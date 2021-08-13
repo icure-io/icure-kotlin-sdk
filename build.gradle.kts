@@ -51,13 +51,14 @@ dependencies {
     implementation(group = "io.icure", name = "async-jackson-http-client", version = "bc6844fb0b")
     implementation(group = "javax.inject", name = "javax.inject", version = "1")
     implementation(group = "org.mapstruct", name = "mapstruct", version = "1.4.2.Final")
+    implementation(group = "com.github.ben-manes.caffeine", name = "caffeine", version = "3.0.3")
 
     // Bouncy Castle
     implementation(group = "org.bouncycastle", name = "bcprov-jdk15on", version = "1.69")
     implementation(group = "org.bouncycastle", name = "bcmail-jdk15on", version = "1.69")
 
-    testImplementation("io.kotlintest", "kotlintest", "2.0.7")
-    testImplementation("junit", "junit", "4.12")
+    testImplementation(group = "io.kotlintest", name = "kotlintest", version = "2.0.7")
+    testImplementation(group = "org.junit.jupiter", name = "junit-jupiter", version = "5.7.0")
 }
 
 java {

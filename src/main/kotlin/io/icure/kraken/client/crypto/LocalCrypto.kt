@@ -1,97 +1,98 @@
 package io.icure.kraken.client.crypto
 
+import com.github.benmanes.caffeine.cache.Cache
+import com.github.benmanes.caffeine.cache.Caffeine
+import io.icure.kraken.client.apis.HcpartyApi
+import io.icure.kraken.client.crypto.CryptoUtils.decodeHex
+import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
+import io.icure.kraken.client.crypto.CryptoUtils.encodeHex
+import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
+import io.icure.kraken.client.defGet
+import io.icure.kraken.client.defPut
 import io.icure.kraken.client.models.DelegationDto
-import java.io.IOException
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.security.*
 import java.security.interfaces.RSAPrivateKey
 import java.security.interfaces.RSAPublicKey
+import java.security.spec.X509EncodedKeySpec
 import java.util.*
-import java.util.concurrent.Callable
-import java.util.concurrent.ExecutionException
-import javax.crypto.BadPaddingException
-import javax.crypto.IllegalBlockSizeException
-import javax.crypto.NoSuchPaddingException
+import java.util.concurrent.TimeUnit
 
-class LocalCrypto(val rsaKeyPairs: Map<String, Pair<RSAPrivateKey, RSAPublicKey>>) : Crypto {
-    override suspend fun decryptEncryptionKeysDto(keys: Map<String, Set<DelegationDto>>): Set<String> {
+@ExperimentalCoroutinesApi
+@DelicateCoroutinesApi
+@ExperimentalStdlibApi
+class LocalCrypto(private val hcpartyApi: HcpartyApi, private val rsaKeyPairs: Map<String, Pair<RSAPrivateKey, RSAPublicKey>>) : Crypto {
+    private val ownerHcpartyKeysCache : Cache<String, Deferred<Optional<Map<String, Pair<String, ByteArray>>>>> = Caffeine.newBuilder()
+        .maximumSize(100)
+        .expireAfterWrite(5, TimeUnit.MINUTES)
+        .build()
+    private val delegateHcpartyKeysCache : Cache<String, Deferred<Optional<Map<String, Pair<String, ByteArray>>>>> = Caffeine.newBuilder()
+        .maximumSize(100)
+        .expireAfterWrite(5, TimeUnit.MINUTES)
+        .build()
 
+    override suspend fun decryptEncryptionKeys(myId: String, keys: Map<String, Set<DelegationDto>>): Set<String> {
+        return keys[myId]?.mapNotNull { d ->
+            try {
+                getDelegateHcPartyKey(d.delegatedTo!!, d.owner!!)
+            } catch (e: Exception) {
+                null
+            }?.let { k -> decryptAES(decodeHex(d.key!!), k).toString(Charsets.UTF_8).split(":")[1] }
+        }?.toSet() ?: throw IllegalArgumentException("Missing key for $myId")
     }
 
-    fun getOwnerHcPartyKey(myId: String, delegateId: String, privateKey: PrivateKey?): ByteArray? {
-        val keyMap: Map<String, org.taktik.icure.client.ICureHelper.EncryptedCryptedKey> =
-            hcOwnerPartyKeysCache.get(myId,
-                Callable<Map<String, org.taktik.icure.client.ICureHelper.EncryptedCryptedKey>> {
-                    val response: String = doRestGET("hcparty/$myId")
-                    val hcp: HealthcarePartyDto = getGson().fromJson(response, HealthcarePartyDto::class.java)
-                    val result: MutableMap<String, org.taktik.icure.client.ICureHelper.EncryptedCryptedKey> =
-                        HashMap<String, org.taktik.icure.client.ICureHelper.EncryptedCryptedKey>()
-                    for ((key, value) in hcp.getHcPartyKeys()
-                        .entrySet()) {
-                        result[key] = org.taktik.icure.client.ICureHelper.EncryptedCryptedKey(value.get(0), null)
-                    }
-                    result
-                })
-        var k: org.taktik.icure.client.ICureHelper.EncryptedCryptedKey? = keyMap[delegateId]
-        if (k == null) {
-            val delegateHcParty: HealthcarePartyDto = getHealthcarePartyHelper().get(delegateId)
-            val delegatePublicKey: String = delegateHcParty.getPublicKey()
-            val myPublicKey: PublicKey = RSAKeysUtils.loadMyKeyPair(myId).getPublic()
+    override suspend fun encryptKeyForHcp(myId: String, delegateId: String, objectId: String, secret: String): String {
+        return encodeHex(encryptAES("$objectId:$secret".toByteArray(Charsets.UTF_8), getDelegateHcPartyKey(delegateId, myId)))
+    }
 
-            // generate exchange key (plain)
-            val exchangeAESKey: Key = CryptoUtils.generateKeyAES()
+    suspend fun getDelegateHcPartyKey(delegateId: String, ownerId: String, myPrivateKey: PrivateKey? = null): ByteArray {
+        val privateKey = myPrivateKey ?: rsaKeyPairs[delegateId]?.first ?: throw IllegalArgumentException("Missing key for hcp $delegateId")
+        val keyMap: Map<String, Pair<String, ByteArray>> =
+            delegateHcpartyKeysCache.defGet(delegateId) {
+                hcpartyApi.getHcPartyKeysForDelegate(delegateId)?.decryptHcPartyKeys(delegateId, privateKey)
+            } ?: throw IllegalArgumentException("Unknown hcp $delegateId")
 
-            // crypting with delegate HcParty public key
-            val delegateCryptedKey: String = org.taktik.icure.client.ICureHelper.encodeHex(
-                CryptoUtils.encrypt(
-                    exchangeAESKey.encoded,
-                    RSAKeysUtils.toPublicKey(delegatePublicKey)
-                )
-            ).toString()
+        return keyMap[ownerId]?.second ?: throw IllegalArgumentException("Missing share for $ownerId")
+    }
 
-            // crypting with my public key (i.e. owner)
-            val myCryptedKey: String = org.taktik.icure.client.ICureHelper.encodeHex(
-                CryptoUtils.encrypt(
-                    exchangeAESKey.encoded,
-                    myPublicKey
-                )
-            ).toString()
+    suspend fun getOwnerHcPartyKey(myId: String, delegateId: String, privateKey: PrivateKey? = null, publicKey: PublicKey? = null): ByteArray {
+        val myPublicKey = publicKey ?: rsaKeyPairs[myId]?.second ?: throw IllegalArgumentException("Missing key for hcp $myId")
+        val myPrivateKey = privateKey ?: rsaKeyPairs[myId]?.first ?: throw IllegalArgumentException("Missing key for hcp $myId")
+        val keyMap: Map<String, Pair<String, ByteArray>> =
+            ownerHcpartyKeysCache.defGet(myId) {
+                hcpartyApi.getHealthcareParty(myId)?.hcPartyKeys?.mapValues { (_, v) -> v[0] }?.decryptHcPartyKeys(myId, myPrivateKey)
+            } ?: throw IllegalArgumentException("Unknown hcp $myId")
 
-            // update the owner (myself) through REST
-            val responseHcPartyKeysUpdate: String = doRestPUT(
-                "hcparty/keys",
-                Collections.singletonMap(delegateId, arrayOf(myCryptedKey, delegateCryptedKey))
-            )
-            // It has to be Map<String, String[]>. But weirdly gson convert it to ArrayList
-            val newKeyMap: Map<String, ArrayList<String>> =
-                getGson().< Map < String, ArrayList<String>>>fromJson<kotlin.collections.MutableMap<kotlin.String?, java.util.ArrayList<kotlin.String?>?>?>(responseHcPartyKeysUpdate, kotlin.collections.MutableMap::class.java)
-
-            // update the caches, delegate and owner
-            var existingKeyMapOfOwner: MutableMap<String?, org.taktik.icure.client.ICureHelper.EncryptedCryptedKey?>? =
-                hcOwnerPartyKeysCache.getIfPresent(myId)
-            if (existingKeyMapOfOwner == null) {
-                hcOwnerPartyKeysCache.put(
-                    myId,
-                    HashMap<String, org.taktik.icure.client.ICureHelper.EncryptedCryptedKey>().also {
-                        existingKeyMapOfOwner = it
-                    })
-            }
-            existingKeyMapOfOwner!![delegateId] = org.taktik.icure.client.ICureHelper.EncryptedCryptedKey(
-                newKeyMap[delegateId]!![0], null
-            )
-            var existingKeyMapOfDelegate: MutableMap<String?, org.taktik.icure.client.ICureHelper.EncryptedCryptedKey?>? =
-                hcDelegatePartyKeysCache.getIfPresent(delegateId)
-            if (existingKeyMapOfDelegate == null) {
-                hcDelegatePartyKeysCache.put(
-                    delegateId,
-                    HashMap<String, org.taktik.icure.client.ICureHelper.EncryptedCryptedKey>().also {
-                        existingKeyMapOfDelegate = it
-                    })
-            }
-            existingKeyMapOfDelegate!![myId] = org.taktik.icure.client.ICureHelper.EncryptedCryptedKey(
-                newKeyMap[delegateId]!![1], null
-            )
-            k = org.taktik.icure.client.ICureHelper.EncryptedCryptedKey(myCryptedKey, exchangeAESKey.encoded)
+        return keyMap[delegateId]?.second ?: CryptoUtils.generateKeyAES().encoded.let {
+            val keyForMe = CryptoUtils.encodeHex(CryptoUtils.encryptRSA(it, myPublicKey))
+            val keyForDelegate = CryptoUtils.encodeHex(CryptoUtils.encryptRSA(
+                it,
+                hcpartyApi.getHealthcareParty(delegateId)?.publicKey?.let { pk ->
+                    KeyFactory.getInstance("RSA").generatePublic(X509EncodedKeySpec(decodeHex(pk)))
+                } ?: throw IllegalArgumentException("Unknown hcp $delegateId")
+            ))
+            hcpartyApi.getHealthcareParty(myId)?.let { hcp ->
+                ownerHcpartyKeysCache.defPut(myId) {
+                    hcpartyApi.modifyHealthcareParty(hcp.copy(hcPartyKeys = hcp.hcPartyKeys + (delegateId to listOf(keyForMe, keyForDelegate))))?.hcPartyKeys?.mapValues { (_, v) -> v[0] }?.decryptHcPartyKeys(myId, myPrivateKey) ?:
+                    throw IllegalStateException("Cannot save new hcparty keys in hcp $myId")
+                }
+            } ?: throw IllegalArgumentException("Unknown hcp $myId")
+            it
         }
-        return k.getDecrypted(privateKey)
+    }
+
+    /** Decrypt hcparty keys
+     *
+     */
+    private fun Map<String, String>.decryptHcPartyKeys(
+        myId: String,
+        myPrivateKey: PrivateKey
+    ) = this.mapValues { (_, v) ->
+        v to CryptoUtils.decryptRSA(
+            decodeHex(v) ?: throw IllegalArgumentException("Invalid HCP key for hcp $myId"),
+            myPrivateKey
+        )
     }
 }

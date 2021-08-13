@@ -1,20 +1,19 @@
 package io.icure.kraken.client.crypto
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider
-import org.bouncycastle.openssl.EncryptionException
-import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
 import java.nio.ByteBuffer
 import java.security.*
-import java.security.cert.Certificate
-import java.security.cert.X509Certificate
+import java.security.interfaces.RSAPrivateKey
+import java.security.interfaces.RSAPublicKey
+import java.security.spec.PKCS8EncodedKeySpec
+import java.security.spec.X509EncodedKeySpec
 import java.util.*
 import javax.crypto.BadPaddingException
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
+import kotlin.experimental.and
 
 object CryptoUtils {
     init {
@@ -24,13 +23,56 @@ object CryptoUtils {
     const val IV_BYTE_LENGTH = 16
     val random: SecureRandom = SecureRandom.getInstance("SHA1PRNG")
 
-    fun encrypt(data: ByteArray, publicKey: Key): ByteArray {
+    /**
+     * Decodes a hex string to a byte array. The hex string can contain either upper
+     * case or lower case letters.
+     *
+     * @param value string to be decoded
+     * @return decoded byte array
+     * @throws NumberFormatException If the string contains an odd number of characters
+     * or if the characters are not valid hexadecimal values.
+     */
+    fun decodeHex(value: String): ByteArray {
+        // if string length is odd then throw exception
+        if (value.length % 2 != 0) {
+            throw NumberFormatException("odd number of characters in hex string")
+        }
+        val bytes = ByteArray(value.length / 2)
+        var i = 0
+        while (i < value.length) {
+            bytes[i / 2] = value.substring(i, i + 2).toInt(16).toByte()
+            i += 2
+        }
+        return bytes
+    }
+
+    /**
+     * Produces a Writable that writes the hex encoding of the byte[]. Calling
+     * toString() on this Writable returns the hex encoding as a String. The hex
+     * encoding includes two characters for each byte and all letters are lower case.
+     *
+     * @param data byte array to be encoded
+     * @return object which will write the hex encoding of the byte array
+     * @see Integer.toHexString
+     */
+    var hexArray = "0123456789ABCDEF".toCharArray()
+    fun encodeHex(data: ByteArray): String {
+        val hexChars = CharArray(data.size * 2)
+        for (j in data.indices) {
+            val v: Int = (data[j] and (0xFF).toByte()).toInt()
+            hexChars[j * 2] = hexArray[v ushr 4]
+            hexChars[j * 2 + 1] = hexArray[v and 0x0F]
+        }
+        return String(hexChars)
+    }
+
+    fun encryptRSA(data: ByteArray, publicKey: Key): ByteArray {
         val cipher: Cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA1AndMGF1Padding", "BC")
         cipher.init(Cipher.ENCRYPT_MODE, publicKey)
         return cipher.doFinal(data)
     }
 
-    fun decrypt(data: ByteArray, privateKey: Key): ByteArray {
+    fun decryptRSA(data: ByteArray, privateKey: Key): ByteArray {
         val cipher: Cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA1AndMGF1Padding", "BC")
         cipher.init(Cipher.DECRYPT_MODE, privateKey)
         return cipher.doFinal(data)
@@ -89,40 +131,7 @@ object CryptoUtils {
         return ivBytes
     }
 
-    fun storePkcs12(
-        masterCertificate: X509Certificate,
-        hcPartyCertificate: X509Certificate,
-        hcPartyPrivateKey: PrivateKey,
-        hcPartyId: String,
-        password: String
-    ) {
-        //
-        // Chain of Trust
-        //
-        val chain = arrayOfNulls<Certificate>(2)
-        chain[1] = masterCertificate
-        chain[0] = hcPartyCertificate
+    fun toPublicKey(publicKeyStr: String) = KeyFactory.getInstance("RSA").generatePublic(X509EncodedKeySpec(decodeHex(publicKeyStr))) as RSAPublicKey
 
-        //
-        // Storing in PKCS #12 format
-        //
-        val store: KeyStore = KeyStore.getInstance("PKCS12", "BC")
-        store.load(null, null)
-        store.setKeyEntry(hcPartyId, hcPartyPrivateKey, null, chain)
-        val fos = FileOutputStream("ICure-keystore-$hcPartyId.p12")
-        store.store(fos, password.toCharArray())
-    }
-
-    fun loadPkcs12(hcPartyId: String, password: String): KeyStore {
-        val store: KeyStore = KeyStore.getInstance("PKCS12", "BC")
-        val pkcs12File = File("ICure-keystore-$hcPartyId.p12")
-        try {
-            FileInputStream(pkcs12File).use { fis ->
-                store.load(fis, password.toCharArray())
-                return store
-            }
-        } catch (e: Exception) {
-            throw EncryptionException(e.message, e)
-        }
-    }
+    fun toPrivateKey(privateKeyStr: String) = KeyFactory.getInstance("RSA").generatePrivate(PKCS8EncodedKeySpec(decodeHex(privateKeyStr))) as RSAPrivateKey
 }
