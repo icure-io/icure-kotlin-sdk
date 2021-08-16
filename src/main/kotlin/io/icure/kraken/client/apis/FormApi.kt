@@ -948,6 +948,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     * Update a form template&#39;s layout
     * 
     * @param formTemplateId  
+    * @param attachment  
     * @return kotlin.String
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -955,10 +956,10 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setTemplateAttachmentMulti(formTemplateId: kotlin.String) : kotlin.String?  {
-        val localVariableConfig = setTemplateAttachmentMultiRequestConfig(formTemplateId = formTemplateId)
+    suspend fun setTemplateAttachmentMulti(formTemplateId: kotlin.String, attachment: kotlin.collections.List<kotlin.ByteArray>) : kotlin.String?  {
+        val localVariableConfig = setTemplateAttachmentMultiRequestConfig(formTemplateId = formTemplateId, attachment = attachment)
 
-        return request<Unit, kotlin.String>(
+        return request<Map<String, Any?>, kotlin.String>(
             localVariableConfig
         )
     }
@@ -967,12 +968,13 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     * To obtain the request config of the operation setTemplateAttachmentMulti
     *
     * @param formTemplateId  
+    * @param attachment  
     * @return RequestConfig
     */
-    fun setTemplateAttachmentMultiRequestConfig(formTemplateId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun setTemplateAttachmentMultiRequestConfig(formTemplateId: kotlin.String, attachment: kotlin.collections.List<kotlin.ByteArray>) : RequestConfig<Map<String, Any?>> {
+        val localVariableBody = mapOf("attachment" to attachment)
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "multipart/form-data")
 
         return RequestConfig(
             method = RequestMethod.PUT,

@@ -1130,7 +1130,7 @@ Configure basicScheme:
 
 <a name="setTemplateAttachmentMulti"></a>
 # **setTemplateAttachmentMulti**
-> kotlin.String setTemplateAttachmentMulti(formTemplateId)
+> kotlin.String setTemplateAttachmentMulti(formTemplateId, attachment)
 
 Update a form template&#39;s layout
 
@@ -1142,8 +1142,9 @@ Update a form template&#39;s layout
 
 val apiInstance = FormApi()
 val formTemplateId : kotlin.String = formTemplateId_example // kotlin.String | 
+val attachment : kotlin.collections.List<kotlin.ByteArray> = BYTE_ARRAY_DATA_HERE // kotlin.collections.List<kotlin.ByteArray> | 
 try {
-    val result : kotlin.String = apiInstance.setTemplateAttachmentMulti(formTemplateId)
+    val result : kotlin.String = apiInstance.setTemplateAttachmentMulti(formTemplateId, attachment)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling FormApi#setTemplateAttachmentMulti")
@@ -1159,6 +1160,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **formTemplateId** | **kotlin.String**|  |
+ **attachment** | [**kotlin.collections.List&lt;kotlin.ByteArray&gt;**](kotlin.ByteArray.md)|  |
 
 ### Return type
 

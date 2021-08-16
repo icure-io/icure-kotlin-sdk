@@ -11,6 +11,8 @@ import io.icure.asyncjacksonhttpclient.net.web.HttpMethod
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.parser.toObject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 import java.io.File
 import java.net.URI
@@ -74,15 +76,15 @@ import java.time.Duration
 
         var request = when (requestConfig.method) {
             RequestMethod.DELETE -> httpClient.uri(uri).method(HttpMethod.DELETE, timeoutDuration)
-                .body(objectMapper.writeValueAsString(requestConfig.body))
+                .body(withContext(Dispatchers.IO){objectMapper.writeValueAsString(requestConfig.body)})
             RequestMethod.GET -> httpClient.uri(uri).method(HttpMethod.GET, timeoutDuration)
             RequestMethod.HEAD -> httpClient.uri(uri).method(HttpMethod.HEAD, timeoutDuration)
             RequestMethod.PATCH -> httpClient.uri(uri).method(HttpMethod.PATCH, timeoutDuration)
-                .body(objectMapper.writeValueAsString(requestConfig.body))
+                .body(withContext(Dispatchers.IO){objectMapper.writeValueAsString(requestConfig.body)})
             RequestMethod.PUT -> httpClient.uri(uri).method(HttpMethod.PUT, timeoutDuration)
-                .body(objectMapper.writeValueAsString(requestConfig.body))
+                .body(withContext(Dispatchers.IO){objectMapper.writeValueAsString(requestConfig.body)})
             RequestMethod.POST -> httpClient.uri(uri).method(HttpMethod.POST, timeoutDuration)
-                .body(objectMapper.writeValueAsString(requestConfig.body))
+                .body(withContext(Dispatchers.IO){objectMapper.writeValueAsString(requestConfig.body)})
             RequestMethod.OPTIONS -> httpClient.uri(uri).method(HttpMethod.OPTIONS, timeoutDuration)
         }.apply {
             requestConfig.headers.forEach { header -> header(header.key, header.value) }

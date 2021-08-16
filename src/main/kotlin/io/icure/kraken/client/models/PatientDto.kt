@@ -32,10 +32,6 @@ import com.fasterxml.jackson.annotation.JsonInclude
  * This entity is a root level object. It represents a patient It is serialized in JSON and saved in the underlying icure-patient CouchDB database.
  *
  * @param id the Id of the patient. We encourage using either a v4 UUID or a HL7 Id.
- * @param created The timestamp (unix epoch in ms) of creation of this entity, will be filled automatically if missing. Not enforced by the application server.
- * @param modified The date (unix epoch in ms) of the latest modification of this entity, will be filled automatically if missing. Not enforced by the application server.
- * @param author The id of the User that has created this entity, will be filled automatically if missing. Not enforced by the application server.
- * @param responsible The id of the HealthcareParty that is responsible for this entity, will be filled automatically if missing. Not enforced by the application server.
  * @param tags A tag is an item from a codification system that qualifies an entity as being member of a certain class, whatever the value it might have taken. If the tag qualifies the content of a field, it means that whatever the content of the field, the tag will always apply. For example, the label of a field is qualified using a tag. LOINC is a codification system typically used for tags.
  * @param codes A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes
  * @param languages the list of languages spoken by the patient ordered by fluency (alpha-2 code http://www.loc.gov/standards/iso639-2/ascii_8bits.html).
@@ -62,6 +58,10 @@ import com.fasterxml.jackson.annotation.JsonInclude
  * @param schoolingInfos 
  * @param employementInfos 
  * @param rev the revision of the patient in the database, used for conflict management / optimistic locking.
+ * @param created The timestamp (unix epoch in ms) of creation of this entity, will be filled automatically if missing. Not enforced by the application server.
+ * @param modified The date (unix epoch in ms) of the latest modification of this entity, will be filled automatically if missing. Not enforced by the application server.
+ * @param author The id of the User that has created this entity, will be filled automatically if missing. Not enforced by the application server.
+ * @param responsible The id of the HealthcareParty that is responsible for this entity, will be filled automatically if missing. Not enforced by the application server.
  * @param endOfLife Soft delete (unix epoch in ms) timestamp of the object.
  * @param deletionDate hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called.
  * @param firstName the firstname (name) of the patient.
@@ -112,22 +112,6 @@ data class PatientDto (
     /* the Id of the patient. We encourage using either a v4 UUID or a HL7 Id. */
     @field:JsonProperty("id")
     val id: kotlin.String,
-
-    /* The timestamp (unix epoch in ms) of creation of this entity, will be filled automatically if missing. Not enforced by the application server. */
-    @field:JsonProperty("created")
-    val created: kotlin.Long,
-
-    /* The date (unix epoch in ms) of the latest modification of this entity, will be filled automatically if missing. Not enforced by the application server. */
-    @field:JsonProperty("modified")
-    val modified: kotlin.Long,
-
-    /* The id of the User that has created this entity, will be filled automatically if missing. Not enforced by the application server. */
-    @field:JsonProperty("author")
-    val author: kotlin.String,
-
-    /* The id of the HealthcareParty that is responsible for this entity, will be filled automatically if missing. Not enforced by the application server. */
-    @field:JsonProperty("responsible")
-    val responsible: kotlin.String,
 
     /* A tag is an item from a codification system that qualifies an entity as being member of a certain class, whatever the value it might have taken. If the tag qualifies the content of a field, it means that whatever the content of the field, the tag will always apply. For example, the label of a field is qualified using a tag. LOINC is a codification system typically used for tags. */
     @field:JsonProperty("tags")
@@ -232,6 +216,22 @@ data class PatientDto (
     /* the revision of the patient in the database, used for conflict management / optimistic locking. */
     @field:JsonProperty("rev")
     val rev: kotlin.String? = null,
+
+    /* The timestamp (unix epoch in ms) of creation of this entity, will be filled automatically if missing. Not enforced by the application server. */
+    @field:JsonProperty("created")
+    val created: kotlin.Long? = null,
+
+    /* The date (unix epoch in ms) of the latest modification of this entity, will be filled automatically if missing. Not enforced by the application server. */
+    @field:JsonProperty("modified")
+    val modified: kotlin.Long? = null,
+
+    /* The id of the User that has created this entity, will be filled automatically if missing. Not enforced by the application server. */
+    @field:JsonProperty("author")
+    val author: kotlin.String? = null,
+
+    /* The id of the HealthcareParty that is responsible for this entity, will be filled automatically if missing. Not enforced by the application server. */
+    @field:JsonProperty("responsible")
+    val responsible: kotlin.String? = null,
 
     /* Soft delete (unix epoch in ms) timestamp of the object. */
     @field:JsonProperty("endOfLife")

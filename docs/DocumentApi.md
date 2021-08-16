@@ -721,7 +721,7 @@ Configure basicScheme:
 
 <a name="setDocumentAttachmentMulti"></a>
 # **setDocumentAttachmentMulti**
-> DocumentDto setDocumentAttachmentMulti(documentId, enckeys)
+> DocumentDto setDocumentAttachmentMulti(documentId, attachment, enckeys)
 
 Creates a document&#39;s attachment
 
@@ -733,9 +733,10 @@ Creates a document&#39;s attachment
 
 val apiInstance = DocumentApi()
 val documentId : kotlin.String = documentId_example // kotlin.String | 
+val attachment : kotlin.collections.List<kotlin.ByteArray> = BYTE_ARRAY_DATA_HERE // kotlin.collections.List<kotlin.ByteArray> | 
 val enckeys : kotlin.String = enckeys_example // kotlin.String | 
 try {
-    val result : DocumentDto = apiInstance.setDocumentAttachmentMulti(documentId, enckeys)
+    val result : DocumentDto = apiInstance.setDocumentAttachmentMulti(documentId, attachment, enckeys)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling DocumentApi#setDocumentAttachmentMulti")
@@ -751,6 +752,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **documentId** | **kotlin.String**|  |
+ **attachment** | [**kotlin.collections.List&lt;kotlin.ByteArray&gt;**](kotlin.ByteArray.md)|  |
  **enckeys** | **kotlin.String**|  | [optional]
 
 ### Return type

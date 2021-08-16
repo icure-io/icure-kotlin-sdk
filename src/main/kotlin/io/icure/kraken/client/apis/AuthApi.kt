@@ -40,7 +40,7 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     /**
     * login
     * Login using username and password
-    * @param webSession  (optional)
+    * @param session  
     * @return AuthenticationResponse
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -48,10 +48,10 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun login(webSession: WebSession?) : AuthenticationResponse?  {
-        val localVariableConfig = loginRequestConfig(webSession = webSession)
+    suspend fun login(session: WebSession) : AuthenticationResponse?  {
+        val localVariableConfig = loginRequestConfig(session = session)
 
-        return request<WebSession, AuthenticationResponse>(
+        return request<Unit, AuthenticationResponse>(
             localVariableConfig
         )
     }
@@ -59,12 +59,15 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     /**
     * To obtain the request config of the operation login
     *
-    * @param webSession  (optional)
+    * @param session  
     * @return RequestConfig
     */
-    fun loginRequestConfig(webSession: WebSession?) : RequestConfig<WebSession> {
-        val localVariableBody = webSession
-        val localVariableQuery: MultiValueMap = mutableMapOf()
+    fun loginRequestConfig(session: WebSession) : RequestConfig<Unit> {
+        val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                put("session", listOf(session.toString()))
+            }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(

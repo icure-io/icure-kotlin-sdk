@@ -632,6 +632,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     * Creates a document&#39;s attachment
     * 
     * @param documentId  
+    * @param attachment  
     * @param enckeys  (optional)
     * @return DocumentDto
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
@@ -640,10 +641,10 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setDocumentAttachmentMulti(documentId: kotlin.String, enckeys: kotlin.String?) : DocumentDto?  {
-        val localVariableConfig = setDocumentAttachmentMultiRequestConfig(documentId = documentId, enckeys = enckeys)
+    suspend fun setDocumentAttachmentMulti(documentId: kotlin.String, attachment: kotlin.collections.List<kotlin.ByteArray>, enckeys: kotlin.String?) : DocumentDto?  {
+        val localVariableConfig = setDocumentAttachmentMultiRequestConfig(documentId = documentId, attachment = attachment, enckeys = enckeys)
 
-        return request<Unit, DocumentDto>(
+        return request<Map<String, Any?>, DocumentDto>(
             localVariableConfig
         )
     }
@@ -652,18 +653,19 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     * To obtain the request config of the operation setDocumentAttachmentMulti
     *
     * @param documentId  
+    * @param attachment  
     * @param enckeys  (optional)
     * @return RequestConfig
     */
-    fun setDocumentAttachmentMultiRequestConfig(documentId: kotlin.String, enckeys: kotlin.String?) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun setDocumentAttachmentMultiRequestConfig(documentId: kotlin.String, attachment: kotlin.collections.List<kotlin.ByteArray>, enckeys: kotlin.String?) : RequestConfig<Map<String, Any?>> {
+        val localVariableBody = mapOf("attachment" to attachment)
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (enckeys != null) {
                     put("enckeys", listOf(enckeys.toString()))
                 }
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "multipart/form-data")
 
         return RequestConfig(
             method = RequestMethod.PUT,
