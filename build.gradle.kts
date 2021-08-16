@@ -112,5 +112,4 @@ tasks.register("apply-custom-fixes") {
 }
 
 tasks.test {
-    ©()
 }

@@ -26,6 +26,8 @@ import io.icure.kraken.client.models.SchoolingInfoDto
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
+import java.time.Instant
+import java.util.*
 
 
 /**
@@ -111,15 +113,15 @@ data class PatientDto (
 
     /* the Id of the patient. We encourage using either a v4 UUID or a HL7 Id. */
     @field:JsonProperty("id")
-    val id: kotlin.String,
+    val id: kotlin.String = UUID.randomUUID().toString(),
 
     /* The timestamp (unix epoch in ms) of creation of this entity, will be filled automatically if missing. Not enforced by the application server. */
     @field:JsonProperty("created")
-    val created: kotlin.Long,
+    val created: kotlin.Long = Instant.now().toEpochMilli(),
 
     /* The date (unix epoch in ms) of the latest modification of this entity, will be filled automatically if missing. Not enforced by the application server. */
     @field:JsonProperty("modified")
-    val modified: kotlin.Long,
+    val modified: kotlin.Long = Instant.now().toEpochMilli(),
 
     /* The id of the User that has created this entity, will be filled automatically if missing. Not enforced by the application server. */
     @field:JsonProperty("author")
