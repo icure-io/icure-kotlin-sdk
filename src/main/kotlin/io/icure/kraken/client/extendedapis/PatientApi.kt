@@ -203,13 +203,13 @@ suspend fun CryptoConfig<PatientDto>.encryptPatient(myId: String, delegations: S
     }.let { p ->
         val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.let { aesKey -> decodeHex(aesKey.replace("-", "")) } ?: throw IllegalArgumentException("No encryption key for user")
         val (sanitizedPatient, marshalledData) = this.marshaller(p)
-        PatientMapperFactory.instance.map(sanitizedPatient.copy(encryptedSelf = Base64.getEncoder().encodeToString(encryptAES(data = marshalledData.toByteArray(Charsets.UTF_8), key = key))))
+        PatientMapperFactory.instance.map(sanitizedPatient.copy(encryptedSelf = Base64.getEncoder().encodeToString(encryptAES(data = marshalledData, key = key))))
     }
 }
 
 suspend fun CryptoConfig<PatientDto>.decryptPatient(myId: String, patient: io.icure.kraken.client.models.PatientDto): PatientDto = PatientMapperFactory.instance.map(patient).let { p ->
     val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.let { aesKey -> decodeHex(aesKey.replace("-", "")) } ?: throw IllegalArgumentException("No encryption key for user")
-    this.unmarshaller(p, decryptAES(data = Base64.getDecoder().decode(p.encryptedSelf), key = key).toString(Charsets.UTF_8))
+    this.unmarshaller(p, decryptAES(data = Base64.getDecoder().decode(p.encryptedSelf), key = key))
 }
 
 @Mapper

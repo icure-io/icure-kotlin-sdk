@@ -33,10 +33,12 @@ internal class PatientApiKtTest {
             crypto = LocalCrypto(hcpartyApi, mapOf(
                 user.healthcarePartyId!! to (toPrivateKey(this::class.java.getResource("keys/${hcp.id}-icc-priv.2048.key").readText(Charsets.UTF_8)) to toPublicKey(hcp.publicKey!!))
             )),
-            marshaller = { p -> p.copy(note = null) to objectMapper.writeValueAsString(mapOf("note" to p.note))},
-            unmarshaller = { p, s -> p.copy(note = objectMapper.readTree(s).get("note")?.textValue()) }
+            marshaller = { p -> p.copy(note = null) to objectMapper.writeValueAsBytes(mapOf("note" to p.note))},
+            unmarshaller = { p, c -> p.copy(note = objectMapper.readTree(c).get("note")?.textValue()) }
         )
-        patientApi.createPatient(user, PatientDto(id = UUID.randomUUID().toString(), firstName = "John", lastName = "Doe", note = "To be encrypted"), cc)
+        val p = patientApi.createPatient(user, PatientDto(id = UUID.randomUUID().toString(), firstName = "John", lastName = "Doe", note = "To be encrypted"), cc)
+
+
     }
 
     @org.junit.jupiter.api.Test
