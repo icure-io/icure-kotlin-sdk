@@ -22,7 +22,7 @@ Name | Type | Description | Notes
 **conventionAmount** | **kotlin.Double** |  |  [optional]
 **vat** | **kotlin.Double** |  |  [optional]
 **error** | **kotlin.String** |  |  [optional]
-**contract** | **kotlin.String** |  |  [optional]
+**&#x60;contract&#x60;** | **kotlin.String** |  |  [optional]
 **contractDate** | **kotlin.Long** |  |  [optional]
 **units** | **kotlin.Int** |  |  [optional]
 **side** | **kotlin.Int** |  |  [optional]

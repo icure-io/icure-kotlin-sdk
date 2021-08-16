@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 **medicalLocationId** | **kotlin.String** | The id of the medical location where this entity was created. |  [optional]
 **endOfLife** | **kotlin.Long** | Soft delete (unix epoch in ms) timestamp of the object. |  [optional]
 **deletionDate** | **kotlin.Long** | hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. |  [optional]
-**value** | **kotlin.String** |  |  [optional]
+**&#x60;value&#x60;** | **kotlin.String** |  |  [optional]
 **userId** | **kotlin.String** |  |  [optional]
 
 

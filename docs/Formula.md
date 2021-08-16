@@ -4,7 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**value** | **kotlin.String** |  |  [optional]
+**&#x60;value&#x60;** | **kotlin.String** |  |  [optional]
 **lifecycle** | [**inline**](#LifecycleEnum) |  |  [optional]
 
 

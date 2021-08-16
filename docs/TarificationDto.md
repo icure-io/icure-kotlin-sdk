@@ -26,7 +26,7 @@ Name | Type | Description | Notes
 **version** | **kotlin.String** |  |  [optional]
 **author** | **kotlin.String** |  |  [optional]
 **level** | **kotlin.Int** |  |  [optional]
-**data** | **kotlin.String** |  |  [optional]
+**&#x60;data&#x60;** | **kotlin.String** |  |  [optional]
 **consultationCode** | **kotlin.Boolean** |  |  [optional]
 **hasRelatedCode** | **kotlin.Boolean** |  |  [optional]
 **needsPrescriber** | **kotlin.Boolean** |  |  [optional]

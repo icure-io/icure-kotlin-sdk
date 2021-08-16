@@ -16,9 +16,6 @@ buildscript {
         classpath("com.taktik.gradle:gradle-plugin-git-version:2.0.2")
         classpath ("com.taktik.gradle:gradle-plugin-maven-repository:1.0.2")
     }
-    plugins {
-        id("org.openapi.generator") version "5.2.0"
-    }
 }
 
 apply(plugin = "git-version")
@@ -67,26 +64,30 @@ java {
 }
 
 tasks.getByName("publish") {
-    dependsOn("openApiGenerate", "build")
-    mustRunAfter("apply-custom-fixes")
+    dependsOn("apiGenerate", "build")
 }
 
-tasks.openApiGenerate {
-    apiPackage.set("io.icure.kraken.client.apis")
-    modelPackage.set("io.icure.kraken.client.models")
-    packageName.set("io.icure.kraken.client")
-    groupId.set("io.icure")
-    id.set(rootProject.name)
-    version.set("0.0.1-SNAPSHOT")
-    additionalProperties.put("useCoroutines", true)
-    additionalProperties.put("serializationLibrary", "jackson")
-    generatorName.set("kotlin")
-    templateDir.set("$rootDir/openApiTemplates")
-    inputSpec.set("${rootDir}/icure-openapi-spec.json")
-    outputDir.set("$rootDir")
-    dependsOn.add("download-openapi-spec") // required due to https://github.com/OpenAPITools/openapi-generator/issues/8255
+tasks.register("apiGenerate", Jar::class){
+    doLast{
+        javaexec {
+            main = "-jar"
+            args = listOf("${rootDir}/openapi-generator-cli.jar", "generate",
+                "-i", "${rootDir}/icure-openapi-spec.json",
+                "-g", "kotlin",
+                "-o", "$rootDir",
 
-    finalizedBy( "apply-custom-fixes") // "contract" is not in reserved words list
+                "--model-package", "io.icure.kraken.client.models",
+                "--api-package", "io.icure.kraken.client.apis",
+                "--package-name", "io.icure.kraken.client",
+                "--group-id", "io.icure",
+                "--artifact-id", project.name,
+                "--artifact-version", "0.0.1-SNAPSHOT",
+                "--template-dir", "$rootDir/openApiTemplates",
+                "--additional-properties", "useCoroutines=true,serializationLibrary=jackson"
+            )
+        }
+    }
+    dependsOn.add("download-openapi-spec") // required due to https://github.com/OpenAPITools/openapi-generator/issues/8255
 }
 
 tasks.register("download-openapi-spec") {
@@ -94,20 +95,6 @@ tasks.register("download-openapi-spec") {
         val destFile = File("${rootDir}/icure-openapi-spec.json")
         val url = "https://kraken.icure.dev/v3/api-docs"
         ant.invokeMethod("get", mapOf("src" to url, "dest" to destFile))
-    }
-}
-
-tasks.register("apply-custom-fixes") {
-    doLast {
-        // contract is a kotlin keyword => escape it with ``
-        ant.withGroovyBuilder {
-            "replaceregexp"("match" to "contract\\(", "replace" to "`contract`(", "flags" to "g", "byline" to "true") {
-                "fileset"(
-                    "dir" to File("${rootDir}/src/main/kotlin/io/icure/kraken/client/models"),
-                    "includes" to "PatientDto.kt"
-                )
-            }
-        }
     }
 }
 

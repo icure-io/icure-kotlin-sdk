@@ -4,7 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**value** | **kotlin.Double** |  |  [optional]
+**&#x60;value&#x60;** | **kotlin.Double** |  |  [optional]
 **unit** | [**CodeStubDto**](CodeStubDto.md) |  |  [optional]
 
 

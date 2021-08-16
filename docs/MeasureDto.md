@@ -4,7 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**value** | **kotlin.Double** |  |  [optional]
+**&#x60;value&#x60;** | **kotlin.Double** |  |  [optional]
 **min** | **kotlin.Double** |  |  [optional]
 **max** | **kotlin.Double** |  |  [optional]
 **ref** | **kotlin.Double** |  |  [optional]

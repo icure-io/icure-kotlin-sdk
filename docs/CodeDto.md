@@ -22,7 +22,7 @@ Name | Type | Description | Notes
 **label** | **kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;** |  |  [optional]
 **author** | **kotlin.String** |  |  [optional]
 **level** | **kotlin.Int** |  |  [optional]
-**data** | **kotlin.String** |  |  [optional]
+**&#x60;data&#x60;** | **kotlin.String** |  |  [optional]
 
 
 <a name="kotlin.collections.Set<FlagsEnum>"></a>

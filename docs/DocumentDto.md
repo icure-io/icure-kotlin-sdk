@@ -30,7 +30,7 @@ Name | Type | Description | Notes
 **version** | **kotlin.String** | The document version |  [optional]
 **storedICureDocumentId** | **kotlin.String** | The ICureDocument (Form, Contact, ...) that has been used to generate the document |  [optional]
 **externalUuid** | **kotlin.String** | A unique external id (from another external source). |  [optional]
-**size** | **kotlin.Long** | Size of the document file |  [optional]
+**propertySize** | **kotlin.Long** | Size of the document file |  [optional]
 **hash** | **kotlin.String** | Hashed version of the document |  [optional]
 **openingContactId** | **kotlin.String** | Id of the contact during which the document was created |  [optional]
 **attachmentId** | **kotlin.String** | Id of attachment to this document |  [optional]
