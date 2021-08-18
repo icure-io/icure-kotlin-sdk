@@ -2,9 +2,9 @@ package io.icure.kraken.client.extendedapis
 
 import io.icure.kraken.client.apis.AccesslogApi
 import io.icure.kraken.client.crypto.CryptoConfig
-import io.icure.kraken.client.crypto.CryptoUtils.decodeHex
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
+import io.icure.kraken.client.crypto.fromHexString
 import io.icure.kraken.client.models.*
 import io.icure.kraken.client.models.decrypted.PaginatedListAccessLogDto
 import io.icure.kraken.client.models.decrypted.AccessLogDto
@@ -96,14 +96,24 @@ suspend fun CryptoConfig<AccessLogDto>.encryptAccessLog(myId: String, delegation
             m + (d to setOf(DelegationDto(listOf(), myId, d, this.crypto.encryptKeyForHcp(myId, d, accessLog.id, secret))))
         })
     }.let { p ->
-        val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.let { aesKey -> decodeHex(aesKey.replace("-", "")) } ?: throw IllegalArgumentException("No encryption key for user")
+        val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.let { aesKey ->
+            aesKey.replace(
+                "-",
+                ""
+            ).fromHexString()
+        } ?: throw IllegalArgumentException("No encryption key for user")
         val (sanitizedAccessLog, marshalledData) = this.marshaller(p)
         AccessLogMapperFactory.instance.map(sanitizedAccessLog.copy(encryptedSelf = Base64.getEncoder().encodeToString(encryptAES(data = marshalledData, key = key))))
     }
 }
 
 suspend fun CryptoConfig<AccessLogDto>.decryptAccessLog(myId: String, accessLog: io.icure.kraken.client.models.AccessLogDto): AccessLogDto = AccessLogMapperFactory.instance.map(accessLog).let { p ->
-    val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.let { aesKey -> decodeHex(aesKey.replace("-", "")) } ?: throw IllegalArgumentException("No encryption key for user")
+    val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.let { aesKey ->
+        aesKey.replace(
+            "-",
+            ""
+        ).fromHexString()
+    } ?: throw IllegalArgumentException("No encryption key for user")
     this.unmarshaller(p, decryptAES(data = Base64.getDecoder().decode(p.encryptedSelf), key = key))
 }
 

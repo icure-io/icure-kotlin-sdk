@@ -13,7 +13,6 @@ import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
-import kotlin.experimental.and
 
 object CryptoUtils {
     init {
@@ -22,49 +21,6 @@ object CryptoUtils {
 
     const val IV_BYTE_LENGTH = 16
     val random: SecureRandom = SecureRandom.getInstance("SHA1PRNG")
-
-    /**
-     * Decodes a hex string to a byte array. The hex string can contain either upper
-     * case or lower case letters.
-     *
-     * @param value string to be decoded
-     * @return decoded byte array
-     * @throws NumberFormatException If the string contains an odd number of characters
-     * or if the characters are not valid hexadecimal values.
-     */
-    fun decodeHex(value: String): ByteArray {
-        // if string length is odd then throw exception
-        if (value.length % 2 != 0) {
-            throw NumberFormatException("odd number of characters in hex string")
-        }
-        val bytes = ByteArray(value.length / 2)
-        var i = 0
-        while (i < value.length) {
-            bytes[i / 2] = value.substring(i, i + 2).toInt(16).toByte()
-            i += 2
-        }
-        return bytes
-    }
-
-    /**
-     * Produces a Writable that writes the hex encoding of the byte[]. Calling
-     * toString() on this Writable returns the hex encoding as a String. The hex
-     * encoding includes two characters for each byte and all letters are lower case.
-     *
-     * @param data byte array to be encoded
-     * @return object which will write the hex encoding of the byte array
-     * @see Integer.toHexString
-     */
-    var hexArray = "0123456789ABCDEF".toCharArray()
-    fun encodeHex(data: ByteArray): String {
-        val hexChars = CharArray(data.size * 2)
-        for (j in data.indices) {
-            val v: Int = (data[j] and (0xFF).toByte()).toInt()
-            hexChars[j * 2] = hexArray[v ushr 4]
-            hexChars[j * 2 + 1] = hexArray[v and 0x0F]
-        }
-        return String(hexChars)
-    }
 
     fun encryptRSA(data: ByteArray, publicKey: Key): ByteArray {
         val cipher: Cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA1AndMGF1Padding", "BC")
@@ -131,7 +87,20 @@ object CryptoUtils {
         return ivBytes
     }
 
-    fun toPublicKey(publicKeyStr: String) = KeyFactory.getInstance("RSA").generatePublic(X509EncodedKeySpec(decodeHex(publicKeyStr))) as RSAPublicKey
+    fun toPublicKey(publicKeyStr: String) = KeyFactory.getInstance("RSA").generatePublic(X509EncodedKeySpec(publicKeyStr.fromHexString())) as RSAPublicKey
 
-    fun toPrivateKey(privateKeyStr: String) = KeyFactory.getInstance("RSA").generatePrivate(PKCS8EncodedKeySpec(decodeHex(privateKeyStr))) as RSAPrivateKey
+    fun toPrivateKey(privateKeyStr: String) = KeyFactory.getInstance("RSA").generatePrivate(
+        PKCS8EncodedKeySpec(
+            privateKeyStr.fromHexString()
+        )) as RSAPrivateKey
+}
+
+@ExperimentalUnsignedTypes // just to make it clear that the experimental unsigned types are used
+fun ByteArray.toHexString() = asUByteArray().joinToString("") { it.toString(16).padStart(2, '0') }
+fun String.fromHexString(): ByteArray {
+    check(length % 2 == 0) { "Must have an even length" }
+
+    return this.chunked(2)
+        .map { it.toInt(16).toByte() }
+        .toByteArray()
 }

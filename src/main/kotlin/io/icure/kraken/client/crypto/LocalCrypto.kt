@@ -3,9 +3,7 @@ package io.icure.kraken.client.crypto
 import com.github.benmanes.caffeine.cache.Cache
 import com.github.benmanes.caffeine.cache.Caffeine
 import io.icure.kraken.client.apis.HcpartyApi
-import io.icure.kraken.client.crypto.CryptoUtils.decodeHex
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
-import io.icure.kraken.client.crypto.CryptoUtils.encodeHex
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
 import io.icure.kraken.client.defGet
 import io.icure.kraken.client.defPut
@@ -39,12 +37,12 @@ class LocalCrypto(private val hcpartyApi: HcpartyApi, private val rsaKeyPairs: M
                 getDelegateHcPartyKey(d.delegatedTo!!, d.owner!!)
             } catch (e: Exception) {
                 null
-            }?.let { k -> decryptAES(decodeHex(d.key!!), k).toString(Charsets.UTF_8).split(":")[1] }
+            }?.let { k -> decryptAES(d.key!!.fromHexString(), k).toString(Charsets.UTF_8).split(":")[1] }
         }?.toSet() ?: throw IllegalArgumentException("Missing key for $myId")
     }
 
     override suspend fun encryptKeyForHcp(myId: String, delegateId: String, objectId: String, secret: String): String {
-        return encodeHex(encryptAES("$objectId:$secret".toByteArray(Charsets.UTF_8), getDelegateHcPartyKey(delegateId, myId)))
+        return encryptAES("$objectId:$secret".toByteArray(Charsets.UTF_8), getOrCreateHcPartyKey(myId, delegateId)).toHexString()
     }
 
     suspend fun getDelegateHcPartyKey(delegateId: String, ownerId: String, myPrivateKey: PrivateKey? = null): ByteArray {
@@ -57,7 +55,7 @@ class LocalCrypto(private val hcpartyApi: HcpartyApi, private val rsaKeyPairs: M
         return keyMap[ownerId]?.second ?: throw IllegalArgumentException("Missing share for $ownerId")
     }
 
-    suspend fun getOwnerHcPartyKey(myId: String, delegateId: String, privateKey: PrivateKey? = null, publicKey: PublicKey? = null): ByteArray {
+    suspend fun getOrCreateHcPartyKey(myId: String, delegateId: String, privateKey: PrivateKey? = null, publicKey: PublicKey? = null): ByteArray {
         val myPublicKey = publicKey ?: rsaKeyPairs[myId]?.second ?: throw IllegalArgumentException("Missing key for hcp $myId")
         val myPrivateKey = privateKey ?: rsaKeyPairs[myId]?.first ?: throw IllegalArgumentException("Missing key for hcp $myId")
         val keyMap: Map<String, Pair<String, ByteArray>> =
@@ -66,17 +64,24 @@ class LocalCrypto(private val hcpartyApi: HcpartyApi, private val rsaKeyPairs: M
             } ?: throw IllegalArgumentException("Unknown hcp $myId")
 
         return keyMap[delegateId]?.second ?: CryptoUtils.generateKeyAES().encoded.let {
-            val keyForMe = CryptoUtils.encodeHex(CryptoUtils.encryptRSA(it, myPublicKey))
-            val keyForDelegate = CryptoUtils.encodeHex(CryptoUtils.encryptRSA(
-                it,
-                hcpartyApi.getHealthcareParty(delegateId)?.publicKey?.let { pk ->
-                    KeyFactory.getInstance("RSA").generatePublic(X509EncodedKeySpec(decodeHex(pk)))
-                } ?: throw IllegalArgumentException("Unknown hcp $delegateId")
-            ))
+            val keyForMe = CryptoUtils.encryptRSA(it, myPublicKey).toHexString()
+            val keyForDelegate = CryptoUtils.encryptRSA(
+                        it,
+                        hcpartyApi.getHealthcareParty(delegateId)?.publicKey?.let { pk ->
+                            KeyFactory.getInstance("RSA").generatePublic(X509EncodedKeySpec(pk.fromHexString()))
+                        } ?: throw IllegalArgumentException("Unknown hcp $delegateId")
+                    ).toHexString()
             hcpartyApi.getHealthcareParty(myId)?.let { hcp ->
                 ownerHcpartyKeysCache.defPut(myId) {
-                    hcpartyApi.modifyHealthcareParty(hcp.copy(hcPartyKeys = hcp.hcPartyKeys + (delegateId to listOf(keyForMe, keyForDelegate))))?.hcPartyKeys?.mapValues { (_, v) -> v[0] }?.decryptHcPartyKeys(myId, myPrivateKey) ?:
-                    throw IllegalStateException("Cannot save new hcparty keys in hcp $myId")
+                    hcpartyApi.modifyHealthcareParty(
+                        hcp.copy(
+                            hcPartyKeys = hcp.hcPartyKeys + (delegateId to listOf(
+                                keyForMe,
+                                keyForDelegate
+                            ))
+                        )
+                    )?.hcPartyKeys?.mapValues { (_, v) -> v[0] }?.decryptHcPartyKeys(myId, myPrivateKey)
+                        ?: throw IllegalStateException("Cannot save new hcparty keys in hcp $myId")
                 }
             } ?: throw IllegalArgumentException("Unknown hcp $myId")
             it
@@ -91,7 +96,7 @@ class LocalCrypto(private val hcpartyApi: HcpartyApi, private val rsaKeyPairs: M
         myPrivateKey: PrivateKey
     ) = this.mapValues { (_, v) ->
         v to CryptoUtils.decryptRSA(
-            decodeHex(v) ?: throw IllegalArgumentException("Invalid HCP key for hcp $myId"),
+            v.fromHexString() ?: throw IllegalArgumentException("Invalid HCP key for hcp $myId"),
             myPrivateKey
         )
     }

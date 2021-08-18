@@ -3,14 +3,13 @@ package io.icure.kraken.client.extendedapis
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.icure.kraken.client.apis.ContactApi
 import io.icure.kraken.client.crypto.CryptoConfig
-import io.icure.kraken.client.crypto.CryptoUtils.decodeHex
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
+import io.icure.kraken.client.crypto.fromHexString
 import io.icure.kraken.client.models.decrypted.ServiceDto
 import io.icure.kraken.client.models.decrypted.ContactDto
 import io.icure.kraken.client.models.*
 import io.icure.kraken.client.models.decrypted.PaginatedListContactDto
-import io.icure.kraken.client.models.decrypted.PaginatedListPatientDto
 import io.icure.kraken.client.models.decrypted.PatientDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.mapstruct.Mapper
@@ -197,14 +196,24 @@ suspend fun CryptoConfig<ContactDto>.encryptContact(myId: String, delegations: S
             m + (d to setOf(DelegationDto(listOf(), myId, d, this.crypto.encryptKeyForHcp(myId, d, contact.id, secret))))
         })
     }.let { p ->
-        val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.let { aesKey -> decodeHex(aesKey.replace("-", "")) } ?: throw IllegalArgumentException("No encryption key for user")
+        val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.let { aesKey ->
+            aesKey.replace(
+                "-",
+                ""
+            ).fromHexString()
+        } ?: throw IllegalArgumentException("No encryption key for user")
         val (sanitizedContact, marshalledData) = this.marshaller(p)
         ContactMapperFactory.instance.map(sanitizedContact.copy(encryptedSelf = Base64.getEncoder().encodeToString(encryptAES(data = marshalledData, key = key))))
     }
 }
 
 suspend fun CryptoConfig<ContactDto>.decryptContact(myId: String, contact: io.icure.kraken.client.models.ContactDto): ContactDto = ContactMapperFactory.instance.map(contact).let { p ->
-    val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.let { aesKey -> decodeHex(aesKey.replace("-", "")) } ?: throw IllegalArgumentException("No encryption key for user")
+    val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.let { aesKey ->
+        aesKey.replace(
+            "-",
+            ""
+        ).fromHexString()
+    } ?: throw IllegalArgumentException("No encryption key for user")
     this.unmarshaller(p, decryptAES(data = Base64.getDecoder().decode(p.encryptedSelf), key = key))
 }
 
@@ -212,7 +221,12 @@ suspend fun CryptoConfig<ContactDto>.encryptServices(myId: String, delegations: 
     val objectMapper = ObjectMapper()
 
     return services.map { s ->
-        val key = contactKey ?: this.crypto.decryptEncryptionKeys(myId, s.encryptionKeys).firstOrNull()?.let { aesKey -> decodeHex(aesKey.replace("-", "")) } ?: throw IllegalArgumentException("No encryption key for user")
+        val key = contactKey ?: this.crypto.decryptEncryptionKeys(myId, s.encryptionKeys).firstOrNull()?.let { aesKey ->
+            aesKey.replace(
+                "-",
+                ""
+            ).fromHexString()
+        } ?: throw IllegalArgumentException("No encryption key for user")
         if (s.content.all { (_,c) ->
             c.compoundValue != null && c.stringValue == null && c.documentId == null  && c.measureValue == null  && c.medicationValue == null  &&
                 c.booleanValue == null && c.numberValue == null && c.instantValue == null  && c.fuzzyDateValue == null  && c.binaryValue == null
@@ -226,7 +240,12 @@ suspend fun CryptoConfig<ContactDto>.encryptServices(myId: String, delegations: 
 
 suspend fun CryptoConfig<ContactDto>.decryptServices(myId: String, contactKey: ByteArray?, services: List<io.icure.kraken.client.models.ServiceDto>): List<ServiceDto> = services?.map { s ->
     val objectMapper = ObjectMapper()
-    val key = contactKey ?: this.crypto.decryptEncryptionKeys(myId, s.encryptionKeys).firstOrNull()?.let { aesKey -> decodeHex(aesKey.replace("-", "")) } ?: throw IllegalArgumentException("No encryption key for user")
+    val key = contactKey ?: this.crypto.decryptEncryptionKeys(myId, s.encryptionKeys).firstOrNull()?.let { aesKey ->
+        aesKey.replace(
+            "-",
+            ""
+        ).fromHexString()
+    } ?: throw IllegalArgumentException("No encryption key for user")
     s.encryptedSelf?.let { es ->
         ServiceMapperFactory.instance.map(s).copy(content = objectMapper.readValue(decryptAES(data = Base64.getDecoder().decode(es), key = key), ContentWrapper::class.java).content)
     } ?: ServiceMapperFactory.instance.map(s).let { ss -> ss.copy(content = ss.content.mapValues { (_,c) -> c.copy(compoundValue = c.compoundValue?.let { this.decryptServices(myId, contactKey, it.map { ServiceMapperFactory.instance.map(it) }) }) }) }

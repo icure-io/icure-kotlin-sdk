@@ -59,7 +59,7 @@ statuses | trainee, withconvention, accreditated
 ## Enum: gender
 Name | Value
 ---- | -----
-gender | M, F, I, C, Y, X, U
+gender | male, female, indeterminate, changed, changedToMale, changedToFemale, unknown
 
 
 

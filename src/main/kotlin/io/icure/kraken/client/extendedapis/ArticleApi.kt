@@ -2,9 +2,9 @@ package io.icure.kraken.client.extendedapis
 
 import io.icure.kraken.client.apis.ArticleApi
 import io.icure.kraken.client.crypto.CryptoConfig
-import io.icure.kraken.client.crypto.CryptoUtils.decodeHex
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
+import io.icure.kraken.client.crypto.fromHexString
 import io.icure.kraken.client.models.*
 import io.icure.kraken.client.models.decrypted.ArticleDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -80,14 +80,24 @@ suspend fun CryptoConfig<ArticleDto>.encryptArticle(myId: String, delegations: S
             m + (d to setOf(DelegationDto(listOf(), myId, d, this.crypto.encryptKeyForHcp(myId, d, article.id, secret))))
         })
     }.let { p ->
-        val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.let { aesKey -> decodeHex(aesKey.replace("-", "")) } ?: throw IllegalArgumentException("No encryption key for user")
+        val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.let { aesKey ->
+            aesKey.replace(
+                "-",
+                ""
+            ).fromHexString()
+        } ?: throw IllegalArgumentException("No encryption key for user")
         val (sanitizedArticle, marshalledData) = this.marshaller(p)
         ArticleMapperFactory.instance.map(sanitizedArticle.copy(encryptedSelf = Base64.getEncoder().encodeToString(encryptAES(data = marshalledData, key = key))))
     }
 }
 
 suspend fun CryptoConfig<ArticleDto>.decryptArticle(myId: String, article: io.icure.kraken.client.models.ArticleDto): ArticleDto = ArticleMapperFactory.instance.map(article).let { p ->
-    val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.let { aesKey -> decodeHex(aesKey.replace("-", "")) } ?: throw IllegalArgumentException("No encryption key for user")
+    val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.let { aesKey ->
+        aesKey.replace(
+            "-",
+            ""
+        ).fromHexString()
+    } ?: throw IllegalArgumentException("No encryption key for user")
     this.unmarshaller(p, decryptAES(data = Base64.getDecoder().decode(p.encryptedSelf), key = key))
 }
 
