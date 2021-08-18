@@ -16,7 +16,6 @@ import kotlinx.coroutines.withContext
 import reactor.core.publisher.Mono
 
 import java.io.File
-import java.lang.IllegalArgumentException
 import java.net.URI
 import java.net.URLConnection
 import java.time.Duration
@@ -98,10 +97,10 @@ open class ApiClient(val baseUrl: String, val httpClient: WebClient, val authHea
             }
         }
 
-        return request.retrieve()
-            .onStatus(400) { Mono.just(ClientException("Client-side exception ${it.statusCode}", it.statusCode, details = objectMapper.readValue(it.responseBodyAsString(), ErrorDetails::class.java))) }
-            .onStatus(500) { Mono.just(ServerException("Server-side exception ${it.statusCode}", it.statusCode, details = objectMapper.readValue(it.responseBodyAsString(), ErrorDetails::class.java))) }
-            .toFlow().toObject(T::class.java, objectMapper, true)
+    return request.retrieve()
+        .onStatus(400) { Mono.just(ClientException("Client-side exception ${it.statusCode}", it.statusCode, details = objectMapper.readValue(it.responseBodyAsString(), ErrorDetails::class.java))) }
+        .onStatus(500) { Mono.just(ServerException("Server-side exception ${it.statusCode}", it.statusCode, details = objectMapper.readValue(it.responseBodyAsString(), ErrorDetails::class.java))) }
+        .toFlow().toObject(T::class.java, objectMapper, true)
 
     }
 }

@@ -30,7 +30,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class MessageReadStatusDto (
 
     @field:JsonProperty("read")
-    val read: kotlin.Boolean,
+    val read: kotlin.Boolean = false,
 
     @field:JsonProperty("time")
     val time: kotlin.Long? = null

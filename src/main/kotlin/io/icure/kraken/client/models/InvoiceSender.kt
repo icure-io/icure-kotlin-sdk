@@ -38,7 +38,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class InvoiceSender (
 
     @field:JsonProperty("isSpecialist")
-    val isSpecialist: kotlin.Boolean,
+    val isSpecialist: kotlin.Boolean = false,
 
     @field:JsonProperty("nihii")
     val nihii: kotlin.Long? = null,

@@ -49,13 +49,13 @@ data class MedexInfoDto (
     val endDate: kotlin.Long,
 
     @field:JsonProperty("patientLanguage")
-    val patientLanguage: kotlin.String,
+    val patientLanguage: kotlin.String = "\"fr\"",
 
     @field:JsonProperty("incapacityType")
-    val incapacityType: kotlin.String,
+    val incapacityType: kotlin.String = "\"incapacity\"",
 
     @field:JsonProperty("incapacityReason")
-    val incapacityReason: kotlin.String,
+    val incapacityReason: kotlin.String = "\"sickness\"",
 
     @field:JsonProperty("outOfHomeAllowed")
     val outOfHomeAllowed: kotlin.Boolean,

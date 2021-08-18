@@ -46,7 +46,7 @@ data class SumehrExportInfoDto (
     val excludedIds: kotlin.collections.List<kotlin.String> = listOf(),
 
     @field:JsonProperty("comment")
-    val comment: kotlin.String,
+    val comment: kotlin.String = "\"\"",
 
     @field:JsonProperty("recipient")
     val recipient: HealthcarePartyDto? = null,

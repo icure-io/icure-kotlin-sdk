@@ -59,7 +59,7 @@ data class ClassificationDto (
     val codes: kotlin.collections.List<CodeStubDto> = listOf(),
 
     @field:JsonProperty("label")
-    val label: kotlin.String,
+    val label: kotlin.String = "\"\"",
 
     /* The secretForeignKeys are filled at the to many end of a one to many relationship (for example inside Contact for the Patient -> Contacts relationship). Used when we want to find all contacts for a specific patient. These keys are in clear. You can have several to partition the medical document space. */
     @field:JsonProperty("secretForeignKeys")

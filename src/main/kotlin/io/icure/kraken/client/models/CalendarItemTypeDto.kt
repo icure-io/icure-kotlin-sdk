@@ -42,7 +42,7 @@ data class CalendarItemTypeDto (
     val id: kotlin.String,
 
     @field:JsonProperty("duration")
-    val duration: kotlin.Int,
+    val duration: kotlin.Int = 0,
 
     @field:JsonProperty("docIds")
     val docIds: kotlin.collections.List<kotlin.String> = listOf(),

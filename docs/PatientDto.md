@@ -10,6 +10,8 @@ Name | Type | Description | Notes
 **languages** | **kotlin.collections.List&lt;kotlin.String&gt;** | the list of languages spoken by the patient ordered by fluency (alpha-2 code http://www.loc.gov/standards/iso639-2/ascii_8bits.html). | 
 **addresses** | [**kotlin.collections.List&lt;AddressDto&gt;**](AddressDto.md) | the list of addresses (with address type). | 
 **mergedIds** | **kotlin.collections.Set&lt;kotlin.String&gt;** | The ids of the patients that have been merged inside this patient. | 
+**active** | **kotlin.Boolean** | Is the patient active (boolean). | 
+**deactivationReason** | [**inline**](#DeactivationReasonEnum) | When not active, the reason for deactivation. | 
 **insurabilities** | [**kotlin.collections.List&lt;InsurabilityDto&gt;**](InsurabilityDto.md) | List of insurance coverages (of class Insurability, see below). | 
 **partnerships** | [**kotlin.collections.List&lt;PartnershipDto&gt;**](PartnershipDto.md) | List of partners, or persons of contact (of class Partnership, see below). | 
 **patientHealthCareParties** | [**kotlin.collections.List&lt;PatientHealthCarePartyDto&gt;**](PatientHealthCarePartyDto.md) | Links (usually for therapeutic reasons) between this patient and healthcare parties (of class PatientHealthcareParty). | 
@@ -43,8 +45,6 @@ Name | Type | Description | Notes
 **birthSex** | [**inline**](#BirthSexEnum) | the birth sex of the patient: male, female, indeterminate, unknown |  [optional]
 **mergeToPatientId** | **kotlin.String** | The id of the patient this patient has been merged with. |  [optional]
 **alias** | **kotlin.String** | An alias of the person, nickname, ... |  [optional]
-**active** | **kotlin.Boolean** | Is the patient active (boolean). |  [optional]
-**deactivationReason** | [**inline**](#DeactivationReasonEnum) | When not active, the reason for deactivation. |  [optional]
 **ssin** | **kotlin.String** | Social security inscription number. |  [optional]
 **maidenName** | **kotlin.String** | Lastname at birth (can be different of the current name), depending on the country, must be used to design the patient . |  [optional]
 **spouseName** | **kotlin.String** | Lastname of the spouse for a married woman, depending on the country, can be used to design the patient. |  [optional]
@@ -78,6 +78,13 @@ Name | Type | Description | Notes
 **mainSourceOfIncome** | [**CodeStubDto**](CodeStubDto.md) |  |  [optional]
 
 
+<a name="DeactivationReasonEnum"></a>
+## Enum: deactivationReason
+Name | Value
+---- | -----
+deactivationReason | deceased, moved, other_doctor, retired, no_contact, unknown, none
+
+
 <a name="GenderEnum"></a>
 ## Enum: gender
 Name | Value
@@ -90,13 +97,6 @@ gender | male, female, indeterminate, changed, changedToMale, changedToFemale, u
 Name | Value
 ---- | -----
 birthSex | male, female, indeterminate, changed, changedToMale, changedToFemale, unknown
-
-
-<a name="DeactivationReasonEnum"></a>
-## Enum: deactivationReason
-Name | Value
----- | -----
-deactivationReason | deceased, moved, other_doctor, retired, no_contact, unknown, none
 
 
 <a name="PersonalStatusEnum"></a>

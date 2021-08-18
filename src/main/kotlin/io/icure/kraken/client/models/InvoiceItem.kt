@@ -51,19 +51,19 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class InvoiceItem (
 
     @field:JsonProperty("codeNomenclature")
-    val codeNomenclature: kotlin.Long,
+    val codeNomenclature: kotlin.Long = 0,
 
     @field:JsonProperty("units")
-    val units: kotlin.Int,
+    val units: kotlin.Int = 0,
 
     @field:JsonProperty("reimbursedAmount")
-    val reimbursedAmount: kotlin.Long,
+    val reimbursedAmount: kotlin.Long = 0,
 
     @field:JsonProperty("patientFee")
-    val patientFee: kotlin.Long,
+    val patientFee: kotlin.Long = 0,
 
     @field:JsonProperty("doctorSupplement")
-    val doctorSupplement: kotlin.Long,
+    val doctorSupplement: kotlin.Long = 0,
 
     @field:JsonProperty("dateCode")
     val dateCode: kotlin.Long? = null,

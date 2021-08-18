@@ -45,10 +45,10 @@ data class EmailOrSmsMessageDto (
     val attachments: kotlin.collections.List<MimeAttachmentDto> = listOf(),
 
     @field:JsonProperty("destinationIsNotPatient")
-    val destinationIsNotPatient: kotlin.Boolean,
+    val destinationIsNotPatient: kotlin.Boolean = false,
 
     @field:JsonProperty("sendCopyToSender")
-    val sendCopyToSender: kotlin.Boolean,
+    val sendCopyToSender: kotlin.Boolean = false,
 
     @field:JsonProperty("destination")
     val destination: kotlin.String? = null,

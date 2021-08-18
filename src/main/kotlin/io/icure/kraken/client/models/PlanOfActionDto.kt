@@ -67,7 +67,7 @@ data class PlanOfActionDto (
 
     /* bit 0: active/inactive, bit 1: relevant/irrelevant, bit 2 : present/absent, ex: 0 = active,relevant and present */
     @field:JsonProperty("status")
-    val status: kotlin.Int,
+    val status: kotlin.Int = 0,
 
     @field:JsonProperty("documentIds")
     @Deprecated(message = "This property is deprecated.")
@@ -79,7 +79,7 @@ data class PlanOfActionDto (
 
     @field:JsonProperty("relevant")
     @Deprecated(message = "This property is deprecated.")
-    val relevant: kotlin.Boolean,
+    val relevant: kotlin.Boolean = true,
 
     /* The timestamp (unix epoch in ms) of creation of this entity, will be filled automatically if missing. Not enforced by the application server. */
     @field:JsonProperty("created")

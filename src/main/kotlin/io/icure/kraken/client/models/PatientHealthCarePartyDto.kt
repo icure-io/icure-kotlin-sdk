@@ -44,7 +44,7 @@ data class PatientHealthCarePartyDto (
 
     @field:JsonProperty("referral")
     @Deprecated(message = "This property is deprecated.")
-    val referral: kotlin.Boolean,
+    val referral: kotlin.Boolean = false,
 
     /* Type of care/relationship. */
     @field:JsonProperty("type")

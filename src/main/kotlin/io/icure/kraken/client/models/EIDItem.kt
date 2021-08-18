@@ -33,7 +33,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class EIDItem (
 
     @field:JsonProperty("readHour")
-    val readHour: kotlin.Int,
+    val readHour: kotlin.Int = 0,
 
     @field:JsonProperty("deviceType")
     val deviceType: kotlin.String? = null,

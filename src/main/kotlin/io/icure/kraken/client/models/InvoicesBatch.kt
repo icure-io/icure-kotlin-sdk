@@ -39,10 +39,10 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class InvoicesBatch (
 
     @field:JsonProperty("invoicingYear")
-    val invoicingYear: kotlin.Int,
+    val invoicingYear: kotlin.Int = 0,
 
     @field:JsonProperty("invoicingMonth")
-    val invoicingMonth: kotlin.Int,
+    val invoicingMonth: kotlin.Int = 0,
 
     @field:JsonProperty("invoices")
     val invoices: kotlin.collections.List<EfactInvoice> = listOf(),

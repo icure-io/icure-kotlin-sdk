@@ -38,6 +38,8 @@ import com.fasterxml.jackson.annotation.JsonInclude
  * @param languages the list of languages spoken by the patient ordered by fluency (alpha-2 code http://www.loc.gov/standards/iso639-2/ascii_8bits.html).
  * @param addresses the list of addresses (with address type).
  * @param mergedIds The ids of the patients that have been merged inside this patient.
+ * @param active Is the patient active (boolean).
+ * @param deactivationReason When not active, the reason for deactivation.
  * @param insurabilities List of insurance coverages (of class Insurability, see below).
  * @param partnerships List of partners, or persons of contact (of class Partnership, see below).
  * @param patientHealthCareParties Links (usually for therapeutic reasons) between this patient and healthcare parties (of class PatientHealthcareParty).
@@ -71,8 +73,6 @@ import com.fasterxml.jackson.annotation.JsonInclude
  * @param birthSex the birth sex of the patient: male, female, indeterminate, unknown
  * @param mergeToPatientId The id of the patient this patient has been merged with.
  * @param alias An alias of the person, nickname, ...
- * @param active Is the patient active (boolean).
- * @param deactivationReason When not active, the reason for deactivation.
  * @param ssin Social security inscription number.
  * @param maidenName Lastname at birth (can be different of the current name), depending on the country, must be used to design the patient .
  * @param spouseName Lastname of the spouse for a married woman, depending on the country, can be used to design the patient.
@@ -133,6 +133,14 @@ data class PatientDto (
     /* The ids of the patients that have been merged inside this patient. */
     @field:JsonProperty("mergedIds")
     val mergedIds: kotlin.collections.List<kotlin.String> = listOf(),
+
+    /* Is the patient active (boolean). */
+    @field:JsonProperty("active")
+    val active: kotlin.Boolean = true,
+
+    /* When not active, the reason for deactivation. */
+    @field:JsonProperty("deactivationReason")
+    val deactivationReason: PatientDto.DeactivationReason = DeactivationReason.none,
 
     /* List of insurance coverages (of class Insurability, see below). */
     @field:JsonProperty("insurabilities")
@@ -266,14 +274,6 @@ data class PatientDto (
     @field:JsonProperty("alias")
     val alias: kotlin.String? = null,
 
-    /* Is the patient active (boolean). */
-    @field:JsonProperty("active")
-    val active: kotlin.Boolean? = null,
-
-    /* When not active, the reason for deactivation. */
-    @field:JsonProperty("deactivationReason")
-    val deactivationReason: PatientDto.DeactivationReason? = null,
-
     /* Social security inscription number. */
     @field:JsonProperty("ssin")
     val ssin: kotlin.String? = null,
@@ -396,6 +396,20 @@ data class PatientDto (
 ) {
 
     /**
+     * When not active, the reason for deactivation.
+     *
+     * Values: deceased,moved,otherDoctor,retired,noContact,unknown,none
+     */
+    enum class DeactivationReason(val value: kotlin.String) {
+        @JsonProperty(value = "deceased") deceased("deceased"),
+        @JsonProperty(value = "moved") moved("moved"),
+        @JsonProperty(value = "other_doctor") otherDoctor("other_doctor"),
+        @JsonProperty(value = "retired") retired("retired"),
+        @JsonProperty(value = "no_contact") noContact("no_contact"),
+        @JsonProperty(value = "unknown") unknown("unknown"),
+        @JsonProperty(value = "none") none("none");
+    }
+    /**
      * the gender of the patient: male, female, indeterminate, changed, changedToMale, changedToFemale, unknown
      *
      * Values: male,female,indeterminate,changed,changedToMale,changedToFemale,unknown
@@ -422,20 +436,6 @@ data class PatientDto (
         @JsonProperty(value = "changedToMale") changedToMale("changedToMale"),
         @JsonProperty(value = "changedToFemale") changedToFemale("changedToFemale"),
         @JsonProperty(value = "unknown") unknown("unknown");
-    }
-    /**
-     * When not active, the reason for deactivation.
-     *
-     * Values: deceased,moved,otherDoctor,retired,noContact,unknown,none
-     */
-    enum class DeactivationReason(val value: kotlin.String) {
-        @JsonProperty(value = "deceased") deceased("deceased"),
-        @JsonProperty(value = "moved") moved("moved"),
-        @JsonProperty(value = "other_doctor") otherDoctor("other_doctor"),
-        @JsonProperty(value = "retired") retired("retired"),
-        @JsonProperty(value = "no_contact") noContact("no_contact"),
-        @JsonProperty(value = "unknown") unknown("unknown"),
-        @JsonProperty(value = "none") none("none");
     }
     /**
      * any of `single`, `in_couple`, `married`, `separated`, `divorced`, `divorcing`, `widowed`, `widower`, `complicated`, `unknown`, `contract`, `other`.

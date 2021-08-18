@@ -34,13 +34,13 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class IdentityDocumentReaderDto (
 
     @field:JsonProperty("eidDocumentSupportType")
-    val eidDocumentSupportType: kotlin.Int,
+    val eidDocumentSupportType: kotlin.Int = 0,
 
     @field:JsonProperty("reasonManualEncoding")
-    val reasonManualEncoding: kotlin.Int,
+    val reasonManualEncoding: kotlin.Int = 0,
 
     @field:JsonProperty("reasonUsingVignette")
-    val reasonUsingVignette: kotlin.Int,
+    val reasonUsingVignette: kotlin.Int = 0,
 
     @field:JsonProperty("justificatifDocumentNumber")
     val justificatifDocumentNumber: kotlin.String? = null,

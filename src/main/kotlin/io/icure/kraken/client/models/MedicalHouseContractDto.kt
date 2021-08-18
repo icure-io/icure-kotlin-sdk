@@ -61,28 +61,28 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class MedicalHouseContractDto (
 
     @field:JsonProperty("kine")
-    val kine: kotlin.Boolean,
+    val kine: kotlin.Boolean = false,
 
     @field:JsonProperty("gp")
-    val gp: kotlin.Boolean,
+    val gp: kotlin.Boolean = false,
 
     @field:JsonProperty("ptd")
-    val ptd: kotlin.Boolean,
+    val ptd: kotlin.Boolean = false,
 
     @field:JsonProperty("nurse")
-    val nurse: kotlin.Boolean,
+    val nurse: kotlin.Boolean = false,
 
     @field:JsonProperty("noKine")
-    val noKine: kotlin.Boolean,
+    val noKine: kotlin.Boolean = false,
 
     @field:JsonProperty("noGp")
-    val noGp: kotlin.Boolean,
+    val noGp: kotlin.Boolean = false,
 
     @field:JsonProperty("noNurse")
-    val noNurse: kotlin.Boolean,
+    val noNurse: kotlin.Boolean = false,
 
     @field:JsonProperty("forcedSuspension")
-    val forcedSuspension: kotlin.Boolean,
+    val forcedSuspension: kotlin.Boolean = false,
 
     @field:JsonProperty("options")
     val options: kotlin.collections.Map<kotlin.String, kotlin.String> = mapOf(),

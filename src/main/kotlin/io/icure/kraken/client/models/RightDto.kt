@@ -32,13 +32,13 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class RightDto (
 
     @field:JsonProperty("read")
-    val read: kotlin.Boolean,
+    val read: kotlin.Boolean = false,
 
     @field:JsonProperty("write")
-    val write: kotlin.Boolean,
+    val write: kotlin.Boolean = false,
 
     @field:JsonProperty("administration")
-    val administration: kotlin.Boolean,
+    val administration: kotlin.Boolean = false,
 
     @field:JsonProperty("userId")
     val userId: kotlin.String? = null

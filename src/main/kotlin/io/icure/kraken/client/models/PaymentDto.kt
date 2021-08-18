@@ -31,7 +31,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class PaymentDto (
 
     @field:JsonProperty("paymentDate")
-    val paymentDate: kotlin.Long,
+    val paymentDate: kotlin.Long = 0,
 
     @field:JsonProperty("paymentType")
     val paymentType: PaymentDto.PaymentType? = null,

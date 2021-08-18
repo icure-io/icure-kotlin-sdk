@@ -72,7 +72,7 @@ data class CodeDto (
     val appendices: kotlin.collections.Map<kotlin.String, kotlin.String> = mapOf(),
 
     @field:JsonProperty("disabled")
-    val disabled: kotlin.Boolean,
+    val disabled: kotlin.Boolean = false,
 
     @field:JsonProperty("rev")
     val rev: kotlin.String? = null,
