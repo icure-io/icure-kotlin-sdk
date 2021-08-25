@@ -669,7 +669,7 @@ Configure basicScheme:
 
 <a name="setDocumentAttachment"></a>
 # **setDocumentAttachment**
-> DocumentDto setDocumentAttachment(documentId, requestBody, enckeys)
+> DocumentDto setDocumentAttachment(documentId, body, enckeys)
 
 Creates a document&#39;s attachment
 
@@ -681,10 +681,10 @@ Creates a document&#39;s attachment
 
 val apiInstance = DocumentApi()
 val documentId : kotlin.String = documentId_example // kotlin.String | 
-val requestBody : kotlin.collections.List<kotlin.ByteArray> =  // kotlin.collections.List<kotlin.ByteArray> | 
+val body : kotlin.ByteArray = BYTE_ARRAY_DATA_HERE // kotlin.ByteArray | 
 val enckeys : kotlin.String = enckeys_example // kotlin.String | 
 try {
-    val result : DocumentDto = apiInstance.setDocumentAttachment(documentId, requestBody, enckeys)
+    val result : DocumentDto = apiInstance.setDocumentAttachment(documentId, body, enckeys)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling DocumentApi#setDocumentAttachment")
@@ -700,7 +700,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **documentId** | **kotlin.String**|  |
- **requestBody** | [**kotlin.collections.List&lt;kotlin.ByteArray&gt;**](kotlin.ByteArray.md)|  |
+ **body** | **kotlin.ByteArray**|  |
  **enckeys** | **kotlin.String**|  | [optional]
 
 ### Return type
@@ -823,7 +823,7 @@ Configure basicScheme:
 
 <a name="setSafeDocumentAttachment"></a>
 # **setSafeDocumentAttachment**
-> DocumentDto setSafeDocumentAttachment(documentId, requestBody, enckeys)
+> DocumentDto setSafeDocumentAttachment(documentId, body, enckeys)
 
 Creates a document&#39;s attachment
 
@@ -835,10 +835,10 @@ Creates a document&#39;s attachment
 
 val apiInstance = DocumentApi()
 val documentId : kotlin.String = documentId_example // kotlin.String | 
-val requestBody : kotlin.collections.List<kotlin.ByteArray> =  // kotlin.collections.List<kotlin.ByteArray> | 
+val body : kotlin.ByteArray = BYTE_ARRAY_DATA_HERE // kotlin.ByteArray | 
 val enckeys : kotlin.String = enckeys_example // kotlin.String | 
 try {
-    val result : DocumentDto = apiInstance.setSafeDocumentAttachment(documentId, requestBody, enckeys)
+    val result : DocumentDto = apiInstance.setSafeDocumentAttachment(documentId, body, enckeys)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling DocumentApi#setSafeDocumentAttachment")
@@ -854,7 +854,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **documentId** | **kotlin.String**|  |
- **requestBody** | [**kotlin.collections.List&lt;kotlin.ByteArray&gt;**](kotlin.ByteArray.md)|  |
+ **body** | **kotlin.ByteArray**|  |
  **enckeys** | **kotlin.String**|  | [optional]
 
 ### Return type

@@ -284,7 +284,7 @@ class ReceiptApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * 
     * @param receiptId  
     * @param blobType  
-    * @param requestBody  
+    * @param body  
     * @param enckeys  (optional)
     * @return ReceiptDto
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
@@ -293,10 +293,10 @@ class ReceiptApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setReceiptAttachment(receiptId: kotlin.String, blobType: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>, enckeys: kotlin.String?) : ReceiptDto?  {
-        val localVariableConfig = setReceiptAttachmentRequestConfig(receiptId = receiptId, blobType = blobType, requestBody = requestBody, enckeys = enckeys)
+    suspend fun setReceiptAttachment(receiptId: kotlin.String, blobType: kotlin.String, body: kotlin.ByteArray, enckeys: kotlin.String?) : ReceiptDto?  {
+        val localVariableConfig = setReceiptAttachmentRequestConfig(receiptId = receiptId, blobType = blobType, body = body, enckeys = enckeys)
 
-        return request<kotlin.collections.List<kotlin.ByteArray>, ReceiptDto>(
+        return request<kotlin.ByteArray, ReceiptDto>(
             localVariableConfig
         )
     }
@@ -306,12 +306,12 @@ class ReceiptApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     *
     * @param receiptId  
     * @param blobType  
-    * @param requestBody  
+    * @param body  
     * @param enckeys  (optional)
     * @return RequestConfig
     */
-    fun setReceiptAttachmentRequestConfig(receiptId: kotlin.String, blobType: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>, enckeys: kotlin.String?) : RequestConfig<kotlin.collections.List<kotlin.ByteArray>> {
-        val localVariableBody = requestBody
+    fun setReceiptAttachmentRequestConfig(receiptId: kotlin.String, blobType: kotlin.String, body: kotlin.ByteArray, enckeys: kotlin.String?) : RequestConfig<kotlin.ByteArray> {
+        val localVariableBody = body
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (enckeys != null) {

@@ -90,7 +90,7 @@ Configure basicScheme:
 
 <a name="generateContactreportExport"></a>
 # **generateContactreportExport**
-> java.io.File generateContactreportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, requestBody)
+> java.io.File generateContactreportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
 
 Get Kmehr contactreport
 
@@ -110,9 +110,9 @@ val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
 val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
 val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
 val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val requestBody : kotlin.collections.List<kotlin.ByteArray> =  // kotlin.collections.List<kotlin.ByteArray> | 
+val body : kotlin.ByteArray = BYTE_ARRAY_DATA_HERE // kotlin.ByteArray | 
 try {
-    val result : java.io.File = apiInstance.generateContactreportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, requestBody)
+    val result : java.io.File = apiInstance.generateContactreportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateContactreportExport")
@@ -136,7 +136,7 @@ Name | Type | Description  | Notes
  **recipientFirstName** | **kotlin.String**|  |
  **recipientLastName** | **kotlin.String**|  |
  **mimeType** | **kotlin.String**|  |
- **requestBody** | [**kotlin.collections.List&lt;kotlin.ByteArray&gt;**](kotlin.ByteArray.md)|  |
+ **body** | **kotlin.ByteArray**|  |
 
 ### Return type
 
@@ -208,7 +208,7 @@ Configure basicScheme:
 
 <a name="generateLabresultExport"></a>
 # **generateLabresultExport**
-> java.io.File generateLabresultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, requestBody)
+> java.io.File generateLabresultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
 
 Get Kmehr labresult
 
@@ -228,9 +228,9 @@ val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
 val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
 val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
 val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val requestBody : kotlin.collections.List<kotlin.ByteArray> =  // kotlin.collections.List<kotlin.ByteArray> | 
+val body : kotlin.ByteArray = BYTE_ARRAY_DATA_HERE // kotlin.ByteArray | 
 try {
-    val result : java.io.File = apiInstance.generateLabresultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, requestBody)
+    val result : java.io.File = apiInstance.generateLabresultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateLabresultExport")
@@ -254,7 +254,7 @@ Name | Type | Description  | Notes
  **recipientFirstName** | **kotlin.String**|  |
  **recipientLastName** | **kotlin.String**|  |
  **mimeType** | **kotlin.String**|  |
- **requestBody** | [**kotlin.collections.List&lt;kotlin.ByteArray&gt;**](kotlin.ByteArray.md)|  |
+ **body** | **kotlin.ByteArray**|  |
 
 ### Return type
 
@@ -330,7 +330,7 @@ Configure basicScheme:
 
 <a name="generateNoteExport"></a>
 # **generateNoteExport**
-> java.io.File generateNoteExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, requestBody)
+> java.io.File generateNoteExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
 
 Get Kmehr note
 
@@ -350,9 +350,9 @@ val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
 val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
 val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
 val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val requestBody : kotlin.collections.List<kotlin.ByteArray> =  // kotlin.collections.List<kotlin.ByteArray> | 
+val body : kotlin.ByteArray = BYTE_ARRAY_DATA_HERE // kotlin.ByteArray | 
 try {
-    val result : java.io.File = apiInstance.generateNoteExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, requestBody)
+    val result : java.io.File = apiInstance.generateNoteExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateNoteExport")
@@ -376,7 +376,7 @@ Name | Type | Description  | Notes
  **recipientFirstName** | **kotlin.String**|  |
  **recipientLastName** | **kotlin.String**|  |
  **mimeType** | **kotlin.String**|  |
- **requestBody** | [**kotlin.collections.List&lt;kotlin.ByteArray&gt;**](kotlin.ByteArray.md)|  |
+ **body** | **kotlin.ByteArray**|  |
 
 ### Return type
 
@@ -446,7 +446,7 @@ Configure basicScheme:
 
 <a name="generatePrescriptionExport"></a>
 # **generatePrescriptionExport**
-> java.io.File generatePrescriptionExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, requestBody)
+> java.io.File generatePrescriptionExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
 
 Get Kmehr prescription
 
@@ -466,9 +466,9 @@ val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
 val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
 val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
 val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val requestBody : kotlin.collections.List<kotlin.ByteArray> =  // kotlin.collections.List<kotlin.ByteArray> | 
+val body : kotlin.ByteArray = BYTE_ARRAY_DATA_HERE // kotlin.ByteArray | 
 try {
-    val result : java.io.File = apiInstance.generatePrescriptionExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, requestBody)
+    val result : java.io.File = apiInstance.generatePrescriptionExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generatePrescriptionExport")
@@ -492,7 +492,7 @@ Name | Type | Description  | Notes
  **recipientFirstName** | **kotlin.String**|  |
  **recipientLastName** | **kotlin.String**|  |
  **mimeType** | **kotlin.String**|  |
- **requestBody** | [**kotlin.collections.List&lt;kotlin.ByteArray&gt;**](kotlin.ByteArray.md)|  |
+ **body** | **kotlin.ByteArray**|  |
 
 ### Return type
 
@@ -512,7 +512,7 @@ Configure basicScheme:
 
 <a name="generateReportExport"></a>
 # **generateReportExport**
-> java.io.File generateReportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, requestBody)
+> java.io.File generateReportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
 
 Get Kmehr report
 
@@ -532,9 +532,9 @@ val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
 val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
 val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
 val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val requestBody : kotlin.collections.List<kotlin.ByteArray> =  // kotlin.collections.List<kotlin.ByteArray> | 
+val body : kotlin.ByteArray = BYTE_ARRAY_DATA_HERE // kotlin.ByteArray | 
 try {
-    val result : java.io.File = apiInstance.generateReportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, requestBody)
+    val result : java.io.File = apiInstance.generateReportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateReportExport")
@@ -558,7 +558,7 @@ Name | Type | Description  | Notes
  **recipientFirstName** | **kotlin.String**|  |
  **recipientLastName** | **kotlin.String**|  |
  **mimeType** | **kotlin.String**|  |
- **requestBody** | [**kotlin.collections.List&lt;kotlin.ByteArray&gt;**](kotlin.ByteArray.md)|  |
+ **body** | **kotlin.ByteArray**|  |
 
 ### Return type
 
@@ -578,7 +578,7 @@ Configure basicScheme:
 
 <a name="generateRequestExport"></a>
 # **generateRequestExport**
-> java.io.File generateRequestExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, requestBody)
+> java.io.File generateRequestExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
 
 Get Kmehr request
 
@@ -598,9 +598,9 @@ val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
 val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
 val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
 val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val requestBody : kotlin.collections.List<kotlin.ByteArray> =  // kotlin.collections.List<kotlin.ByteArray> | 
+val body : kotlin.ByteArray = BYTE_ARRAY_DATA_HERE // kotlin.ByteArray | 
 try {
-    val result : java.io.File = apiInstance.generateRequestExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, requestBody)
+    val result : java.io.File = apiInstance.generateRequestExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateRequestExport")
@@ -624,7 +624,7 @@ Name | Type | Description  | Notes
  **recipientFirstName** | **kotlin.String**|  |
  **recipientLastName** | **kotlin.String**|  |
  **mimeType** | **kotlin.String**|  |
- **requestBody** | [**kotlin.collections.List&lt;kotlin.ByteArray&gt;**](kotlin.ByteArray.md)|  |
+ **body** | **kotlin.ByteArray**|  |
 
 ### Return type
 
@@ -644,7 +644,7 @@ Configure basicScheme:
 
 <a name="generateResultExport"></a>
 # **generateResultExport**
-> java.io.File generateResultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, requestBody)
+> java.io.File generateResultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
 
 Get Kmehr result
 
@@ -664,9 +664,9 @@ val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
 val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
 val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
 val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val requestBody : kotlin.collections.List<kotlin.ByteArray> =  // kotlin.collections.List<kotlin.ByteArray> | 
+val body : kotlin.ByteArray = BYTE_ARRAY_DATA_HERE // kotlin.ByteArray | 
 try {
-    val result : java.io.File = apiInstance.generateResultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, requestBody)
+    val result : java.io.File = apiInstance.generateResultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateResultExport")
@@ -690,7 +690,7 @@ Name | Type | Description  | Notes
  **recipientFirstName** | **kotlin.String**|  |
  **recipientLastName** | **kotlin.String**|  |
  **mimeType** | **kotlin.String**|  |
- **requestBody** | [**kotlin.collections.List&lt;kotlin.ByteArray&gt;**](kotlin.ByteArray.md)|  |
+ **body** | **kotlin.ByteArray**|  |
 
 ### Return type
 

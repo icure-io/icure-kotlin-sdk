@@ -40,7 +40,7 @@ class PubsubApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     * Offer auth data on secret bucket
     * Offer auth data on previously agreed on secret bucket, data should be encrypted
     * @param bucket  
-    * @param requestBody  
+    * @param body  
     * @return kotlin.collections.Map<kotlin.String, kotlin.Boolean>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -48,10 +48,10 @@ class PubsubApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun offerAuth(bucket: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>) : kotlin.collections.Map<kotlin.String, kotlin.Boolean>?  {
-        val localVariableConfig = offerAuthRequestConfig(bucket = bucket, requestBody = requestBody)
+    suspend fun offerAuth(bucket: kotlin.String, body: kotlin.ByteArray) : kotlin.collections.Map<kotlin.String, kotlin.Boolean>?  {
+        val localVariableConfig = offerAuthRequestConfig(bucket = bucket, body = body)
 
-        return request<kotlin.collections.List<kotlin.ByteArray>, kotlin.collections.Map<kotlin.String, kotlin.Boolean>>(
+        return request<kotlin.ByteArray, kotlin.collections.Map<kotlin.String, kotlin.Boolean>>(
             localVariableConfig
         )
     }
@@ -60,11 +60,11 @@ class PubsubApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     * To obtain the request config of the operation offerAuth
     *
     * @param bucket  
-    * @param requestBody  
+    * @param body  
     * @return RequestConfig
     */
-    fun offerAuthRequestConfig(bucket: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>) : RequestConfig<kotlin.collections.List<kotlin.ByteArray>> {
-        val localVariableBody = requestBody
+    fun offerAuthRequestConfig(bucket: kotlin.String, body: kotlin.ByteArray) : RequestConfig<kotlin.ByteArray> {
+        val localVariableBody = body
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
@@ -81,7 +81,7 @@ class PubsubApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     * publish data
     * Publish value with key
     * @param key  
-    * @param requestBody  
+    * @param body  
     * @return kotlin.collections.Map<kotlin.String, kotlin.Boolean>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -89,10 +89,10 @@ class PubsubApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun pub(key: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>) : kotlin.collections.Map<kotlin.String, kotlin.Boolean>?  {
-        val localVariableConfig = pubRequestConfig(key = key, requestBody = requestBody)
+    suspend fun pub(key: kotlin.String, body: kotlin.ByteArray) : kotlin.collections.Map<kotlin.String, kotlin.Boolean>?  {
+        val localVariableConfig = pubRequestConfig(key = key, body = body)
 
-        return request<kotlin.collections.List<kotlin.ByteArray>, kotlin.collections.Map<kotlin.String, kotlin.Boolean>>(
+        return request<kotlin.ByteArray, kotlin.collections.Map<kotlin.String, kotlin.Boolean>>(
             localVariableConfig
         )
     }
@@ -101,11 +101,11 @@ class PubsubApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     * To obtain the request config of the operation pub
     *
     * @param key  
-    * @param requestBody  
+    * @param body  
     * @return RequestConfig
     */
-    fun pubRequestConfig(key: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>) : RequestConfig<kotlin.collections.List<kotlin.ByteArray>> {
-        val localVariableBody = requestBody
+    fun pubRequestConfig(key: kotlin.String, body: kotlin.ByteArray) : RequestConfig<kotlin.ByteArray> {
+        val localVariableBody = body
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 

@@ -307,7 +307,7 @@ Configure basicScheme:
 
 <a name="setReceiptAttachment"></a>
 # **setReceiptAttachment**
-> ReceiptDto setReceiptAttachment(receiptId, blobType, requestBody, enckeys)
+> ReceiptDto setReceiptAttachment(receiptId, blobType, body, enckeys)
 
 Creates a receipt&#39;s attachment
 
@@ -320,10 +320,10 @@ Creates a receipt&#39;s attachment
 val apiInstance = ReceiptApi()
 val receiptId : kotlin.String = receiptId_example // kotlin.String | 
 val blobType : kotlin.String = blobType_example // kotlin.String | 
-val requestBody : kotlin.collections.List<kotlin.ByteArray> =  // kotlin.collections.List<kotlin.ByteArray> | 
+val body : kotlin.ByteArray = BYTE_ARRAY_DATA_HERE // kotlin.ByteArray | 
 val enckeys : kotlin.String = enckeys_example // kotlin.String | 
 try {
-    val result : ReceiptDto = apiInstance.setReceiptAttachment(receiptId, blobType, requestBody, enckeys)
+    val result : ReceiptDto = apiInstance.setReceiptAttachment(receiptId, blobType, body, enckeys)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling ReceiptApi#setReceiptAttachment")
@@ -340,7 +340,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **receiptId** | **kotlin.String**|  |
  **blobType** | **kotlin.String**|  |
- **requestBody** | [**kotlin.collections.List&lt;kotlin.ByteArray&gt;**](kotlin.ByteArray.md)|  |
+ **body** | **kotlin.ByteArray**|  |
  **enckeys** | **kotlin.String**|  | [optional]
 
 ### Return type

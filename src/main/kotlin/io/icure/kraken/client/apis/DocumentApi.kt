@@ -585,7 +585,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     * Creates a document&#39;s attachment
     * 
     * @param documentId  
-    * @param requestBody  
+    * @param body  
     * @param enckeys  (optional)
     * @return DocumentDto
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
@@ -594,10 +594,10 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setDocumentAttachment(documentId: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>, enckeys: kotlin.String?) : DocumentDto?  {
-        val localVariableConfig = setDocumentAttachmentRequestConfig(documentId = documentId, requestBody = requestBody, enckeys = enckeys)
+    suspend fun setDocumentAttachment(documentId: kotlin.String, body: kotlin.ByteArray, enckeys: kotlin.String?) : DocumentDto?  {
+        val localVariableConfig = setDocumentAttachmentRequestConfig(documentId = documentId, body = body, enckeys = enckeys)
 
-        return request<kotlin.collections.List<kotlin.ByteArray>, DocumentDto>(
+        return request<kotlin.ByteArray, DocumentDto>(
             localVariableConfig
         )
     }
@@ -606,12 +606,12 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     * To obtain the request config of the operation setDocumentAttachment
     *
     * @param documentId  
-    * @param requestBody  
+    * @param body  
     * @param enckeys  (optional)
     * @return RequestConfig
     */
-    fun setDocumentAttachmentRequestConfig(documentId: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>, enckeys: kotlin.String?) : RequestConfig<kotlin.collections.List<kotlin.ByteArray>> {
-        val localVariableBody = requestBody
+    fun setDocumentAttachmentRequestConfig(documentId: kotlin.String, body: kotlin.ByteArray, enckeys: kotlin.String?) : RequestConfig<kotlin.ByteArray> {
+        val localVariableBody = body
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (enckeys != null) {
@@ -720,7 +720,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     * Creates a document&#39;s attachment
     * 
     * @param documentId  
-    * @param requestBody  
+    * @param body  
     * @param enckeys  (optional)
     * @return DocumentDto
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
@@ -729,10 +729,10 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setSafeDocumentAttachment(documentId: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>, enckeys: kotlin.String?) : DocumentDto?  {
-        val localVariableConfig = setSafeDocumentAttachmentRequestConfig(documentId = documentId, requestBody = requestBody, enckeys = enckeys)
+    suspend fun setSafeDocumentAttachment(documentId: kotlin.String, body: kotlin.ByteArray, enckeys: kotlin.String?) : DocumentDto?  {
+        val localVariableConfig = setSafeDocumentAttachmentRequestConfig(documentId = documentId, body = body, enckeys = enckeys)
 
-        return request<kotlin.collections.List<kotlin.ByteArray>, DocumentDto>(
+        return request<kotlin.ByteArray, DocumentDto>(
             localVariableConfig
         )
     }
@@ -741,12 +741,12 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     * To obtain the request config of the operation setSafeDocumentAttachment
     *
     * @param documentId  
-    * @param requestBody  
+    * @param body  
     * @param enckeys  (optional)
     * @return RequestConfig
     */
-    fun setSafeDocumentAttachmentRequestConfig(documentId: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>, enckeys: kotlin.String?) : RequestConfig<kotlin.collections.List<kotlin.ByteArray>> {
-        val localVariableBody = requestBody
+    fun setSafeDocumentAttachmentRequestConfig(documentId: kotlin.String, body: kotlin.ByteArray, enckeys: kotlin.String?) : RequestConfig<kotlin.ByteArray> {
+        val localVariableBody = body
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("documentId", listOf(documentId.toString()))

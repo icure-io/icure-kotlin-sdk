@@ -14,7 +14,6 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
-import io.icure.kraken.client.models.ByteArrayDto
 import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.DocumentTemplateDto
 
@@ -433,7 +432,7 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebCl
     * Creates a document&#39;s attachment
     * 
     * @param documentTemplateId  
-    * @param requestBody  
+    * @param body  
     * @return DocumentTemplateDto
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -441,10 +440,10 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebCl
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setDocumentTemplateAttachment(documentTemplateId: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>) : DocumentTemplateDto?  {
-        val localVariableConfig = setDocumentTemplateAttachmentRequestConfig(documentTemplateId = documentTemplateId, requestBody = requestBody)
+    suspend fun setDocumentTemplateAttachment(documentTemplateId: kotlin.String, body: kotlin.ByteArray) : DocumentTemplateDto?  {
+        val localVariableConfig = setDocumentTemplateAttachmentRequestConfig(documentTemplateId = documentTemplateId, body = body)
 
-        return request<kotlin.collections.List<kotlin.ByteArray>, DocumentTemplateDto>(
+        return request<kotlin.ByteArray, DocumentTemplateDto>(
             localVariableConfig
         )
     }
@@ -453,11 +452,11 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebCl
     * To obtain the request config of the operation setDocumentTemplateAttachment
     *
     * @param documentTemplateId  
-    * @param requestBody  
+    * @param body  
     * @return RequestConfig
     */
-    fun setDocumentTemplateAttachmentRequestConfig(documentTemplateId: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>) : RequestConfig<kotlin.collections.List<kotlin.ByteArray>> {
-        val localVariableBody = requestBody
+    fun setDocumentTemplateAttachmentRequestConfig(documentTemplateId: kotlin.String, body: kotlin.ByteArray) : RequestConfig<kotlin.ByteArray> {
+        val localVariableBody = body
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
@@ -474,7 +473,7 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebCl
     * Creates a document&#39;s attachment
     * 
     * @param documentTemplateId  
-    * @param byteArrayDto  
+    * @param body  
     * @return DocumentTemplateDto
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -482,10 +481,10 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebCl
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setDocumentTemplateAttachmentJson(documentTemplateId: kotlin.String, byteArrayDto: ByteArrayDto) : DocumentTemplateDto?  {
-        val localVariableConfig = setDocumentTemplateAttachmentJsonRequestConfig(documentTemplateId = documentTemplateId, byteArrayDto = byteArrayDto)
+    suspend fun setDocumentTemplateAttachmentJson(documentTemplateId: kotlin.String, body: kotlin.ByteArray) : DocumentTemplateDto?  {
+        val localVariableConfig = setDocumentTemplateAttachmentJsonRequestConfig(documentTemplateId = documentTemplateId, body = body)
 
-        return request<ByteArrayDto, DocumentTemplateDto>(
+        return request<kotlin.ByteArray, DocumentTemplateDto>(
             localVariableConfig
         )
     }
@@ -494,11 +493,11 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebCl
     * To obtain the request config of the operation setDocumentTemplateAttachmentJson
     *
     * @param documentTemplateId  
-    * @param byteArrayDto  
+    * @param body  
     * @return RequestConfig
     */
-    fun setDocumentTemplateAttachmentJsonRequestConfig(documentTemplateId: kotlin.String, byteArrayDto: ByteArrayDto) : RequestConfig<ByteArrayDto> {
-        val localVariableBody = byteArrayDto
+    fun setDocumentTemplateAttachmentJsonRequestConfig(documentTemplateId: kotlin.String, body: kotlin.ByteArray) : RequestConfig<kotlin.ByteArray> {
+        val localVariableBody = body
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 

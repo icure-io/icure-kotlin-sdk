@@ -499,7 +499,7 @@ Configure basicScheme:
 
 <a name="setDocumentTemplateAttachment"></a>
 # **setDocumentTemplateAttachment**
-> DocumentTemplateDto setDocumentTemplateAttachment(documentTemplateId, requestBody)
+> DocumentTemplateDto setDocumentTemplateAttachment(documentTemplateId, body)
 
 Creates a document&#39;s attachment
 
@@ -511,9 +511,9 @@ Creates a document&#39;s attachment
 
 val apiInstance = DoctemplateApi()
 val documentTemplateId : kotlin.String = documentTemplateId_example // kotlin.String | 
-val requestBody : kotlin.collections.List<kotlin.ByteArray> =  // kotlin.collections.List<kotlin.ByteArray> | 
+val body : kotlin.ByteArray = BYTE_ARRAY_DATA_HERE // kotlin.ByteArray | 
 try {
-    val result : DocumentTemplateDto = apiInstance.setDocumentTemplateAttachment(documentTemplateId, requestBody)
+    val result : DocumentTemplateDto = apiInstance.setDocumentTemplateAttachment(documentTemplateId, body)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling DoctemplateApi#setDocumentTemplateAttachment")
@@ -529,7 +529,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **documentTemplateId** | **kotlin.String**|  |
- **requestBody** | [**kotlin.collections.List&lt;kotlin.ByteArray&gt;**](kotlin.ByteArray.md)|  |
+ **body** | **kotlin.ByteArray**|  |
 
 ### Return type
 
@@ -549,7 +549,7 @@ Configure basicScheme:
 
 <a name="setDocumentTemplateAttachmentJson"></a>
 # **setDocumentTemplateAttachmentJson**
-> DocumentTemplateDto setDocumentTemplateAttachmentJson(documentTemplateId, byteArrayDto)
+> DocumentTemplateDto setDocumentTemplateAttachmentJson(documentTemplateId, body)
 
 Creates a document&#39;s attachment
 
@@ -561,9 +561,9 @@ Creates a document&#39;s attachment
 
 val apiInstance = DoctemplateApi()
 val documentTemplateId : kotlin.String = documentTemplateId_example // kotlin.String | 
-val byteArrayDto : ByteArrayDto =  // ByteArrayDto | 
+val body : kotlin.ByteArray = BYTE_ARRAY_DATA_HERE // kotlin.ByteArray | 
 try {
-    val result : DocumentTemplateDto = apiInstance.setDocumentTemplateAttachmentJson(documentTemplateId, byteArrayDto)
+    val result : DocumentTemplateDto = apiInstance.setDocumentTemplateAttachmentJson(documentTemplateId, body)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling DoctemplateApi#setDocumentTemplateAttachmentJson")
@@ -579,7 +579,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **documentTemplateId** | **kotlin.String**|  |
- **byteArrayDto** | [**ByteArrayDto**](ByteArrayDto.md)|  |
+ **body** | **kotlin.ByteArray**|  |
 
 ### Return type
 
