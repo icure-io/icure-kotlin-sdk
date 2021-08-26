@@ -69,6 +69,14 @@ suspend fun HelementApi.newHealthElementDelegations(user: UserDto, healthElement
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
+suspend fun HelementApi.findHealthElementsByHCPartyPatient(user: UserDto, hcPartyId: String, patient: PatientDto, config: CryptoConfig<HealthElementDto>) : List<HealthElementDto>? {
+    val key = config.crypto.decryptEncryptionKeys(user.healthcarePartyId!!, patient.delegations).firstOrNull()
+        ?: throw IllegalArgumentException("No delegation for user")
+    return this.findHealthElementsByHCPartyPatientForeignKeys(user, hcPartyId, key, config)
+}
+
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
 suspend fun HelementApi.findHealthElementsByHCPartyPatientForeignKeys(user: UserDto, hcPartyId: String, secretFKeys: String, config: CryptoConfig<HealthElementDto>) : List<HealthElementDto>? {
     return this.findHealthElementsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)?.map { config.decryptHealthElement(user.healthcarePartyId!!, it) }
 }

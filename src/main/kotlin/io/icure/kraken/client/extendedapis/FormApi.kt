@@ -6,7 +6,9 @@ import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
 import io.icure.kraken.client.crypto.fromHexString
 import io.icure.kraken.client.models.*
+import io.icure.kraken.client.models.decrypted.ClassificationDto
 import io.icure.kraken.client.models.decrypted.FormDto
+import io.icure.kraken.client.models.decrypted.PatientDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.mapstruct.Mapper
 import org.mapstruct.factory.Mappers
@@ -51,8 +53,9 @@ suspend fun FormApi.createForm(user: UserDto, form: FormDto, config: CryptoConfi
             (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
             form
         )
-    )?.let { config.decryptForm(user.healthcarePartyId!!, it)
-}
+    )?.let {
+        config.decryptForm(user.healthcarePartyId!!, it)
+    }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
@@ -63,6 +66,22 @@ suspend fun FormApi.newFormDelegations(
     config: CryptoConfig<FormDto>
 ): FormDto? {
     return this.newFormDelegations(formId, delegationDto)?.let { config.decryptForm(user.healthcarePartyId!!, it) }
+}
+
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
+suspend fun FormApi.findByHCPartyPatient(
+    user: UserDto,
+    hcPartyId: String,
+    patient: PatientDto,
+    healthElementId: String?,
+    planOfActionId: String?,
+    formTemplateId: String?,
+    config: CryptoConfig<FormDto>
+): List<FormDto>? {
+    val key = config.crypto.decryptEncryptionKeys(user.healthcarePartyId!!, patient.delegations).firstOrNull()
+        ?: throw IllegalArgumentException("No delegation for user")
+    return this.findFormsByHCPartyPatientForeignKeys(user, hcPartyId, key, healthElementId, planOfActionId, formTemplateId, config)
 }
 
 @ExperimentalCoroutinesApi
@@ -134,7 +153,12 @@ suspend fun FormApi.createForms(user: UserDto, form: List<FormDto>, config: Cryp
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun FormApi.getChildrenForms(user: UserDto, formId: String, hcPartyId: String, config: CryptoConfig<FormDto>): List<FormDto>? {
+suspend fun FormApi.getChildrenForms(
+    user: UserDto,
+    formId: String,
+    hcPartyId: String,
+    config: CryptoConfig<FormDto>
+): List<FormDto>? {
     return this.getChildrenForms(formId, hcPartyId)?.map { config.decryptForm(user.healthcarePartyId!!, it) }
 }
 
@@ -158,13 +182,18 @@ suspend fun FormApi.getForms(user: UserDto, listOfIdsDto: ListOfIdsDto, config: 
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun FormApi.getFormsByLogicalUuid(user: UserDto, logicalUuid: String, config: CryptoConfig<FormDto>): List<FormDto>? {
-        return this.getFormsByLogicalUuid(logicalUuid)?.map { config.decryptForm(user.healthcarePartyId!!, it) }
+suspend fun FormApi.getFormsByLogicalUuid(
+    user: UserDto,
+    logicalUuid: String,
+    config: CryptoConfig<FormDto>
+): List<FormDto>? {
+    return this.getFormsByLogicalUuid(logicalUuid)?.map { config.decryptForm(user.healthcarePartyId!!, it) }
 }
+
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun FormApi.getFormsByUniqueId(user: UserDto, uniqueId: String, config: CryptoConfig<FormDto>): List<FormDto>? {
-        return this.getFormsByUniqueId(uniqueId)?.map { config.decryptForm(user.healthcarePartyId!!, it) }
+    return this.getFormsByUniqueId(uniqueId)?.map { config.decryptForm(user.healthcarePartyId!!, it) }
 }
 
 

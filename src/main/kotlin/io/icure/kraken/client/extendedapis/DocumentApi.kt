@@ -49,6 +49,22 @@ suspend fun DocumentApi.createDocument(user: UserDto, document: DocumentDto, con
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
+suspend fun DocumentApi.findDocumentsByHCPartyPatient(user: UserDto, hcPartyId: String, patient: PatientDto, config: CryptoConfig<DocumentDto>) : List<DocumentDto>? {
+    val key = config.crypto.decryptEncryptionKeys(user.healthcarePartyId!!, patient.delegations).firstOrNull()
+        ?: throw IllegalArgumentException("No delegation for user")
+    return this.findDocumentsByHCPartyPatientForeignKeys(user, hcPartyId, key, config)
+}
+
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
+suspend fun DocumentApi.findByTypeHCPartyMessage(user: UserDto, documentTypeCode: String, hcPartyId: String, message: MessageDto, config: CryptoConfig<DocumentDto>) : List<DocumentDto>? {
+    val key = config.crypto.decryptEncryptionKeys(user.healthcarePartyId!!, message.delegations).firstOrNull()
+        ?: throw IllegalArgumentException("No delegation for user")
+    return this.findByTypeHCPartyMessageSecretFKeys(documentTypeCode, hcPartyId, key)?.map { config.decryptDocument(user.healthcarePartyId!!, it) }
+}
+
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
 suspend fun DocumentApi.findDocumentsByHCPartyPatientForeignKeys(user: UserDto, hcPartyId: String, secretFKeys: String, config: CryptoConfig<DocumentDto>) : List<DocumentDto>? {
     return this.findDocumentsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)?.map { config.decryptDocument(user.healthcarePartyId!!, it) }
 }

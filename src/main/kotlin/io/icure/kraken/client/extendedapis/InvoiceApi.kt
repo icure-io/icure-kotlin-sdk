@@ -78,6 +78,20 @@ suspend fun InvoiceApi.newInvoiceDelegations(
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
+suspend fun InvoiceApi.findInvoicesByHCPartyPatient(
+    user: UserDto,
+    hcPartyId: String,
+    patient: PatientDto,
+    config: CryptoConfig<InvoiceDto>
+): List<InvoiceDto>? {
+    val key = config.crypto.decryptEncryptionKeys(user.healthcarePartyId!!, patient.delegations).firstOrNull()
+        ?: throw IllegalArgumentException("No delegation for user")
+
+    return this.findInvoicesByHCPartyPatientForeignKeys(user, hcPartyId, key, config)
+}
+
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
 suspend fun InvoiceApi.findInvoicesByHCPartyPatientForeignKeys(
     user: UserDto,
     hcPartyId: String,

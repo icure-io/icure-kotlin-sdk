@@ -1,12 +1,15 @@
 package io.icure.kraken.client.extendedapis
 
+import io.icure.kraken.client.apis.AccesslogApi
 import io.icure.kraken.client.apis.ClassificationApi
 import io.icure.kraken.client.crypto.CryptoConfig
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
 import io.icure.kraken.client.crypto.fromHexString
 import io.icure.kraken.client.models.*
+import io.icure.kraken.client.models.decrypted.AccessLogDto
 import io.icure.kraken.client.models.decrypted.ClassificationDto
+import io.icure.kraken.client.models.decrypted.PatientDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.mapstruct.Mapper
 import org.mapstruct.factory.Mappers
@@ -57,6 +60,13 @@ suspend fun ClassificationApi.getClassificationByHcPartyId(user: UserDto, ids: S
 @ExperimentalStdlibApi
 suspend fun ClassificationApi.newClassificationDelegations(user: UserDto, classificationId: String, delegationDto: List<DelegationDto>, config: CryptoConfig<ClassificationDto>) : ClassificationDto? {
     return this.newClassificationDelegations(classificationId, delegationDto)?.let { config.decryptClassification(user.healthcarePartyId!!, it) }
+}
+
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
+suspend fun ClassificationApi.findByHCPartyPatient(user: UserDto, hcPartyId: String, patient: PatientDto, config: CryptoConfig<ClassificationDto>) : List<ClassificationDto>? {
+    val key = config.crypto.decryptEncryptionKeys(user.healthcarePartyId!!, patient.delegations).firstOrNull() ?: throw IllegalArgumentException("No delegation for user")
+    return this.findClassificationsByHCPartyPatientForeignKeys(user, hcPartyId, key, config)
 }
 
 @ExperimentalCoroutinesApi

@@ -8,6 +8,7 @@ import io.icure.kraken.client.crypto.fromHexString
 import io.icure.kraken.client.models.*
 import io.icure.kraken.client.models.decrypted.PaginatedListAccessLogDto
 import io.icure.kraken.client.models.decrypted.AccessLogDto
+import io.icure.kraken.client.models.decrypted.PatientDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.mapstruct.Mapper
 import org.mapstruct.factory.Mappers
@@ -55,6 +56,13 @@ suspend fun AccesslogApi.findByUserAfterDate(user: UserDto, userId: String, acce
         PaginatedListAccessLogDto(rows = it.rows?.map { config.decryptAccessLog(user.healthcarePartyId!!, it) }, pageSize = it.pageSize, totalSize = it.totalSize, nextKeyPair = it.nextKeyPair)
     }
 }
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
+suspend fun AccesslogApi.findByHCPartyPatient(user: UserDto, hcPartyId: String, patient: PatientDto, config: CryptoConfig<AccessLogDto>) : List<AccessLogDto>? {
+    val key = config.crypto.decryptEncryptionKeys(user.healthcarePartyId!!, patient.delegations).firstOrNull() ?: throw IllegalArgumentException("No delegation for user")
+    return this.findAccessLogsByHCPartyPatientForeignKeys(hcPartyId, key)?.map { config.decryptAccessLog(user.healthcarePartyId!!, it) }
+}
+
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun AccesslogApi.findAccessLogsByHCPartyPatientForeignKeys(user: UserDto, hcPartyId: String, secretFKeys: String, config: CryptoConfig<AccessLogDto>) : List<AccessLogDto>?  {
