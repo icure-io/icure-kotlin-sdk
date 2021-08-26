@@ -120,7 +120,7 @@ suspend fun DocumentApi.deleteAttachment(user: UserDto, documentId: String, conf
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun DocumentApi.setDocumentAttachment(user: UserDto, documentId: String, requestBody: List<ByteArray>, enckeys: String?, config: CryptoConfig<DocumentDto>) : DocumentDto? {
+suspend fun DocumentApi.setDocumentAttachment(user: UserDto, documentId: String, requestBody: ByteArray, enckeys: String?, config: CryptoConfig<DocumentDto>) : DocumentDto? {
     return this.setDocumentAttachment(documentId, requestBody, enckeys)?.let { config.decryptDocument(user.healthcarePartyId!!, it) }
 }
 

@@ -5,11 +5,9 @@ package io.icure.kraken.client.models.filter.predicate
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-import com.github.pozo.KotlinBuilder
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@KotlinBuilder
 data class KeyValuePredicate(val key: String? = null, val operator: Operator? = null, val value: Any? = null) : Predicate {
     enum class Operator(val code: String) {
         EQUAL("=="),

@@ -73,7 +73,7 @@ suspend fun ReceiptApi.listByReference(user: UserDto, ref: String, config: Crypt
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ReceiptApi.setReceiptAttachment(user: UserDto, receiptId: String, blobType: String, requestBody: List<ByteArray>, enckeys: String?, config: CryptoConfig<ReceiptDto>) :ReceiptDto?  {
+suspend fun ReceiptApi.setReceiptAttachment(user: UserDto, receiptId: String, blobType: String, requestBody: ByteArray, enckeys: String?, config: CryptoConfig<ReceiptDto>) :ReceiptDto?  {
     return this.setReceiptAttachment(receiptId, blobType, requestBody, enckeys)?.let { config.decryptReceipt(user.healthcarePartyId!!, it) }
 }
 

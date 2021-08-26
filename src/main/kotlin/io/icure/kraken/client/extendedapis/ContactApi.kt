@@ -250,7 +250,6 @@ suspend fun CryptoConfig<ContactDto>.decryptServices(myId: String, contactKey: B
         ServiceMapperFactory.instance.map(s).copy(content = objectMapper.readValue(decryptAES(data = Base64.getDecoder().decode(es), key = key), ContentWrapper::class.java).content)
     } ?: ServiceMapperFactory.instance.map(s).let { ss -> ss.copy(content = ss.content.mapValues { (_,c) -> c.copy(compoundValue = c.compoundValue?.let { this.decryptServices(myId, contactKey, it.map { ServiceMapperFactory.instance.map(it) }) }) }) }
 }
-
 data class ContentWrapper(val content: Map<String, io.icure.kraken.client.models.decrypted.ContentDto> = mapOf()
 )
 

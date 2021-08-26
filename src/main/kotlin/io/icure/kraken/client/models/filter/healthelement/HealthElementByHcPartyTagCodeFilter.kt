@@ -6,13 +6,11 @@ package io.icure.kraken.client.models.filter.healthelement
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-import com.github.pozo.KotlinBuilder
 import io.icure.kraken.client.models.HealthElementDto
 import io.icure.kraken.client.models.filter.AbstractFilterDto
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@KotlinBuilder
 data class HealthElementByHcPartyTagCodeFilter(
         override val desc:String? = null,
         val healthCarePartyId: String? = null,
