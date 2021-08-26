@@ -13,6 +13,7 @@ import io.icure.asyncjacksonhttpclient.parser.toObject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import reactor.core.publisher.Mono
 
 import java.io.File
 import java.net.URI
@@ -96,7 +97,10 @@ open class ApiClient(val baseUrl: String, val httpClient: WebClient, val authHea
             }
         }
 
-        return request.retrieve().toFlow().toObject(T::class.java, objectMapper, true)
+    return request.retrieve()
+        .onStatus(400) { Mono.just(ClientException("Client-side exception ${it.statusCode}", it.statusCode, details = objectMapper.readValue(it.responseBodyAsString(), ErrorDetails::class.java))) }
+        .onStatus(500) { Mono.just(ServerException("Server-side exception ${it.statusCode}", it.statusCode, details = objectMapper.readValue(it.responseBodyAsString(), ErrorDetails::class.java))) }
+        .toFlow().toObject(T::class.java, objectMapper, true)
 
     }
 }

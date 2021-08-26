@@ -39,6 +39,7 @@ dependencies {
     implementation(group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version = kotlinVersion)
 
     implementation(group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version = kotlinCoroutinesVersion)
+    implementation(group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-reactive", version = kotlinCoroutinesVersion)
     implementation(group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-reactor", version = kotlinCoroutinesVersion)
 
     implementation(group = "com.fasterxml.jackson.core", name = "jackson-core", version = jacksonVersion)
@@ -96,8 +97,4 @@ tasks.register("download-openapi-spec") {
         val url = "https://kraken.icure.dev/v3/api-docs"
         ant.invokeMethod("get", mapOf("src" to url, "dest" to destFile))
     }
-}
-
-tasks.test {
-    useJUnitPlatform()
 }
