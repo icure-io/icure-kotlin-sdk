@@ -39,8 +39,16 @@ dependencies {
     implementation(group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version = kotlinVersion)
 
     implementation(group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version = kotlinCoroutinesVersion)
-    implementation(group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-reactive", version = kotlinCoroutinesVersion)
-    implementation(group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-reactor", version = kotlinCoroutinesVersion)
+    implementation(
+        group = "org.jetbrains.kotlinx",
+        name = "kotlinx-coroutines-reactive",
+        version = kotlinCoroutinesVersion
+    )
+    implementation(
+        group = "org.jetbrains.kotlinx",
+        name = "kotlinx-coroutines-reactor",
+        version = kotlinCoroutinesVersion
+    )
 
     implementation(group = "com.fasterxml.jackson.core", name = "jackson-core", version = jacksonVersion)
     implementation(group = "com.fasterxml.jackson.core", name = "jackson-databind", version = jacksonVersion)
@@ -122,24 +130,27 @@ tasks.register("apply-custom-fixes") {
         )
 
         // in Folders
-        val folders = listOf("${rootDir}/src/main/kotlin/io/icure/kraken/client/apis", "${rootDir}/src/main/kotlin/io/icure/kraken/client/models")
+        val folders = listOf(
+            "${rootDir}/src/main/kotlin/io/icure/kraken/client/apis",
+            "${rootDir}/src/main/kotlin/io/icure/kraken/client/models"
+        )
 
         for (folder in folders) {
-                    for ((match, replace) in replaceFilterDtos) {
-            ant.withGroovyBuilder {
-                "replaceregexp"(
-                    "match" to "(?<!\\.)$match",
-                    "replace" to replace,
-                    "flags" to "g",
-                    "byline" to "true"
-                ) {
-                    "fileset"(
-                        "dir" to File(folder),
-                        "includes" to "*.kt"
-                    )
+            for ((match, replace) in replaceFilterDtos) {
+                ant.withGroovyBuilder {
+                    "replaceregexp"(
+                        "match" to "(?<!\\.)$match",
+                        "replace" to replace,
+                        "flags" to "g",
+                        "byline" to "true"
+                    ) {
+                        "fileset"(
+                            "dir" to File(folder),
+                            "includes" to "*.kt"
+                        )
+                    }
                 }
             }
-        }
         }
     }
 }
