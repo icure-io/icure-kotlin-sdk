@@ -45,17 +45,17 @@ class BeresultexportApi(basePath: kotlin.String = defaultBasePath, webClient: We
     * @param date  
     * @param ref  
     * @param body  
-    * @return java.io.File
+    * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun exportHealthOne(fromHcpId: kotlin.String, toHcpId: kotlin.String, patId: kotlin.String, date: kotlin.Long, ref: kotlin.String, body: kotlin.ByteArray) : java.io.File?  {
+    suspend fun exportHealthOne(fromHcpId: kotlin.String, toHcpId: kotlin.String, patId: kotlin.String, date: kotlin.Long, ref: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>?  {
         val localVariableConfig = exportHealthOneRequestConfig(fromHcpId = fromHcpId, toHcpId = toHcpId, patId = patId, date = date, ref = ref, body = body)
 
-        return request<kotlin.ByteArray, java.io.File>(
+        return request<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
             localVariableConfig
         )
     }
@@ -71,7 +71,7 @@ class BeresultexportApi(basePath: kotlin.String = defaultBasePath, webClient: We
     * @param body  
     * @return RequestConfig
     */
-    fun exportHealthOneRequestConfig(fromHcpId: kotlin.String, toHcpId: kotlin.String, patId: kotlin.String, date: kotlin.Long, ref: kotlin.String, body: kotlin.ByteArray) : RequestConfig<kotlin.ByteArray> {
+    fun exportHealthOneRequestConfig(fromHcpId: kotlin.String, toHcpId: kotlin.String, patId: kotlin.String, date: kotlin.Long, ref: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
         val localVariableBody = body
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -95,17 +95,17 @@ class BeresultexportApi(basePath: kotlin.String = defaultBasePath, webClient: We
     * @param ref  
     * @param body  
     * @param mimeType  (optional)
-    * @return java.io.File
+    * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun exportKmehrReport(fromHcpId: kotlin.String, toHcpId: kotlin.String, patId: kotlin.String, date: kotlin.Long, ref: kotlin.String, body: kotlin.ByteArray, mimeType: kotlin.Boolean?) : java.io.File?  {
+    suspend fun exportKmehrReport(fromHcpId: kotlin.String, toHcpId: kotlin.String, patId: kotlin.String, date: kotlin.Long, ref: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, mimeType: kotlin.Boolean?) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>?  {
         val localVariableConfig = exportKmehrReportRequestConfig(fromHcpId = fromHcpId, toHcpId = toHcpId, patId = patId, date = date, ref = ref, body = body, mimeType = mimeType)
 
-        return request<kotlin.ByteArray, java.io.File>(
+        return request<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
             localVariableConfig
         )
     }
@@ -122,7 +122,7 @@ class BeresultexportApi(basePath: kotlin.String = defaultBasePath, webClient: We
     * @param mimeType  (optional)
     * @return RequestConfig
     */
-    fun exportKmehrReportRequestConfig(fromHcpId: kotlin.String, toHcpId: kotlin.String, patId: kotlin.String, date: kotlin.Long, ref: kotlin.String, body: kotlin.ByteArray, mimeType: kotlin.Boolean?) : RequestConfig<kotlin.ByteArray> {
+    fun exportKmehrReportRequestConfig(fromHcpId: kotlin.String, toHcpId: kotlin.String, patId: kotlin.String, date: kotlin.Long, ref: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, mimeType: kotlin.Boolean?) : RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
         val localVariableBody = body
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -150,17 +150,17 @@ class BeresultexportApi(basePath: kotlin.String = defaultBasePath, webClient: We
     * @param date  
     * @param ref  
     * @param body  
-    * @return java.io.File
+    * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun exportMedidoc(fromHcpId: kotlin.String, toHcpId: kotlin.String, patId: kotlin.String, date: kotlin.Long, ref: kotlin.String, body: kotlin.ByteArray) : java.io.File?  {
+    suspend fun exportMedidoc(fromHcpId: kotlin.String, toHcpId: kotlin.String, patId: kotlin.String, date: kotlin.Long, ref: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>?  {
         val localVariableConfig = exportMedidocRequestConfig(fromHcpId = fromHcpId, toHcpId = toHcpId, patId = patId, date = date, ref = ref, body = body)
 
-        return request<kotlin.ByteArray, java.io.File>(
+        return request<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
             localVariableConfig
         )
     }
@@ -176,7 +176,7 @@ class BeresultexportApi(basePath: kotlin.String = defaultBasePath, webClient: We
     * @param body  
     * @return RequestConfig
     */
-    fun exportMedidocRequestConfig(fromHcpId: kotlin.String, toHcpId: kotlin.String, patId: kotlin.String, date: kotlin.Long, ref: kotlin.String, body: kotlin.ByteArray) : RequestConfig<kotlin.ByteArray> {
+    fun exportMedidocRequestConfig(fromHcpId: kotlin.String, toHcpId: kotlin.String, patId: kotlin.String, date: kotlin.Long, ref: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
         val localVariableBody = body
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()

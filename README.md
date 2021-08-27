@@ -401,7 +401,7 @@ Class | Method | HTTP request | Description
 *PatientApi* | [**deletePatient**](docs/PatientApi.md#deletepatient) | **DELETE** /rest/v1/patient/{patientIds} | Delete patients.
 *PatientApi* | [**filterPatientsBy**](docs/PatientApi.md#filterpatientsby) | **POST** /rest/v1/patient/filter | Filter patients for the current user (HcParty) 
 *PatientApi* | [**findByAccessLogUserAfterDate**](docs/PatientApi.md#findbyaccessloguserafterdate) | **GET** /rest/v1/patient/byAccess/{userId} | Get Paginated List of Patients sorted by Access logs descending
-*PatientApi* | [**findByExternalId**](docs/PatientApi.md#findbyexternalid) | **GET** /rest/v1/patient/byExternalId/{externalId} | Get Paginated List of Patients sorted by Access logs descending
+*PatientApi* | [**findByExternalId**](docs/PatientApi.md#findbyexternalid) | **GET** /rest/v1/patient/byExternalId/{externalId} | Get the patient having the provided externalId
 *PatientApi* | [**findByNameBirthSsinAuto**](docs/PatientApi.md#findbynamebirthssinauto) | **GET** /rest/v1/patient/byNameBirthSsinAuto | Find patients for the current user (HcParty) 
 *PatientApi* | [**fuzzySearch**](docs/PatientApi.md#fuzzysearch) | **GET** /rest/v1/patient/fuzzy | Filter patients for the current user (HcParty) 
 *PatientApi* | [**getPatient**](docs/PatientApi.md#getpatient) | **GET** /rest/v1/patient/{patientId} | Get patient
@@ -619,6 +619,7 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.FormPlanning](docs/FormPlanning.md)
  - [io.icure.kraken.client.models.FormSection](docs/FormSection.md)
  - [io.icure.kraken.client.models.FormTemplateDto](docs/FormTemplateDto.md)
+ - [io.icure.kraken.client.models.FormTemplateLayout](docs/FormTemplateLayout.md)
  - [io.icure.kraken.client.models.Formula](docs/Formula.md)
  - [io.icure.kraken.client.models.FrontEndMigrationDto](docs/FrontEndMigrationDto.md)
  - [io.icure.kraken.client.models.GroupDto](docs/GroupDto.md)
@@ -724,6 +725,7 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.SamTextDto](docs/SamTextDto.md)
  - [io.icure.kraken.client.models.SamVersionDto](docs/SamVersionDto.md)
  - [io.icure.kraken.client.models.SchoolingInfoDto](docs/SchoolingInfoDto.md)
+ - [io.icure.kraken.client.models.Section](docs/Section.md)
  - [io.icure.kraken.client.models.ServiceDto](docs/ServiceDto.md)
  - [io.icure.kraken.client.models.ServiceLinkDto](docs/ServiceLinkDto.md)
  - [io.icure.kraken.client.models.SoftwareMedicalFileExportDto](docs/SoftwareMedicalFileExportDto.md)

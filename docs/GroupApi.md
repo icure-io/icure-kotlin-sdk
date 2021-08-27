@@ -541,7 +541,7 @@ Configure basicScheme:
 
 <a name="solveConflicts"></a>
 # **solveConflicts**
-> kotlin.collections.List&lt;IdWithRevDto&gt; solveConflicts(id, warmup)
+> kotlin.collections.List&lt;IdWithRevDto&gt; solveConflicts(id, limit, warmup)
 
 Solve conflicts for group
 
@@ -555,9 +555,10 @@ Solve conflicts for group
 
 val apiInstance = GroupApi()
 val id : kotlin.String = id_example // kotlin.String | The id of the group
+val limit : kotlin.Int = 56 // kotlin.Int | Solve at most limit conflicts
 val warmup : kotlin.Boolean = true // kotlin.Boolean | Warmup the design doc
 try {
-    val result : kotlin.collections.List<IdWithRevDto> = apiInstance.solveConflicts(id, warmup)
+    val result : kotlin.collections.List<IdWithRevDto> = apiInstance.solveConflicts(id, limit, warmup)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling GroupApi#solveConflicts")
@@ -573,6 +574,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **kotlin.String**| The id of the group |
+ **limit** | **kotlin.Int**| Solve at most limit conflicts | [optional]
  **warmup** | **kotlin.Boolean**| Warmup the design doc | [optional]
 
 ### Return type

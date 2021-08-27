@@ -340,17 +340,17 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     * @param attachmentId  
     * @param enckeys  (optional)
     * @param fileName  (optional)
-    * @return java.io.File
+    * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getDocumentAttachment(documentId: kotlin.String, attachmentId: kotlin.String, enckeys: kotlin.String?, fileName: kotlin.String?) : java.io.File?  {
+    suspend fun getDocumentAttachment(documentId: kotlin.String, attachmentId: kotlin.String, enckeys: kotlin.String?, fileName: kotlin.String?) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>?  {
         val localVariableConfig = getDocumentAttachmentRequestConfig(documentId = documentId, attachmentId = attachmentId, enckeys = enckeys, fileName = fileName)
 
-        return request<Unit, java.io.File>(
+        return request<Unit, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
             localVariableConfig
         )
     }
@@ -594,10 +594,10 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setDocumentAttachment(documentId: kotlin.String, body: kotlin.ByteArray, enckeys: kotlin.String?) : DocumentDto?  {
+    suspend fun setDocumentAttachment(documentId: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, enckeys: kotlin.String?) : DocumentDto?  {
         val localVariableConfig = setDocumentAttachmentRequestConfig(documentId = documentId, body = body, enckeys = enckeys)
 
-        return request<kotlin.ByteArray, DocumentDto>(
+        return request<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, DocumentDto>(
             localVariableConfig
         )
     }
@@ -610,7 +610,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     * @param enckeys  (optional)
     * @return RequestConfig
     */
-    fun setDocumentAttachmentRequestConfig(documentId: kotlin.String, body: kotlin.ByteArray, enckeys: kotlin.String?) : RequestConfig<kotlin.ByteArray> {
+    fun setDocumentAttachmentRequestConfig(documentId: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, enckeys: kotlin.String?) : RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
         val localVariableBody = body
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -729,10 +729,10 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setSafeDocumentAttachment(documentId: kotlin.String, body: kotlin.ByteArray, enckeys: kotlin.String?) : DocumentDto?  {
+    suspend fun setSafeDocumentAttachment(documentId: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, enckeys: kotlin.String?) : DocumentDto?  {
         val localVariableConfig = setSafeDocumentAttachmentRequestConfig(documentId = documentId, body = body, enckeys = enckeys)
 
-        return request<kotlin.ByteArray, DocumentDto>(
+        return request<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, DocumentDto>(
             localVariableConfig
         )
     }
@@ -745,7 +745,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     * @param enckeys  (optional)
     * @return RequestConfig
     */
-    fun setSafeDocumentAttachmentRequestConfig(documentId: kotlin.String, body: kotlin.ByteArray, enckeys: kotlin.String?) : RequestConfig<kotlin.ByteArray> {
+    fun setSafeDocumentAttachmentRequestConfig(documentId: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, enckeys: kotlin.String?) : RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
         val localVariableBody = body
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {

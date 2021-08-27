@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **rev** | **kotlin.String** |  |  [optional]
 **deletionDate** | **kotlin.Long** | hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. |  [optional]
 **layout** | [**FormLayout**](FormLayout.md) |  |  [optional]
+**templateLayout** | [**FormTemplateLayout**](FormTemplateLayout.md) |  |  [optional]
 **name** | **kotlin.String** |  |  [optional]
 **guid** | **kotlin.String** |  |  [optional]
 **group** | [**DocumentGroupDto**](DocumentGroupDto.md) |  |  [optional]

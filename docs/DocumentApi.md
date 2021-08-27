@@ -373,7 +373,7 @@ Configure basicScheme:
 
 <a name="getDocumentAttachment"></a>
 # **getDocumentAttachment**
-> java.io.File getDocumentAttachment(documentId, attachmentId, enckeys, fileName)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; getDocumentAttachment(documentId, attachmentId, enckeys, fileName)
 
 Load document&#39;s attachment
 
@@ -389,7 +389,7 @@ val attachmentId : kotlin.String = attachmentId_example // kotlin.String |
 val enckeys : kotlin.String = enckeys_example // kotlin.String | 
 val fileName : kotlin.String = fileName_example // kotlin.String | 
 try {
-    val result : java.io.File = apiInstance.getDocumentAttachment(documentId, attachmentId, enckeys, fileName)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.getDocumentAttachment(documentId, attachmentId, enckeys, fileName)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling DocumentApi#getDocumentAttachment")
@@ -411,7 +411,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**java.io.File**](java.io.File.md)
+[**kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**](kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;.md)
 
 ### Authorization
 
@@ -681,7 +681,7 @@ Creates a document&#39;s attachment
 
 val apiInstance = DocumentApi()
 val documentId : kotlin.String = documentId_example // kotlin.String | 
-val body : kotlin.ByteArray = BYTE_ARRAY_DATA_HERE // kotlin.ByteArray | 
+val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
 val enckeys : kotlin.String = enckeys_example // kotlin.String | 
 try {
     val result : DocumentDto = apiInstance.setDocumentAttachment(documentId, body, enckeys)
@@ -700,7 +700,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **documentId** | **kotlin.String**|  |
- **body** | **kotlin.ByteArray**|  |
+ **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
  **enckeys** | **kotlin.String**|  | [optional]
 
 ### Return type
@@ -835,7 +835,7 @@ Creates a document&#39;s attachment
 
 val apiInstance = DocumentApi()
 val documentId : kotlin.String = documentId_example // kotlin.String | 
-val body : kotlin.ByteArray = BYTE_ARRAY_DATA_HERE // kotlin.ByteArray | 
+val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
 val enckeys : kotlin.String = enckeys_example // kotlin.String | 
 try {
     val result : DocumentDto = apiInstance.setSafeDocumentAttachment(documentId, body, enckeys)
@@ -854,7 +854,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **documentId** | **kotlin.String**|  |
- **body** | **kotlin.ByteArray**|  |
+ **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
  **enckeys** | **kotlin.String**|  | [optional]
 
 ### Return type

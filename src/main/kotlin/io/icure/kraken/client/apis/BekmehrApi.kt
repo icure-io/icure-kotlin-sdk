@@ -117,17 +117,17 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param recipientLastName  
     * @param mimeType  
     * @param body  
-    * @return java.io.File
+    * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun generateContactreportExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlin.ByteArray) : java.io.File?  {
+    suspend fun generateContactreportExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>?  {
         val localVariableConfig = generateContactreportExportRequestConfig(patientId = patientId, id = id, date = date, language = language, recipientNihii = recipientNihii, recipientSsin = recipientSsin, recipientFirstName = recipientFirstName, recipientLastName = recipientLastName, mimeType = mimeType, body = body)
 
-        return request<kotlin.ByteArray, java.io.File>(
+        return request<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
             localVariableConfig
         )
     }
@@ -147,7 +147,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param body  
     * @return RequestConfig
     */
-    fun generateContactreportExportRequestConfig(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlin.ByteArray) : RequestConfig<kotlin.ByteArray> {
+    fun generateContactreportExportRequestConfig(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
         val localVariableBody = body
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -176,17 +176,17 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param patientId  
     * @param language  
     * @param diaryNoteExportInfoDto  
-    * @return java.io.File
+    * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun generateDiaryNote(patientId: kotlin.String, language: kotlin.String, diaryNoteExportInfoDto: DiaryNoteExportInfoDto) : java.io.File?  {
+    suspend fun generateDiaryNote(patientId: kotlin.String, language: kotlin.String, diaryNoteExportInfoDto: DiaryNoteExportInfoDto) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>?  {
         val localVariableConfig = generateDiaryNoteRequestConfig(patientId = patientId, language = language, diaryNoteExportInfoDto = diaryNoteExportInfoDto)
 
-        return request<DiaryNoteExportInfoDto, java.io.File>(
+        return request<DiaryNoteExportInfoDto, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
             localVariableConfig
         )
     }
@@ -229,17 +229,17 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param recipientLastName  
     * @param mimeType  
     * @param body  
-    * @return java.io.File
+    * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun generateLabresultExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlin.ByteArray) : java.io.File?  {
+    suspend fun generateLabresultExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>?  {
         val localVariableConfig = generateLabresultExportRequestConfig(patientId = patientId, id = id, date = date, language = language, recipientNihii = recipientNihii, recipientSsin = recipientSsin, recipientFirstName = recipientFirstName, recipientLastName = recipientLastName, mimeType = mimeType, body = body)
 
-        return request<kotlin.ByteArray, java.io.File>(
+        return request<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
             localVariableConfig
         )
     }
@@ -259,7 +259,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param body  
     * @return RequestConfig
     */
-    fun generateLabresultExportRequestConfig(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlin.ByteArray) : RequestConfig<kotlin.ByteArray> {
+    fun generateLabresultExportRequestConfig(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
         val localVariableBody = body
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -290,17 +290,17 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param recipientSafe  
     * @param version  
     * @param medicationSchemeExportInfoDto  
-    * @return java.io.File
+    * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun generateMedicationSchemeExport(patientId: kotlin.String, language: kotlin.String, recipientSafe: kotlin.String, version: kotlin.Int, medicationSchemeExportInfoDto: MedicationSchemeExportInfoDto) : java.io.File?  {
+    suspend fun generateMedicationSchemeExport(patientId: kotlin.String, language: kotlin.String, recipientSafe: kotlin.String, version: kotlin.Int, medicationSchemeExportInfoDto: MedicationSchemeExportInfoDto) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>?  {
         val localVariableConfig = generateMedicationSchemeExportRequestConfig(patientId = patientId, language = language, recipientSafe = recipientSafe, version = version, medicationSchemeExportInfoDto = medicationSchemeExportInfoDto)
 
-        return request<MedicationSchemeExportInfoDto, java.io.File>(
+        return request<MedicationSchemeExportInfoDto, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
             localVariableConfig
         )
     }
@@ -347,17 +347,17 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param recipientLastName  
     * @param mimeType  
     * @param body  
-    * @return java.io.File
+    * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun generateNoteExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlin.ByteArray) : java.io.File?  {
+    suspend fun generateNoteExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>?  {
         val localVariableConfig = generateNoteExportRequestConfig(patientId = patientId, id = id, date = date, language = language, recipientNihii = recipientNihii, recipientSsin = recipientSsin, recipientFirstName = recipientFirstName, recipientLastName = recipientLastName, mimeType = mimeType, body = body)
 
-        return request<kotlin.ByteArray, java.io.File>(
+        return request<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
             localVariableConfig
         )
     }
@@ -377,7 +377,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param body  
     * @return RequestConfig
     */
-    fun generateNoteExportRequestConfig(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlin.ByteArray) : RequestConfig<kotlin.ByteArray> {
+    fun generateNoteExportRequestConfig(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
         val localVariableBody = body
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -405,17 +405,17 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * 
     * @param patientId  
     * @param language  (optional)
-    * @return java.io.File
+    * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun generatePatientInfoExport(patientId: kotlin.String, language: kotlin.String?) : java.io.File?  {
+    suspend fun generatePatientInfoExport(patientId: kotlin.String, language: kotlin.String?) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>?  {
         val localVariableConfig = generatePatientInfoExportRequestConfig(patientId = patientId, language = language)
 
-        return request<Unit, java.io.File>(
+        return request<Unit, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
             localVariableConfig
         )
     }
@@ -459,17 +459,17 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param recipientLastName  
     * @param mimeType  
     * @param body  
-    * @return java.io.File
+    * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun generatePrescriptionExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlin.ByteArray) : java.io.File?  {
+    suspend fun generatePrescriptionExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>?  {
         val localVariableConfig = generatePrescriptionExportRequestConfig(patientId = patientId, id = id, date = date, language = language, recipientNihii = recipientNihii, recipientSsin = recipientSsin, recipientFirstName = recipientFirstName, recipientLastName = recipientLastName, mimeType = mimeType, body = body)
 
-        return request<kotlin.ByteArray, java.io.File>(
+        return request<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
             localVariableConfig
         )
     }
@@ -489,7 +489,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param body  
     * @return RequestConfig
     */
-    fun generatePrescriptionExportRequestConfig(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlin.ByteArray) : RequestConfig<kotlin.ByteArray> {
+    fun generatePrescriptionExportRequestConfig(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
         val localVariableBody = body
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -525,17 +525,17 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param recipientLastName  
     * @param mimeType  
     * @param body  
-    * @return java.io.File
+    * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun generateReportExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlin.ByteArray) : java.io.File?  {
+    suspend fun generateReportExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>?  {
         val localVariableConfig = generateReportExportRequestConfig(patientId = patientId, id = id, date = date, language = language, recipientNihii = recipientNihii, recipientSsin = recipientSsin, recipientFirstName = recipientFirstName, recipientLastName = recipientLastName, mimeType = mimeType, body = body)
 
-        return request<kotlin.ByteArray, java.io.File>(
+        return request<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
             localVariableConfig
         )
     }
@@ -555,7 +555,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param body  
     * @return RequestConfig
     */
-    fun generateReportExportRequestConfig(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlin.ByteArray) : RequestConfig<kotlin.ByteArray> {
+    fun generateReportExportRequestConfig(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
         val localVariableBody = body
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -591,17 +591,17 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param recipientLastName  
     * @param mimeType  
     * @param body  
-    * @return java.io.File
+    * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun generateRequestExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlin.ByteArray) : java.io.File?  {
+    suspend fun generateRequestExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>?  {
         val localVariableConfig = generateRequestExportRequestConfig(patientId = patientId, id = id, date = date, language = language, recipientNihii = recipientNihii, recipientSsin = recipientSsin, recipientFirstName = recipientFirstName, recipientLastName = recipientLastName, mimeType = mimeType, body = body)
 
-        return request<kotlin.ByteArray, java.io.File>(
+        return request<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
             localVariableConfig
         )
     }
@@ -621,7 +621,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param body  
     * @return RequestConfig
     */
-    fun generateRequestExportRequestConfig(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlin.ByteArray) : RequestConfig<kotlin.ByteArray> {
+    fun generateRequestExportRequestConfig(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
         val localVariableBody = body
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -657,17 +657,17 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param recipientLastName  
     * @param mimeType  
     * @param body  
-    * @return java.io.File
+    * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun generateResultExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlin.ByteArray) : java.io.File?  {
+    suspend fun generateResultExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>?  {
         val localVariableConfig = generateResultExportRequestConfig(patientId = patientId, id = id, date = date, language = language, recipientNihii = recipientNihii, recipientSsin = recipientSsin, recipientFirstName = recipientFirstName, recipientLastName = recipientLastName, mimeType = mimeType, body = body)
 
-        return request<kotlin.ByteArray, java.io.File>(
+        return request<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
             localVariableConfig
         )
     }
@@ -687,7 +687,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param body  
     * @return RequestConfig
     */
-    fun generateResultExportRequestConfig(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlin.ByteArray) : RequestConfig<kotlin.ByteArray> {
+    fun generateResultExportRequestConfig(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
         val localVariableBody = body
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -716,17 +716,17 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param patientId  
     * @param language  
     * @param softwareMedicalFileExportDto  
-    * @return java.io.File
+    * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun generateSmfExport(patientId: kotlin.String, language: kotlin.String, softwareMedicalFileExportDto: SoftwareMedicalFileExportDto) : java.io.File?  {
+    suspend fun generateSmfExport(patientId: kotlin.String, language: kotlin.String, softwareMedicalFileExportDto: SoftwareMedicalFileExportDto) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>?  {
         val localVariableConfig = generateSmfExportRequestConfig(patientId = patientId, language = language, softwareMedicalFileExportDto = softwareMedicalFileExportDto)
 
-        return request<SoftwareMedicalFileExportDto, java.io.File>(
+        return request<SoftwareMedicalFileExportDto, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
             localVariableConfig
         )
     }
@@ -762,17 +762,17 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param patientId  
     * @param language  
     * @param sumehrExportInfoDto  
-    * @return java.io.File
+    * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun generateSumehr(patientId: kotlin.String, language: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : java.io.File?  {
+    suspend fun generateSumehr(patientId: kotlin.String, language: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>?  {
         val localVariableConfig = generateSumehrRequestConfig(patientId = patientId, language = language, sumehrExportInfoDto = sumehrExportInfoDto)
 
-        return request<SumehrExportInfoDto, java.io.File>(
+        return request<SumehrExportInfoDto, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
             localVariableConfig
         )
     }
@@ -808,17 +808,17 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param patientId  
     * @param language  
     * @param sumehrExportInfoDto  
-    * @return java.io.File
+    * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun generateSumehrV2(patientId: kotlin.String, language: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : java.io.File?  {
+    suspend fun generateSumehrV2(patientId: kotlin.String, language: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>?  {
         val localVariableConfig = generateSumehrV2RequestConfig(patientId = patientId, language = language, sumehrExportInfoDto = sumehrExportInfoDto)
 
-        return request<SumehrExportInfoDto, java.io.File>(
+        return request<SumehrExportInfoDto, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
             localVariableConfig
         )
     }
@@ -1355,17 +1355,17 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param patientId  
     * @param language  
     * @param sumehrExportInfoDto  
-    * @return java.io.File
+    * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun validateSumehr(patientId: kotlin.String, language: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : java.io.File?  {
+    suspend fun validateSumehr(patientId: kotlin.String, language: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>?  {
         val localVariableConfig = validateSumehrRequestConfig(patientId = patientId, language = language, sumehrExportInfoDto = sumehrExportInfoDto)
 
-        return request<SumehrExportInfoDto, java.io.File>(
+        return request<SumehrExportInfoDto, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
             localVariableConfig
         )
     }
@@ -1401,17 +1401,17 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param patientId  
     * @param language  
     * @param sumehrExportInfoDto  
-    * @return java.io.File
+    * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun validateSumehrV2(patientId: kotlin.String, language: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : java.io.File?  {
+    suspend fun validateSumehrV2(patientId: kotlin.String, language: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>?  {
         val localVariableConfig = validateSumehrV2RequestConfig(patientId = patientId, language = language, sumehrExportInfoDto = sumehrExportInfoDto)
 
-        return request<SumehrExportInfoDto, java.io.File>(
+        return request<SumehrExportInfoDto, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
             localVariableConfig
         )
     }

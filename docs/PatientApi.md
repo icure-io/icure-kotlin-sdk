@@ -13,7 +13,7 @@ Method | HTTP request | Description
 [**deletePatient**](PatientApi.md#deletePatient) | **DELETE** /rest/v1/patient/{patientIds} | Delete patients.
 [**filterPatientsBy**](PatientApi.md#filterPatientsBy) | **POST** /rest/v1/patient/filter | Filter patients for the current user (HcParty) 
 [**findByAccessLogUserAfterDate**](PatientApi.md#findByAccessLogUserAfterDate) | **GET** /rest/v1/patient/byAccess/{userId} | Get Paginated List of Patients sorted by Access logs descending
-[**findByExternalId**](PatientApi.md#findByExternalId) | **GET** /rest/v1/patient/byExternalId/{externalId} | Get Paginated List of Patients sorted by Access logs descending
+[**findByExternalId**](PatientApi.md#findByExternalId) | **GET** /rest/v1/patient/byExternalId/{externalId} | Get the patient having the provided externalId
 [**findByNameBirthSsinAuto**](PatientApi.md#findByNameBirthSsinAuto) | **GET** /rest/v1/patient/byNameBirthSsinAuto | Find patients for the current user (HcParty) 
 [**fuzzySearch**](PatientApi.md#fuzzySearch) | **GET** /rest/v1/patient/fuzzy | Filter patients for the current user (HcParty) 
 [**getPatient**](PatientApi.md#getPatient) | **GET** /rest/v1/patient/{patientId} | Get patient
@@ -509,7 +509,7 @@ Configure basicScheme:
 # **findByExternalId**
 > PatientDto findByExternalId(externalId)
 
-Get Paginated List of Patients sorted by Access logs descending
+Get the patient having the provided externalId
 
 ### Example
 ```kotlin

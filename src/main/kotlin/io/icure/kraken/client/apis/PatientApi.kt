@@ -457,7 +457,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     }
 
     /**
-    * Get Paginated List of Patients sorted by Access logs descending
+    * Get the patient having the provided externalId
     * 
     * @param externalId A external ID 
     * @return PatientDto

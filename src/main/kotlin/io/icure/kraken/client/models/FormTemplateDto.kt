@@ -15,6 +15,7 @@ package io.icure.kraken.client.models
 import io.icure.kraken.client.models.CodeStubDto
 import io.icure.kraken.client.models.DocumentGroupDto
 import io.icure.kraken.client.models.FormLayout
+import io.icure.kraken.client.models.FormTemplateLayout
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
@@ -30,6 +31,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
  * @param rev 
  * @param deletionDate hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called.
  * @param layout 
+ * @param templateLayout 
  * @param name 
  * @param guid 
  * @param group 
@@ -67,6 +69,9 @@ data class FormTemplateDto (
 
     @field:JsonProperty("layout")
     val layout: FormLayout? = null,
+
+    @field:JsonProperty("templateLayout")
+    val templateLayout: FormTemplateLayout? = null,
 
     @field:JsonProperty("name")
     val name: kotlin.String? = null,

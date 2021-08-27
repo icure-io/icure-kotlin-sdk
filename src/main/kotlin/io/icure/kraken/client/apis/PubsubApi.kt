@@ -48,10 +48,10 @@ class PubsubApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun offerAuth(bucket: kotlin.String, body: kotlin.ByteArray) : kotlin.collections.Map<kotlin.String, kotlin.Boolean>?  {
+    suspend fun offerAuth(bucket: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : kotlin.collections.Map<kotlin.String, kotlin.Boolean>?  {
         val localVariableConfig = offerAuthRequestConfig(bucket = bucket, body = body)
 
-        return request<kotlin.ByteArray, kotlin.collections.Map<kotlin.String, kotlin.Boolean>>(
+        return request<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, kotlin.collections.Map<kotlin.String, kotlin.Boolean>>(
             localVariableConfig
         )
     }
@@ -63,7 +63,7 @@ class PubsubApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     * @param body  
     * @return RequestConfig
     */
-    fun offerAuthRequestConfig(bucket: kotlin.String, body: kotlin.ByteArray) : RequestConfig<kotlin.ByteArray> {
+    fun offerAuthRequestConfig(bucket: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
         val localVariableBody = body
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -89,10 +89,10 @@ class PubsubApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun pub(key: kotlin.String, body: kotlin.ByteArray) : kotlin.collections.Map<kotlin.String, kotlin.Boolean>?  {
+    suspend fun pub(key: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : kotlin.collections.Map<kotlin.String, kotlin.Boolean>?  {
         val localVariableConfig = pubRequestConfig(key = key, body = body)
 
-        return request<kotlin.ByteArray, kotlin.collections.Map<kotlin.String, kotlin.Boolean>>(
+        return request<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, kotlin.collections.Map<kotlin.String, kotlin.Boolean>>(
             localVariableConfig
         )
     }
@@ -104,7 +104,7 @@ class PubsubApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     * @param body  
     * @return RequestConfig
     */
-    fun pubRequestConfig(key: kotlin.String, body: kotlin.ByteArray) : RequestConfig<kotlin.ByteArray> {
+    fun pubRequestConfig(key: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
         val localVariableBody = body
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -122,17 +122,17 @@ class PubsubApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     * Recover auth data from secret bucket
     * Recover auth data from bucket, data should be encrypted
     * @param bucket  
-    * @return java.io.File
+    * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun recoverAuth(bucket: kotlin.String) : java.io.File?  {
+    suspend fun recoverAuth(bucket: kotlin.String) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>?  {
         val localVariableConfig = recoverAuthRequestConfig(bucket = bucket)
 
-        return request<Unit, java.io.File>(
+        return request<Unit, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
             localVariableConfig
         )
     }
@@ -161,17 +161,17 @@ class PubsubApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     * subscribe to data
     * Try to get published data
     * @param key  
-    * @return java.io.File
+    * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun sub(key: kotlin.String) : java.io.File?  {
+    suspend fun sub(key: kotlin.String) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>?  {
         val localVariableConfig = subRequestConfig(key = key)
 
-        return request<Unit, java.io.File>(
+        return request<Unit, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
             localVariableConfig
         )
     }

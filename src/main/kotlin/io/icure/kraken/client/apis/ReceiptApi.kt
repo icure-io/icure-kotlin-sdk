@@ -161,17 +161,17 @@ class ReceiptApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param receiptId  
     * @param attachmentId  
     * @param enckeys  
-    * @return java.io.File
+    * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getReceiptAttachment(receiptId: kotlin.String, attachmentId: kotlin.String, enckeys: kotlin.String) : java.io.File?  {
+    suspend fun getReceiptAttachment(receiptId: kotlin.String, attachmentId: kotlin.String, enckeys: kotlin.String) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>?  {
         val localVariableConfig = getReceiptAttachmentRequestConfig(receiptId = receiptId, attachmentId = attachmentId, enckeys = enckeys)
 
-        return request<Unit, java.io.File>(
+        return request<Unit, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
             localVariableConfig
         )
     }
@@ -293,10 +293,10 @@ class ReceiptApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setReceiptAttachment(receiptId: kotlin.String, blobType: kotlin.String, body: kotlin.ByteArray, enckeys: kotlin.String?) : ReceiptDto?  {
+    suspend fun setReceiptAttachment(receiptId: kotlin.String, blobType: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, enckeys: kotlin.String?) : ReceiptDto?  {
         val localVariableConfig = setReceiptAttachmentRequestConfig(receiptId = receiptId, blobType = blobType, body = body, enckeys = enckeys)
 
-        return request<kotlin.ByteArray, ReceiptDto>(
+        return request<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, ReceiptDto>(
             localVariableConfig
         )
     }
@@ -310,7 +310,7 @@ class ReceiptApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param enckeys  (optional)
     * @return RequestConfig
     */
-    fun setReceiptAttachmentRequestConfig(receiptId: kotlin.String, blobType: kotlin.String, body: kotlin.ByteArray, enckeys: kotlin.String?) : RequestConfig<kotlin.ByteArray> {
+    fun setReceiptAttachmentRequestConfig(receiptId: kotlin.String, blobType: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, enckeys: kotlin.String?) : RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
         val localVariableBody = body
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {

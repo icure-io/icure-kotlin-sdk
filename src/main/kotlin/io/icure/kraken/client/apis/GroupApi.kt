@@ -494,6 +494,7 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     * Solve conflicts for group
     * Solve conflicts for group
     * @param id The id of the group 
+    * @param limit Solve at most limit conflicts (optional)
     * @param warmup Warmup the design doc (optional)
     * @return kotlin.collections.List<IdWithRevDto>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
@@ -502,8 +503,8 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun solveConflicts(id: kotlin.String, warmup: kotlin.Boolean?) : kotlin.collections.List<IdWithRevDto>?  {
-        val localVariableConfig = solveConflictsRequestConfig(id = id, warmup = warmup)
+    suspend fun solveConflicts(id: kotlin.String, limit: kotlin.Int?, warmup: kotlin.Boolean?) : kotlin.collections.List<IdWithRevDto>?  {
+        val localVariableConfig = solveConflictsRequestConfig(id = id, limit = limit, warmup = warmup)
 
         return request<Unit, kotlin.collections.List<IdWithRevDto>>(
             localVariableConfig
@@ -514,13 +515,17 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     * To obtain the request config of the operation solveConflicts
     *
     * @param id The id of the group 
+    * @param limit Solve at most limit conflicts (optional)
     * @param warmup Warmup the design doc (optional)
     * @return RequestConfig
     */
-    fun solveConflictsRequestConfig(id: kotlin.String, warmup: kotlin.Boolean?) : RequestConfig<Unit> {
+    fun solveConflictsRequestConfig(id: kotlin.String, limit: kotlin.Int?, warmup: kotlin.Boolean?) : RequestConfig<Unit> {
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
+                if (limit != null) {
+                    put("limit", listOf(limit.toString()))
+                }
                 if (warmup != null) {
                     put("warmup", listOf(warmup.toString()))
                 }

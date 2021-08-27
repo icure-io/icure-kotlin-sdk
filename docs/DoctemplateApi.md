@@ -351,7 +351,7 @@ Configure basicScheme:
 
 <a name="getAttachmentText"></a>
 # **getAttachmentText**
-> java.io.File getAttachmentText(documentTemplateId, attachmentId)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; getAttachmentText(documentTemplateId, attachmentId)
 
 Download a the document template attachment
 
@@ -365,7 +365,7 @@ val apiInstance = DoctemplateApi()
 val documentTemplateId : kotlin.String = documentTemplateId_example // kotlin.String | 
 val attachmentId : kotlin.String = attachmentId_example // kotlin.String | 
 try {
-    val result : java.io.File = apiInstance.getAttachmentText(documentTemplateId, attachmentId)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.getAttachmentText(documentTemplateId, attachmentId)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling DoctemplateApi#getAttachmentText")
@@ -385,7 +385,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**java.io.File**](java.io.File.md)
+[**kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**](kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;.md)
 
 ### Authorization
 
@@ -449,7 +449,7 @@ Configure basicScheme:
 
 <a name="getDocumentTemplateAttachment"></a>
 # **getDocumentTemplateAttachment**
-> java.io.File getDocumentTemplateAttachment(documentTemplateId, attachmentId)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; getDocumentTemplateAttachment(documentTemplateId, attachmentId)
 
 Download a the document template attachment
 
@@ -463,7 +463,7 @@ val apiInstance = DoctemplateApi()
 val documentTemplateId : kotlin.String = documentTemplateId_example // kotlin.String | 
 val attachmentId : kotlin.String = attachmentId_example // kotlin.String | 
 try {
-    val result : java.io.File = apiInstance.getDocumentTemplateAttachment(documentTemplateId, attachmentId)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.getDocumentTemplateAttachment(documentTemplateId, attachmentId)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling DoctemplateApi#getDocumentTemplateAttachment")
@@ -483,7 +483,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**java.io.File**](java.io.File.md)
+[**kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**](kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;.md)
 
 ### Authorization
 
@@ -511,7 +511,7 @@ Creates a document&#39;s attachment
 
 val apiInstance = DoctemplateApi()
 val documentTemplateId : kotlin.String = documentTemplateId_example // kotlin.String | 
-val body : kotlin.ByteArray = BYTE_ARRAY_DATA_HERE // kotlin.ByteArray | 
+val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
 try {
     val result : DocumentTemplateDto = apiInstance.setDocumentTemplateAttachment(documentTemplateId, body)
     println(result)
@@ -529,7 +529,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **documentTemplateId** | **kotlin.String**|  |
- **body** | **kotlin.ByteArray**|  |
+ **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
 
 ### Return type
 
@@ -561,7 +561,7 @@ Creates a document&#39;s attachment
 
 val apiInstance = DoctemplateApi()
 val documentTemplateId : kotlin.String = documentTemplateId_example // kotlin.String | 
-val body : kotlin.ByteArray = BYTE_ARRAY_DATA_HERE // kotlin.ByteArray | 
+val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
 try {
     val result : DocumentTemplateDto = apiInstance.setDocumentTemplateAttachmentJson(documentTemplateId, body)
     println(result)
@@ -579,7 +579,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **documentTemplateId** | **kotlin.String**|  |
- **body** | **kotlin.ByteArray**|  |
+ **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
 
 ### Return type
 
