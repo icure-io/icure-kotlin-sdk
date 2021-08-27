@@ -39,16 +39,8 @@ dependencies {
     implementation(group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version = kotlinVersion)
 
     implementation(group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version = kotlinCoroutinesVersion)
-    implementation(
-        group = "org.jetbrains.kotlinx",
-        name = "kotlinx-coroutines-reactive",
-        version = kotlinCoroutinesVersion
-    )
-    implementation(
-        group = "org.jetbrains.kotlinx",
-        name = "kotlinx-coroutines-reactor",
-        version = kotlinCoroutinesVersion
-    )
+    implementation(group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-reactive", version = kotlinCoroutinesVersion)
+    implementation(group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-reactor", version = kotlinCoroutinesVersion)
 
     implementation(group = "com.fasterxml.jackson.core", name = "jackson-core", version = jacksonVersion)
     implementation(group = "com.fasterxml.jackson.core", name = "jackson-databind", version = jacksonVersion)
