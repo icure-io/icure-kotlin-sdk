@@ -14,7 +14,7 @@ buildscript {
     }
     dependencies {
         classpath("com.taktik.gradle:gradle-plugin-git-version:2.0.2")
-        classpath ("com.taktik.gradle:gradle-plugin-maven-repository:1.0.2")
+        classpath("com.taktik.gradle:gradle-plugin-maven-repository:1.0.2")
     }
 }
 
@@ -39,8 +39,16 @@ dependencies {
     implementation(group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version = kotlinVersion)
 
     implementation(group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version = kotlinCoroutinesVersion)
-    implementation(group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-reactive", version = kotlinCoroutinesVersion)
-    implementation(group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-reactor", version = kotlinCoroutinesVersion)
+    implementation(
+        group = "org.jetbrains.kotlinx",
+        name = "kotlinx-coroutines-reactive",
+        version = kotlinCoroutinesVersion
+    )
+    implementation(
+        group = "org.jetbrains.kotlinx",
+        name = "kotlinx-coroutines-reactor",
+        version = kotlinCoroutinesVersion
+    )
 
     implementation(group = "com.fasterxml.jackson.core", name = "jackson-core", version = jacksonVersion)
     implementation(group = "com.fasterxml.jackson.core", name = "jackson-databind", version = jacksonVersion)
@@ -68,11 +76,12 @@ tasks.getByName("publish") {
     dependsOn("apiGenerate", "build")
 }
 
-tasks.register("apiGenerate", Jar::class){
-    doLast{
+tasks.register("apiGenerate", Jar::class) {
+    doLast {
         javaexec {
             main = "-jar"
-            args = listOf("${rootDir}/openapi-generator-cli.jar", "generate",
+            args = listOf(
+                "${rootDir}/openapi-generator-cli.jar", "generate",
                 "-i", "${rootDir}/icure-openapi-spec.json",
                 "-g", "kotlin",
                 "-o", "$rootDir",
@@ -89,6 +98,7 @@ tasks.register("apiGenerate", Jar::class){
         }
     }
     dependsOn.add("download-openapi-spec") // required due to https://github.com/OpenAPITools/openapi-generator/issues/8255
+    finalizedBy("apply-custom-fixes", "delete-unused-filter-files")
 }
 
 tasks.register("download-openapi-spec") {
@@ -97,4 +107,56 @@ tasks.register("download-openapi-spec") {
         val url = "https://kraken.icure.dev/v3/api-docs"
         ant.invokeMethod("get", mapOf("src" to url, "dest" to destFile))
     }
+}
+
+tasks.register("apply-custom-fixes") {
+    doLast {
+
+        // Use manually added filter classes instead of the generated ones
+        val replaceFilterDtos = mapOf(
+            "AbstractFilterDtoInvoice" to "io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.InvoiceDto>",
+            "AbstractFilterDtoService" to "io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ServiceDto>",
+            "AbstractFilterDtoPatient" to "io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.PatientDto>",
+            "AbstractFilterDtoHealthElement" to "io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.HealthElementDto>",
+            "AbstractFilterDtoContact" to "io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ContactDto>",
+            "AbstractFilterDtoCode" to "io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.CodeDto>",
+
+            "import io.icure.kraken.client.models.AbstractFilterDtoContact" to "",
+            "import io.icure.kraken.client.models.AbstractFilterDtoCode" to "",
+            "import io.icure.kraken.client.models.AbstractFilterDtoHealthElement" to "",
+            "import io.icure.kraken.client.models.AbstractFilterDtoPatient" to "",
+            "import io.icure.kraken.client.models.AbstractFilterDtoService" to "",
+            "import io.icure.kraken.client.models.AbstractFilterDtoInvoice" to ""
+        )
+
+        // in Folders
+        val folders = listOf("${rootDir}/src/main/kotlin/io/icure/kraken/client/apis", "${rootDir}/src/main/kotlin/io/icure/kraken/client/models")
+
+        for (folder in folders) {
+                    for ((match, replace) in replaceFilterDtos) {
+            ant.withGroovyBuilder {
+                "replaceregexp"(
+                    "match" to "(?<!\\.)$match",
+                    "replace" to replace,
+                    "flags" to "g",
+                    "byline" to "true"
+                ) {
+                    "fileset"(
+                        "dir" to File(folder),
+                        "includes" to "*.kt"
+                    )
+                }
+            }
+        }
+        }
+    }
+}
+
+tasks.create<Delete>("delete-unused-filter-files") {
+    delete(File("$rootDir/src/main/kotlin/io/icure/kraken/client/models/AbstractFilterDtoInvoice.kt"))
+    delete(File("$rootDir/src/main/kotlin/io/icure/kraken/client/models/AbstractFilterDtoService.kt"))
+    delete(File("$rootDir/src/main/kotlin/io/icure/kraken/client/models/AbstractFilterDtoPatient.kt"))
+    delete(File("$rootDir/src/main/kotlin/io/icure/kraken/client/models/AbstractFilterDtoHealthElement.kt"))
+    delete(File("$rootDir/src/main/kotlin/io/icure/kraken/client/models/AbstractFilterDtoContact.kt"))
+    delete(File("$rootDir/src/main/kotlin/io/icure/kraken/client/models/AbstractFilterDtoCode.kt"))
 }

@@ -8,8 +8,10 @@ import io.icure.kraken.client.crypto.fromHexString
 import io.icure.kraken.client.models.*
 import io.icure.kraken.client.models.decrypted.ReceiptDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
 import org.mapstruct.Mapper
 import org.mapstruct.factory.Mappers
+import java.nio.ByteBuffer
 import java.util.*
 
 suspend fun ReceiptDto.initDelegations(user: UserDto, config: CryptoConfig<ReceiptDto>): ReceiptDto {
@@ -73,7 +75,7 @@ suspend fun ReceiptApi.listByReference(user: UserDto, ref: String, config: Crypt
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ReceiptApi.setReceiptAttachment(user: UserDto, receiptId: String, blobType: String, requestBody: ByteArray, enckeys: String?, config: CryptoConfig<ReceiptDto>) :ReceiptDto?  {
+suspend fun ReceiptApi.setReceiptAttachment(user: UserDto, receiptId: String, blobType: String, requestBody: Flow<ByteBuffer>, enckeys: String?, config: CryptoConfig<ReceiptDto>) :ReceiptDto?  {
     return this.setReceiptAttachment(receiptId, blobType, requestBody, enckeys)?.let { config.decryptReceipt(user.healthcarePartyId!!, it) }
 }
 

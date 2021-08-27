@@ -8,16 +8,19 @@ import com.fasterxml.jackson.module.kotlin.KotlinModule
 import io.icure.asyncjacksonhttpclient.net.params
 
 import io.icure.asyncjacksonhttpclient.net.web.HttpMethod
+import io.icure.asyncjacksonhttpclient.net.web.Request
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.parser.toObject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import reactor.core.publisher.Mono
 
 import java.io.File
 import java.net.URI
 import java.net.URLConnection
+import java.nio.ByteBuffer
 import java.time.Duration
 
 
@@ -77,15 +80,15 @@ open class ApiClient(val baseUrl: String, val httpClient: WebClient, val authHea
 
         var request = when (requestConfig.method) {
             RequestMethod.DELETE -> httpClient.uri(uri).method(HttpMethod.DELETE, timeoutDuration)
-                .body(withContext(Dispatchers.IO){objectMapper.writeValueAsString(requestConfig.body)})
+                .addBody(requestConfig.body)
             RequestMethod.GET -> httpClient.uri(uri).method(HttpMethod.GET, timeoutDuration)
             RequestMethod.HEAD -> httpClient.uri(uri).method(HttpMethod.HEAD, timeoutDuration)
             RequestMethod.PATCH -> httpClient.uri(uri).method(HttpMethod.PATCH, timeoutDuration)
-                .body(withContext(Dispatchers.IO){objectMapper.writeValueAsString(requestConfig.body)})
+                .addBody(requestConfig.body)
             RequestMethod.PUT -> httpClient.uri(uri).method(HttpMethod.PUT, timeoutDuration)
-                .body(withContext(Dispatchers.IO){objectMapper.writeValueAsString(requestConfig.body)})
+                .addBody(requestConfig.body)
             RequestMethod.POST -> httpClient.uri(uri).method(HttpMethod.POST, timeoutDuration)
-                .body(withContext(Dispatchers.IO){objectMapper.writeValueAsString(requestConfig.body)})
+                .addBody(requestConfig.body)
             RequestMethod.OPTIONS -> httpClient.uri(uri).method(HttpMethod.OPTIONS, timeoutDuration)
         }.apply {
             requestConfig.headers.forEach { header -> header(header.key, header.value) }
@@ -102,5 +105,13 @@ open class ApiClient(val baseUrl: String, val httpClient: WebClient, val authHea
         .onStatus(500) { Mono.just(ServerException("Server-side exception ${it.statusCode}", it.statusCode, details = objectMapper.readValue(it.responseBodyAsString(), ErrorDetails::class.java))) }
         .toFlow().toObject(T::class.java, objectMapper, true)
 
+    }
+
+    protected inline suspend fun <reified T> Request.addBody(body: T): Request {
+        return if (T::class is Flow<*>) {
+            this.body(body as Flow<ByteBuffer>)
+        } else {
+            this.body(withContext(Dispatchers.IO) { objectMapper.writeValueAsString(body) })
+        }
     }
 }

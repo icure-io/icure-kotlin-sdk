@@ -8,8 +8,10 @@ import io.icure.kraken.client.crypto.fromHexString
 import io.icure.kraken.client.models.*
 import io.icure.kraken.client.models.decrypted.DocumentDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
 import org.mapstruct.Mapper
 import org.mapstruct.factory.Mappers
+import java.nio.ByteBuffer
 import java.util.*
 
 suspend fun DocumentDto.initDelegations(user: UserDto, config: CryptoConfig<DocumentDto>): DocumentDto {
@@ -120,7 +122,7 @@ suspend fun DocumentApi.deleteAttachment(user: UserDto, documentId: String, conf
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun DocumentApi.setDocumentAttachment(user: UserDto, documentId: String, requestBody: ByteArray, enckeys: String?, config: CryptoConfig<DocumentDto>) : DocumentDto? {
+suspend fun DocumentApi.setDocumentAttachment(user: UserDto, documentId: String, requestBody: Flow<ByteBuffer>, enckeys: String?, config: CryptoConfig<DocumentDto>) : DocumentDto? {
     return this.setDocumentAttachment(documentId, requestBody, enckeys)?.let { config.decryptDocument(user.healthcarePartyId!!, it) }
 }
 

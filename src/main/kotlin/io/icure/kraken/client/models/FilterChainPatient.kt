@@ -12,7 +12,7 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.AbstractFilterDtoPatient
+
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
@@ -31,7 +31,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class FilterChainPatient (
 
     @field:JsonProperty("filter")
-    val filter: AbstractFilterDtoPatient,
+    val filter: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.PatientDto>,
 
     @field:JsonProperty("predicate")
     val predicate: kotlin.Any? = null

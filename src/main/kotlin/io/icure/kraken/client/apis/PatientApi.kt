@@ -14,7 +14,7 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
-import io.icure.kraken.client.models.AbstractFilterDtoPatient
+
 import io.icure.kraken.client.models.ContentDto
 import io.icure.kraken.client.models.DelegationDto
 import io.icure.kraken.client.models.DocIdentifier
@@ -1212,10 +1212,10 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun matchPatientsBy(abstractFilterDtoPatient: AbstractFilterDtoPatient) : kotlin.collections.List<kotlin.String>?  {
+    suspend fun matchPatientsBy(abstractFilterDtoPatient: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.PatientDto>) : kotlin.collections.List<kotlin.String>?  {
         val localVariableConfig = matchPatientsByRequestConfig(abstractFilterDtoPatient = abstractFilterDtoPatient)
 
-        return request<AbstractFilterDtoPatient, kotlin.collections.List<kotlin.String>>(
+        return request<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.PatientDto>, kotlin.collections.List<kotlin.String>>(
             localVariableConfig
         )
     }
@@ -1226,7 +1226,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param abstractFilterDtoPatient  
     * @return RequestConfig
     */
-    fun matchPatientsByRequestConfig(abstractFilterDtoPatient: AbstractFilterDtoPatient) : RequestConfig<AbstractFilterDtoPatient> {
+    fun matchPatientsByRequestConfig(abstractFilterDtoPatient: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.PatientDto>) : RequestConfig<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.PatientDto>> {
         val localVariableBody = abstractFilterDtoPatient
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
