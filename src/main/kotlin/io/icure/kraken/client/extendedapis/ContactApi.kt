@@ -2,6 +2,7 @@ package io.icure.kraken.client.extendedapis
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.icure.kraken.client.apis.ContactApi
+import io.icure.kraken.client.crypto.Crypto
 import io.icure.kraken.client.crypto.CryptoConfig
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
@@ -104,9 +105,9 @@ suspend fun ContactApi.getContacts(user: UserDto, listOfIdsDto: ListOfIdsDto, co
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.filterServicesBy(user: UserDto, filterChainService: FilterChainService, startDocumentId: String?, limit: Int?, config: CryptoConfig<ContactDto>) : io.icure.kraken.client.models.decrypted.PaginatedListServiceDto? {
+suspend fun ContactApi.filterServicesBy(user: UserDto, filterChainService: FilterChainService, startDocumentId: String?, limit: Int?, crypto: Crypto) : io.icure.kraken.client.models.decrypted.PaginatedListServiceDto? {
     return this.filterServicesBy(filterChainService, startDocumentId, limit)?.let {
-        io.icure.kraken.client.models.decrypted.PaginatedListServiceDto(rows = it.rows?.let { config.decryptServices(user.healthcarePartyId!!, null, it) }, pageSize = it.pageSize, totalSize = it.totalSize, nextKeyPair = it.nextKeyPair)
+        io.icure.kraken.client.models.decrypted.PaginatedListServiceDto(rows = it.rows?.let { crypto.decryptServices(user.healthcarePartyId!!, null, it) }, pageSize = it.pageSize, totalSize = it.totalSize, nextKeyPair = it.nextKeyPair)
     }
 
 }
@@ -159,20 +160,20 @@ suspend fun ContactApi.listContactsByOpeningDate(user: UserDto, startKey: Long, 
 }
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.listServices(user: UserDto, listOfIdsDto: ListOfIdsDto, config: CryptoConfig<ContactDto>) : List<ServiceDto>? {
-    return this.listServices(listOfIdsDto)?.let { config.decryptServices(user.healthcarePartyId!!, null, it) }
+suspend fun ContactApi.listServices(user: UserDto, listOfIdsDto: ListOfIdsDto, crypto: Crypto) : List<ServiceDto>? {
+    return this.listServices(listOfIdsDto)?.let { crypto.decryptServices(user.healthcarePartyId!!, null, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.listServicesByAssociationId(user: UserDto, associationId: String, config: CryptoConfig<ContactDto>) : List<ServiceDto>? {
-    return this.listServicesByAssociationId(associationId)?.let { config.decryptServices(user.healthcarePartyId!!, null, it) }
+suspend fun ContactApi.listServicesByAssociationId(user: UserDto, associationId: String, crypto: Crypto) : List<ServiceDto>? {
+    return this.listServicesByAssociationId(associationId)?.let { crypto.decryptServices(user.healthcarePartyId!!, null, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.listServicesLinkedTo(user: UserDto, listOfIdsDto: ListOfIdsDto, linkType: String?, config: CryptoConfig<ContactDto>) : List<ServiceDto>? {
-    return this.listServicesLinkedTo(listOfIdsDto, linkType)?.let { config.decryptServices(user.healthcarePartyId!!, null, it) }
+suspend fun ContactApi.listServicesLinkedTo(user: UserDto, listOfIdsDto: ListOfIdsDto, linkType: String?, crypto: Crypto) : List<ServiceDto>? {
+    return this.listServicesLinkedTo(listOfIdsDto, linkType)?.let { crypto.decryptServices(user.healthcarePartyId!!, null, it) }
 }
 
 @ExperimentalCoroutinesApi
@@ -217,11 +218,11 @@ suspend fun CryptoConfig<ContactDto>.decryptContact(myId: String, contact: io.ic
     this.unmarshaller(p, decryptAES(data = Base64.getDecoder().decode(p.encryptedSelf), key = key))
 }
 
-suspend fun CryptoConfig<ContactDto>.encryptServices(myId: String, delegations: Set<String>, contactKey: ByteArray?, services: List<ServiceDto>): List<io.icure.kraken.client.models.ServiceDto> {
+suspend fun Crypto.encryptServices(myId: String, delegations: Set<String>, contactKey: ByteArray?, services: List<ServiceDto>): List<io.icure.kraken.client.models.ServiceDto> {
     val objectMapper = ObjectMapper()
 
     return services.map { s ->
-        val key = contactKey ?: this.crypto.decryptEncryptionKeys(myId, s.encryptionKeys).firstOrNull()?.let { aesKey ->
+        val key = contactKey ?: this.decryptEncryptionKeys(myId, s.encryptionKeys).firstOrNull()?.let { aesKey ->
             aesKey.replace(
                 "-",
                 ""
@@ -238,9 +239,9 @@ suspend fun CryptoConfig<ContactDto>.encryptServices(myId: String, delegations: 
     }
 }
 
-suspend fun CryptoConfig<ContactDto>.decryptServices(myId: String, contactKey: ByteArray?, services: List<io.icure.kraken.client.models.ServiceDto>): List<ServiceDto> = services?.map { s ->
+suspend fun Crypto.decryptServices(myId: String, contactKey: ByteArray?, services: List<io.icure.kraken.client.models.ServiceDto>): List<ServiceDto> = services?.map { s ->
     val objectMapper = ObjectMapper()
-    val key = contactKey ?: this.crypto.decryptEncryptionKeys(myId, s.encryptionKeys).firstOrNull()?.let { aesKey ->
+    val key = contactKey ?: this.decryptEncryptionKeys(myId, s.encryptionKeys).firstOrNull()?.let { aesKey ->
         aesKey.replace(
             "-",
             ""
