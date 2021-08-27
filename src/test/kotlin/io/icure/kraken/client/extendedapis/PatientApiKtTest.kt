@@ -9,13 +9,11 @@ import io.icure.kraken.client.crypto.CryptoUtils.toPrivateKey
 import io.icure.kraken.client.crypto.CryptoUtils.toPublicKey
 import io.icure.kraken.client.crypto.LocalCrypto
 import io.icure.kraken.client.models.decrypted.PatientDto
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions
 import java.util.*
 
-@DelicateCoroutinesApi
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 internal class PatientApiKtTest {

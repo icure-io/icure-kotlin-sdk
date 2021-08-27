@@ -1,10 +1,10 @@
-val kotlinVersion = "1.5.21"
-val kotlinCoroutinesVersion = "1.5.1"
+val kotlinVersion = "1.4.21"
+val kotlinCoroutinesVersion = "1.4.2"
 val jacksonVersion = "2.12.4"
 
 plugins {
-    kotlin("jvm") version "1.5.21"
-    kotlin("kapt") version "1.5.21"
+    kotlin("jvm") version "1.4.21"
+    kotlin("kapt") version "1.4.21"
 }
 
 buildscript {
@@ -33,8 +33,8 @@ repositories {
 }
 
 dependencies {
-    api(group = "com.github.pozo", name = "mapstruct-kotlin", version = "1.4.0.0")
-    kapt(group = "com.github.pozo", name = "mapstruct-kotlin-processor", version = "1.4.0.0")
+    api(group = "com.github.pozo", name = "mapstruct-kotlin", version = "1.3.1.2")
+    kapt(group = "com.github.pozo", name = "mapstruct-kotlin-processor", version = "1.3.1.2")
 
     implementation(group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version = kotlinVersion)
 
@@ -48,7 +48,7 @@ dependencies {
     implementation(group = "com.fasterxml.jackson.datatype", name = "jackson-datatype-jsr310", version = jacksonVersion)
     implementation(group = "io.icure", name = "async-jackson-http-client", version = "bc6844fb0b")
     implementation(group = "javax.inject", name = "javax.inject", version = "1")
-    implementation(group = "org.mapstruct", name = "mapstruct", version = "1.4.2.Final")
+    implementation(group = "org.mapstruct", name = "mapstruct", version = "1.3.1.Final")
     implementation(group = "com.github.ben-manes.caffeine", name = "caffeine", version = "3.0.3")
 
     // Bouncy Castle

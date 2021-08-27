@@ -17,6 +17,7 @@ import io.icure.kraken.client.models.HealthcarePartyDto
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
+import com.github.pozo.KotlinBuilder
 
 
 /**
@@ -37,6 +38,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@KotlinBuilder
 data class DiaryNoteExportInfoDto (
 
     @field:JsonProperty("secretForeignKeys")
