@@ -9,7 +9,6 @@ import io.icure.kraken.client.defGet
 import io.icure.kraken.client.defPut
 import io.icure.kraken.client.models.DelegationDto
 import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.security.*
 import java.security.interfaces.RSAPrivateKey
@@ -19,7 +18,6 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 @ExperimentalCoroutinesApi
-@DelicateCoroutinesApi
 @ExperimentalStdlibApi
 class LocalCrypto(private val hcpartyApi: HcpartyApi, private val rsaKeyPairs: Map<String, Pair<RSAPrivateKey, RSAPublicKey>>) : Crypto {
     private val ownerHcpartyKeysCache : Cache<String, Deferred<Optional<Map<String, Pair<String, ByteArray>>>>> = Caffeine.newBuilder()

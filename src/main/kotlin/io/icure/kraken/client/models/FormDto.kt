@@ -18,6 +18,7 @@ import io.icure.kraken.client.models.DelegationDto
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
+import com.github.pozo.KotlinBuilder
 
 
 /**
@@ -54,6 +55,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@KotlinBuilder
 data class FormDto (
 
     /* the Id of the form. We encourage using either a v4 UUID or a HL7 Id. */

@@ -20,6 +20,7 @@ import io.icure.kraken.client.models.SubContactDto
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
+import com.github.pozo.KotlinBuilder
 
 
 /**
@@ -56,6 +57,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@KotlinBuilder
 data class ContactDto (
 
     /* the Id of the contact. We encourage using either a v4 UUID or a HL7 Id. */
