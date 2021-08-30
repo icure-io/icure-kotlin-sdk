@@ -12,7 +12,7 @@ import org.mapstruct.Mapper
 import org.mapstruct.factory.Mappers
 import java.util.*
 
-suspend fun ArticleDto.initDelegations(user: UserDto, config: CryptoConfig<ArticleDto>): ArticleDto {
+suspend fun ArticleDto.initDelegations(user: UserDto, config: CryptoConfig<ArticleDto, io.icure.kraken.client.models.ArticleDto>): ArticleDto {
     val delegations =  (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf())
     val ek = UUID.randomUUID().toString()
     val sfk = UUID.randomUUID().toString()
@@ -38,7 +38,7 @@ suspend fun ArticleDto.initDelegations(user: UserDto, config: CryptoConfig<Artic
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ArticleApi.createArticle(user: UserDto, article: ArticleDto, config: CryptoConfig<ArticleDto>) =
+suspend fun ArticleApi.createArticle(user: UserDto, article: ArticleDto, config: CryptoConfig<ArticleDto, io.icure.kraken.client.models.ArticleDto>) =
     this.createArticle(
         config.encryptArticle(
             user.healthcarePartyId!!,
@@ -49,19 +49,19 @@ suspend fun ArticleApi.createArticle(user: UserDto, article: ArticleDto, config:
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ArticleApi.getArticle(user: UserDto, articleId: String, config: CryptoConfig<ArticleDto>): ArticleDto?  {
+suspend fun ArticleApi.getArticle(user: UserDto, articleId: String, config: CryptoConfig<ArticleDto, io.icure.kraken.client.models.ArticleDto>): ArticleDto?  {
     return this.getArticle(articleId)?.let { config.decryptArticle(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ArticleApi.getArticles(user: UserDto, config: CryptoConfig<ArticleDto>) : List<ArticleDto>?  {
+suspend fun ArticleApi.getArticles(user: UserDto, config: CryptoConfig<ArticleDto, io.icure.kraken.client.models.ArticleDto>) : List<ArticleDto>?  {
     return this.getArticles()?.map { config.decryptArticle(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ArticleApi.modifyArticle(user: UserDto, article: ArticleDto, config: CryptoConfig<ArticleDto>) : ArticleDto?  {
+suspend fun ArticleApi.modifyArticle(user: UserDto, article: ArticleDto, config: CryptoConfig<ArticleDto, io.icure.kraken.client.models.ArticleDto>) : ArticleDto?  {
     return this.modifyArticle(
         config.encryptArticle(
             user.healthcarePartyId!!,
@@ -71,7 +71,7 @@ suspend fun ArticleApi.modifyArticle(user: UserDto, article: ArticleDto, config:
     )?.let { config.decryptArticle(user.healthcarePartyId!!, it) }
 }
 
-suspend fun CryptoConfig<ArticleDto>.encryptArticle(myId: String, delegations: Set<String>, article: ArticleDto): io.icure.kraken.client.models.ArticleDto {
+suspend fun CryptoConfig<ArticleDto, io.icure.kraken.client.models.ArticleDto>.encryptArticle(myId: String, delegations: Set<String>, article: ArticleDto): io.icure.kraken.client.models.ArticleDto {
     return if (article.encryptionKeys.any { (_,s) -> s.isNotEmpty() }) {
         article
     } else {
@@ -87,18 +87,18 @@ suspend fun CryptoConfig<ArticleDto>.encryptArticle(myId: String, delegations: S
             ).fromHexString()
         } ?: throw IllegalArgumentException("No encryption key for user")
         val (sanitizedArticle, marshalledData) = this.marshaller(p)
-        ArticleMapperFactory.instance.map(sanitizedArticle.copy(encryptedSelf = Base64.getEncoder().encodeToString(encryptAES(data = marshalledData, key = key))))
+        sanitizedArticle.copy(encryptedSelf = Base64.getEncoder().encodeToString(encryptAES(data = marshalledData, key = key)))
     }
 }
 
-suspend fun CryptoConfig<ArticleDto>.decryptArticle(myId: String, article: io.icure.kraken.client.models.ArticleDto): ArticleDto = ArticleMapperFactory.instance.map(article).let { p ->
-    val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.let { aesKey ->
+suspend fun CryptoConfig<ArticleDto, io.icure.kraken.client.models.ArticleDto>.decryptArticle(myId: String, article: io.icure.kraken.client.models.ArticleDto): ArticleDto {
+    val key = this.crypto.decryptEncryptionKeys(myId, article.encryptionKeys).firstOrNull()?.let { aesKey ->
         aesKey.replace(
             "-",
             ""
         ).fromHexString()
     } ?: throw IllegalArgumentException("No encryption key for user")
-    this.unmarshaller(p, decryptAES(data = Base64.getDecoder().decode(p.encryptedSelf), key = key))
+    return this.unmarshaller(article, decryptAES(data = Base64.getDecoder().decode(article.encryptedSelf), key = key))
 }
 
 @Mapper

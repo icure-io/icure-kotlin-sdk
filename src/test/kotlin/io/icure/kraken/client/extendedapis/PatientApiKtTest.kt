@@ -28,12 +28,12 @@ internal class PatientApiKtTest {
         val hcp = hcpartyApi.getCurrentHealthcareParty()!!
         val keyPath = "keys/${hcp.id}-icc-priv.2048.key"
         val keyFile = PatientApiKtTest::class.java.getResource(keyPath)!!
-        val cc = CryptoConfig<PatientDto>(
+        val cc = CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>(
             crypto = LocalCrypto(hcpartyApi, mapOf(
                 user.healthcarePartyId!! to (toPrivateKey(keyFile.readText(Charsets.UTF_8)) to toPublicKey(hcp.publicKey!!))
             )),
-            marshaller = { p -> p.copy(note = null) to objectMapper.writeValueAsBytes(mapOf("note" to p.note))},
-            unmarshaller = { p, c -> p.copy(note = objectMapper.readTree(c).get("note")?.textValue()) }
+            marshaller = { p -> PatientMapperFactory.instance.map(p).copy(note = null) to objectMapper.writeValueAsBytes(mapOf("note" to p.note))},
+            unmarshaller = { p, c -> PatientMapperFactory.instance.map(p.copy(note = objectMapper.readTree(c).get("note")?.textValue())) }
         )
         val p1 = try { patientApi.createPatient(user, PatientDto(id = UUID.randomUUID().toString(), firstName = "John", lastName = "Doe", note = "To be encrypted"), cc) } catch(e:Exception) { throw IllegalStateException(e) }
         Assertions.assertNotNull(p1, "Patient should not be null")
