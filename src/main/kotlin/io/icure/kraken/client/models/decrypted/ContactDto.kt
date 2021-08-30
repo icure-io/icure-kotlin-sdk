@@ -14,7 +14,6 @@ package io.icure.kraken.client.models.decrypted
 
 import io.icure.kraken.client.models.CodeStubDto
 import io.icure.kraken.client.models.DelegationDto
-import io.icure.kraken.client.models.ServiceDto
 import io.icure.kraken.client.models.SubContactDto
 
 import com.fasterxml.jackson.annotation.JsonProperty
