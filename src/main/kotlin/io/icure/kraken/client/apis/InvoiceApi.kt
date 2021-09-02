@@ -63,7 +63,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun appendCodes(userId: kotlin.String, type: kotlin.String, sentMediumType: kotlin.String, secretFKeys: kotlin.String, invoicingCodeDto: kotlin.collections.List<InvoicingCodeDto>, insuranceId: kotlin.String?, invoiceId: kotlin.String?, gracePeriod: kotlin.Int?) : kotlin.collections.List<InvoiceDto>?  {
+    suspend fun appendCodes(userId: kotlin.String, type: kotlin.String, sentMediumType: kotlin.String, secretFKeys: kotlin.String, invoicingCodeDto: kotlin.collections.List<InvoicingCodeDto>, insuranceId: kotlin.String?, invoiceId: kotlin.String?, gracePeriod: kotlin.Int?) : kotlin.collections.List<InvoiceDto>  {
         val localVariableConfig = appendCodesRequestConfig(userId = userId, type = type, sentMediumType = sentMediumType, secretFKeys = secretFKeys, invoicingCodeDto = invoicingCodeDto, insuranceId = insuranceId, invoiceId = invoiceId, gracePeriod = gracePeriod)
 
         return request<kotlin.collections.List<InvoicingCodeDto>, kotlin.collections.List<InvoiceDto>>(
@@ -121,7 +121,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createInvoice(invoiceDto: InvoiceDto) : InvoiceDto?  {
+    suspend fun createInvoice(invoiceDto: InvoiceDto) : InvoiceDto  {
         val localVariableConfig = createInvoiceRequestConfig(invoiceDto = invoiceDto)
 
         return request<InvoiceDto, InvoiceDto>(
@@ -160,7 +160,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createInvoices(invoiceDto: kotlin.collections.List<InvoiceDto>) : kotlin.collections.List<InvoiceDto>?  {
+    suspend fun createInvoices(invoiceDto: kotlin.collections.List<InvoiceDto>) : kotlin.collections.List<InvoiceDto>  {
         val localVariableConfig = createInvoicesRequestConfig(invoiceDto = invoiceDto)
 
         return request<kotlin.collections.List<InvoiceDto>, kotlin.collections.List<InvoiceDto>>(
@@ -199,7 +199,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteInvoice(invoiceId: kotlin.String) : DocIdentifier?  {
+    suspend fun deleteInvoice(invoiceId: kotlin.String) : DocIdentifier  {
         val localVariableConfig = deleteInvoiceRequestConfig(invoiceId = invoiceId)
 
         return request<Unit, DocIdentifier>(
@@ -238,7 +238,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun filterInvoicesBy(filterChainInvoice: FilterChainInvoice) : kotlin.collections.List<InvoiceDto>?  {
+    suspend fun filterInvoicesBy(filterChainInvoice: FilterChainInvoice) : kotlin.collections.List<InvoiceDto>  {
         val localVariableConfig = filterInvoicesByRequestConfig(filterChainInvoice = filterChainInvoice)
 
         return request<FilterChainInvoice, kotlin.collections.List<InvoiceDto>>(
@@ -282,7 +282,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findByAuthor(hcPartyId: kotlin.String, fromDate: kotlin.Long?, toDate: kotlin.Long?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListInvoiceDto?  {
+    suspend fun findByAuthor(hcPartyId: kotlin.String, fromDate: kotlin.Long?, toDate: kotlin.Long?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListInvoiceDto  {
         val localVariableConfig = findByAuthorRequestConfig(hcPartyId = hcPartyId, fromDate = fromDate, toDate = toDate, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListInvoiceDto>(
@@ -344,7 +344,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findInvoicesByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<InvoiceDto>?  {
+    suspend fun findInvoicesByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<InvoiceDto>  {
         val localVariableConfig = findInvoicesByHCPartyPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
 
         return request<Unit, kotlin.collections.List<InvoiceDto>>(
@@ -389,7 +389,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findInvoicesDelegationsStubsByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<IcureStubDto>?  {
+    suspend fun findInvoicesDelegationsStubsByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<IcureStubDto>  {
         val localVariableConfig = findInvoicesDelegationsStubsByHCPartyPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
 
         return request<Unit, kotlin.collections.List<IcureStubDto>>(
@@ -433,7 +433,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getInvoice(invoiceId: kotlin.String) : InvoiceDto?  {
+    suspend fun getInvoice(invoiceId: kotlin.String) : InvoiceDto  {
         val localVariableConfig = getInvoiceRequestConfig(invoiceId = invoiceId)
 
         return request<Unit, InvoiceDto>(
@@ -472,7 +472,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getInvoices(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<InvoiceDto>?  {
+    suspend fun getInvoices(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<InvoiceDto>  {
         val localVariableConfig = getInvoicesRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<InvoiceDto>>(
@@ -511,7 +511,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTarificationsCodesOccurences(minOccurences: kotlin.Long) : kotlin.collections.List<LabelledOccurenceDto>?  {
+    suspend fun getTarificationsCodesOccurences(minOccurences: kotlin.Long) : kotlin.collections.List<LabelledOccurenceDto>  {
         val localVariableConfig = getTarificationsCodesOccurencesRequestConfig(minOccurences = minOccurences)
 
         return request<Unit, kotlin.collections.List<LabelledOccurenceDto>>(
@@ -553,7 +553,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listAllHcpsByStatus(status: kotlin.String, listOfIdsDto: ListOfIdsDto, from: kotlin.Long?, to: kotlin.Long?) : kotlin.collections.List<InvoiceDto>?  {
+    suspend fun listAllHcpsByStatus(status: kotlin.String, listOfIdsDto: ListOfIdsDto, from: kotlin.Long?, to: kotlin.Long?) : kotlin.collections.List<InvoiceDto>  {
         val localVariableConfig = listAllHcpsByStatusRequestConfig(status = status, listOfIdsDto = listOfIdsDto, from = from, to = to)
 
         return request<ListOfIdsDto, kotlin.collections.List<InvoiceDto>>(
@@ -603,7 +603,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listByContactIds(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<InvoiceDto>?  {
+    suspend fun listByContactIds(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<InvoiceDto>  {
         val localVariableConfig = listByContactIdsRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<InvoiceDto>>(
@@ -643,7 +643,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listByHcPartyGroupId(hcPartyId: kotlin.String, groupId: kotlin.String) : kotlin.collections.List<InvoiceDto>?  {
+    suspend fun listByHcPartyGroupId(hcPartyId: kotlin.String, groupId: kotlin.String) : kotlin.collections.List<InvoiceDto>  {
         val localVariableConfig = listByHcPartyGroupIdRequestConfig(hcPartyId = hcPartyId, groupId = groupId)
 
         return request<Unit, kotlin.collections.List<InvoiceDto>>(
@@ -688,7 +688,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listByHcPartySentMediumTypeInvoiceTypeSentDate(hcPartyId: kotlin.String, sentMediumType: kotlin.String, invoiceType: kotlin.String, sent: kotlin.Boolean, from: kotlin.Long?, to: kotlin.Long?) : kotlin.collections.List<InvoiceDto>?  {
+    suspend fun listByHcPartySentMediumTypeInvoiceTypeSentDate(hcPartyId: kotlin.String, sentMediumType: kotlin.String, invoiceType: kotlin.String, sent: kotlin.Boolean, from: kotlin.Long?, to: kotlin.Long?) : kotlin.collections.List<InvoiceDto>  {
         val localVariableConfig = listByHcPartySentMediumTypeInvoiceTypeSentDateRequestConfig(hcPartyId = hcPartyId, sentMediumType = sentMediumType, invoiceType = invoiceType, sent = sent, from = from, to = to)
 
         return request<Unit, kotlin.collections.List<InvoiceDto>>(
@@ -744,7 +744,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listByHcpartySendingModeStatusDate(hcPartyId: kotlin.String, sendingMode: kotlin.String?, status: kotlin.String?, from: kotlin.Long?, to: kotlin.Long?) : kotlin.collections.List<InvoiceDto>?  {
+    suspend fun listByHcpartySendingModeStatusDate(hcPartyId: kotlin.String, sendingMode: kotlin.String?, status: kotlin.String?, from: kotlin.Long?, to: kotlin.Long?) : kotlin.collections.List<InvoiceDto>  {
         val localVariableConfig = listByHcpartySendingModeStatusDateRequestConfig(hcPartyId = hcPartyId, sendingMode = sendingMode, status = status, from = from, to = to)
 
         return request<Unit, kotlin.collections.List<InvoiceDto>>(
@@ -801,7 +801,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listByIds(invoiceIds: kotlin.String) : kotlin.collections.List<InvoiceDto>?  {
+    suspend fun listByIds(invoiceIds: kotlin.String) : kotlin.collections.List<InvoiceDto>  {
         val localVariableConfig = listByIdsRequestConfig(invoiceIds = invoiceIds)
 
         return request<Unit, kotlin.collections.List<InvoiceDto>>(
@@ -840,7 +840,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listByRecipientsIds(recipientIds: kotlin.String) : kotlin.collections.List<InvoiceDto>?  {
+    suspend fun listByRecipientsIds(recipientIds: kotlin.String) : kotlin.collections.List<InvoiceDto>  {
         val localVariableConfig = listByRecipientsIdsRequestConfig(recipientIds = recipientIds)
 
         return request<Unit, kotlin.collections.List<InvoiceDto>>(
@@ -879,7 +879,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listByServiceIds(serviceIds: kotlin.String) : kotlin.collections.List<InvoiceDto>?  {
+    suspend fun listByServiceIds(serviceIds: kotlin.String) : kotlin.collections.List<InvoiceDto>  {
         val localVariableConfig = listByServiceIdsRequestConfig(serviceIds = serviceIds)
 
         return request<Unit, kotlin.collections.List<InvoiceDto>>(
@@ -918,7 +918,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listToInsurances(userIds: kotlin.String?) : kotlin.collections.List<InvoiceDto>?  {
+    suspend fun listToInsurances(userIds: kotlin.String?) : kotlin.collections.List<InvoiceDto>  {
         val localVariableConfig = listToInsurancesRequestConfig(userIds = userIds)
 
         return request<Unit, kotlin.collections.List<InvoiceDto>>(
@@ -962,7 +962,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listToInsurancesUnsent(userIds: kotlin.String?) : kotlin.collections.List<InvoiceDto>?  {
+    suspend fun listToInsurancesUnsent(userIds: kotlin.String?) : kotlin.collections.List<InvoiceDto>  {
         val localVariableConfig = listToInsurancesUnsentRequestConfig(userIds = userIds)
 
         return request<Unit, kotlin.collections.List<InvoiceDto>>(
@@ -1006,7 +1006,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listToPatients(hcPartyId: kotlin.String?) : kotlin.collections.List<InvoiceDto>?  {
+    suspend fun listToPatients(hcPartyId: kotlin.String?) : kotlin.collections.List<InvoiceDto>  {
         val localVariableConfig = listToPatientsRequestConfig(hcPartyId = hcPartyId)
 
         return request<Unit, kotlin.collections.List<InvoiceDto>>(
@@ -1050,7 +1050,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listToPatientsUnsent(hcPartyId: kotlin.String?) : kotlin.collections.List<InvoiceDto>?  {
+    suspend fun listToPatientsUnsent(hcPartyId: kotlin.String?) : kotlin.collections.List<InvoiceDto>  {
         val localVariableConfig = listToPatientsUnsentRequestConfig(hcPartyId = hcPartyId)
 
         return request<Unit, kotlin.collections.List<InvoiceDto>>(
@@ -1095,7 +1095,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun mergeTo(invoiceId: kotlin.String, listOfIdsDto: ListOfIdsDto) : InvoiceDto?  {
+    suspend fun mergeTo(invoiceId: kotlin.String, listOfIdsDto: ListOfIdsDto) : InvoiceDto  {
         val localVariableConfig = mergeToRequestConfig(invoiceId = invoiceId, listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, InvoiceDto>(
@@ -1135,7 +1135,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyInvoice(invoiceDto: InvoiceDto) : InvoiceDto?  {
+    suspend fun modifyInvoice(invoiceDto: InvoiceDto) : InvoiceDto  {
         val localVariableConfig = modifyInvoiceRequestConfig(invoiceDto = invoiceDto)
 
         return request<InvoiceDto, InvoiceDto>(
@@ -1174,7 +1174,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyInvoices(invoiceDto: kotlin.collections.List<InvoiceDto>) : kotlin.collections.List<InvoiceDto>?  {
+    suspend fun modifyInvoices(invoiceDto: kotlin.collections.List<InvoiceDto>) : kotlin.collections.List<InvoiceDto>  {
         val localVariableConfig = modifyInvoicesRequestConfig(invoiceDto = invoiceDto)
 
         return request<kotlin.collections.List<InvoiceDto>, kotlin.collections.List<InvoiceDto>>(
@@ -1214,7 +1214,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun newInvoiceDelegations(invoiceId: kotlin.String, delegationDto: kotlin.collections.List<DelegationDto>) : InvoiceDto?  {
+    suspend fun newInvoiceDelegations(invoiceId: kotlin.String, delegationDto: kotlin.collections.List<DelegationDto>) : InvoiceDto  {
         val localVariableConfig = newInvoiceDelegationsRequestConfig(invoiceId = invoiceId, delegationDto = delegationDto)
 
         return request<kotlin.collections.List<DelegationDto>, InvoiceDto>(
@@ -1254,7 +1254,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun reassignInvoice(invoiceDto: InvoiceDto) : InvoiceDto?  {
+    suspend fun reassignInvoice(invoiceDto: InvoiceDto) : InvoiceDto  {
         val localVariableConfig = reassignInvoiceRequestConfig(invoiceDto = invoiceDto)
 
         return request<InvoiceDto, InvoiceDto>(
@@ -1296,7 +1296,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun removeCodes(userId: kotlin.String, serviceId: kotlin.String, secretFKeys: kotlin.String, requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<InvoiceDto>?  {
+    suspend fun removeCodes(userId: kotlin.String, serviceId: kotlin.String, secretFKeys: kotlin.String, requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<InvoiceDto>  {
         val localVariableConfig = removeCodesRequestConfig(userId = userId, serviceId = serviceId, secretFKeys = secretFKeys, requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<InvoiceDto>>(
@@ -1341,7 +1341,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setInvoicesDelegations(icureStubDto: kotlin.collections.List<IcureStubDto>) : kotlin.collections.List<IcureStubDto>?  {
+    suspend fun setInvoicesDelegations(icureStubDto: kotlin.collections.List<IcureStubDto>) : kotlin.collections.List<IcureStubDto>  {
         val localVariableConfig = setInvoicesDelegationsRequestConfig(icureStubDto = icureStubDto)
 
         return request<kotlin.collections.List<IcureStubDto>, kotlin.collections.List<IcureStubDto>>(
@@ -1382,7 +1382,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun validate(invoiceId: kotlin.String, scheme: kotlin.String, forcedValue: kotlin.String) : InvoiceDto?  {
+    suspend fun validate(invoiceId: kotlin.String, scheme: kotlin.String, forcedValue: kotlin.String) : InvoiceDto  {
         val localVariableConfig = validateRequestConfig(invoiceId = invoiceId, scheme = scheme, forcedValue = forcedValue)
 
         return request<Unit, InvoiceDto>(

@@ -52,7 +52,7 @@ class BeefactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createBatchAndMessage(insuranceId: kotlin.String, newMessageId: kotlin.String, numericalRef: kotlin.Long, mapOfIdsDto: MapOfIdsDto) : MessageWithBatch?  {
+    suspend fun createBatchAndMessage(insuranceId: kotlin.String, newMessageId: kotlin.String, numericalRef: kotlin.Long, mapOfIdsDto: MapOfIdsDto) : MessageWithBatch  {
         val localVariableConfig = createBatchAndMessageRequestConfig(insuranceId = insuranceId, newMessageId = newMessageId, numericalRef = numericalRef, mapOfIdsDto = mapOfIdsDto)
 
         return request<MapOfIdsDto, MessageWithBatch>(

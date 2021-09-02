@@ -54,7 +54,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createMessage(messageDto: MessageDto) : MessageDto?  {
+    suspend fun createMessage(messageDto: MessageDto) : MessageDto  {
         val localVariableConfig = createMessageRequestConfig(messageDto = messageDto)
 
         return request<MessageDto, MessageDto>(
@@ -94,7 +94,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteDelegation(messageId: kotlin.String, delegateId: kotlin.String) : MessageDto?  {
+    suspend fun deleteDelegation(messageId: kotlin.String, delegateId: kotlin.String) : MessageDto  {
         val localVariableConfig = deleteDelegationRequestConfig(messageId = messageId, delegateId = delegateId)
 
         return request<Unit, MessageDto>(
@@ -134,7 +134,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteMessages(messageIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
+    suspend fun deleteMessages(messageIds: kotlin.String) : kotlin.collections.List<DocIdentifier>  {
         val localVariableConfig = deleteMessagesRequestConfig(messageIds = messageIds)
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
@@ -173,7 +173,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteMessagesBatch(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocIdentifier>?  {
+    suspend fun deleteMessagesBatch(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocIdentifier>  {
         val localVariableConfig = deleteMessagesBatchRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<DocIdentifier>>(
@@ -214,7 +214,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findMessages(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListMessageDto?  {
+    suspend fun findMessages(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListMessageDto  {
         val localVariableConfig = findMessagesRequestConfig(startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListMessageDto>(
@@ -270,7 +270,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findMessagesByFromAddress(fromAddress: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, hcpId: kotlin.String?) : PaginatedListMessageDto?  {
+    suspend fun findMessagesByFromAddress(fromAddress: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, hcpId: kotlin.String?) : PaginatedListMessageDto  {
         val localVariableConfig = findMessagesByFromAddressRequestConfig(fromAddress = fromAddress, startKey = startKey, startDocumentId = startDocumentId, limit = limit, hcpId = hcpId)
 
         return request<Unit, PaginatedListMessageDto>(
@@ -330,7 +330,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findMessagesByHCPartyPatientForeignKeys(secretFKeys: kotlin.String) : kotlin.collections.List<MessageDto>?  {
+    suspend fun findMessagesByHCPartyPatientForeignKeys(secretFKeys: kotlin.String) : kotlin.collections.List<MessageDto>  {
         val localVariableConfig = findMessagesByHCPartyPatientForeignKeysRequestConfig(secretFKeys = secretFKeys)
 
         return request<Unit, kotlin.collections.List<MessageDto>>(
@@ -377,7 +377,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findMessagesByToAddress(toAddress: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, reverse: kotlin.Boolean?, hcpId: kotlin.String?) : PaginatedListMessageDto?  {
+    suspend fun findMessagesByToAddress(toAddress: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, reverse: kotlin.Boolean?, hcpId: kotlin.String?) : PaginatedListMessageDto  {
         val localVariableConfig = findMessagesByToAddressRequestConfig(toAddress = toAddress, startKey = startKey, startDocumentId = startDocumentId, limit = limit, reverse = reverse, hcpId = hcpId)
 
         return request<Unit, PaginatedListMessageDto>(
@@ -446,7 +446,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findMessagesByTransportGuid(transportGuid: kotlin.String?, received: kotlin.Boolean?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, hcpId: kotlin.String?) : PaginatedListMessageDto?  {
+    suspend fun findMessagesByTransportGuid(transportGuid: kotlin.String?, received: kotlin.Boolean?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, hcpId: kotlin.String?) : PaginatedListMessageDto  {
         val localVariableConfig = findMessagesByTransportGuidRequestConfig(transportGuid = transportGuid, received = received, startKey = startKey, startDocumentId = startDocumentId, limit = limit, hcpId = hcpId)
 
         return request<Unit, PaginatedListMessageDto>(
@@ -516,7 +516,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findMessagesByTransportGuidSentDate(from: kotlin.Long?, to: kotlin.Long?, transportGuid: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, hcpId: kotlin.String?) : PaginatedListMessageDto?  {
+    suspend fun findMessagesByTransportGuidSentDate(from: kotlin.Long?, to: kotlin.Long?, transportGuid: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, hcpId: kotlin.String?) : PaginatedListMessageDto  {
         val localVariableConfig = findMessagesByTransportGuidSentDateRequestConfig(from = from, to = to, transportGuid = transportGuid, startKey = startKey, startDocumentId = startDocumentId, limit = limit, hcpId = hcpId)
 
         return request<Unit, PaginatedListMessageDto>(
@@ -584,7 +584,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getChildrenMessages(messageId: kotlin.String) : kotlin.collections.List<MessageDto>?  {
+    suspend fun getChildrenMessages(messageId: kotlin.String) : kotlin.collections.List<MessageDto>  {
         val localVariableConfig = getChildrenMessagesRequestConfig(messageId = messageId)
 
         return request<Unit, kotlin.collections.List<MessageDto>>(
@@ -623,7 +623,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getChildrenMessagesOfList(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<MessageDto>?  {
+    suspend fun getChildrenMessagesOfList(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<MessageDto>  {
         val localVariableConfig = getChildrenMessagesOfListRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<MessageDto>>(
@@ -662,7 +662,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getMessage(messageId: kotlin.String) : MessageDto?  {
+    suspend fun getMessage(messageId: kotlin.String) : MessageDto  {
         val localVariableConfig = getMessageRequestConfig(messageId = messageId)
 
         return request<Unit, MessageDto>(
@@ -701,7 +701,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listMessagesByInvoiceIds(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<MessageDto>?  {
+    suspend fun listMessagesByInvoiceIds(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<MessageDto>  {
         val localVariableConfig = listMessagesByInvoiceIdsRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<MessageDto>>(
@@ -741,7 +741,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listMessagesByTransportGuids(hcpId: kotlin.String, listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<MessageDto>?  {
+    suspend fun listMessagesByTransportGuids(hcpId: kotlin.String, listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<MessageDto>  {
         val localVariableConfig = listMessagesByTransportGuidsRequestConfig(hcpId = hcpId, listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<MessageDto>>(
@@ -784,7 +784,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyMessage(messageDto: MessageDto) : MessageDto?  {
+    suspend fun modifyMessage(messageDto: MessageDto) : MessageDto  {
         val localVariableConfig = modifyMessageRequestConfig(messageDto = messageDto)
 
         return request<MessageDto, MessageDto>(
@@ -824,7 +824,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun newMessageDelegations(messageId: kotlin.String, delegationDto: kotlin.collections.List<DelegationDto>) : IcureStubDto?  {
+    suspend fun newMessageDelegations(messageId: kotlin.String, delegationDto: kotlin.collections.List<DelegationDto>) : IcureStubDto  {
         val localVariableConfig = newMessageDelegationsRequestConfig(messageId = messageId, delegationDto = delegationDto)
 
         return request<kotlin.collections.List<DelegationDto>, IcureStubDto>(
@@ -864,7 +864,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setMessagesReadStatus(messagesReadStatusUpdate: MessagesReadStatusUpdate) : kotlin.collections.List<MessageDto>?  {
+    suspend fun setMessagesReadStatus(messagesReadStatusUpdate: MessagesReadStatusUpdate) : kotlin.collections.List<MessageDto>  {
         val localVariableConfig = setMessagesReadStatusRequestConfig(messagesReadStatusUpdate = messagesReadStatusUpdate)
 
         return request<MessagesReadStatusUpdate, kotlin.collections.List<MessageDto>>(
@@ -904,7 +904,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setMessagesStatusBits(status: kotlin.Int, listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<MessageDto>?  {
+    suspend fun setMessagesStatusBits(status: kotlin.Int, listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<MessageDto>  {
         val localVariableConfig = setMessagesStatusBitsRequestConfig(status = status, listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<MessageDto>>(

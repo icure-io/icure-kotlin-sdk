@@ -47,7 +47,7 @@ class ApplicationsettingsApi(basePath: kotlin.String = defaultBasePath, webClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getApplicationSettings() : kotlin.collections.List<ApplicationSettingsDto>?  {
+    suspend fun getApplicationSettings() : kotlin.collections.List<ApplicationSettingsDto>  {
         val localVariableConfig = getApplicationSettingsRequestConfig()
 
         return request<Unit, kotlin.collections.List<ApplicationSettingsDto>>(

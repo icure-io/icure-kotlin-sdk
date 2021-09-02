@@ -50,7 +50,7 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createInsurance(insuranceDto: InsuranceDto) : InsuranceDto?  {
+    suspend fun createInsurance(insuranceDto: InsuranceDto) : InsuranceDto  {
         val localVariableConfig = createInsuranceRequestConfig(insuranceDto = insuranceDto)
 
         return request<InsuranceDto, InsuranceDto>(
@@ -89,7 +89,7 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteInsurance(insuranceId: kotlin.String) : DocIdentifier?  {
+    suspend fun deleteInsurance(insuranceId: kotlin.String) : DocIdentifier  {
         val localVariableConfig = deleteInsuranceRequestConfig(insuranceId = insuranceId)
 
         return request<Unit, DocIdentifier>(
@@ -128,7 +128,7 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getInsurance(insuranceId: kotlin.String) : InsuranceDto?  {
+    suspend fun getInsurance(insuranceId: kotlin.String) : InsuranceDto  {
         val localVariableConfig = getInsuranceRequestConfig(insuranceId = insuranceId)
 
         return request<Unit, InsuranceDto>(
@@ -167,7 +167,7 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getInsurances(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<InsuranceDto>?  {
+    suspend fun getInsurances(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<InsuranceDto>  {
         val localVariableConfig = getInsurancesRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<InsuranceDto>>(
@@ -206,7 +206,7 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listInsurancesByCode(insuranceCode: kotlin.String) : kotlin.collections.List<InsuranceDto>?  {
+    suspend fun listInsurancesByCode(insuranceCode: kotlin.String) : kotlin.collections.List<InsuranceDto>  {
         val localVariableConfig = listInsurancesByCodeRequestConfig(insuranceCode = insuranceCode)
 
         return request<Unit, kotlin.collections.List<InsuranceDto>>(
@@ -245,7 +245,7 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listInsurancesByName(insuranceName: kotlin.String) : kotlin.collections.List<InsuranceDto>?  {
+    suspend fun listInsurancesByName(insuranceName: kotlin.String) : kotlin.collections.List<InsuranceDto>  {
         val localVariableConfig = listInsurancesByNameRequestConfig(insuranceName = insuranceName)
 
         return request<Unit, kotlin.collections.List<InsuranceDto>>(
@@ -284,7 +284,7 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyInsurance(insuranceDto: InsuranceDto) : InsuranceDto?  {
+    suspend fun modifyInsurance(insuranceDto: InsuranceDto) : InsuranceDto  {
         val localVariableConfig = modifyInsuranceRequestConfig(insuranceDto = insuranceDto)
 
         return request<InsuranceDto, InsuranceDto>(

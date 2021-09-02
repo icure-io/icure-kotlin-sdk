@@ -159,7 +159,7 @@ Configure basicScheme:
 
 <a name="getReceiptAttachment"></a>
 # **getReceiptAttachment**
-> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; getReceiptAttachment(receiptId, attachmentId, enckeys)
+> java.io.File getReceiptAttachment(receiptId, attachmentId, enckeys)
 
 Get an attachment
 
@@ -174,7 +174,7 @@ val receiptId : kotlin.String = receiptId_example // kotlin.String |
 val attachmentId : kotlin.String = attachmentId_example // kotlin.String | 
 val enckeys : kotlin.String = enckeys_example // kotlin.String | 
 try {
-    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.getReceiptAttachment(receiptId, attachmentId, enckeys)
+    val result : java.io.File = apiInstance.getReceiptAttachment(receiptId, attachmentId, enckeys)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling ReceiptApi#getReceiptAttachment")
@@ -195,7 +195,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**](kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;.md)
+[**java.io.File**](java.io.File.md)
 
 ### Authorization
 
@@ -320,7 +320,7 @@ Creates a receipt&#39;s attachment
 val apiInstance = ReceiptApi()
 val receiptId : kotlin.String = receiptId_example // kotlin.String | 
 val blobType : kotlin.String = blobType_example // kotlin.String | 
-val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
+val body : java.io.File = BINARY_DATA_HERE // java.io.File | 
 val enckeys : kotlin.String = enckeys_example // kotlin.String | 
 try {
     val result : ReceiptDto = apiInstance.setReceiptAttachment(receiptId, blobType, body, enckeys)
@@ -340,7 +340,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **receiptId** | **kotlin.String**|  |
  **blobType** | **kotlin.String**|  |
- **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
+ **body** | **java.io.File**|  |
  **enckeys** | **kotlin.String**|  | [optional]
 
 ### Return type

@@ -61,7 +61,7 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createGroup(id: kotlin.String, name: kotlin.String, password: kotlin.String, databaseInitialisationDto: DatabaseInitialisationDto, server: kotlin.String?, q: kotlin.Int?, n: kotlin.Int?) : GroupDto?  {
+    suspend fun createGroup(id: kotlin.String, name: kotlin.String, password: kotlin.String, databaseInitialisationDto: DatabaseInitialisationDto, server: kotlin.String?, q: kotlin.Int?, n: kotlin.Int?) : GroupDto  {
         val localVariableConfig = createGroupRequestConfig(id = id, name = name, password = password, databaseInitialisationDto = databaseInitialisationDto, server = server, q = q, n = n)
 
         return request<DatabaseInitialisationDto, GroupDto>(
@@ -119,7 +119,7 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getGroup(id: kotlin.String) : GroupDto?  {
+    suspend fun getGroup(id: kotlin.String) : GroupDto  {
         val localVariableConfig = getGroupRequestConfig(id = id)
 
         return request<Unit, GroupDto>(
@@ -158,7 +158,7 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getReplicationInfo1(id: kotlin.String) : ReplicationInfoDto?  {
+    suspend fun getReplicationInfo1(id: kotlin.String) : ReplicationInfoDto  {
         val localVariableConfig = getReplicationInfo1RequestConfig(id = id)
 
         return request<Unit, ReplicationInfoDto>(
@@ -199,7 +199,7 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun initDesignDocs(id: kotlin.String, clazz: kotlin.String?, warmup: kotlin.Boolean?) : kotlin.Any?  {
+    suspend fun initDesignDocs(id: kotlin.String, clazz: kotlin.String?, warmup: kotlin.Boolean?) : kotlin.Any  {
         val localVariableConfig = initDesignDocsRequestConfig(id = id, clazz = clazz, warmup = warmup)
 
         return request<Unit, kotlin.Any>(
@@ -247,7 +247,7 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listGroups() : kotlin.collections.List<GroupDto>?  {
+    suspend fun listGroups() : kotlin.collections.List<GroupDto>  {
         val localVariableConfig = listGroupsRequestConfig()
 
         return request<Unit, kotlin.collections.List<GroupDto>>(
@@ -286,7 +286,7 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyGroupName(id: kotlin.String, name: kotlin.String) : GroupDto?  {
+    suspend fun modifyGroupName(id: kotlin.String, name: kotlin.String) : GroupDto  {
         val localVariableConfig = modifyGroupNameRequestConfig(id = id, name = name)
 
         return request<Unit, GroupDto>(
@@ -327,7 +327,7 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyGroupProperties(id: kotlin.String, listOfPropertiesDto: ListOfPropertiesDto) : GroupDto?  {
+    suspend fun modifyGroupProperties(id: kotlin.String, listOfPropertiesDto: ListOfPropertiesDto) : GroupDto  {
         val localVariableConfig = modifyGroupPropertiesRequestConfig(id = id, listOfPropertiesDto = listOfPropertiesDto)
 
         return request<ListOfPropertiesDto, GroupDto>(
@@ -367,7 +367,7 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun registerNewGroupAdministrator(registrationInformationDto: RegistrationInformationDto) : RegistrationSuccessDto?  {
+    suspend fun registerNewGroupAdministrator(registrationInformationDto: RegistrationInformationDto) : RegistrationSuccessDto  {
         val localVariableConfig = registerNewGroupAdministratorRequestConfig(registrationInformationDto = registrationInformationDto)
 
         return request<RegistrationInformationDto, RegistrationSuccessDto>(
@@ -409,7 +409,7 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun resetStorage(id: kotlin.String, listOfIdsDto: ListOfIdsDto, q: kotlin.Int?, n: kotlin.Int?) : kotlin.Any?  {
+    suspend fun resetStorage(id: kotlin.String, listOfIdsDto: ListOfIdsDto, q: kotlin.Int?, n: kotlin.Int?) : kotlin.Any  {
         val localVariableConfig = resetStorageRequestConfig(id = id, listOfIdsDto = listOfIdsDto, q = q, n = n)
 
         return request<ListOfIdsDto, kotlin.Any>(
@@ -460,7 +460,7 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setGroupPassword(id: kotlin.String, password: kotlin.String) : GroupDto?  {
+    suspend fun setGroupPassword(id: kotlin.String, password: kotlin.String) : GroupDto  {
         val localVariableConfig = setGroupPasswordRequestConfig(id = id, password = password)
 
         return request<Unit, GroupDto>(
@@ -503,7 +503,7 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun solveConflicts(id: kotlin.String, limit: kotlin.Int?, warmup: kotlin.Boolean?) : kotlin.collections.List<IdWithRevDto>?  {
+    suspend fun solveConflicts(id: kotlin.String, limit: kotlin.Int?, warmup: kotlin.Boolean?) : kotlin.collections.List<IdWithRevDto>  {
         val localVariableConfig = solveConflictsRequestConfig(id = id, limit = limit, warmup = warmup)
 
         return request<Unit, kotlin.collections.List<IdWithRevDto>>(

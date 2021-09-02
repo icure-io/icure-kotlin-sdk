@@ -290,7 +290,7 @@ Configure basicScheme:
 
 <a name="resolveContactsConflicts"></a>
 # **resolveContactsConflicts**
-> kotlin.collections.List&lt;ContactDto&gt; resolveContactsConflicts()
+> kotlin.collections.List&lt;ContactDto&gt; resolveContactsConflicts(limit)
 
 Resolve contacts conflicts
 
@@ -301,8 +301,9 @@ Resolve contacts conflicts
 //import io.icure.kraken.client.models.*
 
 val apiInstance = IcureApi()
+val limit : kotlin.Int = 56 // kotlin.Int | 
 try {
-    val result : kotlin.collections.List<ContactDto> = apiInstance.resolveContactsConflicts()
+    val result : kotlin.collections.List<ContactDto> = apiInstance.resolveContactsConflicts(limit)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling IcureApi#resolveContactsConflicts")
@@ -314,7 +315,10 @@ try {
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **limit** | **kotlin.Int**|  | [optional]
 
 ### Return type
 
@@ -334,7 +338,7 @@ Configure basicScheme:
 
 <a name="resolveDocumentsConflicts"></a>
 # **resolveDocumentsConflicts**
-> kotlin.collections.List&lt;DocumentDto&gt; resolveDocumentsConflicts(ids)
+> kotlin.collections.List&lt;DocumentDto&gt; resolveDocumentsConflicts(ids, limit)
 
 resolve documents conflicts
 
@@ -346,8 +350,9 @@ resolve documents conflicts
 
 val apiInstance = IcureApi()
 val ids : kotlin.String = ids_example // kotlin.String | 
+val limit : kotlin.Int = 56 // kotlin.Int | 
 try {
-    val result : kotlin.collections.List<DocumentDto> = apiInstance.resolveDocumentsConflicts(ids)
+    val result : kotlin.collections.List<DocumentDto> = apiInstance.resolveDocumentsConflicts(ids, limit)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling IcureApi#resolveDocumentsConflicts")
@@ -363,6 +368,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ids** | **kotlin.String**|  | [optional]
+ **limit** | **kotlin.Int**|  | [optional]
 
 ### Return type
 
@@ -382,7 +388,7 @@ Configure basicScheme:
 
 <a name="resolveFormsConflicts"></a>
 # **resolveFormsConflicts**
-> kotlin.collections.List&lt;FormDto&gt; resolveFormsConflicts()
+> kotlin.collections.List&lt;FormDto&gt; resolveFormsConflicts(limit)
 
 resolve forms conflicts
 
@@ -393,8 +399,9 @@ resolve forms conflicts
 //import io.icure.kraken.client.models.*
 
 val apiInstance = IcureApi()
+val limit : kotlin.Int = 56 // kotlin.Int | 
 try {
-    val result : kotlin.collections.List<FormDto> = apiInstance.resolveFormsConflicts()
+    val result : kotlin.collections.List<FormDto> = apiInstance.resolveFormsConflicts(limit)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling IcureApi#resolveFormsConflicts")
@@ -406,7 +413,10 @@ try {
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **limit** | **kotlin.Int**|  | [optional]
 
 ### Return type
 
@@ -426,7 +436,7 @@ Configure basicScheme:
 
 <a name="resolveHealthElementsConflicts"></a>
 # **resolveHealthElementsConflicts**
-> kotlin.collections.List&lt;HealthElementDto&gt; resolveHealthElementsConflicts()
+> kotlin.collections.List&lt;HealthElementDto&gt; resolveHealthElementsConflicts(limit)
 
 resolve healthcare elements conflicts
 
@@ -437,8 +447,9 @@ resolve healthcare elements conflicts
 //import io.icure.kraken.client.models.*
 
 val apiInstance = IcureApi()
+val limit : kotlin.Int = 56 // kotlin.Int | 
 try {
-    val result : kotlin.collections.List<HealthElementDto> = apiInstance.resolveHealthElementsConflicts()
+    val result : kotlin.collections.List<HealthElementDto> = apiInstance.resolveHealthElementsConflicts(limit)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling IcureApi#resolveHealthElementsConflicts")
@@ -450,7 +461,10 @@ try {
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **limit** | **kotlin.Int**|  | [optional]
 
 ### Return type
 
@@ -470,7 +484,7 @@ Configure basicScheme:
 
 <a name="resolveInvoicesConflicts"></a>
 # **resolveInvoicesConflicts**
-> kotlin.collections.List&lt;InvoiceDto&gt; resolveInvoicesConflicts()
+> kotlin.collections.List&lt;InvoiceDto&gt; resolveInvoicesConflicts(limit)
 
 resolve invoices conflicts
 
@@ -481,8 +495,9 @@ resolve invoices conflicts
 //import io.icure.kraken.client.models.*
 
 val apiInstance = IcureApi()
+val limit : kotlin.Int = 56 // kotlin.Int | 
 try {
-    val result : kotlin.collections.List<InvoiceDto> = apiInstance.resolveInvoicesConflicts()
+    val result : kotlin.collections.List<InvoiceDto> = apiInstance.resolveInvoicesConflicts(limit)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling IcureApi#resolveInvoicesConflicts")
@@ -494,7 +509,10 @@ try {
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **limit** | **kotlin.Int**|  | [optional]
 
 ### Return type
 
@@ -514,7 +532,7 @@ Configure basicScheme:
 
 <a name="resolveMessagesConflicts"></a>
 # **resolveMessagesConflicts**
-> kotlin.collections.List&lt;MessageDto&gt; resolveMessagesConflicts()
+> kotlin.collections.List&lt;MessageDto&gt; resolveMessagesConflicts(limit)
 
 resolve messages conflicts
 
@@ -525,8 +543,9 @@ resolve messages conflicts
 //import io.icure.kraken.client.models.*
 
 val apiInstance = IcureApi()
+val limit : kotlin.Int = 56 // kotlin.Int | 
 try {
-    val result : kotlin.collections.List<MessageDto> = apiInstance.resolveMessagesConflicts()
+    val result : kotlin.collections.List<MessageDto> = apiInstance.resolveMessagesConflicts(limit)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling IcureApi#resolveMessagesConflicts")
@@ -538,7 +557,10 @@ try {
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **limit** | **kotlin.Int**|  | [optional]
 
 ### Return type
 
@@ -558,7 +580,7 @@ Configure basicScheme:
 
 <a name="resolvePatientsConflicts"></a>
 # **resolvePatientsConflicts**
-> kotlin.collections.List&lt;PatientDto&gt; resolvePatientsConflicts()
+> kotlin.collections.List&lt;PatientDto&gt; resolvePatientsConflicts(limit)
 
 Resolve patients conflicts
 
@@ -569,8 +591,9 @@ Resolve patients conflicts
 //import io.icure.kraken.client.models.*
 
 val apiInstance = IcureApi()
+val limit : kotlin.Int = 56 // kotlin.Int | 
 try {
-    val result : kotlin.collections.List<PatientDto> = apiInstance.resolvePatientsConflicts()
+    val result : kotlin.collections.List<PatientDto> = apiInstance.resolvePatientsConflicts(limit)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling IcureApi#resolvePatientsConflicts")
@@ -582,7 +605,10 @@ try {
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **limit** | **kotlin.Int**|  | [optional]
 
 ### Return type
 

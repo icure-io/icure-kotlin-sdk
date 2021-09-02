@@ -49,7 +49,7 @@ class ArticleApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createArticle(articleDto: ArticleDto) : ArticleDto?  {
+    suspend fun createArticle(articleDto: ArticleDto) : ArticleDto  {
         val localVariableConfig = createArticleRequestConfig(articleDto = articleDto)
 
         return request<ArticleDto, ArticleDto>(
@@ -88,7 +88,7 @@ class ArticleApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteArticle(articleIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
+    suspend fun deleteArticle(articleIds: kotlin.String) : kotlin.collections.List<DocIdentifier>  {
         val localVariableConfig = deleteArticleRequestConfig(articleIds = articleIds)
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
@@ -127,7 +127,7 @@ class ArticleApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getArticle(articleId: kotlin.String) : ArticleDto?  {
+    suspend fun getArticle(articleId: kotlin.String) : ArticleDto  {
         val localVariableConfig = getArticleRequestConfig(articleId = articleId)
 
         return request<Unit, ArticleDto>(
@@ -165,7 +165,7 @@ class ArticleApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getArticles() : kotlin.collections.List<ArticleDto>?  {
+    suspend fun getArticles() : kotlin.collections.List<ArticleDto>  {
         val localVariableConfig = getArticlesRequestConfig()
 
         return request<Unit, kotlin.collections.List<ArticleDto>>(
@@ -203,7 +203,7 @@ class ArticleApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyArticle(articleDto: ArticleDto) : ArticleDto?  {
+    suspend fun modifyArticle(articleDto: ArticleDto) : ArticleDto  {
         val localVariableConfig = modifyArticleRequestConfig(articleDto = articleDto)
 
         return request<ArticleDto, ArticleDto>(

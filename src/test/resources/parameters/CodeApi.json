@@ -1,0 +1,114 @@
+{
+  "beforeElements": {
+    "bodies": [
+      {
+        "author": "Simon",
+        "regions": ["BE", "FR"],
+        "type": "normal",
+        "code": "A0",
+        "label": {
+          "additionalProp1": "prop1",
+          "additionalProp2": "prop2"
+        },
+        "links": ["L", "M"]
+      },
+      {
+        "author": "Simon",
+        "regions": ["BE"],
+        "type": "anormal",
+        "code": "A1",
+        "links": ["L"]
+      },
+      {"author": "Simon", "regions": ["UK"], "type": "normal", "code": "A2", "label": {"additionalProp1": "p1", "additionalProp2": "p2"}}
+    ]
+  },
+  "afterElements": {
+    "family": "base",
+    "deleteIds": ["normal|A0|1", "anormal|A1|1", "normal|A2|1", "normal|A5|1"]
+  },
+  "createCode": {
+    "body": {
+      "author": "Simon",
+      "regions": ["BE", "FR", "UK", "USA"],
+      "type": "normal",
+      "code": "A5"
+    }
+  },
+  "filterBy": {
+    "skipEndpoint": true,
+    "startKey": null, 
+    "startDocumentId": "anormal|A1|1",
+    "limit": null, 
+    "skip": null, 
+    "sort": null, 
+    "desc": null, 
+    "body": null
+  },
+  "findCodeTypes": {
+    "region": "BE",
+    "type": null
+  },
+  "findCodes": {
+    "region": "BE",
+    "type": "normal",
+    "code": "A0",
+    "version": "1"
+  },
+  "findPaginatedCodes": {
+    "region": "BE",
+    "type": null, 
+    "code": "A0",
+    "version": null, 
+    "startDocumentId": null, 
+    "limit": null
+  },
+  "findPaginatedCodesByLabel": {
+    "region": "be",
+    "types": "CD-HCPARTY",
+    "language": "fr",
+    "label": "pers",
+    "startKey": null, 
+    "startDocumentId": null, 
+    "limit": 100
+  },
+  "findPaginatedCodesWithLink": {
+    "skipEndpoint": true,
+    "linkType": null, 
+    "linkedId": null, 
+    "startKey": null, 
+    "startDocumentId": null, 
+    "limit": null
+  },
+  "findTagTypes": {
+    "region": null,
+    "type": null
+  },
+  "getCode": {
+    "codeId": "normal|A0|1"
+  },
+  "getCodeWithParts": {
+    "type": "normal",
+    "code": "A0",
+    "version": "1"
+  },
+  "getCodes": {
+    "codeIds": "normal|A0|1"
+  },
+  "modifyCode": {
+    "autoRev": true,
+    "body": {
+      "id": "normal|A0|1",
+      "author": "SHA",
+      "regions": ["BE", "FR"],
+      "type": "normal",
+      "code": "A0",
+      "label": {
+        "additionalProp1": "prop1-modified",
+        "additionalProp2": "prop2"
+      },
+      "links": ["L", "M", "N"]
+    }
+  },
+  "fallback": {
+  }
+}

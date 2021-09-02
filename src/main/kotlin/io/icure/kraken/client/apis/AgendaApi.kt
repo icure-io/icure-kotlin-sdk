@@ -49,7 +49,7 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createAgenda(agendaDto: AgendaDto) : AgendaDto?  {
+    suspend fun createAgenda(agendaDto: AgendaDto) : AgendaDto  {
         val localVariableConfig = createAgendaRequestConfig(agendaDto = agendaDto)
 
         return request<AgendaDto, AgendaDto>(
@@ -88,7 +88,7 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteAgenda(agendaIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
+    suspend fun deleteAgenda(agendaIds: kotlin.String) : kotlin.collections.List<DocIdentifier>  {
         val localVariableConfig = deleteAgendaRequestConfig(agendaIds = agendaIds)
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
@@ -127,7 +127,7 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getAgenda(agendaId: kotlin.String) : AgendaDto?  {
+    suspend fun getAgenda(agendaId: kotlin.String) : AgendaDto  {
         val localVariableConfig = getAgendaRequestConfig(agendaId = agendaId)
 
         return request<Unit, AgendaDto>(
@@ -165,7 +165,7 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getAgendas() : kotlin.collections.List<AgendaDto>?  {
+    suspend fun getAgendas() : kotlin.collections.List<AgendaDto>  {
         val localVariableConfig = getAgendasRequestConfig()
 
         return request<Unit, kotlin.collections.List<AgendaDto>>(
@@ -203,7 +203,7 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getAgendasForUser(userId: kotlin.String) : AgendaDto?  {
+    suspend fun getAgendasForUser(userId: kotlin.String) : AgendaDto  {
         val localVariableConfig = getAgendasForUserRequestConfig(userId = userId)
 
         return request<Unit, AgendaDto>(
@@ -245,7 +245,7 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getReadableAgendasForUser(userId: kotlin.String) : kotlin.collections.List<AgendaDto>?  {
+    suspend fun getReadableAgendasForUser(userId: kotlin.String) : kotlin.collections.List<AgendaDto>  {
         val localVariableConfig = getReadableAgendasForUserRequestConfig(userId = userId)
 
         return request<Unit, kotlin.collections.List<AgendaDto>>(
@@ -287,7 +287,7 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyAgenda(agendaDto: AgendaDto) : AgendaDto?  {
+    suspend fun modifyAgenda(agendaDto: AgendaDto) : AgendaDto  {
         val localVariableConfig = modifyAgendaRequestConfig(agendaDto = agendaDto)
 
         return request<AgendaDto, AgendaDto>(

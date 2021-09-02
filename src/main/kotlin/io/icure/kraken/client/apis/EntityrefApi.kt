@@ -48,7 +48,7 @@ class EntityrefApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createEntityReference(entityReferenceDto: EntityReferenceDto) : EntityReferenceDto?  {
+    suspend fun createEntityReference(entityReferenceDto: EntityReferenceDto) : EntityReferenceDto  {
         val localVariableConfig = createEntityReferenceRequestConfig(entityReferenceDto = entityReferenceDto)
 
         return request<EntityReferenceDto, EntityReferenceDto>(
@@ -87,7 +87,7 @@ class EntityrefApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getLatest(prefix: kotlin.String) : EntityReferenceDto?  {
+    suspend fun getLatest(prefix: kotlin.String) : EntityReferenceDto  {
         val localVariableConfig = getLatestRequestConfig(prefix = prefix)
 
         return request<Unit, EntityReferenceDto>(

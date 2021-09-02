@@ -630,6 +630,7 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.HealthcarePartyHistoryStatusDto](docs/HealthcarePartyHistoryStatusDto.md)
  - [io.icure.kraken.client.models.IcureStubDto](docs/IcureStubDto.md)
  - [io.icure.kraken.client.models.IdWithRevDto](docs/IdWithRevDto.md)
+ - [io.icure.kraken.client.models.IdentifierDto](docs/IdentifierDto.md)
  - [io.icure.kraken.client.models.IdentityDocumentReaderDto](docs/IdentityDocumentReaderDto.md)
  - [io.icure.kraken.client.models.ImportMapping](docs/ImportMapping.md)
  - [io.icure.kraken.client.models.ImportResultDto](docs/ImportResultDto.md)

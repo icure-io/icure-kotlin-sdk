@@ -59,7 +59,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findAmpsByDmppCode(dmppCode: kotlin.String) : kotlin.collections.List<AmpDto>?  {
+    suspend fun findAmpsByDmppCode(dmppCode: kotlin.String) : kotlin.collections.List<AmpDto>  {
         val localVariableConfig = findAmpsByDmppCodeRequestConfig(dmppCode = dmppCode)
 
         return request<Unit, kotlin.collections.List<AmpDto>>(
@@ -101,7 +101,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findPaginatedAmpsByAtc(atcCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListAmpDto?  {
+    suspend fun findPaginatedAmpsByAtc(atcCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListAmpDto  {
         val localVariableConfig = findPaginatedAmpsByAtcRequestConfig(atcCode = atcCode, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListAmpDto>(
@@ -157,7 +157,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findPaginatedAmpsByGroupCode(vmpgCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListAmpDto?  {
+    suspend fun findPaginatedAmpsByGroupCode(vmpgCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListAmpDto  {
         val localVariableConfig = findPaginatedAmpsByGroupCodeRequestConfig(vmpgCode = vmpgCode, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListAmpDto>(
@@ -213,7 +213,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findPaginatedAmpsByGroupId(vmpgId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListAmpDto?  {
+    suspend fun findPaginatedAmpsByGroupId(vmpgId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListAmpDto  {
         val localVariableConfig = findPaginatedAmpsByGroupIdRequestConfig(vmpgId = vmpgId, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListAmpDto>(
@@ -270,7 +270,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findPaginatedAmpsByLabel(language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListAmpDto?  {
+    suspend fun findPaginatedAmpsByLabel(language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListAmpDto  {
         val localVariableConfig = findPaginatedAmpsByLabelRequestConfig(language = language, label = label, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListAmpDto>(
@@ -333,7 +333,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findPaginatedAmpsByVmpCode(vmpCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListAmpDto?  {
+    suspend fun findPaginatedAmpsByVmpCode(vmpCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListAmpDto  {
         val localVariableConfig = findPaginatedAmpsByVmpCodeRequestConfig(vmpCode = vmpCode, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListAmpDto>(
@@ -389,7 +389,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findPaginatedAmpsByVmpId(vmpId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListAmpDto?  {
+    suspend fun findPaginatedAmpsByVmpId(vmpId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListAmpDto  {
         val localVariableConfig = findPaginatedAmpsByVmpIdRequestConfig(vmpId = vmpId, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListAmpDto>(
@@ -446,7 +446,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findPaginatedNmpsByLabel(language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListNmpDto?  {
+    suspend fun findPaginatedNmpsByLabel(language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListNmpDto  {
         val localVariableConfig = findPaginatedNmpsByLabelRequestConfig(language = language, label = label, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListNmpDto>(
@@ -510,7 +510,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findPaginatedVmpGroupsByLabel(language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListVmpGroupDto?  {
+    suspend fun findPaginatedVmpGroupsByLabel(language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListVmpGroupDto  {
         val localVariableConfig = findPaginatedVmpGroupsByLabelRequestConfig(language = language, label = label, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListVmpGroupDto>(
@@ -573,7 +573,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findPaginatedVmpGroupsByVmpGroupCode(vmpgCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListVmpGroupDto?  {
+    suspend fun findPaginatedVmpGroupsByVmpGroupCode(vmpgCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListVmpGroupDto  {
         val localVariableConfig = findPaginatedVmpGroupsByVmpGroupCodeRequestConfig(vmpgCode = vmpgCode, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListVmpGroupDto>(
@@ -629,7 +629,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findPaginatedVmpsByGroupCode(vmpgCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListVmpDto?  {
+    suspend fun findPaginatedVmpsByGroupCode(vmpgCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListVmpDto  {
         val localVariableConfig = findPaginatedVmpsByGroupCodeRequestConfig(vmpgCode = vmpgCode, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListVmpDto>(
@@ -685,7 +685,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findPaginatedVmpsByGroupId(vmpgId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListVmpDto?  {
+    suspend fun findPaginatedVmpsByGroupId(vmpgId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListVmpDto  {
         val localVariableConfig = findPaginatedVmpsByGroupIdRequestConfig(vmpgId = vmpgId, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListVmpDto>(
@@ -742,7 +742,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findPaginatedVmpsByLabel(language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListVmpDto?  {
+    suspend fun findPaginatedVmpsByLabel(language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListVmpDto  {
         val localVariableConfig = findPaginatedVmpsByLabelRequestConfig(language = language, label = label, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListVmpDto>(
@@ -805,7 +805,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findPaginatedVmpsByVmpCode(vmpCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListVmpDto?  {
+    suspend fun findPaginatedVmpsByVmpCode(vmpCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListVmpDto  {
         val localVariableConfig = findPaginatedVmpsByVmpCodeRequestConfig(vmpCode = vmpCode, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListVmpDto>(
@@ -857,7 +857,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getSamVersion() : SamVersionDto?  {
+    suspend fun getSamVersion() : SamVersionDto  {
         val localVariableConfig = getSamVersionRequestConfig()
 
         return request<Unit, SamVersionDto>(
@@ -895,7 +895,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listAmpsByDmppCodes(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<AmpDto>?  {
+    suspend fun listAmpsByDmppCodes(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<AmpDto>  {
         val localVariableConfig = listAmpsByDmppCodesRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<AmpDto>>(
@@ -934,7 +934,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listAmpsByGroupCodes(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<AmpDto>?  {
+    suspend fun listAmpsByGroupCodes(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<AmpDto>  {
         val localVariableConfig = listAmpsByGroupCodesRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<AmpDto>>(
@@ -973,7 +973,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listAmpsByGroupIds(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<AmpDto>?  {
+    suspend fun listAmpsByGroupIds(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<AmpDto>  {
         val localVariableConfig = listAmpsByGroupIdsRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<AmpDto>>(
@@ -1012,7 +1012,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listAmpsByVmpCodes(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<AmpDto>?  {
+    suspend fun listAmpsByVmpCodes(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<AmpDto>  {
         val localVariableConfig = listAmpsByVmpCodesRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<AmpDto>>(
@@ -1051,7 +1051,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listAmpsByVmpIds(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<AmpDto>?  {
+    suspend fun listAmpsByVmpIds(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<AmpDto>  {
         val localVariableConfig = listAmpsByVmpIdsRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<AmpDto>>(
@@ -1090,7 +1090,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listNmpsByCnks(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<NmpDto>?  {
+    suspend fun listNmpsByCnks(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<NmpDto>  {
         val localVariableConfig = listNmpsByCnksRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<NmpDto>>(
@@ -1128,7 +1128,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listPharmaceuticalForms() : kotlin.collections.List<PharmaceuticalFormDto>?  {
+    suspend fun listPharmaceuticalForms() : kotlin.collections.List<PharmaceuticalFormDto>  {
         val localVariableConfig = listPharmaceuticalFormsRequestConfig()
 
         return request<Unit, kotlin.collections.List<PharmaceuticalFormDto>>(
@@ -1165,7 +1165,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listSubstances() : kotlin.collections.List<SubstanceDto>?  {
+    suspend fun listSubstances() : kotlin.collections.List<SubstanceDto>  {
         val localVariableConfig = listSubstancesRequestConfig()
 
         return request<Unit, kotlin.collections.List<SubstanceDto>>(
@@ -1203,7 +1203,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listVmpGroupsByVmpGroupCodes(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<VmpGroupDto>?  {
+    suspend fun listVmpGroupsByVmpGroupCodes(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<VmpGroupDto>  {
         val localVariableConfig = listVmpGroupsByVmpGroupCodesRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<VmpGroupDto>>(
@@ -1242,7 +1242,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listVmpsByGroupIds(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<VmpDto>?  {
+    suspend fun listVmpsByGroupIds(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<VmpDto>  {
         val localVariableConfig = listVmpsByGroupIdsRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<VmpDto>>(
@@ -1281,7 +1281,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listVmpsByVmpCodes(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<VmpDto>?  {
+    suspend fun listVmpsByVmpCodes(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<VmpDto>  {
         val localVariableConfig = listVmpsByVmpCodesRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<VmpDto>>(

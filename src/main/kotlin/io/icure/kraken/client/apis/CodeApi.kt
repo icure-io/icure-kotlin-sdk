@@ -50,7 +50,7 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createCode(codeDto: CodeDto) : CodeDto?  {
+    suspend fun createCode(codeDto: CodeDto) : CodeDto  {
         val localVariableConfig = createCodeRequestConfig(codeDto = codeDto)
 
         return request<CodeDto, CodeDto>(
@@ -95,7 +95,7 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun filterCodesBy(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, skip: kotlin.Int?, sort: kotlin.String?, desc: kotlin.Boolean?, filterChainCode: FilterChainCode?) : PaginatedListCodeDto?  {
+    suspend fun filterCodesBy(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, skip: kotlin.Int?, sort: kotlin.String?, desc: kotlin.Boolean?, filterChainCode: FilterChainCode?) : PaginatedListCodeDto  {
         val localVariableConfig = filterCodesByRequestConfig(startKey = startKey, startDocumentId = startDocumentId, limit = limit, skip = skip, sort = sort, desc = desc, filterChainCode = filterChainCode)
 
         return request<FilterChainCode, PaginatedListCodeDto>(
@@ -161,7 +161,7 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findCodeTypes(region: kotlin.String?, type: kotlin.String?) : kotlin.collections.List<kotlin.String>?  {
+    suspend fun findCodeTypes(region: kotlin.String?, type: kotlin.String?) : kotlin.collections.List<kotlin.String>  {
         val localVariableConfig = findCodeTypesRequestConfig(region = region, type = type)
 
         return request<Unit, kotlin.collections.List<kotlin.String>>(
@@ -212,7 +212,7 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findCodes(region: kotlin.String?, type: kotlin.String?, code: kotlin.String?, version: kotlin.String?) : kotlin.collections.List<CodeDto>?  {
+    suspend fun findCodes(region: kotlin.String?, type: kotlin.String?, code: kotlin.String?, version: kotlin.String?) : kotlin.collections.List<CodeDto>  {
         val localVariableConfig = findCodesRequestConfig(region = region, type = type, code = code, version = version)
 
         return request<Unit, kotlin.collections.List<CodeDto>>(
@@ -274,7 +274,7 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findPaginatedCodes(region: kotlin.String?, type: kotlin.String?, code: kotlin.String?, version: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListCodeDto?  {
+    suspend fun findPaginatedCodes(region: kotlin.String?, type: kotlin.String?, code: kotlin.String?, version: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListCodeDto  {
         val localVariableConfig = findPaginatedCodesRequestConfig(region = region, type = type, code = code, version = version, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListCodeDto>(
@@ -348,7 +348,7 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findPaginatedCodesByLabel(region: kotlin.String?, types: kotlin.String?, language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListCodeDto?  {
+    suspend fun findPaginatedCodesByLabel(region: kotlin.String?, types: kotlin.String?, language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListCodeDto  {
         val localVariableConfig = findPaginatedCodesByLabelRequestConfig(region = region, types = types, language = language, label = label, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListCodeDto>(
@@ -420,7 +420,7 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findPaginatedCodesWithLink(linkType: kotlin.String, linkedId: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListCodeDto?  {
+    suspend fun findPaginatedCodesWithLink(linkType: kotlin.String, linkedId: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListCodeDto  {
         val localVariableConfig = findPaginatedCodesWithLinkRequestConfig(linkType = linkType, linkedId = linkedId, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListCodeDto>(
@@ -478,7 +478,7 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findTagTypes(region: kotlin.String?, type: kotlin.String?) : kotlin.collections.List<kotlin.String>?  {
+    suspend fun findTagTypes(region: kotlin.String?, type: kotlin.String?) : kotlin.collections.List<kotlin.String>  {
         val localVariableConfig = findTagTypesRequestConfig(region = region, type = type)
 
         return request<Unit, kotlin.collections.List<kotlin.String>>(
@@ -526,7 +526,7 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getCode(codeId: kotlin.String) : CodeDto?  {
+    suspend fun getCode(codeId: kotlin.String) : CodeDto  {
         val localVariableConfig = getCodeRequestConfig(codeId = codeId)
 
         return request<Unit, CodeDto>(
@@ -567,7 +567,7 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getCodeWithParts(type: kotlin.String, code: kotlin.String, version: kotlin.String) : CodeDto?  {
+    suspend fun getCodeWithParts(type: kotlin.String, code: kotlin.String, version: kotlin.String) : CodeDto  {
         val localVariableConfig = getCodeWithPartsRequestConfig(type = type, code = code, version = version)
 
         return request<Unit, CodeDto>(
@@ -608,7 +608,7 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getCodes(codeIds: kotlin.String) : kotlin.collections.List<CodeDto>?  {
+    suspend fun getCodes(codeIds: kotlin.String) : kotlin.collections.List<CodeDto>  {
         val localVariableConfig = getCodesRequestConfig(codeIds = codeIds)
 
         return request<Unit, kotlin.collections.List<CodeDto>>(
@@ -647,7 +647,7 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyCode(codeDto: CodeDto) : CodeDto?  {
+    suspend fun modifyCode(codeDto: CodeDto) : CodeDto  {
         val localVariableConfig = modifyCodeRequestConfig(codeDto = codeDto)
 
         return request<CodeDto, CodeDto>(

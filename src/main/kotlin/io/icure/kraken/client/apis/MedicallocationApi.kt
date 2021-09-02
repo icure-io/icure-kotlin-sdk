@@ -49,7 +49,7 @@ class MedicallocationApi(basePath: kotlin.String = defaultBasePath, webClient: W
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createMedicalLocation(medicalLocationDto: MedicalLocationDto) : MedicalLocationDto?  {
+    suspend fun createMedicalLocation(medicalLocationDto: MedicalLocationDto) : MedicalLocationDto  {
         val localVariableConfig = createMedicalLocationRequestConfig(medicalLocationDto = medicalLocationDto)
 
         return request<MedicalLocationDto, MedicalLocationDto>(
@@ -88,7 +88,7 @@ class MedicallocationApi(basePath: kotlin.String = defaultBasePath, webClient: W
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteMedicalLocation(locationIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
+    suspend fun deleteMedicalLocation(locationIds: kotlin.String) : kotlin.collections.List<DocIdentifier>  {
         val localVariableConfig = deleteMedicalLocationRequestConfig(locationIds = locationIds)
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
@@ -127,7 +127,7 @@ class MedicallocationApi(basePath: kotlin.String = defaultBasePath, webClient: W
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getMedicalLocation(locationId: kotlin.String) : MedicalLocationDto?  {
+    suspend fun getMedicalLocation(locationId: kotlin.String) : MedicalLocationDto  {
         val localVariableConfig = getMedicalLocationRequestConfig(locationId = locationId)
 
         return request<Unit, MedicalLocationDto>(
@@ -165,7 +165,7 @@ class MedicallocationApi(basePath: kotlin.String = defaultBasePath, webClient: W
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getMedicalLocations() : kotlin.collections.List<MedicalLocationDto>?  {
+    suspend fun getMedicalLocations() : kotlin.collections.List<MedicalLocationDto>  {
         val localVariableConfig = getMedicalLocationsRequestConfig()
 
         return request<Unit, kotlin.collections.List<MedicalLocationDto>>(
@@ -203,7 +203,7 @@ class MedicallocationApi(basePath: kotlin.String = defaultBasePath, webClient: W
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyMedicalLocation(medicalLocationDto: MedicalLocationDto) : MedicalLocationDto?  {
+    suspend fun modifyMedicalLocation(medicalLocationDto: MedicalLocationDto) : MedicalLocationDto  {
         val localVariableConfig = modifyMedicalLocationRequestConfig(medicalLocationDto = medicalLocationDto)
 
         return request<MedicalLocationDto, MedicalLocationDto>(
