@@ -59,6 +59,7 @@ dependencies {
     implementation(group = "org.mapstruct", name = "mapstruct", version = "1.3.1.Final")
     implementation(group = "com.github.ben-manes.caffeine", name = "caffeine", version = "3.0.3")
 
+    implementation(group = "io.projectreactor.netty", name = "reactor-netty", version = "1.0.10")
     // Bouncy Castle
     implementation(group = "org.bouncycastle", name = "bcprov-jdk15on", version = "1.69")
     implementation(group = "org.bouncycastle", name = "bcmail-jdk15on", version = "1.69")
