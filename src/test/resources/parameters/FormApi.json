@@ -1,0 +1,87 @@
+{
+  "beforeElements": {
+    "bodies": null
+  },
+  "afterElements": {
+    "family": "healthdata",
+    "deleteIds": ["e283f27b-47d5-40a7-8154-d466a287ede8"]
+  },
+  "convertLegacyFormTemplates": {
+    "body": null
+  },
+  "createForm": {
+    "body": {"id": "e283f27b-47d5-40a7-8154-d466a287ede8", "layoutAttachmentId": "18a4c054058fb88f81d7d32a36d90e483ffe04ad200e9bf54cedd2319b62a82f", "group": {"guid": "86fa8b48-be94-4c49-93a5-82a3bf93aa02", "name": "Topaz"}, "name": "Cheville/Pied/oeil", "specialty": {"type": "CD-HCPARTY", "code": "deptgeneralpractice", "version": "1"}, "guid": "8aef6be3-615a-412a-9e92-4935c52a7c64", "author": "beead3d0-f0a9-4502-9adf-10de593e9110", "java_type": "org.taktik.icure.entities.FormTemplate", "rev_history": {}, "_attachments": {"18a4c054058fb88f81d7d32a36d90e483ffe04ad200e9bf54cedd2319b62a82f": {"content_type": "application/json", "revpos": 44, "digest": "md5-CfbWUBUa+fToxPbArU5Gnw==", "length": 1332, "stub": true}}}
+  },
+  "createFormTemplate": {
+    "body": null
+  },
+  "deleteFormTemplate": {
+    "formTemplateId": null
+  },
+  "deleteForms": {
+    "formIds": null
+  },
+  "findByHCPartyPatientSecretFKeys": {
+    "hcPartyId": null, 
+    "secretFKeys": null, 
+    "healthElementId": null, 
+    "planOfActionId": null, 
+    "formTemplateId": null
+  },
+  "findDelegationsStubsByHCPartyPatientSecretFKeys": {
+    "hcPartyId": "a7dd149c-8977-4e74-9ba9-8bd143372bb4",
+    "secretFKeys": "fd8f697f-3eea-4701-8f69-7f3eea97013e"
+  },
+  "findFormTemplates": {
+    "loadLayout": true
+  },
+  "findFormTemplatesBySpeciality": {
+    "specialityCode": "deptgeneralpractice",
+    "loadLayout": true
+  },
+  "getChildren": {
+    "formId": null, 
+    "hcPartyId": null
+  },
+  "getForm": {
+    "formId": "00018982-33ef-4e09-8189-8233ef5e0935"
+  },
+  "getFormTemplate": {
+    "formTemplateId": "0762f19b-6886-4dfd-a2f1-9b68869dfda2"
+  },
+  "getFormTemplatesByGuid": {
+    "formTemplateGuid": "2c07b938-f6dd-4ba7-9d21-70824249936a",
+    "specialityCode": "deptgeneralpractice"
+  },
+  "getForms": {
+    "body": {
+      "ids": [
+        "00018982-33ef-4e09-8189-8233ef5e0935",
+        "0023a21b-0e51-4a79-973f-fa07583f1fb5"
+      ]
+    }
+  },
+  "modifyForm": {
+    "body": {"id": "e283f27b-47d5-40a7-8154-d466a287ede8", "rev": "1-58f4a37b08ac594ea5eb99eeada26afa", "author": "ebd30407-9f33-4cd5-9999-079f334cd5e8", "responsible": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98", "codes": [], "secretForeignKeys": [], "cryptedForeignKeys": {}, "delegations": {}, "encryptionKeys": {}, "dashboardIds": [], "java_type": "org.taktik.icure.entities.Form", "rev_history": {}, "descr": "testDescription"}
+  },
+  "modifyForms": {
+    "body": null
+  },
+  "newDelegations": {
+    "formId": null, 
+    "body": null
+  },
+  "setAttachmentMulti": {
+    "formTemplateId": null, 
+    "attachment": null
+  },
+  "setFormsDelegations": {
+    "body": null
+  },
+  "updateFormTemplate": {
+    "formTemplateId": null, 
+    "body": null
+  },
+  "fallback": {
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "afterElements": {
+    "family": "base",
+    "deleteIds": ["customTests|1234|1.0", "customTests|12345|1.0"]
+  },
+  "createTarification": {
+    "body": {
+      "regions": [
+        "be"
+      ],
+      "type": "customTests",
+      "version": "1.0",
+      "code": "1234"
+    }
+  },
+  "findPaginatedTarifications": {
+    "region": "fr",
+    "type": "INAMI-RIZIV",
+    "tarification": null, 
+    "version": null, 
+    "startDocumentId": null, 
+    "limit": 10
+  },
+  "findPaginatedTarificationsByLabel": {
+    "region": "be",
+    "types": "INAMI-RIZIV",
+    "language": "fr",
+    "label": "Kyste",
+    "startDocumentId": "INAMI-RIZIV|229235|1.0",
+    "limit": 5
+  },
+  "findTarifications": {
+    "region": "fr",
+    "type": "INAMI-RIZIV",
+    "tarification": "INAMI-RIZIV|229235|1.0",
+    "version": null
+  },
+  "getTarification": {
+    "tarificationId": "INAMI-RIZIV|101010|1.0"
+  },
+  "getTarificationWithParts": {
+    "type": "INAMI-RIZIV",
+    "tarification": "229235",
+    "version": "1.0"
+  },
+  "getTarifications": {
+    "body": {
+      "ids" : ["INAMI-RIZIV|101010|1.0", "INAMI-RIZIV|101356|1.0"]
+    }
+  },
+  "modifyTarification": {
+    "autoRev" : true,
+    "body": {
+      "id" : "customTests|12345|1.0",
+      "type": "customTests",
+      "version": "1.0",
+      "code": "12345",
+      "regions" : [
+        "fr"
+      ]
+    }
+  },
+  
+  "fallback": {
+  },
+  "beforeElements": {
+    "bodies": [
+      {
+        "regions": [
+          "be"
+        ],
+        "type": "customTests",
+        "version": "1.0",
+        "code": "12345"
+      }
+    ]
+  }
+}

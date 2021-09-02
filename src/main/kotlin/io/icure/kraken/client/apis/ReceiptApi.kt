@@ -49,7 +49,7 @@ class ReceiptApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createReceipt(receiptDto: ReceiptDto) : ReceiptDto?  {
+    suspend fun createReceipt(receiptDto: ReceiptDto) : ReceiptDto  {
         val localVariableConfig = createReceiptRequestConfig(receiptDto = receiptDto)
 
         return request<ReceiptDto, ReceiptDto>(
@@ -88,7 +88,7 @@ class ReceiptApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteReceipt(receiptIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
+    suspend fun deleteReceipt(receiptIds: kotlin.String) : kotlin.collections.List<DocIdentifier>  {
         val localVariableConfig = deleteReceiptRequestConfig(receiptIds = receiptIds)
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
@@ -127,7 +127,7 @@ class ReceiptApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getReceipt(receiptId: kotlin.String) : ReceiptDto?  {
+    suspend fun getReceipt(receiptId: kotlin.String) : ReceiptDto  {
         val localVariableConfig = getReceiptRequestConfig(receiptId = receiptId)
 
         return request<Unit, ReceiptDto>(
@@ -161,17 +161,17 @@ class ReceiptApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param receiptId  
     * @param attachmentId  
     * @param enckeys  
-    * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
+    * @return java.io.File
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getReceiptAttachment(receiptId: kotlin.String, attachmentId: kotlin.String, enckeys: kotlin.String) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>?  {
+    suspend fun getReceiptAttachment(receiptId: kotlin.String, attachmentId: kotlin.String, enckeys: kotlin.String) : java.io.File  {
         val localVariableConfig = getReceiptAttachmentRequestConfig(receiptId = receiptId, attachmentId = attachmentId, enckeys = enckeys)
 
-        return request<Unit, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
+        return request<Unit, java.io.File>(
             localVariableConfig
         )
     }
@@ -212,7 +212,7 @@ class ReceiptApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listByReference(ref: kotlin.String) : kotlin.collections.List<ReceiptDto>?  {
+    suspend fun listByReference(ref: kotlin.String) : kotlin.collections.List<ReceiptDto>  {
         val localVariableConfig = listByReferenceRequestConfig(ref = ref)
 
         return request<Unit, kotlin.collections.List<ReceiptDto>>(
@@ -251,7 +251,7 @@ class ReceiptApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyReceipt(receiptDto: ReceiptDto) : ReceiptDto?  {
+    suspend fun modifyReceipt(receiptDto: ReceiptDto) : ReceiptDto  {
         val localVariableConfig = modifyReceiptRequestConfig(receiptDto = receiptDto)
 
         return request<ReceiptDto, ReceiptDto>(
@@ -293,10 +293,10 @@ class ReceiptApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setReceiptAttachment(receiptId: kotlin.String, blobType: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, enckeys: kotlin.String?) : ReceiptDto?  {
+    suspend fun setReceiptAttachment(receiptId: kotlin.String, blobType: kotlin.String, body: java.io.File, enckeys: kotlin.String?) : ReceiptDto  {
         val localVariableConfig = setReceiptAttachmentRequestConfig(receiptId = receiptId, blobType = blobType, body = body, enckeys = enckeys)
 
-        return request<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, ReceiptDto>(
+        return request<java.io.File, ReceiptDto>(
             localVariableConfig
         )
     }
@@ -310,7 +310,7 @@ class ReceiptApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param enckeys  (optional)
     * @return RequestConfig
     */
-    fun setReceiptAttachmentRequestConfig(receiptId: kotlin.String, blobType: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, enckeys: kotlin.String?) : RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
+    fun setReceiptAttachmentRequestConfig(receiptId: kotlin.String, blobType: kotlin.String, body: java.io.File, enckeys: kotlin.String?) : RequestConfig<java.io.File> {
         val localVariableBody = body
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {

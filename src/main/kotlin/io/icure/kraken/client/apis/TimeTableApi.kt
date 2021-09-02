@@ -49,7 +49,7 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTimeTable(timeTableDto: TimeTableDto) : TimeTableDto?  {
+    suspend fun createTimeTable(timeTableDto: TimeTableDto) : TimeTableDto  {
         val localVariableConfig = createTimeTableRequestConfig(timeTableDto = timeTableDto)
 
         return request<TimeTableDto, TimeTableDto>(
@@ -88,7 +88,7 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteTimeTable(timeTableIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
+    suspend fun deleteTimeTable(timeTableIds: kotlin.String) : kotlin.collections.List<DocIdentifier>  {
         val localVariableConfig = deleteTimeTableRequestConfig(timeTableIds = timeTableIds)
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
@@ -127,7 +127,7 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTimeTable(timeTableId: kotlin.String) : TimeTableDto?  {
+    suspend fun getTimeTable(timeTableId: kotlin.String) : TimeTableDto  {
         val localVariableConfig = getTimeTableRequestConfig(timeTableId = timeTableId)
 
         return request<Unit, TimeTableDto>(
@@ -166,7 +166,7 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTimeTablesByAgendaId(agendaId: kotlin.String) : kotlin.collections.List<TimeTableDto>?  {
+    suspend fun getTimeTablesByAgendaId(agendaId: kotlin.String) : kotlin.collections.List<TimeTableDto>  {
         val localVariableConfig = getTimeTablesByAgendaIdRequestConfig(agendaId = agendaId)
 
         return request<Unit, kotlin.collections.List<TimeTableDto>>(
@@ -210,7 +210,7 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTimeTablesByPeriodAndAgendaId(startDate: kotlin.Long, endDate: kotlin.Long, agendaId: kotlin.String) : kotlin.collections.List<TimeTableDto>?  {
+    suspend fun getTimeTablesByPeriodAndAgendaId(startDate: kotlin.Long, endDate: kotlin.Long, agendaId: kotlin.String) : kotlin.collections.List<TimeTableDto>  {
         val localVariableConfig = getTimeTablesByPeriodAndAgendaIdRequestConfig(startDate = startDate, endDate = endDate, agendaId = agendaId)
 
         return request<Unit, kotlin.collections.List<TimeTableDto>>(
@@ -256,7 +256,7 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTimeTable(timeTableDto: TimeTableDto) : TimeTableDto?  {
+    suspend fun modifyTimeTable(timeTableDto: TimeTableDto) : TimeTableDto  {
         val localVariableConfig = modifyTimeTableRequestConfig(timeTableDto = timeTableDto)
 
         return request<TimeTableDto, TimeTableDto>(

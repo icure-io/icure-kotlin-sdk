@@ -1,0 +1,63 @@
+{
+  "beforeElements": {
+    "bodies": [
+      {
+        "id": "2266191a-c0e1-42d0-89a4-89abd288b000",
+        "responsible": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98"
+      },
+      {
+        "id": "2266191a-c0e1-42d0-89a4-89abd288b001",
+        "responsible": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98"
+      },
+      {
+        "id": "2266191a-c0e1-42d0-89a4-89abd288b002",
+        "responsible": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98"
+      },
+      {"id": "eae45415-893f-4e0e-917c-ef3bca301e81", "author": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98", "responsible": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98", "codes": [], "tags": [], "secretForeignKeys": [], "cryptedForeignKeys": {}, "delegations": {}, "encryptionKeys": {}, "java_type": "org.taktik.icure.entities.Classification", "rev_history": {}}
+    ]
+  },
+  "commentedAfterElements": {
+    "family": "healthdata",
+    "deleteIds": ["2266191a-c0e1-42d0-89a4-89abd288b000", "2266191a-c0e1-42d0-89a4-89abd288b001", "2266191a-c0e1-42d0-89a4-89abd288b002", "2266191a-c0e1-42d0-89a4-89abd288b005"]
+  },
+  "createClassification": {
+    "body": {
+      "id": "2266191a-c0e1-42d0-89a4-89abd288b005",
+      "responsible": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98"
+    }
+  },
+  "deleteClassifications": {
+    "classificationIds": "2266191a-c0e1-42d0-89a4-89abd288b001"
+  },
+  "findByHCPartyPatientSecretFKeys": {
+    "hcPartyId": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98",
+    "secretFKeys": "40627245-9272-4652-b316-d9246c5b666a"
+  },
+  "getClassification": {
+    "credentialsFile": ".credentialsReadWrite",
+    "classificationId": "9fa6b64b-dec1-4da1-a6b6-4bdec11da18d"
+  },
+  "getClassificationByHcPartyId": {
+    "comment": "wrong, needs to be renamed! it's just getClassificationsByIds",
+    "credentialsFile": ".credentialsReadWrite",
+    "ids": "9fa6b64b-dec1-4da1-a6b6-4bdec11da18d"
+  },
+  "modifyClassification": {
+    "autoRev": true,
+    "body": {
+      "id": "2266191a-c0e1-42d0-89a4-89abd288b000",
+      "responsible": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98"
+    }
+  },
+  "newDelegations": {
+    "classificationId": "eae45415-893f-4e0e-917c-ef3bca301e81",
+    "body": [{"delegatedTo": "67fe7079-0fe9-4574-8665-23dcff91578d", "key": "f9cea2dc-5b06-47c4-a8ff-4a60e0849192", "owner": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98", "tag": "string"}]
+  },
+  "setClassificationsDelegations": {
+    "skipEndpoint": true,
+    "body": null
+  },
+  
+  "fallback": {
+  }
+}

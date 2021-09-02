@@ -53,7 +53,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createForm(formDto: FormDto) : FormDto?  {
+    suspend fun createForm(formDto: FormDto) : FormDto  {
         val localVariableConfig = createFormRequestConfig(formDto = formDto)
 
         return request<FormDto, FormDto>(
@@ -92,7 +92,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createFormTemplate(formTemplateDto: FormTemplateDto) : FormTemplateDto?  {
+    suspend fun createFormTemplate(formTemplateDto: FormTemplateDto) : FormTemplateDto  {
         val localVariableConfig = createFormTemplateRequestConfig(formTemplateDto = formTemplateDto)
 
         return request<FormTemplateDto, FormTemplateDto>(
@@ -131,7 +131,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createForms(formDto: kotlin.collections.List<FormDto>) : kotlin.collections.List<FormDto>?  {
+    suspend fun createForms(formDto: kotlin.collections.List<FormDto>) : kotlin.collections.List<FormDto>  {
         val localVariableConfig = createFormsRequestConfig(formDto = formDto)
 
         return request<kotlin.collections.List<FormDto>, kotlin.collections.List<FormDto>>(
@@ -170,7 +170,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteFormTemplate(formTemplateId: kotlin.String) : DocIdentifier?  {
+    suspend fun deleteFormTemplate(formTemplateId: kotlin.String) : DocIdentifier  {
         val localVariableConfig = deleteFormTemplateRequestConfig(formTemplateId = formTemplateId)
 
         return request<Unit, DocIdentifier>(
@@ -209,7 +209,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteForms(formIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
+    suspend fun deleteForms(formIds: kotlin.String) : kotlin.collections.List<DocIdentifier>  {
         val localVariableConfig = deleteFormsRequestConfig(formIds = formIds)
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
@@ -248,7 +248,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findFormTemplates(loadLayout: kotlin.Boolean?) : kotlin.collections.List<FormTemplateDto>?  {
+    suspend fun findFormTemplates(loadLayout: kotlin.Boolean?) : kotlin.collections.List<FormTemplateDto>  {
         val localVariableConfig = findFormTemplatesRequestConfig(loadLayout = loadLayout)
 
         return request<Unit, kotlin.collections.List<FormTemplateDto>>(
@@ -293,7 +293,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findFormTemplatesBySpeciality(specialityCode: kotlin.String, loadLayout: kotlin.Boolean?) : kotlin.collections.List<FormTemplateDto>?  {
+    suspend fun findFormTemplatesBySpeciality(specialityCode: kotlin.String, loadLayout: kotlin.Boolean?) : kotlin.collections.List<FormTemplateDto>  {
         val localVariableConfig = findFormTemplatesBySpecialityRequestConfig(specialityCode = specialityCode, loadLayout = loadLayout)
 
         return request<Unit, kotlin.collections.List<FormTemplateDto>>(
@@ -342,7 +342,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findFormsByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String, healthElementId: kotlin.String?, planOfActionId: kotlin.String?, formTemplateId: kotlin.String?) : kotlin.collections.List<FormDto>?  {
+    suspend fun findFormsByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String, healthElementId: kotlin.String?, planOfActionId: kotlin.String?, formTemplateId: kotlin.String?) : kotlin.collections.List<FormDto>  {
         val localVariableConfig = findFormsByHCPartyPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys, healthElementId = healthElementId, planOfActionId = planOfActionId, formTemplateId = formTemplateId)
 
         return request<Unit, kotlin.collections.List<FormDto>>(
@@ -399,7 +399,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findFormsDelegationsStubsByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<IcureStubDto>?  {
+    suspend fun findFormsDelegationsStubsByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<IcureStubDto>  {
         val localVariableConfig = findFormsDelegationsStubsByHCPartyPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
 
         return request<Unit, kotlin.collections.List<IcureStubDto>>(
@@ -444,7 +444,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getChildrenForms(formId: kotlin.String, hcPartyId: kotlin.String) : kotlin.collections.List<FormDto>?  {
+    suspend fun getChildrenForms(formId: kotlin.String, hcPartyId: kotlin.String) : kotlin.collections.List<FormDto>  {
         val localVariableConfig = getChildrenFormsRequestConfig(formId = formId, hcPartyId = hcPartyId)
 
         return request<Unit, kotlin.collections.List<FormDto>>(
@@ -484,7 +484,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getForm(formId: kotlin.String) : FormDto?  {
+    suspend fun getForm(formId: kotlin.String) : FormDto  {
         val localVariableConfig = getFormRequestConfig(formId = formId)
 
         return request<Unit, FormDto>(
@@ -523,7 +523,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getFormByLogicalUuid(logicalUuid: kotlin.String) : FormDto?  {
+    suspend fun getFormByLogicalUuid(logicalUuid: kotlin.String) : FormDto  {
         val localVariableConfig = getFormByLogicalUuidRequestConfig(logicalUuid = logicalUuid)
 
         return request<Unit, FormDto>(
@@ -562,7 +562,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getFormByUniqueId(uniqueId: kotlin.String) : FormDto?  {
+    suspend fun getFormByUniqueId(uniqueId: kotlin.String) : FormDto  {
         val localVariableConfig = getFormByUniqueIdRequestConfig(uniqueId = uniqueId)
 
         return request<Unit, FormDto>(
@@ -601,7 +601,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getFormTemplate(formTemplateId: kotlin.String) : FormTemplateDto?  {
+    suspend fun getFormTemplate(formTemplateId: kotlin.String) : FormTemplateDto  {
         val localVariableConfig = getFormTemplateRequestConfig(formTemplateId = formTemplateId)
 
         return request<Unit, FormTemplateDto>(
@@ -641,7 +641,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getFormTemplatesByGuid(formTemplateGuid: kotlin.String, specialityCode: kotlin.String) : kotlin.collections.List<FormTemplateDto>?  {
+    suspend fun getFormTemplatesByGuid(formTemplateGuid: kotlin.String, specialityCode: kotlin.String) : kotlin.collections.List<FormTemplateDto>  {
         val localVariableConfig = getFormTemplatesByGuidRequestConfig(formTemplateGuid = formTemplateGuid, specialityCode = specialityCode)
 
         return request<Unit, kotlin.collections.List<FormTemplateDto>>(
@@ -681,7 +681,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getForms(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<FormDto>?  {
+    suspend fun getForms(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<FormDto>  {
         val localVariableConfig = getFormsRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<FormDto>>(
@@ -720,7 +720,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getFormsByLogicalUuid(logicalUuid: kotlin.String) : kotlin.collections.List<FormDto>?  {
+    suspend fun getFormsByLogicalUuid(logicalUuid: kotlin.String) : kotlin.collections.List<FormDto>  {
         val localVariableConfig = getFormsByLogicalUuidRequestConfig(logicalUuid = logicalUuid)
 
         return request<Unit, kotlin.collections.List<FormDto>>(
@@ -759,7 +759,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getFormsByUniqueId(uniqueId: kotlin.String) : kotlin.collections.List<FormDto>?  {
+    suspend fun getFormsByUniqueId(uniqueId: kotlin.String) : kotlin.collections.List<FormDto>  {
         val localVariableConfig = getFormsByUniqueIdRequestConfig(uniqueId = uniqueId)
 
         return request<Unit, kotlin.collections.List<FormDto>>(
@@ -798,7 +798,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyForm(formDto: FormDto) : FormDto?  {
+    suspend fun modifyForm(formDto: FormDto) : FormDto  {
         val localVariableConfig = modifyFormRequestConfig(formDto = formDto)
 
         return request<FormDto, FormDto>(
@@ -837,7 +837,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyForms(formDto: kotlin.collections.List<FormDto>) : kotlin.collections.List<FormDto>?  {
+    suspend fun modifyForms(formDto: kotlin.collections.List<FormDto>) : kotlin.collections.List<FormDto>  {
         val localVariableConfig = modifyFormsRequestConfig(formDto = formDto)
 
         return request<kotlin.collections.List<FormDto>, kotlin.collections.List<FormDto>>(
@@ -877,7 +877,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun newFormDelegations(formId: kotlin.String, delegationDto: kotlin.collections.List<DelegationDto>) : FormDto?  {
+    suspend fun newFormDelegations(formId: kotlin.String, delegationDto: kotlin.collections.List<DelegationDto>) : FormDto  {
         val localVariableConfig = newFormDelegationsRequestConfig(formId = formId, delegationDto = delegationDto)
 
         return request<kotlin.collections.List<DelegationDto>, FormDto>(
@@ -917,7 +917,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setFormsDelegations(icureStubDto: kotlin.collections.List<IcureStubDto>) : kotlin.collections.List<IcureStubDto>?  {
+    suspend fun setFormsDelegations(icureStubDto: kotlin.collections.List<IcureStubDto>) : kotlin.collections.List<IcureStubDto>  {
         val localVariableConfig = setFormsDelegationsRequestConfig(icureStubDto = icureStubDto)
 
         return request<kotlin.collections.List<IcureStubDto>, kotlin.collections.List<IcureStubDto>>(
@@ -957,7 +957,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setTemplateAttachmentMulti(formTemplateId: kotlin.String, attachment: kotlin.collections.List<kotlin.ByteArray>) : kotlin.String?  {
+    suspend fun setTemplateAttachmentMulti(formTemplateId: kotlin.String, attachment: kotlin.collections.List<kotlin.ByteArray>) : kotlin.String  {
         val localVariableConfig = setTemplateAttachmentMultiRequestConfig(formTemplateId = formTemplateId, attachment = attachment)
 
         return request<Map<String, Any?>, kotlin.String>(
@@ -998,7 +998,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun updateFormTemplate(formTemplateId: kotlin.String, formTemplateDto: FormTemplateDto) : FormTemplateDto?  {
+    suspend fun updateFormTemplate(formTemplateId: kotlin.String, formTemplateDto: FormTemplateDto) : FormTemplateDto  {
         val localVariableConfig = updateFormTemplateRequestConfig(formTemplateId = formTemplateId, formTemplateDto = formTemplateDto)
 
         return request<FormTemplateDto, FormTemplateDto>(

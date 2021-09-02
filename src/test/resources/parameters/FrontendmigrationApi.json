@@ -1,0 +1,28 @@
+{
+  "beforeElements": {
+    "bodies": null
+  },
+  "afterElements": {
+    "family": null,
+    "deleteIds": null
+  },
+  "createFrontEndMigration": {
+    "body": null
+  },
+  "deleteFrontEndMigration": {
+    "frontEndMigrationId": null
+  },
+  "getFrontEndMigration": {
+    "frontEndMigrationId": null
+  },
+  "getFrontEndMigrationByName": {
+    "frontEndMigrationName": null
+  },
+  "getFrontEndMigrations": {
+  },
+  "modifyFrontEndMigration": {
+    "body": null
+  },
+  "fallback": {
+  }
+}

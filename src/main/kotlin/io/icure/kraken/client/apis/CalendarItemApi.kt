@@ -51,7 +51,7 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createCalendarItem(calendarItemDto: CalendarItemDto) : CalendarItemDto?  {
+    suspend fun createCalendarItem(calendarItemDto: CalendarItemDto) : CalendarItemDto  {
         val localVariableConfig = createCalendarItemRequestConfig(calendarItemDto = calendarItemDto)
 
         return request<CalendarItemDto, CalendarItemDto>(
@@ -90,7 +90,7 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteCalendarItem(calendarItemIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
+    suspend fun deleteCalendarItem(calendarItemIds: kotlin.String) : kotlin.collections.List<DocIdentifier>  {
         val localVariableConfig = deleteCalendarItemRequestConfig(calendarItemIds = calendarItemIds)
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
@@ -130,7 +130,7 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findCalendarItemsByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<CalendarItemDto>?  {
+    suspend fun findCalendarItemsByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<CalendarItemDto>  {
         val localVariableConfig = findCalendarItemsByHCPartyPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
 
         return request<Unit, kotlin.collections.List<CalendarItemDto>>(
@@ -174,7 +174,7 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getCalendarItem(calendarItemId: kotlin.String) : CalendarItemDto?  {
+    suspend fun getCalendarItem(calendarItemId: kotlin.String) : CalendarItemDto  {
         val localVariableConfig = getCalendarItemRequestConfig(calendarItemId = calendarItemId)
 
         return request<Unit, CalendarItemDto>(
@@ -212,7 +212,7 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getCalendarItems() : kotlin.collections.List<CalendarItemDto>?  {
+    suspend fun getCalendarItems() : kotlin.collections.List<CalendarItemDto>  {
         val localVariableConfig = getCalendarItemsRequestConfig()
 
         return request<Unit, kotlin.collections.List<CalendarItemDto>>(
@@ -252,7 +252,7 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getCalendarItemsByPeriodAndHcPartyId(startDate: kotlin.Long, endDate: kotlin.Long, hcPartyId: kotlin.String) : kotlin.collections.List<CalendarItemDto>?  {
+    suspend fun getCalendarItemsByPeriodAndHcPartyId(startDate: kotlin.Long, endDate: kotlin.Long, hcPartyId: kotlin.String) : kotlin.collections.List<CalendarItemDto>  {
         val localVariableConfig = getCalendarItemsByPeriodAndHcPartyIdRequestConfig(startDate = startDate, endDate = endDate, hcPartyId = hcPartyId)
 
         return request<Unit, kotlin.collections.List<CalendarItemDto>>(
@@ -298,7 +298,7 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getCalendarItemsWithIds(listOfIdsDto: ListOfIdsDto?) : kotlin.collections.List<CalendarItemDto>?  {
+    suspend fun getCalendarItemsWithIds(listOfIdsDto: ListOfIdsDto?) : kotlin.collections.List<CalendarItemDto>  {
         val localVariableConfig = getCalendarItemsWithIdsRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<CalendarItemDto>>(
@@ -339,7 +339,7 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getCalendarsByPeriodAndAgendaId(startDate: kotlin.Long, endDate: kotlin.Long, agendaId: kotlin.String) : kotlin.collections.List<CalendarItemDto>?  {
+    suspend fun getCalendarsByPeriodAndAgendaId(startDate: kotlin.Long, endDate: kotlin.Long, agendaId: kotlin.String) : kotlin.collections.List<CalendarItemDto>  {
         val localVariableConfig = getCalendarsByPeriodAndAgendaIdRequestConfig(startDate = startDate, endDate = endDate, agendaId = agendaId)
 
         return request<Unit, kotlin.collections.List<CalendarItemDto>>(
@@ -385,7 +385,7 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyCalendarItem(calendarItemDto: CalendarItemDto) : CalendarItemDto?  {
+    suspend fun modifyCalendarItem(calendarItemDto: CalendarItemDto) : CalendarItemDto  {
         val localVariableConfig = modifyCalendarItemRequestConfig(calendarItemDto = calendarItemDto)
 
         return request<CalendarItemDto, CalendarItemDto>(
@@ -424,7 +424,7 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setCalendarItemsDelegations(icureStubDto: kotlin.collections.List<IcureStubDto>?) : kotlin.collections.List<CalendarItemDto>?  {
+    suspend fun setCalendarItemsDelegations(icureStubDto: kotlin.collections.List<IcureStubDto>?) : kotlin.collections.List<CalendarItemDto>  {
         val localVariableConfig = setCalendarItemsDelegationsRequestConfig(icureStubDto = icureStubDto)
 
         return request<kotlin.collections.List<IcureStubDto>, kotlin.collections.List<CalendarItemDto>>(

@@ -48,7 +48,7 @@ class MedexApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun generateMedex(medexInfoDto: MedexInfoDto) : kotlin.String?  {
+    suspend fun generateMedex(medexInfoDto: MedexInfoDto) : kotlin.String  {
         val localVariableConfig = generateMedexRequestConfig(medexInfoDto = medexInfoDto)
 
         return request<MedexInfoDto, kotlin.String>(

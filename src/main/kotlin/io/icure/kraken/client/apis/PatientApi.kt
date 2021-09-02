@@ -57,7 +57,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun bulkCreatePatients(patientDto: kotlin.collections.List<PatientDto>) : kotlin.collections.List<IdWithRevDto>?  {
+    suspend fun bulkCreatePatients(patientDto: kotlin.collections.List<PatientDto>) : kotlin.collections.List<IdWithRevDto>  {
         val localVariableConfig = bulkCreatePatientsRequestConfig(patientDto = patientDto)
 
         return request<kotlin.collections.List<PatientDto>, kotlin.collections.List<IdWithRevDto>>(
@@ -96,7 +96,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun bulkCreatePatients1(patientDto: kotlin.collections.List<PatientDto>) : kotlin.collections.List<IdWithRevDto>?  {
+    suspend fun bulkCreatePatients1(patientDto: kotlin.collections.List<PatientDto>) : kotlin.collections.List<IdWithRevDto>  {
         val localVariableConfig = bulkCreatePatients1RequestConfig(patientDto = patientDto)
 
         return request<kotlin.collections.List<PatientDto>, kotlin.collections.List<IdWithRevDto>>(
@@ -135,7 +135,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun bulkUpdatePatients(patientDto: kotlin.collections.List<PatientDto>) : kotlin.collections.List<IdWithRevDto>?  {
+    suspend fun bulkUpdatePatients(patientDto: kotlin.collections.List<PatientDto>) : kotlin.collections.List<IdWithRevDto>  {
         val localVariableConfig = bulkUpdatePatientsRequestConfig(patientDto = patientDto)
 
         return request<kotlin.collections.List<PatientDto>, kotlin.collections.List<IdWithRevDto>>(
@@ -174,7 +174,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun bulkUpdatePatients1(patientDto: kotlin.collections.List<PatientDto>) : kotlin.collections.List<IdWithRevDto>?  {
+    suspend fun bulkUpdatePatients1(patientDto: kotlin.collections.List<PatientDto>) : kotlin.collections.List<IdWithRevDto>  {
         val localVariableConfig = bulkUpdatePatients1RequestConfig(patientDto = patientDto)
 
         return request<kotlin.collections.List<PatientDto>, kotlin.collections.List<IdWithRevDto>>(
@@ -213,7 +213,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun countOfPatients(hcPartyId: kotlin.String) : ContentDto?  {
+    suspend fun countOfPatients(hcPartyId: kotlin.String) : ContentDto  {
         val localVariableConfig = countOfPatientsRequestConfig(hcPartyId = hcPartyId)
 
         return request<Unit, ContentDto>(
@@ -252,7 +252,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createPatient(patientDto: PatientDto) : PatientDto?  {
+    suspend fun createPatient(patientDto: PatientDto) : PatientDto  {
         val localVariableConfig = createPatientRequestConfig(patientDto = patientDto)
 
         return request<PatientDto, PatientDto>(
@@ -291,7 +291,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deletePatient(patientIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
+    suspend fun deletePatient(patientIds: kotlin.String) : kotlin.collections.List<DocIdentifier>  {
         val localVariableConfig = deletePatientRequestConfig(patientIds = patientIds)
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
@@ -336,7 +336,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun filterPatientsBy(filterChainPatient: FilterChainPatient, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, skip: kotlin.Int?, sort: kotlin.String?, desc: kotlin.Boolean?) : PaginatedListPatientDto?  {
+    suspend fun filterPatientsBy(filterChainPatient: FilterChainPatient, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, skip: kotlin.Int?, sort: kotlin.String?, desc: kotlin.Boolean?) : PaginatedListPatientDto  {
         val localVariableConfig = filterPatientsByRequestConfig(filterChainPatient = filterChainPatient, startKey = startKey, startDocumentId = startDocumentId, limit = limit, skip = skip, sort = sort, desc = desc)
 
         return request<FilterChainPatient, PaginatedListPatientDto>(
@@ -406,7 +406,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findByAccessLogUserAfterDate(userId: kotlin.String, accessType: kotlin.String?, startDate: kotlin.Long?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListPatientDto?  {
+    suspend fun findByAccessLogUserAfterDate(userId: kotlin.String, accessType: kotlin.String?, startDate: kotlin.Long?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListPatientDto  {
         val localVariableConfig = findByAccessLogUserAfterDateRequestConfig(userId = userId, accessType = accessType, startDate = startDate, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListPatientDto>(
@@ -467,7 +467,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findByExternalId(externalId: kotlin.String) : PatientDto?  {
+    suspend fun findByExternalId(externalId: kotlin.String) : PatientDto  {
         val localVariableConfig = findByExternalIdRequestConfig(externalId = externalId)
 
         return request<Unit, PatientDto>(
@@ -511,7 +511,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findByNameBirthSsinAuto(healthcarePartyId: kotlin.String?, filterValue: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, sortDirection: kotlin.String?) : PaginatedListPatientDto?  {
+    suspend fun findByNameBirthSsinAuto(healthcarePartyId: kotlin.String?, filterValue: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, sortDirection: kotlin.String?) : PaginatedListPatientDto  {
         val localVariableConfig = findByNameBirthSsinAutoRequestConfig(healthcarePartyId = healthcarePartyId, filterValue = filterValue, startKey = startKey, startDocumentId = startDocumentId, limit = limit, sortDirection = sortDirection)
 
         return request<Unit, PaginatedListPatientDto>(
@@ -577,7 +577,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun fuzzySearch(firstName: kotlin.String?, lastName: kotlin.String?, dateOfBirth: kotlin.Int?) : kotlin.collections.List<PatientDto>?  {
+    suspend fun fuzzySearch(firstName: kotlin.String?, lastName: kotlin.String?, dateOfBirth: kotlin.Int?) : kotlin.collections.List<PatientDto>  {
         val localVariableConfig = fuzzySearchRequestConfig(firstName = firstName, lastName = lastName, dateOfBirth = dateOfBirth)
 
         return request<Unit, kotlin.collections.List<PatientDto>>(
@@ -629,7 +629,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getPatient(patientId: kotlin.String) : PatientDto?  {
+    suspend fun getPatient(patientId: kotlin.String) : PatientDto  {
         val localVariableConfig = getPatientRequestConfig(patientId = patientId)
 
         return request<Unit, PatientDto>(
@@ -668,7 +668,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getPatientHcPartyKeysForDelegate(patientId: kotlin.String) : kotlin.String?  {
+    suspend fun getPatientHcPartyKeysForDelegate(patientId: kotlin.String) : kotlin.String  {
         val localVariableConfig = getPatientHcPartyKeysForDelegateRequestConfig(patientId = patientId)
 
         return request<Unit, kotlin.String>(
@@ -707,7 +707,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getPatients(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<PatientDto>?  {
+    suspend fun getPatients(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<PatientDto>  {
         val localVariableConfig = getPatientsRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<PatientDto>>(
@@ -750,7 +750,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listDeletedPatients(startDate: kotlin.Long?, endDate: kotlin.Long?, desc: kotlin.Boolean?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListPatientDto?  {
+    suspend fun listDeletedPatients(startDate: kotlin.Long?, endDate: kotlin.Long?, desc: kotlin.Boolean?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListPatientDto  {
         val localVariableConfig = listDeletedPatientsRequestConfig(startDate = startDate, endDate = endDate, desc = desc, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListPatientDto>(
@@ -811,7 +811,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listDeletedPatientsByName(firstName: kotlin.String?, lastName: kotlin.String?) : kotlin.collections.List<PatientDto>?  {
+    suspend fun listDeletedPatientsByName(firstName: kotlin.String?, lastName: kotlin.String?) : kotlin.collections.List<PatientDto>  {
         val localVariableConfig = listDeletedPatientsByNameRequestConfig(firstName = firstName, lastName = lastName)
 
         return request<Unit, kotlin.collections.List<PatientDto>>(
@@ -859,7 +859,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listOfMergesAfter(date: kotlin.Long) : kotlin.collections.List<PatientDto>?  {
+    suspend fun listOfMergesAfter(date: kotlin.Long) : kotlin.collections.List<PatientDto>  {
         val localVariableConfig = listOfMergesAfterRequestConfig(date = date)
 
         return request<Unit, kotlin.collections.List<PatientDto>>(
@@ -901,7 +901,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listOfPatientsModifiedAfter(date: kotlin.Long, startKey: kotlin.Long?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListPatientDto?  {
+    suspend fun listOfPatientsModifiedAfter(date: kotlin.Long, startKey: kotlin.Long?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListPatientDto  {
         val localVariableConfig = listOfPatientsModifiedAfterRequestConfig(date = date, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListPatientDto>(
@@ -959,7 +959,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listPatients(hcPartyId: kotlin.String?, sortField: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, sortDirection: kotlin.String?) : PaginatedListPatientDto?  {
+    suspend fun listPatients(hcPartyId: kotlin.String?, sortField: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, sortDirection: kotlin.String?) : PaginatedListPatientDto  {
         val localVariableConfig = listPatientsRequestConfig(hcPartyId = hcPartyId, sortField = sortField, startKey = startKey, startDocumentId = startDocumentId, limit = limit, sortDirection = sortDirection)
 
         return request<Unit, PaginatedListPatientDto>(
@@ -1028,7 +1028,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listPatientsByHcParty(hcPartyId: kotlin.String, sortField: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, sortDirection: kotlin.String?) : PaginatedListPatientDto?  {
+    suspend fun listPatientsByHcParty(hcPartyId: kotlin.String, sortField: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, sortDirection: kotlin.String?) : PaginatedListPatientDto  {
         val localVariableConfig = listPatientsByHcPartyRequestConfig(hcPartyId = hcPartyId, sortField = sortField, startKey = startKey, startDocumentId = startDocumentId, limit = limit, sortDirection = sortDirection)
 
         return request<Unit, PaginatedListPatientDto>(
@@ -1092,7 +1092,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listPatientsIds(hcPartyId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListString?  {
+    suspend fun listPatientsIds(hcPartyId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListString  {
         val localVariableConfig = listPatientsIdsRequestConfig(hcPartyId = hcPartyId, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListString>(
@@ -1151,7 +1151,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listPatientsOfHcParty(hcPartyId: kotlin.String, sortField: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, sortDirection: kotlin.String?) : PaginatedListPatientDto?  {
+    suspend fun listPatientsOfHcParty(hcPartyId: kotlin.String, sortField: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, sortDirection: kotlin.String?) : PaginatedListPatientDto  {
         val localVariableConfig = listPatientsOfHcPartyRequestConfig(hcPartyId = hcPartyId, sortField = sortField, startKey = startKey, startDocumentId = startDocumentId, limit = limit, sortDirection = sortDirection)
 
         return request<Unit, PaginatedListPatientDto>(
@@ -1212,7 +1212,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun matchPatientsBy(abstractFilterDtoPatient: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.PatientDto>) : kotlin.collections.List<kotlin.String>?  {
+    suspend fun matchPatientsBy(abstractFilterDtoPatient: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.PatientDto>) : kotlin.collections.List<kotlin.String>  {
         val localVariableConfig = matchPatientsByRequestConfig(abstractFilterDtoPatient = abstractFilterDtoPatient)
 
         return request<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.PatientDto>, kotlin.collections.List<kotlin.String>>(
@@ -1252,7 +1252,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun mergeInto(toId: kotlin.String, fromIds: kotlin.String) : PatientDto?  {
+    suspend fun mergeInto(toId: kotlin.String, fromIds: kotlin.String) : PatientDto  {
         val localVariableConfig = mergeIntoRequestConfig(toId = toId, fromIds = fromIds)
 
         return request<Unit, PatientDto>(
@@ -1292,7 +1292,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyPatient(patientDto: PatientDto) : PatientDto?  {
+    suspend fun modifyPatient(patientDto: PatientDto) : PatientDto  {
         val localVariableConfig = modifyPatientRequestConfig(patientDto = patientDto)
 
         return request<PatientDto, PatientDto>(
@@ -1334,7 +1334,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyPatientReferral(patientId: kotlin.String, referralId: kotlin.String, start: kotlin.Long?, end: kotlin.Long?) : PatientDto?  {
+    suspend fun modifyPatientReferral(patientId: kotlin.String, referralId: kotlin.String, start: kotlin.Long?, end: kotlin.Long?) : PatientDto  {
         val localVariableConfig = modifyPatientReferralRequestConfig(patientId = patientId, referralId = referralId, start = start, end = end)
 
         return request<Unit, PatientDto>(
@@ -1385,7 +1385,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun newPatientDelegations(patientId: kotlin.String, delegationDto: kotlin.collections.List<DelegationDto>) : PatientDto?  {
+    suspend fun newPatientDelegations(patientId: kotlin.String, delegationDto: kotlin.collections.List<DelegationDto>) : PatientDto  {
         val localVariableConfig = newPatientDelegationsRequestConfig(patientId = patientId, delegationDto = delegationDto)
 
         return request<kotlin.collections.List<DelegationDto>, PatientDto>(
@@ -1425,7 +1425,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun undeletePatient(patientIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
+    suspend fun undeletePatient(patientIds: kotlin.String) : kotlin.collections.List<DocIdentifier>  {
         val localVariableConfig = undeletePatientRequestConfig(patientIds = patientIds)
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(

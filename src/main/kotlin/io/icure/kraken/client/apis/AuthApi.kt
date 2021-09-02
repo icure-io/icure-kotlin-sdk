@@ -49,7 +49,7 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun login(session: WebSession) : AuthenticationResponse?  {
+    suspend fun login(session: WebSession) : AuthenticationResponse  {
         val localVariableConfig = loginRequestConfig(session = session)
 
         return request<Unit, AuthenticationResponse>(
@@ -90,7 +90,7 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun logout() : AuthenticationResponse?  {
+    suspend fun logout() : AuthenticationResponse  {
         val localVariableConfig = logoutRequestConfig()
 
         return request<Unit, AuthenticationResponse>(
@@ -127,7 +127,7 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun logoutPost() : AuthenticationResponse?  {
+    suspend fun logoutPost() : AuthenticationResponse  {
         val localVariableConfig = logoutPostRequestConfig()
 
         return request<Unit, AuthenticationResponse>(
@@ -166,7 +166,7 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun token(method: kotlin.String, path: kotlin.String) : kotlin.String?  {
+    suspend fun token(method: kotlin.String, path: kotlin.String) : kotlin.String  {
         val localVariableConfig = tokenRequestConfig(method = method, path = path)
 
         return request<Unit, kotlin.String>(

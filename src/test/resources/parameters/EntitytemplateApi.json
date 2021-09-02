@@ -1,0 +1,36 @@
+{
+  "beforeElements": {
+    "bodies": null
+  },
+  "afterElements": {
+    "family": null,
+    "deleteIds": null
+  },
+  "createEntityTemplate": {
+    "skipEndpoint" : true,
+    "body": null
+  },
+  "findAllEntityTemplates": {
+    "type": "org.taktik.icure.entities.HealthElement",
+    "searchString": null, 
+    "includeEntities": true
+  },
+  "findEntityTemplates": {
+    "userId": "6a827943-68ed-474c-8279-4368ed774c2d",
+    "type": "org.taktik.icure.entities.embed.Medication",
+    "searchString": null, 
+    "includeEntities": true
+  },
+  "getEntityTemplate": {
+    "entityTemplateId": "aff3eb4c-a620-45f2-b3eb-4ca62035f2b9"
+  },
+  "getEntityTemplates": {
+    "entityTemplateIds": "078d3037-779a-4501-8d30-37779aa501db,2c625c9f-76fa-45f3-a25c-9f76faa5f39f"
+  },
+  "modifyEntityTemplate": {
+    "skipEndpoint" : true,
+    "body": null
+  },
+  "fallback": {
+  }
+}

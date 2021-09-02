@@ -56,7 +56,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getIndexingInfo() : IndexingInfoDto?  {
+    suspend fun getIndexingInfo() : IndexingInfoDto  {
         val localVariableConfig = getIndexingInfoRequestConfig()
 
         return request<Unit, IndexingInfoDto>(
@@ -93,7 +93,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getProcessInfo() : kotlin.String?  {
+    suspend fun getProcessInfo() : kotlin.String  {
         val localVariableConfig = getProcessInfoRequestConfig()
 
         return request<Unit, kotlin.String>(
@@ -130,7 +130,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getReplicationInfo() : ReplicationInfoDto?  {
+    suspend fun getReplicationInfo() : ReplicationInfoDto  {
         val localVariableConfig = getReplicationInfoRequestConfig()
 
         return request<Unit, ReplicationInfoDto>(
@@ -168,7 +168,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getReplicatorInfo(id: kotlin.String) : ReplicatorDocument?  {
+    suspend fun getReplicatorInfo(id: kotlin.String) : ReplicatorDocument  {
         val localVariableConfig = getReplicatorInfoRequestConfig(id = id)
 
         return request<Unit, ReplicatorDocument>(
@@ -206,7 +206,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getVersion() : kotlin.String?  {
+    suspend fun getVersion() : kotlin.String  {
         val localVariableConfig = getVersionRequestConfig()
 
         return request<Unit, kotlin.String>(
@@ -243,7 +243,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun isReady() : kotlin.String?  {
+    suspend fun isReady() : kotlin.String  {
         val localVariableConfig = isReadyRequestConfig()
 
         return request<Unit, kotlin.String>(
@@ -281,7 +281,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun resolveContactsConflicts(limit: kotlin.Int?) : kotlin.collections.List<ContactDto>?  {
+    suspend fun resolveContactsConflicts(limit: kotlin.Int?) : kotlin.collections.List<ContactDto>  {
         val localVariableConfig = resolveContactsConflictsRequestConfig(limit = limit)
 
         return request<Unit, kotlin.collections.List<ContactDto>>(
@@ -326,7 +326,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun resolveDocumentsConflicts(ids: kotlin.String?, limit: kotlin.Int?) : kotlin.collections.List<DocumentDto>?  {
+    suspend fun resolveDocumentsConflicts(ids: kotlin.String?, limit: kotlin.Int?) : kotlin.collections.List<DocumentDto>  {
         val localVariableConfig = resolveDocumentsConflictsRequestConfig(ids = ids, limit = limit)
 
         return request<Unit, kotlin.collections.List<DocumentDto>>(
@@ -374,7 +374,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun resolveFormsConflicts(limit: kotlin.Int?) : kotlin.collections.List<FormDto>?  {
+    suspend fun resolveFormsConflicts(limit: kotlin.Int?) : kotlin.collections.List<FormDto>  {
         val localVariableConfig = resolveFormsConflictsRequestConfig(limit = limit)
 
         return request<Unit, kotlin.collections.List<FormDto>>(
@@ -418,7 +418,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun resolveHealthElementsConflicts(limit: kotlin.Int?) : kotlin.collections.List<HealthElementDto>?  {
+    suspend fun resolveHealthElementsConflicts(limit: kotlin.Int?) : kotlin.collections.List<HealthElementDto>  {
         val localVariableConfig = resolveHealthElementsConflictsRequestConfig(limit = limit)
 
         return request<Unit, kotlin.collections.List<HealthElementDto>>(
@@ -462,7 +462,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun resolveInvoicesConflicts(limit: kotlin.Int?) : kotlin.collections.List<InvoiceDto>?  {
+    suspend fun resolveInvoicesConflicts(limit: kotlin.Int?) : kotlin.collections.List<InvoiceDto>  {
         val localVariableConfig = resolveInvoicesConflictsRequestConfig(limit = limit)
 
         return request<Unit, kotlin.collections.List<InvoiceDto>>(
@@ -506,7 +506,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun resolveMessagesConflicts(limit: kotlin.Int?) : kotlin.collections.List<MessageDto>?  {
+    suspend fun resolveMessagesConflicts(limit: kotlin.Int?) : kotlin.collections.List<MessageDto>  {
         val localVariableConfig = resolveMessagesConflictsRequestConfig(limit = limit)
 
         return request<Unit, kotlin.collections.List<MessageDto>>(
@@ -550,7 +550,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun resolvePatientsConflicts(limit: kotlin.Int?) : kotlin.collections.List<PatientDto>?  {
+    suspend fun resolvePatientsConflicts(limit: kotlin.Int?) : kotlin.collections.List<PatientDto>  {
         val localVariableConfig = resolvePatientsConflictsRequestConfig(limit = limit)
 
         return request<Unit, kotlin.collections.List<PatientDto>>(
@@ -595,7 +595,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun updateDesignDoc(entityName: kotlin.String, warmup: kotlin.Boolean?) : kotlin.Boolean?  {
+    suspend fun updateDesignDoc(entityName: kotlin.String, warmup: kotlin.Boolean?) : kotlin.Boolean  {
         val localVariableConfig = updateDesignDocRequestConfig(entityName = entityName, warmup = warmup)
 
         return request<Unit, kotlin.Boolean>(

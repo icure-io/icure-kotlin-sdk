@@ -50,7 +50,7 @@ class AccesslogApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createAccessLog(accessLogDto: AccessLogDto) : AccessLogDto?  {
+    suspend fun createAccessLog(accessLogDto: AccessLogDto) : AccessLogDto  {
         val localVariableConfig = createAccessLogRequestConfig(accessLogDto = accessLogDto)
 
         return request<AccessLogDto, AccessLogDto>(
@@ -89,7 +89,7 @@ class AccesslogApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteAccessLog(accessLogIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
+    suspend fun deleteAccessLog(accessLogIds: kotlin.String) : kotlin.collections.List<DocIdentifier>  {
         val localVariableConfig = deleteAccessLogRequestConfig(accessLogIds = accessLogIds)
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
@@ -129,7 +129,7 @@ class AccesslogApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findAccessLogsByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<AccessLogDto>?  {
+    suspend fun findAccessLogsByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<AccessLogDto>  {
         val localVariableConfig = findAccessLogsByHCPartyPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
 
         return request<Unit, kotlin.collections.List<AccessLogDto>>(
@@ -179,7 +179,7 @@ class AccesslogApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findByUserAfterDate(userId: kotlin.String, accessType: kotlin.String?, startDate: kotlin.Long?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, descending: kotlin.Boolean?) : PaginatedListAccessLogDto?  {
+    suspend fun findByUserAfterDate(userId: kotlin.String, accessType: kotlin.String?, startDate: kotlin.Long?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, descending: kotlin.Boolean?) : PaginatedListAccessLogDto  {
         val localVariableConfig = findByUserAfterDateRequestConfig(userId = userId, accessType = accessType, startDate = startDate, startKey = startKey, startDocumentId = startDocumentId, limit = limit, descending = descending)
 
         return request<Unit, PaginatedListAccessLogDto>(
@@ -245,7 +245,7 @@ class AccesslogApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getAccessLog(accessLogId: kotlin.String) : AccessLogDto?  {
+    suspend fun getAccessLog(accessLogId: kotlin.String) : AccessLogDto  {
         val localVariableConfig = getAccessLogRequestConfig(accessLogId = accessLogId)
 
         return request<Unit, AccessLogDto>(
@@ -289,7 +289,7 @@ class AccesslogApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listAccessLogs(fromEpoch: kotlin.Long?, toEpoch: kotlin.Long?, startKey: kotlin.Long?, startDocumentId: kotlin.String?, limit: kotlin.Int?, descending: kotlin.Boolean?) : PaginatedListAccessLogDto?  {
+    suspend fun listAccessLogs(fromEpoch: kotlin.Long?, toEpoch: kotlin.Long?, startKey: kotlin.Long?, startDocumentId: kotlin.String?, limit: kotlin.Int?, descending: kotlin.Boolean?) : PaginatedListAccessLogDto  {
         val localVariableConfig = listAccessLogsRequestConfig(fromEpoch = fromEpoch, toEpoch = toEpoch, startKey = startKey, startDocumentId = startDocumentId, limit = limit, descending = descending)
 
         return request<Unit, PaginatedListAccessLogDto>(
@@ -353,7 +353,7 @@ class AccesslogApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyAccessLog(accessLogDto: AccessLogDto) : AccessLogDto?  {
+    suspend fun modifyAccessLog(accessLogDto: AccessLogDto) : AccessLogDto  {
         val localVariableConfig = modifyAccessLogRequestConfig(accessLogDto = accessLogDto)
 
         return request<AccessLogDto, AccessLogDto>(

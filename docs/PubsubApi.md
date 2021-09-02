@@ -26,7 +26,7 @@ Offer auth data on previously agreed on secret bucket, data should be encrypted
 
 val apiInstance = PubsubApi()
 val bucket : kotlin.String = bucket_example // kotlin.String | 
-val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
+val body : java.io.File = BINARY_DATA_HERE // java.io.File | 
 try {
     val result : kotlin.collections.Map<kotlin.String, kotlin.Boolean> = apiInstance.offerAuth(bucket, body)
     println(result)
@@ -44,7 +44,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **bucket** | **kotlin.String**|  |
- **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
+ **body** | **java.io.File**|  |
 
 ### Return type
 
@@ -78,7 +78,7 @@ Publish value with key
 
 val apiInstance = PubsubApi()
 val key : kotlin.String = key_example // kotlin.String | 
-val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
+val body : java.io.File = BINARY_DATA_HERE // java.io.File | 
 try {
     val result : kotlin.collections.Map<kotlin.String, kotlin.Boolean> = apiInstance.pub(key, body)
     println(result)
@@ -96,7 +96,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **key** | **kotlin.String**|  |
- **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
+ **body** | **java.io.File**|  |
 
 ### Return type
 
@@ -116,7 +116,7 @@ Configure basicScheme:
 
 <a name="recoverAuth"></a>
 # **recoverAuth**
-> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; recoverAuth(bucket)
+> java.io.File recoverAuth(bucket)
 
 Recover auth data from secret bucket
 
@@ -131,7 +131,7 @@ Recover auth data from bucket, data should be encrypted
 val apiInstance = PubsubApi()
 val bucket : kotlin.String = bucket_example // kotlin.String | 
 try {
-    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.recoverAuth(bucket)
+    val result : java.io.File = apiInstance.recoverAuth(bucket)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling PubsubApi#recoverAuth")
@@ -150,7 +150,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**](kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;.md)
+[**java.io.File**](java.io.File.md)
 
 ### Authorization
 
@@ -166,7 +166,7 @@ Configure basicScheme:
 
 <a name="sub"></a>
 # **sub**
-> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; sub(key)
+> java.io.File sub(key)
 
 subscribe to data
 
@@ -181,7 +181,7 @@ Try to get published data
 val apiInstance = PubsubApi()
 val key : kotlin.String = key_example // kotlin.String | 
 try {
-    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.sub(key)
+    val result : java.io.File = apiInstance.sub(key)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling PubsubApi#sub")
@@ -200,7 +200,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**](kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;.md)
+[**java.io.File**](java.io.File.md)
 
 ### Authorization
 

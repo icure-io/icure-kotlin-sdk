@@ -1,0 +1,63 @@
+{
+  "afterElements": {
+    "family": "healthdata",
+    "deleteIds": ["fabc5f7c-1cc3-4385-a1f2-e3e04c059001", "fabc5f7c-1cc3-4385-a1f2-e3e04c059002", "fabc5f7c-1cc3-4385-a1f2-e3e04c059003"]
+  },
+  "createTimeTable": {
+    "body": {
+      "id" : "fabc5f7c-1cc3-4385-a1f2-e3e04c059003",
+      "name": "fromTests",
+      "agendaId": "fromTestsAgenda",
+      "startTime": 3,
+      "endTime": 5,
+      "items": [
+        {
+          "days": [
+            "day5"
+          ],
+          "hours": [
+            {
+              "startHour": 4,
+              "endHour": 5
+            }
+          ],
+          "calendarItemTypeId": "string",
+          "homeVisit": false,
+          "unavailable": true,
+          "placeId": "string"
+        }
+      ]
+
+    }
+  },
+  "deleteTimeTable": {
+    "timeTableIds": "fabc5f7c-1cc3-4385-a1f2-e3e04c059001"
+  },
+  "getTimeTable": {
+    "timeTableId": "11b8c317-8b38-4049-b8c3-178b3800490a"
+  },
+  "getTimeTablesByAgendaId": {
+    "agendaId": "agenda1"
+  },
+  "getTimeTablesByPeriodAndAgendaId": {
+    "startDate": 3,
+    "endDate": 5,
+    "agendaId": "agenda1"
+  },
+  "modifyTimeTable": {
+    "body": {
+      "id" : "fabc5f7c-1cc3-4385-a1f2-e3e04c059002",
+      "name" : "modifiedFromTests"
+    },
+    "autoRev" : true
+  },
+  
+  "fallback": {
+  },
+  "beforeElements": {
+    "bodies": [
+      {"id" : "fabc5f7c-1cc3-4385-a1f2-e3e04c059001", "name": "forTestDeletion", "agendaId": "fromTestsAgenda", "startTime": 3, "endTime": 5, "items": [{"days": ["day1"], "hours": [{"startHour": 4, "endHour": 5}], "calendarItemTypeId": "string", "homeVisit": false, "unavailable": true, "placeId": "string"}]},
+      {"id" : "fabc5f7c-1cc3-4385-a1f2-e3e04c059002", "name": "forTestModification", "agendaId": "fromTestsAgenda", "startTime": 3, "endTime": 5, "items": [{"days": ["day1"], "hours": [{"startHour": 4, "endHour": 5}], "calendarItemTypeId": "string", "homeVisit": false, "unavailable": true, "placeId": "string"}]}
+    ]
+  }
+}

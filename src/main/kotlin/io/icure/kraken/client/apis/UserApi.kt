@@ -53,7 +53,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun assignHealthcareParty(healthcarePartyId: kotlin.String) : UserDto?  {
+    suspend fun assignHealthcareParty(healthcarePartyId: kotlin.String) : UserDto  {
         val localVariableConfig = assignHealthcarePartyRequestConfig(healthcarePartyId = healthcarePartyId)
 
         return request<Unit, UserDto>(
@@ -92,7 +92,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun checkPassword(password: kotlin.String) : kotlin.Boolean?  {
+    suspend fun checkPassword(password: kotlin.String) : kotlin.Boolean  {
         val localVariableConfig = checkPasswordRequestConfig(password = password)
 
         return request<Unit, kotlin.Boolean>(
@@ -132,7 +132,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createUser(userDto: UserDto) : UserDto?  {
+    suspend fun createUser(userDto: UserDto) : UserDto  {
         val localVariableConfig = createUserRequestConfig(userDto = userDto)
 
         return request<UserDto, UserDto>(
@@ -172,7 +172,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createUserInGroup(groupId: kotlin.String, userDto: UserDto) : UserDto?  {
+    suspend fun createUserInGroup(groupId: kotlin.String, userDto: UserDto) : UserDto  {
         val localVariableConfig = createUserInGroupRequestConfig(groupId = groupId, userDto = userDto)
 
         return request<UserDto, UserDto>(
@@ -212,7 +212,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteUser(userId: kotlin.String) : DocIdentifier?  {
+    suspend fun deleteUser(userId: kotlin.String) : DocIdentifier  {
         val localVariableConfig = deleteUserRequestConfig(userId = userId)
 
         return request<Unit, DocIdentifier>(
@@ -252,7 +252,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteUserInGroup(groupId: kotlin.String, userId: kotlin.String) : kotlin.Any?  {
+    suspend fun deleteUserInGroup(groupId: kotlin.String, userId: kotlin.String) : kotlin.Any  {
         val localVariableConfig = deleteUserInGroupRequestConfig(groupId = groupId, userId = userId)
 
         return request<Unit, kotlin.Any>(
@@ -292,7 +292,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun encodePassword(password: kotlin.String) : kotlin.String?  {
+    suspend fun encodePassword(password: kotlin.String) : kotlin.String  {
         val localVariableConfig = encodePasswordRequestConfig(password = password)
 
         return request<Unit, kotlin.String>(
@@ -332,7 +332,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findByHcpartyId(id: kotlin.String) : kotlin.collections.List<kotlin.String>?  {
+    suspend fun findByHcpartyId(id: kotlin.String) : kotlin.collections.List<kotlin.String>  {
         val localVariableConfig = findByHcpartyIdRequestConfig(id = id)
 
         return request<Unit, kotlin.collections.List<kotlin.String>>(
@@ -372,7 +372,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun forgottenPassword(email: kotlin.String, emailTemplateDto: EmailTemplateDto) : kotlin.Boolean?  {
+    suspend fun forgottenPassword(email: kotlin.String, emailTemplateDto: EmailTemplateDto) : kotlin.Boolean  {
         val localVariableConfig = forgottenPasswordRequestConfig(email = email, emailTemplateDto = emailTemplateDto)
 
         return request<EmailTemplateDto, kotlin.Boolean>(
@@ -411,7 +411,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getCurrentSession() : kotlin.String?  {
+    suspend fun getCurrentSession() : kotlin.String  {
         val localVariableConfig = getCurrentSessionRequestConfig()
 
         return request<Unit, kotlin.String>(
@@ -448,7 +448,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getCurrentUser() : UserDto?  {
+    suspend fun getCurrentUser() : UserDto  {
         val localVariableConfig = getCurrentUserRequestConfig()
 
         return request<Unit, UserDto>(
@@ -485,7 +485,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getMatchingUsers() : kotlin.collections.List<UserGroupDto>?  {
+    suspend fun getMatchingUsers() : kotlin.collections.List<UserGroupDto>  {
         val localVariableConfig = getMatchingUsersRequestConfig()
 
         return request<Unit, kotlin.collections.List<UserGroupDto>>(
@@ -523,7 +523,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getUser(userId: kotlin.String) : UserDto?  {
+    suspend fun getUser(userId: kotlin.String) : UserDto  {
         val localVariableConfig = getUserRequestConfig(userId = userId)
 
         return request<Unit, UserDto>(
@@ -562,7 +562,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getUserByEmail(email: kotlin.String) : UserDto?  {
+    suspend fun getUserByEmail(email: kotlin.String) : UserDto  {
         val localVariableConfig = getUserByEmailRequestConfig(email = email)
 
         return request<Unit, UserDto>(
@@ -603,7 +603,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listUsers(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListUserDto?  {
+    suspend fun listUsers(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListUserDto  {
         val localVariableConfig = listUsersRequestConfig(startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListUserDto>(
@@ -658,7 +658,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listUsersInGroup(groupId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListUserDto?  {
+    suspend fun listUsersInGroup(groupId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListUserDto  {
         val localVariableConfig = listUsersInGroupRequestConfig(groupId = groupId, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListUserDto>(
@@ -712,7 +712,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyProperties(userId: kotlin.String, propertyStubDto: kotlin.collections.List<PropertyStubDto>?) : UserDto?  {
+    suspend fun modifyProperties(userId: kotlin.String, propertyStubDto: kotlin.collections.List<PropertyStubDto>?) : UserDto  {
         val localVariableConfig = modifyPropertiesRequestConfig(userId = userId, propertyStubDto = propertyStubDto)
 
         return request<kotlin.collections.List<PropertyStubDto>, UserDto>(
@@ -752,7 +752,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyUser(userDto: UserDto) : UserDto?  {
+    suspend fun modifyUser(userDto: UserDto) : UserDto  {
         val localVariableConfig = modifyUserRequestConfig(userDto = userDto)
 
         return request<UserDto, UserDto>(
@@ -792,7 +792,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyUserInGroup(groupId: kotlin.String, userDto: UserDto) : UserDto?  {
+    suspend fun modifyUserInGroup(groupId: kotlin.String, userDto: UserDto) : UserDto  {
         val localVariableConfig = modifyUserInGroupRequestConfig(groupId = groupId, userDto = userDto)
 
         return request<UserDto, UserDto>(

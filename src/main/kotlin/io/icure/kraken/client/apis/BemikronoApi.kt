@@ -53,7 +53,7 @@ class BemikronoApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun appointmentsByDate(calendarDate: kotlin.Long) : kotlin.collections.List<AppointmentDto>?  {
+    suspend fun appointmentsByDate(calendarDate: kotlin.Long) : kotlin.collections.List<AppointmentDto>  {
         val localVariableConfig = appointmentsByDateRequestConfig(calendarDate = calendarDate)
 
         return request<Unit, kotlin.collections.List<AppointmentDto>>(
@@ -94,7 +94,7 @@ class BemikronoApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun appointmentsByPatient(patientId: kotlin.String, from: kotlin.Long?, to: kotlin.Long?) : kotlin.collections.List<AppointmentDto>?  {
+    suspend fun appointmentsByPatient(patientId: kotlin.String, from: kotlin.Long?, to: kotlin.Long?) : kotlin.collections.List<AppointmentDto>  {
         val localVariableConfig = appointmentsByPatientRequestConfig(patientId = patientId, from = from, to = to)
 
         return request<Unit, kotlin.collections.List<AppointmentDto>>(
@@ -143,7 +143,7 @@ class BemikronoApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createAppointmentTypes(mikronoAppointmentTypeRestDto: kotlin.collections.List<MikronoAppointmentTypeRestDto>?) : kotlin.collections.List<MikronoAppointmentTypeRestDto>?  {
+    suspend fun createAppointmentTypes(mikronoAppointmentTypeRestDto: kotlin.collections.List<MikronoAppointmentTypeRestDto>?) : kotlin.collections.List<MikronoAppointmentTypeRestDto>  {
         val localVariableConfig = createAppointmentTypesRequestConfig(mikronoAppointmentTypeRestDto = mikronoAppointmentTypeRestDto)
 
         return request<kotlin.collections.List<MikronoAppointmentTypeRestDto>, kotlin.collections.List<MikronoAppointmentTypeRestDto>>(
@@ -182,7 +182,7 @@ class BemikronoApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createAppointments(appointmentImportDto: kotlin.collections.List<AppointmentImportDto>) : kotlin.collections.List<kotlin.String>?  {
+    suspend fun createAppointments(appointmentImportDto: kotlin.collections.List<AppointmentImportDto>) : kotlin.collections.List<kotlin.String>  {
         val localVariableConfig = createAppointmentsRequestConfig(appointmentImportDto = appointmentImportDto)
 
         return request<kotlin.collections.List<AppointmentImportDto>, kotlin.collections.List<kotlin.String>>(
@@ -262,7 +262,7 @@ class BemikronoApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun register(userId: kotlin.String, mikronoCredentialsDto: MikronoCredentialsDto) : UserDto?  {
+    suspend fun register(userId: kotlin.String, mikronoCredentialsDto: MikronoCredentialsDto) : UserDto  {
         val localVariableConfig = registerRequestConfig(userId = userId, mikronoCredentialsDto = mikronoCredentialsDto)
 
         return request<MikronoCredentialsDto, UserDto>(
@@ -302,7 +302,7 @@ class BemikronoApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun sendMessage(emailOrSmsMessageDto: EmailOrSmsMessageDto) : kotlin.Any?  {
+    suspend fun sendMessage(emailOrSmsMessageDto: EmailOrSmsMessageDto) : kotlin.Any  {
         val localVariableConfig = sendMessageRequestConfig(emailOrSmsMessageDto = emailOrSmsMessageDto)
 
         return request<EmailOrSmsMessageDto, kotlin.Any>(
@@ -342,7 +342,7 @@ class BemikronoApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setUserCredentials(userId: kotlin.String, mikronoCredentialsDto: MikronoCredentialsDto?) : UserDto?  {
+    suspend fun setUserCredentials(userId: kotlin.String, mikronoCredentialsDto: MikronoCredentialsDto?) : UserDto  {
         val localVariableConfig = setUserCredentialsRequestConfig(userId = userId, mikronoCredentialsDto = mikronoCredentialsDto)
 
         return request<MikronoCredentialsDto, UserDto>(

@@ -52,7 +52,7 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createHealthcareParty(healthcarePartyDto: HealthcarePartyDto) : HealthcarePartyDto?  {
+    suspend fun createHealthcareParty(healthcarePartyDto: HealthcarePartyDto) : HealthcarePartyDto  {
         val localVariableConfig = createHealthcarePartyRequestConfig(healthcarePartyDto = healthcarePartyDto)
 
         return request<HealthcarePartyDto, HealthcarePartyDto>(
@@ -92,7 +92,7 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createHealthcarePartyInGroup(groupId: kotlin.String, healthcarePartyDto: HealthcarePartyDto) : HealthcarePartyDto?  {
+    suspend fun createHealthcarePartyInGroup(groupId: kotlin.String, healthcarePartyDto: HealthcarePartyDto) : HealthcarePartyDto  {
         val localVariableConfig = createHealthcarePartyInGroupRequestConfig(groupId = groupId, healthcarePartyDto = healthcarePartyDto)
 
         return request<HealthcarePartyDto, HealthcarePartyDto>(
@@ -132,7 +132,7 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteHealthcareParties(healthcarePartyIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
+    suspend fun deleteHealthcareParties(healthcarePartyIds: kotlin.String) : kotlin.collections.List<DocIdentifier>  {
         val localVariableConfig = deleteHealthcarePartiesRequestConfig(healthcarePartyIds = healthcarePartyIds)
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
@@ -172,7 +172,7 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteHealthcarePartiesInGroup(groupId: kotlin.String, healthcarePartyIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
+    suspend fun deleteHealthcarePartiesInGroup(groupId: kotlin.String, healthcarePartyIds: kotlin.String) : kotlin.collections.List<DocIdentifier>  {
         val localVariableConfig = deleteHealthcarePartiesInGroupRequestConfig(groupId = groupId, healthcarePartyIds = healthcarePartyIds)
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
@@ -216,7 +216,7 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findByName(name: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, desc: kotlin.Boolean?) : PaginatedListHealthcarePartyDto?  {
+    suspend fun findByName(name: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, desc: kotlin.Boolean?) : PaginatedListHealthcarePartyDto  {
         val localVariableConfig = findByNameRequestConfig(name = name, startKey = startKey, startDocumentId = startDocumentId, limit = limit, desc = desc)
 
         return request<Unit, PaginatedListHealthcarePartyDto>(
@@ -280,7 +280,7 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findBySpecialityAndPostCode(type: kotlin.String, spec: kotlin.String, firstCode: kotlin.String, lastCode: kotlin.String, limit: kotlin.Int?) : PaginatedListHealthcarePartyDto?  {
+    suspend fun findBySpecialityAndPostCode(type: kotlin.String, spec: kotlin.String, firstCode: kotlin.String, lastCode: kotlin.String, limit: kotlin.Int?) : PaginatedListHealthcarePartyDto  {
         val localVariableConfig = findBySpecialityAndPostCodeRequestConfig(type = type, spec = spec, firstCode = firstCode, lastCode = lastCode, limit = limit)
 
         return request<Unit, PaginatedListHealthcarePartyDto>(
@@ -332,7 +332,7 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findBySsinOrNihii(searchValue: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, desc: kotlin.Boolean?) : PaginatedListHealthcarePartyDto?  {
+    suspend fun findBySsinOrNihii(searchValue: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, desc: kotlin.Boolean?) : PaginatedListHealthcarePartyDto  {
         val localVariableConfig = findBySsinOrNihiiRequestConfig(searchValue = searchValue, startKey = startKey, startDocumentId = startDocumentId, limit = limit, desc = desc)
 
         return request<Unit, PaginatedListHealthcarePartyDto>(
@@ -388,7 +388,7 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getCurrentHealthcareParty() : HealthcarePartyDto?  {
+    suspend fun getCurrentHealthcareParty() : HealthcarePartyDto  {
         val localVariableConfig = getCurrentHealthcarePartyRequestConfig()
 
         return request<Unit, HealthcarePartyDto>(
@@ -426,7 +426,7 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getHcPartyKeysForDelegate(healthcarePartyId: kotlin.String) : kotlin.collections.Map<kotlin.String, kotlin.String>?  {
+    suspend fun getHcPartyKeysForDelegate(healthcarePartyId: kotlin.String) : kotlin.collections.Map<kotlin.String, kotlin.String>  {
         val localVariableConfig = getHcPartyKeysForDelegateRequestConfig(healthcarePartyId = healthcarePartyId)
 
         return request<Unit, kotlin.collections.Map<kotlin.String, kotlin.String>>(
@@ -465,7 +465,7 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getHealthcareParties(healthcarePartyIds: kotlin.String) : kotlin.collections.List<HealthcarePartyDto>?  {
+    suspend fun getHealthcareParties(healthcarePartyIds: kotlin.String) : kotlin.collections.List<HealthcarePartyDto>  {
         val localVariableConfig = getHealthcarePartiesRequestConfig(healthcarePartyIds = healthcarePartyIds)
 
         return request<Unit, kotlin.collections.List<HealthcarePartyDto>>(
@@ -504,7 +504,7 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getHealthcarePartiesByParentId(parentId: kotlin.String) : kotlin.collections.List<HealthcarePartyDto>?  {
+    suspend fun getHealthcarePartiesByParentId(parentId: kotlin.String) : kotlin.collections.List<HealthcarePartyDto>  {
         val localVariableConfig = getHealthcarePartiesByParentIdRequestConfig(parentId = parentId)
 
         return request<Unit, kotlin.collections.List<HealthcarePartyDto>>(
@@ -544,7 +544,7 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getHealthcarePartiesInGroup(groupId: kotlin.String, listOfIdsDto: ListOfIdsDto?) : kotlin.collections.List<HealthcarePartyDto>?  {
+    suspend fun getHealthcarePartiesInGroup(groupId: kotlin.String, listOfIdsDto: ListOfIdsDto?) : kotlin.collections.List<HealthcarePartyDto>  {
         val localVariableConfig = getHealthcarePartiesInGroupRequestConfig(groupId = groupId, listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<HealthcarePartyDto>>(
@@ -584,7 +584,7 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getHealthcareParty(healthcarePartyId: kotlin.String) : HealthcarePartyDto?  {
+    suspend fun getHealthcareParty(healthcarePartyId: kotlin.String) : HealthcarePartyDto  {
         val localVariableConfig = getHealthcarePartyRequestConfig(healthcarePartyId = healthcarePartyId)
 
         return request<Unit, HealthcarePartyDto>(
@@ -623,7 +623,7 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getPublicKey(healthcarePartyId: kotlin.String) : PublicKeyDto?  {
+    suspend fun getPublicKey(healthcarePartyId: kotlin.String) : PublicKeyDto  {
         val localVariableConfig = getPublicKeyRequestConfig(healthcarePartyId = healthcarePartyId)
 
         return request<Unit, PublicKeyDto>(
@@ -662,7 +662,7 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listByName(name: kotlin.String) : kotlin.collections.List<HealthcarePartyDto>?  {
+    suspend fun listByName(name: kotlin.String) : kotlin.collections.List<HealthcarePartyDto>  {
         val localVariableConfig = listByNameRequestConfig(name = name)
 
         return request<Unit, kotlin.collections.List<HealthcarePartyDto>>(
@@ -704,7 +704,7 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listHealthcareParties(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, desc: kotlin.Boolean?) : PaginatedListHealthcarePartyDto?  {
+    suspend fun listHealthcareParties(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, desc: kotlin.Boolean?) : PaginatedListHealthcarePartyDto  {
         val localVariableConfig = listHealthcarePartiesRequestConfig(startKey = startKey, startDocumentId = startDocumentId, limit = limit, desc = desc)
 
         return request<Unit, PaginatedListHealthcarePartyDto>(
@@ -760,7 +760,7 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyHealthcareParty(healthcarePartyDto: HealthcarePartyDto) : HealthcarePartyDto?  {
+    suspend fun modifyHealthcareParty(healthcarePartyDto: HealthcarePartyDto) : HealthcarePartyDto  {
         val localVariableConfig = modifyHealthcarePartyRequestConfig(healthcarePartyDto = healthcarePartyDto)
 
         return request<HealthcarePartyDto, HealthcarePartyDto>(
@@ -800,7 +800,7 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyHealthcarePartyInGroup(groupId: kotlin.String, healthcarePartyDto: HealthcarePartyDto) : HealthcarePartyDto?  {
+    suspend fun modifyHealthcarePartyInGroup(groupId: kotlin.String, healthcarePartyDto: HealthcarePartyDto) : HealthcarePartyDto  {
         val localVariableConfig = modifyHealthcarePartyInGroupRequestConfig(groupId = groupId, healthcarePartyDto = healthcarePartyDto)
 
         return request<HealthcarePartyDto, HealthcarePartyDto>(
