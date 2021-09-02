@@ -1,0 +1,51 @@
+{
+  "beforeElements": {
+    "bodies": [
+      {
+        "id": "2106191a-c0e1-42d0-89a4-89abd288b000",
+        "name": "Simon"
+      },
+      {
+        "id": "2106191a-c0e1-42d0-89a4-89abd288b001",
+        "name": "Michal"
+      }
+    ]
+  },
+  "afterElements": {
+    "family": "healthdata",
+    "deleteIds": ["2106191a-c0e1-42d0-89a4-89abd288b000", "2106191a-c0e1-42d0-89a4-89abd288b001",  "2106191a-c0e1-42d0-89a4-89abd288b002", "2106191a-c0e1-42d0-89a4-89abd288b005"]
+  },
+  "createAgenda": {
+    "body": {
+      "id": "2106191a-c0e1-42d0-89a4-89abd288b005",
+      "name": "Vladimir"
+    }
+  },
+  "deleteAgenda": {
+    "skipEndpoint": true,
+    "agendaIds": "2106191a-c0e1-42d0-89a4-89abd288b001"
+  },
+  "getAgenda": {
+    "agendaId": "2106191a-c0e1-42d0-89a4-89abd288b010"
+  },
+  "getAgendas": {
+  },
+  "getAgendasForUser": {
+    "skipEndpoint": true,
+    "userId": null
+  },
+  "getReadableAgendasForUser": {
+    "skipEndpoint": true,
+    "userId": null
+  },
+  "modifyAgenda": {
+    "autoRev": true,
+    "body": {
+      "id": "2106191a-c0e1-42d0-89a4-89abd288b000",
+      "name": "sha"
+    }
+  },
+  
+  "fallback": {
+  }
+}
