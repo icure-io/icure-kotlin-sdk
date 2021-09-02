@@ -57,9 +57,8 @@ class BeefactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<MapOfIdsDto, MessageWithBatch>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createBatchAndMessage
     *

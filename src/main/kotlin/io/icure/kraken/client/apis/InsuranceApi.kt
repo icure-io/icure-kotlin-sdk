@@ -55,9 +55,8 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return request<InsuranceDto, InsuranceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createInsurance
     *
@@ -94,9 +93,8 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return request<Unit, DocIdentifier>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteInsurance
     *
@@ -133,9 +131,8 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return request<Unit, InsuranceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getInsurance
     *
@@ -172,9 +169,8 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return request<ListOfIdsDto, kotlin.collections.List<InsuranceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getInsurances
     *
@@ -211,9 +207,8 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return request<Unit, kotlin.collections.List<InsuranceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listInsurancesByCode
     *
@@ -250,9 +245,8 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return request<Unit, kotlin.collections.List<InsuranceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listInsurancesByName
     *
@@ -289,9 +283,8 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return request<InsuranceDto, InsuranceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyInsurance
     *

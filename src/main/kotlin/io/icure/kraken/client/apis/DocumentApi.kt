@@ -56,9 +56,8 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return request<DocumentDto, DocumentDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createDocument
     *
@@ -95,9 +94,8 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return request<Unit, DocumentDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteAttachment
     *
@@ -134,9 +132,8 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteDocument
     *
@@ -175,9 +172,8 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return request<Unit, kotlin.collections.List<DocumentDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findByTypeHCPartyMessageSecretFKeys
     *
@@ -222,9 +218,8 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return request<Unit, kotlin.collections.List<DocumentDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findDocumentsByHCPartyPatientForeignKeys
     *
@@ -266,9 +261,8 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return request<Unit, kotlin.collections.List<DocumentDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findWithoutDelegation
     *
@@ -310,9 +304,8 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return request<Unit, DocumentDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getDocument
     *
@@ -340,21 +333,20 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     * @param attachmentId  
     * @param enckeys  (optional)
     * @param fileName  (optional)
-    * @return java.io.File
+    * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getDocumentAttachment(documentId: kotlin.String, attachmentId: kotlin.String, enckeys: kotlin.String?, fileName: kotlin.String?) : java.io.File  {
+    suspend fun getDocumentAttachment(documentId: kotlin.String, attachmentId: kotlin.String, enckeys: kotlin.String?, fileName: kotlin.String?) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>  {
         val localVariableConfig = getDocumentAttachmentRequestConfig(documentId = documentId, attachmentId = attachmentId, enckeys = enckeys, fileName = fileName)
 
-        return request<Unit, java.io.File>(
+        return request<Unit, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getDocumentAttachment
     *
@@ -402,9 +394,8 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return request<Unit, DocumentDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getDocumentByExternalUuid
     *
@@ -441,9 +432,8 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return request<ListOfIdsDto, kotlin.collections.List<DocumentDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getDocuments
     *
@@ -480,9 +470,8 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return request<Unit, kotlin.collections.List<DocumentDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getDocumentsByExternalUuid
     *
@@ -519,9 +508,8 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return request<DocumentDto, DocumentDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyDocument
     *
@@ -558,9 +546,8 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return request<kotlin.collections.List<DocumentDto>, kotlin.collections.List<DocumentDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyDocuments
     *
@@ -594,14 +581,13 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setDocumentAttachment(documentId: kotlin.String, body: java.io.File, enckeys: kotlin.String?) : DocumentDto  {
+    suspend fun setDocumentAttachment(documentId: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, enckeys: kotlin.String?) : DocumentDto  {
         val localVariableConfig = setDocumentAttachmentRequestConfig(documentId = documentId, body = body, enckeys = enckeys)
 
-        return request<java.io.File, DocumentDto>(
+        return request<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, DocumentDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation setDocumentAttachment
     *
@@ -610,7 +596,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     * @param enckeys  (optional)
     * @return RequestConfig
     */
-    fun setDocumentAttachmentRequestConfig(documentId: kotlin.String, body: java.io.File, enckeys: kotlin.String?) : RequestConfig<java.io.File> {
+    fun setDocumentAttachmentRequestConfig(documentId: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, enckeys: kotlin.String?) : RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
         val localVariableBody = body
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -647,9 +633,8 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return request<Map<String, Any?>, DocumentDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation setDocumentAttachmentMulti
     *
@@ -693,9 +678,8 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return request<kotlin.collections.List<IcureStubDto>, kotlin.collections.List<IcureStubDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation setDocumentsDelegations
     *
@@ -729,14 +713,13 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setSafeDocumentAttachment(documentId: kotlin.String, body: java.io.File, enckeys: kotlin.String?) : DocumentDto  {
+    suspend fun setSafeDocumentAttachment(documentId: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, enckeys: kotlin.String?) : DocumentDto  {
         val localVariableConfig = setSafeDocumentAttachmentRequestConfig(documentId = documentId, body = body, enckeys = enckeys)
 
-        return request<java.io.File, DocumentDto>(
+        return request<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, DocumentDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation setSafeDocumentAttachment
     *
@@ -745,7 +728,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     * @param enckeys  (optional)
     * @return RequestConfig
     */
-    fun setSafeDocumentAttachmentRequestConfig(documentId: kotlin.String, body: java.io.File, enckeys: kotlin.String?) : RequestConfig<java.io.File> {
+    fun setSafeDocumentAttachmentRequestConfig(documentId: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, enckeys: kotlin.String?) : RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
         val localVariableBody = body
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {

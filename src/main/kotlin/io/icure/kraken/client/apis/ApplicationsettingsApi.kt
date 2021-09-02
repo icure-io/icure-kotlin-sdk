@@ -52,9 +52,8 @@ class ApplicationsettingsApi(basePath: kotlin.String = defaultBasePath, webClien
 
         return request<Unit, kotlin.collections.List<ApplicationSettingsDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getApplicationSettings
     *

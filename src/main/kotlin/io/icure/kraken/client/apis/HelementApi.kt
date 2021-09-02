@@ -57,9 +57,8 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return request<HealthElementDto, HealthElementDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createHealthElement
     *
@@ -96,9 +95,8 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return request<kotlin.collections.List<HealthElementDto>, kotlin.collections.List<HealthElementDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createHealthElements
     *
@@ -135,9 +133,8 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteHealthElements
     *
@@ -174,9 +171,8 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return request<FilterChainHealthElement, kotlin.collections.List<HealthElementDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation filterHealthElementsBy
     *
@@ -214,9 +210,8 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return request<Unit, kotlin.collections.List<HealthElementDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findHealthElementsByHCPartyPatientForeignKeys
     *
@@ -259,9 +254,8 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return request<Unit, kotlin.collections.List<IcureStubDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findHealthElementsDelegationsStubsByHCPartyPatientForeignKeys
     *
@@ -303,9 +297,8 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return request<Unit, HealthElementDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getHealthElement
     *
@@ -342,9 +335,8 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return request<HealthElementDto, HealthElementDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyHealthElement
     *
@@ -381,9 +373,8 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return request<kotlin.collections.List<HealthElementDto>, kotlin.collections.List<HealthElementDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyHealthElements
     *
@@ -421,9 +412,8 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return request<kotlin.collections.List<DelegationDto>, HealthElementDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation newHealthElementDelegations
     *
@@ -461,9 +451,8 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return request<kotlin.collections.List<IcureStubDto>, kotlin.collections.List<HealthElementDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation setHealthElementsDelegations
     *

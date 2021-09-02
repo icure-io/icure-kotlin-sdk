@@ -54,9 +54,8 @@ class MedicallocationApi(basePath: kotlin.String = defaultBasePath, webClient: W
 
         return request<MedicalLocationDto, MedicalLocationDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createMedicalLocation
     *
@@ -93,9 +92,8 @@ class MedicallocationApi(basePath: kotlin.String = defaultBasePath, webClient: W
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteMedicalLocation
     *
@@ -132,9 +130,8 @@ class MedicallocationApi(basePath: kotlin.String = defaultBasePath, webClient: W
 
         return request<Unit, MedicalLocationDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getMedicalLocation
     *
@@ -170,9 +167,8 @@ class MedicallocationApi(basePath: kotlin.String = defaultBasePath, webClient: W
 
         return request<Unit, kotlin.collections.List<MedicalLocationDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getMedicalLocations
     *
@@ -208,9 +204,8 @@ class MedicallocationApi(basePath: kotlin.String = defaultBasePath, webClient: W
 
         return request<MedicalLocationDto, MedicalLocationDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyMedicalLocation
     *

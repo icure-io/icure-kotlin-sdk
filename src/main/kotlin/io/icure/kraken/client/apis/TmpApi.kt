@@ -70,9 +70,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<ClassificationDto, ClassificationDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpClassification
     *
@@ -109,9 +108,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<kotlin.collections.List<ClassificationDto>, kotlin.collections.List<ClassificationDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpClassifications
     *
@@ -148,9 +146,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<ContactDto, ContactDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpContact
     *
@@ -187,9 +184,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<kotlin.collections.List<ContactDto>, kotlin.collections.List<ContactDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpContacts
     *
@@ -225,9 +221,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<Unit, kotlin.Any>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpDatabase
     *
@@ -263,9 +258,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<DocumentDto, DocumentDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpDocument
     *
@@ -302,9 +296,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<kotlin.collections.List<DocumentDto>, kotlin.collections.List<DocumentDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpDocuments
     *
@@ -341,9 +334,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<EntityTemplateDto, EntityTemplateDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpEntityTemplate
     *
@@ -380,9 +372,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<kotlin.collections.List<EntityTemplateDto>, kotlin.collections.List<EntityTemplateDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpEntityTemplates
     *
@@ -419,9 +410,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<FormDto, FormDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpForm
     *
@@ -458,9 +448,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<kotlin.collections.List<FormDto>, kotlin.collections.List<FormDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpForms
     *
@@ -497,9 +486,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<HealthElementDto, HealthElementDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpHealthElement
     *
@@ -536,9 +524,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<kotlin.collections.List<HealthElementDto>, kotlin.collections.List<HealthElementDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpHealthElements
     *
@@ -575,9 +562,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<InvoiceDto, InvoiceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpInvoice
     *
@@ -614,9 +600,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<kotlin.collections.List<InvoiceDto>, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpInvoices
     *
@@ -653,9 +638,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<MessageDto, MessageDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpMessage
     *
@@ -692,9 +676,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<kotlin.collections.List<MessageDto>, kotlin.collections.List<MessageDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpMessages
     *
@@ -731,9 +714,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<PatientDto, PatientDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpPatient
     *
@@ -770,9 +752,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<kotlin.collections.List<PatientDto>, kotlin.collections.List<PatientDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpPatients
     *
@@ -809,9 +790,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteTmpItems
     *
@@ -847,9 +827,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<Unit, kotlin.Any>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation destroyTmpDatabase
     *
@@ -885,9 +864,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<Unit, ClassificationDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTmpClassification
     *
@@ -924,9 +902,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<ClassificationDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTmpClassifications
     *
@@ -963,9 +940,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<Unit, ContactDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTmpContact
     *
@@ -1002,9 +978,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<ContactDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTmpContacts
     *
@@ -1041,9 +1016,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<Unit, DocumentDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTmpDocument
     *
@@ -1080,9 +1054,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<DocumentDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTmpDocuments
     *
@@ -1119,9 +1092,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<Unit, EntityTemplateDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTmpEntityTemplate
     *
@@ -1158,9 +1130,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<EntityTemplateDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTmpEntityTemplates
     *
@@ -1197,9 +1168,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<Unit, FormDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTmpForm
     *
@@ -1236,9 +1206,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<FormDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTmpForms
     *
@@ -1275,9 +1244,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<Unit, HealthElementDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTmpHealthElement
     *
@@ -1314,9 +1282,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<HealthElementDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTmpHealthElements
     *
@@ -1353,9 +1320,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<Unit, InvoiceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTmpInvoice
     *
@@ -1392,9 +1358,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTmpInvoices
     *
@@ -1431,9 +1396,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<Unit, MessageDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTmpMessage
     *
@@ -1470,9 +1434,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<MessageDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTmpMessages
     *
@@ -1509,9 +1472,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<Unit, PatientDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTmpPatient
     *
@@ -1548,9 +1510,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<PatientDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTmpPatients
     *
@@ -1588,9 +1549,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<Unit, PaginatedListClassificationDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listTmpClassifications
     *
@@ -1637,9 +1597,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<Unit, PaginatedListInvoiceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listTmpContacts
     *
@@ -1686,9 +1645,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<Unit, PaginatedListDocumentDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listTmpDocuments
     *
@@ -1735,9 +1693,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<Unit, PaginatedListEntityTemplateDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listTmpEntityTemplates
     *
@@ -1784,9 +1741,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<Unit, PaginatedListFormDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listTmpForms
     *
@@ -1833,9 +1789,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<Unit, PaginatedListHealthElementDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listTmpHealthElements
     *
@@ -1882,9 +1837,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<Unit, PaginatedListInvoiceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listTmpInvoices
     *
@@ -1931,9 +1885,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<Unit, PaginatedListInvoiceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listTmpMessages
     *
@@ -1980,9 +1933,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<Unit, PaginatedListPatientDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listTmpPatients
     *
@@ -2028,9 +1980,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<ClassificationDto, ClassificationDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTmpClassification
     *
@@ -2067,9 +2018,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<kotlin.collections.List<ClassificationDto>, kotlin.collections.List<ClassificationDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTmpClassifications
     *
@@ -2106,9 +2056,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<ContactDto, ContactDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTmpContact
     *
@@ -2145,9 +2094,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<kotlin.collections.List<ContactDto>, kotlin.collections.List<ContactDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTmpContacts
     *
@@ -2184,9 +2132,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<DocumentDto, DocumentDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTmpDocument
     *
@@ -2223,9 +2170,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<kotlin.collections.List<DocumentDto>, kotlin.collections.List<DocumentDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTmpDocuments
     *
@@ -2262,9 +2208,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<EntityTemplateDto, EntityTemplateDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTmpEntityTemplate
     *
@@ -2301,9 +2246,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<kotlin.collections.List<EntityTemplateDto>, kotlin.collections.List<EntityTemplateDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTmpEntityTemplates
     *
@@ -2340,9 +2284,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<FormDto, FormDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTmpForm
     *
@@ -2379,9 +2322,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<kotlin.collections.List<FormDto>, kotlin.collections.List<FormDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTmpForms
     *
@@ -2418,9 +2360,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<HealthElementDto, HealthElementDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTmpHealthElement
     *
@@ -2457,9 +2398,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<kotlin.collections.List<HealthElementDto>, kotlin.collections.List<HealthElementDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTmpHealthElements
     *
@@ -2496,9 +2436,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<InvoiceDto, InvoiceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTmpInvoice
     *
@@ -2535,9 +2474,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<kotlin.collections.List<InvoiceDto>, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTmpInvoices
     *
@@ -2574,9 +2512,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<MessageDto, MessageDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTmpMessage
     *
@@ -2613,9 +2550,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<kotlin.collections.List<MessageDto>, kotlin.collections.List<MessageDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTmpMessages
     *
@@ -2652,9 +2588,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<PatientDto, PatientDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTmpPatient
     *
@@ -2691,9 +2626,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<kotlin.collections.List<PatientDto>, kotlin.collections.List<PatientDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTmpPatients
     *
@@ -2730,9 +2664,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation purgeTmpItems
     *
@@ -2770,9 +2703,8 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return request<kotlin.collections.List<kotlin.String>, ReplicatorDocument>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation replicateToTmpDatabase
     *

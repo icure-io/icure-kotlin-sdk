@@ -57,9 +57,8 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<HealthcarePartyDto, HealthcarePartyDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createHealthcareParty
     *
@@ -97,9 +96,8 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<HealthcarePartyDto, HealthcarePartyDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createHealthcarePartyInGroup
     *
@@ -137,9 +135,8 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteHealthcareParties
     *
@@ -177,9 +174,8 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteHealthcarePartiesInGroup
     *
@@ -221,9 +217,8 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PaginatedListHealthcarePartyDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findByName
     *
@@ -285,9 +280,8 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PaginatedListHealthcarePartyDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findBySpecialityAndPostCode
     *
@@ -337,9 +331,8 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PaginatedListHealthcarePartyDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findBySsinOrNihii
     *
@@ -393,9 +386,8 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, HealthcarePartyDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getCurrentHealthcareParty
     *
@@ -431,9 +423,8 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.Map<kotlin.String, kotlin.String>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getHcPartyKeysForDelegate
     *
@@ -470,9 +461,8 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<HealthcarePartyDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getHealthcareParties
     *
@@ -509,9 +499,8 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<HealthcarePartyDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getHealthcarePartiesByParentId
     *
@@ -549,9 +538,8 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<ListOfIdsDto, kotlin.collections.List<HealthcarePartyDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getHealthcarePartiesInGroup
     *
@@ -589,9 +577,8 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, HealthcarePartyDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getHealthcareParty
     *
@@ -628,9 +615,8 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PublicKeyDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getPublicKey
     *
@@ -667,9 +653,8 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<HealthcarePartyDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listByName
     *
@@ -709,9 +694,8 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PaginatedListHealthcarePartyDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listHealthcareParties
     *
@@ -765,9 +749,8 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<HealthcarePartyDto, HealthcarePartyDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyHealthcareParty
     *
@@ -805,9 +788,8 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<HealthcarePartyDto, HealthcarePartyDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyHealthcarePartyInGroup
     *

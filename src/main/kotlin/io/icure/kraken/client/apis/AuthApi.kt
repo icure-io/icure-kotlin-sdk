@@ -54,9 +54,8 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, AuthenticationResponse>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation login
     *
@@ -95,9 +94,8 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, AuthenticationResponse>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation logout
     *
@@ -132,9 +130,8 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, AuthenticationResponse>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation logoutPost
     *
@@ -171,9 +168,8 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, kotlin.String>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation token
     *

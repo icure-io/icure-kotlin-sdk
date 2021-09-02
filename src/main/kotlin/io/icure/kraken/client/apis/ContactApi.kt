@@ -66,9 +66,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<ContactDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation closeForHCPartyPatientForeignKeys
     *
@@ -110,9 +109,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<ContactDto, ContactDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createContact
     *
@@ -149,9 +147,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<kotlin.collections.List<ContactDto>, kotlin.collections.List<ContactDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createContacts
     *
@@ -188,9 +185,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteContacts
     *
@@ -229,9 +225,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<FilterChainContact, PaginatedListContactDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation filterContactsBy
     *
@@ -280,9 +275,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<FilterChainService, PaginatedListServiceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation filterServicesBy
     *
@@ -330,9 +324,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<ContactDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findByHCPartyFormId
     *
@@ -375,9 +368,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<ListOfIdsDto, kotlin.collections.List<ContactDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findByHCPartyFormIds
     *
@@ -421,9 +413,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<ContactDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findByHCPartyPatientSecretFKeys
     *
@@ -474,9 +465,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<ContactDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findByHCPartyServiceId
     *
@@ -518,9 +508,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<ContactDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findContactsByExternalId
     *
@@ -561,9 +550,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<ListOfIdsDto, kotlin.collections.List<ContactDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findContactsByHCPartyPatientForeignKeys
     *
@@ -605,9 +593,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<IcureStubDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findContactsDelegationsStubsByHCPartyPatientForeignKeys
     *
@@ -649,9 +636,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, ContactDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getContact
     *
@@ -688,9 +674,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<ListOfIdsDto, kotlin.collections.List<ContactDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getContacts
     *
@@ -726,9 +711,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, ContentDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getEmptyContent
     *
@@ -765,9 +749,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<LabelledOccurenceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getServiceCodesOccurences
     *
@@ -809,9 +792,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PaginatedListContactDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listContactsByOpeningDate
     *
@@ -863,9 +845,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<ListOfIdsDto, kotlin.collections.List<ServiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listServices
     *
@@ -902,9 +883,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<ServiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listServicesByAssociationId
     *
@@ -945,9 +925,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<ListOfIdsDto, kotlin.collections.List<ServiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listServicesLinkedTo
     *
@@ -990,9 +969,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ContactDto>, kotlin.collections.List<kotlin.String>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation matchContactsBy
     *
@@ -1029,9 +1007,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<ContactDto, ContactDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyContact
     *
@@ -1068,9 +1045,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<kotlin.collections.List<ContactDto>, kotlin.collections.List<ContactDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyContacts
     *
@@ -1108,9 +1084,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<DelegationDto, ContactDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation newContactDelegations
     *
@@ -1148,9 +1123,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<kotlin.collections.List<IcureStubDto>, kotlin.collections.List<ContactDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation setContactsDelegations
     *

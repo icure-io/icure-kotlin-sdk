@@ -54,9 +54,8 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
 
         return request<AgendaDto, AgendaDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createAgenda
     *
@@ -93,9 +92,8 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteAgenda
     *
@@ -132,9 +130,8 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
 
         return request<Unit, AgendaDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getAgenda
     *
@@ -170,9 +167,8 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
 
         return request<Unit, kotlin.collections.List<AgendaDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getAgendas
     *
@@ -208,9 +204,8 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
 
         return request<Unit, AgendaDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getAgendasForUser
     *
@@ -250,9 +245,8 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
 
         return request<Unit, kotlin.collections.List<AgendaDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getReadableAgendasForUser
     *
@@ -292,9 +286,8 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
 
         return request<AgendaDto, AgendaDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyAgenda
     *

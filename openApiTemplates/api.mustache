@@ -55,9 +55,8 @@ import javax.inject.Named
 
         return request<{{#hasBodyParam}}{{#bodyParams}}{{{dataType}}}{{/bodyParams}}{{/hasBodyParam}}{{^hasBodyParam}}{{^hasFormParams}}Unit{{/hasFormParams}}{{#hasFormParams}}Map<String, Any?>{{/hasFormParams}}{{/hasBodyParam}}, {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Unit{{/returnType}}>(
             localVariableConfig
-        )
+        ){{^nullableReturnType}}!!{{/nullableReturnType}}
     }
-
     /**
     * To obtain the request config of the operation {{operationId}}
     *

@@ -55,9 +55,8 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return request<Unit, kotlin.Boolean>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation canHandle
     *
@@ -105,9 +104,8 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return request<Unit, ContactDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation doImport
     *
@@ -161,9 +159,8 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return request<Unit, kotlin.collections.List<ResultInfoDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getInfos
     *

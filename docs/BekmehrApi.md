@@ -90,7 +90,7 @@ Configure basicScheme:
 
 <a name="generateContactreportExport"></a>
 # **generateContactreportExport**
-> java.io.File generateContactreportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generateContactreportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
 
 Get Kmehr contactreport
 
@@ -110,9 +110,9 @@ val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
 val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
 val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
 val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val body : java.io.File = BINARY_DATA_HERE // java.io.File | 
+val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
 try {
-    val result : java.io.File = apiInstance.generateContactreportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateContactreportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateContactreportExport")
@@ -136,11 +136,11 @@ Name | Type | Description  | Notes
  **recipientFirstName** | **kotlin.String**|  |
  **recipientLastName** | **kotlin.String**|  |
  **mimeType** | **kotlin.String**|  |
- **body** | **java.io.File**|  |
+ **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
 
 ### Return type
 
-[**java.io.File**](java.io.File.md)
+[**kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**](kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;.md)
 
 ### Authorization
 
@@ -156,7 +156,7 @@ Configure basicScheme:
 
 <a name="generateDiaryNote"></a>
 # **generateDiaryNote**
-> java.io.File generateDiaryNote(patientId, language, diaryNoteExportInfoDto)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generateDiaryNote(patientId, language, diaryNoteExportInfoDto)
 
 Generate diarynote
 
@@ -171,7 +171,7 @@ val patientId : kotlin.String = patientId_example // kotlin.String |
 val language : kotlin.String = language_example // kotlin.String | 
 val diaryNoteExportInfoDto : DiaryNoteExportInfoDto =  // DiaryNoteExportInfoDto | 
 try {
-    val result : java.io.File = apiInstance.generateDiaryNote(patientId, language, diaryNoteExportInfoDto)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateDiaryNote(patientId, language, diaryNoteExportInfoDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateDiaryNote")
@@ -192,7 +192,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**java.io.File**](java.io.File.md)
+[**kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**](kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;.md)
 
 ### Authorization
 
@@ -208,7 +208,7 @@ Configure basicScheme:
 
 <a name="generateLabresultExport"></a>
 # **generateLabresultExport**
-> java.io.File generateLabresultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generateLabresultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
 
 Get Kmehr labresult
 
@@ -228,9 +228,9 @@ val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
 val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
 val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
 val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val body : java.io.File = BINARY_DATA_HERE // java.io.File | 
+val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
 try {
-    val result : java.io.File = apiInstance.generateLabresultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateLabresultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateLabresultExport")
@@ -254,11 +254,11 @@ Name | Type | Description  | Notes
  **recipientFirstName** | **kotlin.String**|  |
  **recipientLastName** | **kotlin.String**|  |
  **mimeType** | **kotlin.String**|  |
- **body** | **java.io.File**|  |
+ **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
 
 ### Return type
 
-[**java.io.File**](java.io.File.md)
+[**kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**](kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;.md)
 
 ### Authorization
 
@@ -274,7 +274,7 @@ Configure basicScheme:
 
 <a name="generateMedicationSchemeExport"></a>
 # **generateMedicationSchemeExport**
-> java.io.File generateMedicationSchemeExport(patientId, language, recipientSafe, version, medicationSchemeExportInfoDto)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generateMedicationSchemeExport(patientId, language, recipientSafe, version, medicationSchemeExportInfoDto)
 
 Get Medicationscheme export
 
@@ -291,7 +291,7 @@ val recipientSafe : kotlin.String = recipientSafe_example // kotlin.String |
 val version : kotlin.Int = 56 // kotlin.Int | 
 val medicationSchemeExportInfoDto : MedicationSchemeExportInfoDto =  // MedicationSchemeExportInfoDto | 
 try {
-    val result : java.io.File = apiInstance.generateMedicationSchemeExport(patientId, language, recipientSafe, version, medicationSchemeExportInfoDto)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateMedicationSchemeExport(patientId, language, recipientSafe, version, medicationSchemeExportInfoDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateMedicationSchemeExport")
@@ -314,7 +314,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**java.io.File**](java.io.File.md)
+[**kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**](kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;.md)
 
 ### Authorization
 
@@ -330,7 +330,7 @@ Configure basicScheme:
 
 <a name="generateNoteExport"></a>
 # **generateNoteExport**
-> java.io.File generateNoteExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generateNoteExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
 
 Get Kmehr note
 
@@ -350,9 +350,9 @@ val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
 val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
 val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
 val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val body : java.io.File = BINARY_DATA_HERE // java.io.File | 
+val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
 try {
-    val result : java.io.File = apiInstance.generateNoteExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateNoteExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateNoteExport")
@@ -376,11 +376,11 @@ Name | Type | Description  | Notes
  **recipientFirstName** | **kotlin.String**|  |
  **recipientLastName** | **kotlin.String**|  |
  **mimeType** | **kotlin.String**|  |
- **body** | **java.io.File**|  |
+ **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
 
 ### Return type
 
-[**java.io.File**](java.io.File.md)
+[**kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**](kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;.md)
 
 ### Authorization
 
@@ -396,7 +396,7 @@ Configure basicScheme:
 
 <a name="generatePatientInfoExport"></a>
 # **generatePatientInfoExport**
-> java.io.File generatePatientInfoExport(patientId, language)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generatePatientInfoExport(patientId, language)
 
 Get KMEHR Patient Info export
 
@@ -410,7 +410,7 @@ val apiInstance = BekmehrApi()
 val patientId : kotlin.String = patientId_example // kotlin.String | 
 val language : kotlin.String = language_example // kotlin.String | 
 try {
-    val result : java.io.File = apiInstance.generatePatientInfoExport(patientId, language)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generatePatientInfoExport(patientId, language)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generatePatientInfoExport")
@@ -430,7 +430,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**java.io.File**](java.io.File.md)
+[**kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**](kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;.md)
 
 ### Authorization
 
@@ -446,7 +446,7 @@ Configure basicScheme:
 
 <a name="generatePrescriptionExport"></a>
 # **generatePrescriptionExport**
-> java.io.File generatePrescriptionExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generatePrescriptionExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
 
 Get Kmehr prescription
 
@@ -466,9 +466,9 @@ val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
 val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
 val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
 val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val body : java.io.File = BINARY_DATA_HERE // java.io.File | 
+val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
 try {
-    val result : java.io.File = apiInstance.generatePrescriptionExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generatePrescriptionExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generatePrescriptionExport")
@@ -492,11 +492,11 @@ Name | Type | Description  | Notes
  **recipientFirstName** | **kotlin.String**|  |
  **recipientLastName** | **kotlin.String**|  |
  **mimeType** | **kotlin.String**|  |
- **body** | **java.io.File**|  |
+ **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
 
 ### Return type
 
-[**java.io.File**](java.io.File.md)
+[**kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**](kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;.md)
 
 ### Authorization
 
@@ -512,7 +512,7 @@ Configure basicScheme:
 
 <a name="generateReportExport"></a>
 # **generateReportExport**
-> java.io.File generateReportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generateReportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
 
 Get Kmehr report
 
@@ -532,9 +532,9 @@ val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
 val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
 val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
 val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val body : java.io.File = BINARY_DATA_HERE // java.io.File | 
+val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
 try {
-    val result : java.io.File = apiInstance.generateReportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateReportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateReportExport")
@@ -558,11 +558,11 @@ Name | Type | Description  | Notes
  **recipientFirstName** | **kotlin.String**|  |
  **recipientLastName** | **kotlin.String**|  |
  **mimeType** | **kotlin.String**|  |
- **body** | **java.io.File**|  |
+ **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
 
 ### Return type
 
-[**java.io.File**](java.io.File.md)
+[**kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**](kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;.md)
 
 ### Authorization
 
@@ -578,7 +578,7 @@ Configure basicScheme:
 
 <a name="generateRequestExport"></a>
 # **generateRequestExport**
-> java.io.File generateRequestExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generateRequestExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
 
 Get Kmehr request
 
@@ -598,9 +598,9 @@ val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
 val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
 val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
 val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val body : java.io.File = BINARY_DATA_HERE // java.io.File | 
+val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
 try {
-    val result : java.io.File = apiInstance.generateRequestExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateRequestExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateRequestExport")
@@ -624,11 +624,11 @@ Name | Type | Description  | Notes
  **recipientFirstName** | **kotlin.String**|  |
  **recipientLastName** | **kotlin.String**|  |
  **mimeType** | **kotlin.String**|  |
- **body** | **java.io.File**|  |
+ **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
 
 ### Return type
 
-[**java.io.File**](java.io.File.md)
+[**kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**](kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;.md)
 
 ### Authorization
 
@@ -644,7 +644,7 @@ Configure basicScheme:
 
 <a name="generateResultExport"></a>
 # **generateResultExport**
-> java.io.File generateResultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generateResultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
 
 Get Kmehr result
 
@@ -664,9 +664,9 @@ val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
 val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
 val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
 val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val body : java.io.File = BINARY_DATA_HERE // java.io.File | 
+val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
 try {
-    val result : java.io.File = apiInstance.generateResultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateResultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateResultExport")
@@ -690,11 +690,11 @@ Name | Type | Description  | Notes
  **recipientFirstName** | **kotlin.String**|  |
  **recipientLastName** | **kotlin.String**|  |
  **mimeType** | **kotlin.String**|  |
- **body** | **java.io.File**|  |
+ **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
 
 ### Return type
 
-[**java.io.File**](java.io.File.md)
+[**kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**](kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;.md)
 
 ### Authorization
 
@@ -710,7 +710,7 @@ Configure basicScheme:
 
 <a name="generateSmfExport"></a>
 # **generateSmfExport**
-> java.io.File generateSmfExport(patientId, language, softwareMedicalFileExportDto)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generateSmfExport(patientId, language, softwareMedicalFileExportDto)
 
 Get SMF (Software Medical File) export
 
@@ -725,7 +725,7 @@ val patientId : kotlin.String = patientId_example // kotlin.String |
 val language : kotlin.String = language_example // kotlin.String | 
 val softwareMedicalFileExportDto : SoftwareMedicalFileExportDto =  // SoftwareMedicalFileExportDto | 
 try {
-    val result : java.io.File = apiInstance.generateSmfExport(patientId, language, softwareMedicalFileExportDto)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateSmfExport(patientId, language, softwareMedicalFileExportDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateSmfExport")
@@ -746,7 +746,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**java.io.File**](java.io.File.md)
+[**kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**](kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;.md)
 
 ### Authorization
 
@@ -762,7 +762,7 @@ Configure basicScheme:
 
 <a name="generateSumehr"></a>
 # **generateSumehr**
-> java.io.File generateSumehr(patientId, language, sumehrExportInfoDto)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generateSumehr(patientId, language, sumehrExportInfoDto)
 
 Generate sumehr
 
@@ -777,7 +777,7 @@ val patientId : kotlin.String = patientId_example // kotlin.String |
 val language : kotlin.String = language_example // kotlin.String | 
 val sumehrExportInfoDto : SumehrExportInfoDto =  // SumehrExportInfoDto | 
 try {
-    val result : java.io.File = apiInstance.generateSumehr(patientId, language, sumehrExportInfoDto)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateSumehr(patientId, language, sumehrExportInfoDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateSumehr")
@@ -798,7 +798,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**java.io.File**](java.io.File.md)
+[**kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**](kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;.md)
 
 ### Authorization
 
@@ -814,7 +814,7 @@ Configure basicScheme:
 
 <a name="generateSumehrV2"></a>
 # **generateSumehrV2**
-> java.io.File generateSumehrV2(patientId, language, sumehrExportInfoDto)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generateSumehrV2(patientId, language, sumehrExportInfoDto)
 
 Generate sumehr
 
@@ -829,7 +829,7 @@ val patientId : kotlin.String = patientId_example // kotlin.String |
 val language : kotlin.String = language_example // kotlin.String | 
 val sumehrExportInfoDto : SumehrExportInfoDto =  // SumehrExportInfoDto | 
 try {
-    val result : java.io.File = apiInstance.generateSumehrV2(patientId, language, sumehrExportInfoDto)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateSumehrV2(patientId, language, sumehrExportInfoDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateSumehrV2")
@@ -850,7 +850,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**java.io.File**](java.io.File.md)
+[**kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**](kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;.md)
 
 ### Authorization
 
@@ -1400,7 +1400,7 @@ Configure basicScheme:
 
 <a name="validateSumehr"></a>
 # **validateSumehr**
-> java.io.File validateSumehr(patientId, language, sumehrExportInfoDto)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; validateSumehr(patientId, language, sumehrExportInfoDto)
 
 Validate sumehr
 
@@ -1415,7 +1415,7 @@ val patientId : kotlin.String = patientId_example // kotlin.String |
 val language : kotlin.String = language_example // kotlin.String | 
 val sumehrExportInfoDto : SumehrExportInfoDto =  // SumehrExportInfoDto | 
 try {
-    val result : java.io.File = apiInstance.validateSumehr(patientId, language, sumehrExportInfoDto)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.validateSumehr(patientId, language, sumehrExportInfoDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#validateSumehr")
@@ -1436,7 +1436,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**java.io.File**](java.io.File.md)
+[**kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**](kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;.md)
 
 ### Authorization
 
@@ -1452,7 +1452,7 @@ Configure basicScheme:
 
 <a name="validateSumehrV2"></a>
 # **validateSumehrV2**
-> java.io.File validateSumehrV2(patientId, language, sumehrExportInfoDto)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; validateSumehrV2(patientId, language, sumehrExportInfoDto)
 
 Validate sumehr
 
@@ -1467,7 +1467,7 @@ val patientId : kotlin.String = patientId_example // kotlin.String |
 val language : kotlin.String = language_example // kotlin.String | 
 val sumehrExportInfoDto : SumehrExportInfoDto =  // SumehrExportInfoDto | 
 try {
-    val result : java.io.File = apiInstance.validateSumehrV2(patientId, language, sumehrExportInfoDto)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.validateSumehrV2(patientId, language, sumehrExportInfoDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#validateSumehrV2")
@@ -1488,7 +1488,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**java.io.File**](java.io.File.md)
+[**kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**](kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;.md)
 
 ### Authorization
 

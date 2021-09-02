@@ -56,9 +56,8 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return request<ClassificationDto, ClassificationDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createClassification
     *
@@ -95,9 +94,8 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteClassifications
     *
@@ -135,9 +133,8 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return request<Unit, kotlin.collections.List<ClassificationDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findClassificationsByHCPartyPatientForeignKeys
     *
@@ -179,9 +176,8 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return request<Unit, ClassificationDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getClassification
     *
@@ -218,9 +214,8 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return request<Unit, kotlin.collections.List<ClassificationDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getClassificationByHcPartyId
     *
@@ -257,9 +252,8 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return request<ClassificationDto, ClassificationDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyClassification
     *
@@ -297,9 +291,8 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return request<kotlin.collections.List<DelegationDto>, ClassificationDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation newClassificationDelegations
     *
@@ -337,9 +330,8 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return request<kotlin.collections.List<IcureStubDto>, kotlin.collections.List<IcureStubDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation setClassificationsDelegations
     *

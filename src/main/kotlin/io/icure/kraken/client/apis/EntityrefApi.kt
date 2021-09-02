@@ -53,9 +53,8 @@ class EntityrefApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return request<EntityReferenceDto, EntityReferenceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createEntityReference
     *
@@ -92,9 +91,8 @@ class EntityrefApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return request<Unit, EntityReferenceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getLatest
     *

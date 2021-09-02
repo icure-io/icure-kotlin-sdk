@@ -61,9 +61,8 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return request<Unit, IndexingInfoDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getIndexingInfo
     *
@@ -98,9 +97,8 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return request<Unit, kotlin.String>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getProcessInfo
     *
@@ -135,9 +133,8 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return request<Unit, ReplicationInfoDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getReplicationInfo
     *
@@ -173,9 +170,8 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return request<Unit, ReplicatorDocument>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getReplicatorInfo
     *
@@ -211,9 +207,8 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return request<Unit, kotlin.String>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getVersion
     *
@@ -248,9 +243,8 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return request<Unit, kotlin.String>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation isReady
     *
@@ -286,9 +280,8 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return request<Unit, kotlin.collections.List<ContactDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation resolveContactsConflicts
     *
@@ -331,9 +324,8 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return request<Unit, kotlin.collections.List<DocumentDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation resolveDocumentsConflicts
     *
@@ -379,9 +371,8 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return request<Unit, kotlin.collections.List<FormDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation resolveFormsConflicts
     *
@@ -423,9 +414,8 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return request<Unit, kotlin.collections.List<HealthElementDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation resolveHealthElementsConflicts
     *
@@ -467,9 +457,8 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return request<Unit, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation resolveInvoicesConflicts
     *
@@ -511,9 +500,8 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return request<Unit, kotlin.collections.List<MessageDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation resolveMessagesConflicts
     *
@@ -555,9 +543,8 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return request<Unit, kotlin.collections.List<PatientDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation resolvePatientsConflicts
     *
@@ -600,9 +587,8 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return request<Unit, kotlin.Boolean>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation updateDesignDoc
     *

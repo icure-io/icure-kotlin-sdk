@@ -58,9 +58,8 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, UserDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation assignHealthcareParty
     *
@@ -97,9 +96,8 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, kotlin.Boolean>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation checkPassword
     *
@@ -137,9 +135,8 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<UserDto, UserDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createUser
     *
@@ -177,9 +174,8 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<UserDto, UserDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createUserInGroup
     *
@@ -217,9 +213,8 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, DocIdentifier>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteUser
     *
@@ -257,9 +252,8 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, kotlin.Any>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteUserInGroup
     *
@@ -297,9 +291,8 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, kotlin.String>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation encodePassword
     *
@@ -337,9 +330,8 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, kotlin.collections.List<kotlin.String>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findByHcpartyId
     *
@@ -377,9 +369,8 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<EmailTemplateDto, kotlin.Boolean>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation forgottenPassword
     *
@@ -416,9 +407,8 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, kotlin.String>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getCurrentSession
     *
@@ -453,9 +443,8 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, UserDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getCurrentUser
     *
@@ -490,9 +479,8 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, kotlin.collections.List<UserGroupDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getMatchingUsers
     *
@@ -528,9 +516,8 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, UserDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getUser
     *
@@ -567,9 +554,8 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, UserDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getUserByEmail
     *
@@ -608,9 +594,8 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, PaginatedListUserDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listUsers
     *
@@ -663,9 +648,8 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, PaginatedListUserDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listUsersInGroup
     *
@@ -717,9 +701,8 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<kotlin.collections.List<PropertyStubDto>, UserDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyProperties
     *
@@ -757,9 +740,8 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<UserDto, UserDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyUser
     *
@@ -797,9 +779,8 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<UserDto, UserDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyUserInGroup
     *
