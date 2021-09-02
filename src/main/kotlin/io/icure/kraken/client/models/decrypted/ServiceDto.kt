@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.github.pozo.KotlinBuilder
+import io.icure.kraken.client.models.IdentifierDto
 
 
 /**
@@ -67,6 +68,9 @@ data class ServiceDto (
     /* The Id of the Service. We encourage using either a v4 UUID or a HL7 Id. */
     @field:JsonProperty("id")
     val id: kotlin.String,
+
+    @field:JsonProperty("identifier")
+    val identifier: kotlin.collections.List<IdentifierDto> = listOf(),
 
     /* The public patient key, encrypted here for separate Crypto Actors. */
     @field:JsonProperty("cryptedForeignKeys")

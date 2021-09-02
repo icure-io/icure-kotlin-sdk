@@ -18,7 +18,6 @@ import io.icure.kraken.client.models.DelegationDto
 import io.icure.kraken.client.models.EmploymentInfoDto
 import io.icure.kraken.client.models.FinancialInstitutionInformationDto
 import io.icure.kraken.client.models.IdentifierDto
-import io.icure.kraken.client.models.IdentifierDto
 import io.icure.kraken.client.models.InsurabilityDto
 import io.icure.kraken.client.models.MedicalHouseContractDto
 import io.icure.kraken.client.models.PartnershipDto
