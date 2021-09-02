@@ -1,0 +1,53 @@
+{
+  "beforeElements": {
+    "bodies": null
+  },
+  "afterElements": {
+    "family": null,
+    "deleteIds": null
+  },
+  "createDocumentTemplate": {
+    "body": null
+  },
+  "deleteDocumentTemplate": {
+    "documentTemplateIds": null
+  },
+  "findAllDocumentTemplates": {
+  },
+  "findDocumentTemplates": {
+  },
+  "findDocumentTemplatesByDocumentType": {
+    "documentTypeCode": null
+  },
+  "findDocumentTemplatesByDocumentTypeForCurrentUser": {
+    "documentTypeCode": null
+  },
+  "findDocumentTemplatesBySpeciality": {
+    "specialityCode": null
+  },
+  "getAttachment": {
+    "documentTemplateId": null, 
+    "attachmentId": null
+  },
+  "getAttachmentText": {
+    "documentTemplateId": null, 
+    "attachmentId": null
+  },
+  "getDocumentTemplate": {
+    "documentTemplateId": null
+  },
+  "setAttachment": {
+    "documentTemplateId": null, 
+    "body": null
+  },
+  "setAttachmentJson": {
+    "documentTemplateId": null, 
+    "body": null
+  },
+  "updateDocumentTemplate": {
+    "documentTemplateId": null, 
+    "body": null
+  },
+  "fallback": {
+  }
+}

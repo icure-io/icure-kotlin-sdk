@@ -1,0 +1,73 @@
+{
+  "beforeElements": {
+    "bodies": [
+      {"id": "47cde998-100c-4940-8b6f-48201d224226", "codes": [], "tags": [], "secretForeignKeys": ["9a639b98-e667-4a8d-b0b9-3526ff873e51"], "cryptedForeignKeys": {"782f1bcd-9f3f-408a-af1b-cd9f3f908a98": [{"owner": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98", "delegatedTo": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98", "key": "5a7549171bcf6e6c16c2795f9d1d05177658638eee2b575a958ae724c1120ee298e1deceaef0d7e020c1194dca6efd44e8284f21a5cfdeb26223e04f35b0bd25a5cca44980e7305ef42ada0ddfc08c95ce2cd6b3e24c7fb0395e104f11ec536e"}]}, "delegations": {"782f1bcd-9f3f-408a-af1b-cd9f3f908a98": [{"owner": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98", "delegatedTo": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98", "key": "7c612b2f9f76984876e356db51378746a1cd9894387989647ea2c0f95a9ff2d3a14912b06e354b9935e37950af4f28db0b79562b05d66528581f3436423e1caca95ba4d7f46567c8f379ef381558c0ed2e328a64f625c6742bc71887d3632bba"}]}, "attachmentEncryptionKeys": [], "mainUti": "public.xml", "name": "Reponse d'envoi ", "java_type": "org.taktik.icure.entities.Document", "rev_history": {}},
+      {"id": "0c01cc96-62a9-4062-be1f-f8a8d8bb74b7", "codes": [], "tags": [], "secretForeignKeys": ["9a639b98-e667-4a8d-b0b9-3526ff873e51"], "cryptedForeignKeys": {"782f1bcd-9f3f-408a-af1b-cd9f3f908a98": [{"owner": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98", "delegatedTo": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98", "key": "5a7549171bcf6e6c16c2795f9d1d05177658638eee2b575a958ae724c1120ee298e1deceaef0d7e020c1194dca6efd44e8284f21a5cfdeb26223e04f35b0bd25a5cca44980e7305ef42ada0ddfc08c95ce2cd6b3e24c7fb0395e104f11ec536e"}]}, "delegations": {"782f1bcd-9f3f-408a-af1b-cd9f3f908a98": [{"owner": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98", "delegatedTo": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98", "key": "7c612b2f9f76984876e356db51378746a1cd9894387989647ea2c0f95a9ff2d3a14912b06e354b9935e37950af4f28db0b79562b05d66528581f3436423e1caca95ba4d7f46567c8f379ef381558c0ed2e328a64f625c6742bc71887d3632bba"}]}, "attachmentEncryptionKeys": [], "mainUti": "public.xml", "name": "Reponse d'envoi ", "java_type": "org.taktik.icure.entities.Document", "rev_history": {}}
+    ]
+  },
+  "afterElements": {
+    "family": null,
+    "deleteIds": ["a0b9279c-a56e-4344-8e2f-997d172d14f8", "47cde998-100c-4940-8b6f-48201d224226", "0c01cc96-62a9-4062-be1f-f8a8d8bb74b7"]
+  },
+  "createDocument": {
+    "body": {"id": "a0b9279c-a56e-4344-8e2f-997d172d14f8", "codes": [], "tags": [], "secretForeignKeys": ["9a639b98-e667-4a8d-b0b9-3526ff873e51"], "cryptedForeignKeys": {"782f1bcd-9f3f-408a-af1b-cd9f3f908a98": [{"owner": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98", "delegatedTo": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98", "key": "5a7549171bcf6e6c16c2795f9d1d05177658638eee2b575a958ae724c1120ee298e1deceaef0d7e020c1194dca6efd44e8284f21a5cfdeb26223e04f35b0bd25a5cca44980e7305ef42ada0ddfc08c95ce2cd6b3e24c7fb0395e104f11ec536e"}]}, "delegations": {"782f1bcd-9f3f-408a-af1b-cd9f3f908a98": [{"owner": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98", "delegatedTo": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98", "key": "7c612b2f9f76984876e356db51378746a1cd9894387989647ea2c0f95a9ff2d3a14912b06e354b9935e37950af4f28db0b79562b05d66528581f3436423e1caca95ba4d7f46567c8f379ef381558c0ed2e328a64f625c6742bc71887d3632bba"}]}, "attachmentEncryptionKeys": [], "mainUti": "public.xml", "name": "Reponse d'envoi ", "java_type": "org.taktik.icure.entities.Document", "rev_history": {}}
+  },
+  "deleteAttachment": {
+    "skipEndpoint" : true,
+    "documentId": null
+  },
+  "deleteDocument": {
+    "documentIds": "47cde998-100c-4940-8b6f-48201d224226"
+  },
+  "findByHCPartyMessageSecretFKeys": {
+    "hcPartyId": "56cd68ab-9078-4e00-8d68-ab9078de002f",
+    "secretFKeys": "09e7039b-3aba-417f-9ab4-85492686819b"
+  },
+  "findByTypeHCPartyMessageSecretFKeys": {
+    "documentTypeCode": "dischargereport",
+    "hcPartyId": "90904230-9161-4e16-9d27-0eade38f05ef",
+    "secretFKeys": "ab856afa-179a-4bf9-8c09-798de01950b2"
+  },
+  "findWithoutDelegation": {
+    "limit": null
+  },
+  "getAttachment": {
+    "documentId": null, 
+    "attachmentId": null, 
+    "enckeys": null, 
+    "fileName": null
+  },
+  "getDocument": {
+    "documentId": "0028ca1c-9d0a-4632-a8ca-1c9d0a4632ac"
+  },
+  "getDocuments": {
+    "body": {
+      "ids": [
+        "210679bf-0fca-443d-92f7-8ea63a4b11d2",
+        "11471905-c67b-4700-8719-05c67b970080"
+      ]
+    }
+  },
+  "modifyDocument": {
+    "autoRev" : true,
+    "body": {"id": "0c01cc96-62a9-4062-be1f-f8a8d8bb74b7","codes": [], "tags": [], "secretForeignKeys": ["9a639b98-e667-4a8d-b0b9-3526ff873e51"], "cryptedForeignKeys": {"782f1bcd-9f3f-408a-af1b-cd9f3f908a98": [{"owner": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98", "delegatedTo": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98", "key": "5a7549171bcf6e6c16c2795f9d1d05177658638eee2b575a958ae724c1120ee298e1deceaef0d7e020c1194dca6efd44e8284f21a5cfdeb26223e04f35b0bd25a5cca44980e7305ef42ada0ddfc08c95ce2cd6b3e24c7fb0395e104f11ec536e"}]}, "delegations": {"782f1bcd-9f3f-408a-af1b-cd9f3f908a98": [{"owner": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98", "delegatedTo": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98", "key": "7c612b2f9f76984876e356db51378746a1cd9894387989647ea2c0f95a9ff2d3a14912b06e354b9935e37950af4f28db0b79562b05d66528581f3436423e1caca95ba4d7f46567c8f379ef381558c0ed2e328a64f625c6742bc71887d3632bba"}]}, "attachmentEncryptionKeys": [], "mainUti": "public.xml", "name": "Reponse de question ", "java_type": "org.taktik.icure.entities.Document", "rev_history": {}}
+  },
+  "modifyDocuments": {
+    "body": null
+  },
+  "setAttachment": {
+    "documentId": null, 
+    "enckeys": null, 
+    "body": null
+  },
+  "setAttachmentMulti": {
+    "documentId": null, 
+    "enckeys": null, 
+    "attachment": null
+  },
+  "setDocumentsDelegations": {
+    "body": null
+  },
+  "fallback": {
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "beforeElements": {
+    "bodies": null
+  },
+  "afterElements": {
+    "family": null,
+    "deleteIds": null
+  },
+  "createGroup": {
+    "id": null, 
+    "name": null, 
+    "password": null, 
+    "body": null
+  },
+  "fallback": {
+  }
+}

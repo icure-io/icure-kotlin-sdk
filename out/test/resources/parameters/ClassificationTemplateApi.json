@@ -1,0 +1,64 @@
+{
+  "commentedBeforeElements": {
+    "bodies": [
+      {
+        "id": "2276191a-c0e1-42d0-89a4-89abd288b000",
+        "responsible": "Simon"
+      },
+      {
+        "id": "2276191a-c0e1-42d0-89a4-89abd288b001",
+        "responsible": "Michal"
+      },
+      {
+        "id": "2276191a-c0e1-42d0-89a4-89abd288b002",
+        "responsible": "Olivier"
+      }
+    ]
+  },
+  "commentedAfterElements": {
+    "family": "base",
+    "deleteIds": ["2276191a-c0e1-42d0-89a4-89abd288b000", "2276191a-c0e1-42d0-89a4-89abd288b001", "2276191a-c0e1-42d0-89a4-89abd288b002", "2276191a-c0e1-42d0-89a4-89abd288b005"]
+  },
+  "createClassificationTemplate": {
+    "body": {
+      "id": "2276191a-c0e1-42d0-89a4-89abd288b005",
+      "responsible": "Vladimir"
+    }
+  },
+  "deleteClassificationTemplates": {
+    "skipEndpoint": true,
+    "classificationTemplateIds": "2276191a-c0e1-42d0-89a4-89abd288b001"
+  },
+  "findByHCPartyPatientSecretFKeys": {
+    "skipEndpoint": true,
+    "hcPartyId": null, 
+    "secretFKeys": null
+  },
+  "getClassificationTemplate": {
+    "classificationTemplateId": "ClTp_2000121613505142303"
+  },
+  "getClassificationTemplateByIds": {
+    "ids": "ClTp_2000121613505142303, 2276191a-c0e1-42d0-89a4-89abd288b002"
+  },
+  "listClassificationTemplates": {
+    "startKey": null, 
+    "startDocumentId": "ClTp_2000121613505350908",
+    "limit": "10"
+  },
+  "modifyClassificationTemplate": {
+    "skipEndpoint": true,
+    "autoRev": true,
+    "body": {
+      "id": "2276191a-c0e1-42d0-89a4-89abd288b000",
+      "responsible": "SHA"
+    }
+  },
+  "newDelegations": {
+    "skipEndpoint": true,
+    "classificationTemplateId": null, 
+    "body": null
+  },
+  
+  "fallback": {
+  }
+}
