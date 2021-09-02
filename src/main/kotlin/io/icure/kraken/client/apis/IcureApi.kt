@@ -273,6 +273,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     /**
     * Resolve contacts conflicts
     * 
+    * @param limit  (optional)
     * @return kotlin.collections.List<ContactDto>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -280,8 +281,8 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun resolveContactsConflicts() : kotlin.collections.List<ContactDto>?  {
-        val localVariableConfig = resolveContactsConflictsRequestConfig()
+    suspend fun resolveContactsConflicts(limit: kotlin.Int?) : kotlin.collections.List<ContactDto>?  {
+        val localVariableConfig = resolveContactsConflictsRequestConfig(limit = limit)
 
         return request<Unit, kotlin.collections.List<ContactDto>>(
             localVariableConfig
@@ -291,11 +292,17 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     /**
     * To obtain the request config of the operation resolveContactsConflicts
     *
+    * @param limit  (optional)
     * @return RequestConfig
     */
-    fun resolveContactsConflictsRequestConfig() : RequestConfig<Unit> {
+    fun resolveContactsConflictsRequestConfig(limit: kotlin.Int?) : RequestConfig<Unit> {
         val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                if (limit != null) {
+                    put("limit", listOf(limit.toString()))
+                }
+            }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(
@@ -311,6 +318,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     * resolve documents conflicts
     * 
     * @param ids  (optional)
+    * @param limit  (optional)
     * @return kotlin.collections.List<DocumentDto>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -318,8 +326,8 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun resolveDocumentsConflicts(ids: kotlin.String?) : kotlin.collections.List<DocumentDto>?  {
-        val localVariableConfig = resolveDocumentsConflictsRequestConfig(ids = ids)
+    suspend fun resolveDocumentsConflicts(ids: kotlin.String?, limit: kotlin.Int?) : kotlin.collections.List<DocumentDto>?  {
+        val localVariableConfig = resolveDocumentsConflictsRequestConfig(ids = ids, limit = limit)
 
         return request<Unit, kotlin.collections.List<DocumentDto>>(
             localVariableConfig
@@ -330,14 +338,18 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     * To obtain the request config of the operation resolveDocumentsConflicts
     *
     * @param ids  (optional)
+    * @param limit  (optional)
     * @return RequestConfig
     */
-    fun resolveDocumentsConflictsRequestConfig(ids: kotlin.String?) : RequestConfig<Unit> {
+    fun resolveDocumentsConflictsRequestConfig(ids: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (ids != null) {
                     put("ids", listOf(ids.toString()))
+                }
+                if (limit != null) {
+                    put("limit", listOf(limit.toString()))
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -354,6 +366,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     /**
     * resolve forms conflicts
     * 
+    * @param limit  (optional)
     * @return kotlin.collections.List<FormDto>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -361,8 +374,8 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun resolveFormsConflicts() : kotlin.collections.List<FormDto>?  {
-        val localVariableConfig = resolveFormsConflictsRequestConfig()
+    suspend fun resolveFormsConflicts(limit: kotlin.Int?) : kotlin.collections.List<FormDto>?  {
+        val localVariableConfig = resolveFormsConflictsRequestConfig(limit = limit)
 
         return request<Unit, kotlin.collections.List<FormDto>>(
             localVariableConfig
@@ -372,11 +385,17 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     /**
     * To obtain the request config of the operation resolveFormsConflicts
     *
+    * @param limit  (optional)
     * @return RequestConfig
     */
-    fun resolveFormsConflictsRequestConfig() : RequestConfig<Unit> {
+    fun resolveFormsConflictsRequestConfig(limit: kotlin.Int?) : RequestConfig<Unit> {
         val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                if (limit != null) {
+                    put("limit", listOf(limit.toString()))
+                }
+            }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(
@@ -391,6 +410,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     /**
     * resolve healthcare elements conflicts
     * 
+    * @param limit  (optional)
     * @return kotlin.collections.List<HealthElementDto>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -398,8 +418,8 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun resolveHealthElementsConflicts() : kotlin.collections.List<HealthElementDto>?  {
-        val localVariableConfig = resolveHealthElementsConflictsRequestConfig()
+    suspend fun resolveHealthElementsConflicts(limit: kotlin.Int?) : kotlin.collections.List<HealthElementDto>?  {
+        val localVariableConfig = resolveHealthElementsConflictsRequestConfig(limit = limit)
 
         return request<Unit, kotlin.collections.List<HealthElementDto>>(
             localVariableConfig
@@ -409,11 +429,17 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     /**
     * To obtain the request config of the operation resolveHealthElementsConflicts
     *
+    * @param limit  (optional)
     * @return RequestConfig
     */
-    fun resolveHealthElementsConflictsRequestConfig() : RequestConfig<Unit> {
+    fun resolveHealthElementsConflictsRequestConfig(limit: kotlin.Int?) : RequestConfig<Unit> {
         val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                if (limit != null) {
+                    put("limit", listOf(limit.toString()))
+                }
+            }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(
@@ -428,6 +454,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     /**
     * resolve invoices conflicts
     * 
+    * @param limit  (optional)
     * @return kotlin.collections.List<InvoiceDto>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -435,8 +462,8 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun resolveInvoicesConflicts() : kotlin.collections.List<InvoiceDto>?  {
-        val localVariableConfig = resolveInvoicesConflictsRequestConfig()
+    suspend fun resolveInvoicesConflicts(limit: kotlin.Int?) : kotlin.collections.List<InvoiceDto>?  {
+        val localVariableConfig = resolveInvoicesConflictsRequestConfig(limit = limit)
 
         return request<Unit, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
@@ -446,11 +473,17 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     /**
     * To obtain the request config of the operation resolveInvoicesConflicts
     *
+    * @param limit  (optional)
     * @return RequestConfig
     */
-    fun resolveInvoicesConflictsRequestConfig() : RequestConfig<Unit> {
+    fun resolveInvoicesConflictsRequestConfig(limit: kotlin.Int?) : RequestConfig<Unit> {
         val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                if (limit != null) {
+                    put("limit", listOf(limit.toString()))
+                }
+            }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(
@@ -465,6 +498,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     /**
     * resolve messages conflicts
     * 
+    * @param limit  (optional)
     * @return kotlin.collections.List<MessageDto>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -472,8 +506,8 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun resolveMessagesConflicts() : kotlin.collections.List<MessageDto>?  {
-        val localVariableConfig = resolveMessagesConflictsRequestConfig()
+    suspend fun resolveMessagesConflicts(limit: kotlin.Int?) : kotlin.collections.List<MessageDto>?  {
+        val localVariableConfig = resolveMessagesConflictsRequestConfig(limit = limit)
 
         return request<Unit, kotlin.collections.List<MessageDto>>(
             localVariableConfig
@@ -483,11 +517,17 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     /**
     * To obtain the request config of the operation resolveMessagesConflicts
     *
+    * @param limit  (optional)
     * @return RequestConfig
     */
-    fun resolveMessagesConflictsRequestConfig() : RequestConfig<Unit> {
+    fun resolveMessagesConflictsRequestConfig(limit: kotlin.Int?) : RequestConfig<Unit> {
         val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                if (limit != null) {
+                    put("limit", listOf(limit.toString()))
+                }
+            }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(
@@ -502,6 +542,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     /**
     * Resolve patients conflicts
     * 
+    * @param limit  (optional)
     * @return kotlin.collections.List<PatientDto>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -509,8 +550,8 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun resolvePatientsConflicts() : kotlin.collections.List<PatientDto>?  {
-        val localVariableConfig = resolvePatientsConflictsRequestConfig()
+    suspend fun resolvePatientsConflicts(limit: kotlin.Int?) : kotlin.collections.List<PatientDto>?  {
+        val localVariableConfig = resolvePatientsConflictsRequestConfig(limit = limit)
 
         return request<Unit, kotlin.collections.List<PatientDto>>(
             localVariableConfig
@@ -520,11 +561,17 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     /**
     * To obtain the request config of the operation resolvePatientsConflicts
     *
+    * @param limit  (optional)
     * @return RequestConfig
     */
-    fun resolvePatientsConflictsRequestConfig() : RequestConfig<Unit> {
+    fun resolvePatientsConflictsRequestConfig(limit: kotlin.Int?) : RequestConfig<Unit> {
         val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                if (limit != null) {
+                    put("limit", listOf(limit.toString()))
+                }
+            }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(
