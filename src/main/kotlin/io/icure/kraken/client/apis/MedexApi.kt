@@ -53,9 +53,8 @@ class MedexApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return request<MedexInfoDto, kotlin.String>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation generateMedex
     *

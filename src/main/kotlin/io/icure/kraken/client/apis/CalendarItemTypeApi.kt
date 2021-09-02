@@ -54,9 +54,8 @@ class CalendarItemTypeApi(basePath: kotlin.String = defaultBasePath, webClient: 
 
         return request<CalendarItemTypeDto, CalendarItemTypeDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createCalendarItemType
     *
@@ -93,9 +92,8 @@ class CalendarItemTypeApi(basePath: kotlin.String = defaultBasePath, webClient: 
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteCalendarItemType
     *
@@ -132,9 +130,8 @@ class CalendarItemTypeApi(basePath: kotlin.String = defaultBasePath, webClient: 
 
         return request<Unit, CalendarItemTypeDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getCalendarItemType
     *
@@ -170,9 +167,8 @@ class CalendarItemTypeApi(basePath: kotlin.String = defaultBasePath, webClient: 
 
         return request<Unit, kotlin.collections.List<CalendarItemTypeDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getCalendarItemTypes
     *
@@ -207,9 +203,8 @@ class CalendarItemTypeApi(basePath: kotlin.String = defaultBasePath, webClient: 
 
         return request<Unit, kotlin.collections.List<CalendarItemTypeDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getCalendarItemTypesIncludeDeleted
     *
@@ -245,9 +240,8 @@ class CalendarItemTypeApi(basePath: kotlin.String = defaultBasePath, webClient: 
 
         return request<CalendarItemTypeDto, CalendarItemTypeDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyCalendarItemType
     *

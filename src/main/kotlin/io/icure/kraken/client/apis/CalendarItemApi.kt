@@ -56,9 +56,8 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return request<CalendarItemDto, CalendarItemDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createCalendarItem
     *
@@ -95,9 +94,8 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteCalendarItem
     *
@@ -135,9 +133,8 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return request<Unit, kotlin.collections.List<CalendarItemDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findCalendarItemsByHCPartyPatientForeignKeys
     *
@@ -179,9 +176,8 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return request<Unit, CalendarItemDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getCalendarItem
     *
@@ -217,9 +213,8 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return request<Unit, kotlin.collections.List<CalendarItemDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getCalendarItems
     *
@@ -257,9 +252,8 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return request<Unit, kotlin.collections.List<CalendarItemDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getCalendarItemsByPeriodAndHcPartyId
     *
@@ -303,9 +297,8 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return request<ListOfIdsDto, kotlin.collections.List<CalendarItemDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getCalendarItemsWithIds
     *
@@ -344,9 +337,8 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return request<Unit, kotlin.collections.List<CalendarItemDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getCalendarsByPeriodAndAgendaId
     *
@@ -390,9 +382,8 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return request<CalendarItemDto, CalendarItemDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyCalendarItem
     *
@@ -429,9 +420,8 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return request<kotlin.collections.List<IcureStubDto>, kotlin.collections.List<CalendarItemDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation setCalendarItemsDelegations
     *

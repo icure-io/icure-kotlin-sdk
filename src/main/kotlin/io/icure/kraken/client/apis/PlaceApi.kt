@@ -54,9 +54,8 @@ class PlaceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return request<PlaceDto, PlaceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createPlace
     *
@@ -93,9 +92,8 @@ class PlaceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deletePlace
     *
@@ -132,9 +130,8 @@ class PlaceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return request<Unit, PlaceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getPlace
     *
@@ -170,9 +167,8 @@ class PlaceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return request<Unit, kotlin.collections.List<PlaceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getPlaces
     *
@@ -208,9 +204,8 @@ class PlaceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return request<PlaceDto, PlaceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyPlace
     *

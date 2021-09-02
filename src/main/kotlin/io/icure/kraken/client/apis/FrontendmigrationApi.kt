@@ -54,9 +54,8 @@ class FrontendmigrationApi(basePath: kotlin.String = defaultBasePath, webClient:
 
         return request<FrontEndMigrationDto, FrontEndMigrationDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createFrontEndMigration
     *
@@ -93,9 +92,8 @@ class FrontendmigrationApi(basePath: kotlin.String = defaultBasePath, webClient:
 
         return request<Unit, DocIdentifier>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteFrontEndMigration
     *
@@ -132,9 +130,8 @@ class FrontendmigrationApi(basePath: kotlin.String = defaultBasePath, webClient:
 
         return request<Unit, FrontEndMigrationDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getFrontEndMigration
     *
@@ -171,9 +168,8 @@ class FrontendmigrationApi(basePath: kotlin.String = defaultBasePath, webClient:
 
         return request<Unit, kotlin.collections.List<FrontEndMigrationDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getFrontEndMigrationByName
     *
@@ -209,9 +205,8 @@ class FrontendmigrationApi(basePath: kotlin.String = defaultBasePath, webClient:
 
         return request<Unit, kotlin.collections.List<FrontEndMigrationDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getFrontEndMigrations
     *
@@ -247,9 +242,8 @@ class FrontendmigrationApi(basePath: kotlin.String = defaultBasePath, webClient:
 
         return request<FrontEndMigrationDto, FrontEndMigrationDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyFrontEndMigration
     *

@@ -64,9 +64,8 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<AmpDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findAmpsByDmppCode
     *
@@ -106,9 +105,8 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PaginatedListAmpDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findPaginatedAmpsByAtc
     *
@@ -162,9 +160,8 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PaginatedListAmpDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findPaginatedAmpsByGroupCode
     *
@@ -218,9 +215,8 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PaginatedListAmpDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findPaginatedAmpsByGroupId
     *
@@ -275,9 +271,8 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PaginatedListAmpDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findPaginatedAmpsByLabel
     *
@@ -338,9 +333,8 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PaginatedListAmpDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findPaginatedAmpsByVmpCode
     *
@@ -394,9 +388,8 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PaginatedListAmpDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findPaginatedAmpsByVmpId
     *
@@ -451,9 +444,8 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PaginatedListNmpDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findPaginatedNmpsByLabel
     *
@@ -515,9 +507,8 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PaginatedListVmpGroupDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findPaginatedVmpGroupsByLabel
     *
@@ -578,9 +569,8 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PaginatedListVmpGroupDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findPaginatedVmpGroupsByVmpGroupCode
     *
@@ -634,9 +624,8 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PaginatedListVmpDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findPaginatedVmpsByGroupCode
     *
@@ -690,9 +679,8 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PaginatedListVmpDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findPaginatedVmpsByGroupId
     *
@@ -747,9 +735,8 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PaginatedListVmpDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findPaginatedVmpsByLabel
     *
@@ -810,9 +797,8 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PaginatedListVmpDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findPaginatedVmpsByVmpCode
     *
@@ -862,9 +848,8 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, SamVersionDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getSamVersion
     *
@@ -900,9 +885,8 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<ListOfIdsDto, kotlin.collections.List<AmpDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listAmpsByDmppCodes
     *
@@ -939,9 +923,8 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<ListOfIdsDto, kotlin.collections.List<AmpDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listAmpsByGroupCodes
     *
@@ -978,9 +961,8 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<ListOfIdsDto, kotlin.collections.List<AmpDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listAmpsByGroupIds
     *
@@ -1017,9 +999,8 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<ListOfIdsDto, kotlin.collections.List<AmpDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listAmpsByVmpCodes
     *
@@ -1056,9 +1037,8 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<ListOfIdsDto, kotlin.collections.List<AmpDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listAmpsByVmpIds
     *
@@ -1095,9 +1075,8 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<ListOfIdsDto, kotlin.collections.List<NmpDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listNmpsByCnks
     *
@@ -1133,9 +1112,8 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<PharmaceuticalFormDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listPharmaceuticalForms
     *
@@ -1170,9 +1148,8 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<SubstanceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listSubstances
     *
@@ -1208,9 +1185,8 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<ListOfIdsDto, kotlin.collections.List<VmpGroupDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listVmpGroupsByVmpGroupCodes
     *
@@ -1247,9 +1223,8 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<ListOfIdsDto, kotlin.collections.List<VmpDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listVmpsByGroupIds
     *
@@ -1286,9 +1261,8 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<ListOfIdsDto, kotlin.collections.List<VmpDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listVmpsByVmpCodes
     *

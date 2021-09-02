@@ -58,9 +58,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<FormDto, FormDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createForm
     *
@@ -97,9 +96,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<FormTemplateDto, FormTemplateDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createFormTemplate
     *
@@ -136,9 +134,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<kotlin.collections.List<FormDto>, kotlin.collections.List<FormDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createForms
     *
@@ -175,9 +172,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, DocIdentifier>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteFormTemplate
     *
@@ -214,9 +210,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteForms
     *
@@ -253,9 +248,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, kotlin.collections.List<FormTemplateDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findFormTemplates
     *
@@ -298,9 +292,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, kotlin.collections.List<FormTemplateDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findFormTemplatesBySpeciality
     *
@@ -347,9 +340,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, kotlin.collections.List<FormDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findFormsByHCPartyPatientForeignKeys
     *
@@ -404,9 +396,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, kotlin.collections.List<IcureStubDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findFormsDelegationsStubsByHCPartyPatientForeignKeys
     *
@@ -449,9 +440,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, kotlin.collections.List<FormDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getChildrenForms
     *
@@ -489,9 +479,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, FormDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getForm
     *
@@ -528,9 +517,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, FormDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getFormByLogicalUuid
     *
@@ -567,9 +555,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, FormDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getFormByUniqueId
     *
@@ -606,9 +593,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, FormTemplateDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getFormTemplate
     *
@@ -646,9 +632,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, kotlin.collections.List<FormTemplateDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getFormTemplatesByGuid
     *
@@ -686,9 +671,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<ListOfIdsDto, kotlin.collections.List<FormDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getForms
     *
@@ -725,9 +709,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, kotlin.collections.List<FormDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getFormsByLogicalUuid
     *
@@ -764,9 +747,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, kotlin.collections.List<FormDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getFormsByUniqueId
     *
@@ -803,9 +785,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<FormDto, FormDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyForm
     *
@@ -842,9 +823,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<kotlin.collections.List<FormDto>, kotlin.collections.List<FormDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyForms
     *
@@ -882,9 +862,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<kotlin.collections.List<DelegationDto>, FormDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation newFormDelegations
     *
@@ -922,9 +901,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<kotlin.collections.List<IcureStubDto>, kotlin.collections.List<IcureStubDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation setFormsDelegations
     *
@@ -962,9 +940,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Map<String, Any?>, kotlin.String>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation setTemplateAttachmentMulti
     *
@@ -1003,9 +980,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<FormTemplateDto, FormTemplateDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation updateFormTemplate
     *

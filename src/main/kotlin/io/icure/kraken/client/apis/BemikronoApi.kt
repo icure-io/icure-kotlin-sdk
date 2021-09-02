@@ -58,9 +58,8 @@ class BemikronoApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return request<Unit, kotlin.collections.List<AppointmentDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation appointmentsByDate
     *
@@ -99,9 +98,8 @@ class BemikronoApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return request<Unit, kotlin.collections.List<AppointmentDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation appointmentsByPatient
     *
@@ -148,9 +146,8 @@ class BemikronoApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return request<kotlin.collections.List<MikronoAppointmentTypeRestDto>, kotlin.collections.List<MikronoAppointmentTypeRestDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createAppointmentTypes
     *
@@ -187,9 +184,8 @@ class BemikronoApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return request<kotlin.collections.List<AppointmentImportDto>, kotlin.collections.List<kotlin.String>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createAppointments
     *
@@ -226,9 +222,8 @@ class BemikronoApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return request<Unit, Unit>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation notify
     *
@@ -267,9 +262,8 @@ class BemikronoApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return request<MikronoCredentialsDto, UserDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation register
     *
@@ -307,9 +301,8 @@ class BemikronoApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return request<EmailOrSmsMessageDto, kotlin.Any>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation sendMessage
     *
@@ -347,9 +340,8 @@ class BemikronoApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return request<MikronoCredentialsDto, UserDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation setUserCredentials
     *

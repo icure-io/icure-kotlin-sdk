@@ -59,9 +59,8 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<MessageDto, MessageDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createMessage
     *
@@ -99,9 +98,8 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, MessageDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteDelegation
     *
@@ -139,9 +137,8 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteMessages
     *
@@ -178,9 +175,8 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<ListOfIdsDto, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteMessagesBatch
     *
@@ -219,9 +215,8 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PaginatedListMessageDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findMessages
     *
@@ -275,9 +270,8 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PaginatedListMessageDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findMessagesByFromAddress
     *
@@ -335,9 +329,8 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<MessageDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findMessagesByHCPartyPatientForeignKeys
     *
@@ -382,9 +375,8 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PaginatedListMessageDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findMessagesByToAddress
     *
@@ -451,9 +443,8 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PaginatedListMessageDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findMessagesByTransportGuid
     *
@@ -521,9 +512,8 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PaginatedListMessageDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findMessagesByTransportGuidSentDate
     *
@@ -589,9 +579,8 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<MessageDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getChildrenMessages
     *
@@ -628,9 +617,8 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<ListOfIdsDto, kotlin.collections.List<MessageDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getChildrenMessagesOfList
     *
@@ -667,9 +655,8 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, MessageDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getMessage
     *
@@ -706,9 +693,8 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<ListOfIdsDto, kotlin.collections.List<MessageDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listMessagesByInvoiceIds
     *
@@ -746,9 +732,8 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<ListOfIdsDto, kotlin.collections.List<MessageDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listMessagesByTransportGuids
     *
@@ -789,9 +774,8 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<MessageDto, MessageDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyMessage
     *
@@ -829,9 +813,8 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<kotlin.collections.List<DelegationDto>, IcureStubDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation newMessageDelegations
     *
@@ -869,9 +852,8 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<MessagesReadStatusUpdate, kotlin.collections.List<MessageDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation setMessagesReadStatus
     *
@@ -909,9 +891,8 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<ListOfIdsDto, kotlin.collections.List<MessageDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation setMessagesStatusBits
     *

@@ -54,9 +54,8 @@ class KeywordApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<KeywordDto, KeywordDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createKeyword
     *
@@ -93,9 +92,8 @@ class KeywordApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteKeywords
     *
@@ -132,9 +130,8 @@ class KeywordApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, KeywordDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getKeyword
     *
@@ -170,9 +167,8 @@ class KeywordApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<KeywordDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getKeywords
     *
@@ -208,9 +204,8 @@ class KeywordApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<KeywordDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getKeywordsByUser
     *
@@ -247,9 +242,8 @@ class KeywordApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<KeywordDto, KeywordDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyKeyword
     *

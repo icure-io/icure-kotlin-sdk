@@ -39,7 +39,7 @@ import kotlin.reflect.full.memberProperties
  * API tests for {{classname}}
  */
 @ExperimentalStdlibApi
-class {{classname}}Test(private val fileName: String) {
+class {{classname}}Test() {
 
     companion object {
         private val alreadyCreatedObjects = mutableSetOf<String>()
@@ -90,12 +90,11 @@ class {{classname}}Test(private val fileName: String) {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	suspend fun {{operationId}}Test(fileName: String) {
+	fun {{operationId}}Test(fileName: String) = runBlocking {
 		if (TestUtils.skipEndpoint(fileName, "{{operationId}}")) {
 			assert(true)
 			println("Endpoint {{operationId}} skipped")
-			return
-		}
+		} else {
         val credentialsFile = TestUtils.getCredentialsFile(fileName, "{{operationId}}")
     {{#allParams}}
         val {{paramName}}: {{{dataType}}} = TestUtils.getParameter(fileName, "{{operationId}}.{{paramName}}")!!
@@ -149,7 +148,7 @@ class {{classname}}Test(private val fileName: String) {
 			println("File written")
         }
         {{/returnType}}
-    }
+    }}
     {{/operation}}{{/operations}}
 
 

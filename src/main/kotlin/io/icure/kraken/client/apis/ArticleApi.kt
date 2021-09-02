@@ -54,9 +54,8 @@ class ArticleApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<ArticleDto, ArticleDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createArticle
     *
@@ -93,9 +92,8 @@ class ArticleApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteArticle
     *
@@ -132,9 +130,8 @@ class ArticleApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, ArticleDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getArticle
     *
@@ -170,9 +167,8 @@ class ArticleApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<ArticleDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getArticles
     *
@@ -208,9 +204,8 @@ class ArticleApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<ArticleDto, ArticleDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyArticle
     *

@@ -66,9 +66,8 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return request<DatabaseInitialisationDto, GroupDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createGroup
     *
@@ -124,9 +123,8 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return request<Unit, GroupDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getGroup
     *
@@ -163,9 +161,8 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return request<Unit, ReplicationInfoDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getReplicationInfo1
     *
@@ -204,9 +201,8 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return request<Unit, kotlin.Any>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation initDesignDocs
     *
@@ -252,9 +248,8 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return request<Unit, kotlin.collections.List<GroupDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listGroups
     *
@@ -291,9 +286,8 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return request<Unit, GroupDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyGroupName
     *
@@ -332,9 +326,8 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return request<ListOfPropertiesDto, GroupDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyGroupProperties
     *
@@ -372,9 +365,8 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return request<RegistrationInformationDto, RegistrationSuccessDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation registerNewGroupAdministrator
     *
@@ -414,9 +406,8 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return request<ListOfIdsDto, kotlin.Any>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation resetStorage
     *
@@ -465,9 +456,8 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return request<Unit, GroupDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation setGroupPassword
     *
@@ -508,9 +498,8 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return request<Unit, kotlin.collections.List<IdWithRevDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation solveConflicts
     *

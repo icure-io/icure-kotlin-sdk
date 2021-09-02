@@ -62,9 +62,8 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<kotlin.collections.List<PatientDto>, kotlin.collections.List<IdWithRevDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation bulkCreatePatients
     *
@@ -101,9 +100,8 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<kotlin.collections.List<PatientDto>, kotlin.collections.List<IdWithRevDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation bulkCreatePatients1
     *
@@ -140,9 +138,8 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<kotlin.collections.List<PatientDto>, kotlin.collections.List<IdWithRevDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation bulkUpdatePatients
     *
@@ -179,9 +176,8 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<kotlin.collections.List<PatientDto>, kotlin.collections.List<IdWithRevDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation bulkUpdatePatients1
     *
@@ -218,9 +214,8 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, ContentDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation countOfPatients
     *
@@ -257,9 +252,8 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<PatientDto, PatientDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createPatient
     *
@@ -296,9 +290,8 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deletePatient
     *
@@ -341,9 +334,8 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<FilterChainPatient, PaginatedListPatientDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation filterPatientsBy
     *
@@ -411,9 +403,8 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PaginatedListPatientDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findByAccessLogUserAfterDate
     *
@@ -472,9 +463,8 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PatientDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findByExternalId
     *
@@ -516,9 +506,8 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PaginatedListPatientDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findByNameBirthSsinAuto
     *
@@ -582,9 +571,8 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<PatientDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation fuzzySearch
     *
@@ -634,9 +622,8 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PatientDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getPatient
     *
@@ -673,9 +660,8 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.String>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getPatientHcPartyKeysForDelegate
     *
@@ -712,9 +698,8 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<ListOfIdsDto, kotlin.collections.List<PatientDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getPatients
     *
@@ -755,9 +740,8 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PaginatedListPatientDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listDeletedPatients
     *
@@ -816,9 +800,8 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<PatientDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listDeletedPatientsByName
     *
@@ -864,9 +847,8 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<PatientDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listOfMergesAfter
     *
@@ -906,9 +888,8 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PaginatedListPatientDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listOfPatientsModifiedAfter
     *
@@ -964,9 +945,8 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PaginatedListPatientDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listPatients
     *
@@ -1033,9 +1013,8 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PaginatedListPatientDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listPatientsByHcParty
     *
@@ -1097,9 +1076,8 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PaginatedListString>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listPatientsIds
     *
@@ -1156,9 +1134,8 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PaginatedListPatientDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listPatientsOfHcParty
     *
@@ -1217,9 +1194,8 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.PatientDto>, kotlin.collections.List<kotlin.String>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation matchPatientsBy
     *
@@ -1257,9 +1233,8 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PatientDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation mergeInto
     *
@@ -1297,9 +1272,8 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<PatientDto, PatientDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyPatient
     *
@@ -1339,9 +1313,8 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PatientDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyPatientReferral
     *
@@ -1390,9 +1363,8 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<kotlin.collections.List<DelegationDto>, PatientDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation newPatientDelegations
     *
@@ -1430,9 +1402,8 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation undeletePatient
     *

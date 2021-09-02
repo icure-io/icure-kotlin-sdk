@@ -68,9 +68,8 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<kotlin.collections.List<InvoicingCodeDto>, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation appendCodes
     *
@@ -126,9 +125,8 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<InvoiceDto, InvoiceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createInvoice
     *
@@ -165,9 +163,8 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<kotlin.collections.List<InvoiceDto>, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createInvoices
     *
@@ -204,9 +201,8 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, DocIdentifier>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteInvoice
     *
@@ -243,9 +239,8 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<FilterChainInvoice, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation filterInvoicesBy
     *
@@ -287,9 +282,8 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, PaginatedListInvoiceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findByAuthor
     *
@@ -349,9 +343,8 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findInvoicesByHCPartyPatientForeignKeys
     *
@@ -394,9 +387,8 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<IcureStubDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findInvoicesDelegationsStubsByHCPartyPatientForeignKeys
     *
@@ -438,9 +430,8 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, InvoiceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getInvoice
     *
@@ -477,9 +468,8 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<ListOfIdsDto, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getInvoices
     *
@@ -516,9 +506,8 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<LabelledOccurenceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTarificationsCodesOccurences
     *
@@ -558,9 +547,8 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<ListOfIdsDto, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listAllHcpsByStatus
     *
@@ -608,9 +596,8 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<ListOfIdsDto, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listByContactIds
     *
@@ -648,9 +635,8 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listByHcPartyGroupId
     *
@@ -693,9 +679,8 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listByHcPartySentMediumTypeInvoiceTypeSentDate
     *
@@ -749,9 +734,8 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listByHcpartySendingModeStatusDate
     *
@@ -806,9 +790,8 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listByIds
     *
@@ -845,9 +828,8 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listByRecipientsIds
     *
@@ -884,9 +866,8 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listByServiceIds
     *
@@ -923,9 +904,8 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listToInsurances
     *
@@ -967,9 +947,8 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listToInsurancesUnsent
     *
@@ -1011,9 +990,8 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listToPatients
     *
@@ -1055,9 +1033,8 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listToPatientsUnsent
     *
@@ -1100,9 +1077,8 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<ListOfIdsDto, InvoiceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation mergeTo
     *
@@ -1140,9 +1116,8 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<InvoiceDto, InvoiceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyInvoice
     *
@@ -1179,9 +1154,8 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<kotlin.collections.List<InvoiceDto>, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyInvoices
     *
@@ -1219,9 +1193,8 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<kotlin.collections.List<DelegationDto>, InvoiceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation newInvoiceDelegations
     *
@@ -1259,9 +1232,8 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<InvoiceDto, InvoiceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation reassignInvoice
     *
@@ -1301,9 +1273,8 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation removeCodes
     *
@@ -1346,9 +1317,8 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<kotlin.collections.List<IcureStubDto>, kotlin.collections.List<IcureStubDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation setInvoicesDelegations
     *
@@ -1387,9 +1357,8 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return request<Unit, InvoiceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation validate
     *

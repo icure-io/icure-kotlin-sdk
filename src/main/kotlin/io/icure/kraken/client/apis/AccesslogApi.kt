@@ -55,9 +55,8 @@ class AccesslogApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return request<AccessLogDto, AccessLogDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createAccessLog
     *
@@ -94,9 +93,8 @@ class AccesslogApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteAccessLog
     *
@@ -134,9 +132,8 @@ class AccesslogApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return request<Unit, kotlin.collections.List<AccessLogDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findAccessLogsByHCPartyPatientForeignKeys
     *
@@ -184,9 +181,8 @@ class AccesslogApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return request<Unit, PaginatedListAccessLogDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findByUserAfterDate
     *
@@ -250,9 +246,8 @@ class AccesslogApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return request<Unit, AccessLogDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getAccessLog
     *
@@ -294,9 +289,8 @@ class AccesslogApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return request<Unit, PaginatedListAccessLogDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listAccessLogs
     *
@@ -358,9 +352,8 @@ class AccesslogApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return request<AccessLogDto, AccessLogDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyAccessLog
     *

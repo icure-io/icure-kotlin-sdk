@@ -54,9 +54,8 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return request<TimeTableDto, TimeTableDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTimeTable
     *
@@ -93,9 +92,8 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteTimeTable
     *
@@ -132,9 +130,8 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return request<Unit, TimeTableDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTimeTable
     *
@@ -171,9 +168,8 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return request<Unit, kotlin.collections.List<TimeTableDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTimeTablesByAgendaId
     *
@@ -215,9 +211,8 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return request<Unit, kotlin.collections.List<TimeTableDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTimeTablesByPeriodAndAgendaId
     *
@@ -261,9 +256,8 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return request<TimeTableDto, TimeTableDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTimeTable
     *

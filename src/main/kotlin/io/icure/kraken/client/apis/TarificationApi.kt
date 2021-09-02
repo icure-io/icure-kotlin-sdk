@@ -55,9 +55,8 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return request<TarificationDto, TarificationDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTarification
     *
@@ -99,9 +98,8 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return request<Unit, PaginatedListTarificationDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findPaginatedTarifications
     *
@@ -168,9 +166,8 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return request<Unit, PaginatedListTarificationDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findPaginatedTarificationsByLabel
     *
@@ -235,9 +232,8 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return request<Unit, kotlin.collections.List<TarificationDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findTarifications
     *
@@ -291,9 +287,8 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return request<Unit, TarificationDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTarification
     *
@@ -332,9 +327,8 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return request<Unit, TarificationDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTarificationWithParts
     *
@@ -373,9 +367,8 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return request<ListOfIdsDto, kotlin.collections.List<TarificationDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTarifications
     *
@@ -412,9 +405,8 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return request<TarificationDto, TarificationDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTarification
     *

@@ -54,9 +54,8 @@ class EntitytemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return request<EntityTemplateDto, EntityTemplateDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createEntityTemplate
     *
@@ -93,9 +92,8 @@ class EntitytemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return request<kotlin.collections.List<EntityTemplateDto>, kotlin.collections.List<EntityTemplateDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createEntityTemplates
     *
@@ -132,9 +130,8 @@ class EntitytemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteEntityTemplate
     *
@@ -173,9 +170,8 @@ class EntitytemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return request<Unit, kotlin.collections.List<EntityTemplateDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findAllEntityTemplates
     *
@@ -224,9 +220,8 @@ class EntitytemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return request<Unit, kotlin.collections.List<EntityTemplateDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findAllEntityTemplatesByKeyword
     *
@@ -273,9 +268,8 @@ class EntitytemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return request<Unit, kotlin.collections.List<EntityTemplateDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findEntityTemplates
     *
@@ -326,9 +320,8 @@ class EntitytemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return request<Unit, kotlin.collections.List<EntityTemplateDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findEntityTemplatesByKeyword
     *
@@ -373,9 +366,8 @@ class EntitytemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return request<Unit, EntityTemplateDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getEntityTemplate
     *
@@ -412,9 +404,8 @@ class EntitytemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return request<Unit, kotlin.collections.List<EntityTemplateDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getEntityTemplates
     *
@@ -451,9 +442,8 @@ class EntitytemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return request<EntityTemplateDto, EntityTemplateDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyEntityTemplate
     *
@@ -490,9 +480,8 @@ class EntitytemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return request<kotlin.collections.List<EntityTemplateDto>, kotlin.collections.List<EntityTemplateDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyEntityTemplates
     *

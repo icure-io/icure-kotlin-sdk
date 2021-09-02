@@ -55,9 +55,8 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<CodeDto, CodeDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createCode
     *
@@ -100,9 +99,8 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<FilterChainCode, PaginatedListCodeDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation filterCodesBy
     *
@@ -166,9 +164,8 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, kotlin.collections.List<kotlin.String>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findCodeTypes
     *
@@ -217,9 +214,8 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, kotlin.collections.List<CodeDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findCodes
     *
@@ -279,9 +275,8 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, PaginatedListCodeDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findPaginatedCodes
     *
@@ -353,9 +348,8 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, PaginatedListCodeDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findPaginatedCodesByLabel
     *
@@ -425,9 +419,8 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, PaginatedListCodeDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findPaginatedCodesWithLink
     *
@@ -483,9 +476,8 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, kotlin.collections.List<kotlin.String>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findTagTypes
     *
@@ -531,9 +523,8 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, CodeDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getCode
     *
@@ -572,9 +563,8 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, CodeDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getCodeWithParts
     *
@@ -613,9 +603,8 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<Unit, kotlin.collections.List<CodeDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getCodes
     *
@@ -652,9 +641,8 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return request<CodeDto, CodeDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyCode
     *

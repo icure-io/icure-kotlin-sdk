@@ -56,9 +56,8 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
 
         return request<ClassificationTemplateDto, ClassificationTemplateDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createClassificationTemplate
     *
@@ -95,9 +94,8 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteClassificationTemplates
     *
@@ -135,9 +133,8 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
 
         return request<Unit, kotlin.collections.List<ClassificationTemplateDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findClassificationTemplatesByHCPartyPatientForeignKeys
     *
@@ -179,9 +176,8 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
 
         return request<Unit, ClassificationTemplateDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getClassificationTemplate
     *
@@ -218,9 +214,8 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
 
         return request<Unit, kotlin.collections.List<ClassificationTemplateDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getClassificationTemplateByIds
     *
@@ -259,9 +254,8 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
 
         return request<Unit, PaginatedListClassificationTemplateDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listClassificationTemplates
     *
@@ -311,9 +305,8 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
 
         return request<ClassificationTemplateDto, ClassificationTemplateDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyClassificationTemplate
     *
@@ -351,9 +344,8 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
 
         return request<kotlin.collections.List<DelegationDto>, ClassificationTemplateDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation newClassificationTemplateDelegations
     *

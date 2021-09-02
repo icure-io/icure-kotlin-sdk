@@ -35,6 +35,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import io.icure.kraken.client.models.filter.AbstractFilterDto
+import kotlinx.coroutines.runBlocking
 
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeEach
@@ -42,6 +43,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import org.junit.jupiter.api.Assertions.assertEquals
+import java.lang.IllegalStateException
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,7 +58,7 @@ import kotlin.reflect.full.memberProperties
  * API tests for PatientApi
  */
 @ExperimentalStdlibApi
-class PatientApiTest(private val fileName: String) {
+class PatientApiTest() {
 
     companion object {
         private val alreadyCreatedObjects = mutableSetOf<String>()
@@ -72,28 +74,11 @@ class PatientApiTest(private val fileName: String) {
         fun fileNames() = listOf("PatientApi.json")
     }
 
-    private val api = PatientApi()
+    private val api = PatientApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic YWJkZW1vOmtuYWxvdQ==")
     private val workingFolder = "/tmp/icureTests/"
     private val objectMapper = ObjectMapper().registerModule(KotlinModule()).registerModule(JavaTimeModule()).apply {
         setSerializationInclusion(JsonInclude.Include.NON_NULL)
         configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
-    }
-    @BeforeEach
-    fun createForModification(){
-        if (canCreateForModificationObjects(fileName)) {
-            TestUtils.getParameters<Any>(fileName, "beforeElements.bodies")?.let {bodies ->
-                val credentialsFile = TestUtils.getCredentialsFile(fileName, "createDto")
-                val createFunction = api::class.memberFunctions
-                    .firstOrNull { it.parameters.size == 3; it.name.startsWith("create") }
-                val deleteFunction = api::class.memberFunctions
-                    .firstOrNull { it.parameters.size == 3 && it.name.startsWith("delete") }
-                bodies.forEach {body ->
-                    //deleteFunction?.call(api, body?.id)
-                    createFunction!!.call(api, body)
-					println("created")
-                }
-            }
-        }
     }
 
 
@@ -107,11 +92,11 @@ class PatientApiTest(private val fileName: String) {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	suspend fun bulkCreatePatientsTest(fileName: String) {
+	fun bulkCreatePatientsTest(fileName: String) = runBlocking {
 		if (TestUtils.skipEndpoint(fileName, "bulkCreatePatients")) {
 			assert(true)
 			println("Endpoint bulkCreatePatients skipped")
-			return
+			throw java.lang.IllegalStateException()
 		}
         val credentialsFile = TestUtils.getCredentialsFile(fileName, "bulkCreatePatients")
         val patientDto: kotlin.collections.List<PatientDto> = TestUtils.getParameter(fileName, "bulkCreatePatients.patientDto")!!
@@ -174,11 +159,11 @@ class PatientApiTest(private val fileName: String) {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	suspend fun bulkCreatePatients1Test(fileName: String) {
+	fun bulkCreatePatients1Test(fileName: String) = runBlocking {
 		if (TestUtils.skipEndpoint(fileName, "bulkCreatePatients1")) {
 			assert(true)
 			println("Endpoint bulkCreatePatients1 skipped")
-			return
+			throw java.lang.IllegalStateException()
 		}
         val credentialsFile = TestUtils.getCredentialsFile(fileName, "bulkCreatePatients1")
         val patientDto: kotlin.collections.List<PatientDto> = TestUtils.getParameter(fileName, "bulkCreatePatients1.patientDto")!!
@@ -241,11 +226,11 @@ class PatientApiTest(private val fileName: String) {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	suspend fun bulkUpdatePatientsTest(fileName: String) {
+	fun bulkUpdatePatientsTest(fileName: String) = runBlocking {
 		if (TestUtils.skipEndpoint(fileName, "bulkUpdatePatients")) {
 			assert(true)
 			println("Endpoint bulkUpdatePatients skipped")
-			return
+			throw java.lang.IllegalStateException()
 		}
         val credentialsFile = TestUtils.getCredentialsFile(fileName, "bulkUpdatePatients")
         val patientDto: kotlin.collections.List<PatientDto> = TestUtils.getParameter(fileName, "bulkUpdatePatients.patientDto")!!
@@ -308,11 +293,11 @@ class PatientApiTest(private val fileName: String) {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	suspend fun bulkUpdatePatients1Test(fileName: String) {
+	fun bulkUpdatePatients1Test(fileName: String) = runBlocking {
 		if (TestUtils.skipEndpoint(fileName, "bulkUpdatePatients1")) {
 			assert(true)
 			println("Endpoint bulkUpdatePatients1 skipped")
-			return
+			throw java.lang.IllegalStateException()
 		}
         val credentialsFile = TestUtils.getCredentialsFile(fileName, "bulkUpdatePatients1")
         val patientDto: kotlin.collections.List<PatientDto> = TestUtils.getParameter(fileName, "bulkUpdatePatients1.patientDto")!!
@@ -375,11 +360,11 @@ class PatientApiTest(private val fileName: String) {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	suspend fun countOfPatientsTest(fileName: String) {
+	fun countOfPatientsTest(fileName: String) = runBlocking {
 		if (TestUtils.skipEndpoint(fileName, "countOfPatients")) {
 			assert(true)
 			println("Endpoint countOfPatients skipped")
-			return
+			throw java.lang.IllegalStateException()
 		}
         val credentialsFile = TestUtils.getCredentialsFile(fileName, "countOfPatients")
         val hcPartyId: kotlin.String = TestUtils.getParameter(fileName, "countOfPatients.hcPartyId")!!
@@ -442,11 +427,11 @@ class PatientApiTest(private val fileName: String) {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	suspend fun createPatientTest(fileName: String) {
+	fun createPatientTest(fileName: String) = runBlocking {
 		if (TestUtils.skipEndpoint(fileName, "createPatient")) {
 			assert(true)
 			println("Endpoint createPatient skipped")
-			return
+			throw java.lang.IllegalStateException()
 		}
         val credentialsFile = TestUtils.getCredentialsFile(fileName, "createPatient")
         val patientDto: PatientDto = TestUtils.getParameter(fileName, "createPatient.patientDto")!!
@@ -509,11 +494,11 @@ class PatientApiTest(private val fileName: String) {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	suspend fun deletePatientTest(fileName: String) {
+	fun deletePatientTest(fileName: String) = runBlocking {
 		if (TestUtils.skipEndpoint(fileName, "deletePatient")) {
 			assert(true)
 			println("Endpoint deletePatient skipped")
-			return
+			throw java.lang.IllegalStateException()
 		}
         val credentialsFile = TestUtils.getCredentialsFile(fileName, "deletePatient")
         val patientIds: kotlin.String = TestUtils.getParameter(fileName, "deletePatient.patientIds")!!
@@ -576,11 +561,11 @@ class PatientApiTest(private val fileName: String) {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	suspend fun filterPatientsByTest(fileName: String) {
+	fun filterPatientsByTest(fileName: String) = runBlocking {
 		if (TestUtils.skipEndpoint(fileName, "filterPatientsBy")) {
 			assert(true)
 			println("Endpoint filterPatientsBy skipped")
-			return
+			throw java.lang.IllegalStateException()
 		}
         val credentialsFile = TestUtils.getCredentialsFile(fileName, "filterPatientsBy")
         val filterChainPatient: FilterChainPatient = TestUtils.getParameter(fileName, "filterPatientsBy.filterChainPatient")!!
@@ -775,11 +760,11 @@ class PatientApiTest(private val fileName: String) {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	suspend fun findByAccessLogUserAfterDateTest(fileName: String) {
+	fun findByAccessLogUserAfterDateTest(fileName: String) = runBlocking {
 		if (TestUtils.skipEndpoint(fileName, "findByAccessLogUserAfterDate")) {
 			assert(true)
 			println("Endpoint findByAccessLogUserAfterDate skipped")
-			return
+			throw java.lang.IllegalStateException()
 		}
         val credentialsFile = TestUtils.getCredentialsFile(fileName, "findByAccessLogUserAfterDate")
         val userId: kotlin.String = TestUtils.getParameter(fileName, "findByAccessLogUserAfterDate.userId")!!
@@ -952,11 +937,11 @@ class PatientApiTest(private val fileName: String) {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	suspend fun findByExternalIdTest(fileName: String) {
+	fun findByExternalIdTest(fileName: String) = runBlocking {
 		if (TestUtils.skipEndpoint(fileName, "findByExternalId")) {
 			assert(true)
 			println("Endpoint findByExternalId skipped")
-			return
+			throw java.lang.IllegalStateException()
 		}
         val credentialsFile = TestUtils.getCredentialsFile(fileName, "findByExternalId")
         val externalId: kotlin.String = TestUtils.getParameter(fileName, "findByExternalId.externalId")!!
@@ -1019,11 +1004,11 @@ class PatientApiTest(private val fileName: String) {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	suspend fun findByNameBirthSsinAutoTest(fileName: String) {
+	fun findByNameBirthSsinAutoTest(fileName: String) = runBlocking {
 		if (TestUtils.skipEndpoint(fileName, "findByNameBirthSsinAuto")) {
 			assert(true)
 			println("Endpoint findByNameBirthSsinAuto skipped")
-			return
+			throw java.lang.IllegalStateException()
 		}
         val credentialsFile = TestUtils.getCredentialsFile(fileName, "findByNameBirthSsinAuto")
         val healthcarePartyId: kotlin.String = TestUtils.getParameter(fileName, "findByNameBirthSsinAuto.healthcarePartyId")!!
@@ -1196,11 +1181,11 @@ class PatientApiTest(private val fileName: String) {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	suspend fun fuzzySearchTest(fileName: String) {
+	fun fuzzySearchTest(fileName: String) = runBlocking {
 		if (TestUtils.skipEndpoint(fileName, "fuzzySearch")) {
 			assert(true)
 			println("Endpoint fuzzySearch skipped")
-			return
+			throw java.lang.IllegalStateException()
 		}
         val credentialsFile = TestUtils.getCredentialsFile(fileName, "fuzzySearch")
         val firstName: kotlin.String = TestUtils.getParameter(fileName, "fuzzySearch.firstName")!!
@@ -1307,11 +1292,11 @@ class PatientApiTest(private val fileName: String) {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	suspend fun getPatientTest(fileName: String) {
+	fun getPatientTest(fileName: String) = runBlocking {
 		if (TestUtils.skipEndpoint(fileName, "getPatient")) {
 			assert(true)
 			println("Endpoint getPatient skipped")
-			return
+			throw java.lang.IllegalStateException()
 		}
         val credentialsFile = TestUtils.getCredentialsFile(fileName, "getPatient")
         val patientId: kotlin.String = TestUtils.getParameter(fileName, "getPatient.patientId")!!
@@ -1374,11 +1359,11 @@ class PatientApiTest(private val fileName: String) {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	suspend fun getPatientHcPartyKeysForDelegateTest(fileName: String) {
+	fun getPatientHcPartyKeysForDelegateTest(fileName: String) = runBlocking {
 		if (TestUtils.skipEndpoint(fileName, "getPatientHcPartyKeysForDelegate")) {
 			assert(true)
 			println("Endpoint getPatientHcPartyKeysForDelegate skipped")
-			return
+			throw java.lang.IllegalStateException()
 		}
         val credentialsFile = TestUtils.getCredentialsFile(fileName, "getPatientHcPartyKeysForDelegate")
         val patientId: kotlin.String = TestUtils.getParameter(fileName, "getPatientHcPartyKeysForDelegate.patientId")!!
@@ -1441,11 +1426,11 @@ class PatientApiTest(private val fileName: String) {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	suspend fun getPatientsTest(fileName: String) {
+	fun getPatientsTest(fileName: String) = runBlocking {
 		if (TestUtils.skipEndpoint(fileName, "getPatients")) {
 			assert(true)
 			println("Endpoint getPatients skipped")
-			return
+			throw java.lang.IllegalStateException()
 		}
         val credentialsFile = TestUtils.getCredentialsFile(fileName, "getPatients")
         val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter(fileName, "getPatients.listOfIdsDto")!!
@@ -1508,11 +1493,11 @@ class PatientApiTest(private val fileName: String) {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	suspend fun listDeletedPatientsTest(fileName: String) {
+	fun listDeletedPatientsTest(fileName: String) = runBlocking {
 		if (TestUtils.skipEndpoint(fileName, "listDeletedPatients")) {
 			assert(true)
 			println("Endpoint listDeletedPatients skipped")
-			return
+			throw java.lang.IllegalStateException()
 		}
         val credentialsFile = TestUtils.getCredentialsFile(fileName, "listDeletedPatients")
         val startDate: kotlin.Long = TestUtils.getParameter(fileName, "listDeletedPatients.startDate")!!
@@ -1663,11 +1648,11 @@ class PatientApiTest(private val fileName: String) {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	suspend fun listDeletedPatientsByNameTest(fileName: String) {
+	fun listDeletedPatientsByNameTest(fileName: String) = runBlocking {
 		if (TestUtils.skipEndpoint(fileName, "listDeletedPatientsByName")) {
 			assert(true)
 			println("Endpoint listDeletedPatientsByName skipped")
-			return
+			throw java.lang.IllegalStateException()
 		}
         val credentialsFile = TestUtils.getCredentialsFile(fileName, "listDeletedPatientsByName")
         val firstName: kotlin.String = TestUtils.getParameter(fileName, "listDeletedPatientsByName.firstName")!!
@@ -1752,11 +1737,11 @@ class PatientApiTest(private val fileName: String) {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	suspend fun listOfMergesAfterTest(fileName: String) {
+	fun listOfMergesAfterTest(fileName: String) = runBlocking {
 		if (TestUtils.skipEndpoint(fileName, "listOfMergesAfter")) {
 			assert(true)
 			println("Endpoint listOfMergesAfter skipped")
-			return
+			throw java.lang.IllegalStateException()
 		}
         val credentialsFile = TestUtils.getCredentialsFile(fileName, "listOfMergesAfter")
         val date: kotlin.Long = TestUtils.getParameter(fileName, "listOfMergesAfter.date")!!
@@ -1819,11 +1804,11 @@ class PatientApiTest(private val fileName: String) {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	suspend fun listOfPatientsModifiedAfterTest(fileName: String) {
+	fun listOfPatientsModifiedAfterTest(fileName: String) = runBlocking {
 		if (TestUtils.skipEndpoint(fileName, "listOfPatientsModifiedAfter")) {
 			assert(true)
 			println("Endpoint listOfPatientsModifiedAfter skipped")
-			return
+			throw java.lang.IllegalStateException()
 		}
         val credentialsFile = TestUtils.getCredentialsFile(fileName, "listOfPatientsModifiedAfter")
         val date: kotlin.Long = TestUtils.getParameter(fileName, "listOfPatientsModifiedAfter.date")!!
@@ -1952,11 +1937,11 @@ class PatientApiTest(private val fileName: String) {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	suspend fun listPatientsTest(fileName: String) {
+	fun listPatientsTest(fileName: String) = runBlocking {
 		if (TestUtils.skipEndpoint(fileName, "listPatients")) {
 			assert(true)
 			println("Endpoint listPatients skipped")
-			return
+			throw java.lang.IllegalStateException()
 		}
         val credentialsFile = TestUtils.getCredentialsFile(fileName, "listPatients")
         val hcPartyId: kotlin.String = TestUtils.getParameter(fileName, "listPatients.hcPartyId")!!
@@ -2129,11 +2114,11 @@ class PatientApiTest(private val fileName: String) {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	suspend fun listPatientsByHcPartyTest(fileName: String) {
+	fun listPatientsByHcPartyTest(fileName: String) = runBlocking {
 		if (TestUtils.skipEndpoint(fileName, "listPatientsByHcParty")) {
 			assert(true)
 			println("Endpoint listPatientsByHcParty skipped")
-			return
+			throw java.lang.IllegalStateException()
 		}
         val credentialsFile = TestUtils.getCredentialsFile(fileName, "listPatientsByHcParty")
         val hcPartyId: kotlin.String = TestUtils.getParameter(fileName, "listPatientsByHcParty.hcPartyId")!!
@@ -2306,11 +2291,11 @@ class PatientApiTest(private val fileName: String) {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	suspend fun listPatientsIdsTest(fileName: String) {
+	fun listPatientsIdsTest(fileName: String) = runBlocking {
 		if (TestUtils.skipEndpoint(fileName, "listPatientsIds")) {
 			assert(true)
 			println("Endpoint listPatientsIds skipped")
-			return
+			throw java.lang.IllegalStateException()
 		}
         val credentialsFile = TestUtils.getCredentialsFile(fileName, "listPatientsIds")
         val hcPartyId: kotlin.String = TestUtils.getParameter(fileName, "listPatientsIds.hcPartyId")!!
@@ -2439,11 +2424,11 @@ class PatientApiTest(private val fileName: String) {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	suspend fun listPatientsOfHcPartyTest(fileName: String) {
+	fun listPatientsOfHcPartyTest(fileName: String) = runBlocking {
 		if (TestUtils.skipEndpoint(fileName, "listPatientsOfHcParty")) {
 			assert(true)
 			println("Endpoint listPatientsOfHcParty skipped")
-			return
+			throw java.lang.IllegalStateException()
 		}
         val credentialsFile = TestUtils.getCredentialsFile(fileName, "listPatientsOfHcParty")
         val hcPartyId: kotlin.String = TestUtils.getParameter(fileName, "listPatientsOfHcParty.hcPartyId")!!
@@ -2616,11 +2601,11 @@ class PatientApiTest(private val fileName: String) {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	suspend fun matchPatientsByTest(fileName: String) {
+	fun matchPatientsByTest(fileName: String) = runBlocking {
 		if (TestUtils.skipEndpoint(fileName, "matchPatientsBy")) {
 			assert(true)
 			println("Endpoint matchPatientsBy skipped")
-			return
+			throw java.lang.IllegalStateException()
 		}
         val credentialsFile = TestUtils.getCredentialsFile(fileName, "matchPatientsBy")
         val abstractFilterDtoPatient: AbstractFilterDto<PatientDto> = TestUtils.getParameter(fileName, "matchPatientsBy.abstractFilterDtoPatient")!!
@@ -2683,11 +2668,11 @@ class PatientApiTest(private val fileName: String) {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	suspend fun mergeIntoTest(fileName: String) {
+	fun mergeIntoTest(fileName: String) = runBlocking {
 		if (TestUtils.skipEndpoint(fileName, "mergeInto")) {
 			assert(true)
 			println("Endpoint mergeInto skipped")
-			return
+			throw java.lang.IllegalStateException()
 		}
         val credentialsFile = TestUtils.getCredentialsFile(fileName, "mergeInto")
         val toId: kotlin.String = TestUtils.getParameter(fileName, "mergeInto.toId")!!
@@ -2772,11 +2757,11 @@ class PatientApiTest(private val fileName: String) {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	suspend fun modifyPatientTest(fileName: String) {
+	fun modifyPatientTest(fileName: String) = runBlocking {
 		if (TestUtils.skipEndpoint(fileName, "modifyPatient")) {
 			assert(true)
 			println("Endpoint modifyPatient skipped")
-			return
+			throw java.lang.IllegalStateException()
 		}
         val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyPatient")
         val patientDto: PatientDto = TestUtils.getParameter(fileName, "modifyPatient.patientDto")!!
@@ -2839,11 +2824,11 @@ class PatientApiTest(private val fileName: String) {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	suspend fun modifyPatientReferralTest(fileName: String) {
+	fun modifyPatientReferralTest(fileName: String) = runBlocking {
 		if (TestUtils.skipEndpoint(fileName, "modifyPatientReferral")) {
 			assert(true)
 			println("Endpoint modifyPatientReferral skipped")
-			return
+			throw java.lang.IllegalStateException()
 		}
         val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyPatientReferral")
         val patientId: kotlin.String = TestUtils.getParameter(fileName, "modifyPatientReferral.patientId")!!
@@ -2972,11 +2957,11 @@ class PatientApiTest(private val fileName: String) {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	suspend fun newPatientDelegationsTest(fileName: String) {
+	fun newPatientDelegationsTest(fileName: String) = runBlocking {
 		if (TestUtils.skipEndpoint(fileName, "newPatientDelegations")) {
 			assert(true)
 			println("Endpoint newPatientDelegations skipped")
-			return
+			throw java.lang.IllegalStateException()
 		}
         val credentialsFile = TestUtils.getCredentialsFile(fileName, "newPatientDelegations")
         val patientId: kotlin.String = TestUtils.getParameter(fileName, "newPatientDelegations.patientId")!!
@@ -3061,11 +3046,11 @@ class PatientApiTest(private val fileName: String) {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	suspend fun undeletePatientTest(fileName: String) {
+	fun undeletePatientTest(fileName: String) = runBlocking {
 		if (TestUtils.skipEndpoint(fileName, "undeletePatient")) {
 			assert(true)
 			println("Endpoint undeletePatient skipped")
-			return
+			throw IllegalStateException()
 		}
         val credentialsFile = TestUtils.getCredentialsFile(fileName, "undeletePatient")
         val patientIds: kotlin.String = TestUtils.getParameter(fileName, "undeletePatient.patientIds")!!

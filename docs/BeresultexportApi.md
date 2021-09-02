@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 <a name="exportHealthOne"></a>
 # **exportHealthOne**
-> java.io.File exportHealthOne(fromHcpId, toHcpId, patId, date, ref, body)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; exportHealthOne(fromHcpId, toHcpId, patId, date, ref, body)
 
 Export data
 
@@ -27,9 +27,9 @@ val toHcpId : kotlin.String = toHcpId_example // kotlin.String |
 val patId : kotlin.String = patId_example // kotlin.String | 
 val date : kotlin.Long = 789 // kotlin.Long | 
 val ref : kotlin.String = ref_example // kotlin.String | 
-val body : java.io.File = BINARY_DATA_HERE // java.io.File | 
+val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
 try {
-    val result : java.io.File = apiInstance.exportHealthOne(fromHcpId, toHcpId, patId, date, ref, body)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.exportHealthOne(fromHcpId, toHcpId, patId, date, ref, body)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BeresultexportApi#exportHealthOne")
@@ -49,11 +49,11 @@ Name | Type | Description  | Notes
  **patId** | **kotlin.String**|  |
  **date** | **kotlin.Long**|  |
  **ref** | **kotlin.String**|  |
- **body** | **java.io.File**|  |
+ **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
 
 ### Return type
 
-[**java.io.File**](java.io.File.md)
+[**kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**](kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;.md)
 
 ### Authorization
 
@@ -69,7 +69,7 @@ Configure basicScheme:
 
 <a name="exportKmehrReport"></a>
 # **exportKmehrReport**
-> java.io.File exportKmehrReport(fromHcpId, toHcpId, patId, date, ref, body, mimeType)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; exportKmehrReport(fromHcpId, toHcpId, patId, date, ref, body, mimeType)
 
 Export data
 
@@ -85,10 +85,10 @@ val toHcpId : kotlin.String = toHcpId_example // kotlin.String |
 val patId : kotlin.String = patId_example // kotlin.String | 
 val date : kotlin.Long = 789 // kotlin.Long | 
 val ref : kotlin.String = ref_example // kotlin.String | 
-val body : java.io.File = BINARY_DATA_HERE // java.io.File | 
+val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
 val mimeType : kotlin.Boolean = true // kotlin.Boolean | 
 try {
-    val result : java.io.File = apiInstance.exportKmehrReport(fromHcpId, toHcpId, patId, date, ref, body, mimeType)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.exportKmehrReport(fromHcpId, toHcpId, patId, date, ref, body, mimeType)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BeresultexportApi#exportKmehrReport")
@@ -108,12 +108,12 @@ Name | Type | Description  | Notes
  **patId** | **kotlin.String**|  |
  **date** | **kotlin.Long**|  |
  **ref** | **kotlin.String**|  |
- **body** | **java.io.File**|  |
+ **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
  **mimeType** | **kotlin.Boolean**|  | [optional]
 
 ### Return type
 
-[**java.io.File**](java.io.File.md)
+[**kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**](kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;.md)
 
 ### Authorization
 
@@ -129,7 +129,7 @@ Configure basicScheme:
 
 <a name="exportMedidoc"></a>
 # **exportMedidoc**
-> java.io.File exportMedidoc(fromHcpId, toHcpId, patId, date, ref, body)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; exportMedidoc(fromHcpId, toHcpId, patId, date, ref, body)
 
 Export data
 
@@ -145,9 +145,9 @@ val toHcpId : kotlin.String = toHcpId_example // kotlin.String |
 val patId : kotlin.String = patId_example // kotlin.String | 
 val date : kotlin.Long = 789 // kotlin.Long | 
 val ref : kotlin.String = ref_example // kotlin.String | 
-val body : java.io.File = BINARY_DATA_HERE // java.io.File | 
+val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
 try {
-    val result : java.io.File = apiInstance.exportMedidoc(fromHcpId, toHcpId, patId, date, ref, body)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.exportMedidoc(fromHcpId, toHcpId, patId, date, ref, body)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BeresultexportApi#exportMedidoc")
@@ -167,11 +167,11 @@ Name | Type | Description  | Notes
  **patId** | **kotlin.String**|  |
  **date** | **kotlin.Long**|  |
  **ref** | **kotlin.String**|  |
- **body** | **java.io.File**|  |
+ **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
 
 ### Return type
 
-[**java.io.File**](java.io.File.md)
+[**kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**](kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;.md)
 
 ### Authorization
 
