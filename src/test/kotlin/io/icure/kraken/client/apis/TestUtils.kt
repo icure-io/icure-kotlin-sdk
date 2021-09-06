@@ -19,8 +19,12 @@ import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.readValue
 import java.io.File
 import java.io.IOException
+import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.system.exitProcess
+
+import kotlin.reflect.KProperty1
+import kotlin.reflect.full.memberProperties
 
 
 class TestUtils {
@@ -118,7 +122,13 @@ class TestUtils {
 			}
 		}
 
+        fun String.basicAuth() : String {
+            val usernamePassword: UsernamePassword = objectMapper.readValue(File(this).readText())!!
+            return usernamePassword.toBasicAuth()
+        }
+
         private fun infereCredentialsFile(callingFunctionName: String): String {
+            return ".credentialsCouchDb"
             return when {
                 callingFunctionName.startsWith("new") -> {
                     ".credentialsReadWrite"
@@ -133,6 +143,9 @@ class TestUtils {
                     ".credentialsReadWrite"
                 }
                 callingFunctionName.startsWith("set") -> {
+                    ".credentialsReadWrite"
+                }
+                callingFunctionName.startsWith("undelete") -> {
                     ".credentialsReadWrite"
                 }
                 else -> {
@@ -172,4 +185,8 @@ class TestUtils {
     }
 }
 
-data class UsernamePassword(val username: String, val password: String)
+data class UsernamePassword(val username: String, val password: String) {
+    fun toBasicAuth() = "Basic ${
+        java.util.Base64.getEncoder().encode("${username}:${password}".toByteArray(Charsets.UTF_8)).toString(Charsets.UTF_8)}"
+}
+

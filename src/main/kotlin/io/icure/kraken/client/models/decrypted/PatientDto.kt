@@ -356,10 +356,6 @@ data class PatientDto (
     @field:JsonProperty("preferredUserId")
     val preferredUserId: kotlin.String? = null,
 
-    /* A picture usually saved in JPEG format. */
-    @field:JsonProperty("picture")
-    val picture: kotlin.collections.List<kotlin.ByteArray>? = null,
-
     /* An external (from another source) id with no guarantee or requirement for unicity . */
     @field:JsonProperty("externalId")
     val externalId: kotlin.String? = null,

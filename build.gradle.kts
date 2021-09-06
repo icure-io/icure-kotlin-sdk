@@ -69,6 +69,57 @@ dependencies {
     testImplementation(group = "com.willowtreeapps.assertk", name = "assertk-jvm", version = "0.24")
 }
 
+java{
+    sourceSets{
+        main{
+            java{
+                exclude("**/AccesslogApiTest.kt",
+                    "**/AgendaApiTest.kt",
+                    "**/ApplicationsettingsApiTest.kt",
+                    "**/ArticleApiTest.kt",
+                    "**/AuthApiTest.kt",
+                    "**/BeefactApiTest.kt",
+                    "**/BekmehrApiTest.kt",
+                    "**/BemikronoApiTest.kt",
+                    "**/BeresultexportApiTest.kt",
+                    "**/BeresultimportApiTest.kt",
+                    "**/Besamv2ApiTest.kt",
+                    "**/CalendarItemApiTest.kt",
+                    "**/CalendarItemTypeApiTest.kt",
+                    "**/ClassificationApiTest.kt",
+                    "**/ClassificationTemplateApiTest.kt",
+                    "**/CodeApiTest.kt",
+                    "**/ContactApiTest.kt",
+                    "**/DoctemplateApiTest.kt",
+                    "**/DocumentApiTest.kt",
+                    "**/EntityrefApiTest.kt",
+                    "**/EntitytemplateApiTest.kt",
+                    "**/FormApiTest.kt",
+                    "**/FrontendmigrationApiTest.kt",
+                    "**/GroupApiTest.kt",
+                    "**/HcpartyApiTest.kt",
+                    "**/HelementApiTest.kt",
+                    "**/IcureApiTest.kt",
+                    "**/InsuranceApiTest.kt",
+                    "**/InvoiceApiTest.kt",
+                    "**/KeywordApiTest.kt",
+                    "**/MedexApiTest.kt",
+                    "**/MedicallocationApiTest.kt",
+                    "**/MessageApiTest.kt",
+                    "**/PlaceApiTest.kt",
+                    "**/PubsubApiTest.kt",
+                    "**/ReceiptApiTest.kt",
+                    "**/TarificationApiTest.kt",
+                    "**/TimeTableApiTest.kt",
+                    "**/TmpApiTest.kt",
+                    "**/UserApiTest.kt")
+
+                excludes.forEach { print("Excluded : ${it}${System.lineSeparator()}") }
+            }
+        }
+    }
+}
+
 java {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11

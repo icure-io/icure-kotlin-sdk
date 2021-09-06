@@ -1,4 +1,7 @@
 {{>licenseInfo}}
+
+package {{package}};
+
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.core.json.JsonReadFeature
 import com.fasterxml.jackson.core.type.TypeReference
@@ -158,4 +161,6 @@ class TestUtils {
     }
 }
 
-data class UsernamePassword(val username: String, val password: String)
+data class UsernamePassword(val username: String, val password: String) {
+    fun toBasicAuth() = "Basic ${Base64.getEncoder().encodeToString("$username:$password".toByteArray())}"
+}

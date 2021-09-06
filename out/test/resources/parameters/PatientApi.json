@@ -144,9 +144,9 @@
     "start": null, 
     "end": null
   },
-  "newDelegations": {
+  "newPatientDelegations": {
     "patientId": "2b89f5f5-0054-4041-b98b-0fc9001870f7",
-    "body": [
+    "delegationDto": [
       {
         "owner": "hcpa",
         "delegatedTo": "hcpb",

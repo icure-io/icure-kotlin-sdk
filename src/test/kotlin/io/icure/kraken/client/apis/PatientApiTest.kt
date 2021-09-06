@@ -13,6 +13,7 @@
 
 package io.icure.kraken.client.apis;
 
+import TestUtils.Companion.basicAuth
 import io.icure.kraken.client.models.ContentDto;
 import io.icure.kraken.client.models.DelegationDto;
 import io.icure.kraken.client.models.DocIdentifier;
@@ -22,15 +23,14 @@ import io.icure.kraken.client.models.ListOfIdsDto;
 import io.icure.kraken.client.models.PaginatedListPatientDto;
 import io.icure.kraken.client.models.PaginatedListString;
 import io.icure.kraken.client.models.PatientDto;
-import assertk.Assert
 import assertk.assertThat
-import assertk.assertions.hasSameSizeAs
 import assertk.assertions.isEqualToIgnoringGivenProperties
 import java.io.*
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.core.json.JsonReadFeature
 import com.fasterxml.jackson.core.type.TypeReference
+import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
@@ -38,20 +38,15 @@ import io.icure.kraken.client.models.filter.AbstractFilterDto
 import kotlinx.coroutines.runBlocking
 
 import org.junit.jupiter.api.AfterAll
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import java.lang.IllegalStateException
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import kotlin.reflect.KProperty1
 import kotlin.reflect.KMutableProperty
-import kotlin.reflect.full.memberFunctions
 import kotlin.reflect.full.memberProperties
 
 /**
@@ -67,20 +62,20 @@ class PatientApiTest() {
         @JvmStatic
         @AfterAll
         fun afterAllTests(){
-        TestUtils.deleteAfterElements("PatientApi.json")
+            TestUtils.deleteAfterElements("PatientApi.json")
         }
 
         @JvmStatic
         fun fileNames() = listOf("PatientApi.json")
     }
 
-    private val api = PatientApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic YWJkZW1vOmtuYWxvdQ==")
+    fun api(fileName: String) = PatientApi(basePath = "https://kraken.icure.dev", authHeader = fileName.basicAuth())
     private val workingFolder = "/tmp/icureTests/"
     private val objectMapper = ObjectMapper().registerModule(KotlinModule()).registerModule(JavaTimeModule()).apply {
         setSerializationInclusion(JsonInclude.Include.NON_NULL)
         configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
+        configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
     }
-
 
     /**
      * Create patients in bulk
@@ -104,7 +99,7 @@ class PatientApiTest() {
 			patientDto.also {
             if (TestUtils.isAutoRev(fileName, "bulkCreatePatients") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.collections.List::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -115,14 +110,14 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "bulkCreatePatients") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
 			}
 		}
 
-        val response = api.bulkCreatePatients(patientDto)
+        val response = api(credentialsFile).bulkCreatePatients(patientDto)
 
         val testFileName = "PatientApi.bulkCreatePatients"
         val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -171,7 +166,7 @@ class PatientApiTest() {
 			patientDto.also {
             if (TestUtils.isAutoRev(fileName, "bulkCreatePatients1") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.collections.List::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -182,14 +177,14 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "bulkCreatePatients1") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
 			}
 		}
 
-        val response = api.bulkCreatePatients1(patientDto)
+        val response = api(credentialsFile).bulkCreatePatients1(patientDto)
 
         val testFileName = "PatientApi.bulkCreatePatients1"
         val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -238,7 +233,7 @@ class PatientApiTest() {
 			patientDto.also {
             if (TestUtils.isAutoRev(fileName, "bulkUpdatePatients") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.collections.List::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -249,14 +244,14 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "bulkUpdatePatients") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
 			}
 		}
 
-        val response = api.bulkUpdatePatients(patientDto)
+        val response = api(credentialsFile).bulkUpdatePatients(patientDto)
 
         val testFileName = "PatientApi.bulkUpdatePatients"
         val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -305,7 +300,7 @@ class PatientApiTest() {
 			patientDto.also {
             if (TestUtils.isAutoRev(fileName, "bulkUpdatePatients1") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.collections.List::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -316,14 +311,14 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "bulkUpdatePatients1") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
 			}
 		}
 
-        val response = api.bulkUpdatePatients1(patientDto)
+        val response = api(credentialsFile).bulkUpdatePatients1(patientDto)
 
         val testFileName = "PatientApi.bulkUpdatePatients1"
         val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -372,7 +367,7 @@ class PatientApiTest() {
 			hcPartyId.also {
             if (TestUtils.isAutoRev(fileName, "countOfPatients") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -383,14 +378,14 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "countOfPatients") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
 			}
 		}
 
-        val response = api.countOfPatients(hcPartyId)
+        val response = api(credentialsFile).countOfPatients(hcPartyId)
 
         val testFileName = "PatientApi.countOfPatients"
         val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -439,7 +434,7 @@ class PatientApiTest() {
 			patientDto.also {
             if (TestUtils.isAutoRev(fileName, "createPatient") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = PatientDto::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -450,14 +445,14 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "createPatient") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
 			}
 		}
 
-        val response = api.createPatient(patientDto)
+        val response = api(credentialsFile).createPatient(patientDto)
 
         val testFileName = "PatientApi.createPatient"
         val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -506,7 +501,7 @@ class PatientApiTest() {
 			patientIds.also {
             if (TestUtils.isAutoRev(fileName, "deletePatient") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -517,14 +512,14 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "deletePatient") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
 			}
 		}
 
-        val response = api.deletePatient(patientIds)
+        val response = api(credentialsFile).deletePatient(patientIds)
 
         val testFileName = "PatientApi.deletePatient"
         val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -573,7 +568,7 @@ class PatientApiTest() {
 			filterChainPatient.also {
             if (TestUtils.isAutoRev(fileName, "filterPatientsBy") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = FilterChainPatient::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -584,7 +579,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "filterPatientsBy") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -595,7 +590,7 @@ class PatientApiTest() {
 			startKey.also {
             if (TestUtils.isAutoRev(fileName, "filterPatientsBy") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -606,7 +601,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "filterPatientsBy") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -617,7 +612,7 @@ class PatientApiTest() {
 			startDocumentId.also {
             if (TestUtils.isAutoRev(fileName, "filterPatientsBy") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -628,7 +623,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "filterPatientsBy") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -639,7 +634,7 @@ class PatientApiTest() {
 			limit.also {
             if (TestUtils.isAutoRev(fileName, "filterPatientsBy") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.Int::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -650,7 +645,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "filterPatientsBy") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -661,7 +656,7 @@ class PatientApiTest() {
 			skip.also {
             if (TestUtils.isAutoRev(fileName, "filterPatientsBy") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.Int::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -672,7 +667,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "filterPatientsBy") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -683,7 +678,7 @@ class PatientApiTest() {
 			sort.also {
             if (TestUtils.isAutoRev(fileName, "filterPatientsBy") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -694,7 +689,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "filterPatientsBy") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -705,7 +700,7 @@ class PatientApiTest() {
 			desc.also {
             if (TestUtils.isAutoRev(fileName, "filterPatientsBy") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.Boolean::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -716,14 +711,14 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "filterPatientsBy") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
 			}
 		}
 
-        val response = api.filterPatientsBy(filterChainPatient,startKey,startDocumentId,limit,skip,sort,desc)
+        val response = api(credentialsFile).filterPatientsBy(filterChainPatient,startKey,startDocumentId,limit,skip,sort,desc)
 
         val testFileName = "PatientApi.filterPatientsBy"
         val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -772,7 +767,7 @@ class PatientApiTest() {
 			userId.also {
             if (TestUtils.isAutoRev(fileName, "findByAccessLogUserAfterDate") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -783,7 +778,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "findByAccessLogUserAfterDate") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -794,7 +789,7 @@ class PatientApiTest() {
 			accessType.also {
             if (TestUtils.isAutoRev(fileName, "findByAccessLogUserAfterDate") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -805,7 +800,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "findByAccessLogUserAfterDate") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -816,7 +811,7 @@ class PatientApiTest() {
 			startDate.also {
             if (TestUtils.isAutoRev(fileName, "findByAccessLogUserAfterDate") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.Long::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -827,7 +822,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "findByAccessLogUserAfterDate") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -838,7 +833,7 @@ class PatientApiTest() {
 			startKey.also {
             if (TestUtils.isAutoRev(fileName, "findByAccessLogUserAfterDate") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -849,7 +844,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "findByAccessLogUserAfterDate") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -860,7 +855,7 @@ class PatientApiTest() {
 			startDocumentId.also {
             if (TestUtils.isAutoRev(fileName, "findByAccessLogUserAfterDate") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -871,7 +866,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "findByAccessLogUserAfterDate") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -882,7 +877,7 @@ class PatientApiTest() {
 			limit.also {
             if (TestUtils.isAutoRev(fileName, "findByAccessLogUserAfterDate") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.Int::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -893,14 +888,14 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "findByAccessLogUserAfterDate") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
 			}
 		}
 
-        val response = api.findByAccessLogUserAfterDate(userId,accessType,startDate,startKey,startDocumentId,limit)
+        val response = api(credentialsFile).findByAccessLogUserAfterDate(userId,accessType,startDate,startKey,startDocumentId,limit)
 
         val testFileName = "PatientApi.findByAccessLogUserAfterDate"
         val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -949,7 +944,7 @@ class PatientApiTest() {
 			externalId.also {
             if (TestUtils.isAutoRev(fileName, "findByExternalId") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -960,14 +955,14 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "findByExternalId") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
 			}
 		}
 
-        val response = api.findByExternalId(externalId)
+        val response = api(credentialsFile).findByExternalId(externalId)
 
         val testFileName = "PatientApi.findByExternalId"
         val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1016,7 +1011,7 @@ class PatientApiTest() {
 			healthcarePartyId.also {
             if (TestUtils.isAutoRev(fileName, "findByNameBirthSsinAuto") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -1027,7 +1022,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "findByNameBirthSsinAuto") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -1038,7 +1033,7 @@ class PatientApiTest() {
 			filterValue.also {
             if (TestUtils.isAutoRev(fileName, "findByNameBirthSsinAuto") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -1049,7 +1044,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "findByNameBirthSsinAuto") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -1060,7 +1055,7 @@ class PatientApiTest() {
 			startKey.also {
             if (TestUtils.isAutoRev(fileName, "findByNameBirthSsinAuto") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -1071,7 +1066,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "findByNameBirthSsinAuto") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -1082,7 +1077,7 @@ class PatientApiTest() {
 			startDocumentId.also {
             if (TestUtils.isAutoRev(fileName, "findByNameBirthSsinAuto") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -1093,7 +1088,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "findByNameBirthSsinAuto") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -1104,7 +1099,7 @@ class PatientApiTest() {
 			limit.also {
             if (TestUtils.isAutoRev(fileName, "findByNameBirthSsinAuto") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.Int::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -1115,7 +1110,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "findByNameBirthSsinAuto") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -1126,7 +1121,7 @@ class PatientApiTest() {
 			sortDirection.also {
             if (TestUtils.isAutoRev(fileName, "findByNameBirthSsinAuto") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -1137,14 +1132,14 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "findByNameBirthSsinAuto") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
 			}
 		}
 
-        val response = api.findByNameBirthSsinAuto(healthcarePartyId,filterValue,startKey,startDocumentId,limit,sortDirection)
+        val response = api(credentialsFile).findByNameBirthSsinAuto(healthcarePartyId,filterValue,startKey,startDocumentId,limit,sortDirection)
 
         val testFileName = "PatientApi.findByNameBirthSsinAuto"
         val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1193,7 +1188,7 @@ class PatientApiTest() {
 			firstName.also {
             if (TestUtils.isAutoRev(fileName, "fuzzySearch") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -1204,7 +1199,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "fuzzySearch") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -1215,7 +1210,7 @@ class PatientApiTest() {
 			lastName.also {
             if (TestUtils.isAutoRev(fileName, "fuzzySearch") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -1226,7 +1221,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "fuzzySearch") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -1237,7 +1232,7 @@ class PatientApiTest() {
 			dateOfBirth.also {
             if (TestUtils.isAutoRev(fileName, "fuzzySearch") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.Int::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -1248,14 +1243,14 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "fuzzySearch") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
 			}
 		}
 
-        val response = api.fuzzySearch(firstName,lastName,dateOfBirth)
+        val response = api(credentialsFile).fuzzySearch(firstName,lastName,dateOfBirth)
 
         val testFileName = "PatientApi.fuzzySearch"
         val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1304,7 +1299,7 @@ class PatientApiTest() {
 			patientId.also {
             if (TestUtils.isAutoRev(fileName, "getPatient") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -1315,14 +1310,14 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "getPatient") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
 			}
 		}
 
-        val response = api.getPatient(patientId)
+        val response = api(credentialsFile).getPatient(patientId)
 
         val testFileName = "PatientApi.getPatient"
         val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1371,7 +1366,7 @@ class PatientApiTest() {
 			patientId.also {
             if (TestUtils.isAutoRev(fileName, "getPatientHcPartyKeysForDelegate") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -1382,14 +1377,14 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "getPatientHcPartyKeysForDelegate") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
 			}
 		}
 
-        val response = api.getPatientHcPartyKeysForDelegate(patientId)
+        val response = api(credentialsFile).getPatientHcPartyKeysForDelegate(patientId)
 
         val testFileName = "PatientApi.getPatientHcPartyKeysForDelegate"
         val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1438,7 +1433,7 @@ class PatientApiTest() {
 			listOfIdsDto.also {
             if (TestUtils.isAutoRev(fileName, "getPatients") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = ListOfIdsDto::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -1449,14 +1444,14 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "getPatients") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
 			}
 		}
 
-        val response = api.getPatients(listOfIdsDto)
+        val response = api(credentialsFile).getPatients(listOfIdsDto)
 
         val testFileName = "PatientApi.getPatients"
         val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1505,7 +1500,7 @@ class PatientApiTest() {
 			startDate.also {
             if (TestUtils.isAutoRev(fileName, "listDeletedPatients") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.Long::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -1516,7 +1511,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "listDeletedPatients") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -1527,7 +1522,7 @@ class PatientApiTest() {
 			endDate.also {
             if (TestUtils.isAutoRev(fileName, "listDeletedPatients") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.Long::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -1538,7 +1533,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "listDeletedPatients") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -1549,7 +1544,7 @@ class PatientApiTest() {
 			desc.also {
             if (TestUtils.isAutoRev(fileName, "listDeletedPatients") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.Boolean::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -1560,7 +1555,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "listDeletedPatients") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -1571,7 +1566,7 @@ class PatientApiTest() {
 			startDocumentId.also {
             if (TestUtils.isAutoRev(fileName, "listDeletedPatients") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -1582,7 +1577,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "listDeletedPatients") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -1593,7 +1588,7 @@ class PatientApiTest() {
 			limit.also {
             if (TestUtils.isAutoRev(fileName, "listDeletedPatients") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.Int::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -1604,14 +1599,14 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "listDeletedPatients") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
 			}
 		}
 
-        val response = api.listDeletedPatients(startDate,endDate,desc,startDocumentId,limit)
+        val response = api(credentialsFile).listDeletedPatients(startDate,endDate,desc,startDocumentId,limit)
 
         val testFileName = "PatientApi.listDeletedPatients"
         val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1655,12 +1650,12 @@ class PatientApiTest() {
 			throw java.lang.IllegalStateException()
 		}
         val credentialsFile = TestUtils.getCredentialsFile(fileName, "listDeletedPatientsByName")
-        val firstName: kotlin.String = TestUtils.getParameter(fileName, "listDeletedPatientsByName.firstName")!!
+        val firstName: kotlin.String? = TestUtils.getParameter(fileName, "listDeletedPatientsByName.firstName")
 		if (firstName as? Collection<*> == null) {
 			firstName.also {
             if (TestUtils.isAutoRev(fileName, "listDeletedPatientsByName") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -1671,18 +1666,18 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "listDeletedPatientsByName") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
 			}
 		}
-        val lastName: kotlin.String = TestUtils.getParameter(fileName, "listDeletedPatientsByName.lastName")!!
+        val lastName: kotlin.String? = TestUtils.getParameter(fileName, "listDeletedPatientsByName.lastName")
 		if (lastName as? Collection<*> == null) {
 			lastName.also {
             if (TestUtils.isAutoRev(fileName, "listDeletedPatientsByName") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -1693,14 +1688,14 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "listDeletedPatientsByName") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
 			}
 		}
 
-        val response = api.listDeletedPatientsByName(firstName,lastName)
+        val response : List<PatientDto> = api(credentialsFile).listDeletedPatientsByName(firstName,lastName)
 
         val testFileName = "PatientApi.listDeletedPatientsByName"
         val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1714,7 +1709,7 @@ class PatientApiTest() {
             } else if(response as? kotlin.collections.Map<String, String>? != null){
                 object : TypeReference<Map<String,String>>() {}
             } else {
-            object : TypeReference<Void>() {}
+                object : TypeReference<Void>() {}
             })
             assertAreEquals("listDeletedPatientsByName", objectFromFile, response)
 			println("Comparison successful")
@@ -1749,7 +1744,7 @@ class PatientApiTest() {
 			date.also {
             if (TestUtils.isAutoRev(fileName, "listOfMergesAfter") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.Long::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -1760,14 +1755,14 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "listOfMergesAfter") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
 			}
 		}
 
-        val response = api.listOfMergesAfter(date)
+        val response = api(credentialsFile).listOfMergesAfter(date)
 
         val testFileName = "PatientApi.listOfMergesAfter"
         val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1811,12 +1806,12 @@ class PatientApiTest() {
 			throw java.lang.IllegalStateException()
 		}
         val credentialsFile = TestUtils.getCredentialsFile(fileName, "listOfPatientsModifiedAfter")
-        val date: kotlin.Long = TestUtils.getParameter(fileName, "listOfPatientsModifiedAfter.date")!!
+        val date: kotlin.Long = TestUtils.getParameter<Double>(fileName, "listOfPatientsModifiedAfter.date")!!.toLong()
 		if (date as? Collection<*> == null) {
 			date.also {
             if (TestUtils.isAutoRev(fileName, "listOfPatientsModifiedAfter") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.Long::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -1827,18 +1822,18 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "listOfPatientsModifiedAfter") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
 			}
 		}
-        val startKey: kotlin.Long = TestUtils.getParameter(fileName, "listOfPatientsModifiedAfter.startKey")!!
+        val startKey: kotlin.Long? = TestUtils.getParameter(fileName, "listOfPatientsModifiedAfter.startKey")
 		if (startKey as? Collection<*> == null) {
 			startKey.also {
             if (TestUtils.isAutoRev(fileName, "listOfPatientsModifiedAfter") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.Long::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -1849,18 +1844,18 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "listOfPatientsModifiedAfter") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
 			}
 		}
-        val startDocumentId: kotlin.String = TestUtils.getParameter(fileName, "listOfPatientsModifiedAfter.startDocumentId")!!
+        val startDocumentId: kotlin.String? = TestUtils.getParameter(fileName, "listOfPatientsModifiedAfter.startDocumentId")
 		if (startDocumentId as? Collection<*> == null) {
 			startDocumentId.also {
             if (TestUtils.isAutoRev(fileName, "listOfPatientsModifiedAfter") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -1871,18 +1866,18 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "listOfPatientsModifiedAfter") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
 			}
 		}
-        val limit: kotlin.Int = TestUtils.getParameter(fileName, "listOfPatientsModifiedAfter.limit")!!
+        val limit: kotlin.Int? = TestUtils.getParameter(fileName, "listOfPatientsModifiedAfter.limit")
 		if (limit as? Collection<*> == null) {
 			limit.also {
             if (TestUtils.isAutoRev(fileName, "listOfPatientsModifiedAfter") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.Int::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -1893,14 +1888,14 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "listOfPatientsModifiedAfter") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
 			}
 		}
 
-        val response = api.listOfPatientsModifiedAfter(date,startKey,startDocumentId,limit)
+        val response = api(credentialsFile).listOfPatientsModifiedAfter(date,startKey,startDocumentId,limit)
 
         val testFileName = "PatientApi.listOfPatientsModifiedAfter"
         val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1949,7 +1944,7 @@ class PatientApiTest() {
 			hcPartyId.also {
             if (TestUtils.isAutoRev(fileName, "listPatients") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -1960,7 +1955,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "listPatients") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -1971,7 +1966,7 @@ class PatientApiTest() {
 			sortField.also {
             if (TestUtils.isAutoRev(fileName, "listPatients") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -1982,7 +1977,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "listPatients") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -1993,7 +1988,7 @@ class PatientApiTest() {
 			startKey.also {
             if (TestUtils.isAutoRev(fileName, "listPatients") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -2004,7 +1999,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "listPatients") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -2015,7 +2010,7 @@ class PatientApiTest() {
 			startDocumentId.also {
             if (TestUtils.isAutoRev(fileName, "listPatients") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -2026,7 +2021,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "listPatients") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -2037,7 +2032,7 @@ class PatientApiTest() {
 			limit.also {
             if (TestUtils.isAutoRev(fileName, "listPatients") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.Int::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -2048,7 +2043,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "listPatients") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -2059,7 +2054,7 @@ class PatientApiTest() {
 			sortDirection.also {
             if (TestUtils.isAutoRev(fileName, "listPatients") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -2070,14 +2065,14 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "listPatients") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
 			}
 		}
 
-        val response = api.listPatients(hcPartyId,sortField,startKey,startDocumentId,limit,sortDirection)
+        val response = api(credentialsFile).listPatients(hcPartyId,sortField,startKey,startDocumentId,limit,sortDirection)
 
         val testFileName = "PatientApi.listPatients"
         val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -2126,7 +2121,7 @@ class PatientApiTest() {
 			hcPartyId.also {
             if (TestUtils.isAutoRev(fileName, "listPatientsByHcParty") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -2137,7 +2132,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "listPatientsByHcParty") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -2148,7 +2143,7 @@ class PatientApiTest() {
 			sortField.also {
             if (TestUtils.isAutoRev(fileName, "listPatientsByHcParty") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -2159,7 +2154,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "listPatientsByHcParty") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -2170,7 +2165,7 @@ class PatientApiTest() {
 			startKey.also {
             if (TestUtils.isAutoRev(fileName, "listPatientsByHcParty") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -2181,7 +2176,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "listPatientsByHcParty") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -2192,7 +2187,7 @@ class PatientApiTest() {
 			startDocumentId.also {
             if (TestUtils.isAutoRev(fileName, "listPatientsByHcParty") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -2203,7 +2198,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "listPatientsByHcParty") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -2214,7 +2209,7 @@ class PatientApiTest() {
 			limit.also {
             if (TestUtils.isAutoRev(fileName, "listPatientsByHcParty") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.Int::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -2225,7 +2220,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "listPatientsByHcParty") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -2236,7 +2231,7 @@ class PatientApiTest() {
 			sortDirection.also {
             if (TestUtils.isAutoRev(fileName, "listPatientsByHcParty") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -2247,14 +2242,14 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "listPatientsByHcParty") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
 			}
 		}
 
-        val response = api.listPatientsByHcParty(hcPartyId,sortField,startKey,startDocumentId,limit,sortDirection)
+        val response = api(credentialsFile).listPatientsByHcParty(hcPartyId,sortField,startKey,startDocumentId,limit,sortDirection)
 
         val testFileName = "PatientApi.listPatientsByHcParty"
         val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -2303,7 +2298,7 @@ class PatientApiTest() {
 			hcPartyId.also {
             if (TestUtils.isAutoRev(fileName, "listPatientsIds") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -2314,7 +2309,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "listPatientsIds") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -2325,7 +2320,7 @@ class PatientApiTest() {
 			startKey.also {
             if (TestUtils.isAutoRev(fileName, "listPatientsIds") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -2336,7 +2331,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "listPatientsIds") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -2347,7 +2342,7 @@ class PatientApiTest() {
 			startDocumentId.also {
             if (TestUtils.isAutoRev(fileName, "listPatientsIds") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -2358,7 +2353,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "listPatientsIds") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -2369,7 +2364,7 @@ class PatientApiTest() {
 			limit.also {
             if (TestUtils.isAutoRev(fileName, "listPatientsIds") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.Int::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -2380,14 +2375,14 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "listPatientsIds") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
 			}
 		}
 
-        val response = api.listPatientsIds(hcPartyId,startKey,startDocumentId,limit)
+        val response = api(credentialsFile).listPatientsIds(hcPartyId,startKey,startDocumentId,limit)
 
         val testFileName = "PatientApi.listPatientsIds"
         val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -2436,7 +2431,7 @@ class PatientApiTest() {
 			hcPartyId.also {
             if (TestUtils.isAutoRev(fileName, "listPatientsOfHcParty") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -2447,18 +2442,18 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "listPatientsOfHcParty") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
 			}
 		}
-        val sortField: kotlin.String = TestUtils.getParameter(fileName, "listPatientsOfHcParty.sortField")!!
+        val sortField: kotlin.String? = TestUtils.getParameter(fileName, "listPatientsOfHcParty.sortField")
 		if (sortField as? Collection<*> == null) {
 			sortField.also {
             if (TestUtils.isAutoRev(fileName, "listPatientsOfHcParty") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -2469,7 +2464,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "listPatientsOfHcParty") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -2480,7 +2475,7 @@ class PatientApiTest() {
 			startKey.also {
             if (TestUtils.isAutoRev(fileName, "listPatientsOfHcParty") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -2491,7 +2486,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "listPatientsOfHcParty") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -2502,7 +2497,7 @@ class PatientApiTest() {
 			startDocumentId.also {
             if (TestUtils.isAutoRev(fileName, "listPatientsOfHcParty") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -2513,7 +2508,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "listPatientsOfHcParty") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -2524,7 +2519,7 @@ class PatientApiTest() {
 			limit.also {
             if (TestUtils.isAutoRev(fileName, "listPatientsOfHcParty") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.Int::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -2535,7 +2530,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "listPatientsOfHcParty") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -2546,7 +2541,7 @@ class PatientApiTest() {
 			sortDirection.also {
             if (TestUtils.isAutoRev(fileName, "listPatientsOfHcParty") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -2557,14 +2552,14 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "listPatientsOfHcParty") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
 			}
 		}
 
-        val response = api.listPatientsOfHcParty(hcPartyId,sortField,startKey,startDocumentId,limit,sortDirection)
+        val response = api(credentialsFile).listPatientsOfHcParty(hcPartyId,sortField,startKey,startDocumentId,limit,sortDirection)
 
         val testFileName = "PatientApi.listPatientsOfHcParty"
         val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -2613,7 +2608,7 @@ class PatientApiTest() {
 			abstractFilterDtoPatient.also {
             if (TestUtils.isAutoRev(fileName, "matchPatientsBy") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = AbstractFilterDto::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -2624,14 +2619,14 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "matchPatientsBy") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
 			}
 		}
 
-        val response = api.matchPatientsBy(abstractFilterDtoPatient)
+        val response = api(credentialsFile).matchPatientsBy(abstractFilterDtoPatient)
 
         val testFileName = "PatientApi.matchPatientsBy"
         val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -2680,7 +2675,7 @@ class PatientApiTest() {
 			toId.also {
             if (TestUtils.isAutoRev(fileName, "mergeInto") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -2691,7 +2686,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "mergeInto") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -2702,7 +2697,7 @@ class PatientApiTest() {
 			fromIds.also {
             if (TestUtils.isAutoRev(fileName, "mergeInto") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -2713,14 +2708,14 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "mergeInto") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
 			}
 		}
 
-        val response = api.mergeInto(toId,fromIds)
+        val response = api(credentialsFile).mergeInto(toId,fromIds)
 
         val testFileName = "PatientApi.mergeInto"
         val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -2769,7 +2764,7 @@ class PatientApiTest() {
 			patientDto.also {
             if (TestUtils.isAutoRev(fileName, "modifyPatient") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = PatientDto::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -2780,14 +2775,14 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "modifyPatient") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
 			}
 		}
 
-        val response = api.modifyPatient(patientDto)
+        val response = api(credentialsFile).modifyPatient(patientDto)
 
         val testFileName = "PatientApi.modifyPatient"
         val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -2836,7 +2831,7 @@ class PatientApiTest() {
 			patientId.also {
             if (TestUtils.isAutoRev(fileName, "modifyPatientReferral") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -2847,7 +2842,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "modifyPatientReferral") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -2858,7 +2853,7 @@ class PatientApiTest() {
 			referralId.also {
             if (TestUtils.isAutoRev(fileName, "modifyPatientReferral") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -2869,7 +2864,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "modifyPatientReferral") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -2880,7 +2875,7 @@ class PatientApiTest() {
 			start.also {
             if (TestUtils.isAutoRev(fileName, "modifyPatientReferral") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.Long::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -2891,7 +2886,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "modifyPatientReferral") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -2902,7 +2897,7 @@ class PatientApiTest() {
 			end.also {
             if (TestUtils.isAutoRev(fileName, "modifyPatientReferral") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.Long::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -2913,14 +2908,14 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "modifyPatientReferral") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
 			}
 		}
 
-        val response = api.modifyPatientReferral(patientId,referralId,start,end)
+        val response = api(credentialsFile).modifyPatientReferral(patientId,referralId,start,end)
 
         val testFileName = "PatientApi.modifyPatientReferral"
         val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -2969,7 +2964,7 @@ class PatientApiTest() {
 			patientId.also {
             if (TestUtils.isAutoRev(fileName, "newPatientDelegations") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -2980,7 +2975,7 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "newPatientDelegations") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -2991,25 +2986,26 @@ class PatientApiTest() {
 			delegationDto.also {
             if (TestUtils.isAutoRev(fileName, "newPatientDelegations") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.collections.List::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
 			}
 		} else {
 			val paramAsCollection = delegationDto as? Collection<PatientDto> ?: emptyList<PatientDto>() as Collection<PatientDto>
-			paramAsCollection.forEach {
+            val patients = paramAsCollection.map { value -> objectMapper.convertValue(value, PatientDto::class.java) }
+            patients.forEach {
                 if (TestUtils.isAutoRev(fileName, "newPatientDelegations") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
 			}
 		}
 
-        val response = api.newPatientDelegations(patientId,delegationDto)
+        val response = api(credentialsFile).newPatientDelegations(patientId, delegationDto)
 
         val testFileName = "PatientApi.newPatientDelegations"
         val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -3058,7 +3054,7 @@ class PatientApiTest() {
 			patientIds.also {
             if (TestUtils.isAutoRev(fileName, "undeletePatient") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                 val rev = kotlin.String::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -3069,14 +3065,14 @@ class PatientApiTest() {
                 if (TestUtils.isAutoRev(fileName, "undeletePatient") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.getPatient(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
 			}
 		}
 
-        val response = api.undeletePatient(patientIds)
+        val response = api(credentialsFile).undeletePatient(patientIds)
 
         val testFileName = "PatientApi.undeletePatient"
         val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -3125,7 +3121,8 @@ class PatientApiTest() {
                     responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(responseElement, null)
                 }
             }
-            assertEquals(response, objectFromFile)
+            val diffs = response.differences(objectFromFile)
+            assertTrue(diffs.isEmpty())
         } else {
             if (functionName.startsWith("create") || functionName.startsWith("modify")) {
                 assertThat(objectFromFile as Any).isEqualToIgnoringGivenProperties(response, *(response::class.memberProperties.filter { it.name == "rev" || it.name == "id" || it.name == "created"  || it.name == "modified" }.mapNotNull { it as? KProperty1<Any, Any> }.toTypedArray()))
