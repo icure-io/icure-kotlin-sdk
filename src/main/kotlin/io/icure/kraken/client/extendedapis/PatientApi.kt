@@ -20,14 +20,14 @@ suspend fun PatientDto.initDelegations(user: UserDto, config: CryptoConfig<Patie
     return this.copy(
         responsible = user.healthcarePartyId!!,
         author = user.id,
-        delegations = (delegations + user.healthcarePartyId!!).fold(this.encryptionKeys) { m, d ->
+        delegations = (delegations + user.healthcarePartyId).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
                     listOf(), user.healthcarePartyId, d, config.crypto.encryptKeyForHcp(user.healthcarePartyId, d, this.id, sfk),
                 ),
             ))
         },
-        encryptionKeys = (delegations + user.healthcarePartyId!!).fold(this.encryptionKeys) { m, d ->
+        encryptionKeys = (delegations + user.healthcarePartyId).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
                     listOf(), user.healthcarePartyId, d, config.crypto.encryptKeyForHcp(user.healthcarePartyId, d, this.id, ek),
@@ -44,9 +44,9 @@ suspend fun PatientApi.createPatient(user: UserDto, patient: PatientDto, config:
         config.encryptPatient(
             user.healthcarePartyId!!,
             (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
-            patient
+            patient.initDelegations(user, config)
         )
-    )?.let { config.decryptPatient(user.healthcarePartyId!!, it) }
+    ).let { config.decryptPatient(user.healthcarePartyId!!, it) }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
@@ -57,7 +57,7 @@ suspend fun PatientApi.modifyPatient(user: UserDto, patient: PatientDto, config:
             (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
             patient
         )
-    )?.let { config.decryptPatient(user.healthcarePartyId!!, it) }
+    ).let { config.decryptPatient(user.healthcarePartyId!!, it) }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
@@ -65,7 +65,7 @@ suspend fun PatientApi.bulkCreatePatients(user: UserDto, patientDto: List<Patien
     return this.bulkCreatePatients(patientDto.map { config.encryptPatient(
         user.healthcarePartyId!!,
         (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
-        it
+        it.initDelegations(user, config)
     ) })
 }
 @ExperimentalCoroutinesApi
