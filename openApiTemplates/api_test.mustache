@@ -12,6 +12,7 @@ import java.io.*
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.core.json.JsonReadFeature
+import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
@@ -23,6 +24,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 
 {{^fullJavaUtil}}
 import java.util.ArrayList;
@@ -34,6 +36,9 @@ import kotlin.reflect.KProperty1
 import kotlin.reflect.KMutableProperty
 import kotlin.reflect.full.memberFunctions
 import kotlin.reflect.full.memberProperties
+
+import TestUtils.Companion.basicAuth
+
 
 /**
  * API tests for {{classname}}
@@ -55,11 +60,13 @@ class {{classname}}Test() {
         fun fileNames() = listOf("{{classname}}.json")
     }
 
-    private val api = {{classname}}()
+    // private val api = {{classname}}()
+    fun api(fileName: String) = PatientApi(basePath = "https://kraken.icure.dev", authHeader = fileName.basicAuth())
     private val workingFolder = "/tmp/icureTests/"
     private val objectMapper = ObjectMapper().registerModule(KotlinModule()).registerModule(JavaTimeModule()).apply {
         setSerializationInclusion(JsonInclude.Include.NON_NULL)
         configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
+        configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
     }
     @BeforeEach
     fun createForModification(){
@@ -97,12 +104,12 @@ class {{classname}}Test() {
 		} else {
         val credentialsFile = TestUtils.getCredentialsFile(fileName, "{{operationId}}")
     {{#allParams}}
-        val {{paramName}}: {{{dataType}}} = TestUtils.getParameter(fileName, "{{operationId}}.{{paramName}}")!!
+        val {{paramName}}: {{{dataType}}}{{#isNullable}}?{{/isNullable}} = TestUtils.getParameter(fileName, "{{operationId}}.{{paramName}}"){{^isNullable}}!!{{/isNullable}}
 		if ({{paramName}} as? Collection<*> == null) {
 			{{paramName}}.also {
             if (TestUtils.isAutoRev(fileName, "{{operationId}}") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api.get{{classBaseName}}(id.getter.call(it) as String).rev
+                val currentRev = api(credentialsFile).get{{classBaseName}}(id.getter.call(it) as String).rev
                 val rev = {{{dataType}}}::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
@@ -113,7 +120,7 @@ class {{classname}}Test() {
                 if (TestUtils.isAutoRev(fileName, "{{operationId}}") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
-                    val currentRev = api.get{{classBaseName}}(id.getter.call(it) as String).rev
+                    val currentRev = api(credentialsFile).get{{classBaseName}}(id.getter.call(it) as String).rev
                     val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                     rev.setter.call(it, currentRev)
                 }
@@ -121,7 +128,7 @@ class {{classname}}Test() {
 		}
         {{/allParams}}
 
-        {{#returnType}}val response = {{/returnType}}api.{{operationId}}({{#allParams}}{{paramName}}{{^-last}},{{/-last}}{{/allParams}})
+        {{#returnType}}val response = {{/returnType}}api(credentialsFile).{{operationId}}({{#allParams}}{{paramName}}{{^-last}},{{/-last}}{{/allParams}})
 
         {{#returnType}}
         val testFileName = "{{classname}}.{{operationId}}"
@@ -172,7 +179,8 @@ class {{classname}}Test() {
                     responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(responseElement, null)
                 }
             }
-            assertEquals(response, objectFromFile)
+            val diffs = response.differences(objectFromFile)
+            assertTrue(diffs.isEmpty())
         } else {
             if (functionName.startsWith("create") || functionName.startsWith("modify")) {
                 assertThat(objectFromFile as Any).isEqualToIgnoringGivenProperties(response, *(response::class.memberProperties.filter { it.name == "rev" || it.name == "id" || it.name == "created"  || it.name == "modified" }.mapNotNull { it as? KProperty1<Any, Any> }.toTypedArray()))
