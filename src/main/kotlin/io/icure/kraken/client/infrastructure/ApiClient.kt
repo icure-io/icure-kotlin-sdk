@@ -104,7 +104,6 @@ open class ApiClient(val baseUrl: String, val httpClient: WebClient, val authHea
         .onStatus(400) { Mono.just(ClientException("Client-side exception ${it.statusCode}", it.statusCode, details = objectMapper.readValue(it.responseBodyAsString(), ErrorDetails::class.java))) }
         .onStatus(500) { Mono.just(ServerException("Server-side exception ${it.statusCode}", it.statusCode, details = objectMapper.readValue(it.responseBodyAsString(), ErrorDetails::class.java))) }
         .toFlow().toObject(objectMapper, true)
-
     }
 
     protected inline suspend fun <reified T> Request.addBody(body: T): Request {
