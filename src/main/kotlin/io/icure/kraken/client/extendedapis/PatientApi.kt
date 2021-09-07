@@ -46,7 +46,7 @@ suspend fun PatientApi.createPatient(user: UserDto, patient: PatientDto, config:
             (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
             patient.initDelegations(user, config)
         )
-    ).let { config.decryptPatient(user.healthcarePartyId!!, it) }
+    ).let { config.decryptPatient(user.healthcarePartyId, it) }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
@@ -57,7 +57,7 @@ suspend fun PatientApi.modifyPatient(user: UserDto, patient: PatientDto, config:
             (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
             patient
         )
-    ).let { config.decryptPatient(user.healthcarePartyId!!, it) }
+    ).let { config.decryptPatient(user.healthcarePartyId, it) }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
