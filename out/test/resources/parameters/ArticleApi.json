@@ -1,6 +1,6 @@
 {
   "createArticle": {
-    "body": {
+    "articleDto": {
       "id": "0bf2ac3d-a572-47d0-ad49-a33fba991005",
       "classification": "created From tests12"
     }
@@ -16,7 +16,7 @@
   },
   "modifyArticle": {
     "autoRev" : true,
-    "body": {
+    "articleDto": {
       "id" : "b46d3afd-1de5-448d-a99a-c025de040622",
       "classification": "classModified2"
     }

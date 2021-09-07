@@ -1,12 +1,10 @@
 {{>licenseInfo}}
 
-package {{package}};
+package {{package}}
 
-{{#imports}}import {{import}};
+{{#imports}}import {{import}}
 {{/imports}}
-import assertk.Assert
 import assertk.assertThat
-import assertk.assertions.hasSameSizeAs
 import assertk.assertions.isEqualToIgnoringGivenProperties
 import java.io.*
 
@@ -17,6 +15,7 @@ import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
+import io.icure.kraken.client.models.filter.AbstractFilterDto
 
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeEach
@@ -38,7 +37,8 @@ import kotlin.reflect.full.memberFunctions
 import kotlin.reflect.full.memberProperties
 
 import TestUtils.Companion.basicAuth
-
+import kotlinx.coroutines.runBlocking
+import com.google.common.reflect.TypeToken
 
 /**
  * API tests for {{classname}}
@@ -60,26 +60,25 @@ class {{classname}}Test() {
         fun fileNames() = listOf("{{classname}}.json")
     }
 
-    // private val api = {{classname}}()
-    fun api(fileName: String) = PatientApi(basePath = "https://kraken.icure.dev", authHeader = fileName.basicAuth())
+    fun api(fileName: String) = {{baseName}}Api(basePath = "https://kraken.icure.dev", authHeader = fileName.basicAuth())
     private val workingFolder = "/tmp/icureTests/"
     private val objectMapper = ObjectMapper().registerModule(KotlinModule()).registerModule(JavaTimeModule()).apply {
         setSerializationInclusion(JsonInclude.Include.NON_NULL)
         configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
         configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
     }
-    @BeforeEach
-    fun createForModification(){
+
+    fun createForModification(fileName: String){
         if (canCreateForModificationObjects(fileName)) {
             TestUtils.getParameters<Any>(fileName, "beforeElements.bodies")?.let {bodies ->
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createDto")
-                val createFunction = api::class.memberFunctions
+                val createFunction = api(credentialsFile)::class.memberFunctions
                     .firstOrNull { it.parameters.size == 3; it.name.startsWith("create") }
-                val deleteFunction = api::class.memberFunctions
+                val deleteFunction = api(credentialsFile)::class.memberFunctions
                     .firstOrNull { it.parameters.size == 3 && it.name.startsWith("delete") }
                 bodies.forEach {body ->
                     //deleteFunction?.call(api, body?.id)
-                    createFunction!!.call(api, body)
+                    createFunction!!.call(api(credentialsFile), body)
 					println("created")
                 }
             }
@@ -98,24 +97,25 @@ class {{classname}}Test() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun {{operationId}}Test(fileName: String) = runBlocking {
+        createForModification(fileName)
 		if (TestUtils.skipEndpoint(fileName, "{{operationId}}")) {
 			assert(true)
 			println("Endpoint {{operationId}} skipped")
 		} else {
         val credentialsFile = TestUtils.getCredentialsFile(fileName, "{{operationId}}")
     {{#allParams}}
-        val {{paramName}}: {{{dataType}}}{{#isNullable}}?{{/isNullable}} = TestUtils.getParameter(fileName, "{{operationId}}.{{paramName}}"){{^isNullable}}!!{{/isNullable}}
+        val {{paramName}}: {{{dataType}}}{{^required}}?{{/required}} = TestUtils.getParameter(fileName, "{{operationId}}.{{paramName}}"){{#required}}!!{{/required}}
 		if ({{paramName}} as? Collection<*> == null) {
 			{{paramName}}.also {
             if (TestUtils.isAutoRev(fileName, "{{operationId}}") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
                 val currentRev = api(credentialsFile).get{{classBaseName}}(id.getter.call(it) as String).rev
-                val rev = {{{dataType}}}::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                val rev = object: TypeReference<{{{dataType}}}>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
 			}
 		} else {
-			val paramAsCollection = {{paramName}} as? Collection<{{returnBaseType}}> ?: emptyList<{{returnBaseType}}>() as Collection<{{returnBaseType}}>
+			val paramAsCollection = {{paramName}} as? Collection<{{baseType}}{{^baseType}}{{dataType}}{{/baseType}}> ?: emptyList<{{baseType}}{{^baseType}}{{dataType}}{{/baseType}}>() as Collection<{{baseType}}{{^baseType}}{{dataType}}{{/baseType}}>
 			paramAsCollection.forEach {
                 if (TestUtils.isAutoRev(fileName, "{{operationId}}") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }

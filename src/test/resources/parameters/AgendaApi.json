@@ -16,7 +16,7 @@
     "deleteIds": ["2106191a-c0e1-42d0-89a4-89abd288b000", "2106191a-c0e1-42d0-89a4-89abd288b001",  "2106191a-c0e1-42d0-89a4-89abd288b002", "2106191a-c0e1-42d0-89a4-89abd288b005"]
   },
   "createAgenda": {
-    "body": {
+    "agendaDto": {
       "id": "2106191a-c0e1-42d0-89a4-89abd288b005",
       "name": "Vladimir"
     }
@@ -40,7 +40,7 @@
   },
   "modifyAgenda": {
     "autoRev": true,
-    "body": {
+    "agendaDto": {
       "id": "2106191a-c0e1-42d0-89a4-89abd288b000",
       "name": "sha"
     }

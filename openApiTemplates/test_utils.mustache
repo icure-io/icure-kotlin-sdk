@@ -1,7 +1,5 @@
 {{>licenseInfo}}
 
-package {{package}};
-
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.core.json.JsonReadFeature
 import com.fasterxml.jackson.core.type.TypeReference
@@ -108,6 +106,8 @@ class TestUtils {
 		}
 
         private fun infereCredentialsFile(callingFunctionName: String): String {
+            return ".credentialsCouchDb"
+
             return when {
                 callingFunctionName.startsWith("new") -> {
                     ".credentialsReadWrite"
@@ -124,10 +124,18 @@ class TestUtils {
                 callingFunctionName.startsWith("set") -> {
                     ".credentialsReadWrite"
                 }
+                callingFunctionName.startsWith("undelete") -> {
+                    ".credentialsReadWrite"
+                }
                 else -> {
                     ".credentialsReadOnly"
                 }
             }
+        }
+
+        fun String.basicAuth() : String {
+            val usernamePassword: UsernamePassword = objectMapper.readValue(File(this).readText())!!
+            return usernamePassword.toBasicAuth()
         }
 
         fun String.runCommandExitStatus(path: String = ".", streamOutput: Boolean = true, checkReturnValue: Boolean = true, variables: Map<String, String> = mapOf(), suicideOnFailure: Boolean = false): Pair<String, Int> {
@@ -162,5 +170,5 @@ class TestUtils {
 }
 
 data class UsernamePassword(val username: String, val password: String) {
-    fun toBasicAuth() = "Basic ${Base64.getEncoder().encodeToString("$username:$password".toByteArray())}"
+    fun toBasicAuth() = "Basic ${java.util.Base64.getEncoder().encodeToString("$username:$password".toByteArray())}"
 }
