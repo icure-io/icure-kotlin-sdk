@@ -34,10 +34,10 @@ import com.github.pozo.KotlinBuilder
 data class PaginatedListServiceDto (
 
     @field:JsonProperty("pageSize")
-    val pageSize: kotlin.Int? = null,
+    val pageSize: kotlin.Int,
 
     @field:JsonProperty("totalSize")
-    val totalSize: kotlin.Int? = null,
+    val totalSize: kotlin.Int,
 
     @field:JsonProperty("rows")
     val rows: kotlin.collections.List<ServiceDto> = listOf(),
