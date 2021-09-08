@@ -4,13 +4,20 @@ All URIs are relative to *https://kraken.icure.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createAgenda**](AgendaApi.md#createAgenda) | **POST** /rest/v1/agenda | Creates a agenda
-[**deleteAgenda**](AgendaApi.md#deleteAgenda) | **DELETE** /rest/v1/agenda/{agendaIds} | Deletes an agenda
-[**getAgenda**](AgendaApi.md#getAgenda) | **GET** /rest/v1/agenda/{agendaId} | Gets an agenda
-[**getAgendas**](AgendaApi.md#getAgendas) | **GET** /rest/v1/agenda | Gets all agendas
-[**getAgendasForUser**](AgendaApi.md#getAgendasForUser) | **GET** /rest/v1/agenda/byUser | Gets all agendas for user
-[**getReadableAgendasForUser**](AgendaApi.md#getReadableAgendasForUser) | **GET** /rest/v1/agenda/readableForUser | Gets readable agendas for user
-[**modifyAgenda**](AgendaApi.md#modifyAgenda) | **PUT** /rest/v1/agenda | Modifies an agenda
+[**createAgenda**](AgendaApi.md#createAgenda) | **POST** /rest/v2/agenda | Creates a agenda
+[**createAgenda1**](AgendaApi.md#createAgenda1) | **POST** /rest/v1/agenda | Creates a agenda
+[**deleteAgenda**](AgendaApi.md#deleteAgenda) | **DELETE** /rest/v1/agenda/{agendaIds} | Delete agendas by id
+[**deleteAgendas**](AgendaApi.md#deleteAgendas) | **POST** /rest/v2/agenda/delete/batch | Deletes agendas
+[**getAgenda**](AgendaApi.md#getAgenda) | **GET** /rest/v2/agenda/{agendaId} | Gets an agenda
+[**getAgenda1**](AgendaApi.md#getAgenda1) | **GET** /rest/v1/agenda/{agendaId} | Gets an agenda
+[**getAgendas**](AgendaApi.md#getAgendas) | **GET** /rest/v2/agenda | Gets all agendas
+[**getAgendas1**](AgendaApi.md#getAgendas1) | **GET** /rest/v1/agenda | Gets all agendas
+[**getAgendasForUser**](AgendaApi.md#getAgendasForUser) | **GET** /rest/v2/agenda/byUser | Gets all agendas for user
+[**getAgendasForUser1**](AgendaApi.md#getAgendasForUser1) | **GET** /rest/v1/agenda/byUser | Gets all agendas for user
+[**getReadableAgendasForUser**](AgendaApi.md#getReadableAgendasForUser) | **GET** /rest/v2/agenda/readableForUser | Gets readable agendas for user
+[**getReadableAgendasForUser1**](AgendaApi.md#getReadableAgendasForUser1) | **GET** /rest/v1/agenda/readableForUser | Gets readable agendas for user
+[**modifyAgenda**](AgendaApi.md#modifyAgenda) | **PUT** /rest/v2/agenda | Modifies an agenda
+[**modifyAgenda1**](AgendaApi.md#modifyAgenda1) | **PUT** /rest/v1/agenda | Modifies an agenda
 
 
 <a name="createAgenda"></a>
@@ -51,10 +58,52 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
+No authorization required
 
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="createAgenda1"></a>
+# **createAgenda1**
+> AgendaDto createAgenda1(agendaDto)
+
+Creates a agenda
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = AgendaApi()
+val agendaDto : AgendaDto =  // AgendaDto | 
+try {
+    val result : AgendaDto = apiInstance.createAgenda1(agendaDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling AgendaApi#createAgenda1")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling AgendaApi#createAgenda1")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **agendaDto** | [**AgendaDto**](AgendaDto.md)|  |
+
+### Return type
+
+[**AgendaDto**](AgendaDto.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 
@@ -65,7 +114,7 @@ Configure basicScheme:
 # **deleteAgenda**
 > kotlin.collections.List&lt;DocIdentifier&gt; deleteAgenda(agendaIds)
 
-Deletes an agenda
+Delete agendas by id
 
 ### Example
 ```kotlin
@@ -99,14 +148,56 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="deleteAgendas"></a>
+# **deleteAgendas**
+> kotlin.collections.List&lt;DocIdentifier&gt; deleteAgendas(listOfIdsDto)
+
+Deletes agendas
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = AgendaApi()
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+try {
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteAgendas(listOfIdsDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling AgendaApi#deleteAgendas")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling AgendaApi#deleteAgendas")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;DocIdentifier&gt;**](DocIdentifier.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: */*
 
 <a name="getAgenda"></a>
@@ -147,10 +238,52 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
+No authorization required
 
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="getAgenda1"></a>
+# **getAgenda1**
+> AgendaDto getAgenda1(agendaId)
+
+Gets an agenda
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = AgendaApi()
+val agendaId : kotlin.String = agendaId_example // kotlin.String | 
+try {
+    val result : AgendaDto = apiInstance.getAgenda1(agendaId)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling AgendaApi#getAgenda1")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling AgendaApi#getAgenda1")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **agendaId** | **kotlin.String**|  |
+
+### Return type
+
+[**AgendaDto**](AgendaDto.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 
@@ -191,10 +324,48 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
+No authorization required
 
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="getAgendas1"></a>
+# **getAgendas1**
+> kotlin.collections.List&lt;AgendaDto&gt; getAgendas1()
+
+Gets all agendas
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = AgendaApi()
+try {
+    val result : kotlin.collections.List<AgendaDto> = apiInstance.getAgendas1()
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling AgendaApi#getAgendas1")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling AgendaApi#getAgendas1")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**kotlin.collections.List&lt;AgendaDto&gt;**](AgendaDto.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 
@@ -239,10 +410,52 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
+No authorization required
 
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="getAgendasForUser1"></a>
+# **getAgendasForUser1**
+> AgendaDto getAgendasForUser1(userId)
+
+Gets all agendas for user
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = AgendaApi()
+val userId : kotlin.String = userId_example // kotlin.String | 
+try {
+    val result : AgendaDto = apiInstance.getAgendasForUser1(userId)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling AgendaApi#getAgendasForUser1")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling AgendaApi#getAgendasForUser1")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **userId** | **kotlin.String**|  |
+
+### Return type
+
+[**AgendaDto**](AgendaDto.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 
@@ -287,10 +500,52 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
+No authorization required
 
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="getReadableAgendasForUser1"></a>
+# **getReadableAgendasForUser1**
+> kotlin.collections.List&lt;AgendaDto&gt; getReadableAgendasForUser1(userId)
+
+Gets readable agendas for user
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = AgendaApi()
+val userId : kotlin.String = userId_example // kotlin.String | 
+try {
+    val result : kotlin.collections.List<AgendaDto> = apiInstance.getReadableAgendasForUser1(userId)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling AgendaApi#getReadableAgendasForUser1")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling AgendaApi#getReadableAgendasForUser1")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **userId** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;AgendaDto&gt;**](AgendaDto.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 
@@ -335,10 +590,52 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
+No authorization required
 
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="modifyAgenda1"></a>
+# **modifyAgenda1**
+> AgendaDto modifyAgenda1(agendaDto)
+
+Modifies an agenda
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = AgendaApi()
+val agendaDto : AgendaDto =  // AgendaDto | 
+try {
+    val result : AgendaDto = apiInstance.modifyAgenda1(agendaDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling AgendaApi#modifyAgenda1")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling AgendaApi#modifyAgenda1")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **agendaDto** | [**AgendaDto**](AgendaDto.md)|  |
+
+### Return type
+
+[**AgendaDto**](AgendaDto.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 
