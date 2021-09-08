@@ -185,10 +185,10 @@ data class DocumentDto (
     val attachmentId: kotlin.String? = null,
 
     @field:JsonProperty("encryptedAttachment")
-    val encryptedAttachment: kotlin.collections.List<kotlin.ByteArray>? = null,
+    val encryptedAttachment: io.icure.kraken.client.infrastructure.ByteArrayWrapper? = null,
 
     @field:JsonProperty("decryptedAttachment")
-    val decryptedAttachment: kotlin.collections.List<kotlin.ByteArray>? = null,
+    val decryptedAttachment: io.icure.kraken.client.infrastructure.ByteArrayWrapper? = null,
 
     /* The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys. */
     @field:JsonProperty("encryptedSelf")

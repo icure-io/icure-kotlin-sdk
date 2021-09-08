@@ -645,6 +645,48 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     }
 
     /**
+    * Get patient by identifier
+    * It gets patient administrative data based on the identifier (root &amp; extension) parameters.
+    * @param hcPartyId  
+    * @param system  
+    * @param id  
+    * @return PatientDto
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun getPatientByHealrhcarepartyAndIdentifier(hcPartyId: kotlin.String, system: kotlin.String, id: kotlin.String) : PatientDto  {
+        val localVariableConfig = getPatientByHealrhcarepartyAndIdentifierRequestConfig(hcPartyId = hcPartyId, system = system, id = id)
+
+        return request<Unit, PatientDto>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation getPatientByHealrhcarepartyAndIdentifier
+    *
+    * @param hcPartyId  
+    * @param system  
+    * @param id  
+    * @return RequestConfig
+    */
+    fun getPatientByHealrhcarepartyAndIdentifierRequestConfig(hcPartyId: kotlin.String, system: kotlin.String, id: kotlin.String) : RequestConfig<Unit> {
+        val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v1/patient/{hcPartyId}/{system}/{id}".replace("{"+"hcPartyId"+"}", "$hcPartyId").replace("{"+"system"+"}", "$system").replace("{"+"id"+"}", "$id"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
     * Get the patient (identified by patientId) hcparty keys. Those keys are AES keys (encrypted) used to share information between HCPs and a patient.
     * This endpoint is used to recover all keys that have already been created and that can be used to share information with this patient. It returns a map with the following structure: ID of the owner of the encrypted AES key -&gt; encrypted AES key. The returned encrypted AES keys will have to be decrypted using the patient&#39;s private key.
     * @param patientId The patient Id for which information is shared 

@@ -733,7 +733,7 @@ Creates a document&#39;s attachment
 
 val apiInstance = DocumentApi()
 val documentId : kotlin.String = documentId_example // kotlin.String | 
-val attachment : kotlin.collections.List<kotlin.ByteArray> = BYTE_ARRAY_DATA_HERE // kotlin.collections.List<kotlin.ByteArray> | 
+val attachment : kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> = BYTE_ARRAY_DATA_HERE // kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> | 
 val enckeys : kotlin.String = enckeys_example // kotlin.String | 
 try {
     val result : DocumentDto = apiInstance.setDocumentAttachmentMulti(documentId, attachment, enckeys)
@@ -752,7 +752,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **documentId** | **kotlin.String**|  |
- **attachment** | [**kotlin.collections.List&lt;kotlin.ByteArray&gt;**](kotlin.ByteArray.md)|  |
+ **attachment** | [**kotlin.collections.List&lt;io.icure.kraken.client.infrastructure.ByteArrayWrapper&gt;**](io.icure.kraken.client.infrastructure.ByteArrayWrapper.md)|  |
  **enckeys** | **kotlin.String**|  | [optional]
 
 ### Return type

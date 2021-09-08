@@ -100,7 +100,7 @@ data class DocumentTemplateDto (
     val deletionDate: kotlin.Long? = null,
 
     @field:JsonProperty("attachment")
-    val attachment: kotlin.collections.List<kotlin.ByteArray>? = null,
+    val attachment: io.icure.kraken.client.infrastructure.ByteArrayWrapper? = null,
 
     @field:JsonProperty("mainUti")
     val mainUti: kotlin.String? = null,

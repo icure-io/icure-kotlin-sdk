@@ -935,7 +935,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setTemplateAttachmentMulti(formTemplateId: kotlin.String, attachment: kotlin.collections.List<kotlin.ByteArray>) : kotlin.String  {
+    suspend fun setTemplateAttachmentMulti(formTemplateId: kotlin.String, attachment: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>) : kotlin.String  {
         val localVariableConfig = setTemplateAttachmentMultiRequestConfig(formTemplateId = formTemplateId, attachment = attachment)
 
         return request<Map<String, Any?>, kotlin.String>(
@@ -949,7 +949,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     * @param attachment  
     * @return RequestConfig
     */
-    fun setTemplateAttachmentMultiRequestConfig(formTemplateId: kotlin.String, attachment: kotlin.collections.List<kotlin.ByteArray>) : RequestConfig<Map<String, Any?>> {
+    fun setTemplateAttachmentMultiRequestConfig(formTemplateId: kotlin.String, attachment: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>) : RequestConfig<Map<String, Any?>> {
         val localVariableBody = mapOf("attachment" to attachment)
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "multipart/form-data")
