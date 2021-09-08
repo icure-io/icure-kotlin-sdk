@@ -65,7 +65,7 @@ Name | Type | Description | Notes
 **race** | **kotlin.String** | The race of the patient. |  [optional]
 **ethnicity** | **kotlin.String** | The ethnicity of the patient. |  [optional]
 **preferredUserId** | **kotlin.String** | The id of the user that usually handles this patient. |  [optional]
-**picture** | **kotlin.collections.List&lt;kotlin.ByteArray&gt;** | A picture usually saved in JPEG format. |  [optional]
+**picture** | **kotlin.ByteArray** | A picture usually saved in JPEG format. |  [optional]
 **externalId** | **kotlin.String** | An external (from another source) id with no guarantee or requirement for unicity . |  [optional]
 **publicKey** | **kotlin.String** | The public key of this hcp |  [optional]
 **encryptedSelf** | **kotlin.String** | The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys. |  [optional]

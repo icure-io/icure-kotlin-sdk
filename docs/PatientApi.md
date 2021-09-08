@@ -8,31 +8,57 @@ Method | HTTP request | Description
 [**bulkCreatePatients1**](PatientApi.md#bulkCreatePatients1) | **POST** /rest/v1/patient/bulk | Create patients in bulk
 [**bulkUpdatePatients**](PatientApi.md#bulkUpdatePatients) | **PUT** /rest/v1/patient/batch | Modify patients in bulk
 [**bulkUpdatePatients1**](PatientApi.md#bulkUpdatePatients1) | **PUT** /rest/v1/patient/bulk | Modify patients in bulk
-[**countOfPatients**](PatientApi.md#countOfPatients) | **GET** /rest/v1/patient/hcParty/{hcPartyId}/count | Get count of patients for a specific HcParty or for the current HcParty 
-[**createPatient**](PatientApi.md#createPatient) | **POST** /rest/v1/patient | Create a patient
+[**countOfPatients**](PatientApi.md#countOfPatients) | **GET** /rest/v2/patient/hcParty/{hcPartyId}/count | Get count of patients for a specific HcParty or for the current HcParty 
+[**countOfPatients1**](PatientApi.md#countOfPatients1) | **GET** /rest/v1/patient/hcParty/{hcPartyId}/count | Get count of patients for a specific HcParty or for the current HcParty 
+[**createPatient**](PatientApi.md#createPatient) | **POST** /rest/v2/patient | Create a patient
+[**createPatient1**](PatientApi.md#createPatient1) | **POST** /rest/v1/patient | Create a patient
+[**createPatients**](PatientApi.md#createPatients) | **POST** /rest/v2/patient/batch | Create patients in bulk
 [**deletePatient**](PatientApi.md#deletePatient) | **DELETE** /rest/v1/patient/{patientIds} | Delete patients.
-[**filterPatientsBy**](PatientApi.md#filterPatientsBy) | **POST** /rest/v1/patient/filter | Filter patients for the current user (HcParty) 
+[**deletePatients**](PatientApi.md#deletePatients) | **POST** /rest/v2/patient/delete/batch | Delete patients.
+[**filterPatientsBy**](PatientApi.md#filterPatientsBy) | **POST** /rest/v2/patient/filter | Filter patients for the current user (HcParty) 
+[**filterPatientsBy1**](PatientApi.md#filterPatientsBy1) | **POST** /rest/v1/patient/filter | Filter patients for the current user (HcParty) 
 [**findByAccessLogUserAfterDate**](PatientApi.md#findByAccessLogUserAfterDate) | **GET** /rest/v1/patient/byAccess/{userId} | Get Paginated List of Patients sorted by Access logs descending
-[**findByExternalId**](PatientApi.md#findByExternalId) | **GET** /rest/v1/patient/byExternalId/{externalId} | Get the patient having the provided externalId
+[**findByExternalId**](PatientApi.md#findByExternalId) | **GET** /rest/v2/patient/byExternalId/{externalId} | Get the patient having the provided externalId
+[**findByExternalId1**](PatientApi.md#findByExternalId1) | **GET** /rest/v1/patient/byExternalId/{externalId} | Get the patient having the provided externalId
 [**findByNameBirthSsinAuto**](PatientApi.md#findByNameBirthSsinAuto) | **GET** /rest/v1/patient/byNameBirthSsinAuto | Find patients for the current user (HcParty) 
-[**fuzzySearch**](PatientApi.md#fuzzySearch) | **GET** /rest/v1/patient/fuzzy | Filter patients for the current user (HcParty) 
-[**getPatient**](PatientApi.md#getPatient) | **GET** /rest/v1/patient/{patientId} | Get patient
-[**getPatientHcPartyKeysForDelegate**](PatientApi.md#getPatientHcPartyKeysForDelegate) | **GET** /rest/v1/patient/{patientId}/keys | Get the patient (identified by patientId) hcparty keys. Those keys are AES keys (encrypted) used to share information between HCPs and a patient.
-[**getPatients**](PatientApi.md#getPatients) | **POST** /rest/v1/patient/byIds | Get patients by id
+[**findDeletedPatients**](PatientApi.md#findDeletedPatients) | **GET** /rest/v2/patient/deleted/byDate | Find deleted patients
+[**findPatientsByAccessLogUserAfterDate**](PatientApi.md#findPatientsByAccessLogUserAfterDate) | **GET** /rest/v2/patient/byAccess/{userId} | Get Paginated List of Patients sorted by Access logs descending
+[**findPatientsByHealthcareParty**](PatientApi.md#findPatientsByHealthcareParty) | **GET** /rest/v2/patient | List patients for a specific HcParty
+[**findPatientsByNameBirthSsinAuto**](PatientApi.md#findPatientsByNameBirthSsinAuto) | **GET** /rest/v2/patient/byNameBirthSsinAuto | Find patients for the current user (HcParty) 
+[**findPatientsIdsByHealthcareParty**](PatientApi.md#findPatientsIdsByHealthcareParty) | **GET** /rest/v2/patient/byHcPartyId | List patients by pages for a specific HcParty
+[**findPatientsModifiedAfter**](PatientApi.md#findPatientsModifiedAfter) | **GET** /rest/v2/patient/modifiedAfter/{date} | List patients that have been modified after the provided date
+[**fuzzySearch**](PatientApi.md#fuzzySearch) | **GET** /rest/v2/patient/fuzzy | Filter patients for the current user (HcParty) 
+[**fuzzySearch1**](PatientApi.md#fuzzySearch1) | **GET** /rest/v1/patient/fuzzy | Filter patients for the current user (HcParty) 
+[**getPatient**](PatientApi.md#getPatient) | **GET** /rest/v2/patient/{patientId} | Get patient
+[**getPatient1**](PatientApi.md#getPatient1) | **GET** /rest/v1/patient/{patientId} | Get patient
+[**getPatientByHealrhcarepartyAndIdentifier**](PatientApi.md#getPatientByHealrhcarepartyAndIdentifier) | **GET** /rest/v1/patient/{hcPartyId}/{system}/{id} | Get patient by identifier
+[**getPatientHcPartyKeysForDelegate**](PatientApi.md#getPatientHcPartyKeysForDelegate) | **GET** /rest/v2/patient/{patientId}/keys | Get the patient (identified by patientId) hcparty keys. Those keys are AES keys (encrypted) used to share information between HCPs and a patient.
+[**getPatientHcPartyKeysForDelegate1**](PatientApi.md#getPatientHcPartyKeysForDelegate1) | **GET** /rest/v1/patient/{patientId}/keys | Get the patient (identified by patientId) hcparty keys. Those keys are AES keys (encrypted) used to share information between HCPs and a patient.
+[**getPatients**](PatientApi.md#getPatients) | **POST** /rest/v2/patient/byIds | Get patients by id
+[**getPatients1**](PatientApi.md#getPatients1) | **POST** /rest/v1/patient/byIds | Get patients by id
 [**listDeletedPatients**](PatientApi.md#listDeletedPatients) | **GET** /rest/v1/patient/deleted/by_date | Find deleted patients
-[**listDeletedPatientsByName**](PatientApi.md#listDeletedPatientsByName) | **GET** /rest/v1/patient/deleted/by_name | Find deleted patients
-[**listOfMergesAfter**](PatientApi.md#listOfMergesAfter) | **GET** /rest/v1/patient/merges/{date} | List patients that have been merged towards another patient 
+[**listDeletedPatientsByName**](PatientApi.md#listDeletedPatientsByName) | **GET** /rest/v2/patient/deleted/by_name | Find deleted patients
+[**listDeletedPatientsByName1**](PatientApi.md#listDeletedPatientsByName1) | **GET** /rest/v1/patient/deleted/by_name | Find deleted patients
+[**listOfMergesAfter**](PatientApi.md#listOfMergesAfter) | **GET** /rest/v2/patient/merges/{date} | List patients that have been merged towards another patient 
+[**listOfMergesAfter1**](PatientApi.md#listOfMergesAfter1) | **GET** /rest/v1/patient/merges/{date} | List patients that have been merged towards another patient 
 [**listOfPatientsModifiedAfter**](PatientApi.md#listOfPatientsModifiedAfter) | **GET** /rest/v1/patient/modifiedAfter/{date} | List patients that have been modified after the provided date
 [**listPatients**](PatientApi.md#listPatients) | **GET** /rest/v1/patient | List patients for a specific HcParty
 [**listPatientsByHcParty**](PatientApi.md#listPatientsByHcParty) | **GET** /rest/v1/patient/hcParty/{hcPartyId} | List patients for a specific HcParty or for the current HcParty 
 [**listPatientsIds**](PatientApi.md#listPatientsIds) | **GET** /rest/v1/patient/idsPages | List patients by pages for a specific HcParty
 [**listPatientsOfHcParty**](PatientApi.md#listPatientsOfHcParty) | **GET** /rest/v1/patient/ofHcParty/{hcPartyId} | List patients of a specific HcParty or of the current HcParty 
-[**matchPatientsBy**](PatientApi.md#matchPatientsBy) | **POST** /rest/v1/patient/match | Get ids of patients matching the provided filter for the current user (HcParty) 
-[**mergeInto**](PatientApi.md#mergeInto) | **PUT** /rest/v1/patient/mergeInto/{toId}/from/{fromIds} | Merge a series of patients into another patient
-[**modifyPatient**](PatientApi.md#modifyPatient) | **PUT** /rest/v1/patient | Modify a patient
-[**modifyPatientReferral**](PatientApi.md#modifyPatientReferral) | **PUT** /rest/v1/patient/{patientId}/referral/{referralId} | Set a patient referral doctor
-[**newPatientDelegations**](PatientApi.md#newPatientDelegations) | **POST** /rest/v1/patient/{patientId}/delegate | Delegates a patients to a healthcare party
-[**undeletePatient**](PatientApi.md#undeletePatient) | **PUT** /rest/v1/patient/undelete/{patientIds} | undelete previously deleted patients
+[**matchPatientsBy**](PatientApi.md#matchPatientsBy) | **POST** /rest/v2/patient/match | Get ids of patients matching the provided filter for the current user (HcParty) 
+[**matchPatientsBy1**](PatientApi.md#matchPatientsBy1) | **POST** /rest/v1/patient/match | Get ids of patients matching the provided filter for the current user (HcParty) 
+[**mergeInto**](PatientApi.md#mergeInto) | **PUT** /rest/v2/patient/mergeInto/{toId}/from/{fromIds} | Merge a series of patients into another patient
+[**mergeInto1**](PatientApi.md#mergeInto1) | **PUT** /rest/v1/patient/mergeInto/{toId}/from/{fromIds} | Merge a series of patients into another patient
+[**modifyPatient**](PatientApi.md#modifyPatient) | **PUT** /rest/v2/patient | Modify a patient
+[**modifyPatient1**](PatientApi.md#modifyPatient1) | **PUT** /rest/v1/patient | Modify a patient
+[**modifyPatientReferral**](PatientApi.md#modifyPatientReferral) | **PUT** /rest/v2/patient/{patientId}/referral/{referralId} | Set a patient referral doctor
+[**modifyPatientReferral1**](PatientApi.md#modifyPatientReferral1) | **PUT** /rest/v1/patient/{patientId}/referral/{referralId} | Set a patient referral doctor
+[**modifyPatients**](PatientApi.md#modifyPatients) | **PUT** /rest/v2/patient/batch | Modify patients in bulk
+[**newPatientDelegations**](PatientApi.md#newPatientDelegations) | **POST** /rest/v2/patient/{patientId}/delegate | Delegates a patients to a healthcare party
+[**newPatientDelegations1**](PatientApi.md#newPatientDelegations1) | **POST** /rest/v1/patient/{patientId}/delegate | Delegates a patients to a healthcare party
+[**undeletePatient**](PatientApi.md#undeletePatient) | **PUT** /rest/v2/patient/undelete/{patientIds} | undelete previously deleted patients
+[**undeletePatient1**](PatientApi.md#undeletePatient1) | **PUT** /rest/v1/patient/undelete/{patientIds} | undelete previously deleted patients
 
 
 <a name="bulkCreatePatients"></a>
@@ -75,10 +101,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -125,10 +148,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -175,10 +195,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -225,10 +242,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -275,10 +289,54 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
+No authorization required
 
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="countOfPatients1"></a>
+# **countOfPatients1**
+> ContentDto countOfPatients1(hcPartyId)
+
+Get count of patients for a specific HcParty or for the current HcParty 
+
+Returns the count of patients
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = PatientApi()
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | Healthcare party id
+try {
+    val result : ContentDto = apiInstance.countOfPatients1(hcPartyId)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling PatientApi#countOfPatients1")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling PatientApi#countOfPatients1")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **hcPartyId** | **kotlin.String**| Healthcare party id |
+
+### Return type
+
+[**ContentDto**](ContentDto.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 
@@ -325,10 +383,101 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
+No authorization required
 
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="createPatient1"></a>
+# **createPatient1**
+> PatientDto createPatient1(patientDto)
+
+Create a patient
+
+Name, last name, date of birth, and gender are required. After creation of the patient and obtaining the ID, you need to create an initial delegation.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = PatientApi()
+val patientDto : PatientDto =  // PatientDto | 
+try {
+    val result : PatientDto = apiInstance.createPatient1(patientDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling PatientApi#createPatient1")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling PatientApi#createPatient1")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **patientDto** | [**PatientDto**](PatientDto.md)|  |
+
+### Return type
+
+[**PatientDto**](PatientDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="createPatients"></a>
+# **createPatients**
+> kotlin.collections.List&lt;IdWithRevDto&gt; createPatients(patientDto)
+
+Create patients in bulk
+
+Returns the id and _rev of created patients
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = PatientApi()
+val patientDto : kotlin.collections.List<PatientDto> =  // kotlin.collections.List<PatientDto> | 
+try {
+    val result : kotlin.collections.List<IdWithRevDto> = apiInstance.createPatients(patientDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling PatientApi#createPatients")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling PatientApi#createPatients")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **patientDto** | [**kotlin.collections.List&lt;PatientDto&gt;**](PatientDto.md)|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;IdWithRevDto&gt;**](IdWithRevDto.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 
@@ -375,14 +524,58 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="deletePatients"></a>
+# **deletePatients**
+> kotlin.collections.List&lt;DocIdentifier&gt; deletePatients(listOfIdsDto)
+
+Delete patients.
+
+Response is an array containing the ID of deleted patient..
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = PatientApi()
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+try {
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deletePatients(listOfIdsDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling PatientApi#deletePatients")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling PatientApi#deletePatients")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;DocIdentifier&gt;**](DocIdentifier.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: */*
 
 <a name="filterPatientsBy"></a>
@@ -437,10 +630,66 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
+No authorization required
 
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="filterPatientsBy1"></a>
+# **filterPatientsBy1**
+> PaginatedListPatientDto filterPatientsBy1(filterChainPatient, startKey, startDocumentId, limit, skip, sort, desc)
+
+Filter patients for the current user (HcParty) 
+
+Returns a list of patients along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = PatientApi()
+val filterChainPatient : FilterChainPatient =  // FilterChainPatient | 
+val startKey : kotlin.String = startKey_example // kotlin.String | The start key for pagination, depends on the filters used
+val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A patient document ID
+val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
+val skip : kotlin.Int = 56 // kotlin.Int | Skip rows
+val sort : kotlin.String = sort_example // kotlin.String | Sort key
+val desc : kotlin.Boolean = true // kotlin.Boolean | Descending
+try {
+    val result : PaginatedListPatientDto = apiInstance.filterPatientsBy1(filterChainPatient, startKey, startDocumentId, limit, skip, sort, desc)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling PatientApi#filterPatientsBy1")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling PatientApi#filterPatientsBy1")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **filterChainPatient** | [**FilterChainPatient**](FilterChainPatient.md)|  |
+ **startKey** | **kotlin.String**| The start key for pagination, depends on the filters used | [optional]
+ **startDocumentId** | **kotlin.String**| A patient document ID | [optional]
+ **limit** | **kotlin.Int**| Number of rows | [optional]
+ **skip** | **kotlin.Int**| Skip rows | [optional]
+ **sort** | **kotlin.String**| Sort key | [optional]
+ **desc** | **kotlin.Boolean**| Descending | [optional]
+
+### Return type
+
+[**PaginatedListPatientDto**](PaginatedListPatientDto.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 
@@ -495,10 +744,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -543,10 +789,52 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
+No authorization required
 
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="findByExternalId1"></a>
+# **findByExternalId1**
+> PatientDto findByExternalId1(externalId)
+
+Get the patient having the provided externalId
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = PatientApi()
+val externalId : kotlin.String = externalId_example // kotlin.String | A external ID
+try {
+    val result : PatientDto = apiInstance.findByExternalId1(externalId)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling PatientApi#findByExternalId1")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling PatientApi#findByExternalId1")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **externalId** | **kotlin.String**| A external ID |
+
+### Return type
+
+[**PatientDto**](PatientDto.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 
@@ -603,10 +891,337 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
+No authorization required
 
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="findDeletedPatients"></a>
+# **findDeletedPatients**
+> PaginatedListPatientDto findDeletedPatients(startDate, endDate, desc, startDocumentId, limit)
+
+Find deleted patients
+
+Returns a list of deleted patients, within the specified time period, if any.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = PatientApi()
+val startDate : kotlin.Long = 789 // kotlin.Long | Filter deletions after this date (unix epoch), included
+val endDate : kotlin.Long = 789 // kotlin.Long | Filter deletions before this date (unix epoch), included
+val desc : kotlin.Boolean = true // kotlin.Boolean | Descending
+val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A patient document ID
+val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
+try {
+    val result : PaginatedListPatientDto = apiInstance.findDeletedPatients(startDate, endDate, desc, startDocumentId, limit)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling PatientApi#findDeletedPatients")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling PatientApi#findDeletedPatients")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **startDate** | **kotlin.Long**| Filter deletions after this date (unix epoch), included | [optional]
+ **endDate** | **kotlin.Long**| Filter deletions before this date (unix epoch), included | [optional]
+ **desc** | **kotlin.Boolean**| Descending | [optional]
+ **startDocumentId** | **kotlin.String**| A patient document ID | [optional]
+ **limit** | **kotlin.Int**| Number of rows | [optional]
+
+### Return type
+
+[**PaginatedListPatientDto**](PaginatedListPatientDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="findPatientsByAccessLogUserAfterDate"></a>
+# **findPatientsByAccessLogUserAfterDate**
+> PaginatedListPatientDto findPatientsByAccessLogUserAfterDate(userId, accessType, startDate, startKey, startDocumentId, limit)
+
+Get Paginated List of Patients sorted by Access logs descending
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = PatientApi()
+val userId : kotlin.String = userId_example // kotlin.String | A User ID
+val accessType : kotlin.String = accessType_example // kotlin.String | The type of access (COMPUTER or USER)
+val startDate : kotlin.Long = 789 // kotlin.Long | The start search epoch
+val startKey : kotlin.String = startKey_example // kotlin.String | The start key for pagination
+val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A patient document ID
+val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
+try {
+    val result : PaginatedListPatientDto = apiInstance.findPatientsByAccessLogUserAfterDate(userId, accessType, startDate, startKey, startDocumentId, limit)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling PatientApi#findPatientsByAccessLogUserAfterDate")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling PatientApi#findPatientsByAccessLogUserAfterDate")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **userId** | **kotlin.String**| A User ID |
+ **accessType** | **kotlin.String**| The type of access (COMPUTER or USER) | [optional]
+ **startDate** | **kotlin.Long**| The start search epoch | [optional]
+ **startKey** | **kotlin.String**| The start key for pagination | [optional]
+ **startDocumentId** | **kotlin.String**| A patient document ID | [optional]
+ **limit** | **kotlin.Int**| Number of rows | [optional] [default to 1000]
+
+### Return type
+
+[**PaginatedListPatientDto**](PaginatedListPatientDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="findPatientsByHealthcareParty"></a>
+# **findPatientsByHealthcareParty**
+> PaginatedListPatientDto findPatientsByHealthcareParty(hcPartyId, sortField, startKey, startDocumentId, limit, sortDirection)
+
+List patients for a specific HcParty
+
+Returns a list of patients along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = PatientApi()
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | Healthcare party id
+val sortField : kotlin.String = sortField_example // kotlin.String | Optional value for sorting results by a given field ('name', 'ssin', 'dateOfBirth'). Specifying this deactivates filtering
+val startKey : kotlin.String = startKey_example // kotlin.String | The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key's startKey
+val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A patient document ID
+val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
+val sortDirection : kotlin.String = sortDirection_example // kotlin.String | Optional value for providing a sorting direction ('asc', 'desc'). Set to 'asc' by default.
+try {
+    val result : PaginatedListPatientDto = apiInstance.findPatientsByHealthcareParty(hcPartyId, sortField, startKey, startDocumentId, limit, sortDirection)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling PatientApi#findPatientsByHealthcareParty")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling PatientApi#findPatientsByHealthcareParty")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **hcPartyId** | **kotlin.String**| Healthcare party id | [optional]
+ **sortField** | **kotlin.String**| Optional value for sorting results by a given field (&#39;name&#39;, &#39;ssin&#39;, &#39;dateOfBirth&#39;). Specifying this deactivates filtering | [optional]
+ **startKey** | **kotlin.String**| The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key&#39;s startKey | [optional]
+ **startDocumentId** | **kotlin.String**| A patient document ID | [optional]
+ **limit** | **kotlin.Int**| Number of rows | [optional]
+ **sortDirection** | **kotlin.String**| Optional value for providing a sorting direction (&#39;asc&#39;, &#39;desc&#39;). Set to &#39;asc&#39; by default. | [optional] [default to &quot;asc&quot;]
+
+### Return type
+
+[**PaginatedListPatientDto**](PaginatedListPatientDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="findPatientsByNameBirthSsinAuto"></a>
+# **findPatientsByNameBirthSsinAuto**
+> PaginatedListSerializable findPatientsByNameBirthSsinAuto(healthcarePartyId, filterValue, startKey, startDocumentId, limit, sortDirection)
+
+Find patients for the current user (HcParty) 
+
+Returns a list of patients along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = PatientApi()
+val healthcarePartyId : kotlin.String = healthcarePartyId_example // kotlin.String | HealthcareParty Id, if unset will user user's hcpId
+val filterValue : kotlin.String = filterValue_example // kotlin.String | Optional value for filtering results
+val startKey : kotlin.String = startKey_example // kotlin.String | The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key's startKey
+val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A patient document ID
+val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
+val sortDirection : kotlin.String = sortDirection_example // kotlin.String | Optional value for providing a sorting direction ('asc', 'desc'). Set to 'asc' by default.
+try {
+    val result : PaginatedListSerializable = apiInstance.findPatientsByNameBirthSsinAuto(healthcarePartyId, filterValue, startKey, startDocumentId, limit, sortDirection)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling PatientApi#findPatientsByNameBirthSsinAuto")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling PatientApi#findPatientsByNameBirthSsinAuto")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **healthcarePartyId** | **kotlin.String**| HealthcareParty Id, if unset will user user&#39;s hcpId | [optional]
+ **filterValue** | **kotlin.String**| Optional value for filtering results | [optional]
+ **startKey** | **kotlin.String**| The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key&#39;s startKey | [optional]
+ **startDocumentId** | **kotlin.String**| A patient document ID | [optional]
+ **limit** | **kotlin.Int**| Number of rows | [optional]
+ **sortDirection** | **kotlin.String**| Optional value for providing a sorting direction (&#39;asc&#39;, &#39;desc&#39;). Set to &#39;asc&#39; by default. | [optional] [default to &quot;asc&quot;]
+
+### Return type
+
+[**PaginatedListSerializable**](PaginatedListSerializable.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="findPatientsIdsByHealthcareParty"></a>
+# **findPatientsIdsByHealthcareParty**
+> PaginatedListString findPatientsIdsByHealthcareParty(hcPartyId, startKey, startDocumentId, limit)
+
+List patients by pages for a specific HcParty
+
+Returns a list of patients along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = PatientApi()
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | Healthcare party id
+val startKey : kotlin.String = startKey_example // kotlin.String | The page first id
+val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A patient document ID
+val limit : kotlin.Int = 56 // kotlin.Int | Page size
+try {
+    val result : PaginatedListString = apiInstance.findPatientsIdsByHealthcareParty(hcPartyId, startKey, startDocumentId, limit)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling PatientApi#findPatientsIdsByHealthcareParty")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling PatientApi#findPatientsIdsByHealthcareParty")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **hcPartyId** | **kotlin.String**| Healthcare party id |
+ **startKey** | **kotlin.String**| The page first id | [optional]
+ **startDocumentId** | **kotlin.String**| A patient document ID | [optional]
+ **limit** | **kotlin.Int**| Page size | [optional]
+
+### Return type
+
+[**PaginatedListString**](PaginatedListString.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="findPatientsModifiedAfter"></a>
+# **findPatientsModifiedAfter**
+> PaginatedListPatientDto findPatientsModifiedAfter(date, startKey, startDocumentId, limit)
+
+List patients that have been modified after the provided date
+
+Returns a list of patients that have been modified after the provided date
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = PatientApi()
+val date : kotlin.Long = 789 // kotlin.Long | 
+val startKey : kotlin.Long = 789 // kotlin.Long | The start key for pagination the date of the first element of the new page
+val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A patient document ID
+val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
+try {
+    val result : PaginatedListPatientDto = apiInstance.findPatientsModifiedAfter(date, startKey, startDocumentId, limit)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling PatientApi#findPatientsModifiedAfter")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling PatientApi#findPatientsModifiedAfter")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **date** | **kotlin.Long**|  |
+ **startKey** | **kotlin.Long**| The start key for pagination the date of the first element of the new page | [optional]
+ **startDocumentId** | **kotlin.String**| A patient document ID | [optional]
+ **limit** | **kotlin.Int**| Number of rows | [optional]
+
+### Return type
+
+[**PaginatedListPatientDto**](PaginatedListPatientDto.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 
@@ -657,10 +1272,58 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
+No authorization required
 
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="fuzzySearch1"></a>
+# **fuzzySearch1**
+> kotlin.collections.List&lt;PatientDto&gt; fuzzySearch1(firstName, lastName, dateOfBirth)
+
+Filter patients for the current user (HcParty) 
+
+Returns a list of patients
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = PatientApi()
+val firstName : kotlin.String = firstName_example // kotlin.String | The first name
+val lastName : kotlin.String = lastName_example // kotlin.String | The last name
+val dateOfBirth : kotlin.Int = 56 // kotlin.Int | The date of birth
+try {
+    val result : kotlin.collections.List<PatientDto> = apiInstance.fuzzySearch1(firstName, lastName, dateOfBirth)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling PatientApi#fuzzySearch1")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling PatientApi#fuzzySearch1")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **firstName** | **kotlin.String**| The first name | [optional]
+ **lastName** | **kotlin.String**| The last name | [optional]
+ **dateOfBirth** | **kotlin.Int**| The date of birth | [optional]
+
+### Return type
+
+[**kotlin.collections.List&lt;PatientDto&gt;**](PatientDto.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 
@@ -707,10 +1370,105 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
+No authorization required
 
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="getPatient1"></a>
+# **getPatient1**
+> PatientDto getPatient1(patientId)
+
+Get patient
+
+It gets patient administrative data.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = PatientApi()
+val patientId : kotlin.String = patientId_example // kotlin.String | 
+try {
+    val result : PatientDto = apiInstance.getPatient1(patientId)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling PatientApi#getPatient1")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling PatientApi#getPatient1")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **patientId** | **kotlin.String**|  |
+
+### Return type
+
+[**PatientDto**](PatientDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="getPatientByHealrhcarepartyAndIdentifier"></a>
+# **getPatientByHealrhcarepartyAndIdentifier**
+> PatientDto getPatientByHealrhcarepartyAndIdentifier(hcPartyId, system, id)
+
+Get patient by identifier
+
+It gets patient administrative data based on the identifier (root &amp; extension) parameters.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = PatientApi()
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
+val system : kotlin.String = system_example // kotlin.String | 
+val id : kotlin.String = id_example // kotlin.String | 
+try {
+    val result : PatientDto = apiInstance.getPatientByHealrhcarepartyAndIdentifier(hcPartyId, system, id)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling PatientApi#getPatientByHealrhcarepartyAndIdentifier")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling PatientApi#getPatientByHealrhcarepartyAndIdentifier")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **hcPartyId** | **kotlin.String**|  |
+ **system** | **kotlin.String**|  |
+ **id** | **kotlin.String**|  |
+
+### Return type
+
+[**PatientDto**](PatientDto.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 
@@ -757,10 +1515,54 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
+No authorization required
 
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="getPatientHcPartyKeysForDelegate1"></a>
+# **getPatientHcPartyKeysForDelegate1**
+> kotlin.String getPatientHcPartyKeysForDelegate1(patientId)
+
+Get the patient (identified by patientId) hcparty keys. Those keys are AES keys (encrypted) used to share information between HCPs and a patient.
+
+This endpoint is used to recover all keys that have already been created and that can be used to share information with this patient. It returns a map with the following structure: ID of the owner of the encrypted AES key -&gt; encrypted AES key. The returned encrypted AES keys will have to be decrypted using the patient&#39;s private key.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = PatientApi()
+val patientId : kotlin.String = patientId_example // kotlin.String | The patient Id for which information is shared
+try {
+    val result : kotlin.String = apiInstance.getPatientHcPartyKeysForDelegate1(patientId)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling PatientApi#getPatientHcPartyKeysForDelegate1")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling PatientApi#getPatientHcPartyKeysForDelegate1")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **patientId** | **kotlin.String**| The patient Id for which information is shared |
+
+### Return type
+
+**kotlin.String**
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 
@@ -807,10 +1609,54 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
+No authorization required
 
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="getPatients1"></a>
+# **getPatients1**
+> kotlin.collections.List&lt;PatientDto&gt; getPatients1(listOfIdsDto)
+
+Get patients by id
+
+It gets patient administrative data.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = PatientApi()
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+try {
+    val result : kotlin.collections.List<PatientDto> = apiInstance.getPatients1(listOfIdsDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling PatientApi#getPatients1")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling PatientApi#getPatients1")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;PatientDto&gt;**](PatientDto.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 
@@ -865,10 +1711,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -917,10 +1760,56 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
+No authorization required
 
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="listDeletedPatientsByName1"></a>
+# **listDeletedPatientsByName1**
+> kotlin.collections.List&lt;PatientDto&gt; listDeletedPatientsByName1(firstName, lastName)
+
+Find deleted patients
+
+Returns a list of deleted patients, by name and/or firstname prefix, if any.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = PatientApi()
+val firstName : kotlin.String = firstName_example // kotlin.String | First name prefix
+val lastName : kotlin.String = lastName_example // kotlin.String | Last name prefix
+try {
+    val result : kotlin.collections.List<PatientDto> = apiInstance.listDeletedPatientsByName1(firstName, lastName)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling PatientApi#listDeletedPatientsByName1")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling PatientApi#listDeletedPatientsByName1")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **firstName** | **kotlin.String**| First name prefix | [optional]
+ **lastName** | **kotlin.String**| Last name prefix | [optional]
+
+### Return type
+
+[**kotlin.collections.List&lt;PatientDto&gt;**](PatientDto.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 
@@ -967,10 +1856,54 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
+No authorization required
 
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="listOfMergesAfter1"></a>
+# **listOfMergesAfter1**
+> kotlin.collections.List&lt;PatientDto&gt; listOfMergesAfter1(date)
+
+List patients that have been merged towards another patient 
+
+Returns a list of patients that have been merged after the provided date
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = PatientApi()
+val date : kotlin.Long = 789 // kotlin.Long | 
+try {
+    val result : kotlin.collections.List<PatientDto> = apiInstance.listOfMergesAfter1(date)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling PatientApi#listOfMergesAfter1")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling PatientApi#listOfMergesAfter1")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **date** | **kotlin.Long**|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;PatientDto&gt;**](PatientDto.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 
@@ -1023,10 +1956,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -1083,10 +2013,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -1143,10 +2070,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -1199,10 +2123,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -1259,10 +2180,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -1307,10 +2225,52 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
+No authorization required
 
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="matchPatientsBy1"></a>
+# **matchPatientsBy1**
+> kotlin.collections.List&lt;kotlin.String&gt; matchPatientsBy1(abstractFilterDtoPatient)
+
+Get ids of patients matching the provided filter for the current user (HcParty) 
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = PatientApi()
+val abstractFilterDtoPatient : AbstractFilterDtoPatient =  // AbstractFilterDtoPatient | 
+try {
+    val result : kotlin.collections.List<kotlin.String> = apiInstance.matchPatientsBy1(abstractFilterDtoPatient)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling PatientApi#matchPatientsBy1")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling PatientApi#matchPatientsBy1")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **abstractFilterDtoPatient** | [**AbstractFilterDtoPatient**](AbstractFilterDtoPatient.md)|  |
+
+### Return type
+
+**kotlin.collections.List&lt;kotlin.String&gt;**
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 
@@ -1357,10 +2317,54 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
+No authorization required
 
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="mergeInto1"></a>
+# **mergeInto1**
+> PatientDto mergeInto1(toId, fromIds)
+
+Merge a series of patients into another patient
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = PatientApi()
+val toId : kotlin.String = toId_example // kotlin.String | 
+val fromIds : kotlin.String = fromIds_example // kotlin.String | 
+try {
+    val result : PatientDto = apiInstance.mergeInto1(toId, fromIds)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling PatientApi#mergeInto1")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling PatientApi#mergeInto1")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **toId** | **kotlin.String**|  |
+ **fromIds** | **kotlin.String**|  |
+
+### Return type
+
+[**PatientDto**](PatientDto.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 
@@ -1407,10 +2411,54 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
+No authorization required
 
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="modifyPatient1"></a>
+# **modifyPatient1**
+> PatientDto modifyPatient1(patientDto)
+
+Modify a patient
+
+No particular return value. It&#39;s just a message.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = PatientApi()
+val patientDto : PatientDto =  // PatientDto | 
+try {
+    val result : PatientDto = apiInstance.modifyPatient1(patientDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling PatientApi#modifyPatient1")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling PatientApi#modifyPatient1")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **patientDto** | [**PatientDto**](PatientDto.md)|  |
+
+### Return type
+
+[**PatientDto**](PatientDto.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 
@@ -1461,14 +2509,109 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="modifyPatientReferral1"></a>
+# **modifyPatientReferral1**
+> PatientDto modifyPatientReferral1(patientId, referralId, start, end)
+
+Set a patient referral doctor
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = PatientApi()
+val patientId : kotlin.String = patientId_example // kotlin.String | 
+val referralId : kotlin.String = referralId_example // kotlin.String | The referal id. Accepts 'none' for referral removal.
+val start : kotlin.Long = 789 // kotlin.Long | Optional value for start of referral
+val end : kotlin.Long = 789 // kotlin.Long | Optional value for end of referral
+try {
+    val result : PatientDto = apiInstance.modifyPatientReferral1(patientId, referralId, start, end)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling PatientApi#modifyPatientReferral1")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling PatientApi#modifyPatientReferral1")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **patientId** | **kotlin.String**|  |
+ **referralId** | **kotlin.String**| The referal id. Accepts &#39;none&#39; for referral removal. |
+ **start** | **kotlin.Long**| Optional value for start of referral | [optional]
+ **end** | **kotlin.Long**| Optional value for end of referral | [optional]
+
+### Return type
+
+[**PatientDto**](PatientDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="modifyPatients"></a>
+# **modifyPatients**
+> kotlin.collections.List&lt;IdWithRevDto&gt; modifyPatients(patientDto)
+
+Modify patients in bulk
+
+Returns the id and _rev of modified patients
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = PatientApi()
+val patientDto : kotlin.collections.List<PatientDto> =  // kotlin.collections.List<PatientDto> | 
+try {
+    val result : kotlin.collections.List<IdWithRevDto> = apiInstance.modifyPatients(patientDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling PatientApi#modifyPatients")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling PatientApi#modifyPatients")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **patientDto** | [**kotlin.collections.List&lt;PatientDto&gt;**](PatientDto.md)|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;IdWithRevDto&gt;**](IdWithRevDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: */*
 
 <a name="newPatientDelegations"></a>
@@ -1513,10 +2656,56 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
+No authorization required
 
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="newPatientDelegations1"></a>
+# **newPatientDelegations1**
+> PatientDto newPatientDelegations1(patientId, delegationDto)
+
+Delegates a patients to a healthcare party
+
+It delegates a patient to a healthcare party (By current healthcare party). A modified patient with new delegation gets returned.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = PatientApi()
+val patientId : kotlin.String = patientId_example // kotlin.String | 
+val delegationDto : kotlin.collections.List<DelegationDto> =  // kotlin.collections.List<DelegationDto> | 
+try {
+    val result : PatientDto = apiInstance.newPatientDelegations1(patientId, delegationDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling PatientApi#newPatientDelegations1")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling PatientApi#newPatientDelegations1")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **patientId** | **kotlin.String**|  |
+ **delegationDto** | [**kotlin.collections.List&lt;DelegationDto&gt;**](DelegationDto.md)|  |
+
+### Return type
+
+[**PatientDto**](PatientDto.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 
@@ -1563,10 +2752,54 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
+No authorization required
 
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="undeletePatient1"></a>
+# **undeletePatient1**
+> kotlin.collections.List&lt;DocIdentifier&gt; undeletePatient1(patientIds)
+
+undelete previously deleted patients
+
+Response is an array containing the ID of undeleted patient..
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = PatientApi()
+val patientIds : kotlin.String = patientIds_example // kotlin.String | 
+try {
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.undeletePatient1(patientIds)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling PatientApi#undeletePatient1")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling PatientApi#undeletePatient1")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **patientIds** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;DocIdentifier&gt;**](DocIdentifier.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 

@@ -4,23 +4,40 @@ All URIs are relative to *https://kraken.icure.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createDocument**](DocumentApi.md#createDocument) | **POST** /rest/v1/document | Creates a document
-[**deleteAttachment**](DocumentApi.md#deleteAttachment) | **DELETE** /rest/v1/document/{documentId}/attachment | Deletes a document&#39;s attachment
-[**deleteDocument**](DocumentApi.md#deleteDocument) | **DELETE** /rest/v1/document/{documentIds} | Deletes a document
-[**findByTypeHCPartyMessageSecretFKeys**](DocumentApi.md#findByTypeHCPartyMessageSecretFKeys) | **GET** /rest/v1/document/byTypeHcPartySecretForeignKeys | List documents found By type, By Healthcare Party and secret foreign keys.
-[**findDocumentsByHCPartyPatientForeignKeys**](DocumentApi.md#findDocumentsByHCPartyPatientForeignKeys) | **GET** /rest/v1/document/byHcPartySecretForeignKeys | List documents found By Healthcare Party and secret foreign keys.
-[**findWithoutDelegation**](DocumentApi.md#findWithoutDelegation) | **GET** /rest/v1/document/woDelegation | List documents with no delegation
-[**getDocument**](DocumentApi.md#getDocument) | **GET** /rest/v1/document/{documentId} | Gets a document
-[**getDocumentAttachment**](DocumentApi.md#getDocumentAttachment) | **GET** /rest/v1/document/{documentId}/attachment/{attachmentId} | Load document&#39;s attachment
-[**getDocumentByExternalUuid**](DocumentApi.md#getDocumentByExternalUuid) | **GET** /rest/v1/document/externaluuid/{externalUuid} | Gets a document
-[**getDocuments**](DocumentApi.md#getDocuments) | **POST** /rest/v1/document/batch | Gets a document
-[**getDocumentsByExternalUuid**](DocumentApi.md#getDocumentsByExternalUuid) | **GET** /rest/v1/document/externaluuid/{externalUuid}/all | Get all documents with externalUuid
-[**modifyDocument**](DocumentApi.md#modifyDocument) | **PUT** /rest/v1/document | Updates a document
-[**modifyDocuments**](DocumentApi.md#modifyDocuments) | **PUT** /rest/v1/document/batch | Updates a batch of documents
-[**setDocumentAttachment**](DocumentApi.md#setDocumentAttachment) | **PUT** /rest/v1/document/{documentId}/attachment | Creates a document&#39;s attachment
-[**setDocumentAttachmentMulti**](DocumentApi.md#setDocumentAttachmentMulti) | **PUT** /rest/v1/document/{documentId}/attachment/multipart | Creates a document&#39;s attachment
-[**setDocumentsDelegations**](DocumentApi.md#setDocumentsDelegations) | **POST** /rest/v1/document/delegations | Update delegations in healthElements.
-[**setSafeDocumentAttachment**](DocumentApi.md#setSafeDocumentAttachment) | **PUT** /rest/v1/document/attachment | Creates a document&#39;s attachment
+[**createDocument**](DocumentApi.md#createDocument) | **POST** /rest/v2/document | Creates a document
+[**createDocument1**](DocumentApi.md#createDocument1) | **POST** /rest/v1/document | Creates a document
+[**deleteAttachment**](DocumentApi.md#deleteAttachment) | **DELETE** /rest/v2/document/{documentId}/attachment | Deletes a document&#39;s attachment
+[**deleteAttachment1**](DocumentApi.md#deleteAttachment1) | **DELETE** /rest/v1/document/{documentId}/attachment | Deletes a document&#39;s attachment
+[**deleteDocument**](DocumentApi.md#deleteDocument) | **POST** /rest/v2/document/delete/batch | Deletes documents
+[**deleteDocument1**](DocumentApi.md#deleteDocument1) | **DELETE** /rest/v1/document/{documentIds} | Deletes a document
+[**findWithoutDelegation**](DocumentApi.md#findWithoutDelegation) | **GET** /rest/v2/document/woDelegation | List documents with no delegation
+[**getDocument**](DocumentApi.md#getDocument) | **GET** /rest/v2/document/{documentId} | Gets a document
+[**getDocument1**](DocumentApi.md#getDocument1) | **GET** /rest/v1/document/{documentId} | Gets a document
+[**getDocumentAttachment**](DocumentApi.md#getDocumentAttachment) | **GET** /rest/v2/document/{documentId}/attachment/{attachmentId} | Load document&#39;s attachment
+[**getDocumentAttachment1**](DocumentApi.md#getDocumentAttachment1) | **GET** /rest/v1/document/{documentId}/attachment/{attachmentId} | Load document&#39;s attachment
+[**getDocumentByExternalUuid**](DocumentApi.md#getDocumentByExternalUuid) | **GET** /rest/v2/document/externaluuid/{externalUuid} | Gets a document
+[**getDocumentByExternalUuid1**](DocumentApi.md#getDocumentByExternalUuid1) | **GET** /rest/v1/document/externaluuid/{externalUuid} | Gets a document
+[**getDocuments**](DocumentApi.md#getDocuments) | **POST** /rest/v2/document/byIds | Gets a document
+[**getDocuments1**](DocumentApi.md#getDocuments1) | **POST** /rest/v1/document/batch | Gets a document
+[**getDocumentsByExternalUuid**](DocumentApi.md#getDocumentsByExternalUuid) | **GET** /rest/v2/document/externaluuid/{externalUuid}/all | Get all documents with externalUuid
+[**getDocumentsByExternalUuid1**](DocumentApi.md#getDocumentsByExternalUuid1) | **GET** /rest/v1/document/externaluuid/{externalUuid}/all | Get all documents with externalUuid
+[**listDocumentByTypeHCPartyMessageSecretFKeys**](DocumentApi.md#listDocumentByTypeHCPartyMessageSecretFKeys) | **GET** /rest/v2/document/byTypeHcPartySecretForeignKeys | List documents found By type, By Healthcare Party and secret foreign keys.
+[**listDocumentsByHCPartyAndPatientForeignKeys**](DocumentApi.md#listDocumentsByHCPartyAndPatientForeignKeys) | **GET** /rest/v2/document/byHcPartySecretForeignKeys | List documents found By Healthcare Party and secret foreign keys.
+[**listDocumentsByHCPartyPatientForeignKeys**](DocumentApi.md#listDocumentsByHCPartyPatientForeignKeys) | **GET** /rest/v1/document/byHcPartySecretForeignKeys | List documents found By Healthcare Party and secret foreign keys.
+[**listDocumentsByTypeHCPartyMessageSecretFKeys**](DocumentApi.md#listDocumentsByTypeHCPartyMessageSecretFKeys) | **GET** /rest/v1/document/byTypeHcPartySecretForeignKeys | List documents found By type, By Healthcare Party and secret foreign keys.
+[**listWithoutDelegation**](DocumentApi.md#listWithoutDelegation) | **GET** /rest/v1/document/woDelegation | List documents with no delegation
+[**modifyDocument**](DocumentApi.md#modifyDocument) | **PUT** /rest/v2/document | Updates a document
+[**modifyDocument1**](DocumentApi.md#modifyDocument1) | **PUT** /rest/v1/document | Updates a document
+[**modifyDocuments**](DocumentApi.md#modifyDocuments) | **PUT** /rest/v2/document/batch | Updates a batch of documents
+[**modifyDocuments1**](DocumentApi.md#modifyDocuments1) | **PUT** /rest/v1/document/batch | Updates a batch of documents
+[**setDocumentAttachment**](DocumentApi.md#setDocumentAttachment) | **PUT** /rest/v2/document/{documentId}/attachment | Creates a document&#39;s attachment
+[**setDocumentAttachment1**](DocumentApi.md#setDocumentAttachment1) | **PUT** /rest/v1/document/{documentId}/attachment | Creates a document&#39;s attachment
+[**setDocumentAttachmentMulti**](DocumentApi.md#setDocumentAttachmentMulti) | **PUT** /rest/v2/document/{documentId}/attachment/multipart | Creates a document&#39;s attachment
+[**setDocumentAttachmentMulti1**](DocumentApi.md#setDocumentAttachmentMulti1) | **PUT** /rest/v1/document/{documentId}/attachment/multipart | Creates a document&#39;s attachment
+[**setDocumentsDelegations**](DocumentApi.md#setDocumentsDelegations) | **POST** /rest/v2/document/delegations | Update delegations in healthElements.
+[**setDocumentsDelegations1**](DocumentApi.md#setDocumentsDelegations1) | **POST** /rest/v1/document/delegations | Update delegations in healthElements.
+[**setSafeDocumentAttachment**](DocumentApi.md#setSafeDocumentAttachment) | **PUT** /rest/v2/document/attachment | Creates a document&#39;s attachment
+[**setSafeDocumentAttachment1**](DocumentApi.md#setSafeDocumentAttachment1) | **PUT** /rest/v1/document/attachment | Creates a document&#39;s attachment
 
 
 <a name="createDocument"></a>
@@ -61,10 +78,52 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
+No authorization required
 
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="createDocument1"></a>
+# **createDocument1**
+> DocumentDto createDocument1(documentDto)
+
+Creates a document
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = DocumentApi()
+val documentDto : DocumentDto =  // DocumentDto | 
+try {
+    val result : DocumentDto = apiInstance.createDocument1(documentDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DocumentApi#createDocument1")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DocumentApi#createDocument1")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **documentDto** | [**DocumentDto**](DocumentDto.md)|  |
+
+### Return type
+
+[**DocumentDto**](DocumentDto.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 
@@ -109,10 +168,52 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
+No authorization required
 
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="deleteAttachment1"></a>
+# **deleteAttachment1**
+> DocumentDto deleteAttachment1(documentId)
+
+Deletes a document&#39;s attachment
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = DocumentApi()
+val documentId : kotlin.String = documentId_example // kotlin.String | 
+try {
+    val result : DocumentDto = apiInstance.deleteAttachment1(documentId)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DocumentApi#deleteAttachment1")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DocumentApi#deleteAttachment1")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **documentId** | **kotlin.String**|  |
+
+### Return type
+
+[**DocumentDto**](DocumentDto.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 
@@ -121,7 +222,52 @@ Configure basicScheme:
 
 <a name="deleteDocument"></a>
 # **deleteDocument**
-> kotlin.collections.List&lt;DocIdentifier&gt; deleteDocument(documentIds)
+> kotlin.collections.List&lt;DocIdentifier&gt; deleteDocument(listOfIdsDto)
+
+Deletes documents
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = DocumentApi()
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+try {
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteDocument(listOfIdsDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DocumentApi#deleteDocument")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DocumentApi#deleteDocument")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;DocIdentifier&gt;**](DocIdentifier.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="deleteDocument1"></a>
+# **deleteDocument1**
+> kotlin.collections.List&lt;DocIdentifier&gt; deleteDocument1(documentIds)
 
 Deletes a document
 
@@ -134,13 +280,13 @@ Deletes a document
 val apiInstance = DocumentApi()
 val documentIds : kotlin.String = documentIds_example // kotlin.String | 
 try {
-    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteDocument(documentIds)
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteDocument1(documentIds)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling DocumentApi#deleteDocument")
+    println("4xx response calling DocumentApi#deleteDocument1")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling DocumentApi#deleteDocument")
+    println("5xx response calling DocumentApi#deleteDocument1")
     e.printStackTrace()
 }
 ```
@@ -157,116 +303,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="findByTypeHCPartyMessageSecretFKeys"></a>
-# **findByTypeHCPartyMessageSecretFKeys**
-> kotlin.collections.List&lt;DocumentDto&gt; findByTypeHCPartyMessageSecretFKeys(documentTypeCode, hcPartyId, secretFKeys)
-
-List documents found By type, By Healthcare Party and secret foreign keys.
-
-Keys must be delimited by coma
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = DocumentApi()
-val documentTypeCode : kotlin.String = documentTypeCode_example // kotlin.String | 
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
-try {
-    val result : kotlin.collections.List<DocumentDto> = apiInstance.findByTypeHCPartyMessageSecretFKeys(documentTypeCode, hcPartyId, secretFKeys)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling DocumentApi#findByTypeHCPartyMessageSecretFKeys")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling DocumentApi#findByTypeHCPartyMessageSecretFKeys")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **documentTypeCode** | **kotlin.String**|  |
- **hcPartyId** | **kotlin.String**|  |
- **secretFKeys** | **kotlin.String**|  |
-
-### Return type
-
-[**kotlin.collections.List&lt;DocumentDto&gt;**](DocumentDto.md)
-
-### Authorization
-
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="findDocumentsByHCPartyPatientForeignKeys"></a>
-# **findDocumentsByHCPartyPatientForeignKeys**
-> kotlin.collections.List&lt;DocumentDto&gt; findDocumentsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
-
-List documents found By Healthcare Party and secret foreign keys.
-
-Keys must be delimited by coma
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = DocumentApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
-try {
-    val result : kotlin.collections.List<DocumentDto> = apiInstance.findDocumentsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling DocumentApi#findDocumentsByHCPartyPatientForeignKeys")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling DocumentApi#findDocumentsByHCPartyPatientForeignKeys")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **hcPartyId** | **kotlin.String**|  |
- **secretFKeys** | **kotlin.String**|  |
-
-### Return type
-
-[**kotlin.collections.List&lt;DocumentDto&gt;**](DocumentDto.md)
-
-### Authorization
-
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -313,10 +350,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -361,10 +395,52 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
+No authorization required
 
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="getDocument1"></a>
+# **getDocument1**
+> DocumentDto getDocument1(documentId)
+
+Gets a document
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = DocumentApi()
+val documentId : kotlin.String = documentId_example // kotlin.String | 
+try {
+    val result : DocumentDto = apiInstance.getDocument1(documentId)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DocumentApi#getDocument1")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DocumentApi#getDocument1")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **documentId** | **kotlin.String**|  |
+
+### Return type
+
+[**DocumentDto**](DocumentDto.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 
@@ -415,10 +491,58 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
+No authorization required
 
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/octet-stream
+
+<a name="getDocumentAttachment1"></a>
+# **getDocumentAttachment1**
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; getDocumentAttachment1(documentId, attachmentId, enckeys, fileName)
+
+Load document&#39;s attachment
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = DocumentApi()
+val documentId : kotlin.String = documentId_example // kotlin.String | 
+val attachmentId : kotlin.String = attachmentId_example // kotlin.String | 
+val enckeys : kotlin.String = enckeys_example // kotlin.String | 
+val fileName : kotlin.String = fileName_example // kotlin.String | 
+try {
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.getDocumentAttachment1(documentId, attachmentId, enckeys, fileName)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DocumentApi#getDocumentAttachment1")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DocumentApi#getDocumentAttachment1")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **documentId** | **kotlin.String**|  |
+ **attachmentId** | **kotlin.String**|  |
+ **enckeys** | **kotlin.String**|  | [optional]
+ **fileName** | **kotlin.String**|  | [optional]
+
+### Return type
+
+[**kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**](kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 
@@ -463,10 +587,52 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
+No authorization required
 
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="getDocumentByExternalUuid1"></a>
+# **getDocumentByExternalUuid1**
+> DocumentDto getDocumentByExternalUuid1(externalUuid)
+
+Gets a document
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = DocumentApi()
+val externalUuid : kotlin.String = externalUuid_example // kotlin.String | 
+try {
+    val result : DocumentDto = apiInstance.getDocumentByExternalUuid1(externalUuid)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DocumentApi#getDocumentByExternalUuid1")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DocumentApi#getDocumentByExternalUuid1")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **externalUuid** | **kotlin.String**|  |
+
+### Return type
+
+[**DocumentDto**](DocumentDto.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 
@@ -511,10 +677,52 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
+No authorization required
 
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="getDocuments1"></a>
+# **getDocuments1**
+> kotlin.collections.List&lt;DocumentDto&gt; getDocuments1(listOfIdsDto)
+
+Gets a document
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = DocumentApi()
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+try {
+    val result : kotlin.collections.List<DocumentDto> = apiInstance.getDocuments1(listOfIdsDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DocumentApi#getDocuments1")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DocumentApi#getDocuments1")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;DocumentDto&gt;**](DocumentDto.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 
@@ -559,10 +767,299 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
+No authorization required
 
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="getDocumentsByExternalUuid1"></a>
+# **getDocumentsByExternalUuid1**
+> kotlin.collections.List&lt;DocumentDto&gt; getDocumentsByExternalUuid1(externalUuid)
+
+Get all documents with externalUuid
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = DocumentApi()
+val externalUuid : kotlin.String = externalUuid_example // kotlin.String | 
+try {
+    val result : kotlin.collections.List<DocumentDto> = apiInstance.getDocumentsByExternalUuid1(externalUuid)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DocumentApi#getDocumentsByExternalUuid1")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DocumentApi#getDocumentsByExternalUuid1")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **externalUuid** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;DocumentDto&gt;**](DocumentDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="listDocumentByTypeHCPartyMessageSecretFKeys"></a>
+# **listDocumentByTypeHCPartyMessageSecretFKeys**
+> kotlin.collections.List&lt;DocumentDto&gt; listDocumentByTypeHCPartyMessageSecretFKeys(documentTypeCode, hcPartyId, secretFKeys)
+
+List documents found By type, By Healthcare Party and secret foreign keys.
+
+Keys must be delimited by coma
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = DocumentApi()
+val documentTypeCode : kotlin.String = documentTypeCode_example // kotlin.String | 
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
+val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
+try {
+    val result : kotlin.collections.List<DocumentDto> = apiInstance.listDocumentByTypeHCPartyMessageSecretFKeys(documentTypeCode, hcPartyId, secretFKeys)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DocumentApi#listDocumentByTypeHCPartyMessageSecretFKeys")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DocumentApi#listDocumentByTypeHCPartyMessageSecretFKeys")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **documentTypeCode** | **kotlin.String**|  |
+ **hcPartyId** | **kotlin.String**|  |
+ **secretFKeys** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;DocumentDto&gt;**](DocumentDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="listDocumentsByHCPartyAndPatientForeignKeys"></a>
+# **listDocumentsByHCPartyAndPatientForeignKeys**
+> kotlin.collections.List&lt;DocumentDto&gt; listDocumentsByHCPartyAndPatientForeignKeys(hcPartyId, secretFKeys)
+
+List documents found By Healthcare Party and secret foreign keys.
+
+Keys must be delimited by coma
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = DocumentApi()
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
+val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
+try {
+    val result : kotlin.collections.List<DocumentDto> = apiInstance.listDocumentsByHCPartyAndPatientForeignKeys(hcPartyId, secretFKeys)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DocumentApi#listDocumentsByHCPartyAndPatientForeignKeys")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DocumentApi#listDocumentsByHCPartyAndPatientForeignKeys")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **hcPartyId** | **kotlin.String**|  |
+ **secretFKeys** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;DocumentDto&gt;**](DocumentDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="listDocumentsByHCPartyPatientForeignKeys"></a>
+# **listDocumentsByHCPartyPatientForeignKeys**
+> kotlin.collections.List&lt;DocumentDto&gt; listDocumentsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
+
+List documents found By Healthcare Party and secret foreign keys.
+
+Keys must be delimited by coma
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = DocumentApi()
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
+val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
+try {
+    val result : kotlin.collections.List<DocumentDto> = apiInstance.listDocumentsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DocumentApi#listDocumentsByHCPartyPatientForeignKeys")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DocumentApi#listDocumentsByHCPartyPatientForeignKeys")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **hcPartyId** | **kotlin.String**|  |
+ **secretFKeys** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;DocumentDto&gt;**](DocumentDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="listDocumentsByTypeHCPartyMessageSecretFKeys"></a>
+# **listDocumentsByTypeHCPartyMessageSecretFKeys**
+> kotlin.collections.List&lt;DocumentDto&gt; listDocumentsByTypeHCPartyMessageSecretFKeys(documentTypeCode, hcPartyId, secretFKeys)
+
+List documents found By type, By Healthcare Party and secret foreign keys.
+
+Keys must be delimited by coma
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = DocumentApi()
+val documentTypeCode : kotlin.String = documentTypeCode_example // kotlin.String | 
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
+val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
+try {
+    val result : kotlin.collections.List<DocumentDto> = apiInstance.listDocumentsByTypeHCPartyMessageSecretFKeys(documentTypeCode, hcPartyId, secretFKeys)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DocumentApi#listDocumentsByTypeHCPartyMessageSecretFKeys")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DocumentApi#listDocumentsByTypeHCPartyMessageSecretFKeys")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **documentTypeCode** | **kotlin.String**|  |
+ **hcPartyId** | **kotlin.String**|  |
+ **secretFKeys** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;DocumentDto&gt;**](DocumentDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="listWithoutDelegation"></a>
+# **listWithoutDelegation**
+> kotlin.collections.List&lt;DocumentDto&gt; listWithoutDelegation(limit)
+
+List documents with no delegation
+
+Keys must be delimited by coma
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = DocumentApi()
+val limit : kotlin.Int = 56 // kotlin.Int | 
+try {
+    val result : kotlin.collections.List<DocumentDto> = apiInstance.listWithoutDelegation(limit)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DocumentApi#listWithoutDelegation")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DocumentApi#listWithoutDelegation")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **limit** | **kotlin.Int**|  | [optional]
+
+### Return type
+
+[**kotlin.collections.List&lt;DocumentDto&gt;**](DocumentDto.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 
@@ -607,10 +1104,52 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
+No authorization required
 
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="modifyDocument1"></a>
+# **modifyDocument1**
+> DocumentDto modifyDocument1(documentDto)
+
+Updates a document
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = DocumentApi()
+val documentDto : DocumentDto =  // DocumentDto | 
+try {
+    val result : DocumentDto = apiInstance.modifyDocument1(documentDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DocumentApi#modifyDocument1")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DocumentApi#modifyDocument1")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **documentDto** | [**DocumentDto**](DocumentDto.md)|  |
+
+### Return type
+
+[**DocumentDto**](DocumentDto.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 
@@ -657,10 +1196,54 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
+No authorization required
 
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="modifyDocuments1"></a>
+# **modifyDocuments1**
+> kotlin.collections.List&lt;DocumentDto&gt; modifyDocuments1(documentDto)
+
+Updates a batch of documents
+
+Returns the modified documents.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = DocumentApi()
+val documentDto : kotlin.collections.List<DocumentDto> =  // kotlin.collections.List<DocumentDto> | 
+try {
+    val result : kotlin.collections.List<DocumentDto> = apiInstance.modifyDocuments1(documentDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DocumentApi#modifyDocuments1")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DocumentApi#modifyDocuments1")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **documentDto** | [**kotlin.collections.List&lt;DocumentDto&gt;**](DocumentDto.md)|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;DocumentDto&gt;**](DocumentDto.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 
@@ -669,7 +1252,56 @@ Configure basicScheme:
 
 <a name="setDocumentAttachment"></a>
 # **setDocumentAttachment**
-> DocumentDto setDocumentAttachment(documentId, body, enckeys)
+> DocumentDto setDocumentAttachment(documentId, requestBody, enckeys)
+
+Creates a document&#39;s attachment
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = DocumentApi()
+val documentId : kotlin.String = documentId_example // kotlin.String | 
+val requestBody : kotlin.collections.List<kotlin.ByteArray> =  // kotlin.collections.List<kotlin.ByteArray> | 
+val enckeys : kotlin.String = enckeys_example // kotlin.String | 
+try {
+    val result : DocumentDto = apiInstance.setDocumentAttachment(documentId, requestBody, enckeys)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DocumentApi#setDocumentAttachment")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DocumentApi#setDocumentAttachment")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **documentId** | **kotlin.String**|  |
+ **requestBody** | [**kotlin.collections.List&lt;kotlin.ByteArray&gt;**](kotlin.ByteArray.md)|  |
+ **enckeys** | **kotlin.String**|  | [optional]
+
+### Return type
+
+[**DocumentDto**](DocumentDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/octet-stream
+ - **Accept**: */*
+
+<a name="setDocumentAttachment1"></a>
+# **setDocumentAttachment1**
+> DocumentDto setDocumentAttachment1(documentId, body, enckeys)
 
 Creates a document&#39;s attachment
 
@@ -684,13 +1316,13 @@ val documentId : kotlin.String = documentId_example // kotlin.String |
 val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
 val enckeys : kotlin.String = enckeys_example // kotlin.String | 
 try {
-    val result : DocumentDto = apiInstance.setDocumentAttachment(documentId, body, enckeys)
+    val result : DocumentDto = apiInstance.setDocumentAttachment1(documentId, body, enckeys)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling DocumentApi#setDocumentAttachment")
+    println("4xx response calling DocumentApi#setDocumentAttachment1")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling DocumentApi#setDocumentAttachment")
+    println("5xx response calling DocumentApi#setDocumentAttachment1")
     e.printStackTrace()
 }
 ```
@@ -709,10 +1341,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -761,10 +1390,56 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
+No authorization required
 
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+### HTTP request headers
+
+ - **Content-Type**: multipart/form-data
+ - **Accept**: */*
+
+<a name="setDocumentAttachmentMulti1"></a>
+# **setDocumentAttachmentMulti1**
+> DocumentDto setDocumentAttachmentMulti1(documentId, attachment, enckeys)
+
+Creates a document&#39;s attachment
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = DocumentApi()
+val documentId : kotlin.String = documentId_example // kotlin.String | 
+val attachment : kotlin.collections.List<kotlin.ByteArray> = BYTE_ARRAY_DATA_HERE // kotlin.collections.List<kotlin.ByteArray> | 
+val enckeys : kotlin.String = enckeys_example // kotlin.String | 
+try {
+    val result : DocumentDto = apiInstance.setDocumentAttachmentMulti1(documentId, attachment, enckeys)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DocumentApi#setDocumentAttachmentMulti1")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DocumentApi#setDocumentAttachmentMulti1")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **documentId** | **kotlin.String**|  |
+ **attachment** | [**kotlin.collections.List&lt;kotlin.ByteArray&gt;**](kotlin.ByteArray.md)|  |
+ **enckeys** | **kotlin.String**|  | [optional]
+
+### Return type
+
+[**DocumentDto**](DocumentDto.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 
@@ -811,10 +1486,54 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
+No authorization required
 
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="setDocumentsDelegations1"></a>
+# **setDocumentsDelegations1**
+> kotlin.collections.List&lt;IcureStubDto&gt; setDocumentsDelegations1(icureStubDto)
+
+Update delegations in healthElements.
+
+Keys must be delimited by coma
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = DocumentApi()
+val icureStubDto : kotlin.collections.List<IcureStubDto> =  // kotlin.collections.List<IcureStubDto> | 
+try {
+    val result : kotlin.collections.List<IcureStubDto> = apiInstance.setDocumentsDelegations1(icureStubDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DocumentApi#setDocumentsDelegations1")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DocumentApi#setDocumentsDelegations1")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **icureStubDto** | [**kotlin.collections.List&lt;IcureStubDto&gt;**](IcureStubDto.md)|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;IcureStubDto&gt;**](IcureStubDto.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 
@@ -823,7 +1542,56 @@ Configure basicScheme:
 
 <a name="setSafeDocumentAttachment"></a>
 # **setSafeDocumentAttachment**
-> DocumentDto setSafeDocumentAttachment(documentId, body, enckeys)
+> DocumentDto setSafeDocumentAttachment(documentId, requestBody, enckeys)
+
+Creates a document&#39;s attachment
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = DocumentApi()
+val documentId : kotlin.String = documentId_example // kotlin.String | 
+val requestBody : kotlin.collections.List<kotlin.ByteArray> =  // kotlin.collections.List<kotlin.ByteArray> | 
+val enckeys : kotlin.String = enckeys_example // kotlin.String | 
+try {
+    val result : DocumentDto = apiInstance.setSafeDocumentAttachment(documentId, requestBody, enckeys)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DocumentApi#setSafeDocumentAttachment")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DocumentApi#setSafeDocumentAttachment")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **documentId** | **kotlin.String**|  |
+ **requestBody** | [**kotlin.collections.List&lt;kotlin.ByteArray&gt;**](kotlin.ByteArray.md)|  |
+ **enckeys** | **kotlin.String**|  | [optional]
+
+### Return type
+
+[**DocumentDto**](DocumentDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/octet-stream
+ - **Accept**: */*
+
+<a name="setSafeDocumentAttachment1"></a>
+# **setSafeDocumentAttachment1**
+> DocumentDto setSafeDocumentAttachment1(documentId, body, enckeys)
 
 Creates a document&#39;s attachment
 
@@ -838,13 +1606,13 @@ val documentId : kotlin.String = documentId_example // kotlin.String |
 val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
 val enckeys : kotlin.String = enckeys_example // kotlin.String | 
 try {
-    val result : DocumentDto = apiInstance.setSafeDocumentAttachment(documentId, body, enckeys)
+    val result : DocumentDto = apiInstance.setSafeDocumentAttachment1(documentId, body, enckeys)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling DocumentApi#setSafeDocumentAttachment")
+    println("4xx response calling DocumentApi#setSafeDocumentAttachment1")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling DocumentApi#setSafeDocumentAttachment")
+    println("5xx response calling DocumentApi#setSafeDocumentAttachment1")
     e.printStackTrace()
 }
 ```
@@ -863,10 +1631,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
