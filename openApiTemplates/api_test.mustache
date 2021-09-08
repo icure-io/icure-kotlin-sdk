@@ -67,8 +67,8 @@ class {{classname}}Test() {
         .registerModule(object:SimpleModule() {
             override fun setupModule(context: SetupContext?) {
                 super.setupModule(context)
-                addDeserializer(ByteArrayWrapperDeserializer())
-                addSerializer(ByteArrayWrapperSerializer())
+                addDeserializer(ByteArrayWrapper::class.java, ByteArrayWrapperDeserializer())
+                addSerializer(ByteArrayWrapper::class.java, ByteArrayWrapperSerializer())
             }
         })
         .registerModule(JavaTimeModule())
@@ -189,7 +189,7 @@ class {{classname}}Test() {
                     responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(responseElement, null)
                 }
             }
-            val diffs = response.differences(objectFromFile)
+            val diffs = response.io.icure.kraken.client.infrastructure.differences(objectFromFile)
             assertTrue(diffs.isEmpty())
         } else {
             if (functionName.startsWith("create") || functionName.startsWith("modify")) {

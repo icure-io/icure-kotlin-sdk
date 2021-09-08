@@ -5,17 +5,17 @@ package {{package}};
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.memberProperties
 
-fun <K : Any> K.differences(o: K?): List<Diff> {
+fun <K : Any> K.io.icure.kraken.client.infrastructure.differences(o: K?): List<io.icure.kraken.client.infrastructure.Diff> {
     val self: K = this
     return o?.let { other ->
         if (self is List<*>) {
             (this as List<*>).mapIndexedNotNull { idx, v ->
                 when {
                     idx > (other as List<*>).size -> {
-                        Diff("${idx} <-> missing", listOf())
+                        io.icure.kraken.client.infrastructure.Diff("${idx} <-> missing", listOf())
                     }
                     v != other[idx] -> {
-                        Diff("${idx} <-> ${idx}", v?.differences(other[idx]) ?: listOf())
+                        io.icure.kraken.client.infrastructure.Diff("${idx} <-> ${idx}", v?.io.icure.kraken.client.infrastructure.differences(other[idx]) ?: listOf())
                     }
                     else -> {
                         null
@@ -23,7 +23,7 @@ fun <K : Any> K.differences(o: K?): List<Diff> {
                 }
             } + if ((other as List<*>).size > (this as List<*>).size) other.takeLast(other.size - this.size)
                 .mapIndexed { idx, _ ->
-                    Diff("missing <-> ${idx + this.size}", listOf())
+                    io.icure.kraken.client.infrastructure.Diff("missing <-> ${idx + this.size}", listOf())
                 } else listOf()
         } else if (self is Set<*>) {
             val notInSelf = (other as Set<*>) - self
@@ -32,30 +32,30 @@ fun <K : Any> K.differences(o: K?): List<Diff> {
             val othersTreated = mutableSetOf<Any>()
 
             notInSelf.map { s ->
-                Diff(
+                io.icure.kraken.client.infrastructure.Diff(
                     "<-",
-                    notInOther.map { o -> o to (s?.differences(o) ?: listOf()) }.minByOrNull { it.second.size }?.let {
+                    notInOther.map { o -> o to (s?.io.icure.kraken.client.infrastructure.differences(o) ?: listOf()) }.minByOrNull { it.second.size }?.let {
                         it.first?.let { it1 -> othersTreated.add(it1) }
                         it.second.toList()
                     } ?: listOf())
             }.toList() +
                     (notInOther - othersTreated).map { o ->
-                        Diff("->",
-                            notInSelf.map { s -> s?.differences(o) ?: listOf() }.minByOrNull { it.size }?.toList()
+                        io.icure.kraken.client.infrastructure.Diff("->",
+                            notInSelf.map { s -> s?.io.icure.kraken.client.infrastructure.differences(o) ?: listOf() }.minByOrNull { it.size }?.toList()
                                 ?: listOf()
                         )
                     }.toList()
         } else if (self is ByteArray) {
             when {
                 other !is ByteArray -> {
-                    listOf(Diff("self"))
+                    listOf(io.icure.kraken.client.infrastructure.Diff("self"))
                 }
                 self.size != other.size -> {
-                    listOf(Diff("self"))
+                    listOf(io.icure.kraken.client.infrastructure.Diff("self"))
                 }
                 self.withIndex().any { iv -> iv.value != other[iv.index] } -> self.withIndex()
                     .filter { iv -> iv.value != other[iv.index] }.map { iv ->
-                    Diff(iv.index.toString())
+                    io.icure.kraken.client.infrastructure.Diff(iv.index.toString())
                 }
                 else -> listOf()
             }
@@ -74,13 +74,13 @@ fun <K : Any> K.differences(o: K?): List<Diff> {
                     false
                 }
             }.map { kp ->
-                Diff(kp.name, kp.get(self)?.let { s -> (s as Any?)?.differences((kp.get(other))) } ?: listOf())
+                io.icure.kraken.client.infrastructure.Diff(kp.name, kp.get(self)?.let { s -> (s as Any?)?.io.icure.kraken.client.infrastructure.differences((kp.get(other))) } ?: listOf())
             }
         }
     } ?: listOf()
 }
 
-data class Diff(val propertyName: String, val diffs: List<Diff> = listOf()) {
+data class io.icure.kraken.client.infrastructure.Diff(val propertyName: String, val diffs: List<io.icure.kraken.client.infrastructure.Diff> = listOf()) {
     fun toString(prefix: String = ""): String {
         return "$prefix$propertyName, diffs=\n${diffs.joinToString("\n") { prefix + it.toString("  $prefix") }})"
     }
