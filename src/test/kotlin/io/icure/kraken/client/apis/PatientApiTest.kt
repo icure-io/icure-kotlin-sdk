@@ -57,7 +57,9 @@ import TestUtils.Companion.basicAuth
 import com.fasterxml.jackson.databind.module.SimpleModule
 import kotlinx.coroutines.runBlocking
 import com.google.common.reflect.TypeToken
+import io.icure.kraken.client.infrastructure.ByteArrayWrapper
 import io.icure.kraken.client.infrastructure.ByteArrayWrapperDeserializer
+import io.icure.kraken.client.infrastructure.ByteArrayWrapperSerializer
 
 /**
  * API tests for PatientApi
@@ -86,8 +88,8 @@ class PatientApiTest() {
         .registerModule(object:SimpleModule() {
             override fun setupModule(context: SetupContext?) {
                 super.setupModule(context)
-                addDeserializer(ByteArrayWrapperDeserializer())
-                addSerializer(ByteArrayWrapperSerializer())
+                addDeserializer(ByteArrayWrapper::class.java, ByteArrayWrapperDeserializer())
+                addSerializer(ByteArrayWrapper::class.java, ByteArrayWrapperSerializer())
             }
         })
         .registerModule(JavaTimeModule())
