@@ -3,5 +3,5 @@
   "toEpoch" : 1578392223,
   "descending" : false,
   "ascending" : false,
-  "limit": "20"
+  "limit": 20
 }
