@@ -628,7 +628,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setDocumentAttachmentMulti(documentId: kotlin.String, attachment: kotlin.collections.List<kotlin.ByteArray>, enckeys: kotlin.String?) : DocumentDto  {
+    suspend fun setDocumentAttachmentMulti(documentId: kotlin.String, attachment: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>, enckeys: kotlin.String?) : DocumentDto  {
         val localVariableConfig = setDocumentAttachmentMultiRequestConfig(documentId = documentId, attachment = attachment, enckeys = enckeys)
 
         return request<Map<String, Any?>, DocumentDto>(
@@ -643,7 +643,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     * @param enckeys  (optional)
     * @return RequestConfig
     */
-    fun setDocumentAttachmentMultiRequestConfig(documentId: kotlin.String, attachment: kotlin.collections.List<kotlin.ByteArray>, enckeys: kotlin.String?) : RequestConfig<Map<String, Any?>> {
+    fun setDocumentAttachmentMultiRequestConfig(documentId: kotlin.String, attachment: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>, enckeys: kotlin.String?) : RequestConfig<Map<String, Any?>> {
         val localVariableBody = mapOf("attachment" to attachment)
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {

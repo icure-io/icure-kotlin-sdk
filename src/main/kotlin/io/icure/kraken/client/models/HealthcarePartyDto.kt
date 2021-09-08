@@ -211,7 +211,7 @@ data class HealthcarePartyDto (
 
     /* A picture usually saved in JPEG format. */
     @field:JsonProperty("picture")
-    val picture: kotlin.collections.List<kotlin.ByteArray>? = null,
+    val picture: io.icure.kraken.client.infrastructure.ByteArrayWrapper? = null,
 
     /* Text notes. */
     @field:JsonProperty("notes")

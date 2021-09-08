@@ -17,6 +17,7 @@ Method | HTTP request | Description
 [**findByNameBirthSsinAuto**](PatientApi.md#findByNameBirthSsinAuto) | **GET** /rest/v1/patient/byNameBirthSsinAuto | Find patients for the current user (HcParty) 
 [**fuzzySearch**](PatientApi.md#fuzzySearch) | **GET** /rest/v1/patient/fuzzy | Filter patients for the current user (HcParty) 
 [**getPatient**](PatientApi.md#getPatient) | **GET** /rest/v1/patient/{patientId} | Get patient
+[**getPatientByHealrhcarepartyAndIdentifier**](PatientApi.md#getPatientByHealrhcarepartyAndIdentifier) | **GET** /rest/v1/patient/{hcPartyId}/{system}/{id} | Get patient by identifier
 [**getPatientHcPartyKeysForDelegate**](PatientApi.md#getPatientHcPartyKeysForDelegate) | **GET** /rest/v1/patient/{patientId}/keys | Get the patient (identified by patientId) hcparty keys. Those keys are AES keys (encrypted) used to share information between HCPs and a patient.
 [**getPatients**](PatientApi.md#getPatients) | **POST** /rest/v1/patient/byIds | Get patients by id
 [**listDeletedPatients**](PatientApi.md#listDeletedPatients) | **GET** /rest/v1/patient/deleted/by_date | Find deleted patients
@@ -700,6 +701,60 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **patientId** | **kotlin.String**|  |
+
+### Return type
+
+[**PatientDto**](PatientDto.md)
+
+### Authorization
+
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="getPatientByHealrhcarepartyAndIdentifier"></a>
+# **getPatientByHealrhcarepartyAndIdentifier**
+> PatientDto getPatientByHealrhcarepartyAndIdentifier(hcPartyId, system, id)
+
+Get patient by identifier
+
+It gets patient administrative data based on the identifier (root &amp; extension) parameters.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = PatientApi()
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
+val system : kotlin.String = system_example // kotlin.String | 
+val id : kotlin.String = id_example // kotlin.String | 
+try {
+    val result : PatientDto = apiInstance.getPatientByHealrhcarepartyAndIdentifier(hcPartyId, system, id)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling PatientApi#getPatientByHealrhcarepartyAndIdentifier")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling PatientApi#getPatientByHealrhcarepartyAndIdentifier")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **hcPartyId** | **kotlin.String**|  |
+ **system** | **kotlin.String**|  |
+ **id** | **kotlin.String**|  |
 
 ### Return type
 

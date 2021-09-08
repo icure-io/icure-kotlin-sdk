@@ -62,7 +62,17 @@ class {{classname}}Test() {
 
     fun api(fileName: String) = {{baseName}}Api(basePath = "https://kraken.icure.dev", authHeader = fileName.basicAuth())
     private val workingFolder = "/tmp/icureTests/"
-    private val objectMapper = ObjectMapper().registerModule(KotlinModule()).registerModule(JavaTimeModule()).apply {
+    private val objectMapper = ObjectMapper()
+        .registerModule(KotlinModule())
+        .registerModule(object:SimpleModule() {
+            override fun setupModule(context: SetupContext?) {
+                super.setupModule(context)
+                addDeserializer(ByteArrayWrapperDeserializer())
+                addSerializer(ByteArrayWrapperSerializer())
+            }
+        })
+        .registerModule(JavaTimeModule())
+        .apply {
         setSerializationInclusion(JsonInclude.Include.NON_NULL)
         configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
         configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)

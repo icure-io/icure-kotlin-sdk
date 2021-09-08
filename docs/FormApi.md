@@ -1142,7 +1142,7 @@ Update a form template&#39;s layout
 
 val apiInstance = FormApi()
 val formTemplateId : kotlin.String = formTemplateId_example // kotlin.String | 
-val attachment : kotlin.collections.List<kotlin.ByteArray> = BYTE_ARRAY_DATA_HERE // kotlin.collections.List<kotlin.ByteArray> | 
+val attachment : kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> = BYTE_ARRAY_DATA_HERE // kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> | 
 try {
     val result : kotlin.String = apiInstance.setTemplateAttachmentMulti(formTemplateId, attachment)
     println(result)
@@ -1160,7 +1160,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **formTemplateId** | **kotlin.String**|  |
- **attachment** | [**kotlin.collections.List&lt;kotlin.ByteArray&gt;**](kotlin.ByteArray.md)|  |
+ **attachment** | [**kotlin.collections.List&lt;io.icure.kraken.client.infrastructure.ByteArrayWrapper&gt;**](io.icure.kraken.client.infrastructure.ByteArrayWrapper.md)|  |
 
 ### Return type
 
