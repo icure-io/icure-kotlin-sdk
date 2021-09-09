@@ -116,6 +116,12 @@ suspend fun PatientApi.fuzzySearch(user: UserDto, firstName: String?, lastName: 
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
+suspend fun PatientApi.getPatientByHealrhcarepartyAndIdentifier(user: UserDto, hcPartyId: kotlin.String, system: kotlin.String, id: kotlin.String, config: CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>) : PatientDto? {
+    return this.getPatientByHealrhcarepartyAndIdentifier(hcPartyId, system, id)?.let { config.decryptPatient(user.healthcarePartyId!!, it) }
+}
+
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
 suspend fun PatientApi.getPatient(user: UserDto, patientId: String, config: CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>) : PatientDto? {
     return this.getPatient(patientId)?.let { config.decryptPatient(user.healthcarePartyId!!, it) }
 }
