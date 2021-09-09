@@ -681,7 +681,7 @@ No authorization required
 
 <a name="getPatientByHealrhcarepartyAndIdentifier"></a>
 # **getPatientByHealrhcarepartyAndIdentifier**
-> PatientDto getPatientByHealrhcarepartyAndIdentifier(hcPartyId, system, id)
+> kotlin.collections.List&lt;PatientDto&gt; getPatientByHealrhcarepartyAndIdentifier(hcPartyId, system, id)
 
 Get patient by identifier
 
@@ -698,7 +698,7 @@ val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String |
 val system : kotlin.String = system_example // kotlin.String | 
 val id : kotlin.String = id_example // kotlin.String | 
 try {
-    val result : PatientDto = apiInstance.getPatientByHealrhcarepartyAndIdentifier(hcPartyId, system, id)
+    val result : kotlin.collections.List<PatientDto> = apiInstance.getPatientByHealrhcarepartyAndIdentifier(hcPartyId, system, id)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling PatientApi#getPatientByHealrhcarepartyAndIdentifier")
@@ -719,7 +719,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**PatientDto**](PatientDto.md)
+[**kotlin.collections.List&lt;PatientDto&gt;**](PatientDto.md)
 
 ### Authorization
 
