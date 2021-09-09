@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.github.pozo.KotlinBuilder
+import io.icure.kraken.client.models.DocumentDto
 
 
 /**
@@ -185,10 +186,10 @@ data class DocumentDto (
     val attachmentId: kotlin.String? = null,
 
     @field:JsonProperty("encryptedAttachment")
-    val encryptedAttachment: kotlin.collections.List<kotlin.ByteArray>? = null,
+    val encryptedAttachment: kotlin.ByteArray? = null,
 
     @field:JsonProperty("decryptedAttachment")
-    val decryptedAttachment: kotlin.collections.List<kotlin.ByteArray>? = null,
+    val decryptedAttachment: kotlin.ByteArray? = null,
 
     /* The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys. */
     @field:JsonProperty("encryptedSelf")

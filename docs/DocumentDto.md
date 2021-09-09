@@ -34,8 +34,8 @@ Name | Type | Description | Notes
 **hash** | **kotlin.String** | Hashed version of the document |  [optional]
 **openingContactId** | **kotlin.String** | Id of the contact during which the document was created |  [optional]
 **attachmentId** | **kotlin.String** | Id of attachment to this document |  [optional]
-**encryptedAttachment** | **kotlin.collections.List&lt;kotlin.ByteArray&gt;** |  |  [optional]
-**decryptedAttachment** | **kotlin.collections.List&lt;kotlin.ByteArray&gt;** |  |  [optional]
+**encryptedAttachment** | **kotlin.ByteArray** |  |  [optional]
+**decryptedAttachment** | **kotlin.ByteArray** |  |  [optional]
 **encryptedSelf** | **kotlin.String** | The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys. |  [optional]
 
 

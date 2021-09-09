@@ -39,7 +39,7 @@ Name | Type | Description | Notes
 **nihii** | **kotlin.String** | National Institute for Health and Invalidity Insurance number assigned to healthcare parties (institution or person). |  [optional]
 **nihiiSpecCode** | **kotlin.String** |  |  [optional]
 **ssin** | **kotlin.String** | Social security inscription number. |  [optional]
-**picture** | **kotlin.collections.List&lt;kotlin.ByteArray&gt;** | A picture usually saved in JPEG format. |  [optional]
+**picture** | **kotlin.ByteArray** | A picture usually saved in JPEG format. |  [optional]
 **notes** | **kotlin.String** | Text notes. |  [optional]
 **billingType** | **kotlin.String** | The invoicing scheme this healthcare party adheres to : &#39;service fee&#39; or &#39;flat rate&#39; |  [optional]
 **type** | **kotlin.String** |  |  [optional]

@@ -6,7 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createGroup**](GroupApi.md#createGroup) | **POST** /rest/v1/group/{id} | Create a group
 [**getGroup**](GroupApi.md#getGroup) | **GET** /rest/v1/group/{id} | Get a group by id
-[**getReplicationInfo2**](GroupApi.md#getReplicationInfo2) | **GET** /rest/v1/group/{id}/r | Get index info
+[**getReplicationInfo1**](GroupApi.md#getReplicationInfo1) | **GET** /rest/v1/group/{id}/r | Get index info
 [**initDesignDocs**](GroupApi.md#initDesignDocs) | **PUT** /rest/v1/group/{id}/dd | Init design docs
 [**listGroups**](GroupApi.md#listGroups) | **GET** /rest/v1/group | List groups
 [**modifyGroupName**](GroupApi.md#modifyGroupName) | **PUT** /rest/v1/group/{id}/name/{name} | Update group name
@@ -123,9 +123,9 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: */*
 
-<a name="getReplicationInfo2"></a>
-# **getReplicationInfo2**
-> ReplicationInfoDto getReplicationInfo2(id)
+<a name="getReplicationInfo1"></a>
+# **getReplicationInfo1**
+> ReplicationInfoDto getReplicationInfo1(id)
 
 Get index info
 
@@ -138,13 +138,13 @@ Get index info
 val apiInstance = GroupApi()
 val id : kotlin.String = id_example // kotlin.String | The id of the group
 try {
-    val result : ReplicationInfoDto = apiInstance.getReplicationInfo2(id)
+    val result : ReplicationInfoDto = apiInstance.getReplicationInfo1(id)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling GroupApi#getReplicationInfo2")
+    println("4xx response calling GroupApi#getReplicationInfo1")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling GroupApi#getReplicationInfo2")
+    println("5xx response calling GroupApi#getReplicationInfo1")
     e.printStackTrace()
 }
 ```

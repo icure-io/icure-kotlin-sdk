@@ -360,7 +360,7 @@ data class PatientDto (
 
     /* A picture usually saved in JPEG format. */
     @field:JsonProperty("picture")
-    val picture: kotlin.collections.List<kotlin.ByteArray>? = null,
+    val picture: kotlin.ByteArray? = null,
 
     /* An external (from another source) id with no guarantee or requirement for unicity . */
     @field:JsonProperty("externalId")
@@ -465,4 +465,3 @@ data class PatientDto (
         @JsonProperty(value = "other") other("other");
     }
 }
-
