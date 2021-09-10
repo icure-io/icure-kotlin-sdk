@@ -1,11 +1,10 @@
 # ApplicationsettingsApi
 
-All URIs are relative to *https://kraken.icure.dev*
+All URIs are relative to *http://localhost:16043*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**getApplicationSettings**](ApplicationsettingsApi.md#getApplicationSettings) | **GET** /rest/v2/appsettings | Gets all application settings
-[**getApplicationSettings1**](ApplicationsettingsApi.md#getApplicationSettings1) | **GET** /rest/v1/appsettings | Gets all application settings
 
 
 <a name="getApplicationSettings"></a>
@@ -29,47 +28,6 @@ try {
     e.printStackTrace()
 } catch (e: ServerException) {
     println("5xx response calling ApplicationsettingsApi#getApplicationSettings")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-This endpoint does not need any parameter.
-
-### Return type
-
-[**kotlin.collections.List&lt;ApplicationSettingsDto&gt;**](ApplicationSettingsDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="getApplicationSettings1"></a>
-# **getApplicationSettings1**
-> kotlin.collections.List&lt;ApplicationSettingsDto&gt; getApplicationSettings1()
-
-Gets all application settings
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = ApplicationsettingsApi()
-try {
-    val result : kotlin.collections.List<ApplicationSettingsDto> = apiInstance.getApplicationSettings1()
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling ApplicationsettingsApi#getApplicationSettings1")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling ApplicationsettingsApi#getApplicationSettings1")
     e.printStackTrace()
 }
 ```

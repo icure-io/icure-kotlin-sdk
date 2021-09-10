@@ -1,6 +1,6 @@
 package io.icure.kraken.client.extendedapis
 
-import io.icure.kraken.client.apis.AccesslogApi
+import io.icure.kraken.client.apis.AccessLogApi
 import io.icure.kraken.client.crypto.CryptoConfig
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
@@ -40,7 +40,7 @@ suspend fun AccessLogDto.initDelegations(user: UserDto, config: CryptoConfig<Acc
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun AccesslogApi.createAccessLog(user: UserDto, accessLog: AccessLogDto, config: CryptoConfig<AccessLogDto, io.icure.kraken.client.models.AccessLogDto>) =
+suspend fun AccessLogApi.createAccessLog(user: UserDto, accessLog: AccessLogDto, config: CryptoConfig<AccessLogDto, io.icure.kraken.client.models.AccessLogDto>) =
     this.createAccessLog(
         config.encryptAccessLog(
             user.healthcarePartyId!!,
@@ -51,41 +51,41 @@ suspend fun AccesslogApi.createAccessLog(user: UserDto, accessLog: AccessLogDto,
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun AccesslogApi.findByUserAfterDate(user: UserDto, userId: String, accessType: String?, startDate: Long?, startKey: String?, startDocumentId: String?, limit: Int?, descending: Boolean?, config: CryptoConfig<AccessLogDto, io.icure.kraken.client.models.AccessLogDto>) : PaginatedListAccessLogDto? {
-    return this.findByUserAfterDate(userId, accessType, startDate, startKey, startDocumentId, limit, descending)?.let {
+suspend fun AccessLogApi.findAccessLogsByUserAfterDate(user: UserDto, userId: String, accessType: String?, startDate: Long?, startKey: String?, startDocumentId: String?, limit: Int?, descending: Boolean?, config: CryptoConfig<AccessLogDto, io.icure.kraken.client.models.AccessLogDto>) : PaginatedListAccessLogDto? {
+    return this.findAccessLogsByUserAfterDate(userId, accessType, startDate, startKey, startDocumentId, limit, descending)?.let {
         PaginatedListAccessLogDto(rows = it.rows?.map { config.decryptAccessLog(user.healthcarePartyId!!, it) }, pageSize = it.pageSize, totalSize = it.totalSize, nextKeyPair = it.nextKeyPair)
     }
 }
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun AccesslogApi.findByHCPartyPatient(user: UserDto, hcPartyId: String, patient: PatientDto, config: CryptoConfig<AccessLogDto, io.icure.kraken.client.models.AccessLogDto>) : List<AccessLogDto>? {
+suspend fun AccessLogApi.listAccessLogsByHCPartyAndPatient(user: UserDto, hcPartyId: String, patient: PatientDto, config: CryptoConfig<AccessLogDto, io.icure.kraken.client.models.AccessLogDto>) : List<AccessLogDto>? {
     val key = config.crypto.decryptEncryptionKeys(user.healthcarePartyId!!, patient.delegations).firstOrNull() ?: throw IllegalArgumentException("No delegation for user")
-    return this.findAccessLogsByHCPartyPatientForeignKeys(hcPartyId, key)?.map { config.decryptAccessLog(user.healthcarePartyId!!, it) }
+    return this.listAccessLogsByHCPartyAndPatientForeignKeys(hcPartyId, key)?.map { config.decryptAccessLog(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun AccesslogApi.findAccessLogsByHCPartyPatientForeignKeys(user: UserDto, hcPartyId: String, secretFKeys: String, config: CryptoConfig<AccessLogDto, io.icure.kraken.client.models.AccessLogDto>) : List<AccessLogDto>?  {
-    return this.findAccessLogsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)?.map { config.decryptAccessLog(user.healthcarePartyId!!, it) }
+suspend fun AccessLogApi.listAccessLogsByHCPartyAndPatientForeignKeys(user: UserDto, hcPartyId: String, secretFKeys: String, config: CryptoConfig<AccessLogDto, io.icure.kraken.client.models.AccessLogDto>) : List<AccessLogDto>?  {
+    return this.listAccessLogsByHCPartyAndPatientForeignKeys(hcPartyId, secretFKeys)?.map { config.decryptAccessLog(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun AccesslogApi.getAccessLog(user: UserDto, accessLogId: String, config: CryptoConfig<AccessLogDto, io.icure.kraken.client.models.AccessLogDto>): AccessLogDto?  {
+suspend fun AccessLogApi.getAccessLog(user: UserDto, accessLogId: String, config: CryptoConfig<AccessLogDto, io.icure.kraken.client.models.AccessLogDto>): AccessLogDto?  {
     return this.getAccessLog(accessLogId)?.let { config.decryptAccessLog(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun AccesslogApi.listAccessLogs(user: UserDto, fromEpoch: Long?, toEpoch: Long?, startKey: Long?, startDocumentId: String?, limit: Int?, descending: Boolean?, config: CryptoConfig<AccessLogDto, io.icure.kraken.client.models.AccessLogDto>) : PaginatedListAccessLogDto?  {
-    return this.listAccessLogs(fromEpoch, toEpoch, startKey, startDocumentId, limit, descending)?.let {
-        PaginatedListAccessLogDto(rows = it.rows?.map { config.decryptAccessLog(user.healthcarePartyId!!, it) }, pageSize = it.pageSize, totalSize = it.totalSize, nextKeyPair = it.nextKeyPair)
+suspend fun AccessLogApi.findAccessLogsBy(user: UserDto, fromEpoch: Long?, toEpoch: Long?, startKey: Long?, startDocumentId: String?, limit: Int?, descending: Boolean?, config: CryptoConfig<AccessLogDto, io.icure.kraken.client.models.AccessLogDto>) : PaginatedListAccessLogDto?  {
+    return this.findAccessLogsBy(fromEpoch, toEpoch, startKey, startDocumentId, limit, descending).let { paginatedList ->
+        PaginatedListAccessLogDto(rows = paginatedList.rows?.map { config.decryptAccessLog(user.healthcarePartyId!!, it) }, pageSize = paginatedList.pageSize, totalSize = paginatedList.totalSize, nextKeyPair = paginatedList.nextKeyPair)
     }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun AccesslogApi.modifyAccessLog(user: UserDto, accessLog: AccessLogDto, config: CryptoConfig<AccessLogDto, io.icure.kraken.client.models.AccessLogDto>) : AccessLogDto?  {
+suspend fun AccessLogApi.modifyAccessLog(user: UserDto, accessLog: AccessLogDto, config: CryptoConfig<AccessLogDto, io.icure.kraken.client.models.AccessLogDto>) : AccessLogDto?  {
     return this.modifyAccessLog(
         config.encryptAccessLog(
             user.healthcarePartyId!!,

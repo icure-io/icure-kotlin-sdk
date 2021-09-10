@@ -1,9 +1,9 @@
 /**
- * iCure Cloud API Documentation
+ * iCure Data Stack API Documentation
  *
- * Spring shop sample application
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v0.0.1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -15,6 +15,7 @@ package io.icure.kraken.client.apis
 
 import io.icure.kraken.client.models.ArticleDto
 import io.icure.kraken.client.models.DocIdentifier
+import io.icure.kraken.client.models.ListOfIdsDto
 import assertk.assertThat
 import assertk.assertions.isEqualToIgnoringGivenProperties
 import java.io.*
@@ -24,9 +25,10 @@ import com.fasterxml.jackson.core.json.JsonReadFeature
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
-import io.icure.kraken.client.models.filter.AbstractFilterDto
+import io.icure.kraken.client.infrastructure.*
 
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeEach
@@ -45,9 +47,14 @@ import kotlin.reflect.KMutableProperty
 import kotlin.reflect.full.memberFunctions
 import kotlin.reflect.full.memberProperties
 
-import TestUtils.Companion.basicAuth
 import kotlinx.coroutines.runBlocking
-import com.google.common.reflect.TypeToken
+import io.icure.kraken.client.infrastructure.TestUtils
+import io.icure.kraken.client.infrastructure.TestUtils.Companion.basicAuth
+import io.icure.kraken.client.infrastructure.differences
+import kotlin.reflect.full.callSuspendBy
+import kotlin.reflect.javaType
+
+
 
 /**
  * API tests for ArticleApi
@@ -71,13 +78,23 @@ class ArticleApiTest() {
 
     fun api(fileName: String) = ArticleApi(basePath = "https://kraken.icure.dev", authHeader = fileName.basicAuth())
     private val workingFolder = "/tmp/icureTests/"
-    private val objectMapper = ObjectMapper().registerModule(KotlinModule()).registerModule(JavaTimeModule()).apply {
+    private val objectMapper = ObjectMapper()
+        .registerModule(KotlinModule())
+        .registerModule(object:SimpleModule() {
+            override fun setupModule(context: SetupContext?) {
+                super.setupModule(context)
+                addDeserializer(ByteArrayWrapper::class.java, ByteArrayWrapperDeserializer())
+                addSerializer(ByteArrayWrapper::class.java, ByteArrayWrapperSerializer())
+            }
+        })
+        .registerModule(JavaTimeModule())
+        .apply {
         setSerializationInclusion(JsonInclude.Include.NON_NULL)
         configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
         configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
     }
 
-    fun createForModification(fileName: String){
+    suspend fun createForModification(fileName: String){
         if (canCreateForModificationObjects(fileName)) {
             TestUtils.getParameters<Any>(fileName, "beforeElements.bodies")?.let {bodies ->
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createDto")
@@ -87,8 +104,17 @@ class ArticleApiTest() {
                     .firstOrNull { it.parameters.size == 3 && it.name.startsWith("delete") }
                 bodies.forEach {body ->
                     //deleteFunction?.call(api, body?.id)
-                    createFunction!!.call(api(credentialsFile), body)
-					println("created")
+                    val parameters = createFunction!!.parameters.mapNotNull {
+                        when {
+                            it.type.javaType == body!!.javaClass -> it to body
+                            it.type.javaType == ArticleApi::class.java -> it to api(credentialsFile)
+                            else -> null
+                        }
+                    }.toMap()
+
+
+                    createFunction.callSuspendBy(parameters)
+                    println("created")
                 }
             }
         }
@@ -163,7 +189,7 @@ class ArticleApiTest() {
     }}
     
     /**
-     * Deletes an article
+     * Deletes articles
      *
      * 
      *
@@ -172,27 +198,27 @@ class ArticleApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun deleteArticleTest(fileName: String) = runBlocking {
+	fun deleteArticlesTest(fileName: String) = runBlocking {
         createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "deleteArticle")) {
+		if (TestUtils.skipEndpoint(fileName, "deleteArticles")) {
 			assert(true)
-			println("Endpoint deleteArticle skipped")
+			println("Endpoint deleteArticles skipped")
 		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteArticle")
-        val articleIds: kotlin.String = TestUtils.getParameter(fileName, "deleteArticle.articleIds")!!
-		if (articleIds as? Collection<*> == null) {
-			articleIds.also {
-            if (TestUtils.isAutoRev(fileName, "deleteArticle") && it != null) {
+        val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteArticles")
+        val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter(fileName, "deleteArticles.listOfIdsDto")!!
+		if (listOfIdsDto as? Collection<*> == null) {
+			listOfIdsDto.also {
+            if (TestUtils.isAutoRev(fileName, "deleteArticles") && it != null) {
                 val id = it::class.memberProperties.first { it.name == "id" }
                 val currentRev = api(credentialsFile).getArticle(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                val rev = object: TypeReference<ListOfIdsDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
                 rev.setter.call(it, currentRev)
                 }
 			}
 		} else {
-			val paramAsCollection = articleIds as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+			val paramAsCollection = listOfIdsDto as? Collection<ListOfIdsDto> ?: emptyList<ListOfIdsDto>() as Collection<ListOfIdsDto>
 			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "deleteArticle") && it != null) {
+                if (TestUtils.isAutoRev(fileName, "deleteArticles") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
 
                     val currentRev = api(credentialsFile).getArticle(id.getter.call(it) as String).rev
@@ -202,9 +228,9 @@ class ArticleApiTest() {
 			}
 		}
 
-        val response = api(credentialsFile).deleteArticle(articleIds)
+        val response = api(credentialsFile).deleteArticles(listOfIdsDto)
 
-        val testFileName = "ArticleApi.deleteArticle"
+        val testFileName = "ArticleApi.deleteArticles"
         val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
         try {
             val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<DocIdentifier>? != null) {
@@ -218,7 +244,7 @@ class ArticleApiTest() {
             } else {
             object : TypeReference<Void>() {}
             })
-            assertAreEquals("deleteArticle", objectFromFile, response)
+            assertAreEquals("deleteArticles", objectFromFile, response)
 			println("Comparison successful")
         } catch (e:FileNotFoundException) {
             file.parentFile.mkdirs()

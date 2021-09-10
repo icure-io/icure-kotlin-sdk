@@ -1,61 +1,35 @@
 # Besamv2Api
 
-All URIs are relative to *https://kraken.icure.dev*
+All URIs are relative to *http://localhost:16043*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**findAmpsByDmppCode**](Besamv2Api.md#findAmpsByDmppCode) | **GET** /rest/v2/be_samv2/amp/byDmppCode/{dmppCode} | Finding AMPs by dmpp code
-[**findAmpsByDmppCode1**](Besamv2Api.md#findAmpsByDmppCode1) | **GET** /rest/v1/be_samv2/amp/byDmppCode/{dmppCode} | Finding AMPs by dmpp code
 [**findPaginatedAmpsByAtc**](Besamv2Api.md#findPaginatedAmpsByAtc) | **GET** /rest/v2/be_samv2/vmp/byAtc/{atcCode} | Finding AMPs by atc code with pagination.
-[**findPaginatedAmpsByAtc1**](Besamv2Api.md#findPaginatedAmpsByAtc1) | **GET** /rest/v1/be_samv2/vmp/byAtc/{atcCode} | Finding AMPs by atc code with pagination.
 [**findPaginatedAmpsByGroupCode**](Besamv2Api.md#findPaginatedAmpsByGroupCode) | **GET** /rest/v2/be_samv2/amp/byGroupCode/{vmpgCode} | Finding AMPs by group with pagination.
-[**findPaginatedAmpsByGroupCode1**](Besamv2Api.md#findPaginatedAmpsByGroupCode1) | **GET** /rest/v1/be_samv2/amp/byGroupCode/{vmpgCode} | Finding AMPs by group with pagination.
 [**findPaginatedAmpsByGroupId**](Besamv2Api.md#findPaginatedAmpsByGroupId) | **GET** /rest/v2/be_samv2/amp/byGroupId/{vmpgId} | Finding AMPs by group with pagination.
-[**findPaginatedAmpsByGroupId1**](Besamv2Api.md#findPaginatedAmpsByGroupId1) | **GET** /rest/v1/be_samv2/amp/byGroupId/{vmpgId} | Finding AMPs by group with pagination.
 [**findPaginatedAmpsByLabel**](Besamv2Api.md#findPaginatedAmpsByLabel) | **GET** /rest/v2/be_samv2/amp | Finding AMPs by label with pagination.
-[**findPaginatedAmpsByLabel1**](Besamv2Api.md#findPaginatedAmpsByLabel1) | **GET** /rest/v1/be_samv2/amp | Finding AMPs by label with pagination.
 [**findPaginatedAmpsByVmpCode**](Besamv2Api.md#findPaginatedAmpsByVmpCode) | **GET** /rest/v2/be_samv2/amp/byVmpCode/{vmpCode} | Finding AMPs by vmp code with pagination.
-[**findPaginatedAmpsByVmpCode1**](Besamv2Api.md#findPaginatedAmpsByVmpCode1) | **GET** /rest/v1/be_samv2/amp/byVmpCode/{vmpCode} | Finding AMPs by vmp code with pagination.
 [**findPaginatedAmpsByVmpId**](Besamv2Api.md#findPaginatedAmpsByVmpId) | **GET** /rest/v2/be_samv2/amp/byVmpId/{vmpId} | Finding AMPs by vmp id with pagination.
-[**findPaginatedAmpsByVmpId1**](Besamv2Api.md#findPaginatedAmpsByVmpId1) | **GET** /rest/v1/be_samv2/amp/byVmpId/{vmpId} | Finding AMPs by vmp id with pagination.
 [**findPaginatedNmpsByLabel**](Besamv2Api.md#findPaginatedNmpsByLabel) | **GET** /rest/v2/be_samv2/nmp | Finding NMPs by label with pagination.
-[**findPaginatedNmpsByLabel1**](Besamv2Api.md#findPaginatedNmpsByLabel1) | **GET** /rest/v1/be_samv2/nmp | Finding NMPs by label with pagination.
 [**findPaginatedVmpGroupsByLabel**](Besamv2Api.md#findPaginatedVmpGroupsByLabel) | **GET** /rest/v2/be_samv2/vmpgroup | Finding VMP groups by language label with pagination.
-[**findPaginatedVmpGroupsByLabel1**](Besamv2Api.md#findPaginatedVmpGroupsByLabel1) | **GET** /rest/v1/be_samv2/vmpgroup | Finding VMP groups by language label with pagination.
 [**findPaginatedVmpGroupsByVmpGroupCode**](Besamv2Api.md#findPaginatedVmpGroupsByVmpGroupCode) | **GET** /rest/v2/be_samv2/vmpgroup/byGroupCode/{vmpgCode} | Finding VMP groups by cmpgCode with pagination.
-[**findPaginatedVmpGroupsByVmpGroupCode1**](Besamv2Api.md#findPaginatedVmpGroupsByVmpGroupCode1) | **GET** /rest/v1/be_samv2/vmpgroup/byGroupCode/{vmpgCode} | Finding VMP groups by cmpgCode with pagination.
 [**findPaginatedVmpsByGroupCode**](Besamv2Api.md#findPaginatedVmpsByGroupCode) | **GET** /rest/v2/be_samv2/vmp/byGroupCode/{vmpgCode} | Finding VMPs by group with pagination.
-[**findPaginatedVmpsByGroupCode1**](Besamv2Api.md#findPaginatedVmpsByGroupCode1) | **GET** /rest/v1/be_samv2/vmp/byGroupCode/{vmpgCode} | Finding VMPs by group with pagination.
 [**findPaginatedVmpsByGroupId**](Besamv2Api.md#findPaginatedVmpsByGroupId) | **GET** /rest/v2/be_samv2/vmp/byGroupId/{vmpgId} | Finding VMPs by group with pagination.
-[**findPaginatedVmpsByGroupId1**](Besamv2Api.md#findPaginatedVmpsByGroupId1) | **GET** /rest/v1/be_samv2/vmp/byGroupId/{vmpgId} | Finding VMPs by group with pagination.
 [**findPaginatedVmpsByLabel**](Besamv2Api.md#findPaginatedVmpsByLabel) | **GET** /rest/v2/be_samv2/vmp | Finding VMPs by label with pagination.
-[**findPaginatedVmpsByLabel1**](Besamv2Api.md#findPaginatedVmpsByLabel1) | **GET** /rest/v1/be_samv2/vmp | Finding VMPs by label with pagination.
 [**findPaginatedVmpsByVmpCode**](Besamv2Api.md#findPaginatedVmpsByVmpCode) | **GET** /rest/v2/be_samv2/vmp/byVmpCode/{vmpCode} | Finding VMPs by group with pagination.
-[**findPaginatedVmpsByVmpCode1**](Besamv2Api.md#findPaginatedVmpsByVmpCode1) | **GET** /rest/v1/be_samv2/vmp/byVmpCode/{vmpCode} | Finding VMPs by group with pagination.
 [**getSamVersion**](Besamv2Api.md#getSamVersion) | **GET** /rest/v2/be_samv2/v | Get Samv2 version.
-[**getSamVersion1**](Besamv2Api.md#getSamVersion1) | **GET** /rest/v1/be_samv2/v | Get Samv2 version.
 [**listAmpsByDmppCodes**](Besamv2Api.md#listAmpsByDmppCodes) | **POST** /rest/v2/be_samv2/amp/byDmppCodes | Finding AMPs by dmpp code
-[**listAmpsByDmppCodes1**](Besamv2Api.md#listAmpsByDmppCodes1) | **POST** /rest/v1/be_samv2/amp/byDmppCodes | Finding AMPs by dmpp code
 [**listAmpsByGroupCodes**](Besamv2Api.md#listAmpsByGroupCodes) | **POST** /rest/v2/be_samv2/amp/byGroupCodes | Finding AMPs by group.
-[**listAmpsByGroupCodes1**](Besamv2Api.md#listAmpsByGroupCodes1) | **POST** /rest/v1/be_samv2/amp/byGroupCodes | Finding AMPs by group.
 [**listAmpsByGroupIds**](Besamv2Api.md#listAmpsByGroupIds) | **POST** /rest/v2/be_samv2/amp/byGroupIds | Finding AMPs by group.
-[**listAmpsByGroupIds1**](Besamv2Api.md#listAmpsByGroupIds1) | **POST** /rest/v1/be_samv2/amp/byGroupIds | Finding AMPs by group.
 [**listAmpsByVmpCodes**](Besamv2Api.md#listAmpsByVmpCodes) | **POST** /rest/v2/be_samv2/amp/byVmpCodes | Finding AMPs by vmp code.
-[**listAmpsByVmpCodes1**](Besamv2Api.md#listAmpsByVmpCodes1) | **POST** /rest/v1/be_samv2/amp/byVmpCodes | Finding AMPs by vmp code.
 [**listAmpsByVmpIds**](Besamv2Api.md#listAmpsByVmpIds) | **POST** /rest/v2/be_samv2/amp/byVmpIds | Finding AMPs by vmp id.
-[**listAmpsByVmpIds1**](Besamv2Api.md#listAmpsByVmpIds1) | **POST** /rest/v1/be_samv2/amp/byVmpIds | Finding AMPs by vmp id.
 [**listNmpsByCnks**](Besamv2Api.md#listNmpsByCnks) | **POST** /rest/v2/be_samv2/nmp/byCnks | Finding NMPs by cnk id.
-[**listNmpsByCnks1**](Besamv2Api.md#listNmpsByCnks1) | **POST** /rest/v1/be_samv2/nmp/byCnks | Finding NMPs by cnk id.
 [**listPharmaceuticalForms**](Besamv2Api.md#listPharmaceuticalForms) | **GET** /rest/v2/be_samv2/pharmaform | List all pharmaceutical forms.
-[**listPharmaceuticalForms1**](Besamv2Api.md#listPharmaceuticalForms1) | **GET** /rest/v1/be_samv2/pharmaform | List all pharmaceutical forms.
 [**listSubstances**](Besamv2Api.md#listSubstances) | **GET** /rest/v2/be_samv2/substance | List all substances.
-[**listSubstances1**](Besamv2Api.md#listSubstances1) | **GET** /rest/v1/be_samv2/substance | List all substances.
 [**listVmpGroupsByVmpGroupCodes**](Besamv2Api.md#listVmpGroupsByVmpGroupCodes) | **POST** /rest/v2/be_samv2/vmpgroup/byGroupCodes | Finding AMPs by group.
-[**listVmpGroupsByVmpGroupCodes1**](Besamv2Api.md#listVmpGroupsByVmpGroupCodes1) | **POST** /rest/v1/be_samv2/vmpgroup/byGroupCodes | Finding AMPs by group.
 [**listVmpsByGroupIds**](Besamv2Api.md#listVmpsByGroupIds) | **POST** /rest/v2/be_samv2/vmp/byGroupIds | Finding VMPs by group.
-[**listVmpsByGroupIds1**](Besamv2Api.md#listVmpsByGroupIds1) | **POST** /rest/v1/be_samv2/vmp/byGroupIds | Finding VMPs by group.
 [**listVmpsByVmpCodes**](Besamv2Api.md#listVmpsByVmpCodes) | **POST** /rest/v2/be_samv2/vmp/byVmpCodes | Finding VMPs by group.
-[**listVmpsByVmpCodes1**](Besamv2Api.md#listVmpsByVmpCodes1) | **POST** /rest/v1/be_samv2/vmp/byVmpCodes | Finding VMPs by group.
 
 
 <a name="findAmpsByDmppCode"></a>
@@ -82,53 +56,6 @@ try {
     e.printStackTrace()
 } catch (e: ServerException) {
     println("5xx response calling Besamv2Api#findAmpsByDmppCode")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **dmppCode** | **kotlin.String**| dmppCode |
-
-### Return type
-
-[**kotlin.collections.List&lt;AmpDto&gt;**](AmpDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="findAmpsByDmppCode1"></a>
-# **findAmpsByDmppCode1**
-> kotlin.collections.List&lt;AmpDto&gt; findAmpsByDmppCode1(dmppCode)
-
-Finding AMPs by dmpp code
-
-Returns a list of amps matched with given input. If several types are provided, paginantion is not supported
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = Besamv2Api()
-val dmppCode : kotlin.String = dmppCode_example // kotlin.String | dmppCode
-try {
-    val result : kotlin.collections.List<AmpDto> = apiInstance.findAmpsByDmppCode1(dmppCode)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling Besamv2Api#findAmpsByDmppCode1")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling Besamv2Api#findAmpsByDmppCode1")
     e.printStackTrace()
 }
 ```
@@ -179,59 +106,6 @@ try {
     e.printStackTrace()
 } catch (e: ServerException) {
     println("5xx response calling Besamv2Api#findPaginatedAmpsByAtc")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **atcCode** | **kotlin.String**| atcCode |
- **startKey** | **kotlin.String**| The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key&#39;s startKey | [optional]
- **startDocumentId** | **kotlin.String**| A amp document ID | [optional]
- **limit** | **kotlin.Int**| Number of rows | [optional]
-
-### Return type
-
-[**PaginatedListAmpDto**](PaginatedListAmpDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="findPaginatedAmpsByAtc1"></a>
-# **findPaginatedAmpsByAtc1**
-> PaginatedListAmpDto findPaginatedAmpsByAtc1(atcCode, startKey, startDocumentId, limit)
-
-Finding AMPs by atc code with pagination.
-
-Returns a list of codes matched with given input. If several types are provided, paginantion is not supported
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = Besamv2Api()
-val atcCode : kotlin.String = atcCode_example // kotlin.String | atcCode
-val startKey : kotlin.String = startKey_example // kotlin.String | The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key's startKey
-val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A amp document ID
-val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
-try {
-    val result : PaginatedListAmpDto = apiInstance.findPaginatedAmpsByAtc1(atcCode, startKey, startDocumentId, limit)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling Besamv2Api#findPaginatedAmpsByAtc1")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling Besamv2Api#findPaginatedAmpsByAtc1")
     e.printStackTrace()
 }
 ```
@@ -311,59 +185,6 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: */*
 
-<a name="findPaginatedAmpsByGroupCode1"></a>
-# **findPaginatedAmpsByGroupCode1**
-> PaginatedListAmpDto findPaginatedAmpsByGroupCode1(vmpgCode, startKey, startDocumentId, limit)
-
-Finding AMPs by group with pagination.
-
-Returns a list of codes matched with given input. If several types are provided, paginantion is not supported
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = Besamv2Api()
-val vmpgCode : kotlin.String = vmpgCode_example // kotlin.String | vmpgCode
-val startKey : kotlin.String = startKey_example // kotlin.String | The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key's startKey
-val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A vmp document ID
-val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
-try {
-    val result : PaginatedListAmpDto = apiInstance.findPaginatedAmpsByGroupCode1(vmpgCode, startKey, startDocumentId, limit)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling Besamv2Api#findPaginatedAmpsByGroupCode1")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling Besamv2Api#findPaginatedAmpsByGroupCode1")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **vmpgCode** | **kotlin.String**| vmpgCode |
- **startKey** | **kotlin.String**| The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key&#39;s startKey | [optional]
- **startDocumentId** | **kotlin.String**| A vmp document ID | [optional]
- **limit** | **kotlin.Int**| Number of rows | [optional]
-
-### Return type
-
-[**PaginatedListAmpDto**](PaginatedListAmpDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
 <a name="findPaginatedAmpsByGroupId"></a>
 # **findPaginatedAmpsByGroupId**
 > PaginatedListAmpDto findPaginatedAmpsByGroupId(vmpgId, startKey, startDocumentId, limit)
@@ -391,59 +212,6 @@ try {
     e.printStackTrace()
 } catch (e: ServerException) {
     println("5xx response calling Besamv2Api#findPaginatedAmpsByGroupId")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **vmpgId** | **kotlin.String**| vmpgCode |
- **startKey** | **kotlin.String**| The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key&#39;s startKey | [optional]
- **startDocumentId** | **kotlin.String**| A vmp document ID | [optional]
- **limit** | **kotlin.Int**| Number of rows | [optional]
-
-### Return type
-
-[**PaginatedListAmpDto**](PaginatedListAmpDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="findPaginatedAmpsByGroupId1"></a>
-# **findPaginatedAmpsByGroupId1**
-> PaginatedListAmpDto findPaginatedAmpsByGroupId1(vmpgId, startKey, startDocumentId, limit)
-
-Finding AMPs by group with pagination.
-
-Returns a list of codes matched with given input. If several types are provided, paginantion is not supported
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = Besamv2Api()
-val vmpgId : kotlin.String = vmpgId_example // kotlin.String | vmpgCode
-val startKey : kotlin.String = startKey_example // kotlin.String | The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key's startKey
-val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A vmp document ID
-val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
-try {
-    val result : PaginatedListAmpDto = apiInstance.findPaginatedAmpsByGroupId1(vmpgId, startKey, startDocumentId, limit)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling Besamv2Api#findPaginatedAmpsByGroupId1")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling Besamv2Api#findPaginatedAmpsByGroupId1")
     e.printStackTrace()
 }
 ```
@@ -525,61 +293,6 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: */*
 
-<a name="findPaginatedAmpsByLabel1"></a>
-# **findPaginatedAmpsByLabel1**
-> PaginatedListAmpDto findPaginatedAmpsByLabel1(language, label, startKey, startDocumentId, limit)
-
-Finding AMPs by label with pagination.
-
-Returns a list of codes matched with given input. If several types are provided, paginantion is not supported
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = Besamv2Api()
-val language : kotlin.String = language_example // kotlin.String | language
-val label : kotlin.String = label_example // kotlin.String | label
-val startKey : kotlin.String = startKey_example // kotlin.String | The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key's startKey
-val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | An amp document ID
-val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
-try {
-    val result : PaginatedListAmpDto = apiInstance.findPaginatedAmpsByLabel1(language, label, startKey, startDocumentId, limit)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling Besamv2Api#findPaginatedAmpsByLabel1")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling Besamv2Api#findPaginatedAmpsByLabel1")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **language** | **kotlin.String**| language | [optional]
- **label** | **kotlin.String**| label | [optional]
- **startKey** | **kotlin.String**| The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key&#39;s startKey | [optional]
- **startDocumentId** | **kotlin.String**| An amp document ID | [optional]
- **limit** | **kotlin.Int**| Number of rows | [optional]
-
-### Return type
-
-[**PaginatedListAmpDto**](PaginatedListAmpDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
 <a name="findPaginatedAmpsByVmpCode"></a>
 # **findPaginatedAmpsByVmpCode**
 > PaginatedListAmpDto findPaginatedAmpsByVmpCode(vmpCode, startKey, startDocumentId, limit)
@@ -607,59 +320,6 @@ try {
     e.printStackTrace()
 } catch (e: ServerException) {
     println("5xx response calling Besamv2Api#findPaginatedAmpsByVmpCode")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **vmpCode** | **kotlin.String**| vmpCode |
- **startKey** | **kotlin.String**| The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key&#39;s startKey | [optional]
- **startDocumentId** | **kotlin.String**| A amp document ID | [optional]
- **limit** | **kotlin.Int**| Number of rows | [optional]
-
-### Return type
-
-[**PaginatedListAmpDto**](PaginatedListAmpDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="findPaginatedAmpsByVmpCode1"></a>
-# **findPaginatedAmpsByVmpCode1**
-> PaginatedListAmpDto findPaginatedAmpsByVmpCode1(vmpCode, startKey, startDocumentId, limit)
-
-Finding AMPs by vmp code with pagination.
-
-Returns a list of codes matched with given input. If several types are provided, paginantion is not supported
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = Besamv2Api()
-val vmpCode : kotlin.String = vmpCode_example // kotlin.String | vmpCode
-val startKey : kotlin.String = startKey_example // kotlin.String | The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key's startKey
-val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A amp document ID
-val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
-try {
-    val result : PaginatedListAmpDto = apiInstance.findPaginatedAmpsByVmpCode1(vmpCode, startKey, startDocumentId, limit)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling Besamv2Api#findPaginatedAmpsByVmpCode1")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling Besamv2Api#findPaginatedAmpsByVmpCode1")
     e.printStackTrace()
 }
 ```
@@ -739,59 +399,6 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: */*
 
-<a name="findPaginatedAmpsByVmpId1"></a>
-# **findPaginatedAmpsByVmpId1**
-> PaginatedListAmpDto findPaginatedAmpsByVmpId1(vmpId, startKey, startDocumentId, limit)
-
-Finding AMPs by vmp id with pagination.
-
-Returns a list of codes matched with given input. If several types are provided, paginantion is not supported
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = Besamv2Api()
-val vmpId : kotlin.String = vmpId_example // kotlin.String | vmpgCode
-val startKey : kotlin.String = startKey_example // kotlin.String | The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key's startKey
-val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A amp document ID
-val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
-try {
-    val result : PaginatedListAmpDto = apiInstance.findPaginatedAmpsByVmpId1(vmpId, startKey, startDocumentId, limit)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling Besamv2Api#findPaginatedAmpsByVmpId1")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling Besamv2Api#findPaginatedAmpsByVmpId1")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **vmpId** | **kotlin.String**| vmpgCode |
- **startKey** | **kotlin.String**| The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key&#39;s startKey | [optional]
- **startDocumentId** | **kotlin.String**| A amp document ID | [optional]
- **limit** | **kotlin.Int**| Number of rows | [optional]
-
-### Return type
-
-[**PaginatedListAmpDto**](PaginatedListAmpDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
 <a name="findPaginatedNmpsByLabel"></a>
 # **findPaginatedNmpsByLabel**
 > PaginatedListNmpDto findPaginatedNmpsByLabel(language, label, startKey, startDocumentId, limit)
@@ -820,61 +427,6 @@ try {
     e.printStackTrace()
 } catch (e: ServerException) {
     println("5xx response calling Besamv2Api#findPaginatedNmpsByLabel")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **language** | **kotlin.String**| language | [optional]
- **label** | **kotlin.String**| label | [optional]
- **startKey** | **kotlin.String**| The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key&#39;s startKey | [optional]
- **startDocumentId** | **kotlin.String**| A vmp document ID | [optional]
- **limit** | **kotlin.Int**| Number of rows | [optional]
-
-### Return type
-
-[**PaginatedListNmpDto**](PaginatedListNmpDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="findPaginatedNmpsByLabel1"></a>
-# **findPaginatedNmpsByLabel1**
-> PaginatedListNmpDto findPaginatedNmpsByLabel1(language, label, startKey, startDocumentId, limit)
-
-Finding NMPs by label with pagination.
-
-Returns a paginated list of NMPs by matching label. Matches occur per word
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = Besamv2Api()
-val language : kotlin.String = language_example // kotlin.String | language
-val label : kotlin.String = label_example // kotlin.String | label
-val startKey : kotlin.String = startKey_example // kotlin.String | The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key's startKey
-val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A vmp document ID
-val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
-try {
-    val result : PaginatedListNmpDto = apiInstance.findPaginatedNmpsByLabel1(language, label, startKey, startDocumentId, limit)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling Besamv2Api#findPaginatedNmpsByLabel1")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling Besamv2Api#findPaginatedNmpsByLabel1")
     e.printStackTrace()
 }
 ```
@@ -957,61 +509,6 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: */*
 
-<a name="findPaginatedVmpGroupsByLabel1"></a>
-# **findPaginatedVmpGroupsByLabel1**
-> PaginatedListVmpGroupDto findPaginatedVmpGroupsByLabel1(language, label, startKey, startDocumentId, limit)
-
-Finding VMP groups by language label with pagination.
-
-Returns a list of codes matched with given input. If several types are provided, paginantion is not supported
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = Besamv2Api()
-val language : kotlin.String = language_example // kotlin.String | language
-val label : kotlin.String = label_example // kotlin.String | label
-val startKey : kotlin.String = startKey_example // kotlin.String | The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key's startKey
-val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A vmpgroup document ID
-val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
-try {
-    val result : PaginatedListVmpGroupDto = apiInstance.findPaginatedVmpGroupsByLabel1(language, label, startKey, startDocumentId, limit)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling Besamv2Api#findPaginatedVmpGroupsByLabel1")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling Besamv2Api#findPaginatedVmpGroupsByLabel1")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **language** | **kotlin.String**| language | [optional]
- **label** | **kotlin.String**| label | [optional]
- **startKey** | **kotlin.String**| The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key&#39;s startKey | [optional]
- **startDocumentId** | **kotlin.String**| A vmpgroup document ID | [optional]
- **limit** | **kotlin.Int**| Number of rows | [optional]
-
-### Return type
-
-[**PaginatedListVmpGroupDto**](PaginatedListVmpGroupDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
 <a name="findPaginatedVmpGroupsByVmpGroupCode"></a>
 # **findPaginatedVmpGroupsByVmpGroupCode**
 > PaginatedListVmpGroupDto findPaginatedVmpGroupsByVmpGroupCode(vmpgCode, startKey, startDocumentId, limit)
@@ -1039,59 +536,6 @@ try {
     e.printStackTrace()
 } catch (e: ServerException) {
     println("5xx response calling Besamv2Api#findPaginatedVmpGroupsByVmpGroupCode")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **vmpgCode** | **kotlin.String**| vmpgCode |
- **startKey** | **kotlin.String**| The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key&#39;s startKey | [optional]
- **startDocumentId** | **kotlin.String**| A vmpgroup document ID | [optional]
- **limit** | **kotlin.Int**| Number of rows | [optional]
-
-### Return type
-
-[**PaginatedListVmpGroupDto**](PaginatedListVmpGroupDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="findPaginatedVmpGroupsByVmpGroupCode1"></a>
-# **findPaginatedVmpGroupsByVmpGroupCode1**
-> PaginatedListVmpGroupDto findPaginatedVmpGroupsByVmpGroupCode1(vmpgCode, startKey, startDocumentId, limit)
-
-Finding VMP groups by cmpgCode with pagination.
-
-Returns a list of codes matched with given input. If several types are provided, paginantion is not supported
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = Besamv2Api()
-val vmpgCode : kotlin.String = vmpgCode_example // kotlin.String | vmpgCode
-val startKey : kotlin.String = startKey_example // kotlin.String | The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key's startKey
-val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A vmpgroup document ID
-val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
-try {
-    val result : PaginatedListVmpGroupDto = apiInstance.findPaginatedVmpGroupsByVmpGroupCode1(vmpgCode, startKey, startDocumentId, limit)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling Besamv2Api#findPaginatedVmpGroupsByVmpGroupCode1")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling Besamv2Api#findPaginatedVmpGroupsByVmpGroupCode1")
     e.printStackTrace()
 }
 ```
@@ -1171,59 +615,6 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: */*
 
-<a name="findPaginatedVmpsByGroupCode1"></a>
-# **findPaginatedVmpsByGroupCode1**
-> PaginatedListVmpDto findPaginatedVmpsByGroupCode1(vmpgCode, startKey, startDocumentId, limit)
-
-Finding VMPs by group with pagination.
-
-Returns a list of codes matched with given input. If several types are provided, paginantion is not supported
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = Besamv2Api()
-val vmpgCode : kotlin.String = vmpgCode_example // kotlin.String | vmpgCode
-val startKey : kotlin.String = startKey_example // kotlin.String | The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key's startKey
-val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A vmp document ID
-val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
-try {
-    val result : PaginatedListVmpDto = apiInstance.findPaginatedVmpsByGroupCode1(vmpgCode, startKey, startDocumentId, limit)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling Besamv2Api#findPaginatedVmpsByGroupCode1")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling Besamv2Api#findPaginatedVmpsByGroupCode1")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **vmpgCode** | **kotlin.String**| vmpgCode |
- **startKey** | **kotlin.String**| The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key&#39;s startKey | [optional]
- **startDocumentId** | **kotlin.String**| A vmp document ID | [optional]
- **limit** | **kotlin.Int**| Number of rows | [optional]
-
-### Return type
-
-[**PaginatedListVmpDto**](PaginatedListVmpDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
 <a name="findPaginatedVmpsByGroupId"></a>
 # **findPaginatedVmpsByGroupId**
 > PaginatedListVmpDto findPaginatedVmpsByGroupId(vmpgId, startKey, startDocumentId, limit)
@@ -1251,59 +642,6 @@ try {
     e.printStackTrace()
 } catch (e: ServerException) {
     println("5xx response calling Besamv2Api#findPaginatedVmpsByGroupId")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **vmpgId** | **kotlin.String**| vmpgId |
- **startKey** | **kotlin.String**| The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key&#39;s startKey | [optional]
- **startDocumentId** | **kotlin.String**| A vmp document ID | [optional]
- **limit** | **kotlin.Int**| Number of rows | [optional]
-
-### Return type
-
-[**PaginatedListVmpDto**](PaginatedListVmpDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="findPaginatedVmpsByGroupId1"></a>
-# **findPaginatedVmpsByGroupId1**
-> PaginatedListVmpDto findPaginatedVmpsByGroupId1(vmpgId, startKey, startDocumentId, limit)
-
-Finding VMPs by group with pagination.
-
-Returns a list of codes matched with given input. If several types are provided, paginantion is not supported
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = Besamv2Api()
-val vmpgId : kotlin.String = vmpgId_example // kotlin.String | vmpgId
-val startKey : kotlin.String = startKey_example // kotlin.String | The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key's startKey
-val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A vmp document ID
-val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
-try {
-    val result : PaginatedListVmpDto = apiInstance.findPaginatedVmpsByGroupId1(vmpgId, startKey, startDocumentId, limit)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling Besamv2Api#findPaginatedVmpsByGroupId1")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling Besamv2Api#findPaginatedVmpsByGroupId1")
     e.printStackTrace()
 }
 ```
@@ -1385,61 +723,6 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: */*
 
-<a name="findPaginatedVmpsByLabel1"></a>
-# **findPaginatedVmpsByLabel1**
-> PaginatedListVmpDto findPaginatedVmpsByLabel1(language, label, startKey, startDocumentId, limit)
-
-Finding VMPs by label with pagination.
-
-Returns a paginated list of VMPs by matching label. Matches occur per word
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = Besamv2Api()
-val language : kotlin.String = language_example // kotlin.String | language
-val label : kotlin.String = label_example // kotlin.String | label
-val startKey : kotlin.String = startKey_example // kotlin.String | The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key's startKey
-val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A vmp document ID
-val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
-try {
-    val result : PaginatedListVmpDto = apiInstance.findPaginatedVmpsByLabel1(language, label, startKey, startDocumentId, limit)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling Besamv2Api#findPaginatedVmpsByLabel1")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling Besamv2Api#findPaginatedVmpsByLabel1")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **language** | **kotlin.String**| language | [optional]
- **label** | **kotlin.String**| label | [optional]
- **startKey** | **kotlin.String**| The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key&#39;s startKey | [optional]
- **startDocumentId** | **kotlin.String**| A vmp document ID | [optional]
- **limit** | **kotlin.Int**| Number of rows | [optional]
-
-### Return type
-
-[**PaginatedListVmpDto**](PaginatedListVmpDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
 <a name="findPaginatedVmpsByVmpCode"></a>
 # **findPaginatedVmpsByVmpCode**
 > PaginatedListVmpDto findPaginatedVmpsByVmpCode(vmpCode, startKey, startDocumentId, limit)
@@ -1467,59 +750,6 @@ try {
     e.printStackTrace()
 } catch (e: ServerException) {
     println("5xx response calling Besamv2Api#findPaginatedVmpsByVmpCode")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **vmpCode** | **kotlin.String**| vmpCode |
- **startKey** | **kotlin.String**| The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key&#39;s startKey | [optional]
- **startDocumentId** | **kotlin.String**| A vmp document ID | [optional]
- **limit** | **kotlin.Int**| Number of rows | [optional]
-
-### Return type
-
-[**PaginatedListVmpDto**](PaginatedListVmpDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="findPaginatedVmpsByVmpCode1"></a>
-# **findPaginatedVmpsByVmpCode1**
-> PaginatedListVmpDto findPaginatedVmpsByVmpCode1(vmpCode, startKey, startDocumentId, limit)
-
-Finding VMPs by group with pagination.
-
-Returns a list of codes matched with given input. If several types are provided, paginantion is not supported
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = Besamv2Api()
-val vmpCode : kotlin.String = vmpCode_example // kotlin.String | vmpCode
-val startKey : kotlin.String = startKey_example // kotlin.String | The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key's startKey
-val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A vmp document ID
-val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
-try {
-    val result : PaginatedListVmpDto = apiInstance.findPaginatedVmpsByVmpCode1(vmpCode, startKey, startDocumentId, limit)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling Besamv2Api#findPaginatedVmpsByVmpCode1")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling Besamv2Api#findPaginatedVmpsByVmpCode1")
     e.printStackTrace()
 }
 ```
@@ -1589,49 +819,6 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: */*
 
-<a name="getSamVersion1"></a>
-# **getSamVersion1**
-> SamVersionDto getSamVersion1()
-
-Get Samv2 version.
-
-Returns a list of codes matched with given input. If several types are provided, paginantion is not supported
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = Besamv2Api()
-try {
-    val result : SamVersionDto = apiInstance.getSamVersion1()
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling Besamv2Api#getSamVersion1")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling Besamv2Api#getSamVersion1")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-This endpoint does not need any parameter.
-
-### Return type
-
-[**SamVersionDto**](SamVersionDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
 <a name="listAmpsByDmppCodes"></a>
 # **listAmpsByDmppCodes**
 > kotlin.collections.List&lt;AmpDto&gt; listAmpsByDmppCodes(listOfIdsDto)
@@ -1656,53 +843,6 @@ try {
     e.printStackTrace()
 } catch (e: ServerException) {
     println("5xx response calling Besamv2Api#listAmpsByDmppCodes")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
-
-### Return type
-
-[**kotlin.collections.List&lt;AmpDto&gt;**](AmpDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: */*
-
-<a name="listAmpsByDmppCodes1"></a>
-# **listAmpsByDmppCodes1**
-> kotlin.collections.List&lt;AmpDto&gt; listAmpsByDmppCodes1(listOfIdsDto)
-
-Finding AMPs by dmpp code
-
-Returns a list of amps matched with given input. If several types are provided, paginantion is not supported
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = Besamv2Api()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
-try {
-    val result : kotlin.collections.List<AmpDto> = apiInstance.listAmpsByDmppCodes1(listOfIdsDto)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling Besamv2Api#listAmpsByDmppCodes1")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling Besamv2Api#listAmpsByDmppCodes1")
     e.printStackTrace()
 }
 ```
@@ -1773,53 +913,6 @@ No authorization required
  - **Content-Type**: application/json
  - **Accept**: */*
 
-<a name="listAmpsByGroupCodes1"></a>
-# **listAmpsByGroupCodes1**
-> kotlin.collections.List&lt;AmpDto&gt; listAmpsByGroupCodes1(listOfIdsDto)
-
-Finding AMPs by group.
-
-Returns a list of codes matched with given input. If several types are provided, paginantion is not supported
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = Besamv2Api()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
-try {
-    val result : kotlin.collections.List<AmpDto> = apiInstance.listAmpsByGroupCodes1(listOfIdsDto)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling Besamv2Api#listAmpsByGroupCodes1")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling Besamv2Api#listAmpsByGroupCodes1")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
-
-### Return type
-
-[**kotlin.collections.List&lt;AmpDto&gt;**](AmpDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: */*
-
 <a name="listAmpsByGroupIds"></a>
 # **listAmpsByGroupIds**
 > kotlin.collections.List&lt;AmpDto&gt; listAmpsByGroupIds(listOfIdsDto)
@@ -1844,53 +937,6 @@ try {
     e.printStackTrace()
 } catch (e: ServerException) {
     println("5xx response calling Besamv2Api#listAmpsByGroupIds")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
-
-### Return type
-
-[**kotlin.collections.List&lt;AmpDto&gt;**](AmpDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: */*
-
-<a name="listAmpsByGroupIds1"></a>
-# **listAmpsByGroupIds1**
-> kotlin.collections.List&lt;AmpDto&gt; listAmpsByGroupIds1(listOfIdsDto)
-
-Finding AMPs by group.
-
-Returns a list of codes matched with given input. If several types are provided, paginantion is not supported
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = Besamv2Api()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
-try {
-    val result : kotlin.collections.List<AmpDto> = apiInstance.listAmpsByGroupIds1(listOfIdsDto)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling Besamv2Api#listAmpsByGroupIds1")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling Besamv2Api#listAmpsByGroupIds1")
     e.printStackTrace()
 }
 ```
@@ -1961,53 +1007,6 @@ No authorization required
  - **Content-Type**: application/json
  - **Accept**: */*
 
-<a name="listAmpsByVmpCodes1"></a>
-# **listAmpsByVmpCodes1**
-> kotlin.collections.List&lt;AmpDto&gt; listAmpsByVmpCodes1(listOfIdsDto)
-
-Finding AMPs by vmp code.
-
-Returns a list of codes matched with given input. If several types are provided, paginantion is not supported
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = Besamv2Api()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
-try {
-    val result : kotlin.collections.List<AmpDto> = apiInstance.listAmpsByVmpCodes1(listOfIdsDto)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling Besamv2Api#listAmpsByVmpCodes1")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling Besamv2Api#listAmpsByVmpCodes1")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
-
-### Return type
-
-[**kotlin.collections.List&lt;AmpDto&gt;**](AmpDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: */*
-
 <a name="listAmpsByVmpIds"></a>
 # **listAmpsByVmpIds**
 > kotlin.collections.List&lt;AmpDto&gt; listAmpsByVmpIds(listOfIdsDto)
@@ -2032,53 +1031,6 @@ try {
     e.printStackTrace()
 } catch (e: ServerException) {
     println("5xx response calling Besamv2Api#listAmpsByVmpIds")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
-
-### Return type
-
-[**kotlin.collections.List&lt;AmpDto&gt;**](AmpDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: */*
-
-<a name="listAmpsByVmpIds1"></a>
-# **listAmpsByVmpIds1**
-> kotlin.collections.List&lt;AmpDto&gt; listAmpsByVmpIds1(listOfIdsDto)
-
-Finding AMPs by vmp id.
-
-Returns a list of codes matched with given input. If several types are provided, paginantion is not supported
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = Besamv2Api()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
-try {
-    val result : kotlin.collections.List<AmpDto> = apiInstance.listAmpsByVmpIds1(listOfIdsDto)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling Besamv2Api#listAmpsByVmpIds1")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling Besamv2Api#listAmpsByVmpIds1")
     e.printStackTrace()
 }
 ```
@@ -2149,53 +1101,6 @@ No authorization required
  - **Content-Type**: application/json
  - **Accept**: */*
 
-<a name="listNmpsByCnks1"></a>
-# **listNmpsByCnks1**
-> kotlin.collections.List&lt;NmpDto&gt; listNmpsByCnks1(listOfIdsDto)
-
-Finding NMPs by cnk id.
-
-Returns a list of codes matched with given input. If several types are provided, paginantion is not supported
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = Besamv2Api()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
-try {
-    val result : kotlin.collections.List<NmpDto> = apiInstance.listNmpsByCnks1(listOfIdsDto)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling Besamv2Api#listNmpsByCnks1")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling Besamv2Api#listNmpsByCnks1")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
-
-### Return type
-
-[**kotlin.collections.List&lt;NmpDto&gt;**](NmpDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: */*
-
 <a name="listPharmaceuticalForms"></a>
 # **listPharmaceuticalForms**
 > kotlin.collections.List&lt;PharmaceuticalFormDto&gt; listPharmaceuticalForms()
@@ -2217,47 +1122,6 @@ try {
     e.printStackTrace()
 } catch (e: ServerException) {
     println("5xx response calling Besamv2Api#listPharmaceuticalForms")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-This endpoint does not need any parameter.
-
-### Return type
-
-[**kotlin.collections.List&lt;PharmaceuticalFormDto&gt;**](PharmaceuticalFormDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="listPharmaceuticalForms1"></a>
-# **listPharmaceuticalForms1**
-> kotlin.collections.List&lt;PharmaceuticalFormDto&gt; listPharmaceuticalForms1()
-
-List all pharmaceutical forms.
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = Besamv2Api()
-try {
-    val result : kotlin.collections.List<PharmaceuticalFormDto> = apiInstance.listPharmaceuticalForms1()
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling Besamv2Api#listPharmaceuticalForms1")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling Besamv2Api#listPharmaceuticalForms1")
     e.printStackTrace()
 }
 ```
@@ -2319,47 +1183,6 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: */*
 
-<a name="listSubstances1"></a>
-# **listSubstances1**
-> kotlin.collections.List&lt;SubstanceDto&gt; listSubstances1()
-
-List all substances.
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = Besamv2Api()
-try {
-    val result : kotlin.collections.List<SubstanceDto> = apiInstance.listSubstances1()
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling Besamv2Api#listSubstances1")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling Besamv2Api#listSubstances1")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-This endpoint does not need any parameter.
-
-### Return type
-
-[**kotlin.collections.List&lt;SubstanceDto&gt;**](SubstanceDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
 <a name="listVmpGroupsByVmpGroupCodes"></a>
 # **listVmpGroupsByVmpGroupCodes**
 > kotlin.collections.List&lt;VmpGroupDto&gt; listVmpGroupsByVmpGroupCodes(listOfIdsDto)
@@ -2384,53 +1207,6 @@ try {
     e.printStackTrace()
 } catch (e: ServerException) {
     println("5xx response calling Besamv2Api#listVmpGroupsByVmpGroupCodes")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
-
-### Return type
-
-[**kotlin.collections.List&lt;VmpGroupDto&gt;**](VmpGroupDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: */*
-
-<a name="listVmpGroupsByVmpGroupCodes1"></a>
-# **listVmpGroupsByVmpGroupCodes1**
-> kotlin.collections.List&lt;VmpGroupDto&gt; listVmpGroupsByVmpGroupCodes1(listOfIdsDto)
-
-Finding AMPs by group.
-
-Returns a list of group codes matched with given input. If several types are provided, paginantion is not supported
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = Besamv2Api()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
-try {
-    val result : kotlin.collections.List<VmpGroupDto> = apiInstance.listVmpGroupsByVmpGroupCodes1(listOfIdsDto)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling Besamv2Api#listVmpGroupsByVmpGroupCodes1")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling Besamv2Api#listVmpGroupsByVmpGroupCodes1")
     e.printStackTrace()
 }
 ```
@@ -2501,53 +1277,6 @@ No authorization required
  - **Content-Type**: application/json
  - **Accept**: */*
 
-<a name="listVmpsByGroupIds1"></a>
-# **listVmpsByGroupIds1**
-> kotlin.collections.List&lt;VmpDto&gt; listVmpsByGroupIds1(listOfIdsDto)
-
-Finding VMPs by group.
-
-Returns a list of codes matched with given input. If several types are provided, paginantion is not supported
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = Besamv2Api()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
-try {
-    val result : kotlin.collections.List<VmpDto> = apiInstance.listVmpsByGroupIds1(listOfIdsDto)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling Besamv2Api#listVmpsByGroupIds1")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling Besamv2Api#listVmpsByGroupIds1")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
-
-### Return type
-
-[**kotlin.collections.List&lt;VmpDto&gt;**](VmpDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: */*
-
 <a name="listVmpsByVmpCodes"></a>
 # **listVmpsByVmpCodes**
 > kotlin.collections.List&lt;VmpDto&gt; listVmpsByVmpCodes(listOfIdsDto)
@@ -2572,53 +1301,6 @@ try {
     e.printStackTrace()
 } catch (e: ServerException) {
     println("5xx response calling Besamv2Api#listVmpsByVmpCodes")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
-
-### Return type
-
-[**kotlin.collections.List&lt;VmpDto&gt;**](VmpDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: */*
-
-<a name="listVmpsByVmpCodes1"></a>
-# **listVmpsByVmpCodes1**
-> kotlin.collections.List&lt;VmpDto&gt; listVmpsByVmpCodes1(listOfIdsDto)
-
-Finding VMPs by group.
-
-Returns a list of codes matched with given input. If several types are provided, paginantion is not supported
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = Besamv2Api()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
-try {
-    val result : kotlin.collections.List<VmpDto> = apiInstance.listVmpsByVmpCodes1(listOfIdsDto)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling Besamv2Api#listVmpsByVmpCodes1")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling Besamv2Api#listVmpsByVmpCodes1")
     e.printStackTrace()
 }
 ```
