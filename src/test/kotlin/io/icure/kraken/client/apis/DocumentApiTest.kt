@@ -55,8 +55,6 @@ import io.icure.kraken.client.infrastructure.differences
 import kotlin.reflect.full.callSuspendBy
 import kotlin.reflect.javaType
 
-
-
 /**
  * API tests for DocumentApi
  */
@@ -106,9 +104,9 @@ class DocumentApiTest() {
                 bodies.forEach {body ->
                     //deleteFunction?.call(api, body?.id)
                     val parameters = createFunction!!.parameters.mapNotNull {
-                        when {
-                            it.type.javaType == body!!.javaClass -> it to body
-                            it.type.javaType == DocumentApi::class.java -> it to api(credentialsFile)
+                        when(it.type.javaType) {
+                            DocumentDto::class.java -> it to objectMapper.convertValue(body, DocumentDto::class.java)
+                            DocumentApi::class.java -> it to api(credentialsFile)
                             else -> null
                         }
                     }.toMap()
@@ -460,12 +458,13 @@ class DocumentApiTest() {
     /**
      * Load document&#39;s attachment
      *
-     * 
+     *
      *
      * @throws ApiException
      *          if the Api call fails
      */
-    /*@ParameterizedTest
+/*
+    @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getDocumentAttachmentTest(fileName: String) = runBlocking {
         createForModification(fileName)
@@ -588,8 +587,9 @@ class DocumentApiTest() {
 			assert(true)
 			println("File written")
         }
-    }}*/
-    
+    }}
+*/
+
     /**
      * Gets a document
      *
