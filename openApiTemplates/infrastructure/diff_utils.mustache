@@ -11,7 +11,7 @@ fun <K : Any> K.differences(o: K?): List<Diff> {
         if (self is List<*>) {
             (this as List<*>).mapIndexedNotNull { idx, v ->
                 when {
-                    idx > (other as List<*>).size -> {
+                    idx >= (other as List<*>).size -> {
                         Diff("${idx} <-> missing", listOf())
                     }
                     v != other[idx] -> {

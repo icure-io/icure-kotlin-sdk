@@ -57,8 +57,6 @@ import io.icure.kraken.client.infrastructure.differences
 import kotlin.reflect.full.callSuspendBy
 import kotlin.reflect.javaType
 
-
-
 /**
  * API tests for FormApi
  */
@@ -108,9 +106,9 @@ class FormApiTest() {
                 bodies.forEach {body ->
                     //deleteFunction?.call(api, body?.id)
                     val parameters = createFunction!!.parameters.mapNotNull {
-                        when {
-                            it.type.javaType == body!!.javaClass -> it to body
-                            it.type.javaType == FormApi::class.java -> it to api(credentialsFile)
+                        when(it.type.javaType) {
+                            FormDto::class.java -> it to objectMapper.convertValue(body, FormDto::class.java)
+                            FormApi::class.java -> it to api(credentialsFile)
                             else -> null
                         }
                     }.toMap()

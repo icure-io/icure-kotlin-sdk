@@ -4,10 +4,17 @@
     "deleteIds": ["4e72e172-38ae-4858-9b8d-8b76fa5558e1", "4e72e172-38ae-4858-9b8d-8b76fa5558e2", "4919839c-b3a9-43e1-bdac-596eb4893642", "be5e355a-866e-42d7-9ee8-56a0a84b0ff4"]
   },
   "createReceipt": {
-    "body": {"id" : "4919839c-b3a9-43e1-bdac-596eb4893642", "responsible": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98", "codes": [], "tags": [], "secretForeignKeys": [], "cryptedForeignKeys": {}, "category": "dmg", "subCategory": "consult", "java_type": "org.taktik.icure.entities.Receipt", "rev_history": {}}
+    "receiptDto": {"id" : "4919839c-b3a9-43e1-bdac-596eb4893642", "responsible": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98", "codes": [], "tags": [], "secretForeignKeys": [], "cryptedForeignKeys": {}, "category": "dmg", "subCategory": "consult", "java_type": "org.taktik.icure.entities.Receipt", "rev_history": {}}
   },
   "deleteReceipt": {
     "receiptIds": "4e72e172-38ae-4858-9b8d-8b76fa5558e2"
+  },
+  "deleteReceipts": {
+    "listOfIdsDto": {
+      "ids": [
+        "4e72e172-38ae-4858-9b8d-8b76fa5558e2"
+      ]
+    }
   },
   "getAttachment": {
     "receiptId": "004787e1-7861-4ac1-b621-a4a70a0e44a6",
@@ -22,12 +29,12 @@
   },
   "modifyReceipt": {
     "autoRev" : true,
-    "body": {
+    "receiptDto": {
       "id" : "4e72e172-38ae-4858-9b8d-8b76fa5558e1",
-      "category": "dmz"
+      "category": "dmg"
     }
   },
-  "setAttachment": {
+  "setReceiptAttachment": {
     "receiptId": "be5e355a-866e-42d7-9ee8-56a0a84b0ff4",
     "blobType": "tack",
     "enckeys": "ccd36d62-7759-4121-8eac-ee7a67eeba23",

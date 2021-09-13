@@ -56,8 +56,6 @@ import io.icure.kraken.client.infrastructure.differences
 import kotlin.reflect.full.callSuspendBy
 import kotlin.reflect.javaType
 
-
-
 /**
  * API tests for ClassificationApi
  */
@@ -107,9 +105,9 @@ class ClassificationApiTest() {
                 bodies.forEach {body ->
                     //deleteFunction?.call(api, body?.id)
                     val parameters = createFunction!!.parameters.mapNotNull {
-                        when {
-                            it.type.javaType == body!!.javaClass -> it to body
-                            it.type.javaType == ClassificationApi::class.java -> it to api(credentialsFile)
+                        when(it.type.javaType) {
+                            ClassificationDto::class.java -> it to objectMapper.convertValue(body, ClassificationDto::class.java)
+                            ClassificationApi::class.java -> it to api(credentialsFile)
                             else -> null
                         }
                     }.toMap()

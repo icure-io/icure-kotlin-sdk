@@ -54,8 +54,6 @@ import io.icure.kraken.client.infrastructure.differences
 import kotlin.reflect.full.callSuspendBy
 import kotlin.reflect.javaType
 
-
-
 /**
  * API tests for ReceiptApi
  */
@@ -105,9 +103,9 @@ class ReceiptApiTest() {
                 bodies.forEach {body ->
                     //deleteFunction?.call(api, body?.id)
                     val parameters = createFunction!!.parameters.mapNotNull {
-                        when {
-                            it.type.javaType == ReceiptDto::class.java -> it to body
-                            it.type.javaType == ReceiptApi::class.java -> it to api(credentialsFile)
+                        when(it.type.javaType) {
+                            ReceiptDto::class.java -> it to objectMapper.convertValue(body, ReceiptDto::class.java)
+                            ReceiptApi::class.java -> it to api(credentialsFile)
                             else -> null
                         }
                     }.toMap()

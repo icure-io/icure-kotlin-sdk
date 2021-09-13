@@ -54,8 +54,6 @@ import io.icure.kraken.client.infrastructure.differences
 import kotlin.reflect.full.callSuspendBy
 import kotlin.reflect.javaType
 
-
-
 /**
  * API tests for EntityTemplateApi
  */
@@ -105,9 +103,9 @@ class EntityTemplateApiTest() {
                 bodies.forEach {body ->
                     //deleteFunction?.call(api, body?.id)
                     val parameters = createFunction!!.parameters.mapNotNull {
-                        when {
-                            it.type.javaType == body!!.javaClass -> it to body
-                            it.type.javaType == EntityTemplateApi::class.java -> it to api(credentialsFile)
+                        when(it.type.javaType) {
+                            EntityTemplateDto::class.java -> it to objectMapper.convertValue(body, EntityTemplateDto::class.java)
+                            EntityTemplateApi::class.java -> it to api(credentialsFile)
                             else -> null
                         }
                     }.toMap()
