@@ -1,22 +1,22 @@
-# DoctemplateApi
+# DocTemplateApi
 
-All URIs are relative to *https://kraken.icure.dev*
+All URIs are relative to *http://localhost:16043*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createDocumentTemplate**](DoctemplateApi.md#createDocumentTemplate) | **POST** /rest/v1/doctemplate | Create a document template with the current user
-[**deleteDocumentTemplate**](DoctemplateApi.md#deleteDocumentTemplate) | **DELETE** /rest/v1/doctemplate/{documentTemplateIds} | Deletes a document template
-[**findAllDocumentTemplates**](DoctemplateApi.md#findAllDocumentTemplates) | **GET** /rest/v1/doctemplate/find/all | Gets all document templates for all users
-[**findDocumentTemplates**](DoctemplateApi.md#findDocumentTemplates) | **GET** /rest/v1/doctemplate | Gets all document templates for current user
-[**findDocumentTemplatesByDocumentType**](DoctemplateApi.md#findDocumentTemplatesByDocumentType) | **GET** /rest/v1/doctemplate/byDocumentType/{documentTypeCode} | Gets all document templates by Type
-[**findDocumentTemplatesByDocumentTypeForCurrentUser**](DoctemplateApi.md#findDocumentTemplatesByDocumentTypeForCurrentUser) | **GET** /rest/v1/doctemplate/byDocumentTypeForCurrentUser/{documentTypeCode} | Gets all document templates by Type For currentUser
-[**findDocumentTemplatesBySpeciality**](DoctemplateApi.md#findDocumentTemplatesBySpeciality) | **GET** /rest/v1/doctemplate/bySpecialty/{specialityCode} | Gets all document templates
-[**getAttachmentText**](DoctemplateApi.md#getAttachmentText) | **GET** /rest/v1/doctemplate/{documentTemplateId}/attachmentText/{attachmentId} | Download a the document template attachment
-[**getDocumentTemplate**](DoctemplateApi.md#getDocumentTemplate) | **GET** /rest/v1/doctemplate/{documentTemplateId} | Gets a document template
-[**getDocumentTemplateAttachment**](DoctemplateApi.md#getDocumentTemplateAttachment) | **GET** /rest/v1/doctemplate/{documentTemplateId}/attachment/{attachmentId} | Download a the document template attachment
-[**setDocumentTemplateAttachment**](DoctemplateApi.md#setDocumentTemplateAttachment) | **PUT** /rest/v1/doctemplate/{documentTemplateId}/attachment | Creates a document&#39;s attachment
-[**setDocumentTemplateAttachmentJson**](DoctemplateApi.md#setDocumentTemplateAttachmentJson) | **PUT** /rest/v1/doctemplate/{documentTemplateId}/attachmentJson | Creates a document&#39;s attachment
-[**updateDocumentTemplate**](DoctemplateApi.md#updateDocumentTemplate) | **PUT** /rest/v1/doctemplate/{documentTemplateId} | Modify a document template with the current user
+[**createDocumentTemplate**](DocTemplateApi.md#createDocumentTemplate) | **POST** /rest/v2/doctemplate | Create a document template with the current user
+[**deleteDocumentTemplates**](DocTemplateApi.md#deleteDocumentTemplates) | **POST** /rest/v2/doctemplate/delete/batch | Deletes document templates
+[**getAttachmentText**](DocTemplateApi.md#getAttachmentText) | **GET** /rest/v2/doctemplate/{documentTemplateId}/attachmentText/{attachmentId} | Download a the document template attachment
+[**getDocumentTemplate**](DocTemplateApi.md#getDocumentTemplate) | **GET** /rest/v2/doctemplate/{documentTemplateId} | Gets a document template
+[**getDocumentTemplateAttachment**](DocTemplateApi.md#getDocumentTemplateAttachment) | **GET** /rest/v2/doctemplate/{documentTemplateId}/attachment/{attachmentId} | Download a the document template attachment
+[**listAllDocumentTemplates**](DocTemplateApi.md#listAllDocumentTemplates) | **GET** /rest/v2/doctemplate/find/all | Gets all document templates for all users
+[**listDocumentTemplates**](DocTemplateApi.md#listDocumentTemplates) | **GET** /rest/v2/doctemplate | Gets all document templates for current user
+[**listDocumentTemplatesByDocumentType**](DocTemplateApi.md#listDocumentTemplatesByDocumentType) | **GET** /rest/v2/doctemplate/byDocumentType/{documentTypeCode} | Gets all document templates by Type
+[**listDocumentTemplatesByDocumentTypeForCurrentUser**](DocTemplateApi.md#listDocumentTemplatesByDocumentTypeForCurrentUser) | **GET** /rest/v2/doctemplate/byDocumentTypeForCurrentUser/{documentTypeCode} | Gets all document templates by Type For currentUser
+[**listDocumentTemplatesBySpeciality**](DocTemplateApi.md#listDocumentTemplatesBySpeciality) | **GET** /rest/v2/doctemplate/bySpecialty/{specialityCode} | Gets all document templates
+[**modifyDocumentTemplate**](DocTemplateApi.md#modifyDocumentTemplate) | **PUT** /rest/v2/doctemplate/{documentTemplateId} | Modify a document template with the current user
+[**setDocumentTemplateAttachment**](DocTemplateApi.md#setDocumentTemplateAttachment) | **PUT** /rest/v2/doctemplate/{documentTemplateId}/attachment | Creates a document&#39;s attachment
+[**setDocumentTemplateAttachmentJson**](DocTemplateApi.md#setDocumentTemplateAttachmentJson) | **PUT** /rest/v2/doctemplate/{documentTemplateId}/attachmentJson | Creates a document&#39;s attachment
 
 
 <a name="createDocumentTemplate"></a>
@@ -33,16 +33,16 @@ Returns an instance of created document template.
 //import io.icure.kraken.client.infrastructure.*
 //import io.icure.kraken.client.models.*
 
-val apiInstance = DoctemplateApi()
+val apiInstance = DocTemplateApi()
 val documentTemplateDto : DocumentTemplateDto =  // DocumentTemplateDto | 
 try {
     val result : DocumentTemplateDto = apiInstance.createDocumentTemplate(documentTemplateDto)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling DoctemplateApi#createDocumentTemplate")
+    println("4xx response calling DocTemplateApi#createDocumentTemplate")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling DoctemplateApi#createDocumentTemplate")
+    println("5xx response calling DocTemplateApi#createDocumentTemplate")
     e.printStackTrace()
 }
 ```
@@ -59,21 +59,18 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
  - **Accept**: */*
 
-<a name="deleteDocumentTemplate"></a>
-# **deleteDocumentTemplate**
-> kotlin.collections.List&lt;DocIdentifier&gt; deleteDocumentTemplate(documentTemplateIds)
+<a name="deleteDocumentTemplates"></a>
+# **deleteDocumentTemplates**
+> kotlin.collections.List&lt;DocIdentifier&gt; deleteDocumentTemplates(listOfIdsDto)
 
-Deletes a document template
+Deletes document templates
 
 ### Example
 ```kotlin
@@ -81,16 +78,16 @@ Deletes a document template
 //import io.icure.kraken.client.infrastructure.*
 //import io.icure.kraken.client.models.*
 
-val apiInstance = DoctemplateApi()
-val documentTemplateIds : kotlin.String = documentTemplateIds_example // kotlin.String | 
+val apiInstance = DocTemplateApi()
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
 try {
-    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteDocumentTemplate(documentTemplateIds)
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteDocumentTemplates(listOfIdsDto)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling DoctemplateApi#deleteDocumentTemplate")
+    println("4xx response calling DocTemplateApi#deleteDocumentTemplates")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling DoctemplateApi#deleteDocumentTemplate")
+    println("5xx response calling DocTemplateApi#deleteDocumentTemplates")
     e.printStackTrace()
 }
 ```
@@ -99,7 +96,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **documentTemplateIds** | **kotlin.String**|  |
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
 
 ### Return type
 
@@ -107,246 +104,11 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="findAllDocumentTemplates"></a>
-# **findAllDocumentTemplates**
-> kotlin.collections.List&lt;DocumentTemplateDto&gt; findAllDocumentTemplates()
-
-Gets all document templates for all users
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = DoctemplateApi()
-try {
-    val result : kotlin.collections.List<DocumentTemplateDto> = apiInstance.findAllDocumentTemplates()
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling DoctemplateApi#findAllDocumentTemplates")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling DoctemplateApi#findAllDocumentTemplates")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-This endpoint does not need any parameter.
-
-### Return type
-
-[**kotlin.collections.List&lt;DocumentTemplateDto&gt;**](DocumentTemplateDto.md)
-
-### Authorization
-
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="findDocumentTemplates"></a>
-# **findDocumentTemplates**
-> kotlin.collections.List&lt;DocumentTemplateDto&gt; findDocumentTemplates()
-
-Gets all document templates for current user
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = DoctemplateApi()
-try {
-    val result : kotlin.collections.List<DocumentTemplateDto> = apiInstance.findDocumentTemplates()
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling DoctemplateApi#findDocumentTemplates")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling DoctemplateApi#findDocumentTemplates")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-This endpoint does not need any parameter.
-
-### Return type
-
-[**kotlin.collections.List&lt;DocumentTemplateDto&gt;**](DocumentTemplateDto.md)
-
-### Authorization
-
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="findDocumentTemplatesByDocumentType"></a>
-# **findDocumentTemplatesByDocumentType**
-> kotlin.collections.List&lt;DocumentTemplateDto&gt; findDocumentTemplatesByDocumentType(documentTypeCode)
-
-Gets all document templates by Type
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = DoctemplateApi()
-val documentTypeCode : kotlin.String = documentTypeCode_example // kotlin.String | 
-try {
-    val result : kotlin.collections.List<DocumentTemplateDto> = apiInstance.findDocumentTemplatesByDocumentType(documentTypeCode)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling DoctemplateApi#findDocumentTemplatesByDocumentType")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling DoctemplateApi#findDocumentTemplatesByDocumentType")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **documentTypeCode** | **kotlin.String**|  |
-
-### Return type
-
-[**kotlin.collections.List&lt;DocumentTemplateDto&gt;**](DocumentTemplateDto.md)
-
-### Authorization
-
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="findDocumentTemplatesByDocumentTypeForCurrentUser"></a>
-# **findDocumentTemplatesByDocumentTypeForCurrentUser**
-> kotlin.collections.List&lt;DocumentTemplateDto&gt; findDocumentTemplatesByDocumentTypeForCurrentUser(documentTypeCode)
-
-Gets all document templates by Type For currentUser
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = DoctemplateApi()
-val documentTypeCode : kotlin.String = documentTypeCode_example // kotlin.String | 
-try {
-    val result : kotlin.collections.List<DocumentTemplateDto> = apiInstance.findDocumentTemplatesByDocumentTypeForCurrentUser(documentTypeCode)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling DoctemplateApi#findDocumentTemplatesByDocumentTypeForCurrentUser")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling DoctemplateApi#findDocumentTemplatesByDocumentTypeForCurrentUser")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **documentTypeCode** | **kotlin.String**|  |
-
-### Return type
-
-[**kotlin.collections.List&lt;DocumentTemplateDto&gt;**](DocumentTemplateDto.md)
-
-### Authorization
-
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="findDocumentTemplatesBySpeciality"></a>
-# **findDocumentTemplatesBySpeciality**
-> kotlin.collections.List&lt;DocumentTemplateDto&gt; findDocumentTemplatesBySpeciality(specialityCode)
-
-Gets all document templates
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = DoctemplateApi()
-val specialityCode : kotlin.String = specialityCode_example // kotlin.String | 
-try {
-    val result : kotlin.collections.List<DocumentTemplateDto> = apiInstance.findDocumentTemplatesBySpeciality(specialityCode)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling DoctemplateApi#findDocumentTemplatesBySpeciality")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling DoctemplateApi#findDocumentTemplatesBySpeciality")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **specialityCode** | **kotlin.String**|  |
-
-### Return type
-
-[**kotlin.collections.List&lt;DocumentTemplateDto&gt;**](DocumentTemplateDto.md)
-
-### Authorization
-
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: */*
 
 <a name="getAttachmentText"></a>
@@ -361,17 +123,17 @@ Download a the document template attachment
 //import io.icure.kraken.client.infrastructure.*
 //import io.icure.kraken.client.models.*
 
-val apiInstance = DoctemplateApi()
+val apiInstance = DocTemplateApi()
 val documentTemplateId : kotlin.String = documentTemplateId_example // kotlin.String | 
 val attachmentId : kotlin.String = attachmentId_example // kotlin.String | 
 try {
     val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.getAttachmentText(documentTemplateId, attachmentId)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling DoctemplateApi#getAttachmentText")
+    println("4xx response calling DocTemplateApi#getAttachmentText")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling DoctemplateApi#getAttachmentText")
+    println("5xx response calling DocTemplateApi#getAttachmentText")
     e.printStackTrace()
 }
 ```
@@ -389,10 +151,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -411,16 +170,16 @@ Gets a document template
 //import io.icure.kraken.client.infrastructure.*
 //import io.icure.kraken.client.models.*
 
-val apiInstance = DoctemplateApi()
+val apiInstance = DocTemplateApi()
 val documentTemplateId : kotlin.String = documentTemplateId_example // kotlin.String | 
 try {
     val result : DocumentTemplateDto = apiInstance.getDocumentTemplate(documentTemplateId)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling DoctemplateApi#getDocumentTemplate")
+    println("4xx response calling DocTemplateApi#getDocumentTemplate")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling DoctemplateApi#getDocumentTemplate")
+    println("5xx response calling DocTemplateApi#getDocumentTemplate")
     e.printStackTrace()
 }
 ```
@@ -437,10 +196,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -459,17 +215,17 @@ Download a the document template attachment
 //import io.icure.kraken.client.infrastructure.*
 //import io.icure.kraken.client.models.*
 
-val apiInstance = DoctemplateApi()
+val apiInstance = DocTemplateApi()
 val documentTemplateId : kotlin.String = documentTemplateId_example // kotlin.String | 
 val attachmentId : kotlin.String = attachmentId_example // kotlin.String | 
 try {
     val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.getDocumentTemplateAttachment(documentTemplateId, attachmentId)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling DoctemplateApi#getDocumentTemplateAttachment")
+    println("4xx response calling DocTemplateApi#getDocumentTemplateAttachment")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling DoctemplateApi#getDocumentTemplateAttachment")
+    println("5xx response calling DocTemplateApi#getDocumentTemplateAttachment")
     e.printStackTrace()
 }
 ```
@@ -487,21 +243,18 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/octet-stream
 
-<a name="setDocumentTemplateAttachment"></a>
-# **setDocumentTemplateAttachment**
-> DocumentTemplateDto setDocumentTemplateAttachment(documentTemplateId, body)
+<a name="listAllDocumentTemplates"></a>
+# **listAllDocumentTemplates**
+> kotlin.collections.List&lt;DocumentTemplateDto&gt; listAllDocumentTemplates()
 
-Creates a document&#39;s attachment
+Gets all document templates for all users
 
 ### Example
 ```kotlin
@@ -509,17 +262,98 @@ Creates a document&#39;s attachment
 //import io.icure.kraken.client.infrastructure.*
 //import io.icure.kraken.client.models.*
 
-val apiInstance = DoctemplateApi()
-val documentTemplateId : kotlin.String = documentTemplateId_example // kotlin.String | 
-val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
+val apiInstance = DocTemplateApi()
 try {
-    val result : DocumentTemplateDto = apiInstance.setDocumentTemplateAttachment(documentTemplateId, body)
+    val result : kotlin.collections.List<DocumentTemplateDto> = apiInstance.listAllDocumentTemplates()
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling DoctemplateApi#setDocumentTemplateAttachment")
+    println("4xx response calling DocTemplateApi#listAllDocumentTemplates")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling DoctemplateApi#setDocumentTemplateAttachment")
+    println("5xx response calling DocTemplateApi#listAllDocumentTemplates")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**kotlin.collections.List&lt;DocumentTemplateDto&gt;**](DocumentTemplateDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="listDocumentTemplates"></a>
+# **listDocumentTemplates**
+> kotlin.collections.List&lt;DocumentTemplateDto&gt; listDocumentTemplates()
+
+Gets all document templates for current user
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = DocTemplateApi()
+try {
+    val result : kotlin.collections.List<DocumentTemplateDto> = apiInstance.listDocumentTemplates()
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DocTemplateApi#listDocumentTemplates")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DocTemplateApi#listDocumentTemplates")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**kotlin.collections.List&lt;DocumentTemplateDto&gt;**](DocumentTemplateDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="listDocumentTemplatesByDocumentType"></a>
+# **listDocumentTemplatesByDocumentType**
+> kotlin.collections.List&lt;DocumentTemplateDto&gt; listDocumentTemplatesByDocumentType(documentTypeCode)
+
+Gets all document templates by Type
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = DocTemplateApi()
+val documentTypeCode : kotlin.String = documentTypeCode_example // kotlin.String | 
+try {
+    val result : kotlin.collections.List<DocumentTemplateDto> = apiInstance.listDocumentTemplatesByDocumentType(documentTypeCode)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DocTemplateApi#listDocumentTemplatesByDocumentType")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DocTemplateApi#listDocumentTemplatesByDocumentType")
     e.printStackTrace()
 }
 ```
@@ -528,30 +362,26 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **documentTemplateId** | **kotlin.String**|  |
- **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
+ **documentTypeCode** | **kotlin.String**|  |
 
 ### Return type
 
-[**DocumentTemplateDto**](DocumentTemplateDto.md)
+[**kotlin.collections.List&lt;DocumentTemplateDto&gt;**](DocumentTemplateDto.md)
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/octet-stream
+ - **Content-Type**: Not defined
  - **Accept**: */*
 
-<a name="setDocumentTemplateAttachmentJson"></a>
-# **setDocumentTemplateAttachmentJson**
-> DocumentTemplateDto setDocumentTemplateAttachmentJson(documentTemplateId, body)
+<a name="listDocumentTemplatesByDocumentTypeForCurrentUser"></a>
+# **listDocumentTemplatesByDocumentTypeForCurrentUser**
+> kotlin.collections.List&lt;DocumentTemplateDto&gt; listDocumentTemplatesByDocumentTypeForCurrentUser(documentTypeCode)
 
-Creates a document&#39;s attachment
+Gets all document templates by Type For currentUser
 
 ### Example
 ```kotlin
@@ -559,17 +389,16 @@ Creates a document&#39;s attachment
 //import io.icure.kraken.client.infrastructure.*
 //import io.icure.kraken.client.models.*
 
-val apiInstance = DoctemplateApi()
-val documentTemplateId : kotlin.String = documentTemplateId_example // kotlin.String | 
-val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
+val apiInstance = DocTemplateApi()
+val documentTypeCode : kotlin.String = documentTypeCode_example // kotlin.String | 
 try {
-    val result : DocumentTemplateDto = apiInstance.setDocumentTemplateAttachmentJson(documentTemplateId, body)
+    val result : kotlin.collections.List<DocumentTemplateDto> = apiInstance.listDocumentTemplatesByDocumentTypeForCurrentUser(documentTypeCode)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling DoctemplateApi#setDocumentTemplateAttachmentJson")
+    println("4xx response calling DocTemplateApi#listDocumentTemplatesByDocumentTypeForCurrentUser")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling DoctemplateApi#setDocumentTemplateAttachmentJson")
+    println("5xx response calling DocTemplateApi#listDocumentTemplatesByDocumentTypeForCurrentUser")
     e.printStackTrace()
 }
 ```
@@ -578,28 +407,69 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **documentTemplateId** | **kotlin.String**|  |
- **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
+ **documentTypeCode** | **kotlin.String**|  |
 
 ### Return type
 
-[**DocumentTemplateDto**](DocumentTemplateDto.md)
+[**kotlin.collections.List&lt;DocumentTemplateDto&gt;**](DocumentTemplateDto.md)
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/octet-stream
+ - **Content-Type**: Not defined
  - **Accept**: */*
 
-<a name="updateDocumentTemplate"></a>
-# **updateDocumentTemplate**
-> DocumentTemplateDto updateDocumentTemplate(documentTemplateId, documentTemplateDto)
+<a name="listDocumentTemplatesBySpeciality"></a>
+# **listDocumentTemplatesBySpeciality**
+> kotlin.collections.List&lt;DocumentTemplateDto&gt; listDocumentTemplatesBySpeciality(specialityCode)
+
+Gets all document templates
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = DocTemplateApi()
+val specialityCode : kotlin.String = specialityCode_example // kotlin.String | 
+try {
+    val result : kotlin.collections.List<DocumentTemplateDto> = apiInstance.listDocumentTemplatesBySpeciality(specialityCode)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DocTemplateApi#listDocumentTemplatesBySpeciality")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DocTemplateApi#listDocumentTemplatesBySpeciality")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **specialityCode** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;DocumentTemplateDto&gt;**](DocumentTemplateDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="modifyDocumentTemplate"></a>
+# **modifyDocumentTemplate**
+> DocumentTemplateDto modifyDocumentTemplate(documentTemplateId, documentTemplateDto)
 
 Modify a document template with the current user
 
@@ -611,17 +481,17 @@ Returns an instance of created document template.
 //import io.icure.kraken.client.infrastructure.*
 //import io.icure.kraken.client.models.*
 
-val apiInstance = DoctemplateApi()
+val apiInstance = DocTemplateApi()
 val documentTemplateId : kotlin.String = documentTemplateId_example // kotlin.String | 
 val documentTemplateDto : DocumentTemplateDto =  // DocumentTemplateDto | 
 try {
-    val result : DocumentTemplateDto = apiInstance.updateDocumentTemplate(documentTemplateId, documentTemplateDto)
+    val result : DocumentTemplateDto = apiInstance.modifyDocumentTemplate(documentTemplateId, documentTemplateDto)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling DoctemplateApi#updateDocumentTemplate")
+    println("4xx response calling DocTemplateApi#modifyDocumentTemplate")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling DoctemplateApi#updateDocumentTemplate")
+    println("5xx response calling DocTemplateApi#modifyDocumentTemplate")
     e.printStackTrace()
 }
 ```
@@ -639,13 +509,104 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="setDocumentTemplateAttachment"></a>
+# **setDocumentTemplateAttachment**
+> DocumentTemplateDto setDocumentTemplateAttachment(documentTemplateId, ioIcureKrakenClientInfrastructureByteArrayWrapper)
+
+Creates a document&#39;s attachment
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = DocTemplateApi()
+val documentTemplateId : kotlin.String = documentTemplateId_example // kotlin.String | 
+val ioIcureKrakenClientInfrastructureByteArrayWrapper : kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> =  // kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> | 
+try {
+    val result : DocumentTemplateDto = apiInstance.setDocumentTemplateAttachment(documentTemplateId, ioIcureKrakenClientInfrastructureByteArrayWrapper)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DocTemplateApi#setDocumentTemplateAttachment")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DocTemplateApi#setDocumentTemplateAttachment")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **documentTemplateId** | **kotlin.String**|  |
+ **ioIcureKrakenClientInfrastructureByteArrayWrapper** | [**kotlin.collections.List&lt;io.icure.kraken.client.infrastructure.ByteArrayWrapper&gt;**](io.icure.kraken.client.infrastructure.ByteArrayWrapper.md)|  |
+
+### Return type
+
+[**DocumentTemplateDto**](DocumentTemplateDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/octet-stream
+ - **Accept**: */*
+
+<a name="setDocumentTemplateAttachmentJson"></a>
+# **setDocumentTemplateAttachmentJson**
+> DocumentTemplateDto setDocumentTemplateAttachmentJson(documentTemplateId, byteArrayDto)
+
+Creates a document&#39;s attachment
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = DocTemplateApi()
+val documentTemplateId : kotlin.String = documentTemplateId_example // kotlin.String | 
+val byteArrayDto : ByteArrayDto =  // ByteArrayDto | 
+try {
+    val result : DocumentTemplateDto = apiInstance.setDocumentTemplateAttachmentJson(documentTemplateId, byteArrayDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DocTemplateApi#setDocumentTemplateAttachmentJson")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DocTemplateApi#setDocumentTemplateAttachmentJson")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **documentTemplateId** | **kotlin.String**|  |
+ **byteArrayDto** | [**ByteArrayDto**](ByteArrayDto.md)|  |
+
+### Return type
+
+[**DocumentTemplateDto**](DocumentTemplateDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/octet-stream
  - **Accept**: */*
 

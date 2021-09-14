@@ -1,10 +1,10 @@
 # MedexApi
 
-All URIs are relative to *https://kraken.icure.dev*
+All URIs are relative to *http://localhost:16043*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**generateMedex**](MedexApi.md#generateMedex) | **POST** /rest/v1/medex/generate | Generate a Medex XML String
+[**generateMedex**](MedexApi.md#generateMedex) | **POST** /rest/v2/medex/generate | Generate a Medex XML String
 
 
 <a name="generateMedex"></a>
@@ -45,10 +45,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 

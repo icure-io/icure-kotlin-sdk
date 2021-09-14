@@ -1,9 +1,9 @@
 /**
- * iCure Cloud API Documentation
+ * iCure Data Stack API Documentation
  *
- * Spring shop sample application
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v0.0.1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -18,6 +18,7 @@ import io.icure.kraken.client.models.ClassificationDto
 import io.icure.kraken.client.models.DelegationDto
 import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.IcureStubDto
+import io.icure.kraken.client.models.ListOfIdsDto
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -36,7 +37,7 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
-            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "https://kraken.icure.dev")
+            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "http://localhost:16043")
         }
     }
 
@@ -71,7 +72,7 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/classification",
+            path = "/rest/v2/classification",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -81,7 +82,7 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
     /**
     * Delete classification Templates.
     * Response is a set containing the ID&#39;s of deleted classification Templates.
-    * @param classificationIds  
+    * @param listOfIdsDto  
     * @return kotlin.collections.List<DocIdentifier>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -89,27 +90,27 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteClassifications(classificationIds: kotlin.String) : kotlin.collections.List<DocIdentifier>  {
-        val localVariableConfig = deleteClassificationsRequestConfig(classificationIds = classificationIds)
+    suspend fun deleteClassifications(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocIdentifier>  {
+        val localVariableConfig = deleteClassificationsRequestConfig(listOfIdsDto = listOfIdsDto)
 
-        return request<Unit, kotlin.collections.List<DocIdentifier>>(
+        return request<ListOfIdsDto, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
         )!!
     }
     /**
     * To obtain the request config of the operation deleteClassifications
     *
-    * @param classificationIds  
+    * @param listOfIdsDto  
     * @return RequestConfig
     */
-    fun deleteClassificationsRequestConfig(classificationIds: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun deleteClassificationsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+        val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(
-            method = RequestMethod.DELETE,
-            path = "/rest/v1/classification/{classificationIds}".replace("{"+"classificationIds"+"}", "$classificationIds"),
+            method = RequestMethod.POST,
+            path = "/rest/v2/classification/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -153,7 +154,7 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/classification/byHcPartySecretForeignKeys",
+            path = "/rest/v2/classification/byHcPartySecretForeignKeys",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -191,7 +192,7 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/classification/{classificationId}".replace("{"+"classificationId"+"}", "$classificationId"),
+            path = "/rest/v2/classification/{classificationId}".replace("{"+"classificationId"+"}", "$classificationId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -229,7 +230,7 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/classification/byIds/{ids}".replace("{"+"ids"+"}", "$ids"),
+            path = "/rest/v2/classification/byIds/{ids}".replace("{"+"ids"+"}", "$ids"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -267,7 +268,7 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/classification",
+            path = "/rest/v2/classification",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -307,7 +308,7 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/classification/{classificationId}/delegate".replace("{"+"classificationId"+"}", "$classificationId"),
+            path = "/rest/v2/classification/{classificationId}/delegate".replace("{"+"classificationId"+"}", "$classificationId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -345,7 +346,7 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/classification/delegations",
+            path = "/rest/v2/classification/delegations",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody

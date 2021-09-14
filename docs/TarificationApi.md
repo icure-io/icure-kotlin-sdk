@@ -1,17 +1,17 @@
 # TarificationApi
 
-All URIs are relative to *https://kraken.icure.dev*
+All URIs are relative to *http://localhost:16043*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createTarification**](TarificationApi.md#createTarification) | **POST** /rest/v1/tarification | Create a Tarification
-[**findPaginatedTarifications**](TarificationApi.md#findPaginatedTarifications) | **GET** /rest/v1/tarification | Finding tarifications by tarification, type and version with pagination.
-[**findPaginatedTarificationsByLabel**](TarificationApi.md#findPaginatedTarificationsByLabel) | **GET** /rest/v1/tarification/byLabel | Finding tarifications by tarification, type and version with pagination.
-[**findTarifications**](TarificationApi.md#findTarifications) | **GET** /rest/v1/tarification/byRegionTypeTarification | Finding tarifications by tarification, type and version
-[**getTarification**](TarificationApi.md#getTarification) | **GET** /rest/v1/tarification/{tarificationId} | Get a tarification
-[**getTarificationWithParts**](TarificationApi.md#getTarificationWithParts) | **GET** /rest/v1/tarification/{type}/{tarification}/{version} | Get a tarification
-[**getTarifications**](TarificationApi.md#getTarifications) | **POST** /rest/v1/tarification/byIds | Get a list of tarifications by ids
-[**modifyTarification**](TarificationApi.md#modifyTarification) | **PUT** /rest/v1/tarification | Modify a tarification
+[**createTarification**](TarificationApi.md#createTarification) | **POST** /rest/v2/tarification | Create a Tarification
+[**findTarificationsBy**](TarificationApi.md#findTarificationsBy) | **GET** /rest/v2/tarification | Finding tarifications by tarification, type and version with pagination.
+[**findTarificationsBy1**](TarificationApi.md#findTarificationsBy1) | **GET** /rest/v2/tarification/byRegionTypeTarification | Finding tarifications by tarification, type and version
+[**findTarificationsByLabel**](TarificationApi.md#findTarificationsByLabel) | **GET** /rest/v2/tarification/byLabel | Finding tarifications by tarification, type and version with pagination.
+[**getTarification**](TarificationApi.md#getTarification) | **GET** /rest/v2/tarification/{tarificationId} | Get a tarification
+[**getTarificationWithParts**](TarificationApi.md#getTarificationWithParts) | **GET** /rest/v2/tarification/{type}/{tarification}/{version} | Get a tarification
+[**getTarifications**](TarificationApi.md#getTarifications) | **POST** /rest/v2/tarification/byIds | Get a list of tarifications by ids
+[**modifyTarification**](TarificationApi.md#modifyTarification) | **PUT** /rest/v2/tarification | Modify a tarification
 
 
 <a name="createTarification"></a>
@@ -54,19 +54,16 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
  - **Accept**: */*
 
-<a name="findPaginatedTarifications"></a>
-# **findPaginatedTarifications**
-> PaginatedListTarificationDto findPaginatedTarifications(region, type, tarification, version, startDocumentId, limit)
+<a name="findTarificationsBy"></a>
+# **findTarificationsBy**
+> PaginatedListTarificationDto findTarificationsBy(region, type, tarification, version, startDocumentId, limit)
 
 Finding tarifications by tarification, type and version with pagination.
 
@@ -86,13 +83,13 @@ val version : kotlin.String = version_example // kotlin.String |
 val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A tarification document ID
 val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
 try {
-    val result : PaginatedListTarificationDto = apiInstance.findPaginatedTarifications(region, type, tarification, version, startDocumentId, limit)
+    val result : PaginatedListTarificationDto = apiInstance.findTarificationsBy(region, type, tarification, version, startDocumentId, limit)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling TarificationApi#findPaginatedTarifications")
+    println("4xx response calling TarificationApi#findTarificationsBy")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling TarificationApi#findPaginatedTarifications")
+    println("5xx response calling TarificationApi#findTarificationsBy")
     e.printStackTrace()
 }
 ```
@@ -114,19 +111,69 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: */*
 
-<a name="findPaginatedTarificationsByLabel"></a>
-# **findPaginatedTarificationsByLabel**
-> PaginatedListTarificationDto findPaginatedTarificationsByLabel(region, types, language, label, startDocumentId, limit)
+<a name="findTarificationsBy1"></a>
+# **findTarificationsBy1**
+> kotlin.collections.List&lt;TarificationDto&gt; findTarificationsBy1(region, type, tarification, version)
+
+Finding tarifications by tarification, type and version
+
+Returns a list of tarifications matched with given input.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = TarificationApi()
+val region : kotlin.String = region_example // kotlin.String | Tarification region
+val type : kotlin.String = type_example // kotlin.String | Tarification type
+val tarification : kotlin.String = tarification_example // kotlin.String | Tarification tarification
+val version : kotlin.String = version_example // kotlin.String | Tarification version
+try {
+    val result : kotlin.collections.List<TarificationDto> = apiInstance.findTarificationsBy1(region, type, tarification, version)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling TarificationApi#findTarificationsBy1")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling TarificationApi#findTarificationsBy1")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **region** | **kotlin.String**| Tarification region | [optional]
+ **type** | **kotlin.String**| Tarification type | [optional]
+ **tarification** | **kotlin.String**| Tarification tarification | [optional]
+ **version** | **kotlin.String**| Tarification version | [optional]
+
+### Return type
+
+[**kotlin.collections.List&lt;TarificationDto&gt;**](TarificationDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="findTarificationsByLabel"></a>
+# **findTarificationsByLabel**
+> PaginatedListTarificationDto findTarificationsByLabel(region, types, language, label, startDocumentId, limit)
 
 Finding tarifications by tarification, type and version with pagination.
 
@@ -146,13 +193,13 @@ val label : kotlin.String = label_example // kotlin.String |
 val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A tarification document ID
 val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
 try {
-    val result : PaginatedListTarificationDto = apiInstance.findPaginatedTarificationsByLabel(region, types, language, label, startDocumentId, limit)
+    val result : PaginatedListTarificationDto = apiInstance.findTarificationsByLabel(region, types, language, label, startDocumentId, limit)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling TarificationApi#findPaginatedTarificationsByLabel")
+    println("4xx response calling TarificationApi#findTarificationsByLabel")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling TarificationApi#findPaginatedTarificationsByLabel")
+    println("5xx response calling TarificationApi#findTarificationsByLabel")
     e.printStackTrace()
 }
 ```
@@ -174,66 +221,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="findTarifications"></a>
-# **findTarifications**
-> kotlin.collections.List&lt;TarificationDto&gt; findTarifications(region, type, tarification, version)
-
-Finding tarifications by tarification, type and version
-
-Returns a list of tarifications matched with given input.
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = TarificationApi()
-val region : kotlin.String = region_example // kotlin.String | Tarification region
-val type : kotlin.String = type_example // kotlin.String | Tarification type
-val tarification : kotlin.String = tarification_example // kotlin.String | Tarification tarification
-val version : kotlin.String = version_example // kotlin.String | Tarification version
-try {
-    val result : kotlin.collections.List<TarificationDto> = apiInstance.findTarifications(region, type, tarification, version)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling TarificationApi#findTarifications")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling TarificationApi#findTarifications")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **region** | **kotlin.String**| Tarification region | [optional]
- **type** | **kotlin.String**| Tarification type | [optional]
- **tarification** | **kotlin.String**| Tarification tarification | [optional]
- **version** | **kotlin.String**| Tarification version | [optional]
-
-### Return type
-
-[**kotlin.collections.List&lt;TarificationDto&gt;**](TarificationDto.md)
-
-### Authorization
-
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -280,10 +268,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -334,10 +319,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -384,10 +366,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -434,10 +413,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 

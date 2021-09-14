@@ -1,9 +1,9 @@
 /**
- * iCure Cloud API Documentation
+ * iCure Data Stack API Documentation
  *
- * Spring shop sample application
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v0.0.1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -35,7 +35,7 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
-            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "https://kraken.icure.dev")
+            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "http://localhost:16043")
         }
     }
 
@@ -70,7 +70,7 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/insurance",
+            path = "/rest/v2/insurance",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -108,7 +108,7 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return RequestConfig(
             method = RequestMethod.DELETE,
-            path = "/rest/v1/insurance/{insuranceId}".replace("{"+"insuranceId"+"}", "$insuranceId"),
+            path = "/rest/v2/insurance/{insuranceId}".replace("{"+"insuranceId"+"}", "$insuranceId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -146,7 +146,7 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/insurance/{insuranceId}".replace("{"+"insuranceId"+"}", "$insuranceId"),
+            path = "/rest/v2/insurance/{insuranceId}".replace("{"+"insuranceId"+"}", "$insuranceId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -184,7 +184,7 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/insurance/byIds",
+            path = "/rest/v2/insurance/byIds",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -222,7 +222,7 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/insurance/byCode/{insuranceCode}".replace("{"+"insuranceCode"+"}", "$insuranceCode"),
+            path = "/rest/v2/insurance/byCode/{insuranceCode}".replace("{"+"insuranceCode"+"}", "$insuranceCode"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -260,7 +260,7 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/insurance/byName/{insuranceName}".replace("{"+"insuranceName"+"}", "$insuranceName"),
+            path = "/rest/v2/insurance/byName/{insuranceName}".replace("{"+"insuranceName"+"}", "$insuranceName"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -298,7 +298,7 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/insurance",
+            path = "/rest/v2/insurance",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody

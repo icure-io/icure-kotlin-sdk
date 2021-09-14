@@ -1,9 +1,9 @@
 /**
- * iCure Cloud API Documentation
+ * iCure Data Stack API Documentation
  *
- * Spring shop sample application
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v0.0.1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -23,7 +23,7 @@ import com.github.pozo.KotlinBuilder
 
 
 /**
- * The type of the content recorded in the documents for the service
+ * 
  *
  * @param stringValue 
  * @param numberValue 

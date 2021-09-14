@@ -1,17 +1,17 @@
 # ClassificationApi
 
-All URIs are relative to *https://kraken.icure.dev*
+All URIs are relative to *http://localhost:16043*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createClassification**](ClassificationApi.md#createClassification) | **POST** /rest/v1/classification | Create a classification with the current user
-[**deleteClassifications**](ClassificationApi.md#deleteClassifications) | **DELETE** /rest/v1/classification/{classificationIds} | Delete classification Templates.
-[**findClassificationsByHCPartyPatientForeignKeys**](ClassificationApi.md#findClassificationsByHCPartyPatientForeignKeys) | **GET** /rest/v1/classification/byHcPartySecretForeignKeys | List classification Templates found By Healthcare Party and secret foreign keyelementIds.
-[**getClassification**](ClassificationApi.md#getClassification) | **GET** /rest/v1/classification/{classificationId} | Get a classification Template
-[**getClassificationByHcPartyId**](ClassificationApi.md#getClassificationByHcPartyId) | **GET** /rest/v1/classification/byIds/{ids} | Get a list of classifications
-[**modifyClassification**](ClassificationApi.md#modifyClassification) | **PUT** /rest/v1/classification | Modify a classification Template
-[**newClassificationDelegations**](ClassificationApi.md#newClassificationDelegations) | **POST** /rest/v1/classification/{classificationId}/delegate | Delegates a classification to a healthcare party
-[**setClassificationsDelegations**](ClassificationApi.md#setClassificationsDelegations) | **POST** /rest/v1/classification/delegations | Update delegations in classification
+[**createClassification**](ClassificationApi.md#createClassification) | **POST** /rest/v2/classification | Create a classification with the current user
+[**deleteClassifications**](ClassificationApi.md#deleteClassifications) | **POST** /rest/v2/classification/delete/batch | Delete classification Templates.
+[**findClassificationsByHCPartyPatientForeignKeys**](ClassificationApi.md#findClassificationsByHCPartyPatientForeignKeys) | **GET** /rest/v2/classification/byHcPartySecretForeignKeys | List classification Templates found By Healthcare Party and secret foreign keyelementIds.
+[**getClassification**](ClassificationApi.md#getClassification) | **GET** /rest/v2/classification/{classificationId} | Get a classification Template
+[**getClassificationByHcPartyId**](ClassificationApi.md#getClassificationByHcPartyId) | **GET** /rest/v2/classification/byIds/{ids} | Get a list of classifications
+[**modifyClassification**](ClassificationApi.md#modifyClassification) | **PUT** /rest/v2/classification | Modify a classification Template
+[**newClassificationDelegations**](ClassificationApi.md#newClassificationDelegations) | **POST** /rest/v2/classification/{classificationId}/delegate | Delegates a classification to a healthcare party
+[**setClassificationsDelegations**](ClassificationApi.md#setClassificationsDelegations) | **POST** /rest/v2/classification/delegations | Update delegations in classification
 
 
 <a name="createClassification"></a>
@@ -54,10 +54,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -66,7 +63,7 @@ Configure basicScheme:
 
 <a name="deleteClassifications"></a>
 # **deleteClassifications**
-> kotlin.collections.List&lt;DocIdentifier&gt; deleteClassifications(classificationIds)
+> kotlin.collections.List&lt;DocIdentifier&gt; deleteClassifications(listOfIdsDto)
 
 Delete classification Templates.
 
@@ -79,9 +76,9 @@ Response is a set containing the ID&#39;s of deleted classification Templates.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ClassificationApi()
-val classificationIds : kotlin.String = classificationIds_example // kotlin.String | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
 try {
-    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteClassifications(classificationIds)
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteClassifications(listOfIdsDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling ClassificationApi#deleteClassifications")
@@ -96,7 +93,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **classificationIds** | **kotlin.String**|  |
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
 
 ### Return type
 
@@ -104,14 +101,11 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: */*
 
 <a name="findClassificationsByHCPartyPatientForeignKeys"></a>
@@ -156,10 +150,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -204,10 +195,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -254,10 +242,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -304,10 +289,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -356,10 +338,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -406,10 +385,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 

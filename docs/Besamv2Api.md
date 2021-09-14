@@ -1,35 +1,35 @@
 # Besamv2Api
 
-All URIs are relative to *https://kraken.icure.dev*
+All URIs are relative to *http://localhost:16043*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**findAmpsByDmppCode**](Besamv2Api.md#findAmpsByDmppCode) | **GET** /rest/v1/be_samv2/amp/byDmppCode/{dmppCode} | Finding AMPs by dmpp code
-[**findPaginatedAmpsByAtc**](Besamv2Api.md#findPaginatedAmpsByAtc) | **GET** /rest/v1/be_samv2/vmp/byAtc/{atcCode} | Finding AMPs by atc code with pagination.
-[**findPaginatedAmpsByGroupCode**](Besamv2Api.md#findPaginatedAmpsByGroupCode) | **GET** /rest/v1/be_samv2/amp/byGroupCode/{vmpgCode} | Finding AMPs by group with pagination.
-[**findPaginatedAmpsByGroupId**](Besamv2Api.md#findPaginatedAmpsByGroupId) | **GET** /rest/v1/be_samv2/amp/byGroupId/{vmpgId} | Finding AMPs by group with pagination.
-[**findPaginatedAmpsByLabel**](Besamv2Api.md#findPaginatedAmpsByLabel) | **GET** /rest/v1/be_samv2/amp | Finding AMPs by label with pagination.
-[**findPaginatedAmpsByVmpCode**](Besamv2Api.md#findPaginatedAmpsByVmpCode) | **GET** /rest/v1/be_samv2/amp/byVmpCode/{vmpCode} | Finding AMPs by vmp code with pagination.
-[**findPaginatedAmpsByVmpId**](Besamv2Api.md#findPaginatedAmpsByVmpId) | **GET** /rest/v1/be_samv2/amp/byVmpId/{vmpId} | Finding AMPs by vmp id with pagination.
-[**findPaginatedNmpsByLabel**](Besamv2Api.md#findPaginatedNmpsByLabel) | **GET** /rest/v1/be_samv2/nmp | Finding NMPs by label with pagination.
-[**findPaginatedVmpGroupsByLabel**](Besamv2Api.md#findPaginatedVmpGroupsByLabel) | **GET** /rest/v1/be_samv2/vmpgroup | Finding VMP groups by language label with pagination.
-[**findPaginatedVmpGroupsByVmpGroupCode**](Besamv2Api.md#findPaginatedVmpGroupsByVmpGroupCode) | **GET** /rest/v1/be_samv2/vmpgroup/byGroupCode/{vmpgCode} | Finding VMP groups by cmpgCode with pagination.
-[**findPaginatedVmpsByGroupCode**](Besamv2Api.md#findPaginatedVmpsByGroupCode) | **GET** /rest/v1/be_samv2/vmp/byGroupCode/{vmpgCode} | Finding VMPs by group with pagination.
-[**findPaginatedVmpsByGroupId**](Besamv2Api.md#findPaginatedVmpsByGroupId) | **GET** /rest/v1/be_samv2/vmp/byGroupId/{vmpgId} | Finding VMPs by group with pagination.
-[**findPaginatedVmpsByLabel**](Besamv2Api.md#findPaginatedVmpsByLabel) | **GET** /rest/v1/be_samv2/vmp | Finding VMPs by label with pagination.
-[**findPaginatedVmpsByVmpCode**](Besamv2Api.md#findPaginatedVmpsByVmpCode) | **GET** /rest/v1/be_samv2/vmp/byVmpCode/{vmpCode} | Finding VMPs by group with pagination.
-[**getSamVersion**](Besamv2Api.md#getSamVersion) | **GET** /rest/v1/be_samv2/v | Get Samv2 version.
-[**listAmpsByDmppCodes**](Besamv2Api.md#listAmpsByDmppCodes) | **POST** /rest/v1/be_samv2/amp/byDmppCodes | Finding AMPs by dmpp code
-[**listAmpsByGroupCodes**](Besamv2Api.md#listAmpsByGroupCodes) | **POST** /rest/v1/be_samv2/amp/byGroupCodes | Finding AMPs by group.
-[**listAmpsByGroupIds**](Besamv2Api.md#listAmpsByGroupIds) | **POST** /rest/v1/be_samv2/amp/byGroupIds | Finding AMPs by group.
-[**listAmpsByVmpCodes**](Besamv2Api.md#listAmpsByVmpCodes) | **POST** /rest/v1/be_samv2/amp/byVmpCodes | Finding AMPs by vmp code.
-[**listAmpsByVmpIds**](Besamv2Api.md#listAmpsByVmpIds) | **POST** /rest/v1/be_samv2/amp/byVmpIds | Finding AMPs by vmp id.
-[**listNmpsByCnks**](Besamv2Api.md#listNmpsByCnks) | **POST** /rest/v1/be_samv2/nmp/byCnks | Finding NMPs by cnk id.
-[**listPharmaceuticalForms**](Besamv2Api.md#listPharmaceuticalForms) | **GET** /rest/v1/be_samv2/pharmaform | List all pharmaceutical forms.
-[**listSubstances**](Besamv2Api.md#listSubstances) | **GET** /rest/v1/be_samv2/substance | List all substances.
-[**listVmpGroupsByVmpGroupCodes**](Besamv2Api.md#listVmpGroupsByVmpGroupCodes) | **POST** /rest/v1/be_samv2/vmpgroup/byGroupCodes | Finding AMPs by group.
-[**listVmpsByGroupIds**](Besamv2Api.md#listVmpsByGroupIds) | **POST** /rest/v1/be_samv2/vmp/byGroupIds | Finding VMPs by group.
-[**listVmpsByVmpCodes**](Besamv2Api.md#listVmpsByVmpCodes) | **POST** /rest/v1/be_samv2/vmp/byVmpCodes | Finding VMPs by group.
+[**findAmpsByDmppCode**](Besamv2Api.md#findAmpsByDmppCode) | **GET** /rest/v2/be_samv2/amp/byDmppCode/{dmppCode} | Finding AMPs by dmpp code
+[**findPaginatedAmpsByAtc**](Besamv2Api.md#findPaginatedAmpsByAtc) | **GET** /rest/v2/be_samv2/vmp/byAtc/{atcCode} | Finding AMPs by atc code with pagination.
+[**findPaginatedAmpsByGroupCode**](Besamv2Api.md#findPaginatedAmpsByGroupCode) | **GET** /rest/v2/be_samv2/amp/byGroupCode/{vmpgCode} | Finding AMPs by group with pagination.
+[**findPaginatedAmpsByGroupId**](Besamv2Api.md#findPaginatedAmpsByGroupId) | **GET** /rest/v2/be_samv2/amp/byGroupId/{vmpgId} | Finding AMPs by group with pagination.
+[**findPaginatedAmpsByLabel**](Besamv2Api.md#findPaginatedAmpsByLabel) | **GET** /rest/v2/be_samv2/amp | Finding AMPs by label with pagination.
+[**findPaginatedAmpsByVmpCode**](Besamv2Api.md#findPaginatedAmpsByVmpCode) | **GET** /rest/v2/be_samv2/amp/byVmpCode/{vmpCode} | Finding AMPs by vmp code with pagination.
+[**findPaginatedAmpsByVmpId**](Besamv2Api.md#findPaginatedAmpsByVmpId) | **GET** /rest/v2/be_samv2/amp/byVmpId/{vmpId} | Finding AMPs by vmp id with pagination.
+[**findPaginatedNmpsByLabel**](Besamv2Api.md#findPaginatedNmpsByLabel) | **GET** /rest/v2/be_samv2/nmp | Finding NMPs by label with pagination.
+[**findPaginatedVmpGroupsByLabel**](Besamv2Api.md#findPaginatedVmpGroupsByLabel) | **GET** /rest/v2/be_samv2/vmpgroup | Finding VMP groups by language label with pagination.
+[**findPaginatedVmpGroupsByVmpGroupCode**](Besamv2Api.md#findPaginatedVmpGroupsByVmpGroupCode) | **GET** /rest/v2/be_samv2/vmpgroup/byGroupCode/{vmpgCode} | Finding VMP groups by cmpgCode with pagination.
+[**findPaginatedVmpsByGroupCode**](Besamv2Api.md#findPaginatedVmpsByGroupCode) | **GET** /rest/v2/be_samv2/vmp/byGroupCode/{vmpgCode} | Finding VMPs by group with pagination.
+[**findPaginatedVmpsByGroupId**](Besamv2Api.md#findPaginatedVmpsByGroupId) | **GET** /rest/v2/be_samv2/vmp/byGroupId/{vmpgId} | Finding VMPs by group with pagination.
+[**findPaginatedVmpsByLabel**](Besamv2Api.md#findPaginatedVmpsByLabel) | **GET** /rest/v2/be_samv2/vmp | Finding VMPs by label with pagination.
+[**findPaginatedVmpsByVmpCode**](Besamv2Api.md#findPaginatedVmpsByVmpCode) | **GET** /rest/v2/be_samv2/vmp/byVmpCode/{vmpCode} | Finding VMPs by group with pagination.
+[**getSamVersion**](Besamv2Api.md#getSamVersion) | **GET** /rest/v2/be_samv2/v | Get Samv2 version.
+[**listAmpsByDmppCodes**](Besamv2Api.md#listAmpsByDmppCodes) | **POST** /rest/v2/be_samv2/amp/byDmppCodes | Finding AMPs by dmpp code
+[**listAmpsByGroupCodes**](Besamv2Api.md#listAmpsByGroupCodes) | **POST** /rest/v2/be_samv2/amp/byGroupCodes | Finding AMPs by group.
+[**listAmpsByGroupIds**](Besamv2Api.md#listAmpsByGroupIds) | **POST** /rest/v2/be_samv2/amp/byGroupIds | Finding AMPs by group.
+[**listAmpsByVmpCodes**](Besamv2Api.md#listAmpsByVmpCodes) | **POST** /rest/v2/be_samv2/amp/byVmpCodes | Finding AMPs by vmp code.
+[**listAmpsByVmpIds**](Besamv2Api.md#listAmpsByVmpIds) | **POST** /rest/v2/be_samv2/amp/byVmpIds | Finding AMPs by vmp id.
+[**listNmpsByCnks**](Besamv2Api.md#listNmpsByCnks) | **POST** /rest/v2/be_samv2/nmp/byCnks | Finding NMPs by cnk id.
+[**listPharmaceuticalForms**](Besamv2Api.md#listPharmaceuticalForms) | **GET** /rest/v2/be_samv2/pharmaform | List all pharmaceutical forms.
+[**listSubstances**](Besamv2Api.md#listSubstances) | **GET** /rest/v2/be_samv2/substance | List all substances.
+[**listVmpGroupsByVmpGroupCodes**](Besamv2Api.md#listVmpGroupsByVmpGroupCodes) | **POST** /rest/v2/be_samv2/vmpgroup/byGroupCodes | Finding AMPs by group.
+[**listVmpsByGroupIds**](Besamv2Api.md#listVmpsByGroupIds) | **POST** /rest/v2/be_samv2/vmp/byGroupIds | Finding VMPs by group.
+[**listVmpsByVmpCodes**](Besamv2Api.md#listVmpsByVmpCodes) | **POST** /rest/v2/be_samv2/vmp/byVmpCodes | Finding VMPs by group.
 
 
 <a name="findAmpsByDmppCode"></a>
@@ -72,10 +72,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -128,10 +125,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -184,10 +178,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -240,10 +231,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -298,10 +286,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -354,10 +339,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -410,10 +392,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -468,10 +447,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -526,10 +502,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -582,10 +555,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -638,10 +608,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -694,10 +661,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -752,10 +716,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -808,10 +769,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -854,10 +812,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -904,10 +859,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -954,10 +906,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -1004,10 +953,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -1054,10 +1000,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -1104,10 +1047,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -1154,10 +1094,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -1198,10 +1135,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -1242,10 +1176,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -1292,10 +1223,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -1342,10 +1270,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -1392,10 +1317,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 

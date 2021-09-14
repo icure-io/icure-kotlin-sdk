@@ -13,9 +13,10 @@ import com.fasterxml.jackson.core.json.JsonReadFeature
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
-import io.icure.kraken.client.models.filter.AbstractFilterDto
+import io.icure.kraken.client.infrastructure.*
 
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeEach
@@ -36,9 +37,12 @@ import kotlin.reflect.KMutableProperty
 import kotlin.reflect.full.memberFunctions
 import kotlin.reflect.full.memberProperties
 
-import TestUtils.Companion.basicAuth
 import kotlinx.coroutines.runBlocking
-import com.google.common.reflect.TypeToken
+import io.icure.kraken.client.infrastructure.TestUtils
+import io.icure.kraken.client.infrastructure.TestUtils.Companion.basicAuth
+import io.icure.kraken.client.infrastructure.differences
+import kotlin.reflect.full.callSuspendBy
+import kotlin.reflect.javaType
 
 /**
  * API tests for {{classname}}
@@ -78,7 +82,7 @@ class {{classname}}Test() {
         configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
     }
 
-    fun createForModification(fileName: String){
+    suspend fun createForModification(fileName: String){
         if (canCreateForModificationObjects(fileName)) {
             TestUtils.getParameters<Any>(fileName, "beforeElements.bodies")?.let {bodies ->
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createDto")
@@ -88,8 +92,17 @@ class {{classname}}Test() {
                     .firstOrNull { it.parameters.size == 3 && it.name.startsWith("delete") }
                 bodies.forEach {body ->
                     //deleteFunction?.call(api, body?.id)
-                    createFunction!!.call(api(credentialsFile), body)
-					println("created")
+                    val parameters = createFunction!!.parameters.mapNotNull {
+                        when(it.type.javaType) {
+                            {{classBaseName}}Dto::class.java -> it to objectMapper.convertValue(body, {{classBaseName}}Dto::class.java)
+                            {{classname}}::class.java -> it to api(credentialsFile)
+                            else -> null
+                        }
+                    }.toMap()
+
+
+                    createFunction.callSuspendBy(parameters)
+                    println("created")
                 }
             }
         }
@@ -125,7 +138,7 @@ class {{classname}}Test() {
                 }
 			}
 		} else {
-			val paramAsCollection = {{paramName}} as? Collection<{{baseType}}{{^baseType}}{{dataType}}{{/baseType}}> ?: emptyList<{{baseType}}{{^baseType}}{{dataType}}{{/baseType}}>() as Collection<{{baseType}}{{^baseType}}{{dataType}}{{/baseType}}>
+			val paramAsCollection = {{paramName}} as? Collection<{{{baseType}}}{{^baseType}}{{{dataType}}}{{/baseType}}> ?: emptyList<{{{baseType}}}{{^baseType}}{{{dataType}}}{{/baseType}}>() as Collection<{{{baseType}}}{{^baseType}}{{{dataType}}}{{/baseType}}>
 			paramAsCollection.forEach {
                 if (TestUtils.isAutoRev(fileName, "{{operationId}}") && it != null) {
                     val id = it::class.memberProperties.first { it.name == "id" }
@@ -144,16 +157,16 @@ class {{classname}}Test() {
         val testFileName = "{{classname}}.{{operationId}}"
         val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
         try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<{{returnBaseType}}>? != null) {
+            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<{{{returnBaseType}}}>? != null) {
                 if ("{{{returnType}}}".contains("String>")) {
                     object : TypeReference<List<String>>() {}
                 } else {
-                    object : TypeReference<List<{{returnBaseType}}>>() {}
+                    object : TypeReference<List<{{{returnBaseType}}}>>() {}
                 }
             } else if(response as? kotlin.collections.Map<String, String>? != null){
                 object : TypeReference<Map<String,String>>() {}
             } else {
-            {{#responseType}}object : TypeReference<{{responseType}}>() {}{{/responseType}}{{^responseType}}object : TypeReference<Void>() {}{{/responseType}}
+            {{#responseType}}object : TypeReference<{{{responseType}}}>() {}{{/responseType}}{{^responseType}}object : TypeReference<Void>() {}{{/responseType}}
             })
             assertAreEquals("{{operationId}}", objectFromFile, response)
 			println("Comparison successful")
@@ -189,7 +202,7 @@ class {{classname}}Test() {
                     responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(responseElement, null)
                 }
             }
-            val diffs = response.io.icure.kraken.client.infrastructure.differences(objectFromFile)
+            val diffs = response.differences(objectFromFile)
             assertTrue(diffs.isEmpty())
         } else {
             if (functionName.startsWith("create") || functionName.startsWith("modify")) {

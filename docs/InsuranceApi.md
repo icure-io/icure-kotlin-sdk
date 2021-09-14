@@ -1,16 +1,16 @@
 # InsuranceApi
 
-All URIs are relative to *https://kraken.icure.dev*
+All URIs are relative to *http://localhost:16043*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createInsurance**](InsuranceApi.md#createInsurance) | **POST** /rest/v1/insurance | Creates an insurance
-[**deleteInsurance**](InsuranceApi.md#deleteInsurance) | **DELETE** /rest/v1/insurance/{insuranceId} | Deletes an insurance
-[**getInsurance**](InsuranceApi.md#getInsurance) | **GET** /rest/v1/insurance/{insuranceId} | Gets an insurance
-[**getInsurances**](InsuranceApi.md#getInsurances) | **POST** /rest/v1/insurance/byIds | Gets insurances by id
-[**listInsurancesByCode**](InsuranceApi.md#listInsurancesByCode) | **GET** /rest/v1/insurance/byCode/{insuranceCode} | Gets an insurance
-[**listInsurancesByName**](InsuranceApi.md#listInsurancesByName) | **GET** /rest/v1/insurance/byName/{insuranceName} | Gets an insurance
-[**modifyInsurance**](InsuranceApi.md#modifyInsurance) | **PUT** /rest/v1/insurance | Modifies an insurance
+[**createInsurance**](InsuranceApi.md#createInsurance) | **POST** /rest/v2/insurance | Creates an insurance
+[**deleteInsurance**](InsuranceApi.md#deleteInsurance) | **DELETE** /rest/v2/insurance/{insuranceId} | Deletes an insurance
+[**getInsurance**](InsuranceApi.md#getInsurance) | **GET** /rest/v2/insurance/{insuranceId} | Gets an insurance
+[**getInsurances**](InsuranceApi.md#getInsurances) | **POST** /rest/v2/insurance/byIds | Gets insurances by id
+[**listInsurancesByCode**](InsuranceApi.md#listInsurancesByCode) | **GET** /rest/v2/insurance/byCode/{insuranceCode} | Gets an insurance
+[**listInsurancesByName**](InsuranceApi.md#listInsurancesByName) | **GET** /rest/v2/insurance/byName/{insuranceName} | Gets an insurance
+[**modifyInsurance**](InsuranceApi.md#modifyInsurance) | **PUT** /rest/v2/insurance | Modifies an insurance
 
 
 <a name="createInsurance"></a>
@@ -51,10 +51,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -99,10 +96,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -147,10 +141,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -195,10 +186,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -243,10 +231,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -291,10 +276,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -339,10 +321,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 

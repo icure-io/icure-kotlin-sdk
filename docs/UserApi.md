@@ -1,28 +1,28 @@
 # UserApi
 
-All URIs are relative to *https://kraken.icure.dev*
+All URIs are relative to *http://localhost:16043*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**assignHealthcareParty**](UserApi.md#assignHealthcareParty) | **PUT** /rest/v1/user/current/hcparty/{healthcarePartyId} | Assign a healthcare party ID to current user
-[**checkPassword**](UserApi.md#checkPassword) | **GET** /rest/v1/user/checkPassword | 
-[**createUser**](UserApi.md#createUser) | **POST** /rest/v1/user | Create a user
-[**createUserInGroup**](UserApi.md#createUserInGroup) | **POST** /rest/v1/user/inGroup/{groupId} | Create a user
-[**deleteUser**](UserApi.md#deleteUser) | **DELETE** /rest/v1/user/{userId} | Delete a User based on his/her ID.
-[**deleteUserInGroup**](UserApi.md#deleteUserInGroup) | **DELETE** /rest/v1/user/inGroup/{groupId}/{userId} | Delete a User based on his/her ID.
-[**encodePassword**](UserApi.md#encodePassword) | **GET** /rest/v1/user/encodePassword | 
-[**findByHcpartyId**](UserApi.md#findByHcpartyId) | **GET** /rest/v1/user/byHealthcarePartyId/{id} | Get the list of users by healthcare party id
-[**forgottenPassword**](UserApi.md#forgottenPassword) | **POST** /rest/v1/user/forgottenPassword/{email} | Send a forgotten email message to an user
-[**getCurrentSession**](UserApi.md#getCurrentSession) | **GET** /rest/v1/user/session | Get Currently logged-in user session.
-[**getCurrentUser**](UserApi.md#getCurrentUser) | **GET** /rest/v1/user/current | Get presently logged-in user.
-[**getMatchingUsers**](UserApi.md#getMatchingUsers) | **GET** /rest/v1/user/matches | Get presently logged-in user.
-[**getUser**](UserApi.md#getUser) | **GET** /rest/v1/user/{userId} | Get a user by his ID
-[**getUserByEmail**](UserApi.md#getUserByEmail) | **GET** /rest/v1/user/byEmail/{email} | Get a user by his Email/Login
-[**listUsers**](UserApi.md#listUsers) | **GET** /rest/v1/user | List users with(out) pagination
-[**listUsersInGroup**](UserApi.md#listUsersInGroup) | **GET** /rest/v1/user/inGroup/{groupId} | List users with(out) pagination
-[**modifyProperties**](UserApi.md#modifyProperties) | **PUT** /rest/v1/user/{userId}/properties | Modify a User property
-[**modifyUser**](UserApi.md#modifyUser) | **PUT** /rest/v1/user | Modify a user.
-[**modifyUserInGroup**](UserApi.md#modifyUserInGroup) | **PUT** /rest/v1/user/inGroup/{groupId} | Modify a user.
+[**assignHealthcareParty**](UserApi.md#assignHealthcareParty) | **PUT** /rest/v2/user/current/hcparty/{healthcarePartyId} | Assign a healthcare party ID to current user
+[**checkPassword**](UserApi.md#checkPassword) | **GET** /rest/v2/user/checkPassword | 
+[**createUser**](UserApi.md#createUser) | **POST** /rest/v2/user | Create a user
+[**createUserInGroup**](UserApi.md#createUserInGroup) | **POST** /rest/v2/user/inGroup/{groupId} | Create a user
+[**deleteUser**](UserApi.md#deleteUser) | **DELETE** /rest/v2/user/{userId} | Delete a User based on his/her ID.
+[**deleteUserInGroup**](UserApi.md#deleteUserInGroup) | **DELETE** /rest/v2/user/inGroup/{groupId}/{userId} | Delete a User based on his/her ID.
+[**encodePassword**](UserApi.md#encodePassword) | **GET** /rest/v2/user/encodePassword | 
+[**findByHcpartyId**](UserApi.md#findByHcpartyId) | **GET** /rest/v2/user/byHealthcarePartyId/{id} | Get the list of users by healthcare party id
+[**forgottenPassword**](UserApi.md#forgottenPassword) | **POST** /rest/v2/user/forgottenPassword/{email} | Send a forgotten email message to an user
+[**getCurrentSession**](UserApi.md#getCurrentSession) | **GET** /rest/v2/user/session | Get Currently logged-in user session.
+[**getCurrentUser**](UserApi.md#getCurrentUser) | **GET** /rest/v2/user/current | Get presently logged-in user.
+[**getMatchingUsers**](UserApi.md#getMatchingUsers) | **GET** /rest/v2/user/matches | Get presently logged-in user.
+[**getUser**](UserApi.md#getUser) | **GET** /rest/v2/user/{userId} | Get a user by his ID
+[**getUserByEmail**](UserApi.md#getUserByEmail) | **GET** /rest/v2/user/byEmail/{email} | Get a user by his Email/Login
+[**listUsersBy**](UserApi.md#listUsersBy) | **GET** /rest/v2/user | List users with(out) pagination
+[**listUsersInGroup**](UserApi.md#listUsersInGroup) | **GET** /rest/v2/user/inGroup/{groupId} | List users with(out) pagination
+[**modifyProperties**](UserApi.md#modifyProperties) | **PUT** /rest/v2/user/{userId}/properties | Modify a User property
+[**modifyUser**](UserApi.md#modifyUser) | **PUT** /rest/v2/user | Modify a user.
+[**modifyUserInGroup**](UserApi.md#modifyUserInGroup) | **PUT** /rest/v2/user/inGroup/{groupId} | Modify a user.
 
 
 <a name="assignHealthcareParty"></a>
@@ -65,10 +65,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -113,10 +110,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -163,10 +157,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -215,10 +206,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -265,10 +253,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -317,10 +302,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -365,10 +347,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -413,10 +392,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -463,10 +439,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -509,10 +482,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -555,10 +525,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -601,10 +568,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -651,10 +615,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -701,19 +662,16 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: */*
 
-<a name="listUsers"></a>
-# **listUsers**
-> PaginatedListUserDto listUsers(startKey, startDocumentId, limit)
+<a name="listUsersBy"></a>
+# **listUsersBy**
+> PaginatedListUserDto listUsersBy(startKey, startDocumentId, limit)
 
 List users with(out) pagination
 
@@ -730,13 +688,13 @@ val startKey : kotlin.String = startKey_example // kotlin.String | An user email
 val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | An user document ID
 val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
 try {
-    val result : PaginatedListUserDto = apiInstance.listUsers(startKey, startDocumentId, limit)
+    val result : PaginatedListUserDto = apiInstance.listUsersBy(startKey, startDocumentId, limit)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling UserApi#listUsers")
+    println("4xx response calling UserApi#listUsersBy")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling UserApi#listUsers")
+    println("5xx response calling UserApi#listUsersBy")
     e.printStackTrace()
 }
 ```
@@ -755,10 +713,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -811,10 +766,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -863,10 +815,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -913,10 +862,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -965,10 +911,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 

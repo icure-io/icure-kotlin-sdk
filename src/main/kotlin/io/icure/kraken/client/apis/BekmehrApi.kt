@@ -1,9 +1,9 @@
 /**
- * iCure Cloud API Documentation
+ * iCure Data Stack API Documentation
  *
- * Spring shop sample application
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v0.0.1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -42,7 +42,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
-            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "https://kraken.icure.dev")
+            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "http://localhost:16043")
         }
     }
 
@@ -96,7 +96,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/be_kmehr/smf/{documentId}/checkIfSMFPatientsExists".replace("{"+"documentId"+"}", "$documentId"),
+            path = "/rest/v2/be_kmehr/smf/{documentId}/checkIfSMFPatientsExists".replace("{"+"documentId"+"}", "$documentId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -115,7 +115,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param recipientFirstName  
     * @param recipientLastName  
     * @param mimeType  
-    * @param body  
+    * @param ioIcureKrakenClientInfrastructureByteArrayWrapper  
     * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -123,10 +123,10 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun generateContactreportExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>  {
-        val localVariableConfig = generateContactreportExportRequestConfig(patientId = patientId, id = id, date = date, language = language, recipientNihii = recipientNihii, recipientSsin = recipientSsin, recipientFirstName = recipientFirstName, recipientLastName = recipientLastName, mimeType = mimeType, body = body)
+    suspend fun generateContactreportExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, ioIcureKrakenClientInfrastructureByteArrayWrapper: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>  {
+        val localVariableConfig = generateContactreportExportRequestConfig(patientId = patientId, id = id, date = date, language = language, recipientNihii = recipientNihii, recipientSsin = recipientSsin, recipientFirstName = recipientFirstName, recipientLastName = recipientLastName, mimeType = mimeType, ioIcureKrakenClientInfrastructureByteArrayWrapper = ioIcureKrakenClientInfrastructureByteArrayWrapper)
 
-        return request<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
+        return request<kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
             localVariableConfig
         )!!
     }
@@ -142,11 +142,11 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param recipientFirstName  
     * @param recipientLastName  
     * @param mimeType  
-    * @param body  
+    * @param ioIcureKrakenClientInfrastructureByteArrayWrapper  
     * @return RequestConfig
     */
-    fun generateContactreportExportRequestConfig(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
-        val localVariableBody = body
+    fun generateContactreportExportRequestConfig(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, ioIcureKrakenClientInfrastructureByteArrayWrapper: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>) : RequestConfig<kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>> {
+        val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("date", listOf(date.toString()))
@@ -161,7 +161,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/be_kmehr/contactreport/{patientId}/export/{id}".replace("{"+"patientId"+"}", "$patientId").replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/be_kmehr/contactreport/{patientId}/export/{id}".replace("{"+"patientId"+"}", "$patientId").replace("{"+"id"+"}", "$id"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -206,7 +206,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/be_kmehr/diarynote/{patientId}/export".replace("{"+"patientId"+"}", "$patientId"),
+            path = "/rest/v2/be_kmehr/diarynote/{patientId}/export".replace("{"+"patientId"+"}", "$patientId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -225,7 +225,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param recipientFirstName  
     * @param recipientLastName  
     * @param mimeType  
-    * @param body  
+    * @param ioIcureKrakenClientInfrastructureByteArrayWrapper  
     * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -233,10 +233,10 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun generateLabresultExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>  {
-        val localVariableConfig = generateLabresultExportRequestConfig(patientId = patientId, id = id, date = date, language = language, recipientNihii = recipientNihii, recipientSsin = recipientSsin, recipientFirstName = recipientFirstName, recipientLastName = recipientLastName, mimeType = mimeType, body = body)
+    suspend fun generateLabresultExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, ioIcureKrakenClientInfrastructureByteArrayWrapper: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>  {
+        val localVariableConfig = generateLabresultExportRequestConfig(patientId = patientId, id = id, date = date, language = language, recipientNihii = recipientNihii, recipientSsin = recipientSsin, recipientFirstName = recipientFirstName, recipientLastName = recipientLastName, mimeType = mimeType, ioIcureKrakenClientInfrastructureByteArrayWrapper = ioIcureKrakenClientInfrastructureByteArrayWrapper)
 
-        return request<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
+        return request<kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
             localVariableConfig
         )!!
     }
@@ -252,11 +252,11 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param recipientFirstName  
     * @param recipientLastName  
     * @param mimeType  
-    * @param body  
+    * @param ioIcureKrakenClientInfrastructureByteArrayWrapper  
     * @return RequestConfig
     */
-    fun generateLabresultExportRequestConfig(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
-        val localVariableBody = body
+    fun generateLabresultExportRequestConfig(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, ioIcureKrakenClientInfrastructureByteArrayWrapper: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>) : RequestConfig<kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>> {
+        val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("date", listOf(date.toString()))
@@ -271,7 +271,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/be_kmehr/labresult/{patientId}/export/{id}".replace("{"+"patientId"+"}", "$patientId").replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/be_kmehr/labresult/{patientId}/export/{id}".replace("{"+"patientId"+"}", "$patientId").replace("{"+"id"+"}", "$id"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -322,7 +322,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/be_kmehr/medicationscheme/{patientId}/export".replace("{"+"patientId"+"}", "$patientId"),
+            path = "/rest/v2/be_kmehr/medicationscheme/{patientId}/export".replace("{"+"patientId"+"}", "$patientId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -341,7 +341,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param recipientFirstName  
     * @param recipientLastName  
     * @param mimeType  
-    * @param body  
+    * @param ioIcureKrakenClientInfrastructureByteArrayWrapper  
     * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -349,10 +349,10 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun generateNoteExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>  {
-        val localVariableConfig = generateNoteExportRequestConfig(patientId = patientId, id = id, date = date, language = language, recipientNihii = recipientNihii, recipientSsin = recipientSsin, recipientFirstName = recipientFirstName, recipientLastName = recipientLastName, mimeType = mimeType, body = body)
+    suspend fun generateNoteExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, ioIcureKrakenClientInfrastructureByteArrayWrapper: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>  {
+        val localVariableConfig = generateNoteExportRequestConfig(patientId = patientId, id = id, date = date, language = language, recipientNihii = recipientNihii, recipientSsin = recipientSsin, recipientFirstName = recipientFirstName, recipientLastName = recipientLastName, mimeType = mimeType, ioIcureKrakenClientInfrastructureByteArrayWrapper = ioIcureKrakenClientInfrastructureByteArrayWrapper)
 
-        return request<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
+        return request<kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
             localVariableConfig
         )!!
     }
@@ -368,11 +368,11 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param recipientFirstName  
     * @param recipientLastName  
     * @param mimeType  
-    * @param body  
+    * @param ioIcureKrakenClientInfrastructureByteArrayWrapper  
     * @return RequestConfig
     */
-    fun generateNoteExportRequestConfig(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
-        val localVariableBody = body
+    fun generateNoteExportRequestConfig(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, ioIcureKrakenClientInfrastructureByteArrayWrapper: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>) : RequestConfig<kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>> {
+        val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("date", listOf(date.toString()))
@@ -387,7 +387,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/be_kmehr/note/{patientId}/export/{id}".replace("{"+"patientId"+"}", "$patientId").replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/be_kmehr/note/{patientId}/export/{id}".replace("{"+"patientId"+"}", "$patientId").replace("{"+"id"+"}", "$id"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -432,7 +432,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/be_kmehr/patientinfo/{patientId}/export".replace("{"+"patientId"+"}", "$patientId"),
+            path = "/rest/v2/be_kmehr/patientinfo/{patientId}/export".replace("{"+"patientId"+"}", "$patientId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -451,7 +451,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param recipientFirstName  
     * @param recipientLastName  
     * @param mimeType  
-    * @param body  
+    * @param ioIcureKrakenClientInfrastructureByteArrayWrapper  
     * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -459,10 +459,10 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun generatePrescriptionExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>  {
-        val localVariableConfig = generatePrescriptionExportRequestConfig(patientId = patientId, id = id, date = date, language = language, recipientNihii = recipientNihii, recipientSsin = recipientSsin, recipientFirstName = recipientFirstName, recipientLastName = recipientLastName, mimeType = mimeType, body = body)
+    suspend fun generatePrescriptionExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, ioIcureKrakenClientInfrastructureByteArrayWrapper: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>  {
+        val localVariableConfig = generatePrescriptionExportRequestConfig(patientId = patientId, id = id, date = date, language = language, recipientNihii = recipientNihii, recipientSsin = recipientSsin, recipientFirstName = recipientFirstName, recipientLastName = recipientLastName, mimeType = mimeType, ioIcureKrakenClientInfrastructureByteArrayWrapper = ioIcureKrakenClientInfrastructureByteArrayWrapper)
 
-        return request<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
+        return request<kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
             localVariableConfig
         )!!
     }
@@ -478,11 +478,11 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param recipientFirstName  
     * @param recipientLastName  
     * @param mimeType  
-    * @param body  
+    * @param ioIcureKrakenClientInfrastructureByteArrayWrapper  
     * @return RequestConfig
     */
-    fun generatePrescriptionExportRequestConfig(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
-        val localVariableBody = body
+    fun generatePrescriptionExportRequestConfig(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, ioIcureKrakenClientInfrastructureByteArrayWrapper: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>) : RequestConfig<kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>> {
+        val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("date", listOf(date.toString()))
@@ -497,7 +497,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/be_kmehr/prescription/{patientId}/export/{id}".replace("{"+"patientId"+"}", "$patientId").replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/be_kmehr/prescription/{patientId}/export/{id}".replace("{"+"patientId"+"}", "$patientId").replace("{"+"id"+"}", "$id"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -516,7 +516,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param recipientFirstName  
     * @param recipientLastName  
     * @param mimeType  
-    * @param body  
+    * @param ioIcureKrakenClientInfrastructureByteArrayWrapper  
     * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -524,10 +524,10 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun generateReportExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>  {
-        val localVariableConfig = generateReportExportRequestConfig(patientId = patientId, id = id, date = date, language = language, recipientNihii = recipientNihii, recipientSsin = recipientSsin, recipientFirstName = recipientFirstName, recipientLastName = recipientLastName, mimeType = mimeType, body = body)
+    suspend fun generateReportExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, ioIcureKrakenClientInfrastructureByteArrayWrapper: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>  {
+        val localVariableConfig = generateReportExportRequestConfig(patientId = patientId, id = id, date = date, language = language, recipientNihii = recipientNihii, recipientSsin = recipientSsin, recipientFirstName = recipientFirstName, recipientLastName = recipientLastName, mimeType = mimeType, ioIcureKrakenClientInfrastructureByteArrayWrapper = ioIcureKrakenClientInfrastructureByteArrayWrapper)
 
-        return request<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
+        return request<kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
             localVariableConfig
         )!!
     }
@@ -543,11 +543,11 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param recipientFirstName  
     * @param recipientLastName  
     * @param mimeType  
-    * @param body  
+    * @param ioIcureKrakenClientInfrastructureByteArrayWrapper  
     * @return RequestConfig
     */
-    fun generateReportExportRequestConfig(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
-        val localVariableBody = body
+    fun generateReportExportRequestConfig(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, ioIcureKrakenClientInfrastructureByteArrayWrapper: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>) : RequestConfig<kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>> {
+        val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("date", listOf(date.toString()))
@@ -562,7 +562,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/be_kmehr/report/{patientId}/export/{id}".replace("{"+"patientId"+"}", "$patientId").replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/be_kmehr/report/{patientId}/export/{id}".replace("{"+"patientId"+"}", "$patientId").replace("{"+"id"+"}", "$id"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -581,7 +581,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param recipientFirstName  
     * @param recipientLastName  
     * @param mimeType  
-    * @param body  
+    * @param ioIcureKrakenClientInfrastructureByteArrayWrapper  
     * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -589,10 +589,10 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun generateRequestExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>  {
-        val localVariableConfig = generateRequestExportRequestConfig(patientId = patientId, id = id, date = date, language = language, recipientNihii = recipientNihii, recipientSsin = recipientSsin, recipientFirstName = recipientFirstName, recipientLastName = recipientLastName, mimeType = mimeType, body = body)
+    suspend fun generateRequestExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, ioIcureKrakenClientInfrastructureByteArrayWrapper: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>  {
+        val localVariableConfig = generateRequestExportRequestConfig(patientId = patientId, id = id, date = date, language = language, recipientNihii = recipientNihii, recipientSsin = recipientSsin, recipientFirstName = recipientFirstName, recipientLastName = recipientLastName, mimeType = mimeType, ioIcureKrakenClientInfrastructureByteArrayWrapper = ioIcureKrakenClientInfrastructureByteArrayWrapper)
 
-        return request<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
+        return request<kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
             localVariableConfig
         )!!
     }
@@ -608,11 +608,11 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param recipientFirstName  
     * @param recipientLastName  
     * @param mimeType  
-    * @param body  
+    * @param ioIcureKrakenClientInfrastructureByteArrayWrapper  
     * @return RequestConfig
     */
-    fun generateRequestExportRequestConfig(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
-        val localVariableBody = body
+    fun generateRequestExportRequestConfig(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, ioIcureKrakenClientInfrastructureByteArrayWrapper: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>) : RequestConfig<kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>> {
+        val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("date", listOf(date.toString()))
@@ -627,7 +627,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/be_kmehr/request/{patientId}/export/{id}".replace("{"+"patientId"+"}", "$patientId").replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/be_kmehr/request/{patientId}/export/{id}".replace("{"+"patientId"+"}", "$patientId").replace("{"+"id"+"}", "$id"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -646,7 +646,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param recipientFirstName  
     * @param recipientLastName  
     * @param mimeType  
-    * @param body  
+    * @param ioIcureKrakenClientInfrastructureByteArrayWrapper  
     * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -654,10 +654,10 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun generateResultExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>  {
-        val localVariableConfig = generateResultExportRequestConfig(patientId = patientId, id = id, date = date, language = language, recipientNihii = recipientNihii, recipientSsin = recipientSsin, recipientFirstName = recipientFirstName, recipientLastName = recipientLastName, mimeType = mimeType, body = body)
+    suspend fun generateResultExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, ioIcureKrakenClientInfrastructureByteArrayWrapper: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>  {
+        val localVariableConfig = generateResultExportRequestConfig(patientId = patientId, id = id, date = date, language = language, recipientNihii = recipientNihii, recipientSsin = recipientSsin, recipientFirstName = recipientFirstName, recipientLastName = recipientLastName, mimeType = mimeType, ioIcureKrakenClientInfrastructureByteArrayWrapper = ioIcureKrakenClientInfrastructureByteArrayWrapper)
 
-        return request<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
+        return request<kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
             localVariableConfig
         )!!
     }
@@ -673,11 +673,11 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param recipientFirstName  
     * @param recipientLastName  
     * @param mimeType  
-    * @param body  
+    * @param ioIcureKrakenClientInfrastructureByteArrayWrapper  
     * @return RequestConfig
     */
-    fun generateResultExportRequestConfig(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
-        val localVariableBody = body
+    fun generateResultExportRequestConfig(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, ioIcureKrakenClientInfrastructureByteArrayWrapper: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>) : RequestConfig<kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>> {
+        val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("date", listOf(date.toString()))
@@ -692,7 +692,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/be_kmehr/result/{patientId}/export/{id}".replace("{"+"patientId"+"}", "$patientId").replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/be_kmehr/result/{patientId}/export/{id}".replace("{"+"patientId"+"}", "$patientId").replace("{"+"id"+"}", "$id"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -737,7 +737,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/be_kmehr/smf/{patientId}/export".replace("{"+"patientId"+"}", "$patientId"),
+            path = "/rest/v2/be_kmehr/smf/{patientId}/export".replace("{"+"patientId"+"}", "$patientId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -782,7 +782,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/be_kmehr/sumehr/{patientId}/export".replace("{"+"patientId"+"}", "$patientId"),
+            path = "/rest/v2/be_kmehr/sumehr/{patientId}/export".replace("{"+"patientId"+"}", "$patientId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -827,7 +827,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/be_kmehr/sumehrv2/{patientId}/export".replace("{"+"patientId"+"}", "$patientId"),
+            path = "/rest/v2/be_kmehr/sumehrv2/{patientId}/export".replace("{"+"patientId"+"}", "$patientId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -867,7 +867,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/be_kmehr/sumehr/{patientId}/content".replace("{"+"patientId"+"}", "$patientId"),
+            path = "/rest/v2/be_kmehr/sumehr/{patientId}/content".replace("{"+"patientId"+"}", "$patientId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -907,7 +907,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/be_kmehr/sumehr/{patientId}/md5".replace("{"+"patientId"+"}", "$patientId"),
+            path = "/rest/v2/be_kmehr/sumehr/{patientId}/md5".replace("{"+"patientId"+"}", "$patientId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -947,7 +947,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/be_kmehr/sumehrv2/{patientId}/content".replace("{"+"patientId"+"}", "$patientId"),
+            path = "/rest/v2/be_kmehr/sumehrv2/{patientId}/content".replace("{"+"patientId"+"}", "$patientId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -987,7 +987,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/be_kmehr/sumehrv2/{patientId}/md5".replace("{"+"patientId"+"}", "$patientId"),
+            path = "/rest/v2/be_kmehr/sumehrv2/{patientId}/md5".replace("{"+"patientId"+"}", "$patientId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -1049,7 +1049,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/be_kmehr/medicationscheme/{documentId}/import".replace("{"+"documentId"+"}", "$documentId"),
+            path = "/rest/v2/be_kmehr/medicationscheme/{documentId}/import".replace("{"+"documentId"+"}", "$documentId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -1111,7 +1111,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/be_kmehr/smf/{documentId}/import".replace("{"+"documentId"+"}", "$documentId"),
+            path = "/rest/v2/be_kmehr/smf/{documentId}/import".replace("{"+"documentId"+"}", "$documentId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -1173,7 +1173,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/be_kmehr/sumehr/{documentId}/import".replace("{"+"documentId"+"}", "$documentId"),
+            path = "/rest/v2/be_kmehr/sumehr/{documentId}/import".replace("{"+"documentId"+"}", "$documentId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -1238,7 +1238,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/be_kmehr/sumehr/{documentId}/importbyitemid".replace("{"+"documentId"+"}", "$documentId"),
+            path = "/rest/v2/be_kmehr/sumehr/{documentId}/importbyitemid".replace("{"+"documentId"+"}", "$documentId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -1278,7 +1278,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/be_kmehr/sumehrv2/{patientId}/valid".replace("{"+"patientId"+"}", "$patientId"),
+            path = "/rest/v2/be_kmehr/sumehrv2/{patientId}/valid".replace("{"+"patientId"+"}", "$patientId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -1318,7 +1318,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/be_kmehr/sumehr/{patientId}/valid".replace("{"+"patientId"+"}", "$patientId"),
+            path = "/rest/v2/be_kmehr/sumehr/{patientId}/valid".replace("{"+"patientId"+"}", "$patientId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -1363,7 +1363,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/be_kmehr/sumehr/{patientId}/validate".replace("{"+"patientId"+"}", "$patientId"),
+            path = "/rest/v2/be_kmehr/sumehr/{patientId}/validate".replace("{"+"patientId"+"}", "$patientId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -1408,7 +1408,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/be_kmehr/sumehrv2/{patientId}/validate".replace("{"+"patientId"+"}", "$patientId"),
+            path = "/rest/v2/be_kmehr/sumehrv2/{patientId}/validate".replace("{"+"patientId"+"}", "$patientId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody

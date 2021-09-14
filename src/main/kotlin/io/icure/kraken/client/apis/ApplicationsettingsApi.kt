@@ -1,9 +1,9 @@
 /**
- * iCure Cloud API Documentation
+ * iCure Data Stack API Documentation
  *
- * Spring shop sample application
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v0.0.1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -33,7 +33,7 @@ class ApplicationsettingsApi(basePath: kotlin.String = defaultBasePath, webClien
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
-            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "https://kraken.icure.dev")
+            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "http://localhost:16043")
         }
     }
 
@@ -66,7 +66,7 @@ class ApplicationsettingsApi(basePath: kotlin.String = defaultBasePath, webClien
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/appsettings",
+            path = "/rest/v2/appsettings",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody

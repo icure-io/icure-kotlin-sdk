@@ -1,9 +1,9 @@
 /**
- * iCure Cloud API Documentation
+ * iCure Data Stack API Documentation
  *
- * Spring shop sample application
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v0.0.1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -19,6 +19,7 @@ import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.FilterChainHealthElement
 import io.icure.kraken.client.models.HealthElementDto
 import io.icure.kraken.client.models.IcureStubDto
+import io.icure.kraken.client.models.ListOfIdsDto
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -37,13 +38,13 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
-            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "https://kraken.icure.dev")
+            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "http://localhost:16043")
         }
     }
 
     /**
-    * Create a healthcare element with the current user
-    * Returns an instance of created healthcare element.
+    * Create a health element with the current user
+    * Returns an instance of created health element.
     * @param healthElementDto  
     * @return HealthElementDto
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
@@ -72,7 +73,7 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/helement",
+            path = "/rest/v2/helement",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -110,7 +111,7 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/helement/batch",
+            path = "/rest/v2/helement/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -118,9 +119,9 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     }
 
     /**
-    * Delete healthcare elements.
-    * Response is a set containing the ID&#39;s of deleted healthcare elements.
-    * @param healthElementIds  
+    * Delete health elements.
+    * Response is a set containing the ID&#39;s of deleted health elements.
+    * @param listOfIdsDto  
     * @return kotlin.collections.List<DocIdentifier>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -128,27 +129,27 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteHealthElements(healthElementIds: kotlin.String) : kotlin.collections.List<DocIdentifier>  {
-        val localVariableConfig = deleteHealthElementsRequestConfig(healthElementIds = healthElementIds)
+    suspend fun deleteHealthElements(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocIdentifier>  {
+        val localVariableConfig = deleteHealthElementsRequestConfig(listOfIdsDto = listOfIdsDto)
 
-        return request<Unit, kotlin.collections.List<DocIdentifier>>(
+        return request<ListOfIdsDto, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
         )!!
     }
     /**
     * To obtain the request config of the operation deleteHealthElements
     *
-    * @param healthElementIds  
+    * @param listOfIdsDto  
     * @return RequestConfig
     */
-    fun deleteHealthElementsRequestConfig(healthElementIds: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun deleteHealthElementsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+        val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(
             method = RequestMethod.DELETE,
-            path = "/rest/v1/helement/{healthElementIds}".replace("{"+"healthElementIds"+"}", "$healthElementIds"),
+            path = "/rest/v2/helement/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -156,8 +157,8 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     }
 
     /**
-    * Filter healthcare elements for the current user (HcParty)
-    * Returns a list of healthcare elements along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
+    * Filter health elements for the current user (HcParty)
+    * Returns a list of health elements along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
     * @param filterChainHealthElement  
     * @return kotlin.collections.List<HealthElementDto>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
@@ -186,7 +187,7 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/helement/filter",
+            path = "/rest/v2/helement/filter",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -194,95 +195,7 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     }
 
     /**
-    * List healthcare elements found By Healthcare Party and secret foreign keyelementIds.
-    * Keys hast to delimited by coma
-    * @param hcPartyId  
-    * @param secretFKeys  
-    * @return kotlin.collections.List<HealthElementDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findHealthElementsByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<HealthElementDto>  {
-        val localVariableConfig = findHealthElementsByHCPartyPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
-
-        return request<Unit, kotlin.collections.List<HealthElementDto>>(
-            localVariableConfig
-        )!!
-    }
-    /**
-    * To obtain the request config of the operation findHealthElementsByHCPartyPatientForeignKeys
-    *
-    * @param hcPartyId  
-    * @param secretFKeys  
-    * @return RequestConfig
-    */
-    fun findHealthElementsByHCPartyPatientForeignKeysRequestConfig(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
-            .apply {
-                put("hcPartyId", listOf(hcPartyId.toString()))
-                put("secretFKeys", listOf(secretFKeys.toString()))
-            }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/helement/byHcPartySecretForeignKeys",
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * List helement stubs found By Healthcare Party and secret foreign keys.
-    * Keys must be delimited by coma
-    * @param hcPartyId  
-    * @param secretFKeys  
-    * @return kotlin.collections.List<IcureStubDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findHealthElementsDelegationsStubsByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<IcureStubDto>  {
-        val localVariableConfig = findHealthElementsDelegationsStubsByHCPartyPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
-
-        return request<Unit, kotlin.collections.List<IcureStubDto>>(
-            localVariableConfig
-        )!!
-    }
-    /**
-    * To obtain the request config of the operation findHealthElementsDelegationsStubsByHCPartyPatientForeignKeys
-    *
-    * @param hcPartyId  
-    * @param secretFKeys  
-    * @return RequestConfig
-    */
-    fun findHealthElementsDelegationsStubsByHCPartyPatientForeignKeysRequestConfig(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
-            .apply {
-                put("hcPartyId", listOf(hcPartyId.toString()))
-                put("secretFKeys", listOf(secretFKeys.toString()))
-            }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/helement/byHcPartySecretForeignKeys/delegations",
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Get a healthcare element
+    * Get a health element
     * 
     * @param healthElementId  
     * @return HealthElementDto
@@ -312,7 +225,7 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/helement/{healthElementId}".replace("{"+"healthElementId"+"}", "$healthElementId"),
+            path = "/rest/v2/helement/{healthElementId}".replace("{"+"healthElementId"+"}", "$healthElementId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -320,8 +233,96 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     }
 
     /**
-    * Modify a healthcare element
-    * Returns the modified healthcare element.
+    * List health elements found By Healthcare Party and secret foreign keyelementIds.
+    * Keys hast to delimited by coma
+    * @param hcPartyId  
+    * @param secretFKeys  
+    * @return kotlin.collections.List<HealthElementDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun listHealthElementsByHCPartyAndPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<HealthElementDto>  {
+        val localVariableConfig = listHealthElementsByHCPartyAndPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
+
+        return request<Unit, kotlin.collections.List<HealthElementDto>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation listHealthElementsByHCPartyAndPatientForeignKeys
+    *
+    * @param hcPartyId  
+    * @param secretFKeys  
+    * @return RequestConfig
+    */
+    fun listHealthElementsByHCPartyAndPatientForeignKeysRequestConfig(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : RequestConfig<Unit> {
+        val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                put("hcPartyId", listOf(hcPartyId.toString()))
+                put("secretFKeys", listOf(secretFKeys.toString()))
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v2/helement/byHcPartySecretForeignKeys",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
+    * List helement stubs found By Healthcare Party and secret foreign keys.
+    * Keys must be delimited by coma
+    * @param hcPartyId  
+    * @param secretFKeys  
+    * @return kotlin.collections.List<IcureStubDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<IcureStubDto>  {
+        val localVariableConfig = listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
+
+        return request<Unit, kotlin.collections.List<IcureStubDto>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys
+    *
+    * @param hcPartyId  
+    * @param secretFKeys  
+    * @return RequestConfig
+    */
+    fun listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeysRequestConfig(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : RequestConfig<Unit> {
+        val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                put("hcPartyId", listOf(hcPartyId.toString()))
+                put("secretFKeys", listOf(secretFKeys.toString()))
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v2/helement/byHcPartySecretForeignKeys/delegations",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
+    * Modify a health element
+    * Returns the modified health element.
     * @param healthElementDto  
     * @return HealthElementDto
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
@@ -350,7 +351,7 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/helement",
+            path = "/rest/v2/helement",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -358,8 +359,8 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     }
 
     /**
-    * Modify a batch of healthcare elements
-    * Returns the modified healthcare elements.
+    * Modify a batch of health elements
+    * Returns the modified health elements.
     * @param healthElementDto  
     * @return kotlin.collections.List<HealthElementDto>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
@@ -388,7 +389,7 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/helement/batch",
+            path = "/rest/v2/helement/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -396,8 +397,8 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     }
 
     /**
-    * Delegates a healthcare element to a healthcare party
-    * It delegates a healthcare element to a healthcare party (By current healthcare party). Returns the element with new delegations.
+    * Delegates a health element to a healthcare party
+    * It delegates a health element to a healthcare party (By current healthcare party). Returns the element with new delegations.
     * @param healthElementId  
     * @param delegationDto  
     * @return HealthElementDto
@@ -428,7 +429,7 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/helement/{healthElementId}/delegate".replace("{"+"healthElementId"+"}", "$healthElementId"),
+            path = "/rest/v2/helement/{healthElementId}/delegate".replace("{"+"healthElementId"+"}", "$healthElementId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -466,7 +467,7 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/helement/delegations",
+            path = "/rest/v2/helement/delegations",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody

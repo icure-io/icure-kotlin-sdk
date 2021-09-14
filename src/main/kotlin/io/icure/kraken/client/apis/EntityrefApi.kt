@@ -1,9 +1,9 @@
 /**
- * iCure Cloud API Documentation
+ * iCure Data Stack API Documentation
  *
- * Spring shop sample application
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v0.0.1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -33,7 +33,7 @@ class EntityrefApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
-            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "https://kraken.icure.dev")
+            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "http://localhost:16043")
         }
     }
 
@@ -68,7 +68,7 @@ class EntityrefApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/entityref",
+            path = "/rest/v2/entityref",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -106,7 +106,7 @@ class EntityrefApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/entityref/latest/{prefix}".replace("{"+"prefix"+"}", "$prefix"),
+            path = "/rest/v2/entityref/latest/{prefix}".replace("{"+"prefix"+"}", "$prefix"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody

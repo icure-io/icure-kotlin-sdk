@@ -1,9 +1,9 @@
 /**
- * iCure Cloud API Documentation
+ * iCure Data Stack API Documentation
  *
- * Spring shop sample application
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v0.0.1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -34,7 +34,7 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: We
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
-            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "https://kraken.icure.dev")
+            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "http://localhost:16043")
         }
     }
 
@@ -74,7 +74,7 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/be_result_import/canhandle/{id}".replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/be_result_import/canhandle/{id}".replace("{"+"id"+"}", "$id"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -133,7 +133,7 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/be_result_import/import/{documentId}/{hcpId}/{language}".replace("{"+"documentId"+"}", "$documentId").replace("{"+"hcpId"+"}", "$hcpId").replace("{"+"language"+"}", "$language"),
+            path = "/rest/v2/be_result_import/import/{documentId}/{hcpId}/{language}".replace("{"+"documentId"+"}", "$documentId").replace("{"+"hcpId"+"}", "$hcpId").replace("{"+"language"+"}", "$language"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -184,7 +184,7 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/be_result_import/infos/{id}".replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/be_result_import/infos/{id}".replace("{"+"id"+"}", "$id"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody

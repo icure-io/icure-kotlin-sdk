@@ -1,9 +1,9 @@
 /**
- * iCure Cloud API Documentation
+ * iCure Data Stack API Documentation
  *
- * Spring shop sample application
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v0.0.1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -34,7 +34,7 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
-            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "https://kraken.icure.dev")
+            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "http://localhost:16043")
         }
     }
 
@@ -72,7 +72,7 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/auth/login",
+            path = "/rest/v2/auth/login",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -108,7 +108,7 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/auth/logout",
+            path = "/rest/v2/auth/logout",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -144,7 +144,7 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/auth/logout",
+            path = "/rest/v2/auth/logout",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -184,7 +184,7 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/auth/token/{method}/{path}".replace("{"+"method"+"}", "$method").replace("{"+"path"+"}", "$path"),
+            path = "/rest/v2/auth/token/{method}/{path}".replace("{"+"method"+"}", "$method").replace("{"+"path"+"}", "$path"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody

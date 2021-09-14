@@ -151,14 +151,14 @@ suspend fun MessageApi.getChildrenMessages(user: UserDto, messageId: String, con
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun MessageApi.getChildrenMessagesOfList(user: UserDto, listOfIdsDto: ListOfIdsDto, config: CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>) : List<MessageDto>?  {
-    return this.getChildrenMessagesOfList(listOfIdsDto)?.map { config.decryptMessage(user.healthcarePartyId!!, it) }
+suspend fun MessageApi.getMessagesChildren(user: UserDto, listOfIdsDto: ListOfIdsDto, config: CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>) : List<MessageDto>?  {
+    return this.getMessagesChildren(listOfIdsDto)?.map { config.decryptMessage(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun MessageApi.listMessagesByInvoiceIds(user: UserDto, listOfIdsDto: ListOfIdsDto, config: CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>) : List<MessageDto>?  {
-    return this.listMessagesByInvoiceIds(listOfIdsDto)?.map { config.decryptMessage(user.healthcarePartyId!!, it) }
+suspend fun MessageApi.listMessagesByInvoices(user: UserDto, listOfIdsDto: ListOfIdsDto, config: CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>) : List<MessageDto>?  {
+    return this.listMessagesByInvoices(listOfIdsDto)?.map { config.decryptMessage(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi

@@ -1,9 +1,9 @@
 /**
- * iCure Cloud API Documentation
+ * iCure Data Stack API Documentation
  *
- * Spring shop sample application
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v0.0.1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -15,6 +15,7 @@ package io.icure.kraken.client.apis
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.models.DocIdentifier
+import io.icure.kraken.client.models.ListOfIdsDto
 import io.icure.kraken.client.models.MedicalLocationDto
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -30,11 +31,11 @@ import javax.inject.Named
 @Named
 @ExperimentalStdlibApi
 @ExperimentalCoroutinesApi
-class MedicallocationApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = NettyWebClient(), authHeader: String? = null) : ApiClient(basePath, webClient, authHeader) {
+class MedicalLocationApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = NettyWebClient(), authHeader: String? = null) : ApiClient(basePath, webClient, authHeader) {
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
-            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "https://kraken.icure.dev")
+            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "http://localhost:16043")
         }
     }
 
@@ -69,7 +70,7 @@ class MedicallocationApi(basePath: kotlin.String = defaultBasePath, webClient: W
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/medicallocation",
+            path = "/rest/v2/medicallocation",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -77,9 +78,9 @@ class MedicallocationApi(basePath: kotlin.String = defaultBasePath, webClient: W
     }
 
     /**
-    * Deletes a medical location
+    * Deletes medical locations
     * 
-    * @param locationIds  
+    * @param listOfIdsDto  
     * @return kotlin.collections.List<DocIdentifier>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -87,27 +88,27 @@ class MedicallocationApi(basePath: kotlin.String = defaultBasePath, webClient: W
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteMedicalLocation(locationIds: kotlin.String) : kotlin.collections.List<DocIdentifier>  {
-        val localVariableConfig = deleteMedicalLocationRequestConfig(locationIds = locationIds)
+    suspend fun deleteMedicalLocations(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocIdentifier>  {
+        val localVariableConfig = deleteMedicalLocationsRequestConfig(listOfIdsDto = listOfIdsDto)
 
-        return request<Unit, kotlin.collections.List<DocIdentifier>>(
+        return request<ListOfIdsDto, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
         )!!
     }
     /**
-    * To obtain the request config of the operation deleteMedicalLocation
+    * To obtain the request config of the operation deleteMedicalLocations
     *
-    * @param locationIds  
+    * @param listOfIdsDto  
     * @return RequestConfig
     */
-    fun deleteMedicalLocationRequestConfig(locationIds: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun deleteMedicalLocationsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+        val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(
             method = RequestMethod.DELETE,
-            path = "/rest/v1/medicallocation/{locationIds}".replace("{"+"locationIds"+"}", "$locationIds"),
+            path = "/rest/v2/medicallocation/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -145,7 +146,7 @@ class MedicallocationApi(basePath: kotlin.String = defaultBasePath, webClient: W
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/medicallocation/{locationId}".replace("{"+"locationId"+"}", "$locationId"),
+            path = "/rest/v2/medicallocation/{locationId}".replace("{"+"locationId"+"}", "$locationId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -181,7 +182,7 @@ class MedicallocationApi(basePath: kotlin.String = defaultBasePath, webClient: W
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/medicallocation",
+            path = "/rest/v2/medicallocation",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -219,7 +220,7 @@ class MedicallocationApi(basePath: kotlin.String = defaultBasePath, webClient: W
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/medicallocation",
+            path = "/rest/v2/medicallocation",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody

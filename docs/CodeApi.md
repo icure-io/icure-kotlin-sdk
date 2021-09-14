@@ -1,21 +1,21 @@
 # CodeApi
 
-All URIs are relative to *https://kraken.icure.dev*
+All URIs are relative to *http://localhost:16043*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createCode**](CodeApi.md#createCode) | **POST** /rest/v1/code | Create a Code
-[**filterCodesBy**](CodeApi.md#filterCodesBy) | **POST** /rest/v1/code/filter | Filter codes 
-[**findCodeTypes**](CodeApi.md#findCodeTypes) | **GET** /rest/v1/code/codetype/byRegionType | Finding code types.
-[**findCodes**](CodeApi.md#findCodes) | **GET** /rest/v1/code/byRegionTypeCode | Finding codes by code, type and version
-[**findPaginatedCodes**](CodeApi.md#findPaginatedCodes) | **GET** /rest/v1/code | Finding codes by code, type and version with pagination.
-[**findPaginatedCodesByLabel**](CodeApi.md#findPaginatedCodesByLabel) | **GET** /rest/v1/code/byLabel | Finding codes by code, type and version with pagination.
-[**findPaginatedCodesWithLink**](CodeApi.md#findPaginatedCodesWithLink) | **GET** /rest/v1/code/link/{linkType} | Finding codes by code, type and version with pagination.
-[**findTagTypes**](CodeApi.md#findTagTypes) | **GET** /rest/v1/code/tagtype/byRegionType | Finding tag types.
-[**getCode**](CodeApi.md#getCode) | **GET** /rest/v1/code/{codeId} | Get a code
-[**getCodeWithParts**](CodeApi.md#getCodeWithParts) | **GET** /rest/v1/code/{type}/{code}/{version} | Get a code
-[**getCodes**](CodeApi.md#getCodes) | **GET** /rest/v1/code/byIds/{codeIds} | Get a list of codes by ids
-[**modifyCode**](CodeApi.md#modifyCode) | **PUT** /rest/v1/code | Modify a code
+[**createCode**](CodeApi.md#createCode) | **POST** /rest/v2/code | Create a Code
+[**filterCodesBy**](CodeApi.md#filterCodesBy) | **POST** /rest/v2/code/filter | Filter codes 
+[**findCodesByLabel**](CodeApi.md#findCodesByLabel) | **GET** /rest/v2/code/byLabel | Finding codes by code, type and version with pagination.
+[**findCodesByLink**](CodeApi.md#findCodesByLink) | **GET** /rest/v2/code/byLink/{linkType} | Finding codes by code, type and version with pagination.
+[**findCodesByType**](CodeApi.md#findCodesByType) | **GET** /rest/v2/code | Finding codes by code, type and version with pagination.
+[**getCode**](CodeApi.md#getCode) | **GET** /rest/v2/code/{codeId} | Get a code
+[**getCodeWithParts**](CodeApi.md#getCodeWithParts) | **GET** /rest/v2/code/{type}/{code}/{version} | Get a code
+[**getCodes**](CodeApi.md#getCodes) | **POST** /rest/v2/code/byIds | Get a list of codes by ids
+[**listCodeTypesBy**](CodeApi.md#listCodeTypesBy) | **GET** /rest/v2/code/codetype/byRegionType | Finding code types.
+[**listCodesByRegionTypeCodeVersion**](CodeApi.md#listCodesByRegionTypeCodeVersion) | **GET** /rest/v2/code/byRegionTypeCode | Finding codes by code, type and version
+[**listTagTypesBy**](CodeApi.md#listTagTypesBy) | **GET** /rest/v2/code/tagtype/byRegionType | Finding tag types.
+[**modifyCode**](CodeApi.md#modifyCode) | **PUT** /rest/v2/code | Modify a code
 
 
 <a name="createCode"></a>
@@ -58,10 +58,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -120,189 +117,16 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
  - **Accept**: */*
 
-<a name="findCodeTypes"></a>
-# **findCodeTypes**
-> kotlin.collections.List&lt;kotlin.String&gt; findCodeTypes(region, type)
-
-Finding code types.
-
-Returns a list of code types matched with given input.
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = CodeApi()
-val region : kotlin.String = region_example // kotlin.String | Code region
-val type : kotlin.String = type_example // kotlin.String | Code type
-try {
-    val result : kotlin.collections.List<kotlin.String> = apiInstance.findCodeTypes(region, type)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling CodeApi#findCodeTypes")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling CodeApi#findCodeTypes")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **region** | **kotlin.String**| Code region | [optional]
- **type** | **kotlin.String**| Code type | [optional]
-
-### Return type
-
-**kotlin.collections.List&lt;kotlin.String&gt;**
-
-### Authorization
-
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="findCodes"></a>
-# **findCodes**
-> kotlin.collections.List&lt;CodeDto&gt; findCodes(region, type, code, version)
-
-Finding codes by code, type and version
-
-Returns a list of codes matched with given input.
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = CodeApi()
-val region : kotlin.String = region_example // kotlin.String | Code region
-val type : kotlin.String = type_example // kotlin.String | Code type
-val code : kotlin.String = code_example // kotlin.String | Code code
-val version : kotlin.String = version_example // kotlin.String | Code version
-try {
-    val result : kotlin.collections.List<CodeDto> = apiInstance.findCodes(region, type, code, version)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling CodeApi#findCodes")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling CodeApi#findCodes")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **region** | **kotlin.String**| Code region | [optional]
- **type** | **kotlin.String**| Code type | [optional]
- **code** | **kotlin.String**| Code code | [optional]
- **version** | **kotlin.String**| Code version | [optional]
-
-### Return type
-
-[**kotlin.collections.List&lt;CodeDto&gt;**](CodeDto.md)
-
-### Authorization
-
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="findPaginatedCodes"></a>
-# **findPaginatedCodes**
-> PaginatedListCodeDto findPaginatedCodes(region, type, code, version, startKey, startDocumentId, limit)
-
-Finding codes by code, type and version with pagination.
-
-Returns a list of codes matched with given input.
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = CodeApi()
-val region : kotlin.String = region_example // kotlin.String | 
-val type : kotlin.String = type_example // kotlin.String | 
-val code : kotlin.String = code_example // kotlin.String | 
-val version : kotlin.String = version_example // kotlin.String | 
-val startKey : kotlin.String = startKey_example // kotlin.String | The start key for pagination
-val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A code document ID
-val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
-try {
-    val result : PaginatedListCodeDto = apiInstance.findPaginatedCodes(region, type, code, version, startKey, startDocumentId, limit)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling CodeApi#findPaginatedCodes")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling CodeApi#findPaginatedCodes")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **region** | **kotlin.String**|  | [optional]
- **type** | **kotlin.String**|  | [optional]
- **code** | **kotlin.String**|  | [optional]
- **version** | **kotlin.String**|  | [optional]
- **startKey** | **kotlin.String**| The start key for pagination | [optional]
- **startDocumentId** | **kotlin.String**| A code document ID | [optional]
- **limit** | **kotlin.Int**| Number of rows | [optional]
-
-### Return type
-
-[**PaginatedListCodeDto**](PaginatedListCodeDto.md)
-
-### Authorization
-
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="findPaginatedCodesByLabel"></a>
-# **findPaginatedCodesByLabel**
-> PaginatedListCodeDto findPaginatedCodesByLabel(region, types, language, label, startKey, startDocumentId, limit)
+<a name="findCodesByLabel"></a>
+# **findCodesByLabel**
+> PaginatedListCodeDto findCodesByLabel(region, types, language, label, startKey, startDocumentId, limit)
 
 Finding codes by code, type and version with pagination.
 
@@ -323,13 +147,13 @@ val startKey : kotlin.String = startKey_example // kotlin.String | The start key
 val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A code document ID
 val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
 try {
-    val result : PaginatedListCodeDto = apiInstance.findPaginatedCodesByLabel(region, types, language, label, startKey, startDocumentId, limit)
+    val result : PaginatedListCodeDto = apiInstance.findCodesByLabel(region, types, language, label, startKey, startDocumentId, limit)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling CodeApi#findPaginatedCodesByLabel")
+    println("4xx response calling CodeApi#findCodesByLabel")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling CodeApi#findPaginatedCodesByLabel")
+    println("5xx response calling CodeApi#findCodesByLabel")
     e.printStackTrace()
 }
 ```
@@ -352,19 +176,16 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: */*
 
-<a name="findPaginatedCodesWithLink"></a>
-# **findPaginatedCodesWithLink**
-> PaginatedListCodeDto findPaginatedCodesWithLink(linkType, linkedId, startKey, startDocumentId, limit)
+<a name="findCodesByLink"></a>
+# **findCodesByLink**
+> PaginatedListCodeDto findCodesByLink(linkType, linkedId, startKey, startDocumentId, limit)
 
 Finding codes by code, type and version with pagination.
 
@@ -383,13 +204,13 @@ val startKey : kotlin.String = startKey_example // kotlin.String | The start key
 val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A code document ID
 val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
 try {
-    val result : PaginatedListCodeDto = apiInstance.findPaginatedCodesWithLink(linkType, linkedId, startKey, startDocumentId, limit)
+    val result : PaginatedListCodeDto = apiInstance.findCodesByLink(linkType, linkedId, startKey, startDocumentId, limit)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling CodeApi#findPaginatedCodesWithLink")
+    println("4xx response calling CodeApi#findCodesByLink")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling CodeApi#findPaginatedCodesWithLink")
+    println("5xx response calling CodeApi#findCodesByLink")
     e.printStackTrace()
 }
 ```
@@ -410,23 +231,20 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: */*
 
-<a name="findTagTypes"></a>
-# **findTagTypes**
-> kotlin.collections.List&lt;kotlin.String&gt; findTagTypes(region, type)
+<a name="findCodesByType"></a>
+# **findCodesByType**
+> PaginatedListCodeDto findCodesByType(region, type, code, version, startKey, startDocumentId, limit)
 
-Finding tag types.
+Finding codes by code, type and version with pagination.
 
-Returns a list of tag types matched with given input.
+Returns a list of codes matched with given input.
 
 ### Example
 ```kotlin
@@ -435,16 +253,21 @@ Returns a list of tag types matched with given input.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = CodeApi()
-val region : kotlin.String = region_example // kotlin.String | Code region
-val type : kotlin.String = type_example // kotlin.String | Code type
+val region : kotlin.String = region_example // kotlin.String | 
+val type : kotlin.String = type_example // kotlin.String | 
+val code : kotlin.String = code_example // kotlin.String | 
+val version : kotlin.String = version_example // kotlin.String | 
+val startKey : kotlin.String = startKey_example // kotlin.String | The start key for pagination
+val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A code document ID
+val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
 try {
-    val result : kotlin.collections.List<kotlin.String> = apiInstance.findTagTypes(region, type)
+    val result : PaginatedListCodeDto = apiInstance.findCodesByType(region, type, code, version, startKey, startDocumentId, limit)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling CodeApi#findTagTypes")
+    println("4xx response calling CodeApi#findCodesByType")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling CodeApi#findTagTypes")
+    println("5xx response calling CodeApi#findCodesByType")
     e.printStackTrace()
 }
 ```
@@ -453,19 +276,21 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **region** | **kotlin.String**| Code region | [optional]
- **type** | **kotlin.String**| Code type | [optional]
+ **region** | **kotlin.String**|  | [optional]
+ **type** | **kotlin.String**|  | [optional]
+ **code** | **kotlin.String**|  | [optional]
+ **version** | **kotlin.String**|  | [optional]
+ **startKey** | **kotlin.String**| The start key for pagination | [optional]
+ **startDocumentId** | **kotlin.String**| A code document ID | [optional]
+ **limit** | **kotlin.Int**| Number of rows | [optional]
 
 ### Return type
 
-**kotlin.collections.List&lt;kotlin.String&gt;**
+[**PaginatedListCodeDto**](PaginatedListCodeDto.md)
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -512,10 +337,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -566,10 +388,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -578,7 +397,7 @@ Configure basicScheme:
 
 <a name="getCodes"></a>
 # **getCodes**
-> kotlin.collections.List&lt;CodeDto&gt; getCodes(codeIds)
+> kotlin.collections.List&lt;CodeDto&gt; getCodes(listOfIdsDto)
 
 Get a list of codes by ids
 
@@ -591,9 +410,9 @@ Keys must be delimited by coma
 //import io.icure.kraken.client.models.*
 
 val apiInstance = CodeApi()
-val codeIds : kotlin.String = codeIds_example // kotlin.String | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
 try {
-    val result : kotlin.collections.List<CodeDto> = apiInstance.getCodes(codeIds)
+    val result : kotlin.collections.List<CodeDto> = apiInstance.getCodes(listOfIdsDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling CodeApi#getCodes")
@@ -608,7 +427,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **codeIds** | **kotlin.String**|  |
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
 
 ### Return type
 
@@ -616,10 +435,158 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
+No authorization required
 
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="listCodeTypesBy"></a>
+# **listCodeTypesBy**
+> kotlin.collections.List&lt;kotlin.String&gt; listCodeTypesBy(region, type)
+
+Finding code types.
+
+Returns a list of code types matched with given input.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = CodeApi()
+val region : kotlin.String = region_example // kotlin.String | Code region
+val type : kotlin.String = type_example // kotlin.String | Code type
+try {
+    val result : kotlin.collections.List<kotlin.String> = apiInstance.listCodeTypesBy(region, type)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling CodeApi#listCodeTypesBy")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling CodeApi#listCodeTypesBy")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **region** | **kotlin.String**| Code region | [optional]
+ **type** | **kotlin.String**| Code type | [optional]
+
+### Return type
+
+**kotlin.collections.List&lt;kotlin.String&gt;**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="listCodesByRegionTypeCodeVersion"></a>
+# **listCodesByRegionTypeCodeVersion**
+> kotlin.collections.List&lt;CodeDto&gt; listCodesByRegionTypeCodeVersion(region, type, code, version)
+
+Finding codes by code, type and version
+
+Returns a list of codes matched with given input.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = CodeApi()
+val region : kotlin.String = region_example // kotlin.String | Code region
+val type : kotlin.String = type_example // kotlin.String | Code type
+val code : kotlin.String = code_example // kotlin.String | Code code
+val version : kotlin.String = version_example // kotlin.String | Code version
+try {
+    val result : kotlin.collections.List<CodeDto> = apiInstance.listCodesByRegionTypeCodeVersion(region, type, code, version)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling CodeApi#listCodesByRegionTypeCodeVersion")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling CodeApi#listCodesByRegionTypeCodeVersion")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **region** | **kotlin.String**| Code region | [optional]
+ **type** | **kotlin.String**| Code type | [optional]
+ **code** | **kotlin.String**| Code code | [optional]
+ **version** | **kotlin.String**| Code version | [optional]
+
+### Return type
+
+[**kotlin.collections.List&lt;CodeDto&gt;**](CodeDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="listTagTypesBy"></a>
+# **listTagTypesBy**
+> kotlin.collections.List&lt;kotlin.String&gt; listTagTypesBy(region, type)
+
+Finding tag types.
+
+Returns a list of tag types matched with given input.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = CodeApi()
+val region : kotlin.String = region_example // kotlin.String | Code region
+val type : kotlin.String = type_example // kotlin.String | Code type
+try {
+    val result : kotlin.collections.List<kotlin.String> = apiInstance.listTagTypesBy(region, type)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling CodeApi#listTagTypesBy")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling CodeApi#listTagTypesBy")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **region** | **kotlin.String**| Code region | [optional]
+ **type** | **kotlin.String**| Code type | [optional]
+
+### Return type
+
+**kotlin.collections.List&lt;kotlin.String&gt;**
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 
@@ -666,10 +633,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 

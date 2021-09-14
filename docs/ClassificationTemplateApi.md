@@ -1,17 +1,17 @@
 # ClassificationTemplateApi
 
-All URIs are relative to *https://kraken.icure.dev*
+All URIs are relative to *http://localhost:16043*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createClassificationTemplate**](ClassificationTemplateApi.md#createClassificationTemplate) | **POST** /rest/v1/classificationTemplate | Create a classification Template with the current user
-[**deleteClassificationTemplates**](ClassificationTemplateApi.md#deleteClassificationTemplates) | **DELETE** /rest/v1/classificationTemplate/{classificationTemplateIds} | Delete classification Templates.
-[**findClassificationTemplatesByHCPartyPatientForeignKeys**](ClassificationTemplateApi.md#findClassificationTemplatesByHCPartyPatientForeignKeys) | **GET** /rest/v1/classificationTemplate/byHcPartySecretForeignKeys | List classification Templates found By Healthcare Party and secret foreign keyelementIds.
-[**getClassificationTemplate**](ClassificationTemplateApi.md#getClassificationTemplate) | **GET** /rest/v1/classificationTemplate/{classificationTemplateId} | Get a classification Template
-[**getClassificationTemplateByIds**](ClassificationTemplateApi.md#getClassificationTemplateByIds) | **GET** /rest/v1/classificationTemplate/byIds/{ids} | Get a list of classifications Templates
-[**listClassificationTemplates**](ClassificationTemplateApi.md#listClassificationTemplates) | **GET** /rest/v1/classificationTemplate | List all classification templates with pagination
-[**modifyClassificationTemplate**](ClassificationTemplateApi.md#modifyClassificationTemplate) | **PUT** /rest/v1/classificationTemplate | Modify a classification Template
-[**newClassificationTemplateDelegations**](ClassificationTemplateApi.md#newClassificationTemplateDelegations) | **POST** /rest/v1/classificationTemplate/{classificationTemplateId}/delegate | Delegates a classification Template to a healthcare party
+[**createClassificationTemplate**](ClassificationTemplateApi.md#createClassificationTemplate) | **POST** /rest/v2/classificationTemplate | Create a classification Template with the current user
+[**deleteClassificationTemplates**](ClassificationTemplateApi.md#deleteClassificationTemplates) | **POST** /rest/v2/classificationTemplate/delete/batch | Delete classification Templates.
+[**findClassificationTemplatesBy**](ClassificationTemplateApi.md#findClassificationTemplatesBy) | **GET** /rest/v2/classificationTemplate | List all classification templates with pagination
+[**getClassificationTemplate**](ClassificationTemplateApi.md#getClassificationTemplate) | **GET** /rest/v2/classificationTemplate/{classificationTemplateId} | Get a classification Template
+[**getClassificationTemplateByIds**](ClassificationTemplateApi.md#getClassificationTemplateByIds) | **GET** /rest/v2/classificationTemplate/byIds/{ids} | Get a list of classifications Templates
+[**listClassificationTemplatesByHCPartyPatientForeignKeys**](ClassificationTemplateApi.md#listClassificationTemplatesByHCPartyPatientForeignKeys) | **GET** /rest/v2/classificationTemplate/byHcPartySecretForeignKeys | List classification Templates found By Healthcare Party and secret foreign keyelementIds.
+[**modifyClassificationTemplate**](ClassificationTemplateApi.md#modifyClassificationTemplate) | **PUT** /rest/v2/classificationTemplate | Modify a classification Template
+[**newClassificationTemplateDelegations**](ClassificationTemplateApi.md#newClassificationTemplateDelegations) | **POST** /rest/v2/classificationTemplate/{classificationTemplateId}/delegate | Delegates a classification Template to a healthcare party
 
 
 <a name="createClassificationTemplate"></a>
@@ -54,10 +54,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -66,7 +63,7 @@ Configure basicScheme:
 
 <a name="deleteClassificationTemplates"></a>
 # **deleteClassificationTemplates**
-> kotlin.collections.List&lt;DocIdentifier&gt; deleteClassificationTemplates(classificationTemplateIds)
+> kotlin.collections.List&lt;DocIdentifier&gt; deleteClassificationTemplates(listOfIdsDto)
 
 Delete classification Templates.
 
@@ -79,9 +76,9 @@ Response is a set containing the ID&#39;s of deleted classification Templates.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ClassificationTemplateApi()
-val classificationTemplateIds : kotlin.String = classificationTemplateIds_example // kotlin.String | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
 try {
-    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteClassificationTemplates(classificationTemplateIds)
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteClassificationTemplates(listOfIdsDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling ClassificationTemplateApi#deleteClassificationTemplates")
@@ -96,7 +93,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **classificationTemplateIds** | **kotlin.String**|  |
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
 
 ### Return type
 
@@ -104,23 +101,20 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: */*
 
-<a name="findClassificationTemplatesByHCPartyPatientForeignKeys"></a>
-# **findClassificationTemplatesByHCPartyPatientForeignKeys**
-> kotlin.collections.List&lt;ClassificationTemplateDto&gt; findClassificationTemplatesByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
+<a name="findClassificationTemplatesBy"></a>
+# **findClassificationTemplatesBy**
+> PaginatedListClassificationTemplateDto findClassificationTemplatesBy(startKey, startDocumentId, limit)
 
-List classification Templates found By Healthcare Party and secret foreign keyelementIds.
+List all classification templates with pagination
 
-Keys hast to delimited by coma
+Returns a list of classification templates.
 
 ### Example
 ```kotlin
@@ -129,16 +123,17 @@ Keys hast to delimited by coma
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ClassificationTemplateApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
+val startKey : kotlin.String = startKey_example // kotlin.String | A label
+val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | An classification template document ID
+val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
 try {
-    val result : kotlin.collections.List<ClassificationTemplateDto> = apiInstance.findClassificationTemplatesByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
+    val result : PaginatedListClassificationTemplateDto = apiInstance.findClassificationTemplatesBy(startKey, startDocumentId, limit)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling ClassificationTemplateApi#findClassificationTemplatesByHCPartyPatientForeignKeys")
+    println("4xx response calling ClassificationTemplateApi#findClassificationTemplatesBy")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling ClassificationTemplateApi#findClassificationTemplatesByHCPartyPatientForeignKeys")
+    println("5xx response calling ClassificationTemplateApi#findClassificationTemplatesBy")
     e.printStackTrace()
 }
 ```
@@ -147,19 +142,17 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **hcPartyId** | **kotlin.String**|  |
- **secretFKeys** | **kotlin.String**|  |
+ **startKey** | **kotlin.String**| A label | [optional]
+ **startDocumentId** | **kotlin.String**| An classification template document ID | [optional]
+ **limit** | **kotlin.Int**| Number of rows | [optional]
 
 ### Return type
 
-[**kotlin.collections.List&lt;ClassificationTemplateDto&gt;**](ClassificationTemplateDto.md)
+[**PaginatedListClassificationTemplateDto**](PaginatedListClassificationTemplateDto.md)
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -204,10 +197,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -254,23 +244,20 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: */*
 
-<a name="listClassificationTemplates"></a>
-# **listClassificationTemplates**
-> PaginatedListClassificationTemplateDto listClassificationTemplates(startKey, startDocumentId, limit)
+<a name="listClassificationTemplatesByHCPartyPatientForeignKeys"></a>
+# **listClassificationTemplatesByHCPartyPatientForeignKeys**
+> kotlin.collections.List&lt;ClassificationTemplateDto&gt; listClassificationTemplatesByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
 
-List all classification templates with pagination
+List classification Templates found By Healthcare Party and secret foreign keyelementIds.
 
-Returns a list of classification templates.
+Keys hast to delimited by coma
 
 ### Example
 ```kotlin
@@ -279,17 +266,16 @@ Returns a list of classification templates.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ClassificationTemplateApi()
-val startKey : kotlin.String = startKey_example // kotlin.String | A label
-val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | An classification template document ID
-val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
+val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
 try {
-    val result : PaginatedListClassificationTemplateDto = apiInstance.listClassificationTemplates(startKey, startDocumentId, limit)
+    val result : kotlin.collections.List<ClassificationTemplateDto> = apiInstance.listClassificationTemplatesByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling ClassificationTemplateApi#listClassificationTemplates")
+    println("4xx response calling ClassificationTemplateApi#listClassificationTemplatesByHCPartyPatientForeignKeys")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling ClassificationTemplateApi#listClassificationTemplates")
+    println("5xx response calling ClassificationTemplateApi#listClassificationTemplatesByHCPartyPatientForeignKeys")
     e.printStackTrace()
 }
 ```
@@ -298,20 +284,16 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **startKey** | **kotlin.String**| A label | [optional]
- **startDocumentId** | **kotlin.String**| An classification template document ID | [optional]
- **limit** | **kotlin.Int**| Number of rows | [optional]
+ **hcPartyId** | **kotlin.String**|  |
+ **secretFKeys** | **kotlin.String**|  |
 
 ### Return type
 
-[**PaginatedListClassificationTemplateDto**](PaginatedListClassificationTemplateDto.md)
+[**kotlin.collections.List&lt;ClassificationTemplateDto&gt;**](ClassificationTemplateDto.md)
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -358,10 +340,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -410,10 +389,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 

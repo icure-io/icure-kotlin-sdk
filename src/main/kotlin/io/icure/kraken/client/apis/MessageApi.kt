@@ -1,9 +1,9 @@
 /**
- * iCure Cloud API Documentation
+ * iCure Data Stack API Documentation
  *
- * Spring shop sample application
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v0.0.1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -39,7 +39,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
-            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "https://kraken.icure.dev")
+            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "http://localhost:16043")
         }
     }
 
@@ -74,7 +74,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/message",
+            path = "/rest/v2/message",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -114,45 +114,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.DELETE,
-            path = "/rest/v1/message/{messageId}/delegate/{delegateId}".replace("{"+"messageId"+"}", "$messageId").replace("{"+"delegateId"+"}", "$delegateId"),
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Deletes multiple messages
-    * 
-    * @param messageIds  
-    * @return kotlin.collections.List<DocIdentifier>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteMessages(messageIds: kotlin.String) : kotlin.collections.List<DocIdentifier>  {
-        val localVariableConfig = deleteMessagesRequestConfig(messageIds = messageIds)
-
-        return request<Unit, kotlin.collections.List<DocIdentifier>>(
-            localVariableConfig
-        )!!
-    }
-    /**
-    * To obtain the request config of the operation deleteMessages
-    *
-    * @param messageIds  
-    * @return RequestConfig
-    */
-    fun deleteMessagesRequestConfig(messageIds: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.DELETE,
-            path = "/rest/v1/message/{messageIds}".replace("{"+"messageIds"+"}", "$messageIds"),
+            path = "/rest/v2/message/{messageId}/delegate/{delegateId}".replace("{"+"messageId"+"}", "$messageId").replace("{"+"delegateId"+"}", "$delegateId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -170,27 +132,27 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteMessagesBatch(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocIdentifier>  {
-        val localVariableConfig = deleteMessagesBatchRequestConfig(listOfIdsDto = listOfIdsDto)
+    suspend fun deleteMessages(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocIdentifier>  {
+        val localVariableConfig = deleteMessagesRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
         )!!
     }
     /**
-    * To obtain the request config of the operation deleteMessagesBatch
+    * To obtain the request config of the operation deleteMessages
     *
     * @param listOfIdsDto  
     * @return RequestConfig
     */
-    fun deleteMessagesBatchRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+    fun deleteMessagesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
         val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/message/delete/byIds",
+            path = "/rest/v2/message/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -243,7 +205,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/message",
+            path = "/rest/v2/message",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -306,7 +268,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/message/byFromAddress",
+            path = "/rest/v2/message/byFromAddress",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -347,7 +309,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/message/byHcPartySecretForeignKeys",
+            path = "/rest/v2/message/byHcPartySecretForeignKeys",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -415,7 +377,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/message/byToAddress",
+            path = "/rest/v2/message/byToAddress",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -483,7 +445,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/message/byTransportGuid",
+            path = "/rest/v2/message/byTransportGuid",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -556,7 +518,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/message/byTransportGuidSentDate",
+            path = "/rest/v2/message/byTransportGuidSentDate",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -594,45 +556,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/message/{messageId}/children".replace("{"+"messageId"+"}", "$messageId"),
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Get children messages of provided message
-    * 
-    * @param listOfIdsDto  
-    * @return kotlin.collections.List<MessageDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getChildrenMessagesOfList(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<MessageDto>  {
-        val localVariableConfig = getChildrenMessagesOfListRequestConfig(listOfIdsDto = listOfIdsDto)
-
-        return request<ListOfIdsDto, kotlin.collections.List<MessageDto>>(
-            localVariableConfig
-        )!!
-    }
-    /**
-    * To obtain the request config of the operation getChildrenMessagesOfList
-    *
-    * @param listOfIdsDto  
-    * @return RequestConfig
-    */
-    fun getChildrenMessagesOfListRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
-        val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.POST,
-            path = "/rest/v1/message/children/batch",
+            path = "/rest/v2/message/{messageId}/children".replace("{"+"messageId"+"}", "$messageId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -670,7 +594,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/message/{messageId}".replace("{"+"messageId"+"}", "$messageId"),
+            path = "/rest/v2/message/{messageId}".replace("{"+"messageId"+"}", "$messageId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -688,27 +612,65 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listMessagesByInvoiceIds(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<MessageDto>  {
-        val localVariableConfig = listMessagesByInvoiceIdsRequestConfig(listOfIdsDto = listOfIdsDto)
+    suspend fun getMessagesChildren(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<MessageDto>  {
+        val localVariableConfig = getMessagesChildrenRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<MessageDto>>(
             localVariableConfig
         )!!
     }
     /**
-    * To obtain the request config of the operation listMessagesByInvoiceIds
+    * To obtain the request config of the operation getMessagesChildren
     *
     * @param listOfIdsDto  
     * @return RequestConfig
     */
-    fun listMessagesByInvoiceIdsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+    fun getMessagesChildrenRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
         val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/message/byInvoiceId",
+            path = "/rest/v2/message/children/batch",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
+    * Get children messages of provided message
+    * 
+    * @param listOfIdsDto  
+    * @return kotlin.collections.List<MessageDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun listMessagesByInvoices(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<MessageDto>  {
+        val localVariableConfig = listMessagesByInvoicesRequestConfig(listOfIdsDto = listOfIdsDto)
+
+        return request<ListOfIdsDto, kotlin.collections.List<MessageDto>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation listMessagesByInvoices
+    *
+    * @param listOfIdsDto  
+    * @return RequestConfig
+    */
+    fun listMessagesByInvoicesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+        val localVariableBody = listOfIdsDto
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v2/message/byInvoice",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -751,7 +713,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/message/byTransportGuid/list",
+            path = "/rest/v2/message/byTransportGuid/list",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -789,7 +751,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/message",
+            path = "/rest/v2/message",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -829,7 +791,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/message/{messageId}/delegate".replace("{"+"messageId"+"}", "$messageId"),
+            path = "/rest/v2/message/{messageId}/delegate".replace("{"+"messageId"+"}", "$messageId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -867,7 +829,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/message/readstatus",
+            path = "/rest/v2/message/readstatus",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -907,7 +869,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/message/status/{status}".replace("{"+"status"+"}", "$status"),
+            path = "/rest/v2/message/status/{status}".replace("{"+"status"+"}", "$status"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody

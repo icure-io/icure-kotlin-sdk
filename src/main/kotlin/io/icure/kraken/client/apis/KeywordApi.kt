@@ -1,9 +1,9 @@
 /**
- * iCure Cloud API Documentation
+ * iCure Data Stack API Documentation
  *
- * Spring shop sample application
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v0.0.1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -16,6 +16,7 @@ import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.KeywordDto
+import io.icure.kraken.client.models.ListOfIdsDto
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -34,7 +35,7 @@ class KeywordApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
-            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "https://kraken.icure.dev")
+            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "http://localhost:16043")
         }
     }
 
@@ -69,7 +70,7 @@ class KeywordApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/keyword",
+            path = "/rest/v2/keyword",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -79,7 +80,7 @@ class KeywordApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     /**
     * Delete keywords.
     * Response is a set containing the ID&#39;s of deleted keywords.
-    * @param keywordIds  
+    * @param listOfIdsDto  
     * @return kotlin.collections.List<DocIdentifier>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -87,27 +88,27 @@ class KeywordApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteKeywords(keywordIds: kotlin.String) : kotlin.collections.List<DocIdentifier>  {
-        val localVariableConfig = deleteKeywordsRequestConfig(keywordIds = keywordIds)
+    suspend fun deleteKeywords(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocIdentifier>  {
+        val localVariableConfig = deleteKeywordsRequestConfig(listOfIdsDto = listOfIdsDto)
 
-        return request<Unit, kotlin.collections.List<DocIdentifier>>(
+        return request<ListOfIdsDto, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
         )!!
     }
     /**
     * To obtain the request config of the operation deleteKeywords
     *
-    * @param keywordIds  
+    * @param listOfIdsDto  
     * @return RequestConfig
     */
-    fun deleteKeywordsRequestConfig(keywordIds: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun deleteKeywordsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+        val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(
-            method = RequestMethod.DELETE,
-            path = "/rest/v1/keyword/{keywordIds}".replace("{"+"keywordIds"+"}", "$keywordIds"),
+            method = RequestMethod.POST,
+            path = "/rest/v2/keyword/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -145,7 +146,7 @@ class KeywordApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/keyword/{keywordId}".replace("{"+"keywordId"+"}", "$keywordId"),
+            path = "/rest/v2/keyword/{keywordId}".replace("{"+"keywordId"+"}", "$keywordId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -181,7 +182,7 @@ class KeywordApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/keyword",
+            path = "/rest/v2/keyword",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -219,7 +220,7 @@ class KeywordApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/keyword/byUser/{userId}".replace("{"+"userId"+"}", "$userId"),
+            path = "/rest/v2/keyword/byUser/{userId}".replace("{"+"userId"+"}", "$userId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -257,7 +258,7 @@ class KeywordApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/keyword",
+            path = "/rest/v2/keyword",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody

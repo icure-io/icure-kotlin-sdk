@@ -70,7 +70,7 @@ suspend fun FormApi.newFormDelegations(
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun FormApi.findByHCPartyPatient(
+suspend fun FormApi.listFormsByHCPartyAndPatient(
     user: UserDto,
     hcPartyId: String,
     patient: PatientDto,
@@ -81,12 +81,12 @@ suspend fun FormApi.findByHCPartyPatient(
 ): List<FormDto>? {
     val key = config.crypto.decryptEncryptionKeys(user.healthcarePartyId!!, patient.delegations).firstOrNull()
         ?: throw IllegalArgumentException("No delegation for user")
-    return this.findFormsByHCPartyPatientForeignKeys(user, hcPartyId, key, healthElementId, planOfActionId, formTemplateId, config)
+    return this.listFormsByHCPartyAndPatientForeignKeys(user, hcPartyId, key, healthElementId, planOfActionId, formTemplateId, config)
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun FormApi.findFormsByHCPartyPatientForeignKeys(
+suspend fun FormApi.listFormsByHCPartyAndPatientForeignKeys(
     user: UserDto,
     hcPartyId: String,
     secretFKeys: String,
@@ -95,7 +95,7 @@ suspend fun FormApi.findFormsByHCPartyPatientForeignKeys(
     formTemplateId: String?,
     config: CryptoConfig<FormDto, io.icure.kraken.client.models.FormDto>
 ): List<FormDto>? {
-    return this.findFormsByHCPartyPatientForeignKeys(
+    return this.listFormsByHCPartyAndPatientForeignKeys(
         hcPartyId,
         secretFKeys,
         healthElementId,

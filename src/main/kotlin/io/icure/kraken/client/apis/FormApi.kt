@@ -1,9 +1,9 @@
 /**
- * iCure Cloud API Documentation
+ * iCure Data Stack API Documentation
  *
- * Spring shop sample application
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v0.0.1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -38,7 +38,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
-            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "https://kraken.icure.dev")
+            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "http://localhost:16043")
         }
     }
 
@@ -73,7 +73,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/form",
+            path = "/rest/v2/form",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -111,7 +111,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/form/template",
+            path = "/rest/v2/form/template",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -149,7 +149,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/form/batch",
+            path = "/rest/v2/form/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -187,7 +187,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.DELETE,
-            path = "/rest/v1/form/template/{formTemplateId}".replace("{"+"formTemplateId"+"}", "$formTemplateId"),
+            path = "/rest/v2/form/template/{formTemplateId}".replace("{"+"formTemplateId"+"}", "$formTemplateId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -197,7 +197,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     /**
     * Delete forms.
     * Response is a set containing the ID&#39;s of deleted forms.
-    * @param formIds  
+    * @param listOfIdsDto  
     * @return kotlin.collections.List<DocIdentifier>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -205,27 +205,27 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteForms(formIds: kotlin.String) : kotlin.collections.List<DocIdentifier>  {
-        val localVariableConfig = deleteFormsRequestConfig(formIds = formIds)
+    suspend fun deleteForms(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocIdentifier>  {
+        val localVariableConfig = deleteFormsRequestConfig(listOfIdsDto = listOfIdsDto)
 
-        return request<Unit, kotlin.collections.List<DocIdentifier>>(
+        return request<ListOfIdsDto, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
         )!!
     }
     /**
     * To obtain the request config of the operation deleteForms
     *
-    * @param formIds  
+    * @param listOfIdsDto  
     * @return RequestConfig
     */
-    fun deleteFormsRequestConfig(formIds: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun deleteFormsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+        val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(
-            method = RequestMethod.DELETE,
-            path = "/rest/v1/form/{formIds}".replace("{"+"formIds"+"}", "$formIds"),
+            method = RequestMethod.POST,
+            path = "/rest/v2/form/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -233,198 +233,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     }
 
     /**
-    * Gets all form templates for current user
-    * 
-    * @param loadLayout  (optional)
-    * @return kotlin.collections.List<FormTemplateDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findFormTemplates(loadLayout: kotlin.Boolean?) : kotlin.collections.List<FormTemplateDto>  {
-        val localVariableConfig = findFormTemplatesRequestConfig(loadLayout = loadLayout)
-
-        return request<Unit, kotlin.collections.List<FormTemplateDto>>(
-            localVariableConfig
-        )!!
-    }
-    /**
-    * To obtain the request config of the operation findFormTemplates
-    *
-    * @param loadLayout  (optional)
-    * @return RequestConfig
-    */
-    fun findFormTemplatesRequestConfig(loadLayout: kotlin.Boolean?) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
-            .apply {
-                if (loadLayout != null) {
-                    put("loadLayout", listOf(loadLayout.toString()))
-                }
-            }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/form/template",
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Gets all form templates
-    * 
-    * @param specialityCode  
-    * @param loadLayout  (optional)
-    * @return kotlin.collections.List<FormTemplateDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findFormTemplatesBySpeciality(specialityCode: kotlin.String, loadLayout: kotlin.Boolean?) : kotlin.collections.List<FormTemplateDto>  {
-        val localVariableConfig = findFormTemplatesBySpecialityRequestConfig(specialityCode = specialityCode, loadLayout = loadLayout)
-
-        return request<Unit, kotlin.collections.List<FormTemplateDto>>(
-            localVariableConfig
-        )!!
-    }
-    /**
-    * To obtain the request config of the operation findFormTemplatesBySpeciality
-    *
-    * @param specialityCode  
-    * @param loadLayout  (optional)
-    * @return RequestConfig
-    */
-    fun findFormTemplatesBySpecialityRequestConfig(specialityCode: kotlin.String, loadLayout: kotlin.Boolean?) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
-            .apply {
-                if (loadLayout != null) {
-                    put("loadLayout", listOf(loadLayout.toString()))
-                }
-            }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/form/template/bySpecialty/{specialityCode}".replace("{"+"specialityCode"+"}", "$specialityCode"),
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * List forms found By Healthcare Party and secret foreign keys.
-    * Keys must be delimited by coma
-    * @param hcPartyId  
-    * @param secretFKeys  
-    * @param healthElementId  (optional)
-    * @param planOfActionId  (optional)
-    * @param formTemplateId  (optional)
-    * @return kotlin.collections.List<FormDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findFormsByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String, healthElementId: kotlin.String?, planOfActionId: kotlin.String?, formTemplateId: kotlin.String?) : kotlin.collections.List<FormDto>  {
-        val localVariableConfig = findFormsByHCPartyPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys, healthElementId = healthElementId, planOfActionId = planOfActionId, formTemplateId = formTemplateId)
-
-        return request<Unit, kotlin.collections.List<FormDto>>(
-            localVariableConfig
-        )!!
-    }
-    /**
-    * To obtain the request config of the operation findFormsByHCPartyPatientForeignKeys
-    *
-    * @param hcPartyId  
-    * @param secretFKeys  
-    * @param healthElementId  (optional)
-    * @param planOfActionId  (optional)
-    * @param formTemplateId  (optional)
-    * @return RequestConfig
-    */
-    fun findFormsByHCPartyPatientForeignKeysRequestConfig(hcPartyId: kotlin.String, secretFKeys: kotlin.String, healthElementId: kotlin.String?, planOfActionId: kotlin.String?, formTemplateId: kotlin.String?) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
-            .apply {
-                put("hcPartyId", listOf(hcPartyId.toString()))
-                put("secretFKeys", listOf(secretFKeys.toString()))
-                if (healthElementId != null) {
-                    put("healthElementId", listOf(healthElementId.toString()))
-                }
-                if (planOfActionId != null) {
-                    put("planOfActionId", listOf(planOfActionId.toString()))
-                }
-                if (formTemplateId != null) {
-                    put("formTemplateId", listOf(formTemplateId.toString()))
-                }
-            }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/form/byHcPartySecretForeignKeys",
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * List form stubs found By Healthcare Party and secret foreign keys.
-    * Keys must be delimited by coma
-    * @param hcPartyId  
-    * @param secretFKeys  
-    * @return kotlin.collections.List<IcureStubDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findFormsDelegationsStubsByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<IcureStubDto>  {
-        val localVariableConfig = findFormsDelegationsStubsByHCPartyPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
-
-        return request<Unit, kotlin.collections.List<IcureStubDto>>(
-            localVariableConfig
-        )!!
-    }
-    /**
-    * To obtain the request config of the operation findFormsDelegationsStubsByHCPartyPatientForeignKeys
-    *
-    * @param hcPartyId  
-    * @param secretFKeys  
-    * @return RequestConfig
-    */
-    fun findFormsDelegationsStubsByHCPartyPatientForeignKeysRequestConfig(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
-            .apply {
-                put("hcPartyId", listOf(hcPartyId.toString()))
-                put("secretFKeys", listOf(secretFKeys.toString()))
-            }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/form/byHcPartySecretForeignKeys/delegations",
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Get a list of forms by ids
+    * Get a list of forms by parents ids
     * Keys must be delimited by coma
     * @param formId  
     * @param hcPartyId  
@@ -456,7 +265,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/form/childrenOf/{formId}/{hcPartyId}".replace("{"+"formId"+"}", "$formId").replace("{"+"hcPartyId"+"}", "$hcPartyId"),
+            path = "/rest/v2/form/childrenOf/{formId}/{hcPartyId}".replace("{"+"formId"+"}", "$formId").replace("{"+"hcPartyId"+"}", "$hcPartyId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -494,7 +303,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/form/{formId}".replace("{"+"formId"+"}", "$formId"),
+            path = "/rest/v2/form/{formId}".replace("{"+"formId"+"}", "$formId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -532,7 +341,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/form/logicalUuid/{logicalUuid}".replace("{"+"logicalUuid"+"}", "$logicalUuid"),
+            path = "/rest/v2/form/logicalUuid/{logicalUuid}".replace("{"+"logicalUuid"+"}", "$logicalUuid"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -570,7 +379,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/form/uniqueId/{uniqueId}".replace("{"+"uniqueId"+"}", "$uniqueId"),
+            path = "/rest/v2/form/uniqueId/{uniqueId}".replace("{"+"uniqueId"+"}", "$uniqueId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -608,7 +417,50 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/form/template/{formTemplateId}".replace("{"+"formTemplateId"+"}", "$formTemplateId"),
+            path = "/rest/v2/form/template/{formTemplateId}".replace("{"+"formTemplateId"+"}", "$formTemplateId"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
+    * Gets all form templates for current user
+    * 
+    * @param loadLayout  (optional)
+    * @return kotlin.collections.List<FormTemplateDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun getFormTemplates(loadLayout: kotlin.Boolean?) : kotlin.collections.List<FormTemplateDto>  {
+        val localVariableConfig = getFormTemplatesRequestConfig(loadLayout = loadLayout)
+
+        return request<Unit, kotlin.collections.List<FormTemplateDto>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation getFormTemplates
+    *
+    * @param loadLayout  (optional)
+    * @return RequestConfig
+    */
+    fun getFormTemplatesRequestConfig(loadLayout: kotlin.Boolean?) : RequestConfig<Unit> {
+        val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                if (loadLayout != null) {
+                    put("loadLayout", listOf(loadLayout.toString()))
+                }
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v2/form/template",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -648,7 +500,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/form/template/{specialityCode}/guid/{formTemplateGuid}".replace("{"+"formTemplateGuid"+"}", "$formTemplateGuid").replace("{"+"specialityCode"+"}", "$specialityCode"),
+            path = "/rest/v2/form/template/{specialityCode}/guid/{formTemplateGuid}".replace("{"+"formTemplateGuid"+"}", "$formTemplateGuid").replace("{"+"specialityCode"+"}", "$specialityCode"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -686,7 +538,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/form/byIds",
+            path = "/rest/v2/form/byIds",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -724,7 +576,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/form/all/logicalUuid/{logicalUuid}".replace("{"+"logicalUuid"+"}", "$logicalUuid"),
+            path = "/rest/v2/form/all/logicalUuid/{logicalUuid}".replace("{"+"logicalUuid"+"}", "$logicalUuid"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -762,7 +614,155 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/form/all/uniqueId/{uniqueId}".replace("{"+"uniqueId"+"}", "$uniqueId"),
+            path = "/rest/v2/form/all/uniqueId/{uniqueId}".replace("{"+"uniqueId"+"}", "$uniqueId"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
+    * Gets all form templates
+    * 
+    * @param specialityCode  
+    * @param loadLayout  (optional)
+    * @return kotlin.collections.List<FormTemplateDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun listFormTemplatesBySpeciality(specialityCode: kotlin.String, loadLayout: kotlin.Boolean?) : kotlin.collections.List<FormTemplateDto>  {
+        val localVariableConfig = listFormTemplatesBySpecialityRequestConfig(specialityCode = specialityCode, loadLayout = loadLayout)
+
+        return request<Unit, kotlin.collections.List<FormTemplateDto>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation listFormTemplatesBySpeciality
+    *
+    * @param specialityCode  
+    * @param loadLayout  (optional)
+    * @return RequestConfig
+    */
+    fun listFormTemplatesBySpecialityRequestConfig(specialityCode: kotlin.String, loadLayout: kotlin.Boolean?) : RequestConfig<Unit> {
+        val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                if (loadLayout != null) {
+                    put("loadLayout", listOf(loadLayout.toString()))
+                }
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v2/form/template/bySpecialty/{specialityCode}".replace("{"+"specialityCode"+"}", "$specialityCode"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
+    * List forms found By Healthcare Party and secret foreign keys.
+    * Keys must be delimited by coma
+    * @param hcPartyId  
+    * @param secretFKeys  
+    * @param healthElementId  (optional)
+    * @param planOfActionId  (optional)
+    * @param formTemplateId  (optional)
+    * @return kotlin.collections.List<FormDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun listFormsByHCPartyAndPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String, healthElementId: kotlin.String?, planOfActionId: kotlin.String?, formTemplateId: kotlin.String?) : kotlin.collections.List<FormDto>  {
+        val localVariableConfig = listFormsByHCPartyAndPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys, healthElementId = healthElementId, planOfActionId = planOfActionId, formTemplateId = formTemplateId)
+
+        return request<Unit, kotlin.collections.List<FormDto>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation listFormsByHCPartyAndPatientForeignKeys
+    *
+    * @param hcPartyId  
+    * @param secretFKeys  
+    * @param healthElementId  (optional)
+    * @param planOfActionId  (optional)
+    * @param formTemplateId  (optional)
+    * @return RequestConfig
+    */
+    fun listFormsByHCPartyAndPatientForeignKeysRequestConfig(hcPartyId: kotlin.String, secretFKeys: kotlin.String, healthElementId: kotlin.String?, planOfActionId: kotlin.String?, formTemplateId: kotlin.String?) : RequestConfig<Unit> {
+        val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                put("hcPartyId", listOf(hcPartyId.toString()))
+                put("secretFKeys", listOf(secretFKeys.toString()))
+                if (healthElementId != null) {
+                    put("healthElementId", listOf(healthElementId.toString()))
+                }
+                if (planOfActionId != null) {
+                    put("planOfActionId", listOf(planOfActionId.toString()))
+                }
+                if (formTemplateId != null) {
+                    put("formTemplateId", listOf(formTemplateId.toString()))
+                }
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v2/form/byHcPartySecretForeignKeys",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
+    * List form stubs found By Healthcare Party and secret foreign keys.
+    * Keys must be delimited by coma
+    * @param hcPartyId  
+    * @param secretFKeys  
+    * @return kotlin.collections.List<IcureStubDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun listFormsDelegationsStubsByHCPartyAndPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<IcureStubDto>  {
+        val localVariableConfig = listFormsDelegationsStubsByHCPartyAndPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
+
+        return request<Unit, kotlin.collections.List<IcureStubDto>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation listFormsDelegationsStubsByHCPartyAndPatientForeignKeys
+    *
+    * @param hcPartyId  
+    * @param secretFKeys  
+    * @return RequestConfig
+    */
+    fun listFormsDelegationsStubsByHCPartyAndPatientForeignKeysRequestConfig(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : RequestConfig<Unit> {
+        val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                put("hcPartyId", listOf(hcPartyId.toString()))
+                put("secretFKeys", listOf(secretFKeys.toString()))
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v2/form/byHcPartySecretForeignKeys/delegations",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -800,7 +800,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/form",
+            path = "/rest/v2/form",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -838,7 +838,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/form/batch",
+            path = "/rest/v2/form/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -878,7 +878,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/form/delegate/{formId}".replace("{"+"formId"+"}", "$formId"),
+            path = "/rest/v2/form/delegate/{formId}".replace("{"+"formId"+"}", "$formId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -916,7 +916,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/form/delegations",
+            path = "/rest/v2/form/delegations",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -956,7 +956,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/form/template/{formTemplateId}/attachment/multipart".replace("{"+"formTemplateId"+"}", "$formTemplateId"),
+            path = "/rest/v2/form/template/{formTemplateId}/attachment/multipart".replace("{"+"formTemplateId"+"}", "$formTemplateId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -996,7 +996,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/form/template/{formTemplateId}".replace("{"+"formTemplateId"+"}", "$formTemplateId"),
+            path = "/rest/v2/form/template/{formTemplateId}".replace("{"+"formTemplateId"+"}", "$formTemplateId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody

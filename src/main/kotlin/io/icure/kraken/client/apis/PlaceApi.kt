@@ -1,9 +1,9 @@
 /**
- * iCure Cloud API Documentation
+ * iCure Data Stack API Documentation
  *
- * Spring shop sample application
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v0.0.1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -15,6 +15,7 @@ package io.icure.kraken.client.apis
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.models.DocIdentifier
+import io.icure.kraken.client.models.ListOfIdsDto
 import io.icure.kraken.client.models.PlaceDto
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -34,7 +35,7 @@ class PlaceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
-            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "https://kraken.icure.dev")
+            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "http://localhost:16043")
         }
     }
 
@@ -69,7 +70,7 @@ class PlaceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/place",
+            path = "/rest/v2/place",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -77,9 +78,9 @@ class PlaceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     }
 
     /**
-    * Deletes an place
+    * Deletes places
     * 
-    * @param placeIds  
+    * @param listOfIdsDto  
     * @return kotlin.collections.List<DocIdentifier>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -87,27 +88,27 @@ class PlaceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deletePlace(placeIds: kotlin.String) : kotlin.collections.List<DocIdentifier>  {
-        val localVariableConfig = deletePlaceRequestConfig(placeIds = placeIds)
+    suspend fun deletePlaces(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocIdentifier>  {
+        val localVariableConfig = deletePlacesRequestConfig(listOfIdsDto = listOfIdsDto)
 
-        return request<Unit, kotlin.collections.List<DocIdentifier>>(
+        return request<ListOfIdsDto, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
         )!!
     }
     /**
-    * To obtain the request config of the operation deletePlace
+    * To obtain the request config of the operation deletePlaces
     *
-    * @param placeIds  
+    * @param listOfIdsDto  
     * @return RequestConfig
     */
-    fun deletePlaceRequestConfig(placeIds: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun deletePlacesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+        val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(
-            method = RequestMethod.DELETE,
-            path = "/rest/v1/place/{placeIds}".replace("{"+"placeIds"+"}", "$placeIds"),
+            method = RequestMethod.POST,
+            path = "/rest/v2/place/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -145,7 +146,7 @@ class PlaceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/place/{placeId}".replace("{"+"placeId"+"}", "$placeId"),
+            path = "/rest/v2/place/{placeId}".replace("{"+"placeId"+"}", "$placeId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -181,7 +182,7 @@ class PlaceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/place",
+            path = "/rest/v2/place",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -219,7 +220,7 @@ class PlaceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/place",
+            path = "/rest/v2/place",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody

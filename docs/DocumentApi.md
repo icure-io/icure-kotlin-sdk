@@ -1,26 +1,26 @@
 # DocumentApi
 
-All URIs are relative to *https://kraken.icure.dev*
+All URIs are relative to *http://localhost:16043*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createDocument**](DocumentApi.md#createDocument) | **POST** /rest/v1/document | Creates a document
-[**deleteAttachment**](DocumentApi.md#deleteAttachment) | **DELETE** /rest/v1/document/{documentId}/attachment | Deletes a document&#39;s attachment
-[**deleteDocument**](DocumentApi.md#deleteDocument) | **DELETE** /rest/v1/document/{documentIds} | Deletes a document
-[**findByTypeHCPartyMessageSecretFKeys**](DocumentApi.md#findByTypeHCPartyMessageSecretFKeys) | **GET** /rest/v1/document/byTypeHcPartySecretForeignKeys | List documents found By type, By Healthcare Party and secret foreign keys.
-[**findDocumentsByHCPartyPatientForeignKeys**](DocumentApi.md#findDocumentsByHCPartyPatientForeignKeys) | **GET** /rest/v1/document/byHcPartySecretForeignKeys | List documents found By Healthcare Party and secret foreign keys.
-[**findWithoutDelegation**](DocumentApi.md#findWithoutDelegation) | **GET** /rest/v1/document/woDelegation | List documents with no delegation
-[**getDocument**](DocumentApi.md#getDocument) | **GET** /rest/v1/document/{documentId} | Gets a document
-[**getDocumentAttachment**](DocumentApi.md#getDocumentAttachment) | **GET** /rest/v1/document/{documentId}/attachment/{attachmentId} | Load document&#39;s attachment
-[**getDocumentByExternalUuid**](DocumentApi.md#getDocumentByExternalUuid) | **GET** /rest/v1/document/externaluuid/{externalUuid} | Gets a document
-[**getDocuments**](DocumentApi.md#getDocuments) | **POST** /rest/v1/document/batch | Gets a document
-[**getDocumentsByExternalUuid**](DocumentApi.md#getDocumentsByExternalUuid) | **GET** /rest/v1/document/externaluuid/{externalUuid}/all | Get all documents with externalUuid
-[**modifyDocument**](DocumentApi.md#modifyDocument) | **PUT** /rest/v1/document | Updates a document
-[**modifyDocuments**](DocumentApi.md#modifyDocuments) | **PUT** /rest/v1/document/batch | Updates a batch of documents
-[**setDocumentAttachment**](DocumentApi.md#setDocumentAttachment) | **PUT** /rest/v1/document/{documentId}/attachment | Creates a document&#39;s attachment
-[**setDocumentAttachmentMulti**](DocumentApi.md#setDocumentAttachmentMulti) | **PUT** /rest/v1/document/{documentId}/attachment/multipart | Creates a document&#39;s attachment
-[**setDocumentsDelegations**](DocumentApi.md#setDocumentsDelegations) | **POST** /rest/v1/document/delegations | Update delegations in healthElements.
-[**setSafeDocumentAttachment**](DocumentApi.md#setSafeDocumentAttachment) | **PUT** /rest/v1/document/attachment | Creates a document&#39;s attachment
+[**createDocument**](DocumentApi.md#createDocument) | **POST** /rest/v2/document | Creates a document
+[**deleteAttachment**](DocumentApi.md#deleteAttachment) | **DELETE** /rest/v2/document/{documentId}/attachment | Deletes a document&#39;s attachment
+[**deleteDocument**](DocumentApi.md#deleteDocument) | **POST** /rest/v2/document/delete/batch | Deletes documents
+[**findWithoutDelegation**](DocumentApi.md#findWithoutDelegation) | **GET** /rest/v2/document/woDelegation | List documents with no delegation
+[**getDocument**](DocumentApi.md#getDocument) | **GET** /rest/v2/document/{documentId} | Gets a document
+[**getDocumentAttachment**](DocumentApi.md#getDocumentAttachment) | **GET** /rest/v2/document/{documentId}/attachment/{attachmentId} | Load document&#39;s attachment
+[**getDocumentByExternalUuid**](DocumentApi.md#getDocumentByExternalUuid) | **GET** /rest/v2/document/externaluuid/{externalUuid} | Gets a document
+[**getDocuments**](DocumentApi.md#getDocuments) | **POST** /rest/v2/document/byIds | Gets a document
+[**getDocumentsByExternalUuid**](DocumentApi.md#getDocumentsByExternalUuid) | **GET** /rest/v2/document/externaluuid/{externalUuid}/all | Get all documents with externalUuid
+[**listDocumentByTypeHCPartyMessageSecretFKeys**](DocumentApi.md#listDocumentByTypeHCPartyMessageSecretFKeys) | **GET** /rest/v2/document/byTypeHcPartySecretForeignKeys | List documents found By type, By Healthcare Party and secret foreign keys.
+[**listDocumentsByHCPartyAndPatientForeignKeys**](DocumentApi.md#listDocumentsByHCPartyAndPatientForeignKeys) | **GET** /rest/v2/document/byHcPartySecretForeignKeys | List documents found By Healthcare Party and secret foreign keys.
+[**modifyDocument**](DocumentApi.md#modifyDocument) | **PUT** /rest/v2/document | Updates a document
+[**modifyDocuments**](DocumentApi.md#modifyDocuments) | **PUT** /rest/v2/document/batch | Updates a batch of documents
+[**setDocumentAttachment**](DocumentApi.md#setDocumentAttachment) | **PUT** /rest/v2/document/{documentId}/attachment | Creates a document&#39;s attachment
+[**setDocumentAttachmentMulti**](DocumentApi.md#setDocumentAttachmentMulti) | **PUT** /rest/v2/document/{documentId}/attachment/multipart | Creates a document&#39;s attachment
+[**setDocumentsDelegations**](DocumentApi.md#setDocumentsDelegations) | **POST** /rest/v2/document/delegations | Update delegations in healthElements.
+[**setSafeDocumentAttachment**](DocumentApi.md#setSafeDocumentAttachment) | **PUT** /rest/v2/document/attachment | Creates a document&#39;s attachment
 
 
 <a name="createDocument"></a>
@@ -61,10 +61,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -109,10 +106,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -121,9 +115,9 @@ Configure basicScheme:
 
 <a name="deleteDocument"></a>
 # **deleteDocument**
-> kotlin.collections.List&lt;DocIdentifier&gt; deleteDocument(documentIds)
+> kotlin.collections.List&lt;DocIdentifier&gt; deleteDocument(listOfIdsDto)
 
-Deletes a document
+Deletes documents
 
 ### Example
 ```kotlin
@@ -132,9 +126,9 @@ Deletes a document
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DocumentApi()
-val documentIds : kotlin.String = documentIds_example // kotlin.String | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
 try {
-    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteDocument(documentIds)
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteDocument(listOfIdsDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling DocumentApi#deleteDocument")
@@ -149,7 +143,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **documentIds** | **kotlin.String**|  |
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
 
 ### Return type
 
@@ -157,120 +151,11 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="findByTypeHCPartyMessageSecretFKeys"></a>
-# **findByTypeHCPartyMessageSecretFKeys**
-> kotlin.collections.List&lt;DocumentDto&gt; findByTypeHCPartyMessageSecretFKeys(documentTypeCode, hcPartyId, secretFKeys)
-
-List documents found By type, By Healthcare Party and secret foreign keys.
-
-Keys must be delimited by coma
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = DocumentApi()
-val documentTypeCode : kotlin.String = documentTypeCode_example // kotlin.String | 
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
-try {
-    val result : kotlin.collections.List<DocumentDto> = apiInstance.findByTypeHCPartyMessageSecretFKeys(documentTypeCode, hcPartyId, secretFKeys)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling DocumentApi#findByTypeHCPartyMessageSecretFKeys")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling DocumentApi#findByTypeHCPartyMessageSecretFKeys")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **documentTypeCode** | **kotlin.String**|  |
- **hcPartyId** | **kotlin.String**|  |
- **secretFKeys** | **kotlin.String**|  |
-
-### Return type
-
-[**kotlin.collections.List&lt;DocumentDto&gt;**](DocumentDto.md)
-
-### Authorization
-
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="findDocumentsByHCPartyPatientForeignKeys"></a>
-# **findDocumentsByHCPartyPatientForeignKeys**
-> kotlin.collections.List&lt;DocumentDto&gt; findDocumentsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
-
-List documents found By Healthcare Party and secret foreign keys.
-
-Keys must be delimited by coma
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = DocumentApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
-try {
-    val result : kotlin.collections.List<DocumentDto> = apiInstance.findDocumentsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling DocumentApi#findDocumentsByHCPartyPatientForeignKeys")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling DocumentApi#findDocumentsByHCPartyPatientForeignKeys")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **hcPartyId** | **kotlin.String**|  |
- **secretFKeys** | **kotlin.String**|  |
-
-### Return type
-
-[**kotlin.collections.List&lt;DocumentDto&gt;**](DocumentDto.md)
-
-### Authorization
-
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: */*
 
 <a name="findWithoutDelegation"></a>
@@ -313,10 +198,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -361,10 +243,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -415,10 +294,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -463,10 +339,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -511,10 +384,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -559,10 +429,107 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
+No authorization required
 
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="listDocumentByTypeHCPartyMessageSecretFKeys"></a>
+# **listDocumentByTypeHCPartyMessageSecretFKeys**
+> kotlin.collections.List&lt;DocumentDto&gt; listDocumentByTypeHCPartyMessageSecretFKeys(documentTypeCode, hcPartyId, secretFKeys)
+
+List documents found By type, By Healthcare Party and secret foreign keys.
+
+Keys must be delimited by coma
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = DocumentApi()
+val documentTypeCode : kotlin.String = documentTypeCode_example // kotlin.String | 
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
+val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
+try {
+    val result : kotlin.collections.List<DocumentDto> = apiInstance.listDocumentByTypeHCPartyMessageSecretFKeys(documentTypeCode, hcPartyId, secretFKeys)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DocumentApi#listDocumentByTypeHCPartyMessageSecretFKeys")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DocumentApi#listDocumentByTypeHCPartyMessageSecretFKeys")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **documentTypeCode** | **kotlin.String**|  |
+ **hcPartyId** | **kotlin.String**|  |
+ **secretFKeys** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;DocumentDto&gt;**](DocumentDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="listDocumentsByHCPartyAndPatientForeignKeys"></a>
+# **listDocumentsByHCPartyAndPatientForeignKeys**
+> kotlin.collections.List&lt;DocumentDto&gt; listDocumentsByHCPartyAndPatientForeignKeys(hcPartyId, secretFKeys)
+
+List documents found By Healthcare Party and secret foreign keys.
+
+Keys must be delimited by coma
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = DocumentApi()
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
+val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
+try {
+    val result : kotlin.collections.List<DocumentDto> = apiInstance.listDocumentsByHCPartyAndPatientForeignKeys(hcPartyId, secretFKeys)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DocumentApi#listDocumentsByHCPartyAndPatientForeignKeys")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DocumentApi#listDocumentsByHCPartyAndPatientForeignKeys")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **hcPartyId** | **kotlin.String**|  |
+ **secretFKeys** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;DocumentDto&gt;**](DocumentDto.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 
@@ -607,10 +574,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -657,10 +621,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -709,10 +670,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -761,10 +719,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -811,10 +766,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -863,10 +815,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 

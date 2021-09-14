@@ -1,10 +1,10 @@
 # ApplicationsettingsApi
 
-All URIs are relative to *https://kraken.icure.dev*
+All URIs are relative to *http://localhost:16043*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getApplicationSettings**](ApplicationsettingsApi.md#getApplicationSettings) | **GET** /rest/v1/appsettings | Gets all application settings
+[**getApplicationSettings**](ApplicationsettingsApi.md#getApplicationSettings) | **GET** /rest/v2/appsettings | Gets all application settings
 
 
 <a name="getApplicationSettings"></a>
@@ -41,10 +41,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 

@@ -1,16 +1,16 @@
-# AccesslogApi
+# AccessLogApi
 
-All URIs are relative to *https://kraken.icure.dev*
+All URIs are relative to *http://localhost:16043*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createAccessLog**](AccesslogApi.md#createAccessLog) | **POST** /rest/v1/accesslog | Creates an access log
-[**deleteAccessLog**](AccesslogApi.md#deleteAccessLog) | **DELETE** /rest/v1/accesslog/{accessLogIds} | Deletes an access log
-[**findAccessLogsByHCPartyPatientForeignKeys**](AccesslogApi.md#findAccessLogsByHCPartyPatientForeignKeys) | **GET** /rest/v1/accesslog/byHcPartySecretForeignKeys | List access logs found By Healthcare Party and secret foreign keyelementIds.
-[**findByUserAfterDate**](AccesslogApi.md#findByUserAfterDate) | **GET** /rest/v1/accesslog/byUser | Get Paginated List of Access logs
-[**getAccessLog**](AccesslogApi.md#getAccessLog) | **GET** /rest/v1/accesslog/{accessLogId} | Gets an access log
-[**listAccessLogs**](AccesslogApi.md#listAccessLogs) | **GET** /rest/v1/accesslog | Lists access logs
-[**modifyAccessLog**](AccesslogApi.md#modifyAccessLog) | **PUT** /rest/v1/accesslog | Modifies an access log
+[**createAccessLog**](AccessLogApi.md#createAccessLog) | **POST** /rest/v2/accesslog | Creates an access log
+[**deleteAccessLogs**](AccessLogApi.md#deleteAccessLogs) | **POST** /rest/v2/accesslog/delete/batch | Deletes an access log
+[**findAccessLogsBy**](AccessLogApi.md#findAccessLogsBy) | **GET** /rest/v2/accesslog | Get Paginated List of Access logs
+[**findAccessLogsByUserAfterDate**](AccessLogApi.md#findAccessLogsByUserAfterDate) | **GET** /rest/v2/accesslog/byUser | Get Paginated List of Access logs by user after date
+[**getAccessLog**](AccessLogApi.md#getAccessLog) | **GET** /rest/v2/accesslog/{accessLogId} | Gets an access log
+[**listAccessLogsByHCPartyAndPatientForeignKeys**](AccessLogApi.md#listAccessLogsByHCPartyAndPatientForeignKeys) | **GET** /rest/v2/accesslog/byHcPartySecretForeignKeys | List access logs found By Healthcare Party and secret foreign keyelementIds.
+[**modifyAccessLog**](AccessLogApi.md#modifyAccessLog) | **PUT** /rest/v2/accesslog | Modifies an access log
 
 
 <a name="createAccessLog"></a>
@@ -25,16 +25,16 @@ Creates an access log
 //import io.icure.kraken.client.infrastructure.*
 //import io.icure.kraken.client.models.*
 
-val apiInstance = AccesslogApi()
+val apiInstance = AccessLogApi()
 val accessLogDto : AccessLogDto =  // AccessLogDto | 
 try {
     val result : AccessLogDto = apiInstance.createAccessLog(accessLogDto)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling AccesslogApi#createAccessLog")
+    println("4xx response calling AccessLogApi#createAccessLog")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling AccesslogApi#createAccessLog")
+    println("5xx response calling AccessLogApi#createAccessLog")
     e.printStackTrace()
 }
 ```
@@ -51,19 +51,16 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
  - **Accept**: */*
 
-<a name="deleteAccessLog"></a>
-# **deleteAccessLog**
-> kotlin.collections.List&lt;DocIdentifier&gt; deleteAccessLog(accessLogIds)
+<a name="deleteAccessLogs"></a>
+# **deleteAccessLogs**
+> kotlin.collections.List&lt;DocIdentifier&gt; deleteAccessLogs(listOfIdsDto)
 
 Deletes an access log
 
@@ -73,16 +70,16 @@ Deletes an access log
 //import io.icure.kraken.client.infrastructure.*
 //import io.icure.kraken.client.models.*
 
-val apiInstance = AccesslogApi()
-val accessLogIds : kotlin.String = accessLogIds_example // kotlin.String | 
+val apiInstance = AccessLogApi()
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
 try {
-    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteAccessLog(accessLogIds)
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteAccessLogs(listOfIdsDto)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling AccesslogApi#deleteAccessLog")
+    println("4xx response calling AccessLogApi#deleteAccessLogs")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling AccesslogApi#deleteAccessLog")
+    println("5xx response calling AccessLogApi#deleteAccessLogs")
     e.printStackTrace()
 }
 ```
@@ -91,7 +88,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **accessLogIds** | **kotlin.String**|  |
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
 
 ### Return type
 
@@ -99,69 +96,16 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: */*
 
-<a name="findAccessLogsByHCPartyPatientForeignKeys"></a>
-# **findAccessLogsByHCPartyPatientForeignKeys**
-> kotlin.collections.List&lt;AccessLogDto&gt; findAccessLogsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
-
-List access logs found By Healthcare Party and secret foreign keyelementIds.
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = AccesslogApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
-try {
-    val result : kotlin.collections.List<AccessLogDto> = apiInstance.findAccessLogsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling AccesslogApi#findAccessLogsByHCPartyPatientForeignKeys")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling AccesslogApi#findAccessLogsByHCPartyPatientForeignKeys")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **hcPartyId** | **kotlin.String**|  |
- **secretFKeys** | **kotlin.String**|  |
-
-### Return type
-
-[**kotlin.collections.List&lt;AccessLogDto&gt;**](AccessLogDto.md)
-
-### Authorization
-
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="findByUserAfterDate"></a>
-# **findByUserAfterDate**
-> PaginatedListAccessLogDto findByUserAfterDate(userId, accessType, startDate, startKey, startDocumentId, limit, descending)
+<a name="findAccessLogsBy"></a>
+# **findAccessLogsBy**
+> PaginatedListAccessLogDto findAccessLogsBy(fromEpoch, toEpoch, startKey, startDocumentId, limit, descending)
 
 Get Paginated List of Access logs
 
@@ -171,7 +115,62 @@ Get Paginated List of Access logs
 //import io.icure.kraken.client.infrastructure.*
 //import io.icure.kraken.client.models.*
 
-val apiInstance = AccesslogApi()
+val apiInstance = AccessLogApi()
+val fromEpoch : kotlin.Long = 789 // kotlin.Long | 
+val toEpoch : kotlin.Long = 789 // kotlin.Long | 
+val startKey : kotlin.Long = 789 // kotlin.Long | 
+val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | 
+val limit : kotlin.Int = 56 // kotlin.Int | 
+val descending : kotlin.Boolean = true // kotlin.Boolean | 
+try {
+    val result : PaginatedListAccessLogDto = apiInstance.findAccessLogsBy(fromEpoch, toEpoch, startKey, startDocumentId, limit, descending)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling AccessLogApi#findAccessLogsBy")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling AccessLogApi#findAccessLogsBy")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **fromEpoch** | **kotlin.Long**|  | [optional]
+ **toEpoch** | **kotlin.Long**|  | [optional]
+ **startKey** | **kotlin.Long**|  | [optional]
+ **startDocumentId** | **kotlin.String**|  | [optional]
+ **limit** | **kotlin.Int**|  | [optional]
+ **descending** | **kotlin.Boolean**|  | [optional]
+
+### Return type
+
+[**PaginatedListAccessLogDto**](PaginatedListAccessLogDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="findAccessLogsByUserAfterDate"></a>
+# **findAccessLogsByUserAfterDate**
+> PaginatedListAccessLogDto findAccessLogsByUserAfterDate(userId, accessType, startDate, startKey, startDocumentId, limit, descending)
+
+Get Paginated List of Access logs by user after date
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = AccessLogApi()
 val userId : kotlin.String = userId_example // kotlin.String | A User ID
 val accessType : kotlin.String = accessType_example // kotlin.String | The type of access (COMPUTER or USER)
 val startDate : kotlin.Long = 789 // kotlin.Long | The start search epoch
@@ -180,13 +179,13 @@ val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String |
 val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
 val descending : kotlin.Boolean = true // kotlin.Boolean | Descending order
 try {
-    val result : PaginatedListAccessLogDto = apiInstance.findByUserAfterDate(userId, accessType, startDate, startKey, startDocumentId, limit, descending)
+    val result : PaginatedListAccessLogDto = apiInstance.findAccessLogsByUserAfterDate(userId, accessType, startDate, startKey, startDocumentId, limit, descending)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling AccesslogApi#findByUserAfterDate")
+    println("4xx response calling AccessLogApi#findAccessLogsByUserAfterDate")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling AccesslogApi#findByUserAfterDate")
+    println("5xx response calling AccessLogApi#findAccessLogsByUserAfterDate")
     e.printStackTrace()
 }
 ```
@@ -209,10 +208,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -231,16 +227,16 @@ Gets an access log
 //import io.icure.kraken.client.infrastructure.*
 //import io.icure.kraken.client.models.*
 
-val apiInstance = AccesslogApi()
+val apiInstance = AccessLogApi()
 val accessLogId : kotlin.String = accessLogId_example // kotlin.String | 
 try {
     val result : AccessLogDto = apiInstance.getAccessLog(accessLogId)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling AccesslogApi#getAccessLog")
+    println("4xx response calling AccessLogApi#getAccessLog")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling AccesslogApi#getAccessLog")
+    println("5xx response calling AccessLogApi#getAccessLog")
     e.printStackTrace()
 }
 ```
@@ -257,21 +253,18 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: */*
 
-<a name="listAccessLogs"></a>
-# **listAccessLogs**
-> PaginatedListAccessLogDto listAccessLogs(fromEpoch, toEpoch, startKey, startDocumentId, limit, descending)
+<a name="listAccessLogsByHCPartyAndPatientForeignKeys"></a>
+# **listAccessLogsByHCPartyAndPatientForeignKeys**
+> kotlin.collections.List&lt;AccessLogDto&gt; listAccessLogsByHCPartyAndPatientForeignKeys(hcPartyId, secretFKeys)
 
-Lists access logs
+List access logs found By Healthcare Party and secret foreign keyelementIds.
 
 ### Example
 ```kotlin
@@ -279,21 +272,17 @@ Lists access logs
 //import io.icure.kraken.client.infrastructure.*
 //import io.icure.kraken.client.models.*
 
-val apiInstance = AccesslogApi()
-val fromEpoch : kotlin.Long = 789 // kotlin.Long | 
-val toEpoch : kotlin.Long = 789 // kotlin.Long | 
-val startKey : kotlin.Long = 789 // kotlin.Long | 
-val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | 
-val limit : kotlin.Int = 56 // kotlin.Int | 
-val descending : kotlin.Boolean = true // kotlin.Boolean | 
+val apiInstance = AccessLogApi()
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
+val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
 try {
-    val result : PaginatedListAccessLogDto = apiInstance.listAccessLogs(fromEpoch, toEpoch, startKey, startDocumentId, limit, descending)
+    val result : kotlin.collections.List<AccessLogDto> = apiInstance.listAccessLogsByHCPartyAndPatientForeignKeys(hcPartyId, secretFKeys)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling AccesslogApi#listAccessLogs")
+    println("4xx response calling AccessLogApi#listAccessLogsByHCPartyAndPatientForeignKeys")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling AccesslogApi#listAccessLogs")
+    println("5xx response calling AccessLogApi#listAccessLogsByHCPartyAndPatientForeignKeys")
     e.printStackTrace()
 }
 ```
@@ -302,23 +291,16 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **fromEpoch** | **kotlin.Long**|  | [optional]
- **toEpoch** | **kotlin.Long**|  | [optional]
- **startKey** | **kotlin.Long**|  | [optional]
- **startDocumentId** | **kotlin.String**|  | [optional]
- **limit** | **kotlin.Int**|  | [optional]
- **descending** | **kotlin.Boolean**|  | [optional]
+ **hcPartyId** | **kotlin.String**|  |
+ **secretFKeys** | **kotlin.String**|  |
 
 ### Return type
 
-[**PaginatedListAccessLogDto**](PaginatedListAccessLogDto.md)
+[**kotlin.collections.List&lt;AccessLogDto&gt;**](AccessLogDto.md)
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -337,16 +319,16 @@ Modifies an access log
 //import io.icure.kraken.client.infrastructure.*
 //import io.icure.kraken.client.models.*
 
-val apiInstance = AccesslogApi()
+val apiInstance = AccessLogApi()
 val accessLogDto : AccessLogDto =  // AccessLogDto | 
 try {
     val result : AccessLogDto = apiInstance.modifyAccessLog(accessLogDto)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling AccesslogApi#modifyAccessLog")
+    println("4xx response calling AccessLogApi#modifyAccessLog")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling AccesslogApi#modifyAccessLog")
+    println("5xx response calling AccessLogApi#modifyAccessLog")
     e.printStackTrace()
 }
 ```
@@ -363,10 +345,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 

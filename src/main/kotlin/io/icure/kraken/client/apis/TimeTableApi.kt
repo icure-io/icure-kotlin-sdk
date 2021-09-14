@@ -1,9 +1,9 @@
 /**
- * iCure Cloud API Documentation
+ * iCure Data Stack API Documentation
  *
- * Spring shop sample application
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v0.0.1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -15,6 +15,7 @@ package io.icure.kraken.client.apis
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.models.DocIdentifier
+import io.icure.kraken.client.models.ListOfIdsDto
 import io.icure.kraken.client.models.TimeTableDto
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -34,7 +35,7 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
-            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "https://kraken.icure.dev")
+            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "http://localhost:16043")
         }
     }
 
@@ -69,7 +70,7 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/timeTable",
+            path = "/rest/v2/timeTable",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -79,7 +80,7 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     /**
     * Deletes an timeTable
     * 
-    * @param timeTableIds  
+    * @param listOfIdsDto  
     * @return kotlin.collections.List<DocIdentifier>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -87,27 +88,27 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteTimeTable(timeTableIds: kotlin.String) : kotlin.collections.List<DocIdentifier>  {
-        val localVariableConfig = deleteTimeTableRequestConfig(timeTableIds = timeTableIds)
+    suspend fun deleteTimeTable(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocIdentifier>  {
+        val localVariableConfig = deleteTimeTableRequestConfig(listOfIdsDto = listOfIdsDto)
 
-        return request<Unit, kotlin.collections.List<DocIdentifier>>(
+        return request<ListOfIdsDto, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
         )!!
     }
     /**
     * To obtain the request config of the operation deleteTimeTable
     *
-    * @param timeTableIds  
+    * @param listOfIdsDto  
     * @return RequestConfig
     */
-    fun deleteTimeTableRequestConfig(timeTableIds: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun deleteTimeTableRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+        val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(
-            method = RequestMethod.DELETE,
-            path = "/rest/v1/timeTable/{timeTableIds}".replace("{"+"timeTableIds"+"}", "$timeTableIds"),
+            method = RequestMethod.POST,
+            path = "/rest/v2/timeTable/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -145,7 +146,7 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/timeTable/{timeTableId}".replace("{"+"timeTableId"+"}", "$timeTableId"),
+            path = "/rest/v2/timeTable/{timeTableId}".replace("{"+"timeTableId"+"}", "$timeTableId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -186,7 +187,7 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/timeTable/byAgendaId",
+            path = "/rest/v2/timeTable/byAgendaId",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -233,7 +234,7 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/timeTable/byPeriodAndAgendaId",
+            path = "/rest/v2/timeTable/byPeriodAndAgendaId",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -271,7 +272,7 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/timeTable",
+            path = "/rest/v2/timeTable",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody

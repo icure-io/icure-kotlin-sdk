@@ -1,19 +1,19 @@
 # CalendarItemApi
 
-All URIs are relative to *https://kraken.icure.dev*
+All URIs are relative to *http://localhost:16043*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createCalendarItem**](CalendarItemApi.md#createCalendarItem) | **POST** /rest/v1/calendarItem | Creates a calendarItem
-[**deleteCalendarItem**](CalendarItemApi.md#deleteCalendarItem) | **DELETE** /rest/v1/calendarItem/{calendarItemIds} | Deletes an calendarItem
-[**findCalendarItemsByHCPartyPatientForeignKeys**](CalendarItemApi.md#findCalendarItemsByHCPartyPatientForeignKeys) | **GET** /rest/v1/calendarItem/byHcPartySecretForeignKeys | Find CalendarItems by hcparty and patient
-[**getCalendarItem**](CalendarItemApi.md#getCalendarItem) | **GET** /rest/v1/calendarItem/{calendarItemId} | Gets an calendarItem
-[**getCalendarItems**](CalendarItemApi.md#getCalendarItems) | **GET** /rest/v1/calendarItem | Gets all calendarItems
-[**getCalendarItemsByPeriodAndHcPartyId**](CalendarItemApi.md#getCalendarItemsByPeriodAndHcPartyId) | **POST** /rest/v1/calendarItem/byPeriodAndHcPartyId | Get CalendarItems by Period and HcPartyId
-[**getCalendarItemsWithIds**](CalendarItemApi.md#getCalendarItemsWithIds) | **POST** /rest/v1/calendarItem/byIds | Get calendarItems by id
-[**getCalendarsByPeriodAndAgendaId**](CalendarItemApi.md#getCalendarsByPeriodAndAgendaId) | **POST** /rest/v1/calendarItem/byPeriodAndAgendaId | Get CalendarItems by Period and AgendaId
-[**modifyCalendarItem**](CalendarItemApi.md#modifyCalendarItem) | **PUT** /rest/v1/calendarItem | Modifies an calendarItem
-[**setCalendarItemsDelegations**](CalendarItemApi.md#setCalendarItemsDelegations) | **POST** /rest/v1/calendarItem/delegations | Update delegations in calendarItems
+[**createCalendarItem**](CalendarItemApi.md#createCalendarItem) | **POST** /rest/v2/calendarItem | Creates a calendarItem
+[**deleteCalendarItems**](CalendarItemApi.md#deleteCalendarItems) | **DELETE** /rest/v2/calendarItem/delete/batch | Deletes an calendarItem
+[**findCalendarItemsByHCPartyPatientForeignKeys**](CalendarItemApi.md#findCalendarItemsByHCPartyPatientForeignKeys) | **GET** /rest/v2/calendarItem/byHcPartySecretForeignKeys | Find CalendarItems by hcparty and patient
+[**getCalendarItem**](CalendarItemApi.md#getCalendarItem) | **GET** /rest/v2/calendarItem/{calendarItemId} | Gets an calendarItem
+[**getCalendarItems**](CalendarItemApi.md#getCalendarItems) | **GET** /rest/v2/calendarItem | Gets all calendarItems
+[**getCalendarItemsByPeriodAndHcPartyId**](CalendarItemApi.md#getCalendarItemsByPeriodAndHcPartyId) | **POST** /rest/v2/calendarItem/byPeriodAndHcPartyId | Get CalendarItems by Period and HcPartyId
+[**getCalendarItemsWithIds**](CalendarItemApi.md#getCalendarItemsWithIds) | **POST** /rest/v2/calendarItem/byIds | Get calendarItems by ids
+[**getCalendarsByPeriodAndAgendaId**](CalendarItemApi.md#getCalendarsByPeriodAndAgendaId) | **POST** /rest/v2/calendarItem/byPeriodAndAgendaId | Get CalendarItems by Period and AgendaId
+[**modifyCalendarItem**](CalendarItemApi.md#modifyCalendarItem) | **PUT** /rest/v2/calendarItem | Modifies an calendarItem
+[**setCalendarItemsDelegations**](CalendarItemApi.md#setCalendarItemsDelegations) | **POST** /rest/v2/calendarItem/delegations | Update delegations in calendarItems
 
 
 <a name="createCalendarItem"></a>
@@ -54,19 +54,16 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
  - **Accept**: */*
 
-<a name="deleteCalendarItem"></a>
-# **deleteCalendarItem**
-> kotlin.collections.List&lt;DocIdentifier&gt; deleteCalendarItem(calendarItemIds)
+<a name="deleteCalendarItems"></a>
+# **deleteCalendarItems**
+> kotlin.collections.List&lt;DocIdentifier&gt; deleteCalendarItems(listOfIdsDto)
 
 Deletes an calendarItem
 
@@ -77,15 +74,15 @@ Deletes an calendarItem
 //import io.icure.kraken.client.models.*
 
 val apiInstance = CalendarItemApi()
-val calendarItemIds : kotlin.String = calendarItemIds_example // kotlin.String | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
 try {
-    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteCalendarItem(calendarItemIds)
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteCalendarItems(listOfIdsDto)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling CalendarItemApi#deleteCalendarItem")
+    println("4xx response calling CalendarItemApi#deleteCalendarItems")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling CalendarItemApi#deleteCalendarItem")
+    println("5xx response calling CalendarItemApi#deleteCalendarItems")
     e.printStackTrace()
 }
 ```
@@ -94,7 +91,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **calendarItemIds** | **kotlin.String**|  |
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
 
 ### Return type
 
@@ -102,14 +99,11 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: */*
 
 <a name="findCalendarItemsByHCPartyPatientForeignKeys"></a>
@@ -152,10 +146,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -200,10 +191,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -244,10 +232,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -296,10 +281,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -310,7 +292,7 @@ Configure basicScheme:
 # **getCalendarItemsWithIds**
 > kotlin.collections.List&lt;CalendarItemDto&gt; getCalendarItemsWithIds(listOfIdsDto)
 
-Get calendarItems by id
+Get calendarItems by ids
 
 ### Example
 ```kotlin
@@ -344,10 +326,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -396,10 +375,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -444,10 +420,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -492,10 +465,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 

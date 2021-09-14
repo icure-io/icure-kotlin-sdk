@@ -1,6 +1,5 @@
 package io.icure.kraken.client.extendedapis
 
-import io.icure.kraken.client.apis.AccesslogApi
 import io.icure.kraken.client.apis.ClassificationApi
 import io.icure.kraken.client.crypto.CryptoConfig
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES

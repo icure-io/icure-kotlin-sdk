@@ -1,9 +1,9 @@
 /**
- * iCure Cloud API Documentation
+ * iCure Data Stack API Documentation
  *
- * Spring shop sample application
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v0.0.1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -17,6 +17,7 @@ import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.models.ClassificationTemplateDto
 import io.icure.kraken.client.models.DelegationDto
 import io.icure.kraken.client.models.DocIdentifier
+import io.icure.kraken.client.models.ListOfIdsDto
 import io.icure.kraken.client.models.PaginatedListClassificationTemplateDto
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -36,7 +37,7 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
-            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "https://kraken.icure.dev")
+            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "http://localhost:16043")
         }
     }
 
@@ -71,7 +72,7 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/classificationTemplate",
+            path = "/rest/v2/classificationTemplate",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -81,7 +82,7 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     /**
     * Delete classification Templates.
     * Response is a set containing the ID&#39;s of deleted classification Templates.
-    * @param classificationTemplateIds  
+    * @param listOfIdsDto  
     * @return kotlin.collections.List<DocIdentifier>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -89,27 +90,27 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteClassificationTemplates(classificationTemplateIds: kotlin.String) : kotlin.collections.List<DocIdentifier>  {
-        val localVariableConfig = deleteClassificationTemplatesRequestConfig(classificationTemplateIds = classificationTemplateIds)
+    suspend fun deleteClassificationTemplates(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocIdentifier>  {
+        val localVariableConfig = deleteClassificationTemplatesRequestConfig(listOfIdsDto = listOfIdsDto)
 
-        return request<Unit, kotlin.collections.List<DocIdentifier>>(
+        return request<ListOfIdsDto, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
         )!!
     }
     /**
     * To obtain the request config of the operation deleteClassificationTemplates
     *
-    * @param classificationTemplateIds  
+    * @param listOfIdsDto  
     * @return RequestConfig
     */
-    fun deleteClassificationTemplatesRequestConfig(classificationTemplateIds: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun deleteClassificationTemplatesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+        val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(
-            method = RequestMethod.DELETE,
-            path = "/rest/v1/classificationTemplate/{classificationTemplateIds}".replace("{"+"classificationTemplateIds"+"}", "$classificationTemplateIds"),
+            method = RequestMethod.POST,
+            path = "/rest/v2/classificationTemplate/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -117,43 +118,52 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     }
 
     /**
-    * List classification Templates found By Healthcare Party and secret foreign keyelementIds.
-    * Keys hast to delimited by coma
-    * @param hcPartyId  
-    * @param secretFKeys  
-    * @return kotlin.collections.List<ClassificationTemplateDto>
+    * List all classification templates with pagination
+    * Returns a list of classification templates.
+    * @param startKey A label (optional)
+    * @param startDocumentId An classification template document ID (optional)
+    * @param limit Number of rows (optional)
+    * @return PaginatedListClassificationTemplateDto
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findClassificationTemplatesByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<ClassificationTemplateDto>  {
-        val localVariableConfig = findClassificationTemplatesByHCPartyPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
+    suspend fun findClassificationTemplatesBy(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListClassificationTemplateDto  {
+        val localVariableConfig = findClassificationTemplatesByRequestConfig(startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
-        return request<Unit, kotlin.collections.List<ClassificationTemplateDto>>(
+        return request<Unit, PaginatedListClassificationTemplateDto>(
             localVariableConfig
         )!!
     }
     /**
-    * To obtain the request config of the operation findClassificationTemplatesByHCPartyPatientForeignKeys
+    * To obtain the request config of the operation findClassificationTemplatesBy
     *
-    * @param hcPartyId  
-    * @param secretFKeys  
+    * @param startKey A label (optional)
+    * @param startDocumentId An classification template document ID (optional)
+    * @param limit Number of rows (optional)
     * @return RequestConfig
     */
-    fun findClassificationTemplatesByHCPartyPatientForeignKeysRequestConfig(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : RequestConfig<Unit> {
+    fun findClassificationTemplatesByRequestConfig(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
-                put("hcPartyId", listOf(hcPartyId.toString()))
-                put("secretFKeys", listOf(secretFKeys.toString()))
+                if (startKey != null) {
+                    put("startKey", listOf(startKey.toString()))
+                }
+                if (startDocumentId != null) {
+                    put("startDocumentId", listOf(startDocumentId.toString()))
+                }
+                if (limit != null) {
+                    put("limit", listOf(limit.toString()))
+                }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/classificationTemplate/byHcPartySecretForeignKeys",
+            path = "/rest/v2/classificationTemplate",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -191,7 +201,7 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/classificationTemplate/{classificationTemplateId}".replace("{"+"classificationTemplateId"+"}", "$classificationTemplateId"),
+            path = "/rest/v2/classificationTemplate/{classificationTemplateId}".replace("{"+"classificationTemplateId"+"}", "$classificationTemplateId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -229,7 +239,7 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/classificationTemplate/byIds/{ids}".replace("{"+"ids"+"}", "$ids"),
+            path = "/rest/v2/classificationTemplate/byIds/{ids}".replace("{"+"ids"+"}", "$ids"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -237,52 +247,43 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     }
 
     /**
-    * List all classification templates with pagination
-    * Returns a list of classification templates.
-    * @param startKey A label (optional)
-    * @param startDocumentId An classification template document ID (optional)
-    * @param limit Number of rows (optional)
-    * @return PaginatedListClassificationTemplateDto
+    * List classification Templates found By Healthcare Party and secret foreign keyelementIds.
+    * Keys hast to delimited by coma
+    * @param hcPartyId  
+    * @param secretFKeys  
+    * @return kotlin.collections.List<ClassificationTemplateDto>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listClassificationTemplates(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListClassificationTemplateDto  {
-        val localVariableConfig = listClassificationTemplatesRequestConfig(startKey = startKey, startDocumentId = startDocumentId, limit = limit)
+    suspend fun listClassificationTemplatesByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<ClassificationTemplateDto>  {
+        val localVariableConfig = listClassificationTemplatesByHCPartyPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
 
-        return request<Unit, PaginatedListClassificationTemplateDto>(
+        return request<Unit, kotlin.collections.List<ClassificationTemplateDto>>(
             localVariableConfig
         )!!
     }
     /**
-    * To obtain the request config of the operation listClassificationTemplates
+    * To obtain the request config of the operation listClassificationTemplatesByHCPartyPatientForeignKeys
     *
-    * @param startKey A label (optional)
-    * @param startDocumentId An classification template document ID (optional)
-    * @param limit Number of rows (optional)
+    * @param hcPartyId  
+    * @param secretFKeys  
     * @return RequestConfig
     */
-    fun listClassificationTemplatesRequestConfig(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
+    fun listClassificationTemplatesByHCPartyPatientForeignKeysRequestConfig(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : RequestConfig<Unit> {
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
-                if (startKey != null) {
-                    put("startKey", listOf(startKey.toString()))
-                }
-                if (startDocumentId != null) {
-                    put("startDocumentId", listOf(startDocumentId.toString()))
-                }
-                if (limit != null) {
-                    put("limit", listOf(limit.toString()))
-                }
+                put("hcPartyId", listOf(hcPartyId.toString()))
+                put("secretFKeys", listOf(secretFKeys.toString()))
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/classificationTemplate",
+            path = "/rest/v2/classificationTemplate/byHcPartySecretForeignKeys",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -320,7 +321,7 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/classificationTemplate",
+            path = "/rest/v2/classificationTemplate",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -360,7 +361,7 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/classificationTemplate/{classificationTemplateId}/delegate".replace("{"+"classificationTemplateId"+"}", "$classificationTemplateId"),
+            path = "/rest/v2/classificationTemplate/{classificationTemplateId}/delegate".replace("{"+"classificationTemplateId"+"}", "$classificationTemplateId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody

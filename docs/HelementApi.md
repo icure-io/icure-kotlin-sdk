@@ -1,29 +1,29 @@
 # HelementApi
 
-All URIs are relative to *https://kraken.icure.dev*
+All URIs are relative to *http://localhost:16043*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createHealthElement**](HelementApi.md#createHealthElement) | **POST** /rest/v1/helement | Create a healthcare element with the current user
-[**createHealthElements**](HelementApi.md#createHealthElements) | **POST** /rest/v1/helement/batch | Create a batch of healthcare elements
-[**deleteHealthElements**](HelementApi.md#deleteHealthElements) | **DELETE** /rest/v1/helement/{healthElementIds} | Delete healthcare elements.
-[**filterHealthElementsBy**](HelementApi.md#filterHealthElementsBy) | **POST** /rest/v1/helement/filter | Filter healthcare elements for the current user (HcParty)
-[**findHealthElementsByHCPartyPatientForeignKeys**](HelementApi.md#findHealthElementsByHCPartyPatientForeignKeys) | **GET** /rest/v1/helement/byHcPartySecretForeignKeys | List healthcare elements found By Healthcare Party and secret foreign keyelementIds.
-[**findHealthElementsDelegationsStubsByHCPartyPatientForeignKeys**](HelementApi.md#findHealthElementsDelegationsStubsByHCPartyPatientForeignKeys) | **GET** /rest/v1/helement/byHcPartySecretForeignKeys/delegations | List helement stubs found By Healthcare Party and secret foreign keys.
-[**getHealthElement**](HelementApi.md#getHealthElement) | **GET** /rest/v1/helement/{healthElementId} | Get a healthcare element
-[**modifyHealthElement**](HelementApi.md#modifyHealthElement) | **PUT** /rest/v1/helement | Modify a healthcare element
-[**modifyHealthElements**](HelementApi.md#modifyHealthElements) | **PUT** /rest/v1/helement/batch | Modify a batch of healthcare elements
-[**newHealthElementDelegations**](HelementApi.md#newHealthElementDelegations) | **POST** /rest/v1/helement/{healthElementId}/delegate | Delegates a healthcare element to a healthcare party
-[**setHealthElementsDelegations**](HelementApi.md#setHealthElementsDelegations) | **POST** /rest/v1/helement/delegations | Update delegations in healthElements.
+[**createHealthElement**](HelementApi.md#createHealthElement) | **POST** /rest/v2/helement | Create a health element with the current user
+[**createHealthElements**](HelementApi.md#createHealthElements) | **POST** /rest/v2/helement/batch | Create a batch of healthcare elements
+[**deleteHealthElements**](HelementApi.md#deleteHealthElements) | **DELETE** /rest/v2/helement/delete/batch | Delete health elements.
+[**filterHealthElementsBy**](HelementApi.md#filterHealthElementsBy) | **POST** /rest/v2/helement/filter | Filter health elements for the current user (HcParty)
+[**getHealthElement**](HelementApi.md#getHealthElement) | **GET** /rest/v2/helement/{healthElementId} | Get a health element
+[**listHealthElementsByHCPartyAndPatientForeignKeys**](HelementApi.md#listHealthElementsByHCPartyAndPatientForeignKeys) | **GET** /rest/v2/helement/byHcPartySecretForeignKeys | List health elements found By Healthcare Party and secret foreign keyelementIds.
+[**listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys**](HelementApi.md#listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys) | **GET** /rest/v2/helement/byHcPartySecretForeignKeys/delegations | List helement stubs found By Healthcare Party and secret foreign keys.
+[**modifyHealthElement**](HelementApi.md#modifyHealthElement) | **PUT** /rest/v2/helement | Modify a health element
+[**modifyHealthElements**](HelementApi.md#modifyHealthElements) | **PUT** /rest/v2/helement/batch | Modify a batch of health elements
+[**newHealthElementDelegations**](HelementApi.md#newHealthElementDelegations) | **POST** /rest/v2/helement/{healthElementId}/delegate | Delegates a health element to a healthcare party
+[**setHealthElementsDelegations**](HelementApi.md#setHealthElementsDelegations) | **POST** /rest/v2/helement/delegations | Update delegations in healthElements.
 
 
 <a name="createHealthElement"></a>
 # **createHealthElement**
 > HealthElementDto createHealthElement(healthElementDto)
 
-Create a healthcare element with the current user
+Create a health element with the current user
 
-Returns an instance of created healthcare element.
+Returns an instance of created health element.
 
 ### Example
 ```kotlin
@@ -57,10 +57,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -107,10 +104,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -119,11 +113,11 @@ Configure basicScheme:
 
 <a name="deleteHealthElements"></a>
 # **deleteHealthElements**
-> kotlin.collections.List&lt;DocIdentifier&gt; deleteHealthElements(healthElementIds)
+> kotlin.collections.List&lt;DocIdentifier&gt; deleteHealthElements(listOfIdsDto)
 
-Delete healthcare elements.
+Delete health elements.
 
-Response is a set containing the ID&#39;s of deleted healthcare elements.
+Response is a set containing the ID&#39;s of deleted health elements.
 
 ### Example
 ```kotlin
@@ -132,9 +126,9 @@ Response is a set containing the ID&#39;s of deleted healthcare elements.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = HelementApi()
-val healthElementIds : kotlin.String = healthElementIds_example // kotlin.String | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
 try {
-    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteHealthElements(healthElementIds)
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteHealthElements(listOfIdsDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling HelementApi#deleteHealthElements")
@@ -149,7 +143,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **healthElementIds** | **kotlin.String**|  |
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
 
 ### Return type
 
@@ -157,23 +151,20 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: */*
 
 <a name="filterHealthElementsBy"></a>
 # **filterHealthElementsBy**
 > kotlin.collections.List&lt;HealthElementDto&gt; filterHealthElementsBy(filterChainHealthElement)
 
-Filter healthcare elements for the current user (HcParty)
+Filter health elements for the current user (HcParty)
 
-Returns a list of healthcare elements along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
+Returns a list of health elements along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
 
 ### Example
 ```kotlin
@@ -207,125 +198,18 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
  - **Accept**: */*
 
-<a name="findHealthElementsByHCPartyPatientForeignKeys"></a>
-# **findHealthElementsByHCPartyPatientForeignKeys**
-> kotlin.collections.List&lt;HealthElementDto&gt; findHealthElementsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
-
-List healthcare elements found By Healthcare Party and secret foreign keyelementIds.
-
-Keys hast to delimited by coma
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = HelementApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
-try {
-    val result : kotlin.collections.List<HealthElementDto> = apiInstance.findHealthElementsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling HelementApi#findHealthElementsByHCPartyPatientForeignKeys")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling HelementApi#findHealthElementsByHCPartyPatientForeignKeys")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **hcPartyId** | **kotlin.String**|  |
- **secretFKeys** | **kotlin.String**|  |
-
-### Return type
-
-[**kotlin.collections.List&lt;HealthElementDto&gt;**](HealthElementDto.md)
-
-### Authorization
-
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="findHealthElementsDelegationsStubsByHCPartyPatientForeignKeys"></a>
-# **findHealthElementsDelegationsStubsByHCPartyPatientForeignKeys**
-> kotlin.collections.List&lt;IcureStubDto&gt; findHealthElementsDelegationsStubsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
-
-List helement stubs found By Healthcare Party and secret foreign keys.
-
-Keys must be delimited by coma
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = HelementApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
-try {
-    val result : kotlin.collections.List<IcureStubDto> = apiInstance.findHealthElementsDelegationsStubsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling HelementApi#findHealthElementsDelegationsStubsByHCPartyPatientForeignKeys")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling HelementApi#findHealthElementsDelegationsStubsByHCPartyPatientForeignKeys")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **hcPartyId** | **kotlin.String**|  |
- **secretFKeys** | **kotlin.String**|  |
-
-### Return type
-
-[**kotlin.collections.List&lt;IcureStubDto&gt;**](IcureStubDto.md)
-
-### Authorization
-
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
 <a name="getHealthElement"></a>
 # **getHealthElement**
 > HealthElementDto getHealthElement(healthElementId)
 
-Get a healthcare element
+Get a health element
 
 ### Example
 ```kotlin
@@ -359,10 +243,105 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
+No authorization required
 
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="listHealthElementsByHCPartyAndPatientForeignKeys"></a>
+# **listHealthElementsByHCPartyAndPatientForeignKeys**
+> kotlin.collections.List&lt;HealthElementDto&gt; listHealthElementsByHCPartyAndPatientForeignKeys(hcPartyId, secretFKeys)
+
+List health elements found By Healthcare Party and secret foreign keyelementIds.
+
+Keys hast to delimited by coma
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = HelementApi()
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
+val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
+try {
+    val result : kotlin.collections.List<HealthElementDto> = apiInstance.listHealthElementsByHCPartyAndPatientForeignKeys(hcPartyId, secretFKeys)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling HelementApi#listHealthElementsByHCPartyAndPatientForeignKeys")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling HelementApi#listHealthElementsByHCPartyAndPatientForeignKeys")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **hcPartyId** | **kotlin.String**|  |
+ **secretFKeys** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;HealthElementDto&gt;**](HealthElementDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys"></a>
+# **listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys**
+> kotlin.collections.List&lt;IcureStubDto&gt; listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys(hcPartyId, secretFKeys)
+
+List helement stubs found By Healthcare Party and secret foreign keys.
+
+Keys must be delimited by coma
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = HelementApi()
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
+val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
+try {
+    val result : kotlin.collections.List<IcureStubDto> = apiInstance.listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys(hcPartyId, secretFKeys)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling HelementApi#listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling HelementApi#listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **hcPartyId** | **kotlin.String**|  |
+ **secretFKeys** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;IcureStubDto&gt;**](IcureStubDto.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 
@@ -373,9 +352,9 @@ Configure basicScheme:
 # **modifyHealthElement**
 > HealthElementDto modifyHealthElement(healthElementDto)
 
-Modify a healthcare element
+Modify a health element
 
-Returns the modified healthcare element.
+Returns the modified health element.
 
 ### Example
 ```kotlin
@@ -409,10 +388,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -423,9 +399,9 @@ Configure basicScheme:
 # **modifyHealthElements**
 > kotlin.collections.List&lt;HealthElementDto&gt; modifyHealthElements(healthElementDto)
 
-Modify a batch of healthcare elements
+Modify a batch of health elements
 
-Returns the modified healthcare elements.
+Returns the modified health elements.
 
 ### Example
 ```kotlin
@@ -459,10 +435,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -473,9 +446,9 @@ Configure basicScheme:
 # **newHealthElementDelegations**
 > HealthElementDto newHealthElementDelegations(healthElementId, delegationDto)
 
-Delegates a healthcare element to a healthcare party
+Delegates a health element to a healthcare party
 
-It delegates a healthcare element to a healthcare party (By current healthcare party). Returns the element with new delegations.
+It delegates a health element to a healthcare party (By current healthcare party). Returns the element with new delegations.
 
 ### Example
 ```kotlin
@@ -511,10 +484,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -561,10 +531,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 

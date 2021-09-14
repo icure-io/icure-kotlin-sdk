@@ -1,9 +1,9 @@
 /**
- * iCure Cloud API Documentation
+ * iCure Data Stack API Documentation
  *
- * Spring shop sample application
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v0.0.1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -16,6 +16,7 @@ import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.models.AgendaDto
 import io.icure.kraken.client.models.DocIdentifier
+import io.icure.kraken.client.models.ListOfIdsDto
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -34,7 +35,7 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
-            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "https://kraken.icure.dev")
+            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "http://localhost:16043")
         }
     }
 
@@ -69,7 +70,7 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/agenda",
+            path = "/rest/v2/agenda",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -77,9 +78,9 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     }
 
     /**
-    * Deletes an agenda
+    * Deletes agendas
     * 
-    * @param agendaIds  
+    * @param listOfIdsDto  
     * @return kotlin.collections.List<DocIdentifier>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -87,27 +88,27 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteAgenda(agendaIds: kotlin.String) : kotlin.collections.List<DocIdentifier>  {
-        val localVariableConfig = deleteAgendaRequestConfig(agendaIds = agendaIds)
+    suspend fun deleteAgendas(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocIdentifier>  {
+        val localVariableConfig = deleteAgendasRequestConfig(listOfIdsDto = listOfIdsDto)
 
-        return request<Unit, kotlin.collections.List<DocIdentifier>>(
+        return request<ListOfIdsDto, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
         )!!
     }
     /**
-    * To obtain the request config of the operation deleteAgenda
+    * To obtain the request config of the operation deleteAgendas
     *
-    * @param agendaIds  
+    * @param listOfIdsDto  
     * @return RequestConfig
     */
-    fun deleteAgendaRequestConfig(agendaIds: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun deleteAgendasRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+        val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(
-            method = RequestMethod.DELETE,
-            path = "/rest/v1/agenda/{agendaIds}".replace("{"+"agendaIds"+"}", "$agendaIds"),
+            method = RequestMethod.POST,
+            path = "/rest/v2/agenda/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -145,7 +146,7 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/agenda/{agendaId}".replace("{"+"agendaId"+"}", "$agendaId"),
+            path = "/rest/v2/agenda/{agendaId}".replace("{"+"agendaId"+"}", "$agendaId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -181,7 +182,7 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/agenda",
+            path = "/rest/v2/agenda",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -222,7 +223,7 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/agenda/byUser",
+            path = "/rest/v2/agenda/byUser",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -263,7 +264,7 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/agenda/readableForUser",
+            path = "/rest/v2/agenda/readableForUser",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -301,7 +302,7 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/agenda",
+            path = "/rest/v2/agenda",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody

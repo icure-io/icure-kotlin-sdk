@@ -1,9 +1,9 @@
 /**
- * iCure Cloud API Documentation
+ * iCure Data Stack API Documentation
  *
- * Spring shop sample application
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v0.0.1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -38,7 +38,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
-            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "https://kraken.icure.dev")
+            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "http://localhost:16043")
         }
     }
 
@@ -73,7 +73,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/user/current/hcparty/{healthcarePartyId}".replace("{"+"healthcarePartyId"+"}", "$healthcarePartyId"),
+            path = "/rest/v2/user/current/hcparty/{healthcarePartyId}".replace("{"+"healthcarePartyId"+"}", "$healthcarePartyId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -112,7 +112,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/user/checkPassword",
+            path = "/rest/v2/user/checkPassword",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -150,7 +150,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/user",
+            path = "/rest/v2/user",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -190,7 +190,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/user/inGroup/{groupId}".replace("{"+"groupId"+"}", "$groupId"),
+            path = "/rest/v2/user/inGroup/{groupId}".replace("{"+"groupId"+"}", "$groupId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -228,7 +228,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.DELETE,
-            path = "/rest/v1/user/{userId}".replace("{"+"userId"+"}", "$userId"),
+            path = "/rest/v2/user/{userId}".replace("{"+"userId"+"}", "$userId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -268,7 +268,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.DELETE,
-            path = "/rest/v1/user/inGroup/{groupId}/{userId}".replace("{"+"groupId"+"}", "$groupId").replace("{"+"userId"+"}", "$userId"),
+            path = "/rest/v2/user/inGroup/{groupId}/{userId}".replace("{"+"groupId"+"}", "$groupId").replace("{"+"userId"+"}", "$userId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -307,7 +307,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/user/encodePassword",
+            path = "/rest/v2/user/encodePassword",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -345,7 +345,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/user/byHealthcarePartyId/{id}".replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/user/byHealthcarePartyId/{id}".replace("{"+"id"+"}", "$id"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -385,7 +385,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/user/forgottenPassword/{email}".replace("{"+"email"+"}", "$email"),
+            path = "/rest/v2/user/forgottenPassword/{email}".replace("{"+"email"+"}", "$email"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -421,7 +421,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/user/session",
+            path = "/rest/v2/user/session",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -457,7 +457,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/user/current",
+            path = "/rest/v2/user/current",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -493,7 +493,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/user/matches",
+            path = "/rest/v2/user/matches",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -531,7 +531,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/user/{userId}".replace("{"+"userId"+"}", "$userId"),
+            path = "/rest/v2/user/{userId}".replace("{"+"userId"+"}", "$userId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -569,7 +569,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/user/byEmail/{email}".replace("{"+"email"+"}", "$email"),
+            path = "/rest/v2/user/byEmail/{email}".replace("{"+"email"+"}", "$email"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -589,22 +589,22 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listUsers(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListUserDto  {
-        val localVariableConfig = listUsersRequestConfig(startKey = startKey, startDocumentId = startDocumentId, limit = limit)
+    suspend fun listUsersBy(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListUserDto  {
+        val localVariableConfig = listUsersByRequestConfig(startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListUserDto>(
             localVariableConfig
         )!!
     }
     /**
-    * To obtain the request config of the operation listUsers
+    * To obtain the request config of the operation listUsersBy
     *
     * @param startKey An user email (optional)
     * @param startDocumentId An user document ID (optional)
     * @param limit Number of rows (optional)
     * @return RequestConfig
     */
-    fun listUsersRequestConfig(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
+    fun listUsersByRequestConfig(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -622,7 +622,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/user",
+            path = "/rest/v2/user",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -677,7 +677,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/user/inGroup/{groupId}".replace("{"+"groupId"+"}", "$groupId"),
+            path = "/rest/v2/user/inGroup/{groupId}".replace("{"+"groupId"+"}", "$groupId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -717,7 +717,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/user/{userId}/properties".replace("{"+"userId"+"}", "$userId"),
+            path = "/rest/v2/user/{userId}/properties".replace("{"+"userId"+"}", "$userId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -755,7 +755,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/user",
+            path = "/rest/v2/user",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -795,7 +795,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/user/inGroup/{groupId}".replace("{"+"groupId"+"}", "$groupId"),
+            path = "/rest/v2/user/inGroup/{groupId}".replace("{"+"groupId"+"}", "$groupId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody

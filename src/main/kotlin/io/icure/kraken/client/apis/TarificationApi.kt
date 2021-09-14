@@ -1,9 +1,9 @@
 /**
- * iCure Cloud API Documentation
+ * iCure Data Stack API Documentation
  *
- * Spring shop sample application
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v0.0.1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -35,7 +35,7 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
-            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "https://kraken.icure.dev")
+            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "http://localhost:16043")
         }
     }
 
@@ -70,7 +70,7 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/tarification",
+            path = "/rest/v2/tarification",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -93,15 +93,15 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findPaginatedTarifications(region: kotlin.String?, type: kotlin.String?, tarification: kotlin.String?, version: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListTarificationDto  {
-        val localVariableConfig = findPaginatedTarificationsRequestConfig(region = region, type = type, tarification = tarification, version = version, startDocumentId = startDocumentId, limit = limit)
+    suspend fun findTarificationsBy(region: kotlin.String?, type: kotlin.String?, tarification: kotlin.String?, version: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListTarificationDto  {
+        val localVariableConfig = findTarificationsByRequestConfig(region = region, type = type, tarification = tarification, version = version, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListTarificationDto>(
             localVariableConfig
         )!!
     }
     /**
-    * To obtain the request config of the operation findPaginatedTarifications
+    * To obtain the request config of the operation findTarificationsBy
     *
     * @param region  (optional)
     * @param type  (optional)
@@ -111,7 +111,7 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @param limit Number of rows (optional)
     * @return RequestConfig
     */
-    fun findPaginatedTarificationsRequestConfig(region: kotlin.String?, type: kotlin.String?, tarification: kotlin.String?, version: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
+    fun findTarificationsByRequestConfig(region: kotlin.String?, type: kotlin.String?, tarification: kotlin.String?, version: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -138,7 +138,65 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/tarification",
+            path = "/rest/v2/tarification",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
+    * Finding tarifications by tarification, type and version
+    * Returns a list of tarifications matched with given input.
+    * @param region Tarification region (optional)
+    * @param type Tarification type (optional)
+    * @param tarification Tarification tarification (optional)
+    * @param version Tarification version (optional)
+    * @return kotlin.collections.List<TarificationDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun findTarificationsBy1(region: kotlin.String?, type: kotlin.String?, tarification: kotlin.String?, version: kotlin.String?) : kotlin.collections.List<TarificationDto>  {
+        val localVariableConfig = findTarificationsBy1RequestConfig(region = region, type = type, tarification = tarification, version = version)
+
+        return request<Unit, kotlin.collections.List<TarificationDto>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation findTarificationsBy1
+    *
+    * @param region Tarification region (optional)
+    * @param type Tarification type (optional)
+    * @param tarification Tarification tarification (optional)
+    * @param version Tarification version (optional)
+    * @return RequestConfig
+    */
+    fun findTarificationsBy1RequestConfig(region: kotlin.String?, type: kotlin.String?, tarification: kotlin.String?, version: kotlin.String?) : RequestConfig<Unit> {
+        val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                if (region != null) {
+                    put("region", listOf(region.toString()))
+                }
+                if (type != null) {
+                    put("type", listOf(type.toString()))
+                }
+                if (tarification != null) {
+                    put("tarification", listOf(tarification.toString()))
+                }
+                if (version != null) {
+                    put("version", listOf(version.toString()))
+                }
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v2/tarification/byRegionTypeTarification",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -161,15 +219,15 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findPaginatedTarificationsByLabel(region: kotlin.String?, types: kotlin.String?, language: kotlin.String?, label: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListTarificationDto  {
-        val localVariableConfig = findPaginatedTarificationsByLabelRequestConfig(region = region, types = types, language = language, label = label, startDocumentId = startDocumentId, limit = limit)
+    suspend fun findTarificationsByLabel(region: kotlin.String?, types: kotlin.String?, language: kotlin.String?, label: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListTarificationDto  {
+        val localVariableConfig = findTarificationsByLabelRequestConfig(region = region, types = types, language = language, label = label, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListTarificationDto>(
             localVariableConfig
         )!!
     }
     /**
-    * To obtain the request config of the operation findPaginatedTarificationsByLabel
+    * To obtain the request config of the operation findTarificationsByLabel
     *
     * @param region  (optional)
     * @param types  (optional)
@@ -179,7 +237,7 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @param limit Number of rows (optional)
     * @return RequestConfig
     */
-    fun findPaginatedTarificationsByLabelRequestConfig(region: kotlin.String?, types: kotlin.String?, language: kotlin.String?, label: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
+    fun findTarificationsByLabelRequestConfig(region: kotlin.String?, types: kotlin.String?, language: kotlin.String?, label: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -206,65 +264,7 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/tarification/byLabel",
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Finding tarifications by tarification, type and version
-    * Returns a list of tarifications matched with given input.
-    * @param region Tarification region (optional)
-    * @param type Tarification type (optional)
-    * @param tarification Tarification tarification (optional)
-    * @param version Tarification version (optional)
-    * @return kotlin.collections.List<TarificationDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findTarifications(region: kotlin.String?, type: kotlin.String?, tarification: kotlin.String?, version: kotlin.String?) : kotlin.collections.List<TarificationDto>  {
-        val localVariableConfig = findTarificationsRequestConfig(region = region, type = type, tarification = tarification, version = version)
-
-        return request<Unit, kotlin.collections.List<TarificationDto>>(
-            localVariableConfig
-        )!!
-    }
-    /**
-    * To obtain the request config of the operation findTarifications
-    *
-    * @param region Tarification region (optional)
-    * @param type Tarification type (optional)
-    * @param tarification Tarification tarification (optional)
-    * @param version Tarification version (optional)
-    * @return RequestConfig
-    */
-    fun findTarificationsRequestConfig(region: kotlin.String?, type: kotlin.String?, tarification: kotlin.String?, version: kotlin.String?) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
-            .apply {
-                if (region != null) {
-                    put("region", listOf(region.toString()))
-                }
-                if (type != null) {
-                    put("type", listOf(type.toString()))
-                }
-                if (tarification != null) {
-                    put("tarification", listOf(tarification.toString()))
-                }
-                if (version != null) {
-                    put("version", listOf(version.toString()))
-                }
-            }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/tarification/byRegionTypeTarification",
+            path = "/rest/v2/tarification/byLabel",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -302,7 +302,7 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/tarification/{tarificationId}".replace("{"+"tarificationId"+"}", "$tarificationId"),
+            path = "/rest/v2/tarification/{tarificationId}".replace("{"+"tarificationId"+"}", "$tarificationId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -344,7 +344,7 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/tarification/{type}/{tarification}/{version}".replace("{"+"type"+"}", "$type").replace("{"+"tarification"+"}", "$tarification").replace("{"+"version"+"}", "$version"),
+            path = "/rest/v2/tarification/{type}/{tarification}/{version}".replace("{"+"type"+"}", "$type").replace("{"+"tarification"+"}", "$tarification").replace("{"+"version"+"}", "$version"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -382,7 +382,7 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/tarification/byIds",
+            path = "/rest/v2/tarification/byIds",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -420,7 +420,7 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/tarification",
+            path = "/rest/v2/tarification",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody

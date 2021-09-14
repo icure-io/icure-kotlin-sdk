@@ -1,16 +1,16 @@
 # AgendaApi
 
-All URIs are relative to *https://kraken.icure.dev*
+All URIs are relative to *http://localhost:16043*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createAgenda**](AgendaApi.md#createAgenda) | **POST** /rest/v1/agenda | Creates a agenda
-[**deleteAgenda**](AgendaApi.md#deleteAgenda) | **DELETE** /rest/v1/agenda/{agendaIds} | Deletes an agenda
-[**getAgenda**](AgendaApi.md#getAgenda) | **GET** /rest/v1/agenda/{agendaId} | Gets an agenda
-[**getAgendas**](AgendaApi.md#getAgendas) | **GET** /rest/v1/agenda | Gets all agendas
-[**getAgendasForUser**](AgendaApi.md#getAgendasForUser) | **GET** /rest/v1/agenda/byUser | Gets all agendas for user
-[**getReadableAgendasForUser**](AgendaApi.md#getReadableAgendasForUser) | **GET** /rest/v1/agenda/readableForUser | Gets readable agendas for user
-[**modifyAgenda**](AgendaApi.md#modifyAgenda) | **PUT** /rest/v1/agenda | Modifies an agenda
+[**createAgenda**](AgendaApi.md#createAgenda) | **POST** /rest/v2/agenda | Creates a agenda
+[**deleteAgendas**](AgendaApi.md#deleteAgendas) | **POST** /rest/v2/agenda/delete/batch | Deletes agendas
+[**getAgenda**](AgendaApi.md#getAgenda) | **GET** /rest/v2/agenda/{agendaId} | Gets an agenda
+[**getAgendas**](AgendaApi.md#getAgendas) | **GET** /rest/v2/agenda | Gets all agendas
+[**getAgendasForUser**](AgendaApi.md#getAgendasForUser) | **GET** /rest/v2/agenda/byUser | Gets all agendas for user
+[**getReadableAgendasForUser**](AgendaApi.md#getReadableAgendasForUser) | **GET** /rest/v2/agenda/readableForUser | Gets readable agendas for user
+[**modifyAgenda**](AgendaApi.md#modifyAgenda) | **PUT** /rest/v2/agenda | Modifies an agenda
 
 
 <a name="createAgenda"></a>
@@ -51,21 +51,18 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
  - **Accept**: */*
 
-<a name="deleteAgenda"></a>
-# **deleteAgenda**
-> kotlin.collections.List&lt;DocIdentifier&gt; deleteAgenda(agendaIds)
+<a name="deleteAgendas"></a>
+# **deleteAgendas**
+> kotlin.collections.List&lt;DocIdentifier&gt; deleteAgendas(listOfIdsDto)
 
-Deletes an agenda
+Deletes agendas
 
 ### Example
 ```kotlin
@@ -74,15 +71,15 @@ Deletes an agenda
 //import io.icure.kraken.client.models.*
 
 val apiInstance = AgendaApi()
-val agendaIds : kotlin.String = agendaIds_example // kotlin.String | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
 try {
-    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteAgenda(agendaIds)
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteAgendas(listOfIdsDto)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling AgendaApi#deleteAgenda")
+    println("4xx response calling AgendaApi#deleteAgendas")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling AgendaApi#deleteAgenda")
+    println("5xx response calling AgendaApi#deleteAgendas")
     e.printStackTrace()
 }
 ```
@@ -91,7 +88,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **agendaIds** | **kotlin.String**|  |
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
 
 ### Return type
 
@@ -99,14 +96,11 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: */*
 
 <a name="getAgenda"></a>
@@ -147,10 +141,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -191,10 +182,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -239,10 +227,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -287,10 +272,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -335,10 +317,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 

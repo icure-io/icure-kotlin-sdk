@@ -1,14 +1,14 @@
 # ArticleApi
 
-All URIs are relative to *https://kraken.icure.dev*
+All URIs are relative to *http://localhost:16043*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createArticle**](ArticleApi.md#createArticle) | **POST** /rest/v1/article | Creates a article
-[**deleteArticle**](ArticleApi.md#deleteArticle) | **DELETE** /rest/v1/article/{articleIds} | Deletes an article
-[**getArticle**](ArticleApi.md#getArticle) | **GET** /rest/v1/article/{articleId} | Gets an article
-[**getArticles**](ArticleApi.md#getArticles) | **GET** /rest/v1/article | Gets all articles
-[**modifyArticle**](ArticleApi.md#modifyArticle) | **PUT** /rest/v1/article | Modifies an article
+[**createArticle**](ArticleApi.md#createArticle) | **POST** /rest/v2/article | Creates a article
+[**deleteArticles**](ArticleApi.md#deleteArticles) | **POST** /rest/v2/article/delete/batch | Deletes articles
+[**getArticle**](ArticleApi.md#getArticle) | **GET** /rest/v2/article/{articleId} | Gets an article
+[**getArticles**](ArticleApi.md#getArticles) | **GET** /rest/v2/article | Gets all articles
+[**modifyArticle**](ArticleApi.md#modifyArticle) | **PUT** /rest/v2/article | Modifies an article
 
 
 <a name="createArticle"></a>
@@ -49,21 +49,18 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
  - **Accept**: */*
 
-<a name="deleteArticle"></a>
-# **deleteArticle**
-> kotlin.collections.List&lt;DocIdentifier&gt; deleteArticle(articleIds)
+<a name="deleteArticles"></a>
+# **deleteArticles**
+> kotlin.collections.List&lt;DocIdentifier&gt; deleteArticles(listOfIdsDto)
 
-Deletes an article
+Deletes articles
 
 ### Example
 ```kotlin
@@ -72,15 +69,15 @@ Deletes an article
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ArticleApi()
-val articleIds : kotlin.String = articleIds_example // kotlin.String | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
 try {
-    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteArticle(articleIds)
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteArticles(listOfIdsDto)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling ArticleApi#deleteArticle")
+    println("4xx response calling ArticleApi#deleteArticles")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling ArticleApi#deleteArticle")
+    println("5xx response calling ArticleApi#deleteArticles")
     e.printStackTrace()
 }
 ```
@@ -89,7 +86,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **articleIds** | **kotlin.String**|  |
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
 
 ### Return type
 
@@ -97,14 +94,11 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: */*
 
 <a name="getArticle"></a>
@@ -145,10 +139,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -189,10 +180,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -237,10 +225,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 

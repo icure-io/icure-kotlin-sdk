@@ -1,16 +1,16 @@
 # ReceiptApi
 
-All URIs are relative to *https://kraken.icure.dev*
+All URIs are relative to *http://localhost:16043*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createReceipt**](ReceiptApi.md#createReceipt) | **POST** /rest/v1/receipt | Creates a receipt
-[**deleteReceipt**](ReceiptApi.md#deleteReceipt) | **DELETE** /rest/v1/receipt/{receiptIds} | Deletes a receipt
-[**getReceipt**](ReceiptApi.md#getReceipt) | **GET** /rest/v1/receipt/{receiptId} | Gets a receipt
-[**getReceiptAttachment**](ReceiptApi.md#getReceiptAttachment) | **GET** /rest/v1/receipt/{receiptId}/attachment/{attachmentId} | Get an attachment
-[**listByReference**](ReceiptApi.md#listByReference) | **GET** /rest/v1/receipt/byref/{ref} | Gets a receipt
-[**modifyReceipt**](ReceiptApi.md#modifyReceipt) | **PUT** /rest/v1/receipt | Updates a receipt
-[**setReceiptAttachment**](ReceiptApi.md#setReceiptAttachment) | **PUT** /rest/v1/receipt/{receiptId}/attachment/{blobType} | Creates a receipt&#39;s attachment
+[**createReceipt**](ReceiptApi.md#createReceipt) | **POST** /rest/v2/receipt | Creates a receipt
+[**deleteReceipts**](ReceiptApi.md#deleteReceipts) | **DELETE** /rest/v2/receipt/delete/batch | Deletes receipts
+[**getReceipt**](ReceiptApi.md#getReceipt) | **GET** /rest/v2/receipt/{receiptId} | Gets a receipt
+[**getReceiptAttachment**](ReceiptApi.md#getReceiptAttachment) | **GET** /rest/v2/receipt/{receiptId}/attachment/{attachmentId} | Get an attachment
+[**listByReference**](ReceiptApi.md#listByReference) | **GET** /rest/v2/receipt/byRef/{ref} | Gets a receipt
+[**modifyReceipt**](ReceiptApi.md#modifyReceipt) | **PUT** /rest/v2/receipt | Updates a receipt
+[**setReceiptAttachment**](ReceiptApi.md#setReceiptAttachment) | **PUT** /rest/v2/receipt/{receiptId}/attachment/{blobType} | Creates a receipt&#39;s attachment
 
 
 <a name="createReceipt"></a>
@@ -51,21 +51,18 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
  - **Accept**: */*
 
-<a name="deleteReceipt"></a>
-# **deleteReceipt**
-> kotlin.collections.List&lt;DocIdentifier&gt; deleteReceipt(receiptIds)
+<a name="deleteReceipts"></a>
+# **deleteReceipts**
+> kotlin.collections.List&lt;DocIdentifier&gt; deleteReceipts(listOfIdsDto)
 
-Deletes a receipt
+Deletes receipts
 
 ### Example
 ```kotlin
@@ -74,15 +71,15 @@ Deletes a receipt
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ReceiptApi()
-val receiptIds : kotlin.String = receiptIds_example // kotlin.String | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
 try {
-    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteReceipt(receiptIds)
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteReceipts(listOfIdsDto)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling ReceiptApi#deleteReceipt")
+    println("4xx response calling ReceiptApi#deleteReceipts")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling ReceiptApi#deleteReceipt")
+    println("5xx response calling ReceiptApi#deleteReceipts")
     e.printStackTrace()
 }
 ```
@@ -91,7 +88,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **receiptIds** | **kotlin.String**|  |
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
 
 ### Return type
 
@@ -99,14 +96,11 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: */*
 
 <a name="getReceipt"></a>
@@ -147,10 +141,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -199,10 +190,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -247,10 +235,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -295,10 +280,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -349,10 +331,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 

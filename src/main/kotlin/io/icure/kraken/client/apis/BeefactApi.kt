@@ -1,9 +1,9 @@
 /**
- * iCure Cloud API Documentation
+ * iCure Data Stack API Documentation
  *
- * Spring shop sample application
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v0.0.1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -34,7 +34,7 @@ class BeefactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
-            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "https://kraken.icure.dev")
+            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "http://localhost:16043")
         }
     }
 
@@ -75,7 +75,7 @@ class BeefactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/be_efact/{insuranceId}/{newMessageId}/{numericalRef}".replace("{"+"insuranceId"+"}", "$insuranceId").replace("{"+"newMessageId"+"}", "$newMessageId").replace("{"+"numericalRef"+"}", "$numericalRef"),
+            path = "/rest/v2/be_efact/{insuranceId}/{newMessageId}/{numericalRef}".replace("{"+"insuranceId"+"}", "$insuranceId").replace("{"+"newMessageId"+"}", "$newMessageId").replace("{"+"numericalRef"+"}", "$numericalRef"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody

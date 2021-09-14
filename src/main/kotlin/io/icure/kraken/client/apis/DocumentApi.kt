@@ -1,9 +1,9 @@
 /**
- * iCure Cloud API Documentation
+ * iCure Data Stack API Documentation
  *
- * Spring shop sample application
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v0.0.1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -36,7 +36,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
-            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "https://kraken.icure.dev")
+            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "http://localhost:16043")
         }
     }
 
@@ -71,7 +71,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/document",
+            path = "/rest/v2/document",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -109,7 +109,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return RequestConfig(
             method = RequestMethod.DELETE,
-            path = "/rest/v1/document/{documentId}/attachment".replace("{"+"documentId"+"}", "$documentId"),
+            path = "/rest/v2/document/{documentId}/attachment".replace("{"+"documentId"+"}", "$documentId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -117,9 +117,9 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     }
 
     /**
-    * Deletes a document
+    * Deletes documents
     * 
-    * @param documentIds  
+    * @param listOfIdsDto  
     * @return kotlin.collections.List<DocIdentifier>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -127,118 +127,27 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteDocument(documentIds: kotlin.String) : kotlin.collections.List<DocIdentifier>  {
-        val localVariableConfig = deleteDocumentRequestConfig(documentIds = documentIds)
+    suspend fun deleteDocument(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocIdentifier>  {
+        val localVariableConfig = deleteDocumentRequestConfig(listOfIdsDto = listOfIdsDto)
 
-        return request<Unit, kotlin.collections.List<DocIdentifier>>(
+        return request<ListOfIdsDto, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
         )!!
     }
     /**
     * To obtain the request config of the operation deleteDocument
     *
-    * @param documentIds  
+    * @param listOfIdsDto  
     * @return RequestConfig
     */
-    fun deleteDocumentRequestConfig(documentIds: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun deleteDocumentRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+        val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(
-            method = RequestMethod.DELETE,
-            path = "/rest/v1/document/{documentIds}".replace("{"+"documentIds"+"}", "$documentIds"),
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * List documents found By type, By Healthcare Party and secret foreign keys.
-    * Keys must be delimited by coma
-    * @param documentTypeCode  
-    * @param hcPartyId  
-    * @param secretFKeys  
-    * @return kotlin.collections.List<DocumentDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findByTypeHCPartyMessageSecretFKeys(documentTypeCode: kotlin.String, hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<DocumentDto>  {
-        val localVariableConfig = findByTypeHCPartyMessageSecretFKeysRequestConfig(documentTypeCode = documentTypeCode, hcPartyId = hcPartyId, secretFKeys = secretFKeys)
-
-        return request<Unit, kotlin.collections.List<DocumentDto>>(
-            localVariableConfig
-        )!!
-    }
-    /**
-    * To obtain the request config of the operation findByTypeHCPartyMessageSecretFKeys
-    *
-    * @param documentTypeCode  
-    * @param hcPartyId  
-    * @param secretFKeys  
-    * @return RequestConfig
-    */
-    fun findByTypeHCPartyMessageSecretFKeysRequestConfig(documentTypeCode: kotlin.String, hcPartyId: kotlin.String, secretFKeys: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
-            .apply {
-                put("documentTypeCode", listOf(documentTypeCode.toString()))
-                put("hcPartyId", listOf(hcPartyId.toString()))
-                put("secretFKeys", listOf(secretFKeys.toString()))
-            }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/document/byTypeHcPartySecretForeignKeys",
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * List documents found By Healthcare Party and secret foreign keys.
-    * Keys must be delimited by coma
-    * @param hcPartyId  
-    * @param secretFKeys  
-    * @return kotlin.collections.List<DocumentDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findDocumentsByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<DocumentDto>  {
-        val localVariableConfig = findDocumentsByHCPartyPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
-
-        return request<Unit, kotlin.collections.List<DocumentDto>>(
-            localVariableConfig
-        )!!
-    }
-    /**
-    * To obtain the request config of the operation findDocumentsByHCPartyPatientForeignKeys
-    *
-    * @param hcPartyId  
-    * @param secretFKeys  
-    * @return RequestConfig
-    */
-    fun findDocumentsByHCPartyPatientForeignKeysRequestConfig(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
-            .apply {
-                put("hcPartyId", listOf(hcPartyId.toString()))
-                put("secretFKeys", listOf(secretFKeys.toString()))
-            }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/document/byHcPartySecretForeignKeys",
+            method = RequestMethod.POST,
+            path = "/rest/v2/document/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -281,7 +190,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/document/woDelegation",
+            path = "/rest/v2/document/woDelegation",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -319,7 +228,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/document/{documentId}".replace("{"+"documentId"+"}", "$documentId"),
+            path = "/rest/v2/document/{documentId}".replace("{"+"documentId"+"}", "$documentId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -371,7 +280,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/document/{documentId}/attachment/{attachmentId}".replace("{"+"documentId"+"}", "$documentId").replace("{"+"attachmentId"+"}", "$attachmentId"),
+            path = "/rest/v2/document/{documentId}/attachment/{attachmentId}".replace("{"+"documentId"+"}", "$documentId").replace("{"+"attachmentId"+"}", "$attachmentId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -409,7 +318,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/document/externaluuid/{externalUuid}".replace("{"+"externalUuid"+"}", "$externalUuid"),
+            path = "/rest/v2/document/externaluuid/{externalUuid}".replace("{"+"externalUuid"+"}", "$externalUuid"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -447,7 +356,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/document/batch",
+            path = "/rest/v2/document/byIds",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -485,7 +394,98 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/document/externaluuid/{externalUuid}/all".replace("{"+"externalUuid"+"}", "$externalUuid"),
+            path = "/rest/v2/document/externaluuid/{externalUuid}/all".replace("{"+"externalUuid"+"}", "$externalUuid"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
+    * List documents found By type, By Healthcare Party and secret foreign keys.
+    * Keys must be delimited by coma
+    * @param documentTypeCode  
+    * @param hcPartyId  
+    * @param secretFKeys  
+    * @return kotlin.collections.List<DocumentDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun listDocumentByTypeHCPartyMessageSecretFKeys(documentTypeCode: kotlin.String, hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<DocumentDto>  {
+        val localVariableConfig = listDocumentByTypeHCPartyMessageSecretFKeysRequestConfig(documentTypeCode = documentTypeCode, hcPartyId = hcPartyId, secretFKeys = secretFKeys)
+
+        return request<Unit, kotlin.collections.List<DocumentDto>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation listDocumentByTypeHCPartyMessageSecretFKeys
+    *
+    * @param documentTypeCode  
+    * @param hcPartyId  
+    * @param secretFKeys  
+    * @return RequestConfig
+    */
+    fun listDocumentByTypeHCPartyMessageSecretFKeysRequestConfig(documentTypeCode: kotlin.String, hcPartyId: kotlin.String, secretFKeys: kotlin.String) : RequestConfig<Unit> {
+        val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                put("documentTypeCode", listOf(documentTypeCode.toString()))
+                put("hcPartyId", listOf(hcPartyId.toString()))
+                put("secretFKeys", listOf(secretFKeys.toString()))
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v2/document/byTypeHcPartySecretForeignKeys",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
+    * List documents found By Healthcare Party and secret foreign keys.
+    * Keys must be delimited by coma
+    * @param hcPartyId  
+    * @param secretFKeys  
+    * @return kotlin.collections.List<DocumentDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun listDocumentsByHCPartyAndPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<DocumentDto>  {
+        val localVariableConfig = listDocumentsByHCPartyAndPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
+
+        return request<Unit, kotlin.collections.List<DocumentDto>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation listDocumentsByHCPartyAndPatientForeignKeys
+    *
+    * @param hcPartyId  
+    * @param secretFKeys  
+    * @return RequestConfig
+    */
+    fun listDocumentsByHCPartyAndPatientForeignKeysRequestConfig(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : RequestConfig<Unit> {
+        val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                put("hcPartyId", listOf(hcPartyId.toString()))
+                put("secretFKeys", listOf(secretFKeys.toString()))
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v2/document/byHcPartySecretForeignKeys",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -523,7 +523,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/document",
+            path = "/rest/v2/document",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -561,7 +561,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/document/batch",
+            path = "/rest/v2/document/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -608,7 +608,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/document/{documentId}/attachment".replace("{"+"documentId"+"}", "$documentId"),
+            path = "/rest/v2/document/{documentId}/attachment".replace("{"+"documentId"+"}", "$documentId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -655,7 +655,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/document/{documentId}/attachment/multipart".replace("{"+"documentId"+"}", "$documentId"),
+            path = "/rest/v2/document/{documentId}/attachment/multipart".replace("{"+"documentId"+"}", "$documentId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -693,7 +693,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/document/delegations",
+            path = "/rest/v2/document/delegations",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -741,7 +741,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/document/attachment",
+            path = "/rest/v2/document/attachment",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody

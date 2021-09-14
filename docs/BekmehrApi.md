@@ -1,35 +1,35 @@
 # BekmehrApi
 
-All URIs are relative to *https://kraken.icure.dev*
+All URIs are relative to *http://localhost:16043*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**checkIfSMFPatientsExists**](BekmehrApi.md#checkIfSMFPatientsExists) | **POST** /rest/v1/be_kmehr/smf/{documentId}/checkIfSMFPatientsExists | Check whether patients in SMF already exists in DB
-[**generateContactreportExport**](BekmehrApi.md#generateContactreportExport) | **POST** /rest/v1/be_kmehr/contactreport/{patientId}/export/{id} | Get Kmehr contactreport
-[**generateDiaryNote**](BekmehrApi.md#generateDiaryNote) | **POST** /rest/v1/be_kmehr/diarynote/{patientId}/export | Generate diarynote
-[**generateLabresultExport**](BekmehrApi.md#generateLabresultExport) | **POST** /rest/v1/be_kmehr/labresult/{patientId}/export/{id} | Get Kmehr labresult
-[**generateMedicationSchemeExport**](BekmehrApi.md#generateMedicationSchemeExport) | **POST** /rest/v1/be_kmehr/medicationscheme/{patientId}/export | Get Medicationscheme export
-[**generateNoteExport**](BekmehrApi.md#generateNoteExport) | **POST** /rest/v1/be_kmehr/note/{patientId}/export/{id} | Get Kmehr note
-[**generatePatientInfoExport**](BekmehrApi.md#generatePatientInfoExport) | **POST** /rest/v1/be_kmehr/patientinfo/{patientId}/export | Get KMEHR Patient Info export
-[**generatePrescriptionExport**](BekmehrApi.md#generatePrescriptionExport) | **POST** /rest/v1/be_kmehr/prescription/{patientId}/export/{id} | Get Kmehr prescription
-[**generateReportExport**](BekmehrApi.md#generateReportExport) | **POST** /rest/v1/be_kmehr/report/{patientId}/export/{id} | Get Kmehr report
-[**generateRequestExport**](BekmehrApi.md#generateRequestExport) | **POST** /rest/v1/be_kmehr/request/{patientId}/export/{id} | Get Kmehr request
-[**generateResultExport**](BekmehrApi.md#generateResultExport) | **POST** /rest/v1/be_kmehr/result/{patientId}/export/{id} | Get Kmehr result
-[**generateSmfExport**](BekmehrApi.md#generateSmfExport) | **POST** /rest/v1/be_kmehr/smf/{patientId}/export | Get SMF (Software Medical File) export
-[**generateSumehr**](BekmehrApi.md#generateSumehr) | **POST** /rest/v1/be_kmehr/sumehr/{patientId}/export | Generate sumehr
-[**generateSumehrV2**](BekmehrApi.md#generateSumehrV2) | **POST** /rest/v1/be_kmehr/sumehrv2/{patientId}/export | Generate sumehr
-[**getSumehrContent**](BekmehrApi.md#getSumehrContent) | **POST** /rest/v1/be_kmehr/sumehr/{patientId}/content | Get sumehr elements
-[**getSumehrMd5**](BekmehrApi.md#getSumehrMd5) | **POST** /rest/v1/be_kmehr/sumehr/{patientId}/md5 | Check sumehr signature
-[**getSumehrV2Content**](BekmehrApi.md#getSumehrV2Content) | **POST** /rest/v1/be_kmehr/sumehrv2/{patientId}/content | Get sumehr elements
-[**getSumehrV2Md5**](BekmehrApi.md#getSumehrV2Md5) | **POST** /rest/v1/be_kmehr/sumehrv2/{patientId}/md5 | Check sumehr signature
-[**importMedicationScheme**](BekmehrApi.md#importMedicationScheme) | **POST** /rest/v1/be_kmehr/medicationscheme/{documentId}/import | Import MedicationScheme into patient(s) using existing document
-[**importSmf**](BekmehrApi.md#importSmf) | **POST** /rest/v1/be_kmehr/smf/{documentId}/import | Import SMF into patient(s) using existing document
-[**importSumehr**](BekmehrApi.md#importSumehr) | **POST** /rest/v1/be_kmehr/sumehr/{documentId}/import | Import sumehr into patient(s) using existing document
-[**importSumehrByItemId**](BekmehrApi.md#importSumehrByItemId) | **POST** /rest/v1/be_kmehr/sumehr/{documentId}/importbyitemid | Import sumehr into patient(s) using existing document
-[**isSumehrV2Valid**](BekmehrApi.md#isSumehrV2Valid) | **POST** /rest/v1/be_kmehr/sumehrv2/{patientId}/valid | Get sumehr validity
-[**isSumehrValid**](BekmehrApi.md#isSumehrValid) | **POST** /rest/v1/be_kmehr/sumehr/{patientId}/valid | Get sumehr validity
-[**validateSumehr**](BekmehrApi.md#validateSumehr) | **POST** /rest/v1/be_kmehr/sumehr/{patientId}/validate | Validate sumehr
-[**validateSumehrV2**](BekmehrApi.md#validateSumehrV2) | **POST** /rest/v1/be_kmehr/sumehrv2/{patientId}/validate | Validate sumehr
+[**checkIfSMFPatientsExists**](BekmehrApi.md#checkIfSMFPatientsExists) | **POST** /rest/v2/be_kmehr/smf/{documentId}/checkIfSMFPatientsExists | Check whether patients in SMF already exists in DB
+[**generateContactreportExport**](BekmehrApi.md#generateContactreportExport) | **POST** /rest/v2/be_kmehr/contactreport/{patientId}/export/{id} | Get Kmehr contactreport
+[**generateDiaryNote**](BekmehrApi.md#generateDiaryNote) | **POST** /rest/v2/be_kmehr/diarynote/{patientId}/export | Generate diarynote
+[**generateLabresultExport**](BekmehrApi.md#generateLabresultExport) | **POST** /rest/v2/be_kmehr/labresult/{patientId}/export/{id} | Get Kmehr labresult
+[**generateMedicationSchemeExport**](BekmehrApi.md#generateMedicationSchemeExport) | **POST** /rest/v2/be_kmehr/medicationscheme/{patientId}/export | Get Medicationscheme export
+[**generateNoteExport**](BekmehrApi.md#generateNoteExport) | **POST** /rest/v2/be_kmehr/note/{patientId}/export/{id} | Get Kmehr note
+[**generatePatientInfoExport**](BekmehrApi.md#generatePatientInfoExport) | **POST** /rest/v2/be_kmehr/patientinfo/{patientId}/export | Get KMEHR Patient Info export
+[**generatePrescriptionExport**](BekmehrApi.md#generatePrescriptionExport) | **POST** /rest/v2/be_kmehr/prescription/{patientId}/export/{id} | Get Kmehr prescription
+[**generateReportExport**](BekmehrApi.md#generateReportExport) | **POST** /rest/v2/be_kmehr/report/{patientId}/export/{id} | Get Kmehr report
+[**generateRequestExport**](BekmehrApi.md#generateRequestExport) | **POST** /rest/v2/be_kmehr/request/{patientId}/export/{id} | Get Kmehr request
+[**generateResultExport**](BekmehrApi.md#generateResultExport) | **POST** /rest/v2/be_kmehr/result/{patientId}/export/{id} | Get Kmehr result
+[**generateSmfExport**](BekmehrApi.md#generateSmfExport) | **POST** /rest/v2/be_kmehr/smf/{patientId}/export | Get SMF (Software Medical File) export
+[**generateSumehr**](BekmehrApi.md#generateSumehr) | **POST** /rest/v2/be_kmehr/sumehr/{patientId}/export | Generate sumehr
+[**generateSumehrV2**](BekmehrApi.md#generateSumehrV2) | **POST** /rest/v2/be_kmehr/sumehrv2/{patientId}/export | Generate sumehr
+[**getSumehrContent**](BekmehrApi.md#getSumehrContent) | **POST** /rest/v2/be_kmehr/sumehr/{patientId}/content | Get sumehr elements
+[**getSumehrMd5**](BekmehrApi.md#getSumehrMd5) | **POST** /rest/v2/be_kmehr/sumehr/{patientId}/md5 | Check sumehr signature
+[**getSumehrV2Content**](BekmehrApi.md#getSumehrV2Content) | **POST** /rest/v2/be_kmehr/sumehrv2/{patientId}/content | Get sumehr elements
+[**getSumehrV2Md5**](BekmehrApi.md#getSumehrV2Md5) | **POST** /rest/v2/be_kmehr/sumehrv2/{patientId}/md5 | Check sumehr signature
+[**importMedicationScheme**](BekmehrApi.md#importMedicationScheme) | **POST** /rest/v2/be_kmehr/medicationscheme/{documentId}/import | Import MedicationScheme into patient(s) using existing document
+[**importSmf**](BekmehrApi.md#importSmf) | **POST** /rest/v2/be_kmehr/smf/{documentId}/import | Import SMF into patient(s) using existing document
+[**importSumehr**](BekmehrApi.md#importSumehr) | **POST** /rest/v2/be_kmehr/sumehr/{documentId}/import | Import sumehr into patient(s) using existing document
+[**importSumehrByItemId**](BekmehrApi.md#importSumehrByItemId) | **POST** /rest/v2/be_kmehr/sumehr/{documentId}/importbyitemid | Import sumehr into patient(s) using existing document
+[**isSumehrV2Valid**](BekmehrApi.md#isSumehrV2Valid) | **POST** /rest/v2/be_kmehr/sumehrv2/{patientId}/valid | Get sumehr validity
+[**isSumehrValid**](BekmehrApi.md#isSumehrValid) | **POST** /rest/v2/be_kmehr/sumehr/{patientId}/valid | Get sumehr validity
+[**validateSumehr**](BekmehrApi.md#validateSumehr) | **POST** /rest/v2/be_kmehr/sumehr/{patientId}/validate | Validate sumehr
+[**validateSumehrV2**](BekmehrApi.md#validateSumehrV2) | **POST** /rest/v2/be_kmehr/sumehrv2/{patientId}/validate | Validate sumehr
 
 
 <a name="checkIfSMFPatientsExists"></a>
@@ -78,10 +78,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -90,7 +87,7 @@ Configure basicScheme:
 
 <a name="generateContactreportExport"></a>
 # **generateContactreportExport**
-> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generateContactreportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generateContactreportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, ioIcureKrakenClientInfrastructureByteArrayWrapper)
 
 Get Kmehr contactreport
 
@@ -110,9 +107,9 @@ val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
 val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
 val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
 val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
+val ioIcureKrakenClientInfrastructureByteArrayWrapper : kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> =  // kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> | 
 try {
-    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateContactreportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateContactreportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, ioIcureKrakenClientInfrastructureByteArrayWrapper)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateContactreportExport")
@@ -136,7 +133,7 @@ Name | Type | Description  | Notes
  **recipientFirstName** | **kotlin.String**|  |
  **recipientLastName** | **kotlin.String**|  |
  **mimeType** | **kotlin.String**|  |
- **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
+ **ioIcureKrakenClientInfrastructureByteArrayWrapper** | [**kotlin.collections.List&lt;io.icure.kraken.client.infrastructure.ByteArrayWrapper&gt;**](io.icure.kraken.client.infrastructure.ByteArrayWrapper.md)|  |
 
 ### Return type
 
@@ -144,10 +141,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -196,10 +190,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -208,7 +199,7 @@ Configure basicScheme:
 
 <a name="generateLabresultExport"></a>
 # **generateLabresultExport**
-> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generateLabresultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generateLabresultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, ioIcureKrakenClientInfrastructureByteArrayWrapper)
 
 Get Kmehr labresult
 
@@ -228,9 +219,9 @@ val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
 val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
 val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
 val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
+val ioIcureKrakenClientInfrastructureByteArrayWrapper : kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> =  // kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> | 
 try {
-    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateLabresultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateLabresultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, ioIcureKrakenClientInfrastructureByteArrayWrapper)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateLabresultExport")
@@ -254,7 +245,7 @@ Name | Type | Description  | Notes
  **recipientFirstName** | **kotlin.String**|  |
  **recipientLastName** | **kotlin.String**|  |
  **mimeType** | **kotlin.String**|  |
- **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
+ **ioIcureKrakenClientInfrastructureByteArrayWrapper** | [**kotlin.collections.List&lt;io.icure.kraken.client.infrastructure.ByteArrayWrapper&gt;**](io.icure.kraken.client.infrastructure.ByteArrayWrapper.md)|  |
 
 ### Return type
 
@@ -262,10 +253,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -318,10 +306,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -330,7 +315,7 @@ Configure basicScheme:
 
 <a name="generateNoteExport"></a>
 # **generateNoteExport**
-> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generateNoteExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generateNoteExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, ioIcureKrakenClientInfrastructureByteArrayWrapper)
 
 Get Kmehr note
 
@@ -350,9 +335,9 @@ val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
 val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
 val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
 val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
+val ioIcureKrakenClientInfrastructureByteArrayWrapper : kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> =  // kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> | 
 try {
-    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateNoteExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateNoteExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, ioIcureKrakenClientInfrastructureByteArrayWrapper)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateNoteExport")
@@ -376,7 +361,7 @@ Name | Type | Description  | Notes
  **recipientFirstName** | **kotlin.String**|  |
  **recipientLastName** | **kotlin.String**|  |
  **mimeType** | **kotlin.String**|  |
- **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
+ **ioIcureKrakenClientInfrastructureByteArrayWrapper** | [**kotlin.collections.List&lt;io.icure.kraken.client.infrastructure.ByteArrayWrapper&gt;**](io.icure.kraken.client.infrastructure.ByteArrayWrapper.md)|  |
 
 ### Return type
 
@@ -384,10 +369,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -434,10 +416,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -446,7 +425,7 @@ Configure basicScheme:
 
 <a name="generatePrescriptionExport"></a>
 # **generatePrescriptionExport**
-> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generatePrescriptionExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generatePrescriptionExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, ioIcureKrakenClientInfrastructureByteArrayWrapper)
 
 Get Kmehr prescription
 
@@ -466,9 +445,9 @@ val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
 val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
 val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
 val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
+val ioIcureKrakenClientInfrastructureByteArrayWrapper : kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> =  // kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> | 
 try {
-    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generatePrescriptionExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generatePrescriptionExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, ioIcureKrakenClientInfrastructureByteArrayWrapper)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generatePrescriptionExport")
@@ -492,7 +471,7 @@ Name | Type | Description  | Notes
  **recipientFirstName** | **kotlin.String**|  |
  **recipientLastName** | **kotlin.String**|  |
  **mimeType** | **kotlin.String**|  |
- **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
+ **ioIcureKrakenClientInfrastructureByteArrayWrapper** | [**kotlin.collections.List&lt;io.icure.kraken.client.infrastructure.ByteArrayWrapper&gt;**](io.icure.kraken.client.infrastructure.ByteArrayWrapper.md)|  |
 
 ### Return type
 
@@ -500,10 +479,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -512,7 +488,7 @@ Configure basicScheme:
 
 <a name="generateReportExport"></a>
 # **generateReportExport**
-> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generateReportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generateReportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, ioIcureKrakenClientInfrastructureByteArrayWrapper)
 
 Get Kmehr report
 
@@ -532,9 +508,9 @@ val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
 val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
 val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
 val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
+val ioIcureKrakenClientInfrastructureByteArrayWrapper : kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> =  // kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> | 
 try {
-    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateReportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateReportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, ioIcureKrakenClientInfrastructureByteArrayWrapper)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateReportExport")
@@ -558,7 +534,7 @@ Name | Type | Description  | Notes
  **recipientFirstName** | **kotlin.String**|  |
  **recipientLastName** | **kotlin.String**|  |
  **mimeType** | **kotlin.String**|  |
- **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
+ **ioIcureKrakenClientInfrastructureByteArrayWrapper** | [**kotlin.collections.List&lt;io.icure.kraken.client.infrastructure.ByteArrayWrapper&gt;**](io.icure.kraken.client.infrastructure.ByteArrayWrapper.md)|  |
 
 ### Return type
 
@@ -566,10 +542,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -578,7 +551,7 @@ Configure basicScheme:
 
 <a name="generateRequestExport"></a>
 # **generateRequestExport**
-> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generateRequestExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generateRequestExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, ioIcureKrakenClientInfrastructureByteArrayWrapper)
 
 Get Kmehr request
 
@@ -598,9 +571,9 @@ val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
 val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
 val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
 val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
+val ioIcureKrakenClientInfrastructureByteArrayWrapper : kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> =  // kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> | 
 try {
-    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateRequestExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateRequestExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, ioIcureKrakenClientInfrastructureByteArrayWrapper)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateRequestExport")
@@ -624,7 +597,7 @@ Name | Type | Description  | Notes
  **recipientFirstName** | **kotlin.String**|  |
  **recipientLastName** | **kotlin.String**|  |
  **mimeType** | **kotlin.String**|  |
- **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
+ **ioIcureKrakenClientInfrastructureByteArrayWrapper** | [**kotlin.collections.List&lt;io.icure.kraken.client.infrastructure.ByteArrayWrapper&gt;**](io.icure.kraken.client.infrastructure.ByteArrayWrapper.md)|  |
 
 ### Return type
 
@@ -632,10 +605,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -644,7 +614,7 @@ Configure basicScheme:
 
 <a name="generateResultExport"></a>
 # **generateResultExport**
-> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generateResultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generateResultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, ioIcureKrakenClientInfrastructureByteArrayWrapper)
 
 Get Kmehr result
 
@@ -664,9 +634,9 @@ val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
 val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
 val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
 val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
+val ioIcureKrakenClientInfrastructureByteArrayWrapper : kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> =  // kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> | 
 try {
-    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateResultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateResultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, ioIcureKrakenClientInfrastructureByteArrayWrapper)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateResultExport")
@@ -690,7 +660,7 @@ Name | Type | Description  | Notes
  **recipientFirstName** | **kotlin.String**|  |
  **recipientLastName** | **kotlin.String**|  |
  **mimeType** | **kotlin.String**|  |
- **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
+ **ioIcureKrakenClientInfrastructureByteArrayWrapper** | [**kotlin.collections.List&lt;io.icure.kraken.client.infrastructure.ByteArrayWrapper&gt;**](io.icure.kraken.client.infrastructure.ByteArrayWrapper.md)|  |
 
 ### Return type
 
@@ -698,10 +668,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -750,10 +717,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -802,10 +766,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -854,10 +815,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -904,10 +862,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -954,10 +909,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -1004,10 +956,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -1054,10 +1003,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -1112,10 +1058,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -1170,10 +1113,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -1228,10 +1168,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -1288,10 +1225,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -1338,10 +1272,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -1388,10 +1319,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -1440,10 +1368,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 
@@ -1492,10 +1417,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-
-Configure basicScheme:
-    ApiClient.username = ""
-    ApiClient.password = ""
+No authorization required
 
 ### HTTP request headers
 

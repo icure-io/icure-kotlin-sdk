@@ -1,9 +1,9 @@
 /**
- * iCure Cloud API Documentation
+ * iCure Data Stack API Documentation
  *
- * Spring shop sample application
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v0.0.1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -42,7 +42,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
-            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "https://kraken.icure.dev")
+            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "http://localhost:16043")
         }
     }
 
@@ -75,7 +75,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/icure/i",
+            path = "/rest/v2/icure/i",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -111,7 +111,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/icure/p",
+            path = "/rest/v2/icure/p",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -147,7 +147,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/icure/r",
+            path = "/rest/v2/icure/r",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -185,7 +185,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/icure/r/{id}".replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/icure/r/{id}".replace("{"+"id"+"}", "$id"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -221,7 +221,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/icure/v",
+            path = "/rest/v2/icure/v",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -257,7 +257,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/icure/ok",
+            path = "/rest/v2/icure/ok",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -300,7 +300,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/icure/conflicts/contact",
+            path = "/rest/v2/icure/conflicts/contact",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -348,7 +348,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/icure/conflicts/document",
+            path = "/rest/v2/icure/conflicts/document",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -391,7 +391,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/icure/conflicts/form",
+            path = "/rest/v2/icure/conflicts/form",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -434,7 +434,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/icure/conflicts/healthelement",
+            path = "/rest/v2/icure/conflicts/healthelement",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -477,7 +477,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/icure/conflicts/invoice",
+            path = "/rest/v2/icure/conflicts/invoice",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -520,7 +520,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/icure/conflicts/message",
+            path = "/rest/v2/icure/conflicts/message",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -563,7 +563,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/icure/conflicts/patient",
+            path = "/rest/v2/icure/conflicts/patient",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -608,7 +608,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/icure/dd/{entityName}".replace("{"+"entityName"+"}", "$entityName"),
+            path = "/rest/v2/icure/dd/{entityName}".replace("{"+"entityName"+"}", "$entityName"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody

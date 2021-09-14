@@ -1,9 +1,9 @@
 /**
- * iCure Cloud API Documentation
+ * iCure Data Stack API Documentation
  *
- * Spring shop sample application
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v0.0.1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -36,7 +36,7 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
-            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "https://kraken.icure.dev")
+            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "http://localhost:16043")
         }
     }
 
@@ -71,7 +71,7 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/calendarItem",
+            path = "/rest/v2/calendarItem",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -81,7 +81,7 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     /**
     * Deletes an calendarItem
     * 
-    * @param calendarItemIds  
+    * @param listOfIdsDto  
     * @return kotlin.collections.List<DocIdentifier>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -89,27 +89,27 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteCalendarItem(calendarItemIds: kotlin.String) : kotlin.collections.List<DocIdentifier>  {
-        val localVariableConfig = deleteCalendarItemRequestConfig(calendarItemIds = calendarItemIds)
+    suspend fun deleteCalendarItems(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocIdentifier>  {
+        val localVariableConfig = deleteCalendarItemsRequestConfig(listOfIdsDto = listOfIdsDto)
 
-        return request<Unit, kotlin.collections.List<DocIdentifier>>(
+        return request<ListOfIdsDto, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
         )!!
     }
     /**
-    * To obtain the request config of the operation deleteCalendarItem
+    * To obtain the request config of the operation deleteCalendarItems
     *
-    * @param calendarItemIds  
+    * @param listOfIdsDto  
     * @return RequestConfig
     */
-    fun deleteCalendarItemRequestConfig(calendarItemIds: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun deleteCalendarItemsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+        val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(
             method = RequestMethod.DELETE,
-            path = "/rest/v1/calendarItem/{calendarItemIds}".replace("{"+"calendarItemIds"+"}", "$calendarItemIds"),
+            path = "/rest/v2/calendarItem/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -153,7 +153,7 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/calendarItem/byHcPartySecretForeignKeys",
+            path = "/rest/v2/calendarItem/byHcPartySecretForeignKeys",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -191,7 +191,7 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/calendarItem/{calendarItemId}".replace("{"+"calendarItemId"+"}", "$calendarItemId"),
+            path = "/rest/v2/calendarItem/{calendarItemId}".replace("{"+"calendarItemId"+"}", "$calendarItemId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -227,7 +227,7 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/calendarItem",
+            path = "/rest/v2/calendarItem",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -274,7 +274,7 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/calendarItem/byPeriodAndHcPartyId",
+            path = "/rest/v2/calendarItem/byPeriodAndHcPartyId",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -282,7 +282,7 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     }
 
     /**
-    * Get calendarItems by id
+    * Get calendarItems by ids
     * 
     * @param listOfIdsDto  (optional)
     * @return kotlin.collections.List<CalendarItemDto>
@@ -312,7 +312,7 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/calendarItem/byIds",
+            path = "/rest/v2/calendarItem/byIds",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -359,7 +359,7 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/calendarItem/byPeriodAndAgendaId",
+            path = "/rest/v2/calendarItem/byPeriodAndAgendaId",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -397,7 +397,7 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/calendarItem",
+            path = "/rest/v2/calendarItem",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -435,7 +435,7 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/calendarItem/delegations",
+            path = "/rest/v2/calendarItem/delegations",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
