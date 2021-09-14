@@ -9,7 +9,7 @@ interface AbstractFilterDto<O> {
     val desc: String?
 
     @JsonProperty(value = "\$type")
-    fun getType(): String = this::class.java.simpleName
+    fun getJavaType(): String = this::class.java.simpleName
 }
 
 
