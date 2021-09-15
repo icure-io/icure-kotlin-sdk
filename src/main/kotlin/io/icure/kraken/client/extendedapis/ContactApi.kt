@@ -54,12 +54,12 @@ suspend fun ContactApi.createContact(user: UserDto, contact: ContactDto, config:
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.createContact(user: UserDto, patient:PatientDto, contact: ContactDto, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>): ContactDto {
+suspend fun ContactApi.createContact(user: UserDto, patient:PatientDto, contact: ContactDto, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>): ContactDto? {
     val key = config.crypto.decryptEncryptionKeys(user.healthcarePartyId!!, patient.delegations).firstOrNull() ?: throw IllegalArgumentException("No delegation for user")
     val delegations =  (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf())
     return this.createContact(
         config.encryptContact(
-            user.healthcarePartyId!!,
+            user.healthcarePartyId,
             (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
             contact
         ).let { ec ->
@@ -77,7 +77,7 @@ suspend fun ContactApi.createContact(user: UserDto, patient:PatientDto, contact:
                 },
             )
         }
-    ).let { config.decryptContact(user.healthcarePartyId!!, it) }
+    )?.let { config.decryptContact(user.healthcarePartyId, it) }
 }
 
 @ExperimentalCoroutinesApi

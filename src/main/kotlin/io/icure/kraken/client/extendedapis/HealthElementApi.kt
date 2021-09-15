@@ -1,11 +1,13 @@
 package io.icure.kraken.client.extendedapis
 
+import io.icure.kraken.client.apis.ContactApi
 import io.icure.kraken.client.apis.HelementApi
 import io.icure.kraken.client.crypto.CryptoConfig
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
 import io.icure.kraken.client.crypto.fromHexString
 import io.icure.kraken.client.models.*
+import io.icure.kraken.client.models.decrypted.ContactDto
 import io.icure.kraken.client.models.decrypted.HealthElementDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.mapstruct.Mapper
@@ -59,6 +61,34 @@ suspend fun HelementApi.createHealthElements(user: UserDto, healthElements: List
             )
         }
     )?.map { config.decryptHealthElement(user.healthcarePartyId!!, it) }
+}
+
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
+suspend fun HelementApi.createHealthElement(user: UserDto, patient: io.icure.kraken.client.models.decrypted.PatientDto, healthElement: HealthElementDto, config: CryptoConfig<HealthElementDto, io.icure.kraken.client.models.HealthElementDto>): HealthElementDto? {
+    val key = config.crypto.decryptEncryptionKeys(user.healthcarePartyId!!, patient.delegations).firstOrNull() ?: throw IllegalArgumentException("No delegation for user")
+    val delegations =  (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf())
+    return this.createHealthElement(
+        config.encryptHealthElement(
+            user.healthcarePartyId,
+            (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
+            healthElement
+        ).let { ec ->
+            ec.copy(
+                secretForeignKeys = listOf(key),
+                cryptedForeignKeys = (delegations + user.healthcarePartyId!!).fold(ec.cryptedForeignKeys) { m, d ->
+                    m + (d to setOf(
+                        DelegationDto(
+                            listOf(),
+                            user.healthcarePartyId,
+                            d,
+                            config.crypto.encryptKeyForHcp(user.healthcarePartyId, d, ec.id, patient.id),
+                        ),
+                    ))
+                },
+            )
+        }
+    )?.let { config.decryptHealthElement(user.healthcarePartyId, it) }
 }
 
 @ExperimentalCoroutinesApi
