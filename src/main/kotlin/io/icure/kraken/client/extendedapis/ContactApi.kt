@@ -61,7 +61,7 @@ suspend fun ContactApi.createContact(user: UserDto, patient:PatientDto, contact:
         config.encryptContact(
             user.healthcarePartyId,
             (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
-            contact
+            contact.initDelegations(user, config)
         ).let { ec ->
             ec.copy(
                 secretForeignKeys = listOf(key),

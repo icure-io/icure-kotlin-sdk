@@ -72,7 +72,7 @@ suspend fun HelementApi.createHealthElement(user: UserDto, patient: io.icure.kra
         config.encryptHealthElement(
             user.healthcarePartyId,
             (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
-            healthElement
+            healthElement.initDelegations(user, config)
         ).let { ec ->
             ec.copy(
                 secretForeignKeys = listOf(key),
