@@ -57,6 +57,7 @@ import java.nio.ByteBuffer
 import kotlin.reflect.full.callSuspendBy
 import kotlin.reflect.javaType
 import kotlinx.coroutines.flow.flow
+import org.junit.jupiter.api.BeforeAll
 
 /**
  * API tests for ReceiptApi
@@ -67,12 +68,6 @@ class ReceiptApiTest() {
     companion object {
         private val alreadyCreatedObjects = mutableSetOf<String>()
         fun canCreateForModificationObjects(fileName: String) = alreadyCreatedObjects.add(fileName)
-
-        @JvmStatic
-        @AfterAll
-        fun afterAllTests() {
-            TestUtils.deleteAfterElements("ReceiptApi.json")
-        }
 
         @JvmStatic
         fun fileNames() = listOf("ReceiptApi.json")
@@ -203,7 +198,8 @@ class ReceiptApiTest() {
                 }
             }
         } finally {
-            TestUtils.deleteAfterElements("ReceiptApi.json")
+            TestUtils.deleteAfterElements(fileName)
+            alreadyCreatedObjects.remove(fileName)
         }
     }
 
@@ -287,7 +283,8 @@ class ReceiptApiTest() {
                 }
             }
         } finally {
-            TestUtils.deleteAfterElements("ReceiptApi.json")
+            TestUtils.deleteAfterElements(fileName)
+            alreadyCreatedObjects.remove(fileName)
         }
     }
 
@@ -371,7 +368,8 @@ class ReceiptApiTest() {
                 }
             }
         } finally {
-            TestUtils.deleteAfterElements("ReceiptApi.json")
+            TestUtils.deleteAfterElements(fileName)
+            alreadyCreatedObjects.remove(fileName)
         }
     }
 
@@ -512,7 +510,8 @@ class ReceiptApiTest() {
                 }
             }
         } finally {
-            TestUtils.deleteAfterElements("ReceiptApi.json")
+            TestUtils.deleteAfterElements(fileName)
+            alreadyCreatedObjects.remove(fileName)
         }
     }
 
@@ -596,7 +595,8 @@ class ReceiptApiTest() {
                 }
             }
         } finally {
-            TestUtils.deleteAfterElements("ReceiptApi.json")
+            TestUtils.deleteAfterElements(fileName)
+            alreadyCreatedObjects.remove(fileName)
         }
     }
 
@@ -680,7 +680,8 @@ class ReceiptApiTest() {
                 }
             }
         } finally {
-            TestUtils.deleteAfterElements("ReceiptApi.json")
+            TestUtils.deleteAfterElements(fileName)
+            alreadyCreatedObjects.remove(fileName)
         }
     }
 
@@ -754,8 +755,7 @@ class ReceiptApiTest() {
                         }
                     }
                 }
-                val body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> =
-                    TestUtils.getParameter(fileName, "setReceiptAttachment.body")!!
+                val body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = TestUtils.getParameter(fileName, "setReceiptAttachment.body")!!
                 if (body as? Collection<*> == null) {
                     body.also {
                         if (TestUtils.isAutoRev(fileName, "setReceiptAttachment") && it != null) {
@@ -843,7 +843,8 @@ class ReceiptApiTest() {
                 }
             }
         } finally {
-            TestUtils.deleteAfterElements("ReceiptApi.json")
+            TestUtils.deleteAfterElements(fileName)
+            alreadyCreatedObjects.remove(fileName)
         }
     }
 
@@ -865,10 +866,8 @@ class ReceiptApiTest() {
                         responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>()
                             .firstOrNull { it.name == "rev" }?.setter?.call(responseElement, null)
                     }
-                } else if (functionName.startsWith("modify") || functionName.startsWith("set") || functionName.startsWith(
-                        "delete"
-                    )
-                ) { // + set + delete
+                }
+                else if (functionName.startsWith("modify") || functionName.startsWith("set") || functionName.startsWith("delete") || functionName.startsWith("list")) { // + set + delete
                     for (fileElement in objectFromFile) {
                         fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>()
                             .firstOrNull { it.name == "rev" }?.setter?.call(fileElement, null)
@@ -891,14 +890,24 @@ class ReceiptApiTest() {
                 )
             }
             else -> {
-                if (functionName.startsWith("create") || functionName.startsWith("modify")) {
-                    assertThat(objectFromFile as Any).isEqualToIgnoringGivenProperties(
-                        response,
-                        *(response::class.memberProperties.filter { it.name == "rev" || it.name == "id" || it.name == "created" || it.name == "modified" }
-                            .mapNotNull { it as? KProperty1<Any, Any> }.toTypedArray())
-                    )
-                } else {
-                    assertEquals(objectFromFile, response)
+                when {
+                    functionName.startsWith("create") || functionName.startsWith("modify") -> {
+                        assertThat(objectFromFile as Any).isEqualToIgnoringGivenProperties(
+                            response,
+                            *(response::class.memberProperties.filter { it.name == "rev" || it.name == "id" || it.name == "created" || it.name == "modified" }
+                                .mapNotNull { it as? KProperty1<Any, Any> }.toTypedArray())
+                        )
+                    }
+                    functionName.startsWith("set") -> {
+                        assertThat(objectFromFile as Any).isEqualToIgnoringGivenProperties(
+                            response,
+                            *(response::class.memberProperties.filter { it.name == "rev" }
+                                .mapNotNull { it as? KProperty1<Any, Any> }.toTypedArray())
+                        )
+                    }
+                    else -> {
+                        assertEquals(objectFromFile, response)
+                    }
                 }
             }
         }

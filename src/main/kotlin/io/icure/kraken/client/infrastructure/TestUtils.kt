@@ -23,6 +23,7 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import java.io.File
 import java.io.IOException
 import java.nio.ByteBuffer
@@ -52,6 +53,7 @@ class TestUtils {
                 methodParams?.let {
                     when(T::class){
                         Long::class -> (methodParams[paramElements[1]] as Double?)?.toLong() as T? ?:  (getGlobalParam(paramElements[1]) as Double?)?.toLong() as T?
+                        Flow::class -> flowOf(methodParams[paramElements[1]]) as T?
                         else -> objectMapper.readValue(objectMapper.writeValueAsString(methodParams[paramElements[1]]), T::class.java) ?: getGlobalObjectParam(
                             paramElements[1]
                         )

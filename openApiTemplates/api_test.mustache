@@ -59,12 +59,6 @@ class {{classname}}Test() {
         fun canCreateForModificationObjects(fileName: String) = alreadyCreatedObjects.add(fileName)
 
         @JvmStatic
-        @AfterAll
-        fun afterAllTests(){
-        TestUtils.deleteAfterElements("{{classname}}.json")
-        }
-
-        @JvmStatic
         fun fileNames() = listOf("{{classname}}.json")
     }
 
@@ -103,7 +97,6 @@ class {{classname}}Test() {
                             else -> null
                         }
                     }.toMap()
-
 
                     createFunction.callSuspendBy(parameters)
                     println("created")
@@ -193,7 +186,8 @@ class {{classname}}Test() {
             }
         }
         finally {
-            TestUtils.deleteAfterElements("{{classname}}.json")
+            TestUtils.deleteAfterElements(fileName)
+            alreadyCreatedObjects.remove(fileName)
         }
     }
     {{/operation}}{{/operations}}
@@ -204,37 +198,61 @@ class {{classname}}Test() {
                 val iterableResponse = (response as? Collection<Any> ?: (emptyList<Any>()))
                 if (functionName.startsWith("create") || functionName.startsWith("new")) { // new
                     for (fileElement in objectFromFile) {
-                        fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "id" }?.setter?.call(fileElement, null)
-                        fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(fileElement, null)
+                        fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>()
+                            .firstOrNull { it.name == "id" }?.setter?.call(fileElement, null)
+                        fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>()
+                            .firstOrNull { it.name == "rev" }?.setter?.call(fileElement, null)
                     }
                     for (responseElement in iterableResponse) {
-                        responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "id" }?.setter?.call(responseElement, null)
-                        responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(responseElement, null)
+                        responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>()
+                            .firstOrNull { it.name == "id" }?.setter?.call(responseElement, null)
+                        responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>()
+                            .firstOrNull { it.name == "rev" }?.setter?.call(responseElement, null)
                     }
-                } else if (functionName.startsWith("modify") || functionName.startsWith("set") || functionName.startsWith("delete")) { // + set + delete
+                }
+                else if (functionName.startsWith("modify") || functionName.startsWith("set") || functionName.startsWith("delete") || functionName.startsWith("list")) { // + set + delete
                     for (fileElement in objectFromFile) {
-                        fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(fileElement, null)
+                        fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>()
+                            .firstOrNull { it.name == "rev" }?.setter?.call(fileElement, null)
                     }
                     for (responseElement in iterableResponse) {
-                        responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(responseElement, null)
+                        responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>()
+                            .firstOrNull { it.name == "rev" }?.setter?.call(responseElement, null)
                     }
                 }
                 val diffs = response.differences(objectFromFile)
                 assertTrue(diffs.isEmpty())
             }
             objectFromFile as? Flow<ByteBuffer> != null -> {
-                objectFromFile.fold(ByteBuffer.allocate(0)) { acc, bb -> ByteBuffer.allocate(bb.limit()+acc.limit()).apply { this.put(acc); this.put(bb) } }.array().contentEquals(
-                    (response as Flow<ByteBuffer>).fold(ByteBuffer.allocate(0)) { acc, bb -> ByteBuffer.allocate(bb.limit()+acc.limit()).apply { this.put(acc); this.put(bb) } }.array()
+                objectFromFile.fold(ByteBuffer.allocate(0)) { acc, bb ->
+                    ByteBuffer.allocate(bb.limit() + acc.limit()).apply { this.put(acc); this.put(bb) }
+                }.array().contentEquals(
+                    (response as Flow<ByteBuffer>).fold(ByteBuffer.allocate(0)) { acc, bb ->
+                        ByteBuffer.allocate(bb.limit() + acc.limit()).apply { this.put(acc); this.put(bb) }
+                    }.array()
                 )
             }
             else -> {
-                if (functionName.startsWith("create") || functionName.startsWith("modify")) {
-                    assertThat(objectFromFile as Any).isEqualToIgnoringGivenProperties(response, *(response::class.memberProperties.filter { it.name == "rev" || it.name == "id" || it.name == "created"  || it.name == "modified" }.mapNotNull { it as? KProperty1<Any, Any> }.toTypedArray()))
-                } else {
-                    assertEquals(objectFromFile, response)
+                when {
+                    functionName.startsWith("create") || functionName.startsWith("modify") -> {
+                        assertThat(objectFromFile as Any).isEqualToIgnoringGivenProperties(
+                            response,
+                            *(response::class.memberProperties.filter { it.name == "rev" || it.name == "id" || it.name == "created" || it.name == "modified" }
+                                .mapNotNull { it as? KProperty1<Any, Any> }.toTypedArray())
+                        )
+                    }
+                    functionName.startsWith("set") -> {
+                        assertThat(objectFromFile as Any).isEqualToIgnoringGivenProperties(
+                            response,
+                            *(response::class.memberProperties.filter { it.name == "rev" }
+                                .mapNotNull { it as? KProperty1<Any, Any> }.toTypedArray())
+                        )
+                    }
+                    else -> {
+                        assertEquals(objectFromFile, response)
+                    }
                 }
             }
         }
     }
-
 }
