@@ -67,7 +67,9 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     fun createDocumentRequestConfig(documentDto: DocumentDto) : RequestConfig<DocumentDto> {
         val localVariableBody = documentDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -106,6 +108,8 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.DELETE,
@@ -143,7 +147,9 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     fun deleteDocumentRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
         val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -187,6 +193,8 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -225,6 +233,8 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -277,6 +287,8 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "application/octet-stream"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -315,6 +327,8 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -352,7 +366,9 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     fun getDocumentsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
         val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -391,6 +407,8 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -438,6 +456,8 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
                 put("secretFKeys", listOf(secretFKeys.toString()))
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -482,6 +502,8 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
                 put("secretFKeys", listOf(secretFKeys.toString()))
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -519,7 +541,9 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     fun modifyDocumentRequestConfig(documentDto: DocumentDto) : RequestConfig<DocumentDto> {
         val localVariableBody = documentDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.PUT,
@@ -557,7 +581,9 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     fun modifyDocumentsRequestConfig(documentDto: kotlin.collections.List<DocumentDto>) : RequestConfig<kotlin.collections.List<DocumentDto>> {
         val localVariableBody = documentDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.PUT,
@@ -604,7 +630,9 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
                     put("enckeys", listOf(enckeys.toString()))
                 }
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/octet-stream")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.PUT,
@@ -652,6 +680,8 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "multipart/form-data")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.PUT,
@@ -689,7 +719,9 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     fun setDocumentsDelegationsRequestConfig(icureStubDto: kotlin.collections.List<IcureStubDto>) : RequestConfig<kotlin.collections.List<IcureStubDto>> {
         val localVariableBody = icureStubDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -737,7 +769,9 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
                     put("enckeys", listOf(enckeys.toString()))
                 }
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/octet-stream")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.PUT,

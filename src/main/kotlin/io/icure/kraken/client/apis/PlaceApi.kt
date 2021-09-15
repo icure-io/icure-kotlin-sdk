@@ -66,7 +66,9 @@ class PlaceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     fun createPlaceRequestConfig(placeDto: PlaceDto) : RequestConfig<PlaceDto> {
         val localVariableBody = placeDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -104,7 +106,9 @@ class PlaceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     fun deletePlacesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
         val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -143,6 +147,8 @@ class PlaceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -179,6 +185,8 @@ class PlaceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -216,7 +224,9 @@ class PlaceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     fun modifyPlaceRequestConfig(placeDto: PlaceDto) : RequestConfig<PlaceDto> {
         val localVariableBody = placeDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.PUT,

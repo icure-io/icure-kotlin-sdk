@@ -69,7 +69,9 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     fun createFormRequestConfig(formDto: FormDto) : RequestConfig<FormDto> {
         val localVariableBody = formDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -107,7 +109,9 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     fun createFormTemplateRequestConfig(formTemplateDto: FormTemplateDto) : RequestConfig<FormTemplateDto> {
         val localVariableBody = formTemplateDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -145,7 +149,9 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     fun createFormsRequestConfig(formDto: kotlin.collections.List<FormDto>) : RequestConfig<kotlin.collections.List<FormDto>> {
         val localVariableBody = formDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -184,6 +190,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.DELETE,
@@ -221,7 +229,9 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     fun deleteFormsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
         val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -262,6 +272,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -300,6 +312,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -338,6 +352,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -376,6 +392,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -414,6 +432,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -457,6 +477,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -497,6 +519,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -534,7 +558,9 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     fun getFormsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
         val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -573,6 +599,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -611,6 +639,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -656,6 +686,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -715,6 +747,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -759,6 +793,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
                 put("secretFKeys", listOf(secretFKeys.toString()))
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -796,7 +832,9 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     fun modifyFormRequestConfig(formDto: FormDto) : RequestConfig<FormDto> {
         val localVariableBody = formDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.PUT,
@@ -834,7 +872,9 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     fun modifyFormsRequestConfig(formDto: kotlin.collections.List<FormDto>) : RequestConfig<kotlin.collections.List<FormDto>> {
         val localVariableBody = formDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.PUT,
@@ -874,7 +914,9 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     fun newFormDelegationsRequestConfig(formId: kotlin.String, delegationDto: kotlin.collections.List<DelegationDto>) : RequestConfig<kotlin.collections.List<DelegationDto>> {
         val localVariableBody = delegationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -912,7 +954,9 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     fun setFormsDelegationsRequestConfig(icureStubDto: kotlin.collections.List<IcureStubDto>) : RequestConfig<kotlin.collections.List<IcureStubDto>> {
         val localVariableBody = icureStubDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -953,6 +997,8 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
         val localVariableBody = mapOf("attachment" to attachment)
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "multipart/form-data")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.PUT,
@@ -992,7 +1038,9 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     fun updateFormTemplateRequestConfig(formTemplateId: kotlin.String, formTemplateDto: FormTemplateDto) : RequestConfig<FormTemplateDto> {
         val localVariableBody = formTemplateDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.PUT,

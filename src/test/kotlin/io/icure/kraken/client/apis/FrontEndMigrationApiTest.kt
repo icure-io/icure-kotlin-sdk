@@ -50,8 +50,12 @@ import kotlinx.coroutines.runBlocking
 import io.icure.kraken.client.infrastructure.TestUtils
 import io.icure.kraken.client.infrastructure.TestUtils.Companion.basicAuth
 import io.icure.kraken.client.infrastructure.differences
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.fold
+import java.nio.ByteBuffer
 import kotlin.reflect.full.callSuspendBy
 import kotlin.reflect.javaType
+import kotlinx.coroutines.flow.flow
 
 /**
  * API tests for FrontEndMigrationApi
@@ -73,7 +77,7 @@ class FrontEndMigrationApiTest() {
         fun fileNames() = listOf("FrontEndMigrationApi.json")
     }
 
-    fun api(fileName: String) = FrontEndMigrationApi(basePath = "https://kraken.icure.dev", authHeader = fileName.basicAuth())
+    fun api(fileName: String) = FrontEndMigrationApi(basePath = "http://127.0.0.1:16043", authHeader = fileName.basicAuth())
     private val workingFolder = "/tmp/icureTests/"
     private val objectMapper = ObjectMapper()
         .registerModule(KotlinModule())
@@ -129,61 +133,74 @@ class FrontEndMigrationApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun createFrontEndMigrationTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "createFrontEndMigration")) {
-			assert(true)
-			println("Endpoint createFrontEndMigration skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "createFrontEndMigration")
-        val frontEndMigrationDto: FrontEndMigrationDto = TestUtils.getParameter(fileName, "createFrontEndMigration.frontEndMigrationDto")!!
-		if (frontEndMigrationDto as? Collection<*> == null) {
-			frontEndMigrationDto.also {
-            if (TestUtils.isAutoRev(fileName, "createFrontEndMigration") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<FrontEndMigrationDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = frontEndMigrationDto as? Collection<FrontEndMigrationDto> ?: emptyList<FrontEndMigrationDto>() as Collection<FrontEndMigrationDto>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "createFrontEndMigration") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).createFrontEndMigration(frontEndMigrationDto)
-
-        val testFileName = "FrontEndMigrationApi.createFrontEndMigration"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<FrontEndMigrationDto>? != null) {
-                if ("FrontEndMigrationDto".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<FrontEndMigrationDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "createFrontEndMigration")) {
+                assert(true)
+                println("Endpoint createFrontEndMigration skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("createFrontEndMigration", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "createFrontEndMigration")
+                val frontEndMigrationDto: FrontEndMigrationDto = TestUtils.getParameter(fileName, "createFrontEndMigration.frontEndMigrationDto")!!
+                    if (frontEndMigrationDto as? Collection<*> == null) {
+                        frontEndMigrationDto.also {
+                    if (TestUtils.isAutoRev(fileName, "createFrontEndMigration") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<FrontEndMigrationDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = frontEndMigrationDto as? Collection<FrontEndMigrationDto> ?: emptyList<FrontEndMigrationDto>() as Collection<FrontEndMigrationDto>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "createFrontEndMigration") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).createFrontEndMigration(frontEndMigrationDto)
+
+                    val testFileName = "FrontEndMigrationApi.createFrontEndMigration"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<FrontEndMigrationDto>? != null) {
+                            if ("FrontEndMigrationDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<FrontEndMigrationDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<FrontEndMigrationDto>() {}
+                        })
+                        assertAreEquals("createFrontEndMigration", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("FrontEndMigrationApi.json")
+        }
+    }
     
     /**
      * Deletes a front end migration
@@ -196,61 +213,74 @@ class FrontEndMigrationApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun deleteFrontEndMigrationTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "deleteFrontEndMigration")) {
-			assert(true)
-			println("Endpoint deleteFrontEndMigration skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteFrontEndMigration")
-        val frontEndMigrationId: kotlin.String = TestUtils.getParameter(fileName, "deleteFrontEndMigration.frontEndMigrationId")!!
-		if (frontEndMigrationId as? Collection<*> == null) {
-			frontEndMigrationId.also {
-            if (TestUtils.isAutoRev(fileName, "deleteFrontEndMigration") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = frontEndMigrationId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "deleteFrontEndMigration") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).deleteFrontEndMigration(frontEndMigrationId)
-
-        val testFileName = "FrontEndMigrationApi.deleteFrontEndMigration"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<DocIdentifier>? != null) {
-                if ("DocIdentifier".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<DocIdentifier>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "deleteFrontEndMigration")) {
+                assert(true)
+                println("Endpoint deleteFrontEndMigration skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("deleteFrontEndMigration", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteFrontEndMigration")
+                val frontEndMigrationId: kotlin.String = TestUtils.getParameter(fileName, "deleteFrontEndMigration.frontEndMigrationId")!!
+                    if (frontEndMigrationId as? Collection<*> == null) {
+                        frontEndMigrationId.also {
+                    if (TestUtils.isAutoRev(fileName, "deleteFrontEndMigration") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = frontEndMigrationId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "deleteFrontEndMigration") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).deleteFrontEndMigration(frontEndMigrationId)
+
+                    val testFileName = "FrontEndMigrationApi.deleteFrontEndMigration"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocIdentifier>? != null) {
+                            if ("DocIdentifier".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<DocIdentifier>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<DocIdentifier>() {}
+                        })
+                        assertAreEquals("deleteFrontEndMigration", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("FrontEndMigrationApi.json")
+        }
+    }
     
     /**
      * Gets a front end migration
@@ -263,61 +293,74 @@ class FrontEndMigrationApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getFrontEndMigrationTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "getFrontEndMigration")) {
-			assert(true)
-			println("Endpoint getFrontEndMigration skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "getFrontEndMigration")
-        val frontEndMigrationId: kotlin.String = TestUtils.getParameter(fileName, "getFrontEndMigration.frontEndMigrationId")!!
-		if (frontEndMigrationId as? Collection<*> == null) {
-			frontEndMigrationId.also {
-            if (TestUtils.isAutoRev(fileName, "getFrontEndMigration") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = frontEndMigrationId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "getFrontEndMigration") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).getFrontEndMigration(frontEndMigrationId)
-
-        val testFileName = "FrontEndMigrationApi.getFrontEndMigration"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<FrontEndMigrationDto>? != null) {
-                if ("FrontEndMigrationDto".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<FrontEndMigrationDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "getFrontEndMigration")) {
+                assert(true)
+                println("Endpoint getFrontEndMigration skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("getFrontEndMigration", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "getFrontEndMigration")
+                val frontEndMigrationId: kotlin.String = TestUtils.getParameter(fileName, "getFrontEndMigration.frontEndMigrationId")!!
+                    if (frontEndMigrationId as? Collection<*> == null) {
+                        frontEndMigrationId.also {
+                    if (TestUtils.isAutoRev(fileName, "getFrontEndMigration") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = frontEndMigrationId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "getFrontEndMigration") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).getFrontEndMigration(frontEndMigrationId)
+
+                    val testFileName = "FrontEndMigrationApi.getFrontEndMigration"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<FrontEndMigrationDto>? != null) {
+                            if ("FrontEndMigrationDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<FrontEndMigrationDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<FrontEndMigrationDto>() {}
+                        })
+                        assertAreEquals("getFrontEndMigration", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("FrontEndMigrationApi.json")
+        }
+    }
     
     /**
      * Gets an front end migration
@@ -330,61 +373,74 @@ class FrontEndMigrationApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getFrontEndMigrationByNameTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "getFrontEndMigrationByName")) {
-			assert(true)
-			println("Endpoint getFrontEndMigrationByName skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "getFrontEndMigrationByName")
-        val frontEndMigrationName: kotlin.String = TestUtils.getParameter(fileName, "getFrontEndMigrationByName.frontEndMigrationName")!!
-		if (frontEndMigrationName as? Collection<*> == null) {
-			frontEndMigrationName.also {
-            if (TestUtils.isAutoRev(fileName, "getFrontEndMigrationByName") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = frontEndMigrationName as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "getFrontEndMigrationByName") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).getFrontEndMigrationByName(frontEndMigrationName)
-
-        val testFileName = "FrontEndMigrationApi.getFrontEndMigrationByName"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<FrontEndMigrationDto>? != null) {
-                if ("kotlin.collections.List<FrontEndMigrationDto>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<FrontEndMigrationDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "getFrontEndMigrationByName")) {
+                assert(true)
+                println("Endpoint getFrontEndMigrationByName skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("getFrontEndMigrationByName", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "getFrontEndMigrationByName")
+                val frontEndMigrationName: kotlin.String = TestUtils.getParameter(fileName, "getFrontEndMigrationByName.frontEndMigrationName")!!
+                    if (frontEndMigrationName as? Collection<*> == null) {
+                        frontEndMigrationName.also {
+                    if (TestUtils.isAutoRev(fileName, "getFrontEndMigrationByName") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = frontEndMigrationName as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "getFrontEndMigrationByName") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).getFrontEndMigrationByName(frontEndMigrationName)
+
+                    val testFileName = "FrontEndMigrationApi.getFrontEndMigrationByName"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<FrontEndMigrationDto>? != null) {
+                            if ("kotlin.collections.List<FrontEndMigrationDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<FrontEndMigrationDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<FrontEndMigrationDto>>() {}
+                        })
+                        assertAreEquals("getFrontEndMigrationByName", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("FrontEndMigrationApi.json")
+        }
+    }
     
     /**
      * Gets a front end migration
@@ -397,39 +453,52 @@ class FrontEndMigrationApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getFrontEndMigrationsTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "getFrontEndMigrations")) {
-			assert(true)
-			println("Endpoint getFrontEndMigrations skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "getFrontEndMigrations")
-
-        val response = api(credentialsFile).getFrontEndMigrations()
-
-        val testFileName = "FrontEndMigrationApi.getFrontEndMigrations"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<FrontEndMigrationDto>? != null) {
-                if ("kotlin.collections.List<FrontEndMigrationDto>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<FrontEndMigrationDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "getFrontEndMigrations")) {
+                assert(true)
+                println("Endpoint getFrontEndMigrations skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("getFrontEndMigrations", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "getFrontEndMigrations")
+
+                val response = api(credentialsFile).getFrontEndMigrations()
+
+                    val testFileName = "FrontEndMigrationApi.getFrontEndMigrations"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<FrontEndMigrationDto>? != null) {
+                            if ("kotlin.collections.List<FrontEndMigrationDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<FrontEndMigrationDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<FrontEndMigrationDto>>() {}
+                        })
+                        assertAreEquals("getFrontEndMigrations", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("FrontEndMigrationApi.json")
+        }
+    }
     
     /**
      * Modifies a front end migration
@@ -442,91 +511,111 @@ class FrontEndMigrationApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun modifyFrontEndMigrationTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "modifyFrontEndMigration")) {
-			assert(true)
-			println("Endpoint modifyFrontEndMigration skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyFrontEndMigration")
-        val frontEndMigrationDto: FrontEndMigrationDto = TestUtils.getParameter(fileName, "modifyFrontEndMigration.frontEndMigrationDto")!!
-		if (frontEndMigrationDto as? Collection<*> == null) {
-			frontEndMigrationDto.also {
-            if (TestUtils.isAutoRev(fileName, "modifyFrontEndMigration") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<FrontEndMigrationDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = frontEndMigrationDto as? Collection<FrontEndMigrationDto> ?: emptyList<FrontEndMigrationDto>() as Collection<FrontEndMigrationDto>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "modifyFrontEndMigration") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).modifyFrontEndMigration(frontEndMigrationDto)
-
-        val testFileName = "FrontEndMigrationApi.modifyFrontEndMigration"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<FrontEndMigrationDto>? != null) {
-                if ("FrontEndMigrationDto".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<FrontEndMigrationDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "modifyFrontEndMigration")) {
+                assert(true)
+                println("Endpoint modifyFrontEndMigration skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("modifyFrontEndMigration", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyFrontEndMigration")
+                val frontEndMigrationDto: FrontEndMigrationDto = TestUtils.getParameter(fileName, "modifyFrontEndMigration.frontEndMigrationDto")!!
+                    if (frontEndMigrationDto as? Collection<*> == null) {
+                        frontEndMigrationDto.also {
+                    if (TestUtils.isAutoRev(fileName, "modifyFrontEndMigration") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<FrontEndMigrationDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = frontEndMigrationDto as? Collection<FrontEndMigrationDto> ?: emptyList<FrontEndMigrationDto>() as Collection<FrontEndMigrationDto>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "modifyFrontEndMigration") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).modifyFrontEndMigration(frontEndMigrationDto)
+
+                    val testFileName = "FrontEndMigrationApi.modifyFrontEndMigration"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<FrontEndMigrationDto>? != null) {
+                            if ("FrontEndMigrationDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<FrontEndMigrationDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<FrontEndMigrationDto>() {}
+                        })
+                        assertAreEquals("modifyFrontEndMigration", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("FrontEndMigrationApi.json")
+        }
+    }
     
 
-
-    private fun assertAreEquals(functionName: String, objectFromFile: Any?, response: Any) {
-        if (objectFromFile as? Iterable<Any> != null) {
-            val iterableResponse = (response as? Collection<Any> ?: (emptyList<Any>()))
-            if (functionName.startsWith("create") || functionName.startsWith("new")) { // new
-                for (fileElement in objectFromFile) {
-                    fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "id" }?.setter?.call(fileElement, null)
-                    fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(fileElement, null)
+    private suspend fun assertAreEquals(functionName: String, objectFromFile: Any?, response: Any) {
+        when {
+            objectFromFile as? Iterable<Any> != null -> {
+                val iterableResponse = (response as? Collection<Any> ?: (emptyList<Any>()))
+                if (functionName.startsWith("create") || functionName.startsWith("new")) { // new
+                    for (fileElement in objectFromFile) {
+                        fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "id" }?.setter?.call(fileElement, null)
+                        fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(fileElement, null)
+                    }
+                    for (responseElement in iterableResponse) {
+                        responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "id" }?.setter?.call(responseElement, null)
+                        responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(responseElement, null)
+                    }
+                } else if (functionName.startsWith("modify") || functionName.startsWith("set") || functionName.startsWith("delete")) { // + set + delete
+                    for (fileElement in objectFromFile) {
+                        fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(fileElement, null)
+                    }
+                    for (responseElement in iterableResponse) {
+                        responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(responseElement, null)
+                    }
                 }
-                for (responseElement in iterableResponse) {
-                    responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "id" }?.setter?.call(responseElement, null)
-                    responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(responseElement, null)
-                }
-            } else if (functionName.startsWith("modify") || functionName.startsWith("set") || functionName.startsWith("delete")) { // + set + delete
-                for (fileElement in objectFromFile) {
-                    fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(fileElement, null)
-                }
-                for (responseElement in iterableResponse) {
-                    responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(responseElement, null)
-                }
+                val diffs = response.differences(objectFromFile)
+                assertTrue(diffs.isEmpty())
             }
-            val diffs = response.differences(objectFromFile)
-            assertTrue(diffs.isEmpty())
-        } else {
-            if (functionName.startsWith("create") || functionName.startsWith("modify")) {
-                assertThat(objectFromFile as Any).isEqualToIgnoringGivenProperties(response, *(response::class.memberProperties.filter { it.name == "rev" || it.name == "id" || it.name == "created"  || it.name == "modified" }.mapNotNull { it as? KProperty1<Any, Any> }.toTypedArray()))
-            } else {
-                assertEquals(objectFromFile, response)
+            objectFromFile as? Flow<ByteBuffer> != null -> {
+                objectFromFile.fold(ByteBuffer.allocate(0)) { acc, bb -> ByteBuffer.allocate(bb.limit()+acc.limit()).apply { this.put(acc); this.put(bb) } }.array().contentEquals(
+                    (response as Flow<ByteBuffer>).fold(ByteBuffer.allocate(0)) { acc, bb -> ByteBuffer.allocate(bb.limit()+acc.limit()).apply { this.put(acc); this.put(bb) } }.array()
+                )
+            }
+            else -> {
+                if (functionName.startsWith("create") || functionName.startsWith("modify")) {
+                    assertThat(objectFromFile as Any).isEqualToIgnoringGivenProperties(response, *(response::class.memberProperties.filter { it.name == "rev" || it.name == "id" || it.name == "created"  || it.name == "modified" }.mapNotNull { it as? KProperty1<Any, Any> }.toTypedArray()))
+                } else {
+                    assertEquals(objectFromFile, response)
+                }
             }
         }
     }

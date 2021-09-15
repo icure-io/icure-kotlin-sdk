@@ -67,7 +67,9 @@ class DocumentTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: 
     fun createDocumentTemplateRequestConfig(documentTemplateDto: DocumentTemplateDto) : RequestConfig<DocumentTemplateDto> {
         val localVariableBody = documentTemplateDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -105,7 +107,9 @@ class DocumentTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: 
     fun deleteDocumentTemplatesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
         val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -146,6 +150,8 @@ class DocumentTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: 
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "application/octet-stream"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -184,6 +190,8 @@ class DocumentTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: 
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -224,6 +232,8 @@ class DocumentTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: 
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "application/octet-stream"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -260,6 +270,8 @@ class DocumentTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: 
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -296,6 +308,8 @@ class DocumentTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: 
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -334,6 +348,8 @@ class DocumentTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: 
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -372,6 +388,8 @@ class DocumentTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: 
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -410,6 +428,8 @@ class DocumentTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: 
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -449,7 +469,9 @@ class DocumentTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: 
     fun modifyDocumentTemplateRequestConfig(documentTemplateId: kotlin.String, documentTemplateDto: DocumentTemplateDto) : RequestConfig<DocumentTemplateDto> {
         val localVariableBody = documentTemplateDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.PUT,
@@ -489,7 +511,9 @@ class DocumentTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: 
     fun setDocumentTemplateAttachmentRequestConfig(documentTemplateId: kotlin.String, ioIcureKrakenClientInfrastructureByteArrayWrapper: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>) : RequestConfig<kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>> {
         val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/octet-stream")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.PUT,
@@ -529,7 +553,9 @@ class DocumentTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: 
     fun setDocumentTemplateAttachmentJsonRequestConfig(documentTemplateId: kotlin.String, byteArrayDto: ByteArrayDto) : RequestConfig<ByteArrayDto> {
         val localVariableBody = byteArrayDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/octet-stream")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.PUT,

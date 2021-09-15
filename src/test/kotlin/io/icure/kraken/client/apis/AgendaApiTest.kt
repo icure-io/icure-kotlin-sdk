@@ -51,8 +51,12 @@ import kotlinx.coroutines.runBlocking
 import io.icure.kraken.client.infrastructure.TestUtils
 import io.icure.kraken.client.infrastructure.TestUtils.Companion.basicAuth
 import io.icure.kraken.client.infrastructure.differences
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.fold
+import java.nio.ByteBuffer
 import kotlin.reflect.full.callSuspendBy
 import kotlin.reflect.javaType
+import kotlinx.coroutines.flow.flow
 
 /**
  * API tests for AgendaApi
@@ -74,7 +78,7 @@ class AgendaApiTest() {
         fun fileNames() = listOf("AgendaApi.json")
     }
 
-    fun api(fileName: String) = AgendaApi(basePath = "https://kraken.icure.dev", authHeader = fileName.basicAuth())
+    fun api(fileName: String) = AgendaApi(basePath = "http://127.0.0.1:16043", authHeader = fileName.basicAuth())
     private val workingFolder = "/tmp/icureTests/"
     private val objectMapper = ObjectMapper()
         .registerModule(KotlinModule())
@@ -130,61 +134,74 @@ class AgendaApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun createAgendaTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "createAgenda")) {
-			assert(true)
-			println("Endpoint createAgenda skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "createAgenda")
-        val agendaDto: AgendaDto = TestUtils.getParameter(fileName, "createAgenda.agendaDto")!!
-		if (agendaDto as? Collection<*> == null) {
-			agendaDto.also {
-            if (TestUtils.isAutoRev(fileName, "createAgenda") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<AgendaDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = agendaDto as? Collection<AgendaDto> ?: emptyList<AgendaDto>() as Collection<AgendaDto>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "createAgenda") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).createAgenda(agendaDto)
-
-        val testFileName = "AgendaApi.createAgenda"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<AgendaDto>? != null) {
-                if ("AgendaDto".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<AgendaDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "createAgenda")) {
+                assert(true)
+                println("Endpoint createAgenda skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("createAgenda", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "createAgenda")
+                val agendaDto: AgendaDto = TestUtils.getParameter(fileName, "createAgenda.agendaDto")!!
+                    if (agendaDto as? Collection<*> == null) {
+                        agendaDto.also {
+                    if (TestUtils.isAutoRev(fileName, "createAgenda") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<AgendaDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = agendaDto as? Collection<AgendaDto> ?: emptyList<AgendaDto>() as Collection<AgendaDto>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "createAgenda") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).createAgenda(agendaDto)
+
+                    val testFileName = "AgendaApi.createAgenda"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<AgendaDto>? != null) {
+                            if ("AgendaDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<AgendaDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<AgendaDto>() {}
+                        })
+                        assertAreEquals("createAgenda", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("AgendaApi.json")
+        }
+    }
     
     /**
      * Deletes agendas
@@ -197,61 +214,74 @@ class AgendaApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun deleteAgendasTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "deleteAgendas")) {
-			assert(true)
-			println("Endpoint deleteAgendas skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteAgendas")
-        val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter(fileName, "deleteAgendas.listOfIdsDto")!!
-		if (listOfIdsDto as? Collection<*> == null) {
-			listOfIdsDto.also {
-            if (TestUtils.isAutoRev(fileName, "deleteAgendas") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<ListOfIdsDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = listOfIdsDto as? Collection<ListOfIdsDto> ?: emptyList<ListOfIdsDto>() as Collection<ListOfIdsDto>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "deleteAgendas") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).deleteAgendas(listOfIdsDto)
-
-        val testFileName = "AgendaApi.deleteAgendas"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<DocIdentifier>? != null) {
-                if ("kotlin.collections.List<DocIdentifier>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<DocIdentifier>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "deleteAgendas")) {
+                assert(true)
+                println("Endpoint deleteAgendas skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("deleteAgendas", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteAgendas")
+                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter(fileName, "deleteAgendas.listOfIdsDto")!!
+                    if (listOfIdsDto as? Collection<*> == null) {
+                        listOfIdsDto.also {
+                    if (TestUtils.isAutoRev(fileName, "deleteAgendas") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<ListOfIdsDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = listOfIdsDto as? Collection<ListOfIdsDto> ?: emptyList<ListOfIdsDto>() as Collection<ListOfIdsDto>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "deleteAgendas") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).deleteAgendas(listOfIdsDto)
+
+                    val testFileName = "AgendaApi.deleteAgendas"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocIdentifier>? != null) {
+                            if ("kotlin.collections.List<DocIdentifier>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<DocIdentifier>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<DocIdentifier>>() {}
+                        })
+                        assertAreEquals("deleteAgendas", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("AgendaApi.json")
+        }
+    }
     
     /**
      * Gets an agenda
@@ -264,61 +294,74 @@ class AgendaApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getAgendaTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "getAgenda")) {
-			assert(true)
-			println("Endpoint getAgenda skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "getAgenda")
-        val agendaId: kotlin.String = TestUtils.getParameter(fileName, "getAgenda.agendaId")!!
-		if (agendaId as? Collection<*> == null) {
-			agendaId.also {
-            if (TestUtils.isAutoRev(fileName, "getAgenda") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = agendaId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "getAgenda") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).getAgenda(agendaId)
-
-        val testFileName = "AgendaApi.getAgenda"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<AgendaDto>? != null) {
-                if ("AgendaDto".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<AgendaDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "getAgenda")) {
+                assert(true)
+                println("Endpoint getAgenda skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("getAgenda", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "getAgenda")
+                val agendaId: kotlin.String = TestUtils.getParameter(fileName, "getAgenda.agendaId")!!
+                    if (agendaId as? Collection<*> == null) {
+                        agendaId.also {
+                    if (TestUtils.isAutoRev(fileName, "getAgenda") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = agendaId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "getAgenda") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).getAgenda(agendaId)
+
+                    val testFileName = "AgendaApi.getAgenda"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<AgendaDto>? != null) {
+                            if ("AgendaDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<AgendaDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<AgendaDto>() {}
+                        })
+                        assertAreEquals("getAgenda", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("AgendaApi.json")
+        }
+    }
     
     /**
      * Gets all agendas
@@ -331,39 +374,52 @@ class AgendaApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getAgendasTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "getAgendas")) {
-			assert(true)
-			println("Endpoint getAgendas skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "getAgendas")
-
-        val response = api(credentialsFile).getAgendas()
-
-        val testFileName = "AgendaApi.getAgendas"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<AgendaDto>? != null) {
-                if ("kotlin.collections.List<AgendaDto>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<AgendaDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "getAgendas")) {
+                assert(true)
+                println("Endpoint getAgendas skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("getAgendas", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "getAgendas")
+
+                val response = api(credentialsFile).getAgendas()
+
+                    val testFileName = "AgendaApi.getAgendas"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<AgendaDto>? != null) {
+                            if ("kotlin.collections.List<AgendaDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<AgendaDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<AgendaDto>>() {}
+                        })
+                        assertAreEquals("getAgendas", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("AgendaApi.json")
+        }
+    }
     
     /**
      * Gets all agendas for user
@@ -376,61 +432,74 @@ class AgendaApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getAgendasForUserTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "getAgendasForUser")) {
-			assert(true)
-			println("Endpoint getAgendasForUser skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "getAgendasForUser")
-        val userId: kotlin.String = TestUtils.getParameter(fileName, "getAgendasForUser.userId")!!
-		if (userId as? Collection<*> == null) {
-			userId.also {
-            if (TestUtils.isAutoRev(fileName, "getAgendasForUser") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = userId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "getAgendasForUser") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).getAgendasForUser(userId)
-
-        val testFileName = "AgendaApi.getAgendasForUser"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<AgendaDto>? != null) {
-                if ("AgendaDto".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<AgendaDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "getAgendasForUser")) {
+                assert(true)
+                println("Endpoint getAgendasForUser skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("getAgendasForUser", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "getAgendasForUser")
+                val userId: kotlin.String = TestUtils.getParameter(fileName, "getAgendasForUser.userId")!!
+                    if (userId as? Collection<*> == null) {
+                        userId.also {
+                    if (TestUtils.isAutoRev(fileName, "getAgendasForUser") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = userId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "getAgendasForUser") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).getAgendasForUser(userId)
+
+                    val testFileName = "AgendaApi.getAgendasForUser"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<AgendaDto>? != null) {
+                            if ("AgendaDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<AgendaDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<AgendaDto>() {}
+                        })
+                        assertAreEquals("getAgendasForUser", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("AgendaApi.json")
+        }
+    }
     
     /**
      * Gets readable agendas for user
@@ -443,61 +512,74 @@ class AgendaApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getReadableAgendasForUserTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "getReadableAgendasForUser")) {
-			assert(true)
-			println("Endpoint getReadableAgendasForUser skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "getReadableAgendasForUser")
-        val userId: kotlin.String = TestUtils.getParameter(fileName, "getReadableAgendasForUser.userId")!!
-		if (userId as? Collection<*> == null) {
-			userId.also {
-            if (TestUtils.isAutoRev(fileName, "getReadableAgendasForUser") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = userId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "getReadableAgendasForUser") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).getReadableAgendasForUser(userId)
-
-        val testFileName = "AgendaApi.getReadableAgendasForUser"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<AgendaDto>? != null) {
-                if ("kotlin.collections.List<AgendaDto>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<AgendaDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "getReadableAgendasForUser")) {
+                assert(true)
+                println("Endpoint getReadableAgendasForUser skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("getReadableAgendasForUser", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "getReadableAgendasForUser")
+                val userId: kotlin.String = TestUtils.getParameter(fileName, "getReadableAgendasForUser.userId")!!
+                    if (userId as? Collection<*> == null) {
+                        userId.also {
+                    if (TestUtils.isAutoRev(fileName, "getReadableAgendasForUser") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = userId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "getReadableAgendasForUser") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).getReadableAgendasForUser(userId)
+
+                    val testFileName = "AgendaApi.getReadableAgendasForUser"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<AgendaDto>? != null) {
+                            if ("kotlin.collections.List<AgendaDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<AgendaDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<AgendaDto>>() {}
+                        })
+                        assertAreEquals("getReadableAgendasForUser", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("AgendaApi.json")
+        }
+    }
     
     /**
      * Modifies an agenda
@@ -510,91 +592,111 @@ class AgendaApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun modifyAgendaTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "modifyAgenda")) {
-			assert(true)
-			println("Endpoint modifyAgenda skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyAgenda")
-        val agendaDto: AgendaDto = TestUtils.getParameter(fileName, "modifyAgenda.agendaDto")!!
-		if (agendaDto as? Collection<*> == null) {
-			agendaDto.also {
-            if (TestUtils.isAutoRev(fileName, "modifyAgenda") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<AgendaDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = agendaDto as? Collection<AgendaDto> ?: emptyList<AgendaDto>() as Collection<AgendaDto>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "modifyAgenda") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).modifyAgenda(agendaDto)
-
-        val testFileName = "AgendaApi.modifyAgenda"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<AgendaDto>? != null) {
-                if ("AgendaDto".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<AgendaDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "modifyAgenda")) {
+                assert(true)
+                println("Endpoint modifyAgenda skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("modifyAgenda", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyAgenda")
+                val agendaDto: AgendaDto = TestUtils.getParameter(fileName, "modifyAgenda.agendaDto")!!
+                    if (agendaDto as? Collection<*> == null) {
+                        agendaDto.also {
+                    if (TestUtils.isAutoRev(fileName, "modifyAgenda") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<AgendaDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = agendaDto as? Collection<AgendaDto> ?: emptyList<AgendaDto>() as Collection<AgendaDto>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "modifyAgenda") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).modifyAgenda(agendaDto)
+
+                    val testFileName = "AgendaApi.modifyAgenda"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<AgendaDto>? != null) {
+                            if ("AgendaDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<AgendaDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<AgendaDto>() {}
+                        })
+                        assertAreEquals("modifyAgenda", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("AgendaApi.json")
+        }
+    }
     
 
-
-    private fun assertAreEquals(functionName: String, objectFromFile: Any?, response: Any) {
-        if (objectFromFile as? Iterable<Any> != null) {
-            val iterableResponse = (response as? Collection<Any> ?: (emptyList<Any>()))
-            if (functionName.startsWith("create") || functionName.startsWith("new")) { // new
-                for (fileElement in objectFromFile) {
-                    fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "id" }?.setter?.call(fileElement, null)
-                    fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(fileElement, null)
+    private suspend fun assertAreEquals(functionName: String, objectFromFile: Any?, response: Any) {
+        when {
+            objectFromFile as? Iterable<Any> != null -> {
+                val iterableResponse = (response as? Collection<Any> ?: (emptyList<Any>()))
+                if (functionName.startsWith("create") || functionName.startsWith("new")) { // new
+                    for (fileElement in objectFromFile) {
+                        fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "id" }?.setter?.call(fileElement, null)
+                        fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(fileElement, null)
+                    }
+                    for (responseElement in iterableResponse) {
+                        responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "id" }?.setter?.call(responseElement, null)
+                        responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(responseElement, null)
+                    }
+                } else if (functionName.startsWith("modify") || functionName.startsWith("set") || functionName.startsWith("delete")) { // + set + delete
+                    for (fileElement in objectFromFile) {
+                        fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(fileElement, null)
+                    }
+                    for (responseElement in iterableResponse) {
+                        responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(responseElement, null)
+                    }
                 }
-                for (responseElement in iterableResponse) {
-                    responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "id" }?.setter?.call(responseElement, null)
-                    responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(responseElement, null)
-                }
-            } else if (functionName.startsWith("modify") || functionName.startsWith("set") || functionName.startsWith("delete")) { // + set + delete
-                for (fileElement in objectFromFile) {
-                    fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(fileElement, null)
-                }
-                for (responseElement in iterableResponse) {
-                    responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(responseElement, null)
-                }
+                val diffs = response.differences(objectFromFile)
+                assertTrue(diffs.isEmpty())
             }
-            val diffs = response.differences(objectFromFile)
-            assertTrue(diffs.isEmpty())
-        } else {
-            if (functionName.startsWith("create") || functionName.startsWith("modify")) {
-                assertThat(objectFromFile as Any).isEqualToIgnoringGivenProperties(response, *(response::class.memberProperties.filter { it.name == "rev" || it.name == "id" || it.name == "created"  || it.name == "modified" }.mapNotNull { it as? KProperty1<Any, Any> }.toTypedArray()))
-            } else {
-                assertEquals(objectFromFile, response)
+            objectFromFile as? Flow<ByteBuffer> != null -> {
+                objectFromFile.fold(ByteBuffer.allocate(0)) { acc, bb -> ByteBuffer.allocate(bb.limit()+acc.limit()).apply { this.put(acc); this.put(bb) } }.array().contentEquals(
+                    (response as Flow<ByteBuffer>).fold(ByteBuffer.allocate(0)) { acc, bb -> ByteBuffer.allocate(bb.limit()+acc.limit()).apply { this.put(acc); this.put(bb) } }.array()
+                )
+            }
+            else -> {
+                if (functionName.startsWith("create") || functionName.startsWith("modify")) {
+                    assertThat(objectFromFile as Any).isEqualToIgnoringGivenProperties(response, *(response::class.memberProperties.filter { it.name == "rev" || it.name == "id" || it.name == "created"  || it.name == "modified" }.mapNotNull { it as? KProperty1<Any, Any> }.toTypedArray()))
+                } else {
+                    assertEquals(objectFromFile, response)
+                }
             }
         }
     }

@@ -54,8 +54,12 @@ import kotlinx.coroutines.runBlocking
 import io.icure.kraken.client.infrastructure.TestUtils
 import io.icure.kraken.client.infrastructure.TestUtils.Companion.basicAuth
 import io.icure.kraken.client.infrastructure.differences
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.fold
+import java.nio.ByteBuffer
 import kotlin.reflect.full.callSuspendBy
 import kotlin.reflect.javaType
+import kotlinx.coroutines.flow.flow
 
 /**
  * API tests for FormApi
@@ -77,7 +81,7 @@ class FormApiTest() {
         fun fileNames() = listOf("FormApi.json")
     }
 
-    fun api(fileName: String) = FormApi(basePath = "https://kraken.icure.dev", authHeader = fileName.basicAuth())
+    fun api(fileName: String) = FormApi(basePath = "http://127.0.0.1:16043", authHeader = fileName.basicAuth())
     private val workingFolder = "/tmp/icureTests/"
     private val objectMapper = ObjectMapper()
         .registerModule(KotlinModule())
@@ -133,61 +137,74 @@ class FormApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun createFormTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "createForm")) {
-			assert(true)
-			println("Endpoint createForm skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "createForm")
-        val formDto: FormDto = TestUtils.getParameter(fileName, "createForm.formDto")!!
-		if (formDto as? Collection<*> == null) {
-			formDto.also {
-            if (TestUtils.isAutoRev(fileName, "createForm") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<FormDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = formDto as? Collection<FormDto> ?: emptyList<FormDto>() as Collection<FormDto>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "createForm") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).createForm(formDto)
-
-        val testFileName = "FormApi.createForm"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<FormDto>? != null) {
-                if ("FormDto".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<FormDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "createForm")) {
+                assert(true)
+                println("Endpoint createForm skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("createForm", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "createForm")
+                val formDto: FormDto = TestUtils.getParameter(fileName, "createForm.formDto")!!
+                    if (formDto as? Collection<*> == null) {
+                        formDto.also {
+                    if (TestUtils.isAutoRev(fileName, "createForm") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<FormDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = formDto as? Collection<FormDto> ?: emptyList<FormDto>() as Collection<FormDto>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "createForm") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).createForm(formDto)
+
+                    val testFileName = "FormApi.createForm"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<FormDto>? != null) {
+                            if ("FormDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<FormDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<FormDto>() {}
+                        })
+                        assertAreEquals("createForm", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("FormApi.json")
+        }
+    }
     
     /**
      * Create a form template with the current user
@@ -200,61 +217,74 @@ class FormApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun createFormTemplateTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "createFormTemplate")) {
-			assert(true)
-			println("Endpoint createFormTemplate skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "createFormTemplate")
-        val formTemplateDto: FormTemplateDto = TestUtils.getParameter(fileName, "createFormTemplate.formTemplateDto")!!
-		if (formTemplateDto as? Collection<*> == null) {
-			formTemplateDto.also {
-            if (TestUtils.isAutoRev(fileName, "createFormTemplate") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<FormTemplateDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = formTemplateDto as? Collection<FormTemplateDto> ?: emptyList<FormTemplateDto>() as Collection<FormTemplateDto>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "createFormTemplate") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).createFormTemplate(formTemplateDto)
-
-        val testFileName = "FormApi.createFormTemplate"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<FormTemplateDto>? != null) {
-                if ("FormTemplateDto".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<FormTemplateDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "createFormTemplate")) {
+                assert(true)
+                println("Endpoint createFormTemplate skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("createFormTemplate", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "createFormTemplate")
+                val formTemplateDto: FormTemplateDto = TestUtils.getParameter(fileName, "createFormTemplate.formTemplateDto")!!
+                    if (formTemplateDto as? Collection<*> == null) {
+                        formTemplateDto.also {
+                    if (TestUtils.isAutoRev(fileName, "createFormTemplate") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<FormTemplateDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = formTemplateDto as? Collection<FormTemplateDto> ?: emptyList<FormTemplateDto>() as Collection<FormTemplateDto>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "createFormTemplate") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).createFormTemplate(formTemplateDto)
+
+                    val testFileName = "FormApi.createFormTemplate"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<FormTemplateDto>? != null) {
+                            if ("FormTemplateDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<FormTemplateDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<FormTemplateDto>() {}
+                        })
+                        assertAreEquals("createFormTemplate", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("FormApi.json")
+        }
+    }
     
     /**
      * Create a batch of forms
@@ -267,61 +297,74 @@ class FormApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun createFormsTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "createForms")) {
-			assert(true)
-			println("Endpoint createForms skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "createForms")
-        val formDto: kotlin.collections.List<FormDto> = TestUtils.getParameter(fileName, "createForms.formDto")!!
-		if (formDto as? Collection<*> == null) {
-			formDto.also {
-            if (TestUtils.isAutoRev(fileName, "createForms") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.collections.List<FormDto>>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = formDto as? Collection<FormDto> ?: emptyList<FormDto>() as Collection<FormDto>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "createForms") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).createForms(formDto)
-
-        val testFileName = "FormApi.createForms"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<FormDto>? != null) {
-                if ("kotlin.collections.List<FormDto>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<FormDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "createForms")) {
+                assert(true)
+                println("Endpoint createForms skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("createForms", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "createForms")
+                val formDto: kotlin.collections.List<FormDto> = TestUtils.getParameter(fileName, "createForms.formDto")!!
+                    if (formDto as? Collection<*> == null) {
+                        formDto.also {
+                    if (TestUtils.isAutoRev(fileName, "createForms") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.collections.List<FormDto>>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = formDto as? Collection<FormDto> ?: emptyList<FormDto>() as Collection<FormDto>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "createForms") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).createForms(formDto)
+
+                    val testFileName = "FormApi.createForms"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<FormDto>? != null) {
+                            if ("kotlin.collections.List<FormDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<FormDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<FormDto>>() {}
+                        })
+                        assertAreEquals("createForms", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("FormApi.json")
+        }
+    }
     
     /**
      * Delete a form template
@@ -334,61 +377,74 @@ class FormApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun deleteFormTemplateTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "deleteFormTemplate")) {
-			assert(true)
-			println("Endpoint deleteFormTemplate skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteFormTemplate")
-        val formTemplateId: kotlin.String = TestUtils.getParameter(fileName, "deleteFormTemplate.formTemplateId")!!
-		if (formTemplateId as? Collection<*> == null) {
-			formTemplateId.also {
-            if (TestUtils.isAutoRev(fileName, "deleteFormTemplate") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = formTemplateId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "deleteFormTemplate") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).deleteFormTemplate(formTemplateId)
-
-        val testFileName = "FormApi.deleteFormTemplate"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<DocIdentifier>? != null) {
-                if ("DocIdentifier".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<DocIdentifier>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "deleteFormTemplate")) {
+                assert(true)
+                println("Endpoint deleteFormTemplate skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("deleteFormTemplate", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteFormTemplate")
+                val formTemplateId: kotlin.String = TestUtils.getParameter(fileName, "deleteFormTemplate.formTemplateId")!!
+                    if (formTemplateId as? Collection<*> == null) {
+                        formTemplateId.also {
+                    if (TestUtils.isAutoRev(fileName, "deleteFormTemplate") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = formTemplateId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "deleteFormTemplate") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).deleteFormTemplate(formTemplateId)
+
+                    val testFileName = "FormApi.deleteFormTemplate"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocIdentifier>? != null) {
+                            if ("DocIdentifier".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<DocIdentifier>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<DocIdentifier>() {}
+                        })
+                        assertAreEquals("deleteFormTemplate", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("FormApi.json")
+        }
+    }
     
     /**
      * Delete forms.
@@ -401,61 +457,74 @@ class FormApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun deleteFormsTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "deleteForms")) {
-			assert(true)
-			println("Endpoint deleteForms skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteForms")
-        val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter(fileName, "deleteForms.listOfIdsDto")!!
-		if (listOfIdsDto as? Collection<*> == null) {
-			listOfIdsDto.also {
-            if (TestUtils.isAutoRev(fileName, "deleteForms") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<ListOfIdsDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = listOfIdsDto as? Collection<ListOfIdsDto> ?: emptyList<ListOfIdsDto>() as Collection<ListOfIdsDto>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "deleteForms") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).deleteForms(listOfIdsDto)
-
-        val testFileName = "FormApi.deleteForms"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<DocIdentifier>? != null) {
-                if ("kotlin.collections.List<DocIdentifier>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<DocIdentifier>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "deleteForms")) {
+                assert(true)
+                println("Endpoint deleteForms skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("deleteForms", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteForms")
+                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter(fileName, "deleteForms.listOfIdsDto")!!
+                    if (listOfIdsDto as? Collection<*> == null) {
+                        listOfIdsDto.also {
+                    if (TestUtils.isAutoRev(fileName, "deleteForms") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<ListOfIdsDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = listOfIdsDto as? Collection<ListOfIdsDto> ?: emptyList<ListOfIdsDto>() as Collection<ListOfIdsDto>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "deleteForms") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).deleteForms(listOfIdsDto)
+
+                    val testFileName = "FormApi.deleteForms"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocIdentifier>? != null) {
+                            if ("kotlin.collections.List<DocIdentifier>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<DocIdentifier>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<DocIdentifier>>() {}
+                        })
+                        assertAreEquals("deleteForms", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("FormApi.json")
+        }
+    }
     
     /**
      * Get a list of forms by parents ids
@@ -468,83 +537,96 @@ class FormApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getChildrenFormsTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "getChildrenForms")) {
-			assert(true)
-			println("Endpoint getChildrenForms skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "getChildrenForms")
-        val formId: kotlin.String = TestUtils.getParameter(fileName, "getChildrenForms.formId")!!
-		if (formId as? Collection<*> == null) {
-			formId.also {
-            if (TestUtils.isAutoRev(fileName, "getChildrenForms") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = formId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "getChildrenForms") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-        val hcPartyId: kotlin.String = TestUtils.getParameter(fileName, "getChildrenForms.hcPartyId")!!
-		if (hcPartyId as? Collection<*> == null) {
-			hcPartyId.also {
-            if (TestUtils.isAutoRev(fileName, "getChildrenForms") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = hcPartyId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "getChildrenForms") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).getChildrenForms(formId,hcPartyId)
-
-        val testFileName = "FormApi.getChildrenForms"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<FormDto>? != null) {
-                if ("kotlin.collections.List<FormDto>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<FormDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "getChildrenForms")) {
+                assert(true)
+                println("Endpoint getChildrenForms skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("getChildrenForms", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "getChildrenForms")
+                val formId: kotlin.String = TestUtils.getParameter(fileName, "getChildrenForms.formId")!!
+                    if (formId as? Collection<*> == null) {
+                        formId.also {
+                    if (TestUtils.isAutoRev(fileName, "getChildrenForms") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = formId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "getChildrenForms") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+                val hcPartyId: kotlin.String = TestUtils.getParameter(fileName, "getChildrenForms.hcPartyId")!!
+                    if (hcPartyId as? Collection<*> == null) {
+                        hcPartyId.also {
+                    if (TestUtils.isAutoRev(fileName, "getChildrenForms") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = hcPartyId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "getChildrenForms") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).getChildrenForms(formId,hcPartyId)
+
+                    val testFileName = "FormApi.getChildrenForms"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<FormDto>? != null) {
+                            if ("kotlin.collections.List<FormDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<FormDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<FormDto>>() {}
+                        })
+                        assertAreEquals("getChildrenForms", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("FormApi.json")
+        }
+    }
     
     /**
      * Gets a form
@@ -557,61 +639,74 @@ class FormApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getFormTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "getForm")) {
-			assert(true)
-			println("Endpoint getForm skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "getForm")
-        val formId: kotlin.String = TestUtils.getParameter(fileName, "getForm.formId")!!
-		if (formId as? Collection<*> == null) {
-			formId.also {
-            if (TestUtils.isAutoRev(fileName, "getForm") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = formId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "getForm") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).getForm(formId)
-
-        val testFileName = "FormApi.getForm"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<FormDto>? != null) {
-                if ("FormDto".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<FormDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "getForm")) {
+                assert(true)
+                println("Endpoint getForm skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("getForm", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "getForm")
+                val formId: kotlin.String = TestUtils.getParameter(fileName, "getForm.formId")!!
+                    if (formId as? Collection<*> == null) {
+                        formId.also {
+                    if (TestUtils.isAutoRev(fileName, "getForm") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = formId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "getForm") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).getForm(formId)
+
+                    val testFileName = "FormApi.getForm"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<FormDto>? != null) {
+                            if ("FormDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<FormDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<FormDto>() {}
+                        })
+                        assertAreEquals("getForm", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("FormApi.json")
+        }
+    }
     
     /**
      * Gets the most recent form with the given logicalUuid
@@ -624,61 +719,74 @@ class FormApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getFormByLogicalUuidTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "getFormByLogicalUuid")) {
-			assert(true)
-			println("Endpoint getFormByLogicalUuid skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "getFormByLogicalUuid")
-        val logicalUuid: kotlin.String = TestUtils.getParameter(fileName, "getFormByLogicalUuid.logicalUuid")!!
-		if (logicalUuid as? Collection<*> == null) {
-			logicalUuid.also {
-            if (TestUtils.isAutoRev(fileName, "getFormByLogicalUuid") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = logicalUuid as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "getFormByLogicalUuid") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).getFormByLogicalUuid(logicalUuid)
-
-        val testFileName = "FormApi.getFormByLogicalUuid"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<FormDto>? != null) {
-                if ("FormDto".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<FormDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "getFormByLogicalUuid")) {
+                assert(true)
+                println("Endpoint getFormByLogicalUuid skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("getFormByLogicalUuid", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "getFormByLogicalUuid")
+                val logicalUuid: kotlin.String = TestUtils.getParameter(fileName, "getFormByLogicalUuid.logicalUuid")!!
+                    if (logicalUuid as? Collection<*> == null) {
+                        logicalUuid.also {
+                    if (TestUtils.isAutoRev(fileName, "getFormByLogicalUuid") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = logicalUuid as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "getFormByLogicalUuid") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).getFormByLogicalUuid(logicalUuid)
+
+                    val testFileName = "FormApi.getFormByLogicalUuid"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<FormDto>? != null) {
+                            if ("FormDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<FormDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<FormDto>() {}
+                        })
+                        assertAreEquals("getFormByLogicalUuid", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("FormApi.json")
+        }
+    }
     
     /**
      * Gets the most recent form with the given uniqueId
@@ -691,61 +799,74 @@ class FormApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getFormByUniqueIdTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "getFormByUniqueId")) {
-			assert(true)
-			println("Endpoint getFormByUniqueId skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "getFormByUniqueId")
-        val uniqueId: kotlin.String = TestUtils.getParameter(fileName, "getFormByUniqueId.uniqueId")!!
-		if (uniqueId as? Collection<*> == null) {
-			uniqueId.also {
-            if (TestUtils.isAutoRev(fileName, "getFormByUniqueId") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = uniqueId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "getFormByUniqueId") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).getFormByUniqueId(uniqueId)
-
-        val testFileName = "FormApi.getFormByUniqueId"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<FormDto>? != null) {
-                if ("FormDto".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<FormDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "getFormByUniqueId")) {
+                assert(true)
+                println("Endpoint getFormByUniqueId skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("getFormByUniqueId", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "getFormByUniqueId")
+                val uniqueId: kotlin.String = TestUtils.getParameter(fileName, "getFormByUniqueId.uniqueId")!!
+                    if (uniqueId as? Collection<*> == null) {
+                        uniqueId.also {
+                    if (TestUtils.isAutoRev(fileName, "getFormByUniqueId") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = uniqueId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "getFormByUniqueId") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).getFormByUniqueId(uniqueId)
+
+                    val testFileName = "FormApi.getFormByUniqueId"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<FormDto>? != null) {
+                            if ("FormDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<FormDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<FormDto>() {}
+                        })
+                        assertAreEquals("getFormByUniqueId", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("FormApi.json")
+        }
+    }
     
     /**
      * Gets a form template by guid
@@ -758,61 +879,74 @@ class FormApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getFormTemplateTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "getFormTemplate")) {
-			assert(true)
-			println("Endpoint getFormTemplate skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "getFormTemplate")
-        val formTemplateId: kotlin.String = TestUtils.getParameter(fileName, "getFormTemplate.formTemplateId")!!
-		if (formTemplateId as? Collection<*> == null) {
-			formTemplateId.also {
-            if (TestUtils.isAutoRev(fileName, "getFormTemplate") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = formTemplateId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "getFormTemplate") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).getFormTemplate(formTemplateId)
-
-        val testFileName = "FormApi.getFormTemplate"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<FormTemplateDto>? != null) {
-                if ("FormTemplateDto".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<FormTemplateDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "getFormTemplate")) {
+                assert(true)
+                println("Endpoint getFormTemplate skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("getFormTemplate", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "getFormTemplate")
+                val formTemplateId: kotlin.String = TestUtils.getParameter(fileName, "getFormTemplate.formTemplateId")!!
+                    if (formTemplateId as? Collection<*> == null) {
+                        formTemplateId.also {
+                    if (TestUtils.isAutoRev(fileName, "getFormTemplate") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = formTemplateId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "getFormTemplate") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).getFormTemplate(formTemplateId)
+
+                    val testFileName = "FormApi.getFormTemplate"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<FormTemplateDto>? != null) {
+                            if ("FormTemplateDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<FormTemplateDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<FormTemplateDto>() {}
+                        })
+                        assertAreEquals("getFormTemplate", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("FormApi.json")
+        }
+    }
     
     /**
      * Gets all form templates for current user
@@ -825,61 +959,74 @@ class FormApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getFormTemplatesTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "getFormTemplates")) {
-			assert(true)
-			println("Endpoint getFormTemplates skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "getFormTemplates")
-        val loadLayout: kotlin.Boolean? = TestUtils.getParameter(fileName, "getFormTemplates.loadLayout")
-		if (loadLayout as? Collection<*> == null) {
-			loadLayout.also {
-            if (TestUtils.isAutoRev(fileName, "getFormTemplates") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.Boolean>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = loadLayout as? Collection<kotlin.Boolean> ?: emptyList<kotlin.Boolean>() as Collection<kotlin.Boolean>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "getFormTemplates") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).getFormTemplates(loadLayout)
-
-        val testFileName = "FormApi.getFormTemplates"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<FormTemplateDto>? != null) {
-                if ("kotlin.collections.List<FormTemplateDto>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<FormTemplateDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "getFormTemplates")) {
+                assert(true)
+                println("Endpoint getFormTemplates skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("getFormTemplates", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "getFormTemplates")
+                val loadLayout: kotlin.Boolean? = TestUtils.getParameter(fileName, "getFormTemplates.loadLayout")
+                    if (loadLayout as? Collection<*> == null) {
+                        loadLayout.also {
+                    if (TestUtils.isAutoRev(fileName, "getFormTemplates") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.Boolean>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = loadLayout as? Collection<kotlin.Boolean> ?: emptyList<kotlin.Boolean>() as Collection<kotlin.Boolean>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "getFormTemplates") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).getFormTemplates(loadLayout)
+
+                    val testFileName = "FormApi.getFormTemplates"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<FormTemplateDto>? != null) {
+                            if ("kotlin.collections.List<FormTemplateDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<FormTemplateDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<FormTemplateDto>>() {}
+                        })
+                        assertAreEquals("getFormTemplates", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("FormApi.json")
+        }
+    }
     
     /**
      * Gets a form template
@@ -892,83 +1039,96 @@ class FormApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getFormTemplatesByGuidTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "getFormTemplatesByGuid")) {
-			assert(true)
-			println("Endpoint getFormTemplatesByGuid skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "getFormTemplatesByGuid")
-        val formTemplateGuid: kotlin.String = TestUtils.getParameter(fileName, "getFormTemplatesByGuid.formTemplateGuid")!!
-		if (formTemplateGuid as? Collection<*> == null) {
-			formTemplateGuid.also {
-            if (TestUtils.isAutoRev(fileName, "getFormTemplatesByGuid") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = formTemplateGuid as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "getFormTemplatesByGuid") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-        val specialityCode: kotlin.String = TestUtils.getParameter(fileName, "getFormTemplatesByGuid.specialityCode")!!
-		if (specialityCode as? Collection<*> == null) {
-			specialityCode.also {
-            if (TestUtils.isAutoRev(fileName, "getFormTemplatesByGuid") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = specialityCode as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "getFormTemplatesByGuid") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).getFormTemplatesByGuid(formTemplateGuid,specialityCode)
-
-        val testFileName = "FormApi.getFormTemplatesByGuid"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<FormTemplateDto>? != null) {
-                if ("kotlin.collections.List<FormTemplateDto>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<FormTemplateDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "getFormTemplatesByGuid")) {
+                assert(true)
+                println("Endpoint getFormTemplatesByGuid skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("getFormTemplatesByGuid", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "getFormTemplatesByGuid")
+                val formTemplateGuid: kotlin.String = TestUtils.getParameter(fileName, "getFormTemplatesByGuid.formTemplateGuid")!!
+                    if (formTemplateGuid as? Collection<*> == null) {
+                        formTemplateGuid.also {
+                    if (TestUtils.isAutoRev(fileName, "getFormTemplatesByGuid") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = formTemplateGuid as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "getFormTemplatesByGuid") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+                val specialityCode: kotlin.String = TestUtils.getParameter(fileName, "getFormTemplatesByGuid.specialityCode")!!
+                    if (specialityCode as? Collection<*> == null) {
+                        specialityCode.also {
+                    if (TestUtils.isAutoRev(fileName, "getFormTemplatesByGuid") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = specialityCode as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "getFormTemplatesByGuid") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).getFormTemplatesByGuid(formTemplateGuid,specialityCode)
+
+                    val testFileName = "FormApi.getFormTemplatesByGuid"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<FormTemplateDto>? != null) {
+                            if ("kotlin.collections.List<FormTemplateDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<FormTemplateDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<FormTemplateDto>>() {}
+                        })
+                        assertAreEquals("getFormTemplatesByGuid", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("FormApi.json")
+        }
+    }
     
     /**
      * Get a list of forms by ids
@@ -981,61 +1141,74 @@ class FormApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getFormsTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "getForms")) {
-			assert(true)
-			println("Endpoint getForms skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "getForms")
-        val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter(fileName, "getForms.listOfIdsDto")!!
-		if (listOfIdsDto as? Collection<*> == null) {
-			listOfIdsDto.also {
-            if (TestUtils.isAutoRev(fileName, "getForms") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<ListOfIdsDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = listOfIdsDto as? Collection<ListOfIdsDto> ?: emptyList<ListOfIdsDto>() as Collection<ListOfIdsDto>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "getForms") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).getForms(listOfIdsDto)
-
-        val testFileName = "FormApi.getForms"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<FormDto>? != null) {
-                if ("kotlin.collections.List<FormDto>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<FormDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "getForms")) {
+                assert(true)
+                println("Endpoint getForms skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("getForms", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "getForms")
+                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter(fileName, "getForms.listOfIdsDto")!!
+                    if (listOfIdsDto as? Collection<*> == null) {
+                        listOfIdsDto.also {
+                    if (TestUtils.isAutoRev(fileName, "getForms") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<ListOfIdsDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = listOfIdsDto as? Collection<ListOfIdsDto> ?: emptyList<ListOfIdsDto>() as Collection<ListOfIdsDto>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "getForms") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).getForms(listOfIdsDto)
+
+                    val testFileName = "FormApi.getForms"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<FormDto>? != null) {
+                            if ("kotlin.collections.List<FormDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<FormDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<FormDto>>() {}
+                        })
+                        assertAreEquals("getForms", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("FormApi.json")
+        }
+    }
     
     /**
      * Gets all forms with given logicalUuid
@@ -1048,61 +1221,74 @@ class FormApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getFormsByLogicalUuidTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "getFormsByLogicalUuid")) {
-			assert(true)
-			println("Endpoint getFormsByLogicalUuid skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "getFormsByLogicalUuid")
-        val logicalUuid: kotlin.String = TestUtils.getParameter(fileName, "getFormsByLogicalUuid.logicalUuid")!!
-		if (logicalUuid as? Collection<*> == null) {
-			logicalUuid.also {
-            if (TestUtils.isAutoRev(fileName, "getFormsByLogicalUuid") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = logicalUuid as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "getFormsByLogicalUuid") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).getFormsByLogicalUuid(logicalUuid)
-
-        val testFileName = "FormApi.getFormsByLogicalUuid"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<FormDto>? != null) {
-                if ("kotlin.collections.List<FormDto>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<FormDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "getFormsByLogicalUuid")) {
+                assert(true)
+                println("Endpoint getFormsByLogicalUuid skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("getFormsByLogicalUuid", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "getFormsByLogicalUuid")
+                val logicalUuid: kotlin.String = TestUtils.getParameter(fileName, "getFormsByLogicalUuid.logicalUuid")!!
+                    if (logicalUuid as? Collection<*> == null) {
+                        logicalUuid.also {
+                    if (TestUtils.isAutoRev(fileName, "getFormsByLogicalUuid") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = logicalUuid as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "getFormsByLogicalUuid") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).getFormsByLogicalUuid(logicalUuid)
+
+                    val testFileName = "FormApi.getFormsByLogicalUuid"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<FormDto>? != null) {
+                            if ("kotlin.collections.List<FormDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<FormDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<FormDto>>() {}
+                        })
+                        assertAreEquals("getFormsByLogicalUuid", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("FormApi.json")
+        }
+    }
     
     /**
      * Gets all forms by uniqueId
@@ -1115,61 +1301,74 @@ class FormApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getFormsByUniqueIdTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "getFormsByUniqueId")) {
-			assert(true)
-			println("Endpoint getFormsByUniqueId skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "getFormsByUniqueId")
-        val uniqueId: kotlin.String = TestUtils.getParameter(fileName, "getFormsByUniqueId.uniqueId")!!
-		if (uniqueId as? Collection<*> == null) {
-			uniqueId.also {
-            if (TestUtils.isAutoRev(fileName, "getFormsByUniqueId") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = uniqueId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "getFormsByUniqueId") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).getFormsByUniqueId(uniqueId)
-
-        val testFileName = "FormApi.getFormsByUniqueId"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<FormDto>? != null) {
-                if ("kotlin.collections.List<FormDto>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<FormDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "getFormsByUniqueId")) {
+                assert(true)
+                println("Endpoint getFormsByUniqueId skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("getFormsByUniqueId", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "getFormsByUniqueId")
+                val uniqueId: kotlin.String = TestUtils.getParameter(fileName, "getFormsByUniqueId.uniqueId")!!
+                    if (uniqueId as? Collection<*> == null) {
+                        uniqueId.also {
+                    if (TestUtils.isAutoRev(fileName, "getFormsByUniqueId") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = uniqueId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "getFormsByUniqueId") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).getFormsByUniqueId(uniqueId)
+
+                    val testFileName = "FormApi.getFormsByUniqueId"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<FormDto>? != null) {
+                            if ("kotlin.collections.List<FormDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<FormDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<FormDto>>() {}
+                        })
+                        assertAreEquals("getFormsByUniqueId", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("FormApi.json")
+        }
+    }
     
     /**
      * Gets all form templates
@@ -1182,83 +1381,96 @@ class FormApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun listFormTemplatesBySpecialityTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "listFormTemplatesBySpeciality")) {
-			assert(true)
-			println("Endpoint listFormTemplatesBySpeciality skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "listFormTemplatesBySpeciality")
-        val specialityCode: kotlin.String = TestUtils.getParameter(fileName, "listFormTemplatesBySpeciality.specialityCode")!!
-		if (specialityCode as? Collection<*> == null) {
-			specialityCode.also {
-            if (TestUtils.isAutoRev(fileName, "listFormTemplatesBySpeciality") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = specialityCode as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "listFormTemplatesBySpeciality") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-        val loadLayout: kotlin.Boolean? = TestUtils.getParameter(fileName, "listFormTemplatesBySpeciality.loadLayout")
-		if (loadLayout as? Collection<*> == null) {
-			loadLayout.also {
-            if (TestUtils.isAutoRev(fileName, "listFormTemplatesBySpeciality") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.Boolean>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = loadLayout as? Collection<kotlin.Boolean> ?: emptyList<kotlin.Boolean>() as Collection<kotlin.Boolean>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "listFormTemplatesBySpeciality") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).listFormTemplatesBySpeciality(specialityCode,loadLayout)
-
-        val testFileName = "FormApi.listFormTemplatesBySpeciality"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<FormTemplateDto>? != null) {
-                if ("kotlin.collections.List<FormTemplateDto>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<FormTemplateDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "listFormTemplatesBySpeciality")) {
+                assert(true)
+                println("Endpoint listFormTemplatesBySpeciality skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("listFormTemplatesBySpeciality", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "listFormTemplatesBySpeciality")
+                val specialityCode: kotlin.String = TestUtils.getParameter(fileName, "listFormTemplatesBySpeciality.specialityCode")!!
+                    if (specialityCode as? Collection<*> == null) {
+                        specialityCode.also {
+                    if (TestUtils.isAutoRev(fileName, "listFormTemplatesBySpeciality") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = specialityCode as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "listFormTemplatesBySpeciality") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+                val loadLayout: kotlin.Boolean? = TestUtils.getParameter(fileName, "listFormTemplatesBySpeciality.loadLayout")
+                    if (loadLayout as? Collection<*> == null) {
+                        loadLayout.also {
+                    if (TestUtils.isAutoRev(fileName, "listFormTemplatesBySpeciality") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.Boolean>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = loadLayout as? Collection<kotlin.Boolean> ?: emptyList<kotlin.Boolean>() as Collection<kotlin.Boolean>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "listFormTemplatesBySpeciality") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).listFormTemplatesBySpeciality(specialityCode,loadLayout)
+
+                    val testFileName = "FormApi.listFormTemplatesBySpeciality"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<FormTemplateDto>? != null) {
+                            if ("kotlin.collections.List<FormTemplateDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<FormTemplateDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<FormTemplateDto>>() {}
+                        })
+                        assertAreEquals("listFormTemplatesBySpeciality", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("FormApi.json")
+        }
+    }
     
     /**
      * List forms found By Healthcare Party and secret foreign keys.
@@ -1271,149 +1483,162 @@ class FormApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun listFormsByHCPartyAndPatientForeignKeysTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "listFormsByHCPartyAndPatientForeignKeys")) {
-			assert(true)
-			println("Endpoint listFormsByHCPartyAndPatientForeignKeys skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "listFormsByHCPartyAndPatientForeignKeys")
-        val hcPartyId: kotlin.String = TestUtils.getParameter(fileName, "listFormsByHCPartyAndPatientForeignKeys.hcPartyId")!!
-		if (hcPartyId as? Collection<*> == null) {
-			hcPartyId.also {
-            if (TestUtils.isAutoRev(fileName, "listFormsByHCPartyAndPatientForeignKeys") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = hcPartyId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "listFormsByHCPartyAndPatientForeignKeys") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-        val secretFKeys: kotlin.String = TestUtils.getParameter(fileName, "listFormsByHCPartyAndPatientForeignKeys.secretFKeys")!!
-		if (secretFKeys as? Collection<*> == null) {
-			secretFKeys.also {
-            if (TestUtils.isAutoRev(fileName, "listFormsByHCPartyAndPatientForeignKeys") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = secretFKeys as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "listFormsByHCPartyAndPatientForeignKeys") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-        val healthElementId: kotlin.String? = TestUtils.getParameter(fileName, "listFormsByHCPartyAndPatientForeignKeys.healthElementId")
-		if (healthElementId as? Collection<*> == null) {
-			healthElementId.also {
-            if (TestUtils.isAutoRev(fileName, "listFormsByHCPartyAndPatientForeignKeys") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = healthElementId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "listFormsByHCPartyAndPatientForeignKeys") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-        val planOfActionId: kotlin.String? = TestUtils.getParameter(fileName, "listFormsByHCPartyAndPatientForeignKeys.planOfActionId")
-		if (planOfActionId as? Collection<*> == null) {
-			planOfActionId.also {
-            if (TestUtils.isAutoRev(fileName, "listFormsByHCPartyAndPatientForeignKeys") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = planOfActionId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "listFormsByHCPartyAndPatientForeignKeys") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-        val formTemplateId: kotlin.String? = TestUtils.getParameter(fileName, "listFormsByHCPartyAndPatientForeignKeys.formTemplateId")
-		if (formTemplateId as? Collection<*> == null) {
-			formTemplateId.also {
-            if (TestUtils.isAutoRev(fileName, "listFormsByHCPartyAndPatientForeignKeys") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = formTemplateId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "listFormsByHCPartyAndPatientForeignKeys") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).listFormsByHCPartyAndPatientForeignKeys(hcPartyId,secretFKeys,healthElementId,planOfActionId,formTemplateId)
-
-        val testFileName = "FormApi.listFormsByHCPartyAndPatientForeignKeys"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<FormDto>? != null) {
-                if ("kotlin.collections.List<FormDto>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<FormDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "listFormsByHCPartyAndPatientForeignKeys")) {
+                assert(true)
+                println("Endpoint listFormsByHCPartyAndPatientForeignKeys skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("listFormsByHCPartyAndPatientForeignKeys", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "listFormsByHCPartyAndPatientForeignKeys")
+                val hcPartyId: kotlin.String = TestUtils.getParameter(fileName, "listFormsByHCPartyAndPatientForeignKeys.hcPartyId")!!
+                    if (hcPartyId as? Collection<*> == null) {
+                        hcPartyId.also {
+                    if (TestUtils.isAutoRev(fileName, "listFormsByHCPartyAndPatientForeignKeys") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = hcPartyId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "listFormsByHCPartyAndPatientForeignKeys") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+                val secretFKeys: kotlin.String = TestUtils.getParameter(fileName, "listFormsByHCPartyAndPatientForeignKeys.secretFKeys")!!
+                    if (secretFKeys as? Collection<*> == null) {
+                        secretFKeys.also {
+                    if (TestUtils.isAutoRev(fileName, "listFormsByHCPartyAndPatientForeignKeys") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = secretFKeys as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "listFormsByHCPartyAndPatientForeignKeys") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+                val healthElementId: kotlin.String? = TestUtils.getParameter(fileName, "listFormsByHCPartyAndPatientForeignKeys.healthElementId")
+                    if (healthElementId as? Collection<*> == null) {
+                        healthElementId.also {
+                    if (TestUtils.isAutoRev(fileName, "listFormsByHCPartyAndPatientForeignKeys") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = healthElementId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "listFormsByHCPartyAndPatientForeignKeys") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+                val planOfActionId: kotlin.String? = TestUtils.getParameter(fileName, "listFormsByHCPartyAndPatientForeignKeys.planOfActionId")
+                    if (planOfActionId as? Collection<*> == null) {
+                        planOfActionId.also {
+                    if (TestUtils.isAutoRev(fileName, "listFormsByHCPartyAndPatientForeignKeys") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = planOfActionId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "listFormsByHCPartyAndPatientForeignKeys") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+                val formTemplateId: kotlin.String? = TestUtils.getParameter(fileName, "listFormsByHCPartyAndPatientForeignKeys.formTemplateId")
+                    if (formTemplateId as? Collection<*> == null) {
+                        formTemplateId.also {
+                    if (TestUtils.isAutoRev(fileName, "listFormsByHCPartyAndPatientForeignKeys") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = formTemplateId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "listFormsByHCPartyAndPatientForeignKeys") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).listFormsByHCPartyAndPatientForeignKeys(hcPartyId,secretFKeys,healthElementId,planOfActionId,formTemplateId)
+
+                    val testFileName = "FormApi.listFormsByHCPartyAndPatientForeignKeys"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<FormDto>? != null) {
+                            if ("kotlin.collections.List<FormDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<FormDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<FormDto>>() {}
+                        })
+                        assertAreEquals("listFormsByHCPartyAndPatientForeignKeys", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("FormApi.json")
+        }
+    }
     
     /**
      * List form stubs found By Healthcare Party and secret foreign keys.
@@ -1426,83 +1651,96 @@ class FormApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun listFormsDelegationsStubsByHCPartyAndPatientForeignKeysTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "listFormsDelegationsStubsByHCPartyAndPatientForeignKeys")) {
-			assert(true)
-			println("Endpoint listFormsDelegationsStubsByHCPartyAndPatientForeignKeys skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "listFormsDelegationsStubsByHCPartyAndPatientForeignKeys")
-        val hcPartyId: kotlin.String = TestUtils.getParameter(fileName, "listFormsDelegationsStubsByHCPartyAndPatientForeignKeys.hcPartyId")!!
-		if (hcPartyId as? Collection<*> == null) {
-			hcPartyId.also {
-            if (TestUtils.isAutoRev(fileName, "listFormsDelegationsStubsByHCPartyAndPatientForeignKeys") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = hcPartyId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "listFormsDelegationsStubsByHCPartyAndPatientForeignKeys") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-        val secretFKeys: kotlin.String = TestUtils.getParameter(fileName, "listFormsDelegationsStubsByHCPartyAndPatientForeignKeys.secretFKeys")!!
-		if (secretFKeys as? Collection<*> == null) {
-			secretFKeys.also {
-            if (TestUtils.isAutoRev(fileName, "listFormsDelegationsStubsByHCPartyAndPatientForeignKeys") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = secretFKeys as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "listFormsDelegationsStubsByHCPartyAndPatientForeignKeys") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).listFormsDelegationsStubsByHCPartyAndPatientForeignKeys(hcPartyId,secretFKeys)
-
-        val testFileName = "FormApi.listFormsDelegationsStubsByHCPartyAndPatientForeignKeys"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<IcureStubDto>? != null) {
-                if ("kotlin.collections.List<IcureStubDto>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<IcureStubDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "listFormsDelegationsStubsByHCPartyAndPatientForeignKeys")) {
+                assert(true)
+                println("Endpoint listFormsDelegationsStubsByHCPartyAndPatientForeignKeys skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("listFormsDelegationsStubsByHCPartyAndPatientForeignKeys", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "listFormsDelegationsStubsByHCPartyAndPatientForeignKeys")
+                val hcPartyId: kotlin.String = TestUtils.getParameter(fileName, "listFormsDelegationsStubsByHCPartyAndPatientForeignKeys.hcPartyId")!!
+                    if (hcPartyId as? Collection<*> == null) {
+                        hcPartyId.also {
+                    if (TestUtils.isAutoRev(fileName, "listFormsDelegationsStubsByHCPartyAndPatientForeignKeys") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = hcPartyId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "listFormsDelegationsStubsByHCPartyAndPatientForeignKeys") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+                val secretFKeys: kotlin.String = TestUtils.getParameter(fileName, "listFormsDelegationsStubsByHCPartyAndPatientForeignKeys.secretFKeys")!!
+                    if (secretFKeys as? Collection<*> == null) {
+                        secretFKeys.also {
+                    if (TestUtils.isAutoRev(fileName, "listFormsDelegationsStubsByHCPartyAndPatientForeignKeys") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = secretFKeys as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "listFormsDelegationsStubsByHCPartyAndPatientForeignKeys") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).listFormsDelegationsStubsByHCPartyAndPatientForeignKeys(hcPartyId,secretFKeys)
+
+                    val testFileName = "FormApi.listFormsDelegationsStubsByHCPartyAndPatientForeignKeys"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<IcureStubDto>? != null) {
+                            if ("kotlin.collections.List<IcureStubDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<IcureStubDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<IcureStubDto>>() {}
+                        })
+                        assertAreEquals("listFormsDelegationsStubsByHCPartyAndPatientForeignKeys", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("FormApi.json")
+        }
+    }
     
     /**
      * Modify a form
@@ -1515,61 +1753,74 @@ class FormApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun modifyFormTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "modifyForm")) {
-			assert(true)
-			println("Endpoint modifyForm skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyForm")
-        val formDto: FormDto = TestUtils.getParameter(fileName, "modifyForm.formDto")!!
-		if (formDto as? Collection<*> == null) {
-			formDto.also {
-            if (TestUtils.isAutoRev(fileName, "modifyForm") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<FormDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = formDto as? Collection<FormDto> ?: emptyList<FormDto>() as Collection<FormDto>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "modifyForm") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).modifyForm(formDto)
-
-        val testFileName = "FormApi.modifyForm"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<FormDto>? != null) {
-                if ("FormDto".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<FormDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "modifyForm")) {
+                assert(true)
+                println("Endpoint modifyForm skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("modifyForm", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyForm")
+                val formDto: FormDto = TestUtils.getParameter(fileName, "modifyForm.formDto")!!
+                    if (formDto as? Collection<*> == null) {
+                        formDto.also {
+                    if (TestUtils.isAutoRev(fileName, "modifyForm") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<FormDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = formDto as? Collection<FormDto> ?: emptyList<FormDto>() as Collection<FormDto>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "modifyForm") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).modifyForm(formDto)
+
+                    val testFileName = "FormApi.modifyForm"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<FormDto>? != null) {
+                            if ("FormDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<FormDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<FormDto>() {}
+                        })
+                        assertAreEquals("modifyForm", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("FormApi.json")
+        }
+    }
     
     /**
      * Modify a batch of forms
@@ -1582,61 +1833,74 @@ class FormApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun modifyFormsTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "modifyForms")) {
-			assert(true)
-			println("Endpoint modifyForms skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyForms")
-        val formDto: kotlin.collections.List<FormDto> = TestUtils.getParameter(fileName, "modifyForms.formDto")!!
-		if (formDto as? Collection<*> == null) {
-			formDto.also {
-            if (TestUtils.isAutoRev(fileName, "modifyForms") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.collections.List<FormDto>>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = formDto as? Collection<FormDto> ?: emptyList<FormDto>() as Collection<FormDto>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "modifyForms") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).modifyForms(formDto)
-
-        val testFileName = "FormApi.modifyForms"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<FormDto>? != null) {
-                if ("kotlin.collections.List<FormDto>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<FormDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "modifyForms")) {
+                assert(true)
+                println("Endpoint modifyForms skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("modifyForms", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyForms")
+                val formDto: kotlin.collections.List<FormDto> = TestUtils.getParameter(fileName, "modifyForms.formDto")!!
+                    if (formDto as? Collection<*> == null) {
+                        formDto.also {
+                    if (TestUtils.isAutoRev(fileName, "modifyForms") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.collections.List<FormDto>>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = formDto as? Collection<FormDto> ?: emptyList<FormDto>() as Collection<FormDto>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "modifyForms") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).modifyForms(formDto)
+
+                    val testFileName = "FormApi.modifyForms"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<FormDto>? != null) {
+                            if ("kotlin.collections.List<FormDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<FormDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<FormDto>>() {}
+                        })
+                        assertAreEquals("modifyForms", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("FormApi.json")
+        }
+    }
     
     /**
      * Delegates a form to a healthcare party
@@ -1649,83 +1913,96 @@ class FormApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun newFormDelegationsTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "newFormDelegations")) {
-			assert(true)
-			println("Endpoint newFormDelegations skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "newFormDelegations")
-        val formId: kotlin.String = TestUtils.getParameter(fileName, "newFormDelegations.formId")!!
-		if (formId as? Collection<*> == null) {
-			formId.also {
-            if (TestUtils.isAutoRev(fileName, "newFormDelegations") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = formId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "newFormDelegations") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-        val delegationDto: kotlin.collections.List<DelegationDto> = TestUtils.getParameter(fileName, "newFormDelegations.delegationDto")!!
-		if (delegationDto as? Collection<*> == null) {
-			delegationDto.also {
-            if (TestUtils.isAutoRev(fileName, "newFormDelegations") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.collections.List<DelegationDto>>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = delegationDto as? Collection<DelegationDto> ?: emptyList<DelegationDto>() as Collection<DelegationDto>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "newFormDelegations") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).newFormDelegations(formId,delegationDto)
-
-        val testFileName = "FormApi.newFormDelegations"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<FormDto>? != null) {
-                if ("FormDto".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<FormDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "newFormDelegations")) {
+                assert(true)
+                println("Endpoint newFormDelegations skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("newFormDelegations", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "newFormDelegations")
+                val formId: kotlin.String = TestUtils.getParameter(fileName, "newFormDelegations.formId")!!
+                    if (formId as? Collection<*> == null) {
+                        formId.also {
+                    if (TestUtils.isAutoRev(fileName, "newFormDelegations") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = formId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "newFormDelegations") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+                val delegationDto: kotlin.collections.List<DelegationDto> = TestUtils.getParameter(fileName, "newFormDelegations.delegationDto")!!
+                    if (delegationDto as? Collection<*> == null) {
+                        delegationDto.also {
+                    if (TestUtils.isAutoRev(fileName, "newFormDelegations") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.collections.List<DelegationDto>>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = delegationDto as? Collection<DelegationDto> ?: emptyList<DelegationDto>() as Collection<DelegationDto>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "newFormDelegations") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).newFormDelegations(formId,delegationDto)
+
+                    val testFileName = "FormApi.newFormDelegations"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<FormDto>? != null) {
+                            if ("FormDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<FormDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<FormDto>() {}
+                        })
+                        assertAreEquals("newFormDelegations", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("FormApi.json")
+        }
+    }
     
     /**
      * Update delegations in form.
@@ -1738,61 +2015,74 @@ class FormApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun setFormsDelegationsTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "setFormsDelegations")) {
-			assert(true)
-			println("Endpoint setFormsDelegations skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "setFormsDelegations")
-        val icureStubDto: kotlin.collections.List<IcureStubDto> = TestUtils.getParameter(fileName, "setFormsDelegations.icureStubDto")!!
-		if (icureStubDto as? Collection<*> == null) {
-			icureStubDto.also {
-            if (TestUtils.isAutoRev(fileName, "setFormsDelegations") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.collections.List<IcureStubDto>>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = icureStubDto as? Collection<IcureStubDto> ?: emptyList<IcureStubDto>() as Collection<IcureStubDto>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "setFormsDelegations") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).setFormsDelegations(icureStubDto)
-
-        val testFileName = "FormApi.setFormsDelegations"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<IcureStubDto>? != null) {
-                if ("kotlin.collections.List<IcureStubDto>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<IcureStubDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "setFormsDelegations")) {
+                assert(true)
+                println("Endpoint setFormsDelegations skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("setFormsDelegations", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "setFormsDelegations")
+                val icureStubDto: kotlin.collections.List<IcureStubDto> = TestUtils.getParameter(fileName, "setFormsDelegations.icureStubDto")!!
+                    if (icureStubDto as? Collection<*> == null) {
+                        icureStubDto.also {
+                    if (TestUtils.isAutoRev(fileName, "setFormsDelegations") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.collections.List<IcureStubDto>>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = icureStubDto as? Collection<IcureStubDto> ?: emptyList<IcureStubDto>() as Collection<IcureStubDto>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "setFormsDelegations") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).setFormsDelegations(icureStubDto)
+
+                    val testFileName = "FormApi.setFormsDelegations"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<IcureStubDto>? != null) {
+                            if ("kotlin.collections.List<IcureStubDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<IcureStubDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<IcureStubDto>>() {}
+                        })
+                        assertAreEquals("setFormsDelegations", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("FormApi.json")
+        }
+    }
     
     /**
      * Update a form template&#39;s layout
@@ -1805,83 +2095,96 @@ class FormApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun setTemplateAttachmentMultiTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "setTemplateAttachmentMulti")) {
-			assert(true)
-			println("Endpoint setTemplateAttachmentMulti skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "setTemplateAttachmentMulti")
-        val formTemplateId: kotlin.String = TestUtils.getParameter(fileName, "setTemplateAttachmentMulti.formTemplateId")!!
-		if (formTemplateId as? Collection<*> == null) {
-			formTemplateId.also {
-            if (TestUtils.isAutoRev(fileName, "setTemplateAttachmentMulti") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = formTemplateId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "setTemplateAttachmentMulti") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-        val attachment: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> = TestUtils.getParameter(fileName, "setTemplateAttachmentMulti.attachment")!!
-		if (attachment as? Collection<*> == null) {
-			attachment.also {
-            if (TestUtils.isAutoRev(fileName, "setTemplateAttachmentMulti") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = attachment as? Collection<io.icure.kraken.client.infrastructure.ByteArrayWrapper> ?: emptyList<io.icure.kraken.client.infrastructure.ByteArrayWrapper>() as Collection<io.icure.kraken.client.infrastructure.ByteArrayWrapper>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "setTemplateAttachmentMulti") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).setTemplateAttachmentMulti(formTemplateId,attachment)
-
-        val testFileName = "FormApi.setTemplateAttachmentMulti"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<kotlin.String>? != null) {
-                if ("kotlin.String".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<kotlin.String>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "setTemplateAttachmentMulti")) {
+                assert(true)
+                println("Endpoint setTemplateAttachmentMulti skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("setTemplateAttachmentMulti", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "setTemplateAttachmentMulti")
+                val formTemplateId: kotlin.String = TestUtils.getParameter(fileName, "setTemplateAttachmentMulti.formTemplateId")!!
+                    if (formTemplateId as? Collection<*> == null) {
+                        formTemplateId.also {
+                    if (TestUtils.isAutoRev(fileName, "setTemplateAttachmentMulti") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = formTemplateId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "setTemplateAttachmentMulti") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+                val attachment: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> = TestUtils.getParameter(fileName, "setTemplateAttachmentMulti.attachment")!!
+                    if (attachment as? Collection<*> == null) {
+                        attachment.also {
+                    if (TestUtils.isAutoRev(fileName, "setTemplateAttachmentMulti") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = attachment as? Collection<io.icure.kraken.client.infrastructure.ByteArrayWrapper> ?: emptyList<io.icure.kraken.client.infrastructure.ByteArrayWrapper>() as Collection<io.icure.kraken.client.infrastructure.ByteArrayWrapper>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "setTemplateAttachmentMulti") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).setTemplateAttachmentMulti(formTemplateId,attachment)
+
+                    val testFileName = "FormApi.setTemplateAttachmentMulti"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<kotlin.String>? != null) {
+                            if ("kotlin.String".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<kotlin.String>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.String>() {}
+                        })
+                        assertAreEquals("setTemplateAttachmentMulti", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("FormApi.json")
+        }
+    }
     
     /**
      * Modify a form template with the current user
@@ -1894,113 +2197,133 @@ class FormApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun updateFormTemplateTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "updateFormTemplate")) {
-			assert(true)
-			println("Endpoint updateFormTemplate skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "updateFormTemplate")
-        val formTemplateId: kotlin.String = TestUtils.getParameter(fileName, "updateFormTemplate.formTemplateId")!!
-		if (formTemplateId as? Collection<*> == null) {
-			formTemplateId.also {
-            if (TestUtils.isAutoRev(fileName, "updateFormTemplate") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = formTemplateId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "updateFormTemplate") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-        val formTemplateDto: FormTemplateDto = TestUtils.getParameter(fileName, "updateFormTemplate.formTemplateDto")!!
-		if (formTemplateDto as? Collection<*> == null) {
-			formTemplateDto.also {
-            if (TestUtils.isAutoRev(fileName, "updateFormTemplate") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<FormTemplateDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = formTemplateDto as? Collection<FormTemplateDto> ?: emptyList<FormTemplateDto>() as Collection<FormTemplateDto>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "updateFormTemplate") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).updateFormTemplate(formTemplateId,formTemplateDto)
-
-        val testFileName = "FormApi.updateFormTemplate"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<FormTemplateDto>? != null) {
-                if ("FormTemplateDto".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<FormTemplateDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "updateFormTemplate")) {
+                assert(true)
+                println("Endpoint updateFormTemplate skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("updateFormTemplate", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "updateFormTemplate")
+                val formTemplateId: kotlin.String = TestUtils.getParameter(fileName, "updateFormTemplate.formTemplateId")!!
+                    if (formTemplateId as? Collection<*> == null) {
+                        formTemplateId.also {
+                    if (TestUtils.isAutoRev(fileName, "updateFormTemplate") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = formTemplateId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "updateFormTemplate") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+                val formTemplateDto: FormTemplateDto = TestUtils.getParameter(fileName, "updateFormTemplate.formTemplateDto")!!
+                    if (formTemplateDto as? Collection<*> == null) {
+                        formTemplateDto.also {
+                    if (TestUtils.isAutoRev(fileName, "updateFormTemplate") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<FormTemplateDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = formTemplateDto as? Collection<FormTemplateDto> ?: emptyList<FormTemplateDto>() as Collection<FormTemplateDto>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "updateFormTemplate") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).updateFormTemplate(formTemplateId,formTemplateDto)
+
+                    val testFileName = "FormApi.updateFormTemplate"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<FormTemplateDto>? != null) {
+                            if ("FormTemplateDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<FormTemplateDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<FormTemplateDto>() {}
+                        })
+                        assertAreEquals("updateFormTemplate", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("FormApi.json")
+        }
+    }
     
 
-
-    private fun assertAreEquals(functionName: String, objectFromFile: Any?, response: Any) {
-        if (objectFromFile as? Iterable<Any> != null) {
-            val iterableResponse = (response as? Collection<Any> ?: (emptyList<Any>()))
-            if (functionName.startsWith("create") || functionName.startsWith("new")) { // new
-                for (fileElement in objectFromFile) {
-                    fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "id" }?.setter?.call(fileElement, null)
-                    fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(fileElement, null)
+    private suspend fun assertAreEquals(functionName: String, objectFromFile: Any?, response: Any) {
+        when {
+            objectFromFile as? Iterable<Any> != null -> {
+                val iterableResponse = (response as? Collection<Any> ?: (emptyList<Any>()))
+                if (functionName.startsWith("create") || functionName.startsWith("new")) { // new
+                    for (fileElement in objectFromFile) {
+                        fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "id" }?.setter?.call(fileElement, null)
+                        fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(fileElement, null)
+                    }
+                    for (responseElement in iterableResponse) {
+                        responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "id" }?.setter?.call(responseElement, null)
+                        responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(responseElement, null)
+                    }
+                } else if (functionName.startsWith("modify") || functionName.startsWith("set") || functionName.startsWith("delete")) { // + set + delete
+                    for (fileElement in objectFromFile) {
+                        fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(fileElement, null)
+                    }
+                    for (responseElement in iterableResponse) {
+                        responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(responseElement, null)
+                    }
                 }
-                for (responseElement in iterableResponse) {
-                    responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "id" }?.setter?.call(responseElement, null)
-                    responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(responseElement, null)
-                }
-            } else if (functionName.startsWith("modify") || functionName.startsWith("set") || functionName.startsWith("delete")) { // + set + delete
-                for (fileElement in objectFromFile) {
-                    fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(fileElement, null)
-                }
-                for (responseElement in iterableResponse) {
-                    responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(responseElement, null)
-                }
+                val diffs = response.differences(objectFromFile)
+                assertTrue(diffs.isEmpty())
             }
-            val diffs = response.differences(objectFromFile)
-            assertTrue(diffs.isEmpty())
-        } else {
-            if (functionName.startsWith("create") || functionName.startsWith("modify")) {
-                assertThat(objectFromFile as Any).isEqualToIgnoringGivenProperties(response, *(response::class.memberProperties.filter { it.name == "rev" || it.name == "id" || it.name == "created"  || it.name == "modified" }.mapNotNull { it as? KProperty1<Any, Any> }.toTypedArray()))
-            } else {
-                assertEquals(objectFromFile, response)
+            objectFromFile as? Flow<ByteBuffer> != null -> {
+                objectFromFile.fold(ByteBuffer.allocate(0)) { acc, bb -> ByteBuffer.allocate(bb.limit()+acc.limit()).apply { this.put(acc); this.put(bb) } }.array().contentEquals(
+                    (response as Flow<ByteBuffer>).fold(ByteBuffer.allocate(0)) { acc, bb -> ByteBuffer.allocate(bb.limit()+acc.limit()).apply { this.put(acc); this.put(bb) } }.array()
+                )
+            }
+            else -> {
+                if (functionName.startsWith("create") || functionName.startsWith("modify")) {
+                    assertThat(objectFromFile as Any).isEqualToIgnoringGivenProperties(response, *(response::class.memberProperties.filter { it.name == "rev" || it.name == "id" || it.name == "created"  || it.name == "modified" }.mapNotNull { it as? KProperty1<Any, Any> }.toTypedArray()))
+                } else {
+                    assertEquals(objectFromFile, response)
+                }
             }
         }
     }

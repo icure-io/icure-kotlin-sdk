@@ -61,8 +61,12 @@ import kotlinx.coroutines.runBlocking
 import io.icure.kraken.client.infrastructure.TestUtils
 import io.icure.kraken.client.infrastructure.TestUtils.Companion.basicAuth
 import io.icure.kraken.client.infrastructure.differences
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.fold
+import java.nio.ByteBuffer
 import kotlin.reflect.full.callSuspendBy
 import kotlin.reflect.javaType
+import kotlinx.coroutines.flow.flow
 
 /**
  * API tests for ContactApi
@@ -84,7 +88,7 @@ class ContactApiTest() {
         fun fileNames() = listOf("ContactApi.json")
     }
 
-    fun api(fileName: String) = ContactApi(basePath = "https://kraken.icure.dev", authHeader = fileName.basicAuth())
+    fun api(fileName: String) = ContactApi(basePath = "http://127.0.0.1:16043", authHeader = fileName.basicAuth())
     private val workingFolder = "/tmp/icureTests/"
     private val objectMapper = ObjectMapper()
         .registerModule(KotlinModule())
@@ -140,83 +144,96 @@ class ContactApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun closeForHCPartyPatientForeignKeysTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "closeForHCPartyPatientForeignKeys")) {
-			assert(true)
-			println("Endpoint closeForHCPartyPatientForeignKeys skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "closeForHCPartyPatientForeignKeys")
-        val hcPartyId: kotlin.String = TestUtils.getParameter(fileName, "closeForHCPartyPatientForeignKeys.hcPartyId")!!
-		if (hcPartyId as? Collection<*> == null) {
-			hcPartyId.also {
-            if (TestUtils.isAutoRev(fileName, "closeForHCPartyPatientForeignKeys") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = hcPartyId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "closeForHCPartyPatientForeignKeys") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-        val secretFKeys: kotlin.String = TestUtils.getParameter(fileName, "closeForHCPartyPatientForeignKeys.secretFKeys")!!
-		if (secretFKeys as? Collection<*> == null) {
-			secretFKeys.also {
-            if (TestUtils.isAutoRev(fileName, "closeForHCPartyPatientForeignKeys") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = secretFKeys as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "closeForHCPartyPatientForeignKeys") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).closeForHCPartyPatientForeignKeys(hcPartyId,secretFKeys)
-
-        val testFileName = "ContactApi.closeForHCPartyPatientForeignKeys"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<ContactDto>? != null) {
-                if ("kotlin.collections.List<ContactDto>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<ContactDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "closeForHCPartyPatientForeignKeys")) {
+                assert(true)
+                println("Endpoint closeForHCPartyPatientForeignKeys skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("closeForHCPartyPatientForeignKeys", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "closeForHCPartyPatientForeignKeys")
+                val hcPartyId: kotlin.String = TestUtils.getParameter(fileName, "closeForHCPartyPatientForeignKeys.hcPartyId")!!
+                    if (hcPartyId as? Collection<*> == null) {
+                        hcPartyId.also {
+                    if (TestUtils.isAutoRev(fileName, "closeForHCPartyPatientForeignKeys") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = hcPartyId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "closeForHCPartyPatientForeignKeys") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+                val secretFKeys: kotlin.String = TestUtils.getParameter(fileName, "closeForHCPartyPatientForeignKeys.secretFKeys")!!
+                    if (secretFKeys as? Collection<*> == null) {
+                        secretFKeys.also {
+                    if (TestUtils.isAutoRev(fileName, "closeForHCPartyPatientForeignKeys") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = secretFKeys as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "closeForHCPartyPatientForeignKeys") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).closeForHCPartyPatientForeignKeys(hcPartyId,secretFKeys)
+
+                    val testFileName = "ContactApi.closeForHCPartyPatientForeignKeys"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ContactDto>? != null) {
+                            if ("kotlin.collections.List<ContactDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ContactDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<ContactDto>>() {}
+                        })
+                        assertAreEquals("closeForHCPartyPatientForeignKeys", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("ContactApi.json")
+        }
+    }
     
     /**
      * Create a contact with the current user
@@ -229,61 +246,74 @@ class ContactApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun createContactTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "createContact")) {
-			assert(true)
-			println("Endpoint createContact skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "createContact")
-        val contactDto: ContactDto = TestUtils.getParameter(fileName, "createContact.contactDto")!!
-		if (contactDto as? Collection<*> == null) {
-			contactDto.also {
-            if (TestUtils.isAutoRev(fileName, "createContact") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<ContactDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = contactDto as? Collection<ContactDto> ?: emptyList<ContactDto>() as Collection<ContactDto>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "createContact") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).createContact(contactDto)
-
-        val testFileName = "ContactApi.createContact"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<ContactDto>? != null) {
-                if ("ContactDto".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<ContactDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "createContact")) {
+                assert(true)
+                println("Endpoint createContact skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("createContact", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "createContact")
+                val contactDto: ContactDto = TestUtils.getParameter(fileName, "createContact.contactDto")!!
+                    if (contactDto as? Collection<*> == null) {
+                        contactDto.also {
+                    if (TestUtils.isAutoRev(fileName, "createContact") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<ContactDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = contactDto as? Collection<ContactDto> ?: emptyList<ContactDto>() as Collection<ContactDto>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "createContact") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).createContact(contactDto)
+
+                    val testFileName = "ContactApi.createContact"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ContactDto>? != null) {
+                            if ("ContactDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ContactDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<ContactDto>() {}
+                        })
+                        assertAreEquals("createContact", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("ContactApi.json")
+        }
+    }
     
     /**
      * Create a batch of contacts
@@ -296,61 +326,74 @@ class ContactApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun createContactsTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "createContacts")) {
-			assert(true)
-			println("Endpoint createContacts skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "createContacts")
-        val contactDto: kotlin.collections.List<ContactDto> = TestUtils.getParameter(fileName, "createContacts.contactDto")!!
-		if (contactDto as? Collection<*> == null) {
-			contactDto.also {
-            if (TestUtils.isAutoRev(fileName, "createContacts") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.collections.List<ContactDto>>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = contactDto as? Collection<ContactDto> ?: emptyList<ContactDto>() as Collection<ContactDto>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "createContacts") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).createContacts(contactDto)
-
-        val testFileName = "ContactApi.createContacts"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<ContactDto>? != null) {
-                if ("kotlin.collections.List<ContactDto>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<ContactDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "createContacts")) {
+                assert(true)
+                println("Endpoint createContacts skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("createContacts", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "createContacts")
+                val contactDto: kotlin.collections.List<ContactDto> = TestUtils.getParameter(fileName, "createContacts.contactDto")!!
+                    if (contactDto as? Collection<*> == null) {
+                        contactDto.also {
+                    if (TestUtils.isAutoRev(fileName, "createContacts") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.collections.List<ContactDto>>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = contactDto as? Collection<ContactDto> ?: emptyList<ContactDto>() as Collection<ContactDto>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "createContacts") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).createContacts(contactDto)
+
+                    val testFileName = "ContactApi.createContacts"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ContactDto>? != null) {
+                            if ("kotlin.collections.List<ContactDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ContactDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<ContactDto>>() {}
+                        })
+                        assertAreEquals("createContacts", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("ContactApi.json")
+        }
+    }
     
     /**
      * Delete contacts.
@@ -363,61 +406,74 @@ class ContactApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun deleteContactsTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "deleteContacts")) {
-			assert(true)
-			println("Endpoint deleteContacts skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteContacts")
-        val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter(fileName, "deleteContacts.listOfIdsDto")!!
-		if (listOfIdsDto as? Collection<*> == null) {
-			listOfIdsDto.also {
-            if (TestUtils.isAutoRev(fileName, "deleteContacts") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<ListOfIdsDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = listOfIdsDto as? Collection<ListOfIdsDto> ?: emptyList<ListOfIdsDto>() as Collection<ListOfIdsDto>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "deleteContacts") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).deleteContacts(listOfIdsDto)
-
-        val testFileName = "ContactApi.deleteContacts"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<DocIdentifier>? != null) {
-                if ("kotlin.collections.List<DocIdentifier>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<DocIdentifier>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "deleteContacts")) {
+                assert(true)
+                println("Endpoint deleteContacts skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("deleteContacts", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteContacts")
+                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter(fileName, "deleteContacts.listOfIdsDto")!!
+                    if (listOfIdsDto as? Collection<*> == null) {
+                        listOfIdsDto.also {
+                    if (TestUtils.isAutoRev(fileName, "deleteContacts") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<ListOfIdsDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = listOfIdsDto as? Collection<ListOfIdsDto> ?: emptyList<ListOfIdsDto>() as Collection<ListOfIdsDto>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "deleteContacts") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).deleteContacts(listOfIdsDto)
+
+                    val testFileName = "ContactApi.deleteContacts"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocIdentifier>? != null) {
+                            if ("kotlin.collections.List<DocIdentifier>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<DocIdentifier>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<DocIdentifier>>() {}
+                        })
+                        assertAreEquals("deleteContacts", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("ContactApi.json")
+        }
+    }
     
     /**
      * List contacts for the current user (HcParty) or the given hcparty in the filter 
@@ -430,105 +486,118 @@ class ContactApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun filterContactsByTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "filterContactsBy")) {
-			assert(true)
-			println("Endpoint filterContactsBy skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "filterContactsBy")
-        val filterChainContact: FilterChainContact = TestUtils.getParameter(fileName, "filterContactsBy.filterChainContact")!!
-		if (filterChainContact as? Collection<*> == null) {
-			filterChainContact.also {
-            if (TestUtils.isAutoRev(fileName, "filterContactsBy") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<FilterChainContact>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = filterChainContact as? Collection<FilterChainContact> ?: emptyList<FilterChainContact>() as Collection<FilterChainContact>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "filterContactsBy") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-        val startDocumentId: kotlin.String? = TestUtils.getParameter(fileName, "filterContactsBy.startDocumentId")
-		if (startDocumentId as? Collection<*> == null) {
-			startDocumentId.also {
-            if (TestUtils.isAutoRev(fileName, "filterContactsBy") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = startDocumentId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "filterContactsBy") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-        val limit: kotlin.Int? = TestUtils.getParameter(fileName, "filterContactsBy.limit")
-		if (limit as? Collection<*> == null) {
-			limit.also {
-            if (TestUtils.isAutoRev(fileName, "filterContactsBy") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.Int>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = limit as? Collection<kotlin.Int> ?: emptyList<kotlin.Int>() as Collection<kotlin.Int>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "filterContactsBy") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).filterContactsBy(filterChainContact,startDocumentId,limit)
-
-        val testFileName = "ContactApi.filterContactsBy"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<PaginatedListContactDto>? != null) {
-                if ("PaginatedListContactDto".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<PaginatedListContactDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "filterContactsBy")) {
+                assert(true)
+                println("Endpoint filterContactsBy skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("filterContactsBy", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "filterContactsBy")
+                val filterChainContact: FilterChainContact = TestUtils.getParameter(fileName, "filterContactsBy.filterChainContact")!!
+                    if (filterChainContact as? Collection<*> == null) {
+                        filterChainContact.also {
+                    if (TestUtils.isAutoRev(fileName, "filterContactsBy") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<FilterChainContact>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = filterChainContact as? Collection<FilterChainContact> ?: emptyList<FilterChainContact>() as Collection<FilterChainContact>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "filterContactsBy") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+                val startDocumentId: kotlin.String? = TestUtils.getParameter(fileName, "filterContactsBy.startDocumentId")
+                    if (startDocumentId as? Collection<*> == null) {
+                        startDocumentId.also {
+                    if (TestUtils.isAutoRev(fileName, "filterContactsBy") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = startDocumentId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "filterContactsBy") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+                val limit: kotlin.Int? = TestUtils.getParameter(fileName, "filterContactsBy.limit")
+                    if (limit as? Collection<*> == null) {
+                        limit.also {
+                    if (TestUtils.isAutoRev(fileName, "filterContactsBy") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.Int>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = limit as? Collection<kotlin.Int> ?: emptyList<kotlin.Int>() as Collection<kotlin.Int>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "filterContactsBy") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).filterContactsBy(filterChainContact,startDocumentId,limit)
+
+                    val testFileName = "ContactApi.filterContactsBy"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<PaginatedListContactDto>? != null) {
+                            if ("PaginatedListContactDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<PaginatedListContactDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<PaginatedListContactDto>() {}
+                        })
+                        assertAreEquals("filterContactsBy", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("ContactApi.json")
+        }
+    }
     
     /**
      * List services for the current user (HcParty) or the given hcparty in the filter 
@@ -541,105 +610,118 @@ class ContactApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun filterServicesByTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "filterServicesBy")) {
-			assert(true)
-			println("Endpoint filterServicesBy skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "filterServicesBy")
-        val filterChainService: FilterChainService = TestUtils.getParameter(fileName, "filterServicesBy.filterChainService")!!
-		if (filterChainService as? Collection<*> == null) {
-			filterChainService.also {
-            if (TestUtils.isAutoRev(fileName, "filterServicesBy") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<FilterChainService>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = filterChainService as? Collection<FilterChainService> ?: emptyList<FilterChainService>() as Collection<FilterChainService>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "filterServicesBy") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-        val startDocumentId: kotlin.String? = TestUtils.getParameter(fileName, "filterServicesBy.startDocumentId")
-		if (startDocumentId as? Collection<*> == null) {
-			startDocumentId.also {
-            if (TestUtils.isAutoRev(fileName, "filterServicesBy") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = startDocumentId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "filterServicesBy") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-        val limit: kotlin.Int? = TestUtils.getParameter(fileName, "filterServicesBy.limit")
-		if (limit as? Collection<*> == null) {
-			limit.also {
-            if (TestUtils.isAutoRev(fileName, "filterServicesBy") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.Int>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = limit as? Collection<kotlin.Int> ?: emptyList<kotlin.Int>() as Collection<kotlin.Int>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "filterServicesBy") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).filterServicesBy(filterChainService,startDocumentId,limit)
-
-        val testFileName = "ContactApi.filterServicesBy"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<PaginatedListServiceDto>? != null) {
-                if ("PaginatedListServiceDto".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<PaginatedListServiceDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "filterServicesBy")) {
+                assert(true)
+                println("Endpoint filterServicesBy skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("filterServicesBy", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "filterServicesBy")
+                val filterChainService: FilterChainService = TestUtils.getParameter(fileName, "filterServicesBy.filterChainService")!!
+                    if (filterChainService as? Collection<*> == null) {
+                        filterChainService.also {
+                    if (TestUtils.isAutoRev(fileName, "filterServicesBy") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<FilterChainService>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = filterChainService as? Collection<FilterChainService> ?: emptyList<FilterChainService>() as Collection<FilterChainService>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "filterServicesBy") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+                val startDocumentId: kotlin.String? = TestUtils.getParameter(fileName, "filterServicesBy.startDocumentId")
+                    if (startDocumentId as? Collection<*> == null) {
+                        startDocumentId.also {
+                    if (TestUtils.isAutoRev(fileName, "filterServicesBy") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = startDocumentId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "filterServicesBy") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+                val limit: kotlin.Int? = TestUtils.getParameter(fileName, "filterServicesBy.limit")
+                    if (limit as? Collection<*> == null) {
+                        limit.also {
+                    if (TestUtils.isAutoRev(fileName, "filterServicesBy") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.Int>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = limit as? Collection<kotlin.Int> ?: emptyList<kotlin.Int>() as Collection<kotlin.Int>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "filterServicesBy") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).filterServicesBy(filterChainService,startDocumentId,limit)
+
+                    val testFileName = "ContactApi.filterServicesBy"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<PaginatedListServiceDto>? != null) {
+                            if ("PaginatedListServiceDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<PaginatedListServiceDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<PaginatedListServiceDto>() {}
+                        })
+                        assertAreEquals("filterServicesBy", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("ContactApi.json")
+        }
+    }
     
     /**
      * List contacts by opening date parties with(out) pagination
@@ -652,149 +734,162 @@ class ContactApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun findContactsByOpeningDateTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "findContactsByOpeningDate")) {
-			assert(true)
-			println("Endpoint findContactsByOpeningDate skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "findContactsByOpeningDate")
-        val startKey: kotlin.Long = TestUtils.getParameter(fileName, "findContactsByOpeningDate.startKey")!!
-		if (startKey as? Collection<*> == null) {
-			startKey.also {
-            if (TestUtils.isAutoRev(fileName, "findContactsByOpeningDate") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.Long>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = startKey as? Collection<kotlin.Long> ?: emptyList<kotlin.Long>() as Collection<kotlin.Long>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "findContactsByOpeningDate") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-        val endKey: kotlin.Long = TestUtils.getParameter(fileName, "findContactsByOpeningDate.endKey")!!
-		if (endKey as? Collection<*> == null) {
-			endKey.also {
-            if (TestUtils.isAutoRev(fileName, "findContactsByOpeningDate") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.Long>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = endKey as? Collection<kotlin.Long> ?: emptyList<kotlin.Long>() as Collection<kotlin.Long>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "findContactsByOpeningDate") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-        val hcpartyid: kotlin.String = TestUtils.getParameter(fileName, "findContactsByOpeningDate.hcpartyid")!!
-		if (hcpartyid as? Collection<*> == null) {
-			hcpartyid.also {
-            if (TestUtils.isAutoRev(fileName, "findContactsByOpeningDate") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = hcpartyid as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "findContactsByOpeningDate") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-        val startDocumentId: kotlin.String? = TestUtils.getParameter(fileName, "findContactsByOpeningDate.startDocumentId")
-		if (startDocumentId as? Collection<*> == null) {
-			startDocumentId.also {
-            if (TestUtils.isAutoRev(fileName, "findContactsByOpeningDate") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = startDocumentId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "findContactsByOpeningDate") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-        val limit: kotlin.Int? = TestUtils.getParameter(fileName, "findContactsByOpeningDate.limit")
-		if (limit as? Collection<*> == null) {
-			limit.also {
-            if (TestUtils.isAutoRev(fileName, "findContactsByOpeningDate") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.Int>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = limit as? Collection<kotlin.Int> ?: emptyList<kotlin.Int>() as Collection<kotlin.Int>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "findContactsByOpeningDate") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).findContactsByOpeningDate(startKey,endKey,hcpartyid,startDocumentId,limit)
-
-        val testFileName = "ContactApi.findContactsByOpeningDate"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<PaginatedListContactDto>? != null) {
-                if ("PaginatedListContactDto".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<PaginatedListContactDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "findContactsByOpeningDate")) {
+                assert(true)
+                println("Endpoint findContactsByOpeningDate skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("findContactsByOpeningDate", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "findContactsByOpeningDate")
+                val startKey: kotlin.Long = TestUtils.getParameter(fileName, "findContactsByOpeningDate.startKey")!!
+                    if (startKey as? Collection<*> == null) {
+                        startKey.also {
+                    if (TestUtils.isAutoRev(fileName, "findContactsByOpeningDate") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.Long>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = startKey as? Collection<kotlin.Long> ?: emptyList<kotlin.Long>() as Collection<kotlin.Long>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "findContactsByOpeningDate") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+                val endKey: kotlin.Long = TestUtils.getParameter(fileName, "findContactsByOpeningDate.endKey")!!
+                    if (endKey as? Collection<*> == null) {
+                        endKey.also {
+                    if (TestUtils.isAutoRev(fileName, "findContactsByOpeningDate") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.Long>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = endKey as? Collection<kotlin.Long> ?: emptyList<kotlin.Long>() as Collection<kotlin.Long>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "findContactsByOpeningDate") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+                val hcpartyid: kotlin.String = TestUtils.getParameter(fileName, "findContactsByOpeningDate.hcpartyid")!!
+                    if (hcpartyid as? Collection<*> == null) {
+                        hcpartyid.also {
+                    if (TestUtils.isAutoRev(fileName, "findContactsByOpeningDate") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = hcpartyid as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "findContactsByOpeningDate") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+                val startDocumentId: kotlin.String? = TestUtils.getParameter(fileName, "findContactsByOpeningDate.startDocumentId")
+                    if (startDocumentId as? Collection<*> == null) {
+                        startDocumentId.also {
+                    if (TestUtils.isAutoRev(fileName, "findContactsByOpeningDate") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = startDocumentId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "findContactsByOpeningDate") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+                val limit: kotlin.Int? = TestUtils.getParameter(fileName, "findContactsByOpeningDate.limit")
+                    if (limit as? Collection<*> == null) {
+                        limit.also {
+                    if (TestUtils.isAutoRev(fileName, "findContactsByOpeningDate") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.Int>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = limit as? Collection<kotlin.Int> ?: emptyList<kotlin.Int>() as Collection<kotlin.Int>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "findContactsByOpeningDate") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).findContactsByOpeningDate(startKey,endKey,hcpartyid,startDocumentId,limit)
+
+                    val testFileName = "ContactApi.findContactsByOpeningDate"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<PaginatedListContactDto>? != null) {
+                            if ("PaginatedListContactDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<PaginatedListContactDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<PaginatedListContactDto>() {}
+                        })
+                        assertAreEquals("findContactsByOpeningDate", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("ContactApi.json")
+        }
+    }
     
     /**
      * Get a contact
@@ -807,61 +902,74 @@ class ContactApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getContactTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "getContact")) {
-			assert(true)
-			println("Endpoint getContact skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "getContact")
-        val contactId: kotlin.String = TestUtils.getParameter(fileName, "getContact.contactId")!!
-		if (contactId as? Collection<*> == null) {
-			contactId.also {
-            if (TestUtils.isAutoRev(fileName, "getContact") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = contactId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "getContact") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).getContact(contactId)
-
-        val testFileName = "ContactApi.getContact"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<ContactDto>? != null) {
-                if ("ContactDto".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<ContactDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "getContact")) {
+                assert(true)
+                println("Endpoint getContact skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("getContact", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "getContact")
+                val contactId: kotlin.String = TestUtils.getParameter(fileName, "getContact.contactId")!!
+                    if (contactId as? Collection<*> == null) {
+                        contactId.also {
+                    if (TestUtils.isAutoRev(fileName, "getContact") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = contactId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "getContact") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).getContact(contactId)
+
+                    val testFileName = "ContactApi.getContact"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ContactDto>? != null) {
+                            if ("ContactDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ContactDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<ContactDto>() {}
+                        })
+                        assertAreEquals("getContact", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("ContactApi.json")
+        }
+    }
     
     /**
      * Get contacts
@@ -874,61 +982,74 @@ class ContactApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getContactsTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "getContacts")) {
-			assert(true)
-			println("Endpoint getContacts skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "getContacts")
-        val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter(fileName, "getContacts.listOfIdsDto")!!
-		if (listOfIdsDto as? Collection<*> == null) {
-			listOfIdsDto.also {
-            if (TestUtils.isAutoRev(fileName, "getContacts") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<ListOfIdsDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = listOfIdsDto as? Collection<ListOfIdsDto> ?: emptyList<ListOfIdsDto>() as Collection<ListOfIdsDto>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "getContacts") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).getContacts(listOfIdsDto)
-
-        val testFileName = "ContactApi.getContacts"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<ContactDto>? != null) {
-                if ("kotlin.collections.List<ContactDto>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<ContactDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "getContacts")) {
+                assert(true)
+                println("Endpoint getContacts skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("getContacts", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "getContacts")
+                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter(fileName, "getContacts.listOfIdsDto")!!
+                    if (listOfIdsDto as? Collection<*> == null) {
+                        listOfIdsDto.also {
+                    if (TestUtils.isAutoRev(fileName, "getContacts") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<ListOfIdsDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = listOfIdsDto as? Collection<ListOfIdsDto> ?: emptyList<ListOfIdsDto>() as Collection<ListOfIdsDto>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "getContacts") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).getContacts(listOfIdsDto)
+
+                    val testFileName = "ContactApi.getContacts"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ContactDto>? != null) {
+                            if ("kotlin.collections.List<ContactDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ContactDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<ContactDto>>() {}
+                        })
+                        assertAreEquals("getContacts", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("ContactApi.json")
+        }
+    }
     
     /**
      * Get an empty content
@@ -941,39 +1062,52 @@ class ContactApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getEmptyContentTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "getEmptyContent")) {
-			assert(true)
-			println("Endpoint getEmptyContent skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "getEmptyContent")
-
-        val response = api(credentialsFile).getEmptyContent()
-
-        val testFileName = "ContactApi.getEmptyContent"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<ContentDto>? != null) {
-                if ("ContentDto".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<ContentDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "getEmptyContent")) {
+                assert(true)
+                println("Endpoint getEmptyContent skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("getEmptyContent", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "getEmptyContent")
+
+                val response = api(credentialsFile).getEmptyContent()
+
+                    val testFileName = "ContactApi.getEmptyContent"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ContentDto>? != null) {
+                            if ("ContentDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ContentDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<ContentDto>() {}
+                        })
+                        assertAreEquals("getEmptyContent", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("ContactApi.json")
+        }
+    }
     
     /**
      * Get the list of all used codes frequencies in services
@@ -986,83 +1120,96 @@ class ContactApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getServiceCodesOccurencesTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "getServiceCodesOccurences")) {
-			assert(true)
-			println("Endpoint getServiceCodesOccurences skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "getServiceCodesOccurences")
-        val codeType: kotlin.String = TestUtils.getParameter(fileName, "getServiceCodesOccurences.codeType")!!
-		if (codeType as? Collection<*> == null) {
-			codeType.also {
-            if (TestUtils.isAutoRev(fileName, "getServiceCodesOccurences") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = codeType as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "getServiceCodesOccurences") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-        val minOccurences: kotlin.Long = TestUtils.getParameter(fileName, "getServiceCodesOccurences.minOccurences")!!
-		if (minOccurences as? Collection<*> == null) {
-			minOccurences.also {
-            if (TestUtils.isAutoRev(fileName, "getServiceCodesOccurences") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.Long>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = minOccurences as? Collection<kotlin.Long> ?: emptyList<kotlin.Long>() as Collection<kotlin.Long>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "getServiceCodesOccurences") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).getServiceCodesOccurences(codeType,minOccurences)
-
-        val testFileName = "ContactApi.getServiceCodesOccurences"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<LabelledOccurenceDto>? != null) {
-                if ("kotlin.collections.List<LabelledOccurenceDto>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<LabelledOccurenceDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "getServiceCodesOccurences")) {
+                assert(true)
+                println("Endpoint getServiceCodesOccurences skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("getServiceCodesOccurences", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "getServiceCodesOccurences")
+                val codeType: kotlin.String = TestUtils.getParameter(fileName, "getServiceCodesOccurences.codeType")!!
+                    if (codeType as? Collection<*> == null) {
+                        codeType.also {
+                    if (TestUtils.isAutoRev(fileName, "getServiceCodesOccurences") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = codeType as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "getServiceCodesOccurences") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+                val minOccurences: kotlin.Long = TestUtils.getParameter(fileName, "getServiceCodesOccurences.minOccurences")!!
+                    if (minOccurences as? Collection<*> == null) {
+                        minOccurences.also {
+                    if (TestUtils.isAutoRev(fileName, "getServiceCodesOccurences") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.Long>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = minOccurences as? Collection<kotlin.Long> ?: emptyList<kotlin.Long>() as Collection<kotlin.Long>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "getServiceCodesOccurences") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).getServiceCodesOccurences(codeType,minOccurences)
+
+                    val testFileName = "ContactApi.getServiceCodesOccurences"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<LabelledOccurenceDto>? != null) {
+                            if ("kotlin.collections.List<LabelledOccurenceDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<LabelledOccurenceDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<LabelledOccurenceDto>>() {}
+                        })
+                        assertAreEquals("getServiceCodesOccurences", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("ContactApi.json")
+        }
+    }
     
     /**
      * List services with provided ids 
@@ -1075,61 +1222,74 @@ class ContactApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getServicesTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "getServices")) {
-			assert(true)
-			println("Endpoint getServices skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "getServices")
-        val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter(fileName, "getServices.listOfIdsDto")!!
-		if (listOfIdsDto as? Collection<*> == null) {
-			listOfIdsDto.also {
-            if (TestUtils.isAutoRev(fileName, "getServices") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<ListOfIdsDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = listOfIdsDto as? Collection<ListOfIdsDto> ?: emptyList<ListOfIdsDto>() as Collection<ListOfIdsDto>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "getServices") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).getServices(listOfIdsDto)
-
-        val testFileName = "ContactApi.getServices"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<ServiceDto>? != null) {
-                if ("kotlin.collections.List<ServiceDto>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<ServiceDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "getServices")) {
+                assert(true)
+                println("Endpoint getServices skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("getServices", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "getServices")
+                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter(fileName, "getServices.listOfIdsDto")!!
+                    if (listOfIdsDto as? Collection<*> == null) {
+                        listOfIdsDto.also {
+                    if (TestUtils.isAutoRev(fileName, "getServices") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<ListOfIdsDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = listOfIdsDto as? Collection<ListOfIdsDto> ?: emptyList<ListOfIdsDto>() as Collection<ListOfIdsDto>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "getServices") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).getServices(listOfIdsDto)
+
+                    val testFileName = "ContactApi.getServices"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ServiceDto>? != null) {
+                            if ("kotlin.collections.List<ServiceDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ServiceDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<ServiceDto>>() {}
+                        })
+                        assertAreEquals("getServices", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("ContactApi.json")
+        }
+    }
     
     /**
      * List services linked to provided ids 
@@ -1142,83 +1302,96 @@ class ContactApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getServicesLinkedToTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "getServicesLinkedTo")) {
-			assert(true)
-			println("Endpoint getServicesLinkedTo skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "getServicesLinkedTo")
-        val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter(fileName, "getServicesLinkedTo.listOfIdsDto")!!
-		if (listOfIdsDto as? Collection<*> == null) {
-			listOfIdsDto.also {
-            if (TestUtils.isAutoRev(fileName, "getServicesLinkedTo") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<ListOfIdsDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = listOfIdsDto as? Collection<ListOfIdsDto> ?: emptyList<ListOfIdsDto>() as Collection<ListOfIdsDto>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "getServicesLinkedTo") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-        val linkType: kotlin.String? = TestUtils.getParameter(fileName, "getServicesLinkedTo.linkType")
-		if (linkType as? Collection<*> == null) {
-			linkType.also {
-            if (TestUtils.isAutoRev(fileName, "getServicesLinkedTo") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = linkType as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "getServicesLinkedTo") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).getServicesLinkedTo(listOfIdsDto,linkType)
-
-        val testFileName = "ContactApi.getServicesLinkedTo"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<ServiceDto>? != null) {
-                if ("kotlin.collections.List<ServiceDto>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<ServiceDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "getServicesLinkedTo")) {
+                assert(true)
+                println("Endpoint getServicesLinkedTo skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("getServicesLinkedTo", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "getServicesLinkedTo")
+                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter(fileName, "getServicesLinkedTo.listOfIdsDto")!!
+                    if (listOfIdsDto as? Collection<*> == null) {
+                        listOfIdsDto.also {
+                    if (TestUtils.isAutoRev(fileName, "getServicesLinkedTo") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<ListOfIdsDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = listOfIdsDto as? Collection<ListOfIdsDto> ?: emptyList<ListOfIdsDto>() as Collection<ListOfIdsDto>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "getServicesLinkedTo") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+                val linkType: kotlin.String? = TestUtils.getParameter(fileName, "getServicesLinkedTo.linkType")
+                    if (linkType as? Collection<*> == null) {
+                        linkType.also {
+                    if (TestUtils.isAutoRev(fileName, "getServicesLinkedTo") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = linkType as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "getServicesLinkedTo") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).getServicesLinkedTo(listOfIdsDto,linkType)
+
+                    val testFileName = "ContactApi.getServicesLinkedTo"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ServiceDto>? != null) {
+                            if ("kotlin.collections.List<ServiceDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ServiceDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<ServiceDto>>() {}
+                        })
+                        assertAreEquals("getServicesLinkedTo", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("ContactApi.json")
+        }
+    }
     
     /**
      * List contacts found By Healthcare Party and service Id.
@@ -1231,83 +1404,96 @@ class ContactApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun listContactByHCPartyServiceIdTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "listContactByHCPartyServiceId")) {
-			assert(true)
-			println("Endpoint listContactByHCPartyServiceId skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "listContactByHCPartyServiceId")
-        val hcPartyId: kotlin.String = TestUtils.getParameter(fileName, "listContactByHCPartyServiceId.hcPartyId")!!
-		if (hcPartyId as? Collection<*> == null) {
-			hcPartyId.also {
-            if (TestUtils.isAutoRev(fileName, "listContactByHCPartyServiceId") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = hcPartyId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "listContactByHCPartyServiceId") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-        val serviceId: kotlin.String = TestUtils.getParameter(fileName, "listContactByHCPartyServiceId.serviceId")!!
-		if (serviceId as? Collection<*> == null) {
-			serviceId.also {
-            if (TestUtils.isAutoRev(fileName, "listContactByHCPartyServiceId") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = serviceId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "listContactByHCPartyServiceId") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).listContactByHCPartyServiceId(hcPartyId,serviceId)
-
-        val testFileName = "ContactApi.listContactByHCPartyServiceId"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<ContactDto>? != null) {
-                if ("kotlin.collections.List<ContactDto>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<ContactDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "listContactByHCPartyServiceId")) {
+                assert(true)
+                println("Endpoint listContactByHCPartyServiceId skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("listContactByHCPartyServiceId", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "listContactByHCPartyServiceId")
+                val hcPartyId: kotlin.String = TestUtils.getParameter(fileName, "listContactByHCPartyServiceId.hcPartyId")!!
+                    if (hcPartyId as? Collection<*> == null) {
+                        hcPartyId.also {
+                    if (TestUtils.isAutoRev(fileName, "listContactByHCPartyServiceId") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = hcPartyId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "listContactByHCPartyServiceId") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+                val serviceId: kotlin.String = TestUtils.getParameter(fileName, "listContactByHCPartyServiceId.serviceId")!!
+                    if (serviceId as? Collection<*> == null) {
+                        serviceId.also {
+                    if (TestUtils.isAutoRev(fileName, "listContactByHCPartyServiceId") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = serviceId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "listContactByHCPartyServiceId") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).listContactByHCPartyServiceId(hcPartyId,serviceId)
+
+                    val testFileName = "ContactApi.listContactByHCPartyServiceId"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ContactDto>? != null) {
+                            if ("kotlin.collections.List<ContactDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ContactDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<ContactDto>>() {}
+                        })
+                        assertAreEquals("listContactByHCPartyServiceId", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("ContactApi.json")
+        }
+    }
     
     /**
      * List contacts found By externalId.
@@ -1320,61 +1506,74 @@ class ContactApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun listContactsByExternalIdTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "listContactsByExternalId")) {
-			assert(true)
-			println("Endpoint listContactsByExternalId skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "listContactsByExternalId")
-        val externalId: kotlin.String = TestUtils.getParameter(fileName, "listContactsByExternalId.externalId")!!
-		if (externalId as? Collection<*> == null) {
-			externalId.also {
-            if (TestUtils.isAutoRev(fileName, "listContactsByExternalId") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = externalId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "listContactsByExternalId") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).listContactsByExternalId(externalId)
-
-        val testFileName = "ContactApi.listContactsByExternalId"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<ContactDto>? != null) {
-                if ("kotlin.collections.List<ContactDto>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<ContactDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "listContactsByExternalId")) {
+                assert(true)
+                println("Endpoint listContactsByExternalId skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("listContactsByExternalId", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "listContactsByExternalId")
+                val externalId: kotlin.String = TestUtils.getParameter(fileName, "listContactsByExternalId.externalId")!!
+                    if (externalId as? Collection<*> == null) {
+                        externalId.also {
+                    if (TestUtils.isAutoRev(fileName, "listContactsByExternalId") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = externalId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "listContactsByExternalId") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).listContactsByExternalId(externalId)
+
+                    val testFileName = "ContactApi.listContactsByExternalId"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ContactDto>? != null) {
+                            if ("kotlin.collections.List<ContactDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ContactDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<ContactDto>>() {}
+                        })
+                        assertAreEquals("listContactsByExternalId", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("ContactApi.json")
+        }
+    }
     
     /**
      * List contacts found By Healthcare Party and form Id.
@@ -1387,83 +1586,96 @@ class ContactApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun listContactsByHCPartyAndFormIdTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "listContactsByHCPartyAndFormId")) {
-			assert(true)
-			println("Endpoint listContactsByHCPartyAndFormId skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "listContactsByHCPartyAndFormId")
-        val hcPartyId: kotlin.String = TestUtils.getParameter(fileName, "listContactsByHCPartyAndFormId.hcPartyId")!!
-		if (hcPartyId as? Collection<*> == null) {
-			hcPartyId.also {
-            if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndFormId") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = hcPartyId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndFormId") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-        val formId: kotlin.String = TestUtils.getParameter(fileName, "listContactsByHCPartyAndFormId.formId")!!
-		if (formId as? Collection<*> == null) {
-			formId.also {
-            if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndFormId") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = formId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndFormId") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).listContactsByHCPartyAndFormId(hcPartyId,formId)
-
-        val testFileName = "ContactApi.listContactsByHCPartyAndFormId"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<ContactDto>? != null) {
-                if ("kotlin.collections.List<ContactDto>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<ContactDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "listContactsByHCPartyAndFormId")) {
+                assert(true)
+                println("Endpoint listContactsByHCPartyAndFormId skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("listContactsByHCPartyAndFormId", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "listContactsByHCPartyAndFormId")
+                val hcPartyId: kotlin.String = TestUtils.getParameter(fileName, "listContactsByHCPartyAndFormId.hcPartyId")!!
+                    if (hcPartyId as? Collection<*> == null) {
+                        hcPartyId.also {
+                    if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndFormId") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = hcPartyId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndFormId") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+                val formId: kotlin.String = TestUtils.getParameter(fileName, "listContactsByHCPartyAndFormId.formId")!!
+                    if (formId as? Collection<*> == null) {
+                        formId.also {
+                    if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndFormId") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = formId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndFormId") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).listContactsByHCPartyAndFormId(hcPartyId,formId)
+
+                    val testFileName = "ContactApi.listContactsByHCPartyAndFormId"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ContactDto>? != null) {
+                            if ("kotlin.collections.List<ContactDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ContactDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<ContactDto>>() {}
+                        })
+                        assertAreEquals("listContactsByHCPartyAndFormId", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("ContactApi.json")
+        }
+    }
     
     /**
      * List contacts found By Healthcare Party and form Id.
@@ -1476,83 +1688,96 @@ class ContactApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun listContactsByHCPartyAndFormIdsTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "listContactsByHCPartyAndFormIds")) {
-			assert(true)
-			println("Endpoint listContactsByHCPartyAndFormIds skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "listContactsByHCPartyAndFormIds")
-        val hcPartyId: kotlin.String = TestUtils.getParameter(fileName, "listContactsByHCPartyAndFormIds.hcPartyId")!!
-		if (hcPartyId as? Collection<*> == null) {
-			hcPartyId.also {
-            if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndFormIds") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = hcPartyId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndFormIds") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-        val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter(fileName, "listContactsByHCPartyAndFormIds.listOfIdsDto")!!
-		if (listOfIdsDto as? Collection<*> == null) {
-			listOfIdsDto.also {
-            if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndFormIds") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<ListOfIdsDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = listOfIdsDto as? Collection<ListOfIdsDto> ?: emptyList<ListOfIdsDto>() as Collection<ListOfIdsDto>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndFormIds") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).listContactsByHCPartyAndFormIds(hcPartyId,listOfIdsDto)
-
-        val testFileName = "ContactApi.listContactsByHCPartyAndFormIds"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<ContactDto>? != null) {
-                if ("kotlin.collections.List<ContactDto>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<ContactDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "listContactsByHCPartyAndFormIds")) {
+                assert(true)
+                println("Endpoint listContactsByHCPartyAndFormIds skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("listContactsByHCPartyAndFormIds", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "listContactsByHCPartyAndFormIds")
+                val hcPartyId: kotlin.String = TestUtils.getParameter(fileName, "listContactsByHCPartyAndFormIds.hcPartyId")!!
+                    if (hcPartyId as? Collection<*> == null) {
+                        hcPartyId.also {
+                    if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndFormIds") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = hcPartyId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndFormIds") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter(fileName, "listContactsByHCPartyAndFormIds.listOfIdsDto")!!
+                    if (listOfIdsDto as? Collection<*> == null) {
+                        listOfIdsDto.also {
+                    if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndFormIds") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<ListOfIdsDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = listOfIdsDto as? Collection<ListOfIdsDto> ?: emptyList<ListOfIdsDto>() as Collection<ListOfIdsDto>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndFormIds") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).listContactsByHCPartyAndFormIds(hcPartyId,listOfIdsDto)
+
+                    val testFileName = "ContactApi.listContactsByHCPartyAndFormIds"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ContactDto>? != null) {
+                            if ("kotlin.collections.List<ContactDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ContactDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<ContactDto>>() {}
+                        })
+                        assertAreEquals("listContactsByHCPartyAndFormIds", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("ContactApi.json")
+        }
+    }
     
     /**
      * List contacts found By Healthcare Party and Patient foreign keys.
@@ -1565,83 +1790,96 @@ class ContactApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun listContactsByHCPartyAndPatientForeignKeysTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "listContactsByHCPartyAndPatientForeignKeys")) {
-			assert(true)
-			println("Endpoint listContactsByHCPartyAndPatientForeignKeys skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "listContactsByHCPartyAndPatientForeignKeys")
-        val hcPartyId: kotlin.String = TestUtils.getParameter(fileName, "listContactsByHCPartyAndPatientForeignKeys.hcPartyId")!!
-		if (hcPartyId as? Collection<*> == null) {
-			hcPartyId.also {
-            if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndPatientForeignKeys") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = hcPartyId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndPatientForeignKeys") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-        val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter(fileName, "listContactsByHCPartyAndPatientForeignKeys.listOfIdsDto")!!
-		if (listOfIdsDto as? Collection<*> == null) {
-			listOfIdsDto.also {
-            if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndPatientForeignKeys") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<ListOfIdsDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = listOfIdsDto as? Collection<ListOfIdsDto> ?: emptyList<ListOfIdsDto>() as Collection<ListOfIdsDto>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndPatientForeignKeys") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).listContactsByHCPartyAndPatientForeignKeys(hcPartyId,listOfIdsDto)
-
-        val testFileName = "ContactApi.listContactsByHCPartyAndPatientForeignKeys"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<ContactDto>? != null) {
-                if ("kotlin.collections.List<ContactDto>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<ContactDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "listContactsByHCPartyAndPatientForeignKeys")) {
+                assert(true)
+                println("Endpoint listContactsByHCPartyAndPatientForeignKeys skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("listContactsByHCPartyAndPatientForeignKeys", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "listContactsByHCPartyAndPatientForeignKeys")
+                val hcPartyId: kotlin.String = TestUtils.getParameter(fileName, "listContactsByHCPartyAndPatientForeignKeys.hcPartyId")!!
+                    if (hcPartyId as? Collection<*> == null) {
+                        hcPartyId.also {
+                    if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndPatientForeignKeys") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = hcPartyId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndPatientForeignKeys") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter(fileName, "listContactsByHCPartyAndPatientForeignKeys.listOfIdsDto")!!
+                    if (listOfIdsDto as? Collection<*> == null) {
+                        listOfIdsDto.also {
+                    if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndPatientForeignKeys") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<ListOfIdsDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = listOfIdsDto as? Collection<ListOfIdsDto> ?: emptyList<ListOfIdsDto>() as Collection<ListOfIdsDto>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndPatientForeignKeys") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).listContactsByHCPartyAndPatientForeignKeys(hcPartyId,listOfIdsDto)
+
+                    val testFileName = "ContactApi.listContactsByHCPartyAndPatientForeignKeys"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ContactDto>? != null) {
+                            if ("kotlin.collections.List<ContactDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ContactDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<ContactDto>>() {}
+                        })
+                        assertAreEquals("listContactsByHCPartyAndPatientForeignKeys", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("ContactApi.json")
+        }
+    }
     
     /**
      * List contacts found By Healthcare Party and secret foreign keys.
@@ -1654,127 +1892,140 @@ class ContactApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun listContactsByHCPartyAndPatientSecretFKeysTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "listContactsByHCPartyAndPatientSecretFKeys")) {
-			assert(true)
-			println("Endpoint listContactsByHCPartyAndPatientSecretFKeys skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "listContactsByHCPartyAndPatientSecretFKeys")
-        val hcPartyId: kotlin.String = TestUtils.getParameter(fileName, "listContactsByHCPartyAndPatientSecretFKeys.hcPartyId")!!
-		if (hcPartyId as? Collection<*> == null) {
-			hcPartyId.also {
-            if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndPatientSecretFKeys") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = hcPartyId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndPatientSecretFKeys") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-        val secretFKeys: kotlin.String = TestUtils.getParameter(fileName, "listContactsByHCPartyAndPatientSecretFKeys.secretFKeys")!!
-		if (secretFKeys as? Collection<*> == null) {
-			secretFKeys.also {
-            if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndPatientSecretFKeys") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = secretFKeys as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndPatientSecretFKeys") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-        val planOfActionsIds: kotlin.String? = TestUtils.getParameter(fileName, "listContactsByHCPartyAndPatientSecretFKeys.planOfActionsIds")
-		if (planOfActionsIds as? Collection<*> == null) {
-			planOfActionsIds.also {
-            if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndPatientSecretFKeys") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = planOfActionsIds as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndPatientSecretFKeys") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-        val skipClosedContacts: kotlin.Boolean? = TestUtils.getParameter(fileName, "listContactsByHCPartyAndPatientSecretFKeys.skipClosedContacts")
-		if (skipClosedContacts as? Collection<*> == null) {
-			skipClosedContacts.also {
-            if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndPatientSecretFKeys") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.Boolean>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = skipClosedContacts as? Collection<kotlin.Boolean> ?: emptyList<kotlin.Boolean>() as Collection<kotlin.Boolean>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndPatientSecretFKeys") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).listContactsByHCPartyAndPatientSecretFKeys(hcPartyId,secretFKeys,planOfActionsIds,skipClosedContacts)
-
-        val testFileName = "ContactApi.listContactsByHCPartyAndPatientSecretFKeys"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<ContactDto>? != null) {
-                if ("kotlin.collections.List<ContactDto>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<ContactDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "listContactsByHCPartyAndPatientSecretFKeys")) {
+                assert(true)
+                println("Endpoint listContactsByHCPartyAndPatientSecretFKeys skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("listContactsByHCPartyAndPatientSecretFKeys", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "listContactsByHCPartyAndPatientSecretFKeys")
+                val hcPartyId: kotlin.String = TestUtils.getParameter(fileName, "listContactsByHCPartyAndPatientSecretFKeys.hcPartyId")!!
+                    if (hcPartyId as? Collection<*> == null) {
+                        hcPartyId.also {
+                    if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndPatientSecretFKeys") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = hcPartyId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndPatientSecretFKeys") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+                val secretFKeys: kotlin.String = TestUtils.getParameter(fileName, "listContactsByHCPartyAndPatientSecretFKeys.secretFKeys")!!
+                    if (secretFKeys as? Collection<*> == null) {
+                        secretFKeys.also {
+                    if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndPatientSecretFKeys") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = secretFKeys as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndPatientSecretFKeys") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+                val planOfActionsIds: kotlin.String? = TestUtils.getParameter(fileName, "listContactsByHCPartyAndPatientSecretFKeys.planOfActionsIds")
+                    if (planOfActionsIds as? Collection<*> == null) {
+                        planOfActionsIds.also {
+                    if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndPatientSecretFKeys") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = planOfActionsIds as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndPatientSecretFKeys") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+                val skipClosedContacts: kotlin.Boolean? = TestUtils.getParameter(fileName, "listContactsByHCPartyAndPatientSecretFKeys.skipClosedContacts")
+                    if (skipClosedContacts as? Collection<*> == null) {
+                        skipClosedContacts.also {
+                    if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndPatientSecretFKeys") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.Boolean>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = skipClosedContacts as? Collection<kotlin.Boolean> ?: emptyList<kotlin.Boolean>() as Collection<kotlin.Boolean>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndPatientSecretFKeys") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).listContactsByHCPartyAndPatientSecretFKeys(hcPartyId,secretFKeys,planOfActionsIds,skipClosedContacts)
+
+                    val testFileName = "ContactApi.listContactsByHCPartyAndPatientSecretFKeys"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ContactDto>? != null) {
+                            if ("kotlin.collections.List<ContactDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ContactDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<ContactDto>>() {}
+                        })
+                        assertAreEquals("listContactsByHCPartyAndPatientSecretFKeys", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("ContactApi.json")
+        }
+    }
     
     /**
      * List contacts found By Healthcare Party and secret foreign keys.
@@ -1787,83 +2038,96 @@ class ContactApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun listContactsDelegationsStubsByHCPartyAndPatientForeignKeysTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "listContactsDelegationsStubsByHCPartyAndPatientForeignKeys")) {
-			assert(true)
-			println("Endpoint listContactsDelegationsStubsByHCPartyAndPatientForeignKeys skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "listContactsDelegationsStubsByHCPartyAndPatientForeignKeys")
-        val hcPartyId: kotlin.String = TestUtils.getParameter(fileName, "listContactsDelegationsStubsByHCPartyAndPatientForeignKeys.hcPartyId")!!
-		if (hcPartyId as? Collection<*> == null) {
-			hcPartyId.also {
-            if (TestUtils.isAutoRev(fileName, "listContactsDelegationsStubsByHCPartyAndPatientForeignKeys") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = hcPartyId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "listContactsDelegationsStubsByHCPartyAndPatientForeignKeys") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-        val secretFKeys: kotlin.String = TestUtils.getParameter(fileName, "listContactsDelegationsStubsByHCPartyAndPatientForeignKeys.secretFKeys")!!
-		if (secretFKeys as? Collection<*> == null) {
-			secretFKeys.also {
-            if (TestUtils.isAutoRev(fileName, "listContactsDelegationsStubsByHCPartyAndPatientForeignKeys") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = secretFKeys as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "listContactsDelegationsStubsByHCPartyAndPatientForeignKeys") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).listContactsDelegationsStubsByHCPartyAndPatientForeignKeys(hcPartyId,secretFKeys)
-
-        val testFileName = "ContactApi.listContactsDelegationsStubsByHCPartyAndPatientForeignKeys"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<IcureStubDto>? != null) {
-                if ("kotlin.collections.List<IcureStubDto>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<IcureStubDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "listContactsDelegationsStubsByHCPartyAndPatientForeignKeys")) {
+                assert(true)
+                println("Endpoint listContactsDelegationsStubsByHCPartyAndPatientForeignKeys skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("listContactsDelegationsStubsByHCPartyAndPatientForeignKeys", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "listContactsDelegationsStubsByHCPartyAndPatientForeignKeys")
+                val hcPartyId: kotlin.String = TestUtils.getParameter(fileName, "listContactsDelegationsStubsByHCPartyAndPatientForeignKeys.hcPartyId")!!
+                    if (hcPartyId as? Collection<*> == null) {
+                        hcPartyId.also {
+                    if (TestUtils.isAutoRev(fileName, "listContactsDelegationsStubsByHCPartyAndPatientForeignKeys") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = hcPartyId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "listContactsDelegationsStubsByHCPartyAndPatientForeignKeys") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+                val secretFKeys: kotlin.String = TestUtils.getParameter(fileName, "listContactsDelegationsStubsByHCPartyAndPatientForeignKeys.secretFKeys")!!
+                    if (secretFKeys as? Collection<*> == null) {
+                        secretFKeys.also {
+                    if (TestUtils.isAutoRev(fileName, "listContactsDelegationsStubsByHCPartyAndPatientForeignKeys") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = secretFKeys as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "listContactsDelegationsStubsByHCPartyAndPatientForeignKeys") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).listContactsDelegationsStubsByHCPartyAndPatientForeignKeys(hcPartyId,secretFKeys)
+
+                    val testFileName = "ContactApi.listContactsDelegationsStubsByHCPartyAndPatientForeignKeys"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<IcureStubDto>? != null) {
+                            if ("kotlin.collections.List<IcureStubDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<IcureStubDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<IcureStubDto>>() {}
+                        })
+                        assertAreEquals("listContactsDelegationsStubsByHCPartyAndPatientForeignKeys", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("ContactApi.json")
+        }
+    }
     
     /**
      * List services by related association id
@@ -1876,61 +2140,74 @@ class ContactApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun listServicesByAssociationIdTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "listServicesByAssociationId")) {
-			assert(true)
-			println("Endpoint listServicesByAssociationId skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "listServicesByAssociationId")
-        val associationId: kotlin.String = TestUtils.getParameter(fileName, "listServicesByAssociationId.associationId")!!
-		if (associationId as? Collection<*> == null) {
-			associationId.also {
-            if (TestUtils.isAutoRev(fileName, "listServicesByAssociationId") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = associationId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "listServicesByAssociationId") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).listServicesByAssociationId(associationId)
-
-        val testFileName = "ContactApi.listServicesByAssociationId"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<ServiceDto>? != null) {
-                if ("kotlin.collections.List<ServiceDto>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<ServiceDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "listServicesByAssociationId")) {
+                assert(true)
+                println("Endpoint listServicesByAssociationId skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("listServicesByAssociationId", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "listServicesByAssociationId")
+                val associationId: kotlin.String = TestUtils.getParameter(fileName, "listServicesByAssociationId.associationId")!!
+                    if (associationId as? Collection<*> == null) {
+                        associationId.also {
+                    if (TestUtils.isAutoRev(fileName, "listServicesByAssociationId") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = associationId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "listServicesByAssociationId") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).listServicesByAssociationId(associationId)
+
+                    val testFileName = "ContactApi.listServicesByAssociationId"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ServiceDto>? != null) {
+                            if ("kotlin.collections.List<ServiceDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ServiceDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<ServiceDto>>() {}
+                        })
+                        assertAreEquals("listServicesByAssociationId", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("ContactApi.json")
+        }
+    }
     
     /**
      * Get ids of contacts matching the provided filter for the current user (HcParty) 
@@ -1943,61 +2220,74 @@ class ContactApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun matchContactsByTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "matchContactsBy")) {
-			assert(true)
-			println("Endpoint matchContactsBy skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "matchContactsBy")
-        val abstractFilterDtoContact: AbstractFilterDtoContact = TestUtils.getParameter(fileName, "matchContactsBy.abstractFilterDtoContact")!!
-		if (abstractFilterDtoContact as? Collection<*> == null) {
-			abstractFilterDtoContact.also {
-            if (TestUtils.isAutoRev(fileName, "matchContactsBy") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<AbstractFilterDtoContact>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = abstractFilterDtoContact as? Collection<AbstractFilterDtoContact> ?: emptyList<AbstractFilterDtoContact>() as Collection<AbstractFilterDtoContact>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "matchContactsBy") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).matchContactsBy(abstractFilterDtoContact)
-
-        val testFileName = "ContactApi.matchContactsBy"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<kotlin.String>? != null) {
-                if ("kotlin.collections.List<kotlin.String>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<kotlin.String>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "matchContactsBy")) {
+                assert(true)
+                println("Endpoint matchContactsBy skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("matchContactsBy", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "matchContactsBy")
+                val abstractFilterDtoContact: AbstractFilterDtoContact = TestUtils.getParameter(fileName, "matchContactsBy.abstractFilterDtoContact")!!
+                    if (abstractFilterDtoContact as? Collection<*> == null) {
+                        abstractFilterDtoContact.also {
+                    if (TestUtils.isAutoRev(fileName, "matchContactsBy") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<AbstractFilterDtoContact>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = abstractFilterDtoContact as? Collection<AbstractFilterDtoContact> ?: emptyList<AbstractFilterDtoContact>() as Collection<AbstractFilterDtoContact>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "matchContactsBy") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).matchContactsBy(abstractFilterDtoContact)
+
+                    val testFileName = "ContactApi.matchContactsBy"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<kotlin.String>? != null) {
+                            if ("kotlin.collections.List<kotlin.String>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<kotlin.String>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<kotlin.String>>() {}
+                        })
+                        assertAreEquals("matchContactsBy", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("ContactApi.json")
+        }
+    }
     
     /**
      * Modify a contact
@@ -2010,61 +2300,74 @@ class ContactApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun modifyContactTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "modifyContact")) {
-			assert(true)
-			println("Endpoint modifyContact skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyContact")
-        val contactDto: ContactDto = TestUtils.getParameter(fileName, "modifyContact.contactDto")!!
-		if (contactDto as? Collection<*> == null) {
-			contactDto.also {
-            if (TestUtils.isAutoRev(fileName, "modifyContact") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<ContactDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = contactDto as? Collection<ContactDto> ?: emptyList<ContactDto>() as Collection<ContactDto>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "modifyContact") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).modifyContact(contactDto)
-
-        val testFileName = "ContactApi.modifyContact"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<ContactDto>? != null) {
-                if ("ContactDto".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<ContactDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "modifyContact")) {
+                assert(true)
+                println("Endpoint modifyContact skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("modifyContact", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyContact")
+                val contactDto: ContactDto = TestUtils.getParameter(fileName, "modifyContact.contactDto")!!
+                    if (contactDto as? Collection<*> == null) {
+                        contactDto.also {
+                    if (TestUtils.isAutoRev(fileName, "modifyContact") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<ContactDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = contactDto as? Collection<ContactDto> ?: emptyList<ContactDto>() as Collection<ContactDto>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "modifyContact") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).modifyContact(contactDto)
+
+                    val testFileName = "ContactApi.modifyContact"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ContactDto>? != null) {
+                            if ("ContactDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ContactDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<ContactDto>() {}
+                        })
+                        assertAreEquals("modifyContact", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("ContactApi.json")
+        }
+    }
     
     /**
      * Modify a batch of contacts
@@ -2077,61 +2380,74 @@ class ContactApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun modifyContactsTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "modifyContacts")) {
-			assert(true)
-			println("Endpoint modifyContacts skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyContacts")
-        val contactDto: kotlin.collections.List<ContactDto> = TestUtils.getParameter(fileName, "modifyContacts.contactDto")!!
-		if (contactDto as? Collection<*> == null) {
-			contactDto.also {
-            if (TestUtils.isAutoRev(fileName, "modifyContacts") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.collections.List<ContactDto>>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = contactDto as? Collection<ContactDto> ?: emptyList<ContactDto>() as Collection<ContactDto>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "modifyContacts") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).modifyContacts(contactDto)
-
-        val testFileName = "ContactApi.modifyContacts"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<ContactDto>? != null) {
-                if ("kotlin.collections.List<ContactDto>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<ContactDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "modifyContacts")) {
+                assert(true)
+                println("Endpoint modifyContacts skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("modifyContacts", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyContacts")
+                val contactDto: kotlin.collections.List<ContactDto> = TestUtils.getParameter(fileName, "modifyContacts.contactDto")!!
+                    if (contactDto as? Collection<*> == null) {
+                        contactDto.also {
+                    if (TestUtils.isAutoRev(fileName, "modifyContacts") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.collections.List<ContactDto>>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = contactDto as? Collection<ContactDto> ?: emptyList<ContactDto>() as Collection<ContactDto>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "modifyContacts") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).modifyContacts(contactDto)
+
+                    val testFileName = "ContactApi.modifyContacts"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ContactDto>? != null) {
+                            if ("kotlin.collections.List<ContactDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ContactDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<ContactDto>>() {}
+                        })
+                        assertAreEquals("modifyContacts", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("ContactApi.json")
+        }
+    }
     
     /**
      * Update delegations in healthElements.
@@ -2144,61 +2460,74 @@ class ContactApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun modifyContactsDelegationsTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "modifyContactsDelegations")) {
-			assert(true)
-			println("Endpoint modifyContactsDelegations skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyContactsDelegations")
-        val icureStubDto: kotlin.collections.List<IcureStubDto> = TestUtils.getParameter(fileName, "modifyContactsDelegations.icureStubDto")!!
-		if (icureStubDto as? Collection<*> == null) {
-			icureStubDto.also {
-            if (TestUtils.isAutoRev(fileName, "modifyContactsDelegations") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.collections.List<IcureStubDto>>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = icureStubDto as? Collection<IcureStubDto> ?: emptyList<IcureStubDto>() as Collection<IcureStubDto>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "modifyContactsDelegations") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).modifyContactsDelegations(icureStubDto)
-
-        val testFileName = "ContactApi.modifyContactsDelegations"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<ContactDto>? != null) {
-                if ("kotlin.collections.List<ContactDto>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<ContactDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "modifyContactsDelegations")) {
+                assert(true)
+                println("Endpoint modifyContactsDelegations skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("modifyContactsDelegations", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyContactsDelegations")
+                val icureStubDto: kotlin.collections.List<IcureStubDto> = TestUtils.getParameter(fileName, "modifyContactsDelegations.icureStubDto")!!
+                    if (icureStubDto as? Collection<*> == null) {
+                        icureStubDto.also {
+                    if (TestUtils.isAutoRev(fileName, "modifyContactsDelegations") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.collections.List<IcureStubDto>>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = icureStubDto as? Collection<IcureStubDto> ?: emptyList<IcureStubDto>() as Collection<IcureStubDto>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "modifyContactsDelegations") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).modifyContactsDelegations(icureStubDto)
+
+                    val testFileName = "ContactApi.modifyContactsDelegations"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ContactDto>? != null) {
+                            if ("kotlin.collections.List<ContactDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ContactDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<ContactDto>>() {}
+                        })
+                        assertAreEquals("modifyContactsDelegations", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("ContactApi.json")
+        }
+    }
     
     /**
      * Delegates a contact to a healthcare party
@@ -2211,83 +2540,96 @@ class ContactApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun newContactDelegationsTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "newContactDelegations")) {
-			assert(true)
-			println("Endpoint newContactDelegations skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "newContactDelegations")
-        val contactId: kotlin.String = TestUtils.getParameter(fileName, "newContactDelegations.contactId")!!
-		if (contactId as? Collection<*> == null) {
-			contactId.also {
-            if (TestUtils.isAutoRev(fileName, "newContactDelegations") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = contactId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "newContactDelegations") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-        val delegationDto: DelegationDto = TestUtils.getParameter(fileName, "newContactDelegations.delegationDto")!!
-		if (delegationDto as? Collection<*> == null) {
-			delegationDto.also {
-            if (TestUtils.isAutoRev(fileName, "newContactDelegations") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<DelegationDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = delegationDto as? Collection<DelegationDto> ?: emptyList<DelegationDto>() as Collection<DelegationDto>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "newContactDelegations") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).newContactDelegations(contactId,delegationDto)
-
-        val testFileName = "ContactApi.newContactDelegations"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<ContactDto>? != null) {
-                if ("ContactDto".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<ContactDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "newContactDelegations")) {
+                assert(true)
+                println("Endpoint newContactDelegations skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("newContactDelegations", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "newContactDelegations")
+                val contactId: kotlin.String = TestUtils.getParameter(fileName, "newContactDelegations.contactId")!!
+                    if (contactId as? Collection<*> == null) {
+                        contactId.also {
+                    if (TestUtils.isAutoRev(fileName, "newContactDelegations") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = contactId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "newContactDelegations") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+                val delegationDto: DelegationDto = TestUtils.getParameter(fileName, "newContactDelegations.delegationDto")!!
+                    if (delegationDto as? Collection<*> == null) {
+                        delegationDto.also {
+                    if (TestUtils.isAutoRev(fileName, "newContactDelegations") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<DelegationDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = delegationDto as? Collection<DelegationDto> ?: emptyList<DelegationDto>() as Collection<DelegationDto>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "newContactDelegations") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).newContactDelegations(contactId,delegationDto)
+
+                    val testFileName = "ContactApi.newContactDelegations"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ContactDto>? != null) {
+                            if ("ContactDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ContactDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<ContactDto>() {}
+                        })
+                        assertAreEquals("newContactDelegations", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("ContactApi.json")
+        }
+    }
     
     /**
      * Update delegations in healthElements.
@@ -2300,91 +2642,111 @@ class ContactApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun setContactsDelegationsTest(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "setContactsDelegations")) {
-			assert(true)
-			println("Endpoint setContactsDelegations skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "setContactsDelegations")
-        val icureStubDto: kotlin.collections.List<IcureStubDto> = TestUtils.getParameter(fileName, "setContactsDelegations.icureStubDto")!!
-		if (icureStubDto as? Collection<*> == null) {
-			icureStubDto.also {
-            if (TestUtils.isAutoRev(fileName, "setContactsDelegations") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<kotlin.collections.List<IcureStubDto>>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = icureStubDto as? Collection<IcureStubDto> ?: emptyList<IcureStubDto>() as Collection<IcureStubDto>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "setContactsDelegations") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-
-        val response = api(credentialsFile).setContactsDelegations(icureStubDto)
-
-        val testFileName = "ContactApi.setContactsDelegations"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<ContactDto>? != null) {
-                if ("kotlin.collections.List<ContactDto>".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<ContactDto>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "setContactsDelegations")) {
+                assert(true)
+                println("Endpoint setContactsDelegations skipped")
             } else {
-            object : TypeReference<Void>() {}
-            })
-            assertAreEquals("setContactsDelegations", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "setContactsDelegations")
+                val icureStubDto: kotlin.collections.List<IcureStubDto> = TestUtils.getParameter(fileName, "setContactsDelegations.icureStubDto")!!
+                    if (icureStubDto as? Collection<*> == null) {
+                        icureStubDto.also {
+                    if (TestUtils.isAutoRev(fileName, "setContactsDelegations") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<kotlin.collections.List<IcureStubDto>>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = icureStubDto as? Collection<IcureStubDto> ?: emptyList<IcureStubDto>() as Collection<IcureStubDto>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "setContactsDelegations") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+
+                val response = api(credentialsFile).setContactsDelegations(icureStubDto)
+
+                    val testFileName = "ContactApi.setContactsDelegations"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ContactDto>? != null) {
+                            if ("kotlin.collections.List<ContactDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ContactDto>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            object : TypeReference<kotlin.collections.List<ContactDto>>() {}
+                        })
+                        assertAreEquals("setContactsDelegations", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+            }
         }
-    }}
+        finally {
+            TestUtils.deleteAfterElements("ContactApi.json")
+        }
+    }
     
 
-
-    private fun assertAreEquals(functionName: String, objectFromFile: Any?, response: Any) {
-        if (objectFromFile as? Iterable<Any> != null) {
-            val iterableResponse = (response as? Collection<Any> ?: (emptyList<Any>()))
-            if (functionName.startsWith("create") || functionName.startsWith("new")) { // new
-                for (fileElement in objectFromFile) {
-                    fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "id" }?.setter?.call(fileElement, null)
-                    fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(fileElement, null)
+    private suspend fun assertAreEquals(functionName: String, objectFromFile: Any?, response: Any) {
+        when {
+            objectFromFile as? Iterable<Any> != null -> {
+                val iterableResponse = (response as? Collection<Any> ?: (emptyList<Any>()))
+                if (functionName.startsWith("create") || functionName.startsWith("new")) { // new
+                    for (fileElement in objectFromFile) {
+                        fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "id" }?.setter?.call(fileElement, null)
+                        fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(fileElement, null)
+                    }
+                    for (responseElement in iterableResponse) {
+                        responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "id" }?.setter?.call(responseElement, null)
+                        responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(responseElement, null)
+                    }
+                } else if (functionName.startsWith("modify") || functionName.startsWith("set") || functionName.startsWith("delete")) { // + set + delete
+                    for (fileElement in objectFromFile) {
+                        fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(fileElement, null)
+                    }
+                    for (responseElement in iterableResponse) {
+                        responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(responseElement, null)
+                    }
                 }
-                for (responseElement in iterableResponse) {
-                    responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "id" }?.setter?.call(responseElement, null)
-                    responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(responseElement, null)
-                }
-            } else if (functionName.startsWith("modify") || functionName.startsWith("set") || functionName.startsWith("delete")) { // + set + delete
-                for (fileElement in objectFromFile) {
-                    fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(fileElement, null)
-                }
-                for (responseElement in iterableResponse) {
-                    responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(responseElement, null)
-                }
+                val diffs = response.differences(objectFromFile)
+                assertTrue(diffs.isEmpty())
             }
-            val diffs = response.differences(objectFromFile)
-            assertTrue(diffs.isEmpty())
-        } else {
-            if (functionName.startsWith("create") || functionName.startsWith("modify")) {
-                assertThat(objectFromFile as Any).isEqualToIgnoringGivenProperties(response, *(response::class.memberProperties.filter { it.name == "rev" || it.name == "id" || it.name == "created"  || it.name == "modified" }.mapNotNull { it as? KProperty1<Any, Any> }.toTypedArray()))
-            } else {
-                assertEquals(objectFromFile, response)
+            objectFromFile as? Flow<ByteBuffer> != null -> {
+                objectFromFile.fold(ByteBuffer.allocate(0)) { acc, bb -> ByteBuffer.allocate(bb.limit()+acc.limit()).apply { this.put(acc); this.put(bb) } }.array().contentEquals(
+                    (response as Flow<ByteBuffer>).fold(ByteBuffer.allocate(0)) { acc, bb -> ByteBuffer.allocate(bb.limit()+acc.limit()).apply { this.put(acc); this.put(bb) } }.array()
+                )
+            }
+            else -> {
+                if (functionName.startsWith("create") || functionName.startsWith("modify")) {
+                    assertThat(objectFromFile as Any).isEqualToIgnoringGivenProperties(response, *(response::class.memberProperties.filter { it.name == "rev" || it.name == "id" || it.name == "created"  || it.name == "modified" }.mapNotNull { it as? KProperty1<Any, Any> }.toTypedArray()))
+                } else {
+                    assertEquals(objectFromFile, response)
+                }
             }
         }
     }

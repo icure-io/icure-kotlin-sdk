@@ -66,7 +66,9 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     fun createTarificationRequestConfig(tarificationDto: TarificationDto) : RequestConfig<TarificationDto> {
         val localVariableBody = tarificationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -135,6 +137,8 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -193,6 +197,8 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -261,6 +267,8 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -299,6 +307,8 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -341,6 +351,8 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -378,7 +390,9 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     fun getTarificationsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
         val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -416,7 +430,9 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     fun modifyTarificationRequestConfig(tarificationDto: TarificationDto) : RequestConfig<TarificationDto> {
         val localVariableBody = tarificationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.PUT,

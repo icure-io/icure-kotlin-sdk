@@ -62,8 +62,9 @@ open class ApiClient(val baseUrl: String, val httpClient: WebClient, val authHea
     }
 
     protected suspend inline fun <reified I, reified T : Any?> request(requestConfig: RequestConfig<I>): T? {
+
         val uri = URI(baseUrl).resolve(requestConfig.path).params(
-            requestConfig.query.mapValues(defaultMultiValueConverter)
+            requestConfig.query
         )
 
         // take authMethod from operation
@@ -102,11 +103,16 @@ open class ApiClient(val baseUrl: String, val httpClient: WebClient, val authHea
     return request.retrieve()
         .onStatus(400) { Mono.just(ClientException("Client-side exception ${it.statusCode}", it.statusCode, details = objectMapper.readValue(it.responseBodyAsString(), ErrorDetails::class.java))) }
         .onStatus(500) { Mono.just(ServerException("Server-side exception ${it.statusCode}", it.statusCode, details = objectMapper.readValue(it.responseBodyAsString(), ErrorDetails::class.java))) }
-        .toFlow().toObject(objectMapper, true)
+        .toFlow().let {
+            when(T::class) {
+                Flow::class -> it as T
+                else -> it.toObject(objectMapper, true)
+            }
+        }
 
     }
 
-    protected inline suspend fun <reified T> Request.addBody(body: T): Request {
+    protected suspend inline fun <reified T> Request.addBody(body: T): Request {
         return if (T::class is Flow<*>) {
             this.body(body as Flow<ByteBuffer>)
         } else {

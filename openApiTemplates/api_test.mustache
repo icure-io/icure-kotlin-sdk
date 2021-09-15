@@ -41,8 +41,12 @@ import kotlinx.coroutines.runBlocking
 import io.icure.kraken.client.infrastructure.TestUtils
 import io.icure.kraken.client.infrastructure.TestUtils.Companion.basicAuth
 import io.icure.kraken.client.infrastructure.differences
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.fold
+import java.nio.ByteBuffer
 import kotlin.reflect.full.callSuspendBy
 import kotlin.reflect.javaType
+import kotlinx.coroutines.flow.flow
 
 /**
  * API tests for {{classname}}
@@ -64,7 +68,7 @@ class {{classname}}Test() {
         fun fileNames() = listOf("{{classname}}.json")
     }
 
-    fun api(fileName: String) = {{baseName}}Api(basePath = "https://kraken.icure.dev", authHeader = fileName.basicAuth())
+    fun api(fileName: String) = {{baseName}}Api(basePath = "http://127.0.0.1:16043", authHeader = fileName.basicAuth())
     private val workingFolder = "/tmp/icureTests/"
     private val objectMapper = ObjectMapper()
         .registerModule(KotlinModule())
@@ -120,95 +124,115 @@ class {{classname}}Test() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun {{operationId}}Test(fileName: String) = runBlocking {
-        createForModification(fileName)
-		if (TestUtils.skipEndpoint(fileName, "{{operationId}}")) {
-			assert(true)
-			println("Endpoint {{operationId}} skipped")
-		} else {
-        val credentialsFile = TestUtils.getCredentialsFile(fileName, "{{operationId}}")
-    {{#allParams}}
-        val {{paramName}}: {{{dataType}}}{{^required}}?{{/required}} = TestUtils.getParameter(fileName, "{{operationId}}.{{paramName}}"){{#required}}!!{{/required}}
-		if ({{paramName}} as? Collection<*> == null) {
-			{{paramName}}.also {
-            if (TestUtils.isAutoRev(fileName, "{{operationId}}") && it != null) {
-                val id = it::class.memberProperties.first { it.name == "id" }
-                val currentRev = api(credentialsFile).get{{classBaseName}}(id.getter.call(it) as String).rev
-                val rev = object: TypeReference<{{{dataType}}}>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                rev.setter.call(it, currentRev)
-                }
-			}
-		} else {
-			val paramAsCollection = {{paramName}} as? Collection<{{{baseType}}}{{^baseType}}{{{dataType}}}{{/baseType}}> ?: emptyList<{{{baseType}}}{{^baseType}}{{{dataType}}}{{/baseType}}>() as Collection<{{{baseType}}}{{^baseType}}{{{dataType}}}{{/baseType}}>
-			paramAsCollection.forEach {
-                if (TestUtils.isAutoRev(fileName, "{{operationId}}") && it != null) {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-
-                    val currentRev = api(credentialsFile).get{{classBaseName}}(id.getter.call(it) as String).rev
-                    val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                    rev.setter.call(it, currentRev)
-                }
-			}
-		}
-        {{/allParams}}
-
-        {{#returnType}}val response = {{/returnType}}api(credentialsFile).{{operationId}}({{#allParams}}{{paramName}}{{^-last}},{{/-last}}{{/allParams}})
-
-        {{#returnType}}
-        val testFileName = "{{classname}}.{{operationId}}"
-        val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-        try {
-            val objectFromFile = objectMapper.readValue(file,  if (response as? kotlin.collections.List<{{{returnBaseType}}}>? != null) {
-                if ("{{{returnType}}}".contains("String>")) {
-                    object : TypeReference<List<String>>() {}
-                } else {
-                    object : TypeReference<List<{{{returnBaseType}}}>>() {}
-                }
-            } else if(response as? kotlin.collections.Map<String, String>? != null){
-                object : TypeReference<Map<String,String>>() {}
+        try{
+            createForModification(fileName)
+            if (TestUtils.skipEndpoint(fileName, "{{operationId}}")) {
+                assert(true)
+                println("Endpoint {{operationId}} skipped")
             } else {
-            {{#responseType}}object : TypeReference<{{{responseType}}}>() {}{{/responseType}}{{^responseType}}object : TypeReference<Void>() {}{{/responseType}}
-            })
-            assertAreEquals("{{operationId}}", objectFromFile, response)
-			println("Comparison successful")
-        } catch (e:FileNotFoundException) {
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            objectMapper.writeValue(file, response)
-			assert(true)
-			println("File written")
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "{{operationId}}")
+                {{#allParams}}
+                val {{paramName}}: {{{dataType}}}{{^required}}?{{/required}} = TestUtils.getParameter(fileName, "{{operationId}}.{{paramName}}"){{#required}}!!{{/required}}
+                    if ({{paramName}} as? Collection<*> == null) {
+                        {{paramName}}.also {
+                    if (TestUtils.isAutoRev(fileName, "{{operationId}}") && it != null) {
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).get{{classBaseName}}(id.getter.call(it) as String).rev
+                        val rev = object: TypeReference<{{{dataType}}}>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                        rev.setter.call(it, currentRev)
+                    }
+                }
+                } else {
+                    val paramAsCollection = {{paramName}} as? Collection<{{{baseType}}}{{^baseType}}{{{dataType}}}{{/baseType}}> ?: emptyList<{{{baseType}}}{{^baseType}}{{{dataType}}}{{/baseType}}>() as Collection<{{{baseType}}}{{^baseType}}{{{dataType}}}{{/baseType}}>
+                    paramAsCollection.forEach {
+                        if (TestUtils.isAutoRev(fileName, "{{operationId}}") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+
+                            val currentRev = api(credentialsFile).get{{classBaseName}}(id.getter.call(it) as String).rev
+                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
+                            rev.setter.call(it, currentRev)
+                        }
+                    }
+                }
+                {{/allParams}}
+
+                {{#returnType}}val response = {{/returnType}}api(credentialsFile).{{operationId}}({{#allParams}}{{paramName}}{{^-last}},{{/-last}}{{/allParams}})
+
+                {{#returnType}}
+                    val testFileName = "{{classname}}.{{operationId}}"
+                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                    try {
+                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<{{{returnBaseType}}}>? != null) {
+                            if ("{{{returnType}}}".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<{{{returnBaseType}}}>>() {}
+                            }
+                        } else if(response as? kotlin.collections.Map<String, String>? != null){
+                            object : TypeReference<Map<String,String>>() {}
+                        } else {
+                            {{#returnType}}object : TypeReference<{{{returnType}}}>() {}{{/returnType}}{{^returnType}}object : TypeReference<Void>() {}{{/returnType}}
+                        })
+                        assertAreEquals("{{operationId}}", objectFromFile, response)
+                        println("Comparison successful")
+                    }
+                    catch (e: Exception) {
+                        when (e) {
+                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                                file.parentFile.mkdirs()
+                                file.createNewFile()
+                                (response as? Flow<ByteBuffer>)
+                                    ?.let { it.writeToFile(file) }
+                                    ?: objectMapper.writeValue(file, response)
+                                assert(true)
+                                println("File written")
+                            }
+                        }
+                    }
+                {{/returnType}}
+            }
         }
-        {{/returnType}}
-    }}
+        finally {
+            TestUtils.deleteAfterElements("{{classname}}.json")
+        }
+    }
     {{/operation}}{{/operations}}
 
-
-    private fun assertAreEquals(functionName: String, objectFromFile: Any?, response: Any) {
-        if (objectFromFile as? Iterable<Any> != null) {
-            val iterableResponse = (response as? Collection<Any> ?: (emptyList<Any>()))
-            if (functionName.startsWith("create") || functionName.startsWith("new")) { // new
-                for (fileElement in objectFromFile) {
-                    fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "id" }?.setter?.call(fileElement, null)
-                    fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(fileElement, null)
+    private suspend fun assertAreEquals(functionName: String, objectFromFile: Any?, response: Any) {
+        when {
+            objectFromFile as? Iterable<Any> != null -> {
+                val iterableResponse = (response as? Collection<Any> ?: (emptyList<Any>()))
+                if (functionName.startsWith("create") || functionName.startsWith("new")) { // new
+                    for (fileElement in objectFromFile) {
+                        fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "id" }?.setter?.call(fileElement, null)
+                        fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(fileElement, null)
+                    }
+                    for (responseElement in iterableResponse) {
+                        responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "id" }?.setter?.call(responseElement, null)
+                        responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(responseElement, null)
+                    }
+                } else if (functionName.startsWith("modify") || functionName.startsWith("set") || functionName.startsWith("delete")) { // + set + delete
+                    for (fileElement in objectFromFile) {
+                        fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(fileElement, null)
+                    }
+                    for (responseElement in iterableResponse) {
+                        responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(responseElement, null)
+                    }
                 }
-                for (responseElement in iterableResponse) {
-                    responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "id" }?.setter?.call(responseElement, null)
-                    responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(responseElement, null)
-                }
-            } else if (functionName.startsWith("modify") || functionName.startsWith("set") || functionName.startsWith("delete")) { // + set + delete
-                for (fileElement in objectFromFile) {
-                    fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(fileElement, null)
-                }
-                for (responseElement in iterableResponse) {
-                    responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>().firstOrNull { it.name == "rev" }?.setter?.call(responseElement, null)
-                }
+                val diffs = response.differences(objectFromFile)
+                assertTrue(diffs.isEmpty())
             }
-            val diffs = response.differences(objectFromFile)
-            assertTrue(diffs.isEmpty())
-        } else {
-            if (functionName.startsWith("create") || functionName.startsWith("modify")) {
-                assertThat(objectFromFile as Any).isEqualToIgnoringGivenProperties(response, *(response::class.memberProperties.filter { it.name == "rev" || it.name == "id" || it.name == "created"  || it.name == "modified" }.mapNotNull { it as? KProperty1<Any, Any> }.toTypedArray()))
-            } else {
-                assertEquals(objectFromFile, response)
+            objectFromFile as? Flow<ByteBuffer> != null -> {
+                objectFromFile.fold(ByteBuffer.allocate(0)) { acc, bb -> ByteBuffer.allocate(bb.limit()+acc.limit()).apply { this.put(acc); this.put(bb) } }.array().contentEquals(
+                    (response as Flow<ByteBuffer>).fold(ByteBuffer.allocate(0)) { acc, bb -> ByteBuffer.allocate(bb.limit()+acc.limit()).apply { this.put(acc); this.put(bb) } }.array()
+                )
+            }
+            else -> {
+                if (functionName.startsWith("create") || functionName.startsWith("modify")) {
+                    assertThat(objectFromFile as Any).isEqualToIgnoringGivenProperties(response, *(response::class.memberProperties.filter { it.name == "rev" || it.name == "id" || it.name == "created"  || it.name == "modified" }.mapNotNull { it as? KProperty1<Any, Any> }.toTypedArray()))
+                } else {
+                    assertEquals(objectFromFile, response)
+                }
             }
         }
     }

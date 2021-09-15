@@ -83,6 +83,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 put("secretFKeys", listOf(secretFKeys.toString()))
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.PUT,
@@ -120,7 +122,9 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun createContactRequestConfig(contactDto: ContactDto) : RequestConfig<ContactDto> {
         val localVariableBody = contactDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -158,7 +162,9 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun createContactsRequestConfig(contactDto: kotlin.collections.List<ContactDto>) : RequestConfig<kotlin.collections.List<ContactDto>> {
         val localVariableBody = contactDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -196,7 +202,9 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun deleteContactsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
         val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -246,7 +254,9 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("limit", listOf(limit.toString()))
                 }
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -296,7 +306,9 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("limit", listOf(limit.toString()))
                 }
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -354,6 +366,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -392,6 +406,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -429,7 +445,9 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun getContactsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
         val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -466,6 +484,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -506,6 +526,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -543,7 +565,9 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun getServicesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
         val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -588,7 +612,9 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("linkType", listOf(linkType.toString()))
                 }
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -633,6 +659,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 put("serviceId", listOf(serviceId.toString()))
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -674,6 +702,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 put("externalId", listOf(externalId.toString()))
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -718,6 +748,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 put("formId", listOf(formId.toString()))
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -760,7 +792,9 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             .apply {
                 put("hcPartyId", listOf(hcPartyId.toString()))
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -803,7 +837,9 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             .apply {
                 put("hcPartyId", listOf(hcPartyId.toString()))
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -858,6 +894,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -902,6 +940,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 put("secretFKeys", listOf(secretFKeys.toString()))
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -943,6 +983,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 put("associationId", listOf(associationId.toString()))
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -980,7 +1022,9 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun matchContactsByRequestConfig(abstractFilterDtoContact: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ContactDto>) : RequestConfig<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ContactDto>> {
         val localVariableBody = abstractFilterDtoContact
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -1018,7 +1062,9 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun modifyContactRequestConfig(contactDto: ContactDto) : RequestConfig<ContactDto> {
         val localVariableBody = contactDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.PUT,
@@ -1056,7 +1102,9 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun modifyContactsRequestConfig(contactDto: kotlin.collections.List<ContactDto>) : RequestConfig<kotlin.collections.List<ContactDto>> {
         val localVariableBody = contactDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.PUT,
@@ -1094,7 +1142,9 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun modifyContactsDelegationsRequestConfig(icureStubDto: kotlin.collections.List<IcureStubDto>) : RequestConfig<kotlin.collections.List<IcureStubDto>> {
         val localVariableBody = icureStubDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.PUT,
@@ -1134,7 +1184,9 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun newContactDelegationsRequestConfig(contactId: kotlin.String, delegationDto: DelegationDto) : RequestConfig<DelegationDto> {
         val localVariableBody = delegationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -1172,7 +1224,9 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun setContactsDelegationsRequestConfig(icureStubDto: kotlin.collections.List<IcureStubDto>) : RequestConfig<kotlin.collections.List<IcureStubDto>> {
         val localVariableBody = icureStubDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,

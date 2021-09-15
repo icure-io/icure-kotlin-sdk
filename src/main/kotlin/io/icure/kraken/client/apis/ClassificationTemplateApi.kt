@@ -68,7 +68,9 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     fun createClassificationTemplateRequestConfig(classificationTemplateDto: ClassificationTemplateDto) : RequestConfig<ClassificationTemplateDto> {
         val localVariableBody = classificationTemplateDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -106,7 +108,9 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     fun deleteClassificationTemplatesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
         val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -160,6 +164,8 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -198,6 +204,8 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -236,6 +244,8 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -280,6 +290,8 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
                 put("secretFKeys", listOf(secretFKeys.toString()))
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -317,7 +329,9 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     fun modifyClassificationTemplateRequestConfig(classificationTemplateDto: ClassificationTemplateDto) : RequestConfig<ClassificationTemplateDto> {
         val localVariableBody = classificationTemplateDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.PUT,
@@ -357,7 +371,9 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     fun newClassificationTemplateDelegationsRequestConfig(classificationTemplateId: kotlin.String, delegationDto: kotlin.collections.List<DelegationDto>) : RequestConfig<kotlin.collections.List<DelegationDto>> {
         val localVariableBody = delegationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,

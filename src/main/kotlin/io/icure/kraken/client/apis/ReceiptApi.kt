@@ -66,7 +66,9 @@ class ReceiptApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun createReceiptRequestConfig(receiptDto: ReceiptDto) : RequestConfig<ReceiptDto> {
         val localVariableBody = receiptDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -104,7 +106,9 @@ class ReceiptApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun deleteReceiptsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
         val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.DELETE,
@@ -143,6 +147,8 @@ class ReceiptApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -188,6 +194,8 @@ class ReceiptApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 put("enckeys", listOf(enckeys.toString()))
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "application/octet-stream"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -226,6 +234,8 @@ class ReceiptApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -263,7 +273,9 @@ class ReceiptApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun modifyReceiptRequestConfig(receiptDto: ReceiptDto) : RequestConfig<ReceiptDto> {
         val localVariableBody = receiptDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.PUT,
@@ -312,7 +324,9 @@ class ReceiptApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("enckeys", listOf(enckeys.toString()))
                 }
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/octet-stream")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.PUT,

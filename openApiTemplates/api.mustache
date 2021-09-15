@@ -90,7 +90,9 @@ import javax.inject.Named
                 {{/queryParams}}
             }
             {{/hasQueryParams}}
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf({{#hasFormParams}}"Content-Type" to {{^consumes}}"multipart/form-data"{{/consumes}}{{#consumes.0}}"{{{mediaType}}}"{{/consumes.0}}{{/hasFormParams}})
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf({{#hasFormParams}}"Content-Type" to {{^consumes}}"multipart/form-data"{{/consumes}}{{#consumes.0}}"{{{mediaType}}}"{{/consumes.0}}{{/hasFormParams}}{{^hasFormParams}}{{#consumes.0}}"Content-Type" to "{{{mediaType}}}"{{/consumes.0}}{{/hasFormParams}})
+        {{#produces.0}}localVariableHeaders["Accept"] = "{{{mediaType}}}"{{/produces.0}}
+
         {{#headerParams}}
         {{{paramName}}}{{^required}}?{{/required}}.apply { localVariableHeaders["{{baseName}}"] = {{#isContainer}}this.joinToString(separator = collectionDelimiter("{{collectionFormat}}")){{/isContainer}}{{^isContainer}}this.toString(){{/isContainer}} }
         {{/headerParams}}

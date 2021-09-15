@@ -69,6 +69,8 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
                 put("session", listOf(session.toString()))
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -105,6 +107,8 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -141,6 +145,8 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -181,6 +187,8 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,

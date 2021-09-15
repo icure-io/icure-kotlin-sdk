@@ -69,7 +69,9 @@ class HealthElementApi(basePath: kotlin.String = defaultBasePath, webClient: Web
     fun createHealthElementRequestConfig(healthElementDto: HealthElementDto) : RequestConfig<HealthElementDto> {
         val localVariableBody = healthElementDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -107,7 +109,9 @@ class HealthElementApi(basePath: kotlin.String = defaultBasePath, webClient: Web
     fun createHealthElementsRequestConfig(healthElementDto: kotlin.collections.List<HealthElementDto>) : RequestConfig<kotlin.collections.List<HealthElementDto>> {
         val localVariableBody = healthElementDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -145,7 +149,9 @@ class HealthElementApi(basePath: kotlin.String = defaultBasePath, webClient: Web
     fun deleteHealthElementsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
         val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.DELETE,
@@ -183,7 +189,9 @@ class HealthElementApi(basePath: kotlin.String = defaultBasePath, webClient: Web
     fun filterHealthElementsByRequestConfig(filterChainHealthElement: FilterChainHealthElement) : RequestConfig<FilterChainHealthElement> {
         val localVariableBody = filterChainHealthElement
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -222,6 +230,8 @@ class HealthElementApi(basePath: kotlin.String = defaultBasePath, webClient: Web
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -266,6 +276,8 @@ class HealthElementApi(basePath: kotlin.String = defaultBasePath, webClient: Web
                 put("secretFKeys", listOf(secretFKeys.toString()))
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -310,6 +322,8 @@ class HealthElementApi(basePath: kotlin.String = defaultBasePath, webClient: Web
                 put("secretFKeys", listOf(secretFKeys.toString()))
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -347,7 +361,9 @@ class HealthElementApi(basePath: kotlin.String = defaultBasePath, webClient: Web
     fun modifyHealthElementRequestConfig(healthElementDto: HealthElementDto) : RequestConfig<HealthElementDto> {
         val localVariableBody = healthElementDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.PUT,
@@ -385,7 +401,9 @@ class HealthElementApi(basePath: kotlin.String = defaultBasePath, webClient: Web
     fun modifyHealthElementsRequestConfig(healthElementDto: kotlin.collections.List<HealthElementDto>) : RequestConfig<kotlin.collections.List<HealthElementDto>> {
         val localVariableBody = healthElementDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.PUT,
@@ -425,7 +443,9 @@ class HealthElementApi(basePath: kotlin.String = defaultBasePath, webClient: Web
     fun newHealthElementDelegationsRequestConfig(healthElementId: kotlin.String, delegationDto: kotlin.collections.List<DelegationDto>) : RequestConfig<kotlin.collections.List<DelegationDto>> {
         val localVariableBody = delegationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -463,7 +483,9 @@ class HealthElementApi(basePath: kotlin.String = defaultBasePath, webClient: Web
     fun setHealthElementsDelegationsRequestConfig(icureStubDto: kotlin.collections.List<IcureStubDto>) : RequestConfig<kotlin.collections.List<IcureStubDto>> {
         val localVariableBody = icureStubDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,

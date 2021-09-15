@@ -64,7 +64,9 @@ class EntityrefApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     fun createEntityReferenceRequestConfig(entityReferenceDto: EntityReferenceDto) : RequestConfig<EntityReferenceDto> {
         val localVariableBody = entityReferenceDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -103,6 +105,8 @@ class EntityrefApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,

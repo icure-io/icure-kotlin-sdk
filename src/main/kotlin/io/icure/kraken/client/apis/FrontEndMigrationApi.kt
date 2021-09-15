@@ -65,7 +65,9 @@ class FrontEndMigrationApi(basePath: kotlin.String = defaultBasePath, webClient:
     fun createFrontEndMigrationRequestConfig(frontEndMigrationDto: FrontEndMigrationDto) : RequestConfig<FrontEndMigrationDto> {
         val localVariableBody = frontEndMigrationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -104,6 +106,8 @@ class FrontEndMigrationApi(basePath: kotlin.String = defaultBasePath, webClient:
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.DELETE,
@@ -142,6 +146,8 @@ class FrontEndMigrationApi(basePath: kotlin.String = defaultBasePath, webClient:
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -180,6 +186,8 @@ class FrontEndMigrationApi(basePath: kotlin.String = defaultBasePath, webClient:
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -216,6 +224,8 @@ class FrontEndMigrationApi(basePath: kotlin.String = defaultBasePath, webClient:
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -253,7 +263,9 @@ class FrontEndMigrationApi(basePath: kotlin.String = defaultBasePath, webClient:
     fun modifyFrontEndMigrationRequestConfig(frontEndMigrationDto: FrontEndMigrationDto) : RequestConfig<FrontEndMigrationDto> {
         val localVariableBody = frontEndMigrationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.PUT,

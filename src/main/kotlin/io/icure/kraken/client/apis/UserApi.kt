@@ -70,6 +70,8 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.PUT,
@@ -108,6 +110,8 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
         password.apply { localVariableHeaders["password"] = this.toString() }
 
         return RequestConfig(
@@ -146,7 +150,9 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     fun createUserRequestConfig(userDto: UserDto) : RequestConfig<UserDto> {
         val localVariableBody = userDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -186,7 +192,9 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     fun createUserInGroupRequestConfig(groupId: kotlin.String, userDto: UserDto) : RequestConfig<UserDto> {
         val localVariableBody = userDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -225,6 +233,8 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.DELETE,
@@ -265,6 +275,8 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.DELETE,
@@ -303,6 +315,8 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
         password.apply { localVariableHeaders["password"] = this.toString() }
 
         return RequestConfig(
@@ -342,6 +356,8 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -381,7 +397,9 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     fun forgottenPasswordRequestConfig(email: kotlin.String, emailTemplateDto: EmailTemplateDto) : RequestConfig<EmailTemplateDto> {
         val localVariableBody = emailTemplateDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -418,6 +436,8 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "text/plain"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -454,6 +474,8 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -490,6 +512,8 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -528,6 +552,8 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -566,6 +592,8 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -619,6 +647,8 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -674,6 +704,8 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -713,7 +745,9 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     fun modifyPropertiesRequestConfig(userId: kotlin.String, propertyStubDto: kotlin.collections.List<PropertyStubDto>?) : RequestConfig<kotlin.collections.List<PropertyStubDto>> {
         val localVariableBody = propertyStubDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.PUT,
@@ -751,7 +785,9 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     fun modifyUserRequestConfig(userDto: UserDto) : RequestConfig<UserDto> {
         val localVariableBody = userDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.PUT,
@@ -791,7 +827,9 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     fun modifyUserInGroupRequestConfig(groupId: kotlin.String, userDto: UserDto) : RequestConfig<UserDto> {
         val localVariableBody = userDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.PUT,

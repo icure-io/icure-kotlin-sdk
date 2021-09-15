@@ -66,7 +66,9 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     fun createInsuranceRequestConfig(insuranceDto: InsuranceDto) : RequestConfig<InsuranceDto> {
         val localVariableBody = insuranceDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -105,6 +107,8 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.DELETE,
@@ -143,6 +147,8 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -180,7 +186,9 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     fun getInsurancesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
         val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -219,6 +227,8 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -257,6 +267,8 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -294,7 +306,9 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     fun modifyInsuranceRequestConfig(insuranceDto: InsuranceDto) : RequestConfig<InsuranceDto> {
         val localVariableBody = insuranceDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.PUT,

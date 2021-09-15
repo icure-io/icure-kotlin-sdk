@@ -66,7 +66,9 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
     fun createEntityTemplateRequestConfig(entityTemplateDto: EntityTemplateDto) : RequestConfig<EntityTemplateDto> {
         val localVariableBody = entityTemplateDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -104,7 +106,9 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
     fun createEntityTemplatesRequestConfig(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>) : RequestConfig<kotlin.collections.List<EntityTemplateDto>> {
         val localVariableBody = entityTemplateDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -142,7 +146,9 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
     fun deleteEntityTemplateRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
         val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -190,6 +196,8 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -228,6 +236,8 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -265,7 +275,9 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
     fun getEntityTemplatesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
         val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -316,6 +328,8 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -368,6 +382,8 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -417,6 +433,8 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -454,7 +472,9 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
     fun modifyEntityTemplateRequestConfig(entityTemplateDto: EntityTemplateDto) : RequestConfig<EntityTemplateDto> {
         val localVariableBody = entityTemplateDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.PUT,
@@ -492,7 +512,9 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
     fun modifyEntityTemplatesRequestConfig(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>) : RequestConfig<kotlin.collections.List<EntityTemplateDto>> {
         val localVariableBody = entityTemplateDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.PUT,

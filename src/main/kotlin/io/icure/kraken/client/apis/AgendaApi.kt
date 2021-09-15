@@ -66,7 +66,9 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     fun createAgendaRequestConfig(agendaDto: AgendaDto) : RequestConfig<AgendaDto> {
         val localVariableBody = agendaDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -104,7 +106,9 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     fun deleteAgendasRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
         val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -143,6 +147,8 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -179,6 +185,8 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -220,6 +228,8 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
                 put("userId", listOf(userId.toString()))
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -261,6 +271,8 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
                 put("userId", listOf(userId.toString()))
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -298,7 +310,9 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     fun modifyAgendaRequestConfig(agendaDto: AgendaDto) : RequestConfig<AgendaDto> {
         val localVariableBody = agendaDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.PUT,

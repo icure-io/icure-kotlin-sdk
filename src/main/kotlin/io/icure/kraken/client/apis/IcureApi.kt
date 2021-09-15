@@ -72,6 +72,8 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -108,6 +110,8 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "text/plain"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -144,6 +148,8 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -182,6 +188,8 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -218,6 +226,8 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "text/plain"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -254,6 +264,8 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "text/plain"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -297,6 +309,8 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -345,6 +359,8 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -388,6 +404,8 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -431,6 +449,8 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -474,6 +494,8 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -517,6 +539,8 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -560,6 +584,8 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -605,6 +631,8 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,

@@ -66,7 +66,9 @@ class MedicalLocationApi(basePath: kotlin.String = defaultBasePath, webClient: W
     fun createMedicalLocationRequestConfig(medicalLocationDto: MedicalLocationDto) : RequestConfig<MedicalLocationDto> {
         val localVariableBody = medicalLocationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -104,7 +106,9 @@ class MedicalLocationApi(basePath: kotlin.String = defaultBasePath, webClient: W
     fun deleteMedicalLocationsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
         val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.DELETE,
@@ -143,6 +147,8 @@ class MedicalLocationApi(basePath: kotlin.String = defaultBasePath, webClient: W
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -179,6 +185,8 @@ class MedicalLocationApi(basePath: kotlin.String = defaultBasePath, webClient: W
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -216,7 +224,9 @@ class MedicalLocationApi(basePath: kotlin.String = defaultBasePath, webClient: W
     fun modifyMedicalLocationRequestConfig(medicalLocationDto: MedicalLocationDto) : RequestConfig<MedicalLocationDto> {
         val localVariableBody = medicalLocationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.PUT,

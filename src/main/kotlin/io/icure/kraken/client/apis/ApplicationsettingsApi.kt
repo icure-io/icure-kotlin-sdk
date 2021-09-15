@@ -63,6 +63,8 @@ class ApplicationsettingsApi(basePath: kotlin.String = defaultBasePath, webClien
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,

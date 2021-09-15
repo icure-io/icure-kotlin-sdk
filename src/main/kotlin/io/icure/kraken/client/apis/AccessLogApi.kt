@@ -67,7 +67,9 @@ class AccessLogApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     fun createAccessLogRequestConfig(accessLogDto: AccessLogDto) : RequestConfig<AccessLogDto> {
         val localVariableBody = accessLogDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -105,7 +107,9 @@ class AccessLogApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     fun deleteAccessLogsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
         val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -174,6 +178,8 @@ class AccessLogApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -245,6 +251,8 @@ class AccessLogApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -283,6 +291,8 @@ class AccessLogApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -327,6 +337,8 @@ class AccessLogApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
                 put("secretFKeys", listOf(secretFKeys.toString()))
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -364,7 +376,9 @@ class AccessLogApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     fun modifyAccessLogRequestConfig(accessLogDto: AccessLogDto) : RequestConfig<AccessLogDto> {
         val localVariableBody = accessLogDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.PUT,

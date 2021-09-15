@@ -66,7 +66,9 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     fun createTimeTableRequestConfig(timeTableDto: TimeTableDto) : RequestConfig<TimeTableDto> {
         val localVariableBody = timeTableDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -104,7 +106,9 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     fun deleteTimeTableRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
         val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -143,6 +147,8 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -184,6 +190,8 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
                 put("agendaId", listOf(agendaId.toString()))
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -231,6 +239,8 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
                 put("agendaId", listOf(agendaId.toString()))
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -268,7 +278,9 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     fun modifyTimeTableRequestConfig(timeTableDto: TimeTableDto) : RequestConfig<TimeTableDto> {
         val localVariableBody = timeTableDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.PUT,

@@ -92,7 +92,9 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("language", listOf(language.toString()))
                 }
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -157,7 +159,9 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 put("recipientLastName", listOf(recipientLastName.toString()))
                 put("mimeType", listOf(mimeType.toString()))
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/octet-stream")
+        localVariableHeaders["Accept"] = "application/octet-stream"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -202,7 +206,9 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             .apply {
                 put("language", listOf(language.toString()))
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "application/octet-stream"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -267,7 +273,9 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 put("recipientLastName", listOf(recipientLastName.toString()))
                 put("mimeType", listOf(mimeType.toString()))
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/octet-stream")
+        localVariableHeaders["Accept"] = "application/octet-stream"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -318,7 +326,9 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 put("recipientSafe", listOf(recipientSafe.toString()))
                 put("version", listOf(version.toString()))
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "application/octet-stream"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -383,7 +393,9 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 put("recipientLastName", listOf(recipientLastName.toString()))
                 put("mimeType", listOf(mimeType.toString()))
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/octet-stream")
+        localVariableHeaders["Accept"] = "application/octet-stream"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -429,6 +441,8 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "application/octet-stream"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -493,7 +507,9 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 put("recipientLastName", listOf(recipientLastName.toString()))
                 put("mimeType", listOf(mimeType.toString()))
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/octet-stream")
+        localVariableHeaders["Accept"] = "application/octet-stream"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -558,7 +574,9 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 put("recipientLastName", listOf(recipientLastName.toString()))
                 put("mimeType", listOf(mimeType.toString()))
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/octet-stream")
+        localVariableHeaders["Accept"] = "application/octet-stream"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -623,7 +641,9 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 put("recipientLastName", listOf(recipientLastName.toString()))
                 put("mimeType", listOf(mimeType.toString()))
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/octet-stream")
+        localVariableHeaders["Accept"] = "application/octet-stream"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -688,7 +708,9 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 put("recipientLastName", listOf(recipientLastName.toString()))
                 put("mimeType", listOf(mimeType.toString()))
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/octet-stream")
+        localVariableHeaders["Accept"] = "application/octet-stream"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -733,7 +755,9 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             .apply {
                 put("language", listOf(language.toString()))
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "application/octet-stream"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -778,7 +802,9 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             .apply {
                 put("language", listOf(language.toString()))
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "application/octet-stream"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -823,7 +849,9 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             .apply {
                 put("language", listOf(language.toString()))
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "application/octet-stream"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -863,7 +891,9 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun getSumehrContentRequestConfig(patientId: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : RequestConfig<SumehrExportInfoDto> {
         val localVariableBody = sumehrExportInfoDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -903,7 +933,9 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun getSumehrMd5RequestConfig(patientId: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : RequestConfig<SumehrExportInfoDto> {
         val localVariableBody = sumehrExportInfoDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -943,7 +975,9 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun getSumehrV2ContentRequestConfig(patientId: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : RequestConfig<SumehrExportInfoDto> {
         val localVariableBody = sumehrExportInfoDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -983,7 +1017,9 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun getSumehrV2Md5RequestConfig(patientId: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : RequestConfig<SumehrExportInfoDto> {
         val localVariableBody = sumehrExportInfoDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -1045,7 +1081,9 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("language", listOf(language.toString()))
                 }
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -1107,7 +1145,9 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("dryRun", listOf(dryRun.toString()))
                 }
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -1169,7 +1209,9 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("language", listOf(language.toString()))
                 }
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -1234,7 +1276,9 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("language", listOf(language.toString()))
                 }
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -1274,7 +1318,9 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun isSumehrV2ValidRequestConfig(patientId: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : RequestConfig<SumehrExportInfoDto> {
         val localVariableBody = sumehrExportInfoDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -1314,7 +1360,9 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun isSumehrValidRequestConfig(patientId: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : RequestConfig<SumehrExportInfoDto> {
         val localVariableBody = sumehrExportInfoDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -1359,7 +1407,9 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             .apply {
                 put("language", listOf(language.toString()))
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "application/octet-stream"
+
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -1404,7 +1454,9 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             .apply {
                 put("language", listOf(language.toString()))
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "application/octet-stream"
+
 
         return RequestConfig(
             method = RequestMethod.POST,

@@ -71,6 +71,8 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: We
                 put("enckeys", listOf(enckeys.toString()))
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -130,6 +132,8 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: We
                 put("ctc", listOf(ctc.toString()))
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -181,6 +185,8 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: We
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+
 
         return RequestConfig(
             method = RequestMethod.GET,

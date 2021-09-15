@@ -9,8 +9,14 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.readValue
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
 import java.io.File
 import java.io.IOException
+import java.nio.ByteBuffer
+import java.nio.channels.FileChannel
+import java.nio.file.StandardOpenOption
 import java.util.concurrent.TimeUnit
 import kotlin.system.exitProcess
 
@@ -108,8 +114,6 @@ class TestUtils {
 		}
 
         private fun infereCredentialsFile(callingFunctionName: String): String {
-            return ".credentialsCouchDb"
-
             return when {
                 callingFunctionName.startsWith("new") -> {
                     ".credentialsReadWrite"
@@ -168,6 +172,29 @@ class TestUtils {
 
         fun String.runCommand(path: String = ".", streamOutput: Boolean = true, checkReturnValue: Boolean = true, variables: Map<String, String> = mapOf(), suicideOnFailure: Boolean = false) =
             runCommandExitStatus(path, streamOutput, checkReturnValue, variables, suicideOnFailure).first
+    }
+}
+
+suspend fun Flow<ByteBuffer>.writeToFile(file:File) = FileChannel.open(file.toPath(), StandardOpenOption.WRITE).use { channel ->
+    this@writeToFile.collect { b -> channel.write(b) }
+}
+
+/*fun Flow<ByteBuffer>.writeToFile(file:File) = file.bufferedWriter().use { writer ->
+    CoroutineScope((Dispatchers.IO)).launch {
+        this@writeToFile.collect {
+            writer.write(it.asCharBuffer().array())
+        }
+    }
+}*/
+
+@Suppress("BlockingMethodInNonBlockingContext")
+fun File.readAsFlow() = flow {
+    FileChannel.open(this@readAsFlow.toPath()).use { channel ->
+        do {
+            val b = ByteBuffer.allocate(4096)
+            val read = channel.read(b)
+            if (read>0) { emit(b) }
+        } while(read>0)
     }
 }
 
