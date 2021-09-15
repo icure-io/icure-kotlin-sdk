@@ -54,34 +54,6 @@ suspend fun ContactApi.createContact(user: UserDto, contact: ContactDto, config:
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.createContact(user: UserDto, patient:PatientDto, contact: ContactDto, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>): ContactDto {
-    val key = config.crypto.decryptEncryptionKeys(user.healthcarePartyId!!, patient.delegations).firstOrNull() ?: throw IllegalArgumentException("No delegation for user")
-    val delegations =  (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf())
-    return this.createContact(
-        config.encryptContact(
-            user.healthcarePartyId!!,
-            (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
-            contact
-        ).let { ec ->
-            ec.copy(
-                secretForeignKeys = listOf(key),
-                cryptedForeignKeys = (delegations + user.healthcarePartyId!!).fold(ec.cryptedForeignKeys) { m, d ->
-                    m + (d to setOf(
-                        DelegationDto(
-                            listOf(),
-                            user.healthcarePartyId,
-                            d,
-                            config.crypto.encryptKeyForHcp(user.healthcarePartyId, d, ec.id, patient.id),
-                        ),
-                    ))
-                },
-            )
-        }
-    ).let { config.decryptContact(user.healthcarePartyId!!, it) }
-}
-
-@ExperimentalCoroutinesApi
-@ExperimentalStdlibApi
 suspend fun ContactApi.modifyContact(user: UserDto, contact: ContactDto, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>) =
     this.modifyContact(
         config.encryptContact(
