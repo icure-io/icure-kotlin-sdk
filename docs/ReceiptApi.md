@@ -5,7 +5,7 @@ All URIs are relative to *http://localhost:16043*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createReceipt**](ReceiptApi.md#createReceipt) | **POST** /rest/v2/receipt | Creates a receipt
-[**deleteReceipts**](ReceiptApi.md#deleteReceipts) | **DELETE** /rest/v2/receipt/delete/batch | Deletes receipts
+[**deleteReceipts**](ReceiptApi.md#deleteReceipts) | **POST** /rest/v2/receipt/delete/batch | Deletes receipts
 [**getReceipt**](ReceiptApi.md#getReceipt) | **GET** /rest/v2/receipt/{receiptId} | Gets a receipt
 [**getReceiptAttachment**](ReceiptApi.md#getReceiptAttachment) | **GET** /rest/v2/receipt/{receiptId}/attachment/{attachmentId} | Get an attachment
 [**listByReference**](ReceiptApi.md#listByReference) | **GET** /rest/v2/receipt/byRef/{ref} | Gets a receipt

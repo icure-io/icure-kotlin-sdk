@@ -125,13 +125,13 @@ class {{classname}}Test() {
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "{{operationId}}")
                 {{#allParams}}
-                val {{paramName}}: {{{dataType}}}{{^required}}?{{/required}} = TestUtils.getParameter<{{{dataType}}}>(fileName, "{{operationId}}.{{paramName}}"){{#required}}!!{{/required}}{{#isArray}}.map {
+                val {{paramName}}: {{{dataType}}}{{^required}}?{{/required}} = TestUtils.getParameter<{{{dataType}}}>(fileName, "{{operationId}}.{{paramName}}"){{#required}}!!{{/required}}{{^required}}?{{/required}}{{#isArray}}.map {
                     (it as? {{classBaseName}}Dto)?.takeIf { TestUtils.isAutoRev(fileName, "{{operationId}}") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
                     val currentRev = api(credentialsFile).get{{classBaseName}}(id.getter.call(it) as String).rev
                     it.copy(rev = currentRev)
-                    } as? {{{dataType}}} ?: it
-                    }{{/isArray}}{{^isArray}}.let {
+                    } ?: it
+                    } as{{^required}}?{{/required}} {{{dataType}}}{{/isArray}}{{^isArray}}.let {
                     (it as? {{classBaseName}}Dto)?.takeIf { TestUtils.isAutoRev(fileName, "{{operationId}}") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
                     val currentRev = api(credentialsFile).get{{classBaseName}}(id.getter.call(it) as String).rev
@@ -216,7 +216,7 @@ class {{classname}}Test() {
             else -> {
                 val toSkip : kotlin.collections.List<String> = when {
                     functionName.let { name -> listOf("create").any { name.startsWith(it) } } -> listOf("id", "rev", "created", "modified")
-                    functionName.let { name -> listOf("set").any { name.startsWith(it) } } -> listOf("rev")
+                    functionName.let { name -> listOf("set",  "modify").any { name.startsWith(it) } } -> listOf("rev")
                     else -> emptyList()
                 }
                 val diffs = filterDiffs(objectFromFile, response, response.differences(objectFromFile), toSkip)

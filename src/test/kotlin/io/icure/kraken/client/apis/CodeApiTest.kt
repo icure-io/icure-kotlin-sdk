@@ -135,28 +135,13 @@ class CodeApiTest() {
                 println("Endpoint createCode skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createCode")
-                val codeDto: CodeDto = TestUtils.getParameter(fileName, "createCode.codeDto")!!
-                    if (codeDto as? Collection<*> == null) {
-                        codeDto.also {
-                    if (TestUtils.isAutoRev(fileName, "createCode") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<CodeDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val codeDto: CodeDto = TestUtils.getParameter<CodeDto>(fileName, "createCode.codeDto")!!.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "createCode") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? CodeDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = codeDto as? Collection<CodeDto> ?: emptyList<CodeDto>() as Collection<CodeDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "createCode") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).createCode(codeDto)
 
@@ -216,160 +201,55 @@ class CodeApiTest() {
                 println("Endpoint filterCodesBy skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "filterCodesBy")
-                val startKey: kotlin.String? = TestUtils.getParameter(fileName, "filterCodesBy.startKey")
-                    if (startKey as? Collection<*> == null) {
-                        startKey.also {
-                    if (TestUtils.isAutoRev(fileName, "filterCodesBy") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val startKey: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "filterCodesBy.startKey")?.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterCodesBy") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = startKey as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "filterCodesBy") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val startDocumentId: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "filterCodesBy.startDocumentId")?.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterCodesBy") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                val startDocumentId: kotlin.String? = TestUtils.getParameter(fileName, "filterCodesBy.startDocumentId")
-                    if (startDocumentId as? Collection<*> == null) {
-                        startDocumentId.also {
-                    if (TestUtils.isAutoRev(fileName, "filterCodesBy") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val limit: kotlin.Int? = TestUtils.getParameter<kotlin.Int>(fileName, "filterCodesBy.limit")?.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterCodesBy") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.Int ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = startDocumentId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "filterCodesBy") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val skip: kotlin.Int? = TestUtils.getParameter<kotlin.Int>(fileName, "filterCodesBy.skip")?.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterCodesBy") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.Int ?: it
                     }
-                }
-                val limit: kotlin.Int? = TestUtils.getParameter(fileName, "filterCodesBy.limit")
-                    if (limit as? Collection<*> == null) {
-                        limit.also {
-                    if (TestUtils.isAutoRev(fileName, "filterCodesBy") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.Int>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val sort: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "filterCodesBy.sort")?.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterCodesBy") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = limit as? Collection<kotlin.Int> ?: emptyList<kotlin.Int>() as Collection<kotlin.Int>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "filterCodesBy") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val desc: kotlin.Boolean? = TestUtils.getParameter<kotlin.Boolean>(fileName, "filterCodesBy.desc")?.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterCodesBy") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.Boolean ?: it
                     }
-                }
-                val skip: kotlin.Int? = TestUtils.getParameter(fileName, "filterCodesBy.skip")
-                    if (skip as? Collection<*> == null) {
-                        skip.also {
-                    if (TestUtils.isAutoRev(fileName, "filterCodesBy") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.Int>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val filterChainCode: FilterChainCode? = TestUtils.getParameter<FilterChainCode>(fileName, "filterCodesBy.filterChainCode")?.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterCodesBy") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? FilterChainCode ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = skip as? Collection<kotlin.Int> ?: emptyList<kotlin.Int>() as Collection<kotlin.Int>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "filterCodesBy") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
-                val sort: kotlin.String? = TestUtils.getParameter(fileName, "filterCodesBy.sort")
-                    if (sort as? Collection<*> == null) {
-                        sort.also {
-                    if (TestUtils.isAutoRev(fileName, "filterCodesBy") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = sort as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "filterCodesBy") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
-                val desc: kotlin.Boolean? = TestUtils.getParameter(fileName, "filterCodesBy.desc")
-                    if (desc as? Collection<*> == null) {
-                        desc.also {
-                    if (TestUtils.isAutoRev(fileName, "filterCodesBy") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.Boolean>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = desc as? Collection<kotlin.Boolean> ?: emptyList<kotlin.Boolean>() as Collection<kotlin.Boolean>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "filterCodesBy") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
-                val filterChainCode: FilterChainCode? = TestUtils.getParameter(fileName, "filterCodesBy.filterChainCode")
-                    if (filterChainCode as? Collection<*> == null) {
-                        filterChainCode.also {
-                    if (TestUtils.isAutoRev(fileName, "filterCodesBy") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<FilterChainCode>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = filterChainCode as? Collection<FilterChainCode> ?: emptyList<FilterChainCode>() as Collection<FilterChainCode>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "filterCodesBy") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).filterCodesBy(startKey,startDocumentId,limit,skip,sort,desc,filterChainCode)
 
@@ -429,160 +309,55 @@ class CodeApiTest() {
                 println("Endpoint findCodesByLabel skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "findCodesByLabel")
-                val region: kotlin.String? = TestUtils.getParameter(fileName, "findCodesByLabel.region")
-                    if (region as? Collection<*> == null) {
-                        region.also {
-                    if (TestUtils.isAutoRev(fileName, "findCodesByLabel") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val region: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findCodesByLabel.region")?.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "findCodesByLabel") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = region as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findCodesByLabel") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val types: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findCodesByLabel.types")?.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "findCodesByLabel") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                val types: kotlin.String? = TestUtils.getParameter(fileName, "findCodesByLabel.types")
-                    if (types as? Collection<*> == null) {
-                        types.also {
-                    if (TestUtils.isAutoRev(fileName, "findCodesByLabel") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val language: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findCodesByLabel.language")?.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "findCodesByLabel") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = types as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findCodesByLabel") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val label: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findCodesByLabel.label")?.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "findCodesByLabel") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                val language: kotlin.String? = TestUtils.getParameter(fileName, "findCodesByLabel.language")
-                    if (language as? Collection<*> == null) {
-                        language.also {
-                    if (TestUtils.isAutoRev(fileName, "findCodesByLabel") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val startKey: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findCodesByLabel.startKey")?.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "findCodesByLabel") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = language as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findCodesByLabel") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val startDocumentId: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findCodesByLabel.startDocumentId")?.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "findCodesByLabel") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                val label: kotlin.String? = TestUtils.getParameter(fileName, "findCodesByLabel.label")
-                    if (label as? Collection<*> == null) {
-                        label.also {
-                    if (TestUtils.isAutoRev(fileName, "findCodesByLabel") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val limit: kotlin.Int? = TestUtils.getParameter<kotlin.Int>(fileName, "findCodesByLabel.limit")?.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "findCodesByLabel") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.Int ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = label as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findCodesByLabel") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
-                val startKey: kotlin.String? = TestUtils.getParameter(fileName, "findCodesByLabel.startKey")
-                    if (startKey as? Collection<*> == null) {
-                        startKey.also {
-                    if (TestUtils.isAutoRev(fileName, "findCodesByLabel") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = startKey as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findCodesByLabel") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
-                val startDocumentId: kotlin.String? = TestUtils.getParameter(fileName, "findCodesByLabel.startDocumentId")
-                    if (startDocumentId as? Collection<*> == null) {
-                        startDocumentId.also {
-                    if (TestUtils.isAutoRev(fileName, "findCodesByLabel") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = startDocumentId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findCodesByLabel") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
-                val limit: kotlin.Int? = TestUtils.getParameter(fileName, "findCodesByLabel.limit")
-                    if (limit as? Collection<*> == null) {
-                        limit.also {
-                    if (TestUtils.isAutoRev(fileName, "findCodesByLabel") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.Int>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = limit as? Collection<kotlin.Int> ?: emptyList<kotlin.Int>() as Collection<kotlin.Int>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findCodesByLabel") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).findCodesByLabel(region,types,language,label,startKey,startDocumentId,limit)
 
@@ -642,116 +417,41 @@ class CodeApiTest() {
                 println("Endpoint findCodesByLink skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "findCodesByLink")
-                val linkType: kotlin.String = TestUtils.getParameter(fileName, "findCodesByLink.linkType")!!
-                    if (linkType as? Collection<*> == null) {
-                        linkType.also {
-                    if (TestUtils.isAutoRev(fileName, "findCodesByLink") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val linkType: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "findCodesByLink.linkType")!!.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "findCodesByLink") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = linkType as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findCodesByLink") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val linkedId: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findCodesByLink.linkedId")?.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "findCodesByLink") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                val linkedId: kotlin.String? = TestUtils.getParameter(fileName, "findCodesByLink.linkedId")
-                    if (linkedId as? Collection<*> == null) {
-                        linkedId.also {
-                    if (TestUtils.isAutoRev(fileName, "findCodesByLink") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val startKey: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findCodesByLink.startKey")?.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "findCodesByLink") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = linkedId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findCodesByLink") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val startDocumentId: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findCodesByLink.startDocumentId")?.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "findCodesByLink") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                val startKey: kotlin.String? = TestUtils.getParameter(fileName, "findCodesByLink.startKey")
-                    if (startKey as? Collection<*> == null) {
-                        startKey.also {
-                    if (TestUtils.isAutoRev(fileName, "findCodesByLink") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val limit: kotlin.Int? = TestUtils.getParameter<kotlin.Int>(fileName, "findCodesByLink.limit")?.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "findCodesByLink") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.Int ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = startKey as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findCodesByLink") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
-                val startDocumentId: kotlin.String? = TestUtils.getParameter(fileName, "findCodesByLink.startDocumentId")
-                    if (startDocumentId as? Collection<*> == null) {
-                        startDocumentId.also {
-                    if (TestUtils.isAutoRev(fileName, "findCodesByLink") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = startDocumentId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findCodesByLink") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
-                val limit: kotlin.Int? = TestUtils.getParameter(fileName, "findCodesByLink.limit")
-                    if (limit as? Collection<*> == null) {
-                        limit.also {
-                    if (TestUtils.isAutoRev(fileName, "findCodesByLink") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.Int>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = limit as? Collection<kotlin.Int> ?: emptyList<kotlin.Int>() as Collection<kotlin.Int>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findCodesByLink") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).findCodesByLink(linkType,linkedId,startKey,startDocumentId,limit)
 
@@ -811,160 +511,55 @@ class CodeApiTest() {
                 println("Endpoint findCodesByType skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "findCodesByType")
-                val region: kotlin.String? = TestUtils.getParameter(fileName, "findCodesByType.region")
-                    if (region as? Collection<*> == null) {
-                        region.also {
-                    if (TestUtils.isAutoRev(fileName, "findCodesByType") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val region: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findCodesByType.region")?.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "findCodesByType") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = region as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findCodesByType") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val type: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findCodesByType.type")?.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "findCodesByType") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                val type: kotlin.String? = TestUtils.getParameter(fileName, "findCodesByType.type")
-                    if (type as? Collection<*> == null) {
-                        type.also {
-                    if (TestUtils.isAutoRev(fileName, "findCodesByType") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val code: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findCodesByType.code")?.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "findCodesByType") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = type as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findCodesByType") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val version: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findCodesByType.version")?.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "findCodesByType") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                val code: kotlin.String? = TestUtils.getParameter(fileName, "findCodesByType.code")
-                    if (code as? Collection<*> == null) {
-                        code.also {
-                    if (TestUtils.isAutoRev(fileName, "findCodesByType") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val startKey: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findCodesByType.startKey")?.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "findCodesByType") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = code as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findCodesByType") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val startDocumentId: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findCodesByType.startDocumentId")?.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "findCodesByType") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                val version: kotlin.String? = TestUtils.getParameter(fileName, "findCodesByType.version")
-                    if (version as? Collection<*> == null) {
-                        version.also {
-                    if (TestUtils.isAutoRev(fileName, "findCodesByType") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val limit: kotlin.Int? = TestUtils.getParameter<kotlin.Int>(fileName, "findCodesByType.limit")?.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "findCodesByType") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.Int ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = version as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findCodesByType") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
-                val startKey: kotlin.String? = TestUtils.getParameter(fileName, "findCodesByType.startKey")
-                    if (startKey as? Collection<*> == null) {
-                        startKey.also {
-                    if (TestUtils.isAutoRev(fileName, "findCodesByType") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = startKey as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findCodesByType") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
-                val startDocumentId: kotlin.String? = TestUtils.getParameter(fileName, "findCodesByType.startDocumentId")
-                    if (startDocumentId as? Collection<*> == null) {
-                        startDocumentId.also {
-                    if (TestUtils.isAutoRev(fileName, "findCodesByType") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = startDocumentId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findCodesByType") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
-                val limit: kotlin.Int? = TestUtils.getParameter(fileName, "findCodesByType.limit")
-                    if (limit as? Collection<*> == null) {
-                        limit.also {
-                    if (TestUtils.isAutoRev(fileName, "findCodesByType") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.Int>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = limit as? Collection<kotlin.Int> ?: emptyList<kotlin.Int>() as Collection<kotlin.Int>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findCodesByType") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).findCodesByType(region,type,code,version,startKey,startDocumentId,limit)
 
@@ -1024,28 +619,13 @@ class CodeApiTest() {
                 println("Endpoint getCode skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getCode")
-                val codeId: kotlin.String = TestUtils.getParameter(fileName, "getCode.codeId")!!
-                    if (codeId as? Collection<*> == null) {
-                        codeId.also {
-                    if (TestUtils.isAutoRev(fileName, "getCode") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val codeId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getCode.codeId")!!.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "getCode") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = codeId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getCode") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).getCode(codeId)
 
@@ -1105,72 +685,27 @@ class CodeApiTest() {
                 println("Endpoint getCodeWithParts skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getCodeWithParts")
-                val type: kotlin.String = TestUtils.getParameter(fileName, "getCodeWithParts.type")!!
-                    if (type as? Collection<*> == null) {
-                        type.also {
-                    if (TestUtils.isAutoRev(fileName, "getCodeWithParts") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val type: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getCodeWithParts.type")!!.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "getCodeWithParts") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = type as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getCodeWithParts") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val code: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getCodeWithParts.code")!!.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "getCodeWithParts") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                val code: kotlin.String = TestUtils.getParameter(fileName, "getCodeWithParts.code")!!
-                    if (code as? Collection<*> == null) {
-                        code.also {
-                    if (TestUtils.isAutoRev(fileName, "getCodeWithParts") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val version: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getCodeWithParts.version")!!.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "getCodeWithParts") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = code as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getCodeWithParts") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
-                val version: kotlin.String = TestUtils.getParameter(fileName, "getCodeWithParts.version")!!
-                    if (version as? Collection<*> == null) {
-                        version.also {
-                    if (TestUtils.isAutoRev(fileName, "getCodeWithParts") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = version as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getCodeWithParts") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).getCodeWithParts(type,code,version)
 
@@ -1230,28 +765,13 @@ class CodeApiTest() {
                 println("Endpoint getCodes skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getCodes")
-                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter(fileName, "getCodes.listOfIdsDto")!!
-                    if (listOfIdsDto as? Collection<*> == null) {
-                        listOfIdsDto.also {
-                    if (TestUtils.isAutoRev(fileName, "getCodes") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<ListOfIdsDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "getCodes.listOfIdsDto")!!.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "getCodes") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? ListOfIdsDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = listOfIdsDto as? Collection<ListOfIdsDto> ?: emptyList<ListOfIdsDto>() as Collection<ListOfIdsDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getCodes") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).getCodes(listOfIdsDto)
 
@@ -1311,50 +831,20 @@ class CodeApiTest() {
                 println("Endpoint listCodeTypesBy skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listCodeTypesBy")
-                val region: kotlin.String? = TestUtils.getParameter(fileName, "listCodeTypesBy.region")
-                    if (region as? Collection<*> == null) {
-                        region.also {
-                    if (TestUtils.isAutoRev(fileName, "listCodeTypesBy") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val region: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "listCodeTypesBy.region")?.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "listCodeTypesBy") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = region as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "listCodeTypesBy") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val type: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "listCodeTypesBy.type")?.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "listCodeTypesBy") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                val type: kotlin.String? = TestUtils.getParameter(fileName, "listCodeTypesBy.type")
-                    if (type as? Collection<*> == null) {
-                        type.also {
-                    if (TestUtils.isAutoRev(fileName, "listCodeTypesBy") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = type as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "listCodeTypesBy") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).listCodeTypesBy(region,type)
 
@@ -1414,94 +904,34 @@ class CodeApiTest() {
                 println("Endpoint listCodesByRegionTypeCodeVersion skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listCodesByRegionTypeCodeVersion")
-                val region: kotlin.String? = TestUtils.getParameter(fileName, "listCodesByRegionTypeCodeVersion.region")
-                    if (region as? Collection<*> == null) {
-                        region.also {
-                    if (TestUtils.isAutoRev(fileName, "listCodesByRegionTypeCodeVersion") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val region: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "listCodesByRegionTypeCodeVersion.region")?.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "listCodesByRegionTypeCodeVersion") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = region as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "listCodesByRegionTypeCodeVersion") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val type: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "listCodesByRegionTypeCodeVersion.type")?.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "listCodesByRegionTypeCodeVersion") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                val type: kotlin.String? = TestUtils.getParameter(fileName, "listCodesByRegionTypeCodeVersion.type")
-                    if (type as? Collection<*> == null) {
-                        type.also {
-                    if (TestUtils.isAutoRev(fileName, "listCodesByRegionTypeCodeVersion") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val code: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "listCodesByRegionTypeCodeVersion.code")?.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "listCodesByRegionTypeCodeVersion") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = type as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "listCodesByRegionTypeCodeVersion") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val version: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "listCodesByRegionTypeCodeVersion.version")?.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "listCodesByRegionTypeCodeVersion") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                val code: kotlin.String? = TestUtils.getParameter(fileName, "listCodesByRegionTypeCodeVersion.code")
-                    if (code as? Collection<*> == null) {
-                        code.also {
-                    if (TestUtils.isAutoRev(fileName, "listCodesByRegionTypeCodeVersion") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = code as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "listCodesByRegionTypeCodeVersion") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
-                val version: kotlin.String? = TestUtils.getParameter(fileName, "listCodesByRegionTypeCodeVersion.version")
-                    if (version as? Collection<*> == null) {
-                        version.also {
-                    if (TestUtils.isAutoRev(fileName, "listCodesByRegionTypeCodeVersion") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = version as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "listCodesByRegionTypeCodeVersion") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).listCodesByRegionTypeCodeVersion(region,type,code,version)
 
@@ -1561,50 +991,20 @@ class CodeApiTest() {
                 println("Endpoint listTagTypesBy skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listTagTypesBy")
-                val region: kotlin.String? = TestUtils.getParameter(fileName, "listTagTypesBy.region")
-                    if (region as? Collection<*> == null) {
-                        region.also {
-                    if (TestUtils.isAutoRev(fileName, "listTagTypesBy") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val region: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "listTagTypesBy.region")?.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "listTagTypesBy") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = region as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "listTagTypesBy") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val type: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "listTagTypesBy.type")?.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "listTagTypesBy") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                val type: kotlin.String? = TestUtils.getParameter(fileName, "listTagTypesBy.type")
-                    if (type as? Collection<*> == null) {
-                        type.also {
-                    if (TestUtils.isAutoRev(fileName, "listTagTypesBy") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = type as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "listTagTypesBy") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).listTagTypesBy(region,type)
 
@@ -1664,28 +1064,13 @@ class CodeApiTest() {
                 println("Endpoint modifyCode skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyCode")
-                val codeDto: CodeDto = TestUtils.getParameter(fileName, "modifyCode.codeDto")!!
-                    if (codeDto as? Collection<*> == null) {
-                        codeDto.also {
-                    if (TestUtils.isAutoRev(fileName, "modifyCode") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<CodeDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val codeDto: CodeDto = TestUtils.getParameter<CodeDto>(fileName, "modifyCode.codeDto")!!.let {
+                    (it as? CodeDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyCode") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? CodeDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = codeDto as? Collection<CodeDto> ?: emptyList<CodeDto>() as Collection<CodeDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "modifyCode") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCode(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).modifyCode(codeDto)
 
@@ -1761,7 +1146,7 @@ class CodeApiTest() {
             else -> {
                 val toSkip : kotlin.collections.List<String> = when {
                     functionName.let { name -> listOf("create").any { name.startsWith(it) } } -> listOf("id", "rev", "created", "modified")
-                    functionName.let { name -> listOf("set").any { name.startsWith(it) } } -> listOf("rev")
+                    functionName.let { name -> listOf("set",  "modify").any { name.startsWith(it) } } -> listOf("rev")
                     else -> emptyList()
                 }
                 val diffs = filterDiffs(objectFromFile, response, response.differences(objectFromFile), toSkip)

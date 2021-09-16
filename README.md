@@ -404,7 +404,7 @@ Class | Method | HTTP request | Description
 *PlaceApi* | [**getPlaces**](docs/PlaceApi.md#getplaces) | **GET** /rest/v2/place | Gets all places
 *PlaceApi* | [**modifyPlace**](docs/PlaceApi.md#modifyplace) | **PUT** /rest/v2/place | Modifies an place
 *ReceiptApi* | [**createReceipt**](docs/ReceiptApi.md#createreceipt) | **POST** /rest/v2/receipt | Creates a receipt
-*ReceiptApi* | [**deleteReceipts**](docs/ReceiptApi.md#deletereceipts) | **DELETE** /rest/v2/receipt/delete/batch | Deletes receipts
+*ReceiptApi* | [**deleteReceipts**](docs/ReceiptApi.md#deletereceipts) | **POST** /rest/v2/receipt/delete/batch | Deletes receipts
 *ReceiptApi* | [**getReceipt**](docs/ReceiptApi.md#getreceipt) | **GET** /rest/v2/receipt/{receiptId} | Gets a receipt
 *ReceiptApi* | [**getReceiptAttachment**](docs/ReceiptApi.md#getreceiptattachment) | **GET** /rest/v2/receipt/{receiptId}/attachment/{attachmentId} | Get an attachment
 *ReceiptApi* | [**listByReference**](docs/ReceiptApi.md#listbyreference) | **GET** /rest/v2/receipt/byRef/{ref} | Gets a receipt

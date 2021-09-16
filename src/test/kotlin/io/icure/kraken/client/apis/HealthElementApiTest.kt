@@ -137,28 +137,13 @@ class HealthElementApiTest() {
                 println("Endpoint createHealthElement skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createHealthElement")
-                val healthElementDto: HealthElementDto = TestUtils.getParameter(fileName, "createHealthElement.healthElementDto")!!
-                    if (healthElementDto as? Collection<*> == null) {
-                        healthElementDto.also {
-                    if (TestUtils.isAutoRev(fileName, "createHealthElement") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<HealthElementDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val healthElementDto: HealthElementDto = TestUtils.getParameter<HealthElementDto>(fileName, "createHealthElement.healthElementDto")!!.let {
+                    (it as? HealthElementDto)?.takeIf { TestUtils.isAutoRev(fileName, "createHealthElement") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? HealthElementDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = healthElementDto as? Collection<HealthElementDto> ?: emptyList<HealthElementDto>() as Collection<HealthElementDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "createHealthElement") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).createHealthElement(healthElementDto)
 
@@ -218,28 +203,13 @@ class HealthElementApiTest() {
                 println("Endpoint createHealthElements skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createHealthElements")
-                val healthElementDto: kotlin.collections.List<HealthElementDto> = TestUtils.getParameter(fileName, "createHealthElements.healthElementDto")!!
-                    if (healthElementDto as? Collection<*> == null) {
-                        healthElementDto.also {
-                    if (TestUtils.isAutoRev(fileName, "createHealthElements") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.collections.List<HealthElementDto>>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = healthElementDto as? Collection<HealthElementDto> ?: emptyList<HealthElementDto>() as Collection<HealthElementDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "createHealthElements") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
+                val healthElementDto: kotlin.collections.List<HealthElementDto> = TestUtils.getParameter<kotlin.collections.List<HealthElementDto>>(fileName, "createHealthElements.healthElementDto")!!.map {
+                    (it as? HealthElementDto)?.takeIf { TestUtils.isAutoRev(fileName, "createHealthElements") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } ?: it
+                    } as kotlin.collections.List<HealthElementDto>
 
                 val response = api(credentialsFile).createHealthElements(healthElementDto)
 
@@ -299,28 +269,13 @@ class HealthElementApiTest() {
                 println("Endpoint deleteHealthElements skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteHealthElements")
-                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter(fileName, "deleteHealthElements.listOfIdsDto")!!
-                    if (listOfIdsDto as? Collection<*> == null) {
-                        listOfIdsDto.also {
-                    if (TestUtils.isAutoRev(fileName, "deleteHealthElements") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<ListOfIdsDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "deleteHealthElements.listOfIdsDto")!!.let {
+                    (it as? HealthElementDto)?.takeIf { TestUtils.isAutoRev(fileName, "deleteHealthElements") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? ListOfIdsDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = listOfIdsDto as? Collection<ListOfIdsDto> ?: emptyList<ListOfIdsDto>() as Collection<ListOfIdsDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "deleteHealthElements") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).deleteHealthElements(listOfIdsDto)
 
@@ -380,28 +335,13 @@ class HealthElementApiTest() {
                 println("Endpoint filterHealthElementsBy skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "filterHealthElementsBy")
-                val filterChainHealthElement: FilterChainHealthElement = TestUtils.getParameter(fileName, "filterHealthElementsBy.filterChainHealthElement")!!
-                    if (filterChainHealthElement as? Collection<*> == null) {
-                        filterChainHealthElement.also {
-                    if (TestUtils.isAutoRev(fileName, "filterHealthElementsBy") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<FilterChainHealthElement>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val filterChainHealthElement: FilterChainHealthElement = TestUtils.getParameter<FilterChainHealthElement>(fileName, "filterHealthElementsBy.filterChainHealthElement")!!.let {
+                    (it as? HealthElementDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterHealthElementsBy") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? FilterChainHealthElement ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = filterChainHealthElement as? Collection<FilterChainHealthElement> ?: emptyList<FilterChainHealthElement>() as Collection<FilterChainHealthElement>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "filterHealthElementsBy") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).filterHealthElementsBy(filterChainHealthElement)
 
@@ -461,28 +401,13 @@ class HealthElementApiTest() {
                 println("Endpoint getHealthElement skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getHealthElement")
-                val healthElementId: kotlin.String = TestUtils.getParameter(fileName, "getHealthElement.healthElementId")!!
-                    if (healthElementId as? Collection<*> == null) {
-                        healthElementId.also {
-                    if (TestUtils.isAutoRev(fileName, "getHealthElement") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val healthElementId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getHealthElement.healthElementId")!!.let {
+                    (it as? HealthElementDto)?.takeIf { TestUtils.isAutoRev(fileName, "getHealthElement") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = healthElementId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getHealthElement") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).getHealthElement(healthElementId)
 
@@ -542,50 +467,20 @@ class HealthElementApiTest() {
                 println("Endpoint listHealthElementsByHCPartyAndPatientForeignKeys skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listHealthElementsByHCPartyAndPatientForeignKeys")
-                val hcPartyId: kotlin.String = TestUtils.getParameter(fileName, "listHealthElementsByHCPartyAndPatientForeignKeys.hcPartyId")!!
-                    if (hcPartyId as? Collection<*> == null) {
-                        hcPartyId.also {
-                    if (TestUtils.isAutoRev(fileName, "listHealthElementsByHCPartyAndPatientForeignKeys") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val hcPartyId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listHealthElementsByHCPartyAndPatientForeignKeys.hcPartyId")!!.let {
+                    (it as? HealthElementDto)?.takeIf { TestUtils.isAutoRev(fileName, "listHealthElementsByHCPartyAndPatientForeignKeys") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = hcPartyId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "listHealthElementsByHCPartyAndPatientForeignKeys") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val secretFKeys: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listHealthElementsByHCPartyAndPatientForeignKeys.secretFKeys")!!.let {
+                    (it as? HealthElementDto)?.takeIf { TestUtils.isAutoRev(fileName, "listHealthElementsByHCPartyAndPatientForeignKeys") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                val secretFKeys: kotlin.String = TestUtils.getParameter(fileName, "listHealthElementsByHCPartyAndPatientForeignKeys.secretFKeys")!!
-                    if (secretFKeys as? Collection<*> == null) {
-                        secretFKeys.also {
-                    if (TestUtils.isAutoRev(fileName, "listHealthElementsByHCPartyAndPatientForeignKeys") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = secretFKeys as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "listHealthElementsByHCPartyAndPatientForeignKeys") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).listHealthElementsByHCPartyAndPatientForeignKeys(hcPartyId,secretFKeys)
 
@@ -645,50 +540,20 @@ class HealthElementApiTest() {
                 println("Endpoint listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys")
-                val hcPartyId: kotlin.String = TestUtils.getParameter(fileName, "listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys.hcPartyId")!!
-                    if (hcPartyId as? Collection<*> == null) {
-                        hcPartyId.also {
-                    if (TestUtils.isAutoRev(fileName, "listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val hcPartyId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys.hcPartyId")!!.let {
+                    (it as? HealthElementDto)?.takeIf { TestUtils.isAutoRev(fileName, "listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = hcPartyId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val secretFKeys: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys.secretFKeys")!!.let {
+                    (it as? HealthElementDto)?.takeIf { TestUtils.isAutoRev(fileName, "listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                val secretFKeys: kotlin.String = TestUtils.getParameter(fileName, "listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys.secretFKeys")!!
-                    if (secretFKeys as? Collection<*> == null) {
-                        secretFKeys.also {
-                    if (TestUtils.isAutoRev(fileName, "listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = secretFKeys as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys(hcPartyId,secretFKeys)
 
@@ -748,28 +613,13 @@ class HealthElementApiTest() {
                 println("Endpoint modifyHealthElement skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyHealthElement")
-                val healthElementDto: HealthElementDto = TestUtils.getParameter(fileName, "modifyHealthElement.healthElementDto")!!
-                    if (healthElementDto as? Collection<*> == null) {
-                        healthElementDto.also {
-                    if (TestUtils.isAutoRev(fileName, "modifyHealthElement") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<HealthElementDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val healthElementDto: HealthElementDto = TestUtils.getParameter<HealthElementDto>(fileName, "modifyHealthElement.healthElementDto")!!.let {
+                    (it as? HealthElementDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyHealthElement") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? HealthElementDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = healthElementDto as? Collection<HealthElementDto> ?: emptyList<HealthElementDto>() as Collection<HealthElementDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "modifyHealthElement") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).modifyHealthElement(healthElementDto)
 
@@ -829,28 +679,13 @@ class HealthElementApiTest() {
                 println("Endpoint modifyHealthElements skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyHealthElements")
-                val healthElementDto: kotlin.collections.List<HealthElementDto> = TestUtils.getParameter(fileName, "modifyHealthElements.healthElementDto")!!
-                    if (healthElementDto as? Collection<*> == null) {
-                        healthElementDto.also {
-                    if (TestUtils.isAutoRev(fileName, "modifyHealthElements") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.collections.List<HealthElementDto>>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = healthElementDto as? Collection<HealthElementDto> ?: emptyList<HealthElementDto>() as Collection<HealthElementDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "modifyHealthElements") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
+                val healthElementDto: kotlin.collections.List<HealthElementDto> = TestUtils.getParameter<kotlin.collections.List<HealthElementDto>>(fileName, "modifyHealthElements.healthElementDto")!!.map {
+                    (it as? HealthElementDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyHealthElements") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } ?: it
+                    } as kotlin.collections.List<HealthElementDto>
 
                 val response = api(credentialsFile).modifyHealthElements(healthElementDto)
 
@@ -910,50 +745,20 @@ class HealthElementApiTest() {
                 println("Endpoint newHealthElementDelegations skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "newHealthElementDelegations")
-                val healthElementId: kotlin.String = TestUtils.getParameter(fileName, "newHealthElementDelegations.healthElementId")!!
-                    if (healthElementId as? Collection<*> == null) {
-                        healthElementId.also {
-                    if (TestUtils.isAutoRev(fileName, "newHealthElementDelegations") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val healthElementId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "newHealthElementDelegations.healthElementId")!!.let {
+                    (it as? HealthElementDto)?.takeIf { TestUtils.isAutoRev(fileName, "newHealthElementDelegations") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = healthElementId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "newHealthElementDelegations") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
-                val delegationDto: kotlin.collections.List<DelegationDto> = TestUtils.getParameter(fileName, "newHealthElementDelegations.delegationDto")!!
-                    if (delegationDto as? Collection<*> == null) {
-                        delegationDto.also {
-                    if (TestUtils.isAutoRev(fileName, "newHealthElementDelegations") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.collections.List<DelegationDto>>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = delegationDto as? Collection<DelegationDto> ?: emptyList<DelegationDto>() as Collection<DelegationDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "newHealthElementDelegations") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
+                val delegationDto: kotlin.collections.List<DelegationDto> = TestUtils.getParameter<kotlin.collections.List<DelegationDto>>(fileName, "newHealthElementDelegations.delegationDto")!!.map {
+                    (it as? HealthElementDto)?.takeIf { TestUtils.isAutoRev(fileName, "newHealthElementDelegations") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } ?: it
+                    } as kotlin.collections.List<DelegationDto>
 
                 val response = api(credentialsFile).newHealthElementDelegations(healthElementId,delegationDto)
 
@@ -1013,28 +818,13 @@ class HealthElementApiTest() {
                 println("Endpoint setHealthElementsDelegations skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "setHealthElementsDelegations")
-                val icureStubDto: kotlin.collections.List<IcureStubDto> = TestUtils.getParameter(fileName, "setHealthElementsDelegations.icureStubDto")!!
-                    if (icureStubDto as? Collection<*> == null) {
-                        icureStubDto.also {
-                    if (TestUtils.isAutoRev(fileName, "setHealthElementsDelegations") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.collections.List<IcureStubDto>>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = icureStubDto as? Collection<IcureStubDto> ?: emptyList<IcureStubDto>() as Collection<IcureStubDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "setHealthElementsDelegations") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
+                val icureStubDto: kotlin.collections.List<IcureStubDto> = TestUtils.getParameter<kotlin.collections.List<IcureStubDto>>(fileName, "setHealthElementsDelegations.icureStubDto")!!.map {
+                    (it as? HealthElementDto)?.takeIf { TestUtils.isAutoRev(fileName, "setHealthElementsDelegations") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } ?: it
+                    } as kotlin.collections.List<IcureStubDto>
 
                 val response = api(credentialsFile).setHealthElementsDelegations(icureStubDto)
 
@@ -1110,7 +900,7 @@ class HealthElementApiTest() {
             else -> {
                 val toSkip : kotlin.collections.List<String> = when {
                     functionName.let { name -> listOf("create").any { name.startsWith(it) } } -> listOf("id", "rev", "created", "modified")
-                    functionName.let { name -> listOf("set").any { name.startsWith(it) } } -> listOf("rev")
+                    functionName.let { name -> listOf("set",  "modify").any { name.startsWith(it) } } -> listOf("rev")
                     else -> emptyList()
                 }
                 val diffs = filterDiffs(objectFromFile, response, response.differences(objectFromFile), toSkip)

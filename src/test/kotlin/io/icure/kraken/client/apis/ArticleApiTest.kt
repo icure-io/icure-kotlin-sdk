@@ -134,28 +134,13 @@ class ArticleApiTest() {
                 println("Endpoint createArticle skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createArticle")
-                val articleDto: ArticleDto = TestUtils.getParameter(fileName, "createArticle.articleDto")!!
-                    if (articleDto as? Collection<*> == null) {
-                        articleDto.also {
-                    if (TestUtils.isAutoRev(fileName, "createArticle") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getArticle(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<ArticleDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val articleDto: ArticleDto = TestUtils.getParameter<ArticleDto>(fileName, "createArticle.articleDto")!!.let {
+                    (it as? ArticleDto)?.takeIf { TestUtils.isAutoRev(fileName, "createArticle") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getArticle(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? ArticleDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = articleDto as? Collection<ArticleDto> ?: emptyList<ArticleDto>() as Collection<ArticleDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "createArticle") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getArticle(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).createArticle(articleDto)
 
@@ -215,28 +200,13 @@ class ArticleApiTest() {
                 println("Endpoint deleteArticles skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteArticles")
-                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter(fileName, "deleteArticles.listOfIdsDto")!!
-                    if (listOfIdsDto as? Collection<*> == null) {
-                        listOfIdsDto.also {
-                    if (TestUtils.isAutoRev(fileName, "deleteArticles") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getArticle(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<ListOfIdsDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "deleteArticles.listOfIdsDto")!!.let {
+                    (it as? ArticleDto)?.takeIf { TestUtils.isAutoRev(fileName, "deleteArticles") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getArticle(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? ListOfIdsDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = listOfIdsDto as? Collection<ListOfIdsDto> ?: emptyList<ListOfIdsDto>() as Collection<ListOfIdsDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "deleteArticles") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getArticle(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).deleteArticles(listOfIdsDto)
 
@@ -296,28 +266,13 @@ class ArticleApiTest() {
                 println("Endpoint getArticle skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getArticle")
-                val articleId: kotlin.String = TestUtils.getParameter(fileName, "getArticle.articleId")!!
-                    if (articleId as? Collection<*> == null) {
-                        articleId.also {
-                    if (TestUtils.isAutoRev(fileName, "getArticle") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getArticle(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val articleId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getArticle.articleId")!!.let {
+                    (it as? ArticleDto)?.takeIf { TestUtils.isAutoRev(fileName, "getArticle") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getArticle(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = articleId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getArticle") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getArticle(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).getArticle(articleId)
 
@@ -436,28 +391,13 @@ class ArticleApiTest() {
                 println("Endpoint modifyArticle skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyArticle")
-                val articleDto: ArticleDto = TestUtils.getParameter(fileName, "modifyArticle.articleDto")!!
-                    if (articleDto as? Collection<*> == null) {
-                        articleDto.also {
-                    if (TestUtils.isAutoRev(fileName, "modifyArticle") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getArticle(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<ArticleDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val articleDto: ArticleDto = TestUtils.getParameter<ArticleDto>(fileName, "modifyArticle.articleDto")!!.let {
+                    (it as? ArticleDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyArticle") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getArticle(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? ArticleDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = articleDto as? Collection<ArticleDto> ?: emptyList<ArticleDto>() as Collection<ArticleDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "modifyArticle") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getArticle(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).modifyArticle(articleDto)
 
@@ -533,7 +473,7 @@ class ArticleApiTest() {
             else -> {
                 val toSkip : kotlin.collections.List<String> = when {
                     functionName.let { name -> listOf("create").any { name.startsWith(it) } } -> listOf("id", "rev", "created", "modified")
-                    functionName.let { name -> listOf("set").any { name.startsWith(it) } } -> listOf("rev")
+                    functionName.let { name -> listOf("set",  "modify").any { name.startsWith(it) } } -> listOf("rev")
                     else -> emptyList()
                 }
                 val diffs = filterDiffs(objectFromFile, response, response.differences(objectFromFile), toSkip)

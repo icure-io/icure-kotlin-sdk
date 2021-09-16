@@ -134,28 +134,13 @@ class InsuranceApiTest() {
                 println("Endpoint createInsurance skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createInsurance")
-                val insuranceDto: InsuranceDto = TestUtils.getParameter(fileName, "createInsurance.insuranceDto")!!
-                    if (insuranceDto as? Collection<*> == null) {
-                        insuranceDto.also {
-                    if (TestUtils.isAutoRev(fileName, "createInsurance") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getInsurance(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<InsuranceDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val insuranceDto: InsuranceDto = TestUtils.getParameter<InsuranceDto>(fileName, "createInsurance.insuranceDto")!!.let {
+                    (it as? InsuranceDto)?.takeIf { TestUtils.isAutoRev(fileName, "createInsurance") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getInsurance(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? InsuranceDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = insuranceDto as? Collection<InsuranceDto> ?: emptyList<InsuranceDto>() as Collection<InsuranceDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "createInsurance") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getInsurance(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).createInsurance(insuranceDto)
 
@@ -215,28 +200,13 @@ class InsuranceApiTest() {
                 println("Endpoint deleteInsurance skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteInsurance")
-                val insuranceId: kotlin.String = TestUtils.getParameter(fileName, "deleteInsurance.insuranceId")!!
-                    if (insuranceId as? Collection<*> == null) {
-                        insuranceId.also {
-                    if (TestUtils.isAutoRev(fileName, "deleteInsurance") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getInsurance(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val insuranceId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "deleteInsurance.insuranceId")!!.let {
+                    (it as? InsuranceDto)?.takeIf { TestUtils.isAutoRev(fileName, "deleteInsurance") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getInsurance(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = insuranceId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "deleteInsurance") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getInsurance(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).deleteInsurance(insuranceId)
 
@@ -296,28 +266,13 @@ class InsuranceApiTest() {
                 println("Endpoint getInsurance skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getInsurance")
-                val insuranceId: kotlin.String = TestUtils.getParameter(fileName, "getInsurance.insuranceId")!!
-                    if (insuranceId as? Collection<*> == null) {
-                        insuranceId.also {
-                    if (TestUtils.isAutoRev(fileName, "getInsurance") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getInsurance(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val insuranceId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getInsurance.insuranceId")!!.let {
+                    (it as? InsuranceDto)?.takeIf { TestUtils.isAutoRev(fileName, "getInsurance") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getInsurance(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = insuranceId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getInsurance") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getInsurance(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).getInsurance(insuranceId)
 
@@ -377,28 +332,13 @@ class InsuranceApiTest() {
                 println("Endpoint getInsurances skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getInsurances")
-                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter(fileName, "getInsurances.listOfIdsDto")!!
-                    if (listOfIdsDto as? Collection<*> == null) {
-                        listOfIdsDto.also {
-                    if (TestUtils.isAutoRev(fileName, "getInsurances") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getInsurance(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<ListOfIdsDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "getInsurances.listOfIdsDto")!!.let {
+                    (it as? InsuranceDto)?.takeIf { TestUtils.isAutoRev(fileName, "getInsurances") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getInsurance(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? ListOfIdsDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = listOfIdsDto as? Collection<ListOfIdsDto> ?: emptyList<ListOfIdsDto>() as Collection<ListOfIdsDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getInsurances") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getInsurance(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).getInsurances(listOfIdsDto)
 
@@ -458,28 +398,13 @@ class InsuranceApiTest() {
                 println("Endpoint listInsurancesByCode skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listInsurancesByCode")
-                val insuranceCode: kotlin.String = TestUtils.getParameter(fileName, "listInsurancesByCode.insuranceCode")!!
-                    if (insuranceCode as? Collection<*> == null) {
-                        insuranceCode.also {
-                    if (TestUtils.isAutoRev(fileName, "listInsurancesByCode") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getInsurance(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val insuranceCode: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listInsurancesByCode.insuranceCode")!!.let {
+                    (it as? InsuranceDto)?.takeIf { TestUtils.isAutoRev(fileName, "listInsurancesByCode") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getInsurance(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = insuranceCode as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "listInsurancesByCode") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getInsurance(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).listInsurancesByCode(insuranceCode)
 
@@ -539,28 +464,13 @@ class InsuranceApiTest() {
                 println("Endpoint listInsurancesByName skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listInsurancesByName")
-                val insuranceName: kotlin.String = TestUtils.getParameter(fileName, "listInsurancesByName.insuranceName")!!
-                    if (insuranceName as? Collection<*> == null) {
-                        insuranceName.also {
-                    if (TestUtils.isAutoRev(fileName, "listInsurancesByName") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getInsurance(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val insuranceName: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listInsurancesByName.insuranceName")!!.let {
+                    (it as? InsuranceDto)?.takeIf { TestUtils.isAutoRev(fileName, "listInsurancesByName") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getInsurance(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = insuranceName as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "listInsurancesByName") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getInsurance(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).listInsurancesByName(insuranceName)
 
@@ -620,28 +530,13 @@ class InsuranceApiTest() {
                 println("Endpoint modifyInsurance skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyInsurance")
-                val insuranceDto: InsuranceDto = TestUtils.getParameter(fileName, "modifyInsurance.insuranceDto")!!
-                    if (insuranceDto as? Collection<*> == null) {
-                        insuranceDto.also {
-                    if (TestUtils.isAutoRev(fileName, "modifyInsurance") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getInsurance(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<InsuranceDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val insuranceDto: InsuranceDto = TestUtils.getParameter<InsuranceDto>(fileName, "modifyInsurance.insuranceDto")!!.let {
+                    (it as? InsuranceDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyInsurance") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getInsurance(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? InsuranceDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = insuranceDto as? Collection<InsuranceDto> ?: emptyList<InsuranceDto>() as Collection<InsuranceDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "modifyInsurance") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getInsurance(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).modifyInsurance(insuranceDto)
 
@@ -717,7 +612,7 @@ class InsuranceApiTest() {
             else -> {
                 val toSkip : kotlin.collections.List<String> = when {
                     functionName.let { name -> listOf("create").any { name.startsWith(it) } } -> listOf("id", "rev", "created", "modified")
-                    functionName.let { name -> listOf("set").any { name.startsWith(it) } } -> listOf("rev")
+                    functionName.let { name -> listOf("set",  "modify").any { name.startsWith(it) } } -> listOf("rev")
                     else -> emptyList()
                 }
                 val diffs = filterDiffs(objectFromFile, response, response.differences(objectFromFile), toSkip)

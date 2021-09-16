@@ -133,28 +133,13 @@ class FrontEndMigrationApiTest() {
                 println("Endpoint createFrontEndMigration skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createFrontEndMigration")
-                val frontEndMigrationDto: FrontEndMigrationDto = TestUtils.getParameter(fileName, "createFrontEndMigration.frontEndMigrationDto")!!
-                    if (frontEndMigrationDto as? Collection<*> == null) {
-                        frontEndMigrationDto.also {
-                    if (TestUtils.isAutoRev(fileName, "createFrontEndMigration") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<FrontEndMigrationDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val frontEndMigrationDto: FrontEndMigrationDto = TestUtils.getParameter<FrontEndMigrationDto>(fileName, "createFrontEndMigration.frontEndMigrationDto")!!.let {
+                    (it as? FrontEndMigrationDto)?.takeIf { TestUtils.isAutoRev(fileName, "createFrontEndMigration") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? FrontEndMigrationDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = frontEndMigrationDto as? Collection<FrontEndMigrationDto> ?: emptyList<FrontEndMigrationDto>() as Collection<FrontEndMigrationDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "createFrontEndMigration") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).createFrontEndMigration(frontEndMigrationDto)
 
@@ -214,28 +199,13 @@ class FrontEndMigrationApiTest() {
                 println("Endpoint deleteFrontEndMigration skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteFrontEndMigration")
-                val frontEndMigrationId: kotlin.String = TestUtils.getParameter(fileName, "deleteFrontEndMigration.frontEndMigrationId")!!
-                    if (frontEndMigrationId as? Collection<*> == null) {
-                        frontEndMigrationId.also {
-                    if (TestUtils.isAutoRev(fileName, "deleteFrontEndMigration") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val frontEndMigrationId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "deleteFrontEndMigration.frontEndMigrationId")!!.let {
+                    (it as? FrontEndMigrationDto)?.takeIf { TestUtils.isAutoRev(fileName, "deleteFrontEndMigration") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = frontEndMigrationId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "deleteFrontEndMigration") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).deleteFrontEndMigration(frontEndMigrationId)
 
@@ -295,28 +265,13 @@ class FrontEndMigrationApiTest() {
                 println("Endpoint getFrontEndMigration skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getFrontEndMigration")
-                val frontEndMigrationId: kotlin.String = TestUtils.getParameter(fileName, "getFrontEndMigration.frontEndMigrationId")!!
-                    if (frontEndMigrationId as? Collection<*> == null) {
-                        frontEndMigrationId.also {
-                    if (TestUtils.isAutoRev(fileName, "getFrontEndMigration") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val frontEndMigrationId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getFrontEndMigration.frontEndMigrationId")!!.let {
+                    (it as? FrontEndMigrationDto)?.takeIf { TestUtils.isAutoRev(fileName, "getFrontEndMigration") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = frontEndMigrationId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getFrontEndMigration") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).getFrontEndMigration(frontEndMigrationId)
 
@@ -376,28 +331,13 @@ class FrontEndMigrationApiTest() {
                 println("Endpoint getFrontEndMigrationByName skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getFrontEndMigrationByName")
-                val frontEndMigrationName: kotlin.String = TestUtils.getParameter(fileName, "getFrontEndMigrationByName.frontEndMigrationName")!!
-                    if (frontEndMigrationName as? Collection<*> == null) {
-                        frontEndMigrationName.also {
-                    if (TestUtils.isAutoRev(fileName, "getFrontEndMigrationByName") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val frontEndMigrationName: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getFrontEndMigrationByName.frontEndMigrationName")!!.let {
+                    (it as? FrontEndMigrationDto)?.takeIf { TestUtils.isAutoRev(fileName, "getFrontEndMigrationByName") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = frontEndMigrationName as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getFrontEndMigrationByName") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).getFrontEndMigrationByName(frontEndMigrationName)
 
@@ -516,28 +456,13 @@ class FrontEndMigrationApiTest() {
                 println("Endpoint modifyFrontEndMigration skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyFrontEndMigration")
-                val frontEndMigrationDto: FrontEndMigrationDto = TestUtils.getParameter(fileName, "modifyFrontEndMigration.frontEndMigrationDto")!!
-                    if (frontEndMigrationDto as? Collection<*> == null) {
-                        frontEndMigrationDto.also {
-                    if (TestUtils.isAutoRev(fileName, "modifyFrontEndMigration") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<FrontEndMigrationDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val frontEndMigrationDto: FrontEndMigrationDto = TestUtils.getParameter<FrontEndMigrationDto>(fileName, "modifyFrontEndMigration.frontEndMigrationDto")!!.let {
+                    (it as? FrontEndMigrationDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyFrontEndMigration") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? FrontEndMigrationDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = frontEndMigrationDto as? Collection<FrontEndMigrationDto> ?: emptyList<FrontEndMigrationDto>() as Collection<FrontEndMigrationDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "modifyFrontEndMigration") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).modifyFrontEndMigration(frontEndMigrationDto)
 
@@ -613,7 +538,7 @@ class FrontEndMigrationApiTest() {
             else -> {
                 val toSkip : kotlin.collections.List<String> = when {
                     functionName.let { name -> listOf("create").any { name.startsWith(it) } } -> listOf("id", "rev", "created", "modified")
-                    functionName.let { name -> listOf("set").any { name.startsWith(it) } } -> listOf("rev")
+                    functionName.let { name -> listOf("set",  "modify").any { name.startsWith(it) } } -> listOf("rev")
                     else -> emptyList()
                 }
                 val diffs = filterDiffs(objectFromFile, response, response.differences(objectFromFile), toSkip)

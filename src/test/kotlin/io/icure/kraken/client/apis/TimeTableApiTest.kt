@@ -134,28 +134,13 @@ class TimeTableApiTest() {
                 println("Endpoint createTimeTable skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createTimeTable")
-                val timeTableDto: TimeTableDto = TestUtils.getParameter(fileName, "createTimeTable.timeTableDto")!!
-                    if (timeTableDto as? Collection<*> == null) {
-                        timeTableDto.also {
-                    if (TestUtils.isAutoRev(fileName, "createTimeTable") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getTimeTable(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<TimeTableDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val timeTableDto: TimeTableDto = TestUtils.getParameter<TimeTableDto>(fileName, "createTimeTable.timeTableDto")!!.let {
+                    (it as? TimeTableDto)?.takeIf { TestUtils.isAutoRev(fileName, "createTimeTable") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getTimeTable(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? TimeTableDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = timeTableDto as? Collection<TimeTableDto> ?: emptyList<TimeTableDto>() as Collection<TimeTableDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "createTimeTable") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getTimeTable(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).createTimeTable(timeTableDto)
 
@@ -215,28 +200,13 @@ class TimeTableApiTest() {
                 println("Endpoint deleteTimeTable skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteTimeTable")
-                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter(fileName, "deleteTimeTable.listOfIdsDto")!!
-                    if (listOfIdsDto as? Collection<*> == null) {
-                        listOfIdsDto.also {
-                    if (TestUtils.isAutoRev(fileName, "deleteTimeTable") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getTimeTable(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<ListOfIdsDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "deleteTimeTable.listOfIdsDto")!!.let {
+                    (it as? TimeTableDto)?.takeIf { TestUtils.isAutoRev(fileName, "deleteTimeTable") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getTimeTable(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? ListOfIdsDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = listOfIdsDto as? Collection<ListOfIdsDto> ?: emptyList<ListOfIdsDto>() as Collection<ListOfIdsDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "deleteTimeTable") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getTimeTable(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).deleteTimeTable(listOfIdsDto)
 
@@ -296,28 +266,13 @@ class TimeTableApiTest() {
                 println("Endpoint getTimeTable skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getTimeTable")
-                val timeTableId: kotlin.String = TestUtils.getParameter(fileName, "getTimeTable.timeTableId")!!
-                    if (timeTableId as? Collection<*> == null) {
-                        timeTableId.also {
-                    if (TestUtils.isAutoRev(fileName, "getTimeTable") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getTimeTable(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val timeTableId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getTimeTable.timeTableId")!!.let {
+                    (it as? TimeTableDto)?.takeIf { TestUtils.isAutoRev(fileName, "getTimeTable") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getTimeTable(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = timeTableId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getTimeTable") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getTimeTable(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).getTimeTable(timeTableId)
 
@@ -377,28 +332,13 @@ class TimeTableApiTest() {
                 println("Endpoint getTimeTablesByAgendaId skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getTimeTablesByAgendaId")
-                val agendaId: kotlin.String = TestUtils.getParameter(fileName, "getTimeTablesByAgendaId.agendaId")!!
-                    if (agendaId as? Collection<*> == null) {
-                        agendaId.also {
-                    if (TestUtils.isAutoRev(fileName, "getTimeTablesByAgendaId") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getTimeTable(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val agendaId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getTimeTablesByAgendaId.agendaId")!!.let {
+                    (it as? TimeTableDto)?.takeIf { TestUtils.isAutoRev(fileName, "getTimeTablesByAgendaId") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getTimeTable(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = agendaId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getTimeTablesByAgendaId") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getTimeTable(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).getTimeTablesByAgendaId(agendaId)
 
@@ -458,72 +398,27 @@ class TimeTableApiTest() {
                 println("Endpoint getTimeTablesByPeriodAndAgendaId skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getTimeTablesByPeriodAndAgendaId")
-                val startDate: kotlin.Long = TestUtils.getParameter(fileName, "getTimeTablesByPeriodAndAgendaId.startDate")!!
-                    if (startDate as? Collection<*> == null) {
-                        startDate.also {
-                    if (TestUtils.isAutoRev(fileName, "getTimeTablesByPeriodAndAgendaId") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getTimeTable(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.Long>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val startDate: kotlin.Long = TestUtils.getParameter<kotlin.Long>(fileName, "getTimeTablesByPeriodAndAgendaId.startDate")!!.let {
+                    (it as? TimeTableDto)?.takeIf { TestUtils.isAutoRev(fileName, "getTimeTablesByPeriodAndAgendaId") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getTimeTable(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.Long ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = startDate as? Collection<kotlin.Long> ?: emptyList<kotlin.Long>() as Collection<kotlin.Long>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getTimeTablesByPeriodAndAgendaId") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getTimeTable(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val endDate: kotlin.Long = TestUtils.getParameter<kotlin.Long>(fileName, "getTimeTablesByPeriodAndAgendaId.endDate")!!.let {
+                    (it as? TimeTableDto)?.takeIf { TestUtils.isAutoRev(fileName, "getTimeTablesByPeriodAndAgendaId") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getTimeTable(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.Long ?: it
                     }
-                }
-                val endDate: kotlin.Long = TestUtils.getParameter(fileName, "getTimeTablesByPeriodAndAgendaId.endDate")!!
-                    if (endDate as? Collection<*> == null) {
-                        endDate.also {
-                    if (TestUtils.isAutoRev(fileName, "getTimeTablesByPeriodAndAgendaId") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getTimeTable(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.Long>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val agendaId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getTimeTablesByPeriodAndAgendaId.agendaId")!!.let {
+                    (it as? TimeTableDto)?.takeIf { TestUtils.isAutoRev(fileName, "getTimeTablesByPeriodAndAgendaId") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getTimeTable(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = endDate as? Collection<kotlin.Long> ?: emptyList<kotlin.Long>() as Collection<kotlin.Long>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getTimeTablesByPeriodAndAgendaId") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getTimeTable(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
-                val agendaId: kotlin.String = TestUtils.getParameter(fileName, "getTimeTablesByPeriodAndAgendaId.agendaId")!!
-                    if (agendaId as? Collection<*> == null) {
-                        agendaId.also {
-                    if (TestUtils.isAutoRev(fileName, "getTimeTablesByPeriodAndAgendaId") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getTimeTable(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = agendaId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getTimeTablesByPeriodAndAgendaId") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getTimeTable(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).getTimeTablesByPeriodAndAgendaId(startDate,endDate,agendaId)
 
@@ -583,28 +478,13 @@ class TimeTableApiTest() {
                 println("Endpoint modifyTimeTable skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyTimeTable")
-                val timeTableDto: TimeTableDto = TestUtils.getParameter(fileName, "modifyTimeTable.timeTableDto")!!
-                    if (timeTableDto as? Collection<*> == null) {
-                        timeTableDto.also {
-                    if (TestUtils.isAutoRev(fileName, "modifyTimeTable") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getTimeTable(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<TimeTableDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val timeTableDto: TimeTableDto = TestUtils.getParameter<TimeTableDto>(fileName, "modifyTimeTable.timeTableDto")!!.let {
+                    (it as? TimeTableDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyTimeTable") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getTimeTable(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? TimeTableDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = timeTableDto as? Collection<TimeTableDto> ?: emptyList<TimeTableDto>() as Collection<TimeTableDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "modifyTimeTable") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getTimeTable(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).modifyTimeTable(timeTableDto)
 
@@ -680,7 +560,7 @@ class TimeTableApiTest() {
             else -> {
                 val toSkip : kotlin.collections.List<String> = when {
                     functionName.let { name -> listOf("create").any { name.startsWith(it) } } -> listOf("id", "rev", "created", "modified")
-                    functionName.let { name -> listOf("set").any { name.startsWith(it) } } -> listOf("rev")
+                    functionName.let { name -> listOf("set",  "modify").any { name.startsWith(it) } } -> listOf("rev")
                     else -> emptyList()
                 }
                 val diffs = filterDiffs(objectFromFile, response, response.differences(objectFromFile), toSkip)

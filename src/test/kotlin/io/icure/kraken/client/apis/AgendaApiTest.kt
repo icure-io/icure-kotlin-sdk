@@ -134,28 +134,13 @@ class AgendaApiTest() {
                 println("Endpoint createAgenda skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createAgenda")
-                val agendaDto: AgendaDto = TestUtils.getParameter(fileName, "createAgenda.agendaDto")!!
-                    if (agendaDto as? Collection<*> == null) {
-                        agendaDto.also {
-                    if (TestUtils.isAutoRev(fileName, "createAgenda") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<AgendaDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val agendaDto: AgendaDto = TestUtils.getParameter<AgendaDto>(fileName, "createAgenda.agendaDto")!!.let {
+                    (it as? AgendaDto)?.takeIf { TestUtils.isAutoRev(fileName, "createAgenda") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? AgendaDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = agendaDto as? Collection<AgendaDto> ?: emptyList<AgendaDto>() as Collection<AgendaDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "createAgenda") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).createAgenda(agendaDto)
 
@@ -215,28 +200,13 @@ class AgendaApiTest() {
                 println("Endpoint deleteAgendas skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteAgendas")
-                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter(fileName, "deleteAgendas.listOfIdsDto")!!
-                    if (listOfIdsDto as? Collection<*> == null) {
-                        listOfIdsDto.also {
-                    if (TestUtils.isAutoRev(fileName, "deleteAgendas") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<ListOfIdsDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "deleteAgendas.listOfIdsDto")!!.let {
+                    (it as? AgendaDto)?.takeIf { TestUtils.isAutoRev(fileName, "deleteAgendas") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? ListOfIdsDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = listOfIdsDto as? Collection<ListOfIdsDto> ?: emptyList<ListOfIdsDto>() as Collection<ListOfIdsDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "deleteAgendas") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).deleteAgendas(listOfIdsDto)
 
@@ -296,28 +266,13 @@ class AgendaApiTest() {
                 println("Endpoint getAgenda skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getAgenda")
-                val agendaId: kotlin.String = TestUtils.getParameter(fileName, "getAgenda.agendaId")!!
-                    if (agendaId as? Collection<*> == null) {
-                        agendaId.also {
-                    if (TestUtils.isAutoRev(fileName, "getAgenda") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val agendaId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getAgenda.agendaId")!!.let {
+                    (it as? AgendaDto)?.takeIf { TestUtils.isAutoRev(fileName, "getAgenda") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = agendaId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getAgenda") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).getAgenda(agendaId)
 
@@ -436,28 +391,13 @@ class AgendaApiTest() {
                 println("Endpoint getAgendasForUser skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getAgendasForUser")
-                val userId: kotlin.String = TestUtils.getParameter(fileName, "getAgendasForUser.userId")!!
-                    if (userId as? Collection<*> == null) {
-                        userId.also {
-                    if (TestUtils.isAutoRev(fileName, "getAgendasForUser") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val userId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getAgendasForUser.userId")!!.let {
+                    (it as? AgendaDto)?.takeIf { TestUtils.isAutoRev(fileName, "getAgendasForUser") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = userId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getAgendasForUser") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).getAgendasForUser(userId)
 
@@ -517,28 +457,13 @@ class AgendaApiTest() {
                 println("Endpoint getReadableAgendasForUser skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getReadableAgendasForUser")
-                val userId: kotlin.String = TestUtils.getParameter(fileName, "getReadableAgendasForUser.userId")!!
-                    if (userId as? Collection<*> == null) {
-                        userId.also {
-                    if (TestUtils.isAutoRev(fileName, "getReadableAgendasForUser") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val userId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getReadableAgendasForUser.userId")!!.let {
+                    (it as? AgendaDto)?.takeIf { TestUtils.isAutoRev(fileName, "getReadableAgendasForUser") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = userId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getReadableAgendasForUser") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).getReadableAgendasForUser(userId)
 
@@ -598,28 +523,13 @@ class AgendaApiTest() {
                 println("Endpoint modifyAgenda skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyAgenda")
-                val agendaDto: AgendaDto = TestUtils.getParameter(fileName, "modifyAgenda.agendaDto")!!
-                    if (agendaDto as? Collection<*> == null) {
-                        agendaDto.also {
-                    if (TestUtils.isAutoRev(fileName, "modifyAgenda") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<AgendaDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val agendaDto: AgendaDto = TestUtils.getParameter<AgendaDto>(fileName, "modifyAgenda.agendaDto")!!.let {
+                    (it as? AgendaDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyAgenda") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? AgendaDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = agendaDto as? Collection<AgendaDto> ?: emptyList<AgendaDto>() as Collection<AgendaDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "modifyAgenda") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getAgenda(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).modifyAgenda(agendaDto)
 
@@ -695,7 +605,7 @@ class AgendaApiTest() {
             else -> {
                 val toSkip : kotlin.collections.List<String> = when {
                     functionName.let { name -> listOf("create").any { name.startsWith(it) } } -> listOf("id", "rev", "created", "modified")
-                    functionName.let { name -> listOf("set").any { name.startsWith(it) } } -> listOf("rev")
+                    functionName.let { name -> listOf("set",  "modify").any { name.startsWith(it) } } -> listOf("rev")
                     else -> emptyList()
                 }
                 val diffs = filterDiffs(objectFromFile, response, response.differences(objectFromFile), toSkip)

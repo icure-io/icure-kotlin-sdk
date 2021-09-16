@@ -135,28 +135,13 @@ class DocumentTemplateApiTest() {
                 println("Endpoint createDocumentTemplate skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createDocumentTemplate")
-                val documentTemplateDto: DocumentTemplateDto = TestUtils.getParameter(fileName, "createDocumentTemplate.documentTemplateDto")!!
-                    if (documentTemplateDto as? Collection<*> == null) {
-                        documentTemplateDto.also {
-                    if (TestUtils.isAutoRev(fileName, "createDocumentTemplate") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<DocumentTemplateDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val documentTemplateDto: DocumentTemplateDto = TestUtils.getParameter<DocumentTemplateDto>(fileName, "createDocumentTemplate.documentTemplateDto")!!.let {
+                    (it as? DocumentTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "createDocumentTemplate") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? DocumentTemplateDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = documentTemplateDto as? Collection<DocumentTemplateDto> ?: emptyList<DocumentTemplateDto>() as Collection<DocumentTemplateDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "createDocumentTemplate") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).createDocumentTemplate(documentTemplateDto)
 
@@ -216,28 +201,13 @@ class DocumentTemplateApiTest() {
                 println("Endpoint deleteDocumentTemplates skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteDocumentTemplates")
-                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter(fileName, "deleteDocumentTemplates.listOfIdsDto")!!
-                    if (listOfIdsDto as? Collection<*> == null) {
-                        listOfIdsDto.also {
-                    if (TestUtils.isAutoRev(fileName, "deleteDocumentTemplates") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<ListOfIdsDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "deleteDocumentTemplates.listOfIdsDto")!!.let {
+                    (it as? DocumentTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "deleteDocumentTemplates") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? ListOfIdsDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = listOfIdsDto as? Collection<ListOfIdsDto> ?: emptyList<ListOfIdsDto>() as Collection<ListOfIdsDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "deleteDocumentTemplates") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).deleteDocumentTemplates(listOfIdsDto)
 
@@ -297,50 +267,20 @@ class DocumentTemplateApiTest() {
                 println("Endpoint getAttachmentText skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getAttachmentText")
-                val documentTemplateId: kotlin.String = TestUtils.getParameter(fileName, "getAttachmentText.documentTemplateId")!!
-                    if (documentTemplateId as? Collection<*> == null) {
-                        documentTemplateId.also {
-                    if (TestUtils.isAutoRev(fileName, "getAttachmentText") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val documentTemplateId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getAttachmentText.documentTemplateId")!!.let {
+                    (it as? DocumentTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "getAttachmentText") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = documentTemplateId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getAttachmentText") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val attachmentId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getAttachmentText.attachmentId")!!.let {
+                    (it as? DocumentTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "getAttachmentText") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                val attachmentId: kotlin.String = TestUtils.getParameter(fileName, "getAttachmentText.attachmentId")!!
-                    if (attachmentId as? Collection<*> == null) {
-                        attachmentId.also {
-                    if (TestUtils.isAutoRev(fileName, "getAttachmentText") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = attachmentId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getAttachmentText") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).getAttachmentText(documentTemplateId,attachmentId)
 
@@ -400,28 +340,13 @@ class DocumentTemplateApiTest() {
                 println("Endpoint getDocumentTemplate skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getDocumentTemplate")
-                val documentTemplateId: kotlin.String = TestUtils.getParameter(fileName, "getDocumentTemplate.documentTemplateId")!!
-                    if (documentTemplateId as? Collection<*> == null) {
-                        documentTemplateId.also {
-                    if (TestUtils.isAutoRev(fileName, "getDocumentTemplate") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val documentTemplateId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getDocumentTemplate.documentTemplateId")!!.let {
+                    (it as? DocumentTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "getDocumentTemplate") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = documentTemplateId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getDocumentTemplate") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).getDocumentTemplate(documentTemplateId)
 
@@ -481,50 +406,20 @@ class DocumentTemplateApiTest() {
                 println("Endpoint getDocumentTemplateAttachment skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getDocumentTemplateAttachment")
-                val documentTemplateId: kotlin.String = TestUtils.getParameter(fileName, "getDocumentTemplateAttachment.documentTemplateId")!!
-                    if (documentTemplateId as? Collection<*> == null) {
-                        documentTemplateId.also {
-                    if (TestUtils.isAutoRev(fileName, "getDocumentTemplateAttachment") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val documentTemplateId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getDocumentTemplateAttachment.documentTemplateId")!!.let {
+                    (it as? DocumentTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "getDocumentTemplateAttachment") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = documentTemplateId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getDocumentTemplateAttachment") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val attachmentId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getDocumentTemplateAttachment.attachmentId")!!.let {
+                    (it as? DocumentTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "getDocumentTemplateAttachment") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                val attachmentId: kotlin.String = TestUtils.getParameter(fileName, "getDocumentTemplateAttachment.attachmentId")!!
-                    if (attachmentId as? Collection<*> == null) {
-                        attachmentId.also {
-                    if (TestUtils.isAutoRev(fileName, "getDocumentTemplateAttachment") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = attachmentId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getDocumentTemplateAttachment") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).getDocumentTemplateAttachment(documentTemplateId,attachmentId)
 
@@ -702,28 +597,13 @@ class DocumentTemplateApiTest() {
                 println("Endpoint listDocumentTemplatesByDocumentType skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listDocumentTemplatesByDocumentType")
-                val documentTypeCode: kotlin.String = TestUtils.getParameter(fileName, "listDocumentTemplatesByDocumentType.documentTypeCode")!!
-                    if (documentTypeCode as? Collection<*> == null) {
-                        documentTypeCode.also {
-                    if (TestUtils.isAutoRev(fileName, "listDocumentTemplatesByDocumentType") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val documentTypeCode: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listDocumentTemplatesByDocumentType.documentTypeCode")!!.let {
+                    (it as? DocumentTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "listDocumentTemplatesByDocumentType") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = documentTypeCode as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "listDocumentTemplatesByDocumentType") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).listDocumentTemplatesByDocumentType(documentTypeCode)
 
@@ -783,28 +663,13 @@ class DocumentTemplateApiTest() {
                 println("Endpoint listDocumentTemplatesByDocumentTypeForCurrentUser skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listDocumentTemplatesByDocumentTypeForCurrentUser")
-                val documentTypeCode: kotlin.String = TestUtils.getParameter(fileName, "listDocumentTemplatesByDocumentTypeForCurrentUser.documentTypeCode")!!
-                    if (documentTypeCode as? Collection<*> == null) {
-                        documentTypeCode.also {
-                    if (TestUtils.isAutoRev(fileName, "listDocumentTemplatesByDocumentTypeForCurrentUser") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val documentTypeCode: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listDocumentTemplatesByDocumentTypeForCurrentUser.documentTypeCode")!!.let {
+                    (it as? DocumentTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "listDocumentTemplatesByDocumentTypeForCurrentUser") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = documentTypeCode as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "listDocumentTemplatesByDocumentTypeForCurrentUser") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).listDocumentTemplatesByDocumentTypeForCurrentUser(documentTypeCode)
 
@@ -864,28 +729,13 @@ class DocumentTemplateApiTest() {
                 println("Endpoint listDocumentTemplatesBySpeciality skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listDocumentTemplatesBySpeciality")
-                val specialityCode: kotlin.String = TestUtils.getParameter(fileName, "listDocumentTemplatesBySpeciality.specialityCode")!!
-                    if (specialityCode as? Collection<*> == null) {
-                        specialityCode.also {
-                    if (TestUtils.isAutoRev(fileName, "listDocumentTemplatesBySpeciality") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val specialityCode: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listDocumentTemplatesBySpeciality.specialityCode")!!.let {
+                    (it as? DocumentTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "listDocumentTemplatesBySpeciality") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = specialityCode as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "listDocumentTemplatesBySpeciality") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).listDocumentTemplatesBySpeciality(specialityCode)
 
@@ -945,50 +795,20 @@ class DocumentTemplateApiTest() {
                 println("Endpoint modifyDocumentTemplate skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyDocumentTemplate")
-                val documentTemplateId: kotlin.String = TestUtils.getParameter(fileName, "modifyDocumentTemplate.documentTemplateId")!!
-                    if (documentTemplateId as? Collection<*> == null) {
-                        documentTemplateId.also {
-                    if (TestUtils.isAutoRev(fileName, "modifyDocumentTemplate") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val documentTemplateId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "modifyDocumentTemplate.documentTemplateId")!!.let {
+                    (it as? DocumentTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyDocumentTemplate") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = documentTemplateId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "modifyDocumentTemplate") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val documentTemplateDto: DocumentTemplateDto = TestUtils.getParameter<DocumentTemplateDto>(fileName, "modifyDocumentTemplate.documentTemplateDto")!!.let {
+                    (it as? DocumentTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyDocumentTemplate") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? DocumentTemplateDto ?: it
                     }
-                }
-                val documentTemplateDto: DocumentTemplateDto = TestUtils.getParameter(fileName, "modifyDocumentTemplate.documentTemplateDto")!!
-                    if (documentTemplateDto as? Collection<*> == null) {
-                        documentTemplateDto.also {
-                    if (TestUtils.isAutoRev(fileName, "modifyDocumentTemplate") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<DocumentTemplateDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = documentTemplateDto as? Collection<DocumentTemplateDto> ?: emptyList<DocumentTemplateDto>() as Collection<DocumentTemplateDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "modifyDocumentTemplate") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).modifyDocumentTemplate(documentTemplateId,documentTemplateDto)
 
@@ -1048,50 +868,20 @@ class DocumentTemplateApiTest() {
                 println("Endpoint setDocumentTemplateAttachment skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "setDocumentTemplateAttachment")
-                val documentTemplateId: kotlin.String = TestUtils.getParameter(fileName, "setDocumentTemplateAttachment.documentTemplateId")!!
-                    if (documentTemplateId as? Collection<*> == null) {
-                        documentTemplateId.also {
-                    if (TestUtils.isAutoRev(fileName, "setDocumentTemplateAttachment") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val documentTemplateId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "setDocumentTemplateAttachment.documentTemplateId")!!.let {
+                    (it as? DocumentTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "setDocumentTemplateAttachment") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = documentTemplateId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "setDocumentTemplateAttachment") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
-                val ioIcureKrakenClientInfrastructureByteArrayWrapper: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> = TestUtils.getParameter(fileName, "setDocumentTemplateAttachment.ioIcureKrakenClientInfrastructureByteArrayWrapper")!!
-                    if (ioIcureKrakenClientInfrastructureByteArrayWrapper as? Collection<*> == null) {
-                        ioIcureKrakenClientInfrastructureByteArrayWrapper.also {
-                    if (TestUtils.isAutoRev(fileName, "setDocumentTemplateAttachment") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = ioIcureKrakenClientInfrastructureByteArrayWrapper as? Collection<io.icure.kraken.client.infrastructure.ByteArrayWrapper> ?: emptyList<io.icure.kraken.client.infrastructure.ByteArrayWrapper>() as Collection<io.icure.kraken.client.infrastructure.ByteArrayWrapper>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "setDocumentTemplateAttachment") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
+                val ioIcureKrakenClientInfrastructureByteArrayWrapper: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> = TestUtils.getParameter<kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>>(fileName, "setDocumentTemplateAttachment.ioIcureKrakenClientInfrastructureByteArrayWrapper")!!.map {
+                    (it as? DocumentTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "setDocumentTemplateAttachment") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } ?: it
+                    } as kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>
 
                 val response = api(credentialsFile).setDocumentTemplateAttachment(documentTemplateId,ioIcureKrakenClientInfrastructureByteArrayWrapper)
 
@@ -1151,50 +941,20 @@ class DocumentTemplateApiTest() {
                 println("Endpoint setDocumentTemplateAttachmentJson skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "setDocumentTemplateAttachmentJson")
-                val documentTemplateId: kotlin.String = TestUtils.getParameter(fileName, "setDocumentTemplateAttachmentJson.documentTemplateId")!!
-                    if (documentTemplateId as? Collection<*> == null) {
-                        documentTemplateId.also {
-                    if (TestUtils.isAutoRev(fileName, "setDocumentTemplateAttachmentJson") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val documentTemplateId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "setDocumentTemplateAttachmentJson.documentTemplateId")!!.let {
+                    (it as? DocumentTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "setDocumentTemplateAttachmentJson") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = documentTemplateId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "setDocumentTemplateAttachmentJson") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val byteArrayDto: ByteArrayDto = TestUtils.getParameter<ByteArrayDto>(fileName, "setDocumentTemplateAttachmentJson.byteArrayDto")!!.let {
+                    (it as? DocumentTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "setDocumentTemplateAttachmentJson") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? ByteArrayDto ?: it
                     }
-                }
-                val byteArrayDto: ByteArrayDto = TestUtils.getParameter(fileName, "setDocumentTemplateAttachmentJson.byteArrayDto")!!
-                    if (byteArrayDto as? Collection<*> == null) {
-                        byteArrayDto.also {
-                    if (TestUtils.isAutoRev(fileName, "setDocumentTemplateAttachmentJson") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<ByteArrayDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = byteArrayDto as? Collection<ByteArrayDto> ?: emptyList<ByteArrayDto>() as Collection<ByteArrayDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "setDocumentTemplateAttachmentJson") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getDocumentTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).setDocumentTemplateAttachmentJson(documentTemplateId,byteArrayDto)
 
@@ -1270,7 +1030,7 @@ class DocumentTemplateApiTest() {
             else -> {
                 val toSkip : kotlin.collections.List<String> = when {
                     functionName.let { name -> listOf("create").any { name.startsWith(it) } } -> listOf("id", "rev", "created", "modified")
-                    functionName.let { name -> listOf("set").any { name.startsWith(it) } } -> listOf("rev")
+                    functionName.let { name -> listOf("set",  "modify").any { name.startsWith(it) } } -> listOf("rev")
                     else -> emptyList()
                 }
                 val diffs = filterDiffs(objectFromFile, response, response.differences(objectFromFile), toSkip)

@@ -135,28 +135,13 @@ class AccessLogApiTest() {
                 println("Endpoint createAccessLog skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createAccessLog")
-                val accessLogDto: AccessLogDto = TestUtils.getParameter(fileName, "createAccessLog.accessLogDto")!!
-                    if (accessLogDto as? Collection<*> == null) {
-                        accessLogDto.also {
-                    if (TestUtils.isAutoRev(fileName, "createAccessLog") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<AccessLogDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val accessLogDto: AccessLogDto = TestUtils.getParameter<AccessLogDto>(fileName, "createAccessLog.accessLogDto")!!.let {
+                    (it as? AccessLogDto)?.takeIf { TestUtils.isAutoRev(fileName, "createAccessLog") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? AccessLogDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = accessLogDto as? Collection<AccessLogDto> ?: emptyList<AccessLogDto>() as Collection<AccessLogDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "createAccessLog") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).createAccessLog(accessLogDto)
 
@@ -216,28 +201,13 @@ class AccessLogApiTest() {
                 println("Endpoint deleteAccessLogs skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteAccessLogs")
-                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter(fileName, "deleteAccessLogs.listOfIdsDto")!!
-                    if (listOfIdsDto as? Collection<*> == null) {
-                        listOfIdsDto.also {
-                    if (TestUtils.isAutoRev(fileName, "deleteAccessLogs") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<ListOfIdsDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "deleteAccessLogs.listOfIdsDto")!!.let {
+                    (it as? AccessLogDto)?.takeIf { TestUtils.isAutoRev(fileName, "deleteAccessLogs") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? ListOfIdsDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = listOfIdsDto as? Collection<ListOfIdsDto> ?: emptyList<ListOfIdsDto>() as Collection<ListOfIdsDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "deleteAccessLogs") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).deleteAccessLogs(listOfIdsDto)
 
@@ -297,138 +267,48 @@ class AccessLogApiTest() {
                 println("Endpoint findAccessLogsBy skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "findAccessLogsBy")
-                val fromEpoch: kotlin.Long? = TestUtils.getParameter(fileName, "findAccessLogsBy.fromEpoch")
-                    if (fromEpoch as? Collection<*> == null) {
-                        fromEpoch.also {
-                    if (TestUtils.isAutoRev(fileName, "findAccessLogsBy") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.Long>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val fromEpoch: kotlin.Long? = TestUtils.getParameter<kotlin.Long>(fileName, "findAccessLogsBy.fromEpoch")?.let {
+                    (it as? AccessLogDto)?.takeIf { TestUtils.isAutoRev(fileName, "findAccessLogsBy") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.Long ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = fromEpoch as? Collection<kotlin.Long> ?: emptyList<kotlin.Long>() as Collection<kotlin.Long>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findAccessLogsBy") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val toEpoch: kotlin.Long? = TestUtils.getParameter<kotlin.Long>(fileName, "findAccessLogsBy.toEpoch")?.let {
+                    (it as? AccessLogDto)?.takeIf { TestUtils.isAutoRev(fileName, "findAccessLogsBy") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.Long ?: it
                     }
-                }
-                val toEpoch: kotlin.Long? = TestUtils.getParameter(fileName, "findAccessLogsBy.toEpoch")
-                    if (toEpoch as? Collection<*> == null) {
-                        toEpoch.also {
-                    if (TestUtils.isAutoRev(fileName, "findAccessLogsBy") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.Long>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val startKey: kotlin.Long? = TestUtils.getParameter<kotlin.Long>(fileName, "findAccessLogsBy.startKey")?.let {
+                    (it as? AccessLogDto)?.takeIf { TestUtils.isAutoRev(fileName, "findAccessLogsBy") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.Long ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = toEpoch as? Collection<kotlin.Long> ?: emptyList<kotlin.Long>() as Collection<kotlin.Long>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findAccessLogsBy") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val startDocumentId: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findAccessLogsBy.startDocumentId")?.let {
+                    (it as? AccessLogDto)?.takeIf { TestUtils.isAutoRev(fileName, "findAccessLogsBy") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                val startKey: kotlin.Long? = TestUtils.getParameter(fileName, "findAccessLogsBy.startKey")
-                    if (startKey as? Collection<*> == null) {
-                        startKey.also {
-                    if (TestUtils.isAutoRev(fileName, "findAccessLogsBy") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.Long>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val limit: kotlin.Int? = TestUtils.getParameter<kotlin.Int>(fileName, "findAccessLogsBy.limit")?.let {
+                    (it as? AccessLogDto)?.takeIf { TestUtils.isAutoRev(fileName, "findAccessLogsBy") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.Int ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = startKey as? Collection<kotlin.Long> ?: emptyList<kotlin.Long>() as Collection<kotlin.Long>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findAccessLogsBy") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val descending: kotlin.Boolean? = TestUtils.getParameter<kotlin.Boolean>(fileName, "findAccessLogsBy.descending")?.let {
+                    (it as? AccessLogDto)?.takeIf { TestUtils.isAutoRev(fileName, "findAccessLogsBy") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.Boolean ?: it
                     }
-                }
-                val startDocumentId: kotlin.String? = TestUtils.getParameter(fileName, "findAccessLogsBy.startDocumentId")
-                    if (startDocumentId as? Collection<*> == null) {
-                        startDocumentId.also {
-                    if (TestUtils.isAutoRev(fileName, "findAccessLogsBy") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = startDocumentId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findAccessLogsBy") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
-                val limit: kotlin.Int? = TestUtils.getParameter(fileName, "findAccessLogsBy.limit")
-                    if (limit as? Collection<*> == null) {
-                        limit.also {
-                    if (TestUtils.isAutoRev(fileName, "findAccessLogsBy") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.Int>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = limit as? Collection<kotlin.Int> ?: emptyList<kotlin.Int>() as Collection<kotlin.Int>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findAccessLogsBy") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
-                val descending: kotlin.Boolean? = TestUtils.getParameter(fileName, "findAccessLogsBy.descending")
-                    if (descending as? Collection<*> == null) {
-                        descending.also {
-                    if (TestUtils.isAutoRev(fileName, "findAccessLogsBy") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.Boolean>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = descending as? Collection<kotlin.Boolean> ?: emptyList<kotlin.Boolean>() as Collection<kotlin.Boolean>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findAccessLogsBy") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).findAccessLogsBy(fromEpoch,toEpoch,startKey,startDocumentId,limit,descending)
 
@@ -488,160 +368,55 @@ class AccessLogApiTest() {
                 println("Endpoint findAccessLogsByUserAfterDate skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "findAccessLogsByUserAfterDate")
-                val userId: kotlin.String = TestUtils.getParameter(fileName, "findAccessLogsByUserAfterDate.userId")!!
-                    if (userId as? Collection<*> == null) {
-                        userId.also {
-                    if (TestUtils.isAutoRev(fileName, "findAccessLogsByUserAfterDate") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val userId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "findAccessLogsByUserAfterDate.userId")!!.let {
+                    (it as? AccessLogDto)?.takeIf { TestUtils.isAutoRev(fileName, "findAccessLogsByUserAfterDate") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = userId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findAccessLogsByUserAfterDate") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val accessType: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findAccessLogsByUserAfterDate.accessType")?.let {
+                    (it as? AccessLogDto)?.takeIf { TestUtils.isAutoRev(fileName, "findAccessLogsByUserAfterDate") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                val accessType: kotlin.String? = TestUtils.getParameter(fileName, "findAccessLogsByUserAfterDate.accessType")
-                    if (accessType as? Collection<*> == null) {
-                        accessType.also {
-                    if (TestUtils.isAutoRev(fileName, "findAccessLogsByUserAfterDate") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val startDate: kotlin.Long? = TestUtils.getParameter<kotlin.Long>(fileName, "findAccessLogsByUserAfterDate.startDate")?.let {
+                    (it as? AccessLogDto)?.takeIf { TestUtils.isAutoRev(fileName, "findAccessLogsByUserAfterDate") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.Long ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = accessType as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findAccessLogsByUserAfterDate") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val startKey: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findAccessLogsByUserAfterDate.startKey")?.let {
+                    (it as? AccessLogDto)?.takeIf { TestUtils.isAutoRev(fileName, "findAccessLogsByUserAfterDate") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                val startDate: kotlin.Long? = TestUtils.getParameter(fileName, "findAccessLogsByUserAfterDate.startDate")
-                    if (startDate as? Collection<*> == null) {
-                        startDate.also {
-                    if (TestUtils.isAutoRev(fileName, "findAccessLogsByUserAfterDate") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.Long>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val startDocumentId: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findAccessLogsByUserAfterDate.startDocumentId")?.let {
+                    (it as? AccessLogDto)?.takeIf { TestUtils.isAutoRev(fileName, "findAccessLogsByUserAfterDate") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = startDate as? Collection<kotlin.Long> ?: emptyList<kotlin.Long>() as Collection<kotlin.Long>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findAccessLogsByUserAfterDate") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val limit: kotlin.Int? = TestUtils.getParameter<kotlin.Int>(fileName, "findAccessLogsByUserAfterDate.limit")?.let {
+                    (it as? AccessLogDto)?.takeIf { TestUtils.isAutoRev(fileName, "findAccessLogsByUserAfterDate") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.Int ?: it
                     }
-                }
-                val startKey: kotlin.String? = TestUtils.getParameter(fileName, "findAccessLogsByUserAfterDate.startKey")
-                    if (startKey as? Collection<*> == null) {
-                        startKey.also {
-                    if (TestUtils.isAutoRev(fileName, "findAccessLogsByUserAfterDate") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val descending: kotlin.Boolean? = TestUtils.getParameter<kotlin.Boolean>(fileName, "findAccessLogsByUserAfterDate.descending")?.let {
+                    (it as? AccessLogDto)?.takeIf { TestUtils.isAutoRev(fileName, "findAccessLogsByUserAfterDate") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.Boolean ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = startKey as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findAccessLogsByUserAfterDate") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
-                val startDocumentId: kotlin.String? = TestUtils.getParameter(fileName, "findAccessLogsByUserAfterDate.startDocumentId")
-                    if (startDocumentId as? Collection<*> == null) {
-                        startDocumentId.also {
-                    if (TestUtils.isAutoRev(fileName, "findAccessLogsByUserAfterDate") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = startDocumentId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findAccessLogsByUserAfterDate") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
-                val limit: kotlin.Int? = TestUtils.getParameter(fileName, "findAccessLogsByUserAfterDate.limit")
-                    if (limit as? Collection<*> == null) {
-                        limit.also {
-                    if (TestUtils.isAutoRev(fileName, "findAccessLogsByUserAfterDate") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.Int>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = limit as? Collection<kotlin.Int> ?: emptyList<kotlin.Int>() as Collection<kotlin.Int>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findAccessLogsByUserAfterDate") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
-                val descending: kotlin.Boolean? = TestUtils.getParameter(fileName, "findAccessLogsByUserAfterDate.descending")
-                    if (descending as? Collection<*> == null) {
-                        descending.also {
-                    if (TestUtils.isAutoRev(fileName, "findAccessLogsByUserAfterDate") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.Boolean>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = descending as? Collection<kotlin.Boolean> ?: emptyList<kotlin.Boolean>() as Collection<kotlin.Boolean>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findAccessLogsByUserAfterDate") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).findAccessLogsByUserAfterDate(userId,accessType,startDate,startKey,startDocumentId,limit,descending)
 
@@ -701,28 +476,13 @@ class AccessLogApiTest() {
                 println("Endpoint getAccessLog skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getAccessLog")
-                val accessLogId: kotlin.String = TestUtils.getParameter(fileName, "getAccessLog.accessLogId")!!
-                    if (accessLogId as? Collection<*> == null) {
-                        accessLogId.also {
-                    if (TestUtils.isAutoRev(fileName, "getAccessLog") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val accessLogId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getAccessLog.accessLogId")!!.let {
+                    (it as? AccessLogDto)?.takeIf { TestUtils.isAutoRev(fileName, "getAccessLog") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = accessLogId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getAccessLog") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).getAccessLog(accessLogId)
 
@@ -782,50 +542,20 @@ class AccessLogApiTest() {
                 println("Endpoint listAccessLogsByHCPartyAndPatientForeignKeys skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listAccessLogsByHCPartyAndPatientForeignKeys")
-                val hcPartyId: kotlin.String = TestUtils.getParameter(fileName, "listAccessLogsByHCPartyAndPatientForeignKeys.hcPartyId")!!
-                    if (hcPartyId as? Collection<*> == null) {
-                        hcPartyId.also {
-                    if (TestUtils.isAutoRev(fileName, "listAccessLogsByHCPartyAndPatientForeignKeys") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val hcPartyId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listAccessLogsByHCPartyAndPatientForeignKeys.hcPartyId")!!.let {
+                    (it as? AccessLogDto)?.takeIf { TestUtils.isAutoRev(fileName, "listAccessLogsByHCPartyAndPatientForeignKeys") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = hcPartyId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "listAccessLogsByHCPartyAndPatientForeignKeys") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val secretFKeys: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listAccessLogsByHCPartyAndPatientForeignKeys.secretFKeys")!!.let {
+                    (it as? AccessLogDto)?.takeIf { TestUtils.isAutoRev(fileName, "listAccessLogsByHCPartyAndPatientForeignKeys") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                val secretFKeys: kotlin.String = TestUtils.getParameter(fileName, "listAccessLogsByHCPartyAndPatientForeignKeys.secretFKeys")!!
-                    if (secretFKeys as? Collection<*> == null) {
-                        secretFKeys.also {
-                    if (TestUtils.isAutoRev(fileName, "listAccessLogsByHCPartyAndPatientForeignKeys") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = secretFKeys as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "listAccessLogsByHCPartyAndPatientForeignKeys") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).listAccessLogsByHCPartyAndPatientForeignKeys(hcPartyId,secretFKeys)
 
@@ -885,28 +615,13 @@ class AccessLogApiTest() {
                 println("Endpoint modifyAccessLog skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyAccessLog")
-                val accessLogDto: AccessLogDto = TestUtils.getParameter(fileName, "modifyAccessLog.accessLogDto")!!
-                    if (accessLogDto as? Collection<*> == null) {
-                        accessLogDto.also {
-                    if (TestUtils.isAutoRev(fileName, "modifyAccessLog") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<AccessLogDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val accessLogDto: AccessLogDto = TestUtils.getParameter<AccessLogDto>(fileName, "modifyAccessLog.accessLogDto")!!.let {
+                    (it as? AccessLogDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyAccessLog") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? AccessLogDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = accessLogDto as? Collection<AccessLogDto> ?: emptyList<AccessLogDto>() as Collection<AccessLogDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "modifyAccessLog") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getAccessLog(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).modifyAccessLog(accessLogDto)
 
@@ -982,7 +697,7 @@ class AccessLogApiTest() {
             else -> {
                 val toSkip : kotlin.collections.List<String> = when {
                     functionName.let { name -> listOf("create").any { name.startsWith(it) } } -> listOf("id", "rev", "created", "modified")
-                    functionName.let { name -> listOf("set").any { name.startsWith(it) } } -> listOf("rev")
+                    functionName.let { name -> listOf("set",  "modify").any { name.startsWith(it) } } -> listOf("rev")
                     else -> emptyList()
                 }
                 val diffs = filterDiffs(objectFromFile, response, response.differences(objectFromFile), toSkip)

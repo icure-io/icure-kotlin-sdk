@@ -134,28 +134,13 @@ class MedicalLocationApiTest() {
                 println("Endpoint createMedicalLocation skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createMedicalLocation")
-                val medicalLocationDto: MedicalLocationDto = TestUtils.getParameter(fileName, "createMedicalLocation.medicalLocationDto")!!
-                    if (medicalLocationDto as? Collection<*> == null) {
-                        medicalLocationDto.also {
-                    if (TestUtils.isAutoRev(fileName, "createMedicalLocation") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getMedicalLocation(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<MedicalLocationDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val medicalLocationDto: MedicalLocationDto = TestUtils.getParameter<MedicalLocationDto>(fileName, "createMedicalLocation.medicalLocationDto")!!.let {
+                    (it as? MedicalLocationDto)?.takeIf { TestUtils.isAutoRev(fileName, "createMedicalLocation") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getMedicalLocation(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? MedicalLocationDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = medicalLocationDto as? Collection<MedicalLocationDto> ?: emptyList<MedicalLocationDto>() as Collection<MedicalLocationDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "createMedicalLocation") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getMedicalLocation(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).createMedicalLocation(medicalLocationDto)
 
@@ -215,28 +200,13 @@ class MedicalLocationApiTest() {
                 println("Endpoint deleteMedicalLocations skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteMedicalLocations")
-                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter(fileName, "deleteMedicalLocations.listOfIdsDto")!!
-                    if (listOfIdsDto as? Collection<*> == null) {
-                        listOfIdsDto.also {
-                    if (TestUtils.isAutoRev(fileName, "deleteMedicalLocations") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getMedicalLocation(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<ListOfIdsDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "deleteMedicalLocations.listOfIdsDto")!!.let {
+                    (it as? MedicalLocationDto)?.takeIf { TestUtils.isAutoRev(fileName, "deleteMedicalLocations") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getMedicalLocation(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? ListOfIdsDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = listOfIdsDto as? Collection<ListOfIdsDto> ?: emptyList<ListOfIdsDto>() as Collection<ListOfIdsDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "deleteMedicalLocations") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getMedicalLocation(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).deleteMedicalLocations(listOfIdsDto)
 
@@ -296,28 +266,13 @@ class MedicalLocationApiTest() {
                 println("Endpoint getMedicalLocation skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getMedicalLocation")
-                val locationId: kotlin.String = TestUtils.getParameter(fileName, "getMedicalLocation.locationId")!!
-                    if (locationId as? Collection<*> == null) {
-                        locationId.also {
-                    if (TestUtils.isAutoRev(fileName, "getMedicalLocation") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getMedicalLocation(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val locationId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getMedicalLocation.locationId")!!.let {
+                    (it as? MedicalLocationDto)?.takeIf { TestUtils.isAutoRev(fileName, "getMedicalLocation") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getMedicalLocation(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = locationId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getMedicalLocation") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getMedicalLocation(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).getMedicalLocation(locationId)
 
@@ -436,28 +391,13 @@ class MedicalLocationApiTest() {
                 println("Endpoint modifyMedicalLocation skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyMedicalLocation")
-                val medicalLocationDto: MedicalLocationDto = TestUtils.getParameter(fileName, "modifyMedicalLocation.medicalLocationDto")!!
-                    if (medicalLocationDto as? Collection<*> == null) {
-                        medicalLocationDto.also {
-                    if (TestUtils.isAutoRev(fileName, "modifyMedicalLocation") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getMedicalLocation(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<MedicalLocationDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val medicalLocationDto: MedicalLocationDto = TestUtils.getParameter<MedicalLocationDto>(fileName, "modifyMedicalLocation.medicalLocationDto")!!.let {
+                    (it as? MedicalLocationDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyMedicalLocation") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getMedicalLocation(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? MedicalLocationDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = medicalLocationDto as? Collection<MedicalLocationDto> ?: emptyList<MedicalLocationDto>() as Collection<MedicalLocationDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "modifyMedicalLocation") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getMedicalLocation(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).modifyMedicalLocation(medicalLocationDto)
 
@@ -533,7 +473,7 @@ class MedicalLocationApiTest() {
             else -> {
                 val toSkip : kotlin.collections.List<String> = when {
                     functionName.let { name -> listOf("create").any { name.startsWith(it) } } -> listOf("id", "rev", "created", "modified")
-                    functionName.let { name -> listOf("set").any { name.startsWith(it) } } -> listOf("rev")
+                    functionName.let { name -> listOf("set",  "modify").any { name.startsWith(it) } } -> listOf("rev")
                     else -> emptyList()
                 }
                 val diffs = filterDiffs(objectFromFile, response, response.differences(objectFromFile), toSkip)

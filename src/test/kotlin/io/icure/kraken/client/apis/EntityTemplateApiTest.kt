@@ -134,28 +134,13 @@ class EntityTemplateApiTest() {
                 println("Endpoint createEntityTemplate skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createEntityTemplate")
-                val entityTemplateDto: EntityTemplateDto = TestUtils.getParameter(fileName, "createEntityTemplate.entityTemplateDto")!!
-                    if (entityTemplateDto as? Collection<*> == null) {
-                        entityTemplateDto.also {
-                    if (TestUtils.isAutoRev(fileName, "createEntityTemplate") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<EntityTemplateDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val entityTemplateDto: EntityTemplateDto = TestUtils.getParameter<EntityTemplateDto>(fileName, "createEntityTemplate.entityTemplateDto")!!.let {
+                    (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "createEntityTemplate") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? EntityTemplateDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = entityTemplateDto as? Collection<EntityTemplateDto> ?: emptyList<EntityTemplateDto>() as Collection<EntityTemplateDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "createEntityTemplate") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).createEntityTemplate(entityTemplateDto)
 
@@ -215,28 +200,13 @@ class EntityTemplateApiTest() {
                 println("Endpoint createEntityTemplates skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createEntityTemplates")
-                val entityTemplateDto: kotlin.collections.List<EntityTemplateDto> = TestUtils.getParameter(fileName, "createEntityTemplates.entityTemplateDto")!!
-                    if (entityTemplateDto as? Collection<*> == null) {
-                        entityTemplateDto.also {
-                    if (TestUtils.isAutoRev(fileName, "createEntityTemplates") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.collections.List<EntityTemplateDto>>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = entityTemplateDto as? Collection<EntityTemplateDto> ?: emptyList<EntityTemplateDto>() as Collection<EntityTemplateDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "createEntityTemplates") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
+                val entityTemplateDto: kotlin.collections.List<EntityTemplateDto> = TestUtils.getParameter<kotlin.collections.List<EntityTemplateDto>>(fileName, "createEntityTemplates.entityTemplateDto")!!.map {
+                    (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "createEntityTemplates") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } ?: it
+                    } as kotlin.collections.List<EntityTemplateDto>
 
                 val response = api(credentialsFile).createEntityTemplates(entityTemplateDto)
 
@@ -296,28 +266,13 @@ class EntityTemplateApiTest() {
                 println("Endpoint deleteEntityTemplate skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteEntityTemplate")
-                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter(fileName, "deleteEntityTemplate.listOfIdsDto")!!
-                    if (listOfIdsDto as? Collection<*> == null) {
-                        listOfIdsDto.also {
-                    if (TestUtils.isAutoRev(fileName, "deleteEntityTemplate") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<ListOfIdsDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "deleteEntityTemplate.listOfIdsDto")!!.let {
+                    (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "deleteEntityTemplate") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? ListOfIdsDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = listOfIdsDto as? Collection<ListOfIdsDto> ?: emptyList<ListOfIdsDto>() as Collection<ListOfIdsDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "deleteEntityTemplate") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).deleteEntityTemplate(listOfIdsDto)
 
@@ -377,72 +332,27 @@ class EntityTemplateApiTest() {
                 println("Endpoint findAllEntityTemplatesByKeyword skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "findAllEntityTemplatesByKeyword")
-                val type: kotlin.String = TestUtils.getParameter(fileName, "findAllEntityTemplatesByKeyword.type")!!
-                    if (type as? Collection<*> == null) {
-                        type.also {
-                    if (TestUtils.isAutoRev(fileName, "findAllEntityTemplatesByKeyword") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val type: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "findAllEntityTemplatesByKeyword.type")!!.let {
+                    (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "findAllEntityTemplatesByKeyword") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = type as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findAllEntityTemplatesByKeyword") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val keyword: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "findAllEntityTemplatesByKeyword.keyword")!!.let {
+                    (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "findAllEntityTemplatesByKeyword") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                val keyword: kotlin.String = TestUtils.getParameter(fileName, "findAllEntityTemplatesByKeyword.keyword")!!
-                    if (keyword as? Collection<*> == null) {
-                        keyword.also {
-                    if (TestUtils.isAutoRev(fileName, "findAllEntityTemplatesByKeyword") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val includeEntities: kotlin.Boolean? = TestUtils.getParameter<kotlin.Boolean>(fileName, "findAllEntityTemplatesByKeyword.includeEntities")?.let {
+                    (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "findAllEntityTemplatesByKeyword") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.Boolean ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = keyword as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findAllEntityTemplatesByKeyword") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
-                val includeEntities: kotlin.Boolean? = TestUtils.getParameter(fileName, "findAllEntityTemplatesByKeyword.includeEntities")
-                    if (includeEntities as? Collection<*> == null) {
-                        includeEntities.also {
-                    if (TestUtils.isAutoRev(fileName, "findAllEntityTemplatesByKeyword") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.Boolean>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = includeEntities as? Collection<kotlin.Boolean> ?: emptyList<kotlin.Boolean>() as Collection<kotlin.Boolean>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findAllEntityTemplatesByKeyword") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).findAllEntityTemplatesByKeyword(type,keyword,includeEntities)
 
@@ -502,28 +412,13 @@ class EntityTemplateApiTest() {
                 println("Endpoint getEntityTemplate skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getEntityTemplate")
-                val entityTemplateId: kotlin.String = TestUtils.getParameter(fileName, "getEntityTemplate.entityTemplateId")!!
-                    if (entityTemplateId as? Collection<*> == null) {
-                        entityTemplateId.also {
-                    if (TestUtils.isAutoRev(fileName, "getEntityTemplate") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val entityTemplateId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getEntityTemplate.entityTemplateId")!!.let {
+                    (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "getEntityTemplate") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = entityTemplateId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getEntityTemplate") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).getEntityTemplate(entityTemplateId)
 
@@ -583,28 +478,13 @@ class EntityTemplateApiTest() {
                 println("Endpoint getEntityTemplates skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getEntityTemplates")
-                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter(fileName, "getEntityTemplates.listOfIdsDto")!!
-                    if (listOfIdsDto as? Collection<*> == null) {
-                        listOfIdsDto.also {
-                    if (TestUtils.isAutoRev(fileName, "getEntityTemplates") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<ListOfIdsDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "getEntityTemplates.listOfIdsDto")!!.let {
+                    (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "getEntityTemplates") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? ListOfIdsDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = listOfIdsDto as? Collection<ListOfIdsDto> ?: emptyList<ListOfIdsDto>() as Collection<ListOfIdsDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getEntityTemplates") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).getEntityTemplates(listOfIdsDto)
 
@@ -664,72 +544,27 @@ class EntityTemplateApiTest() {
                 println("Endpoint listAllEntityTemplatesBy skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listAllEntityTemplatesBy")
-                val type: kotlin.String = TestUtils.getParameter(fileName, "listAllEntityTemplatesBy.type")!!
-                    if (type as? Collection<*> == null) {
-                        type.also {
-                    if (TestUtils.isAutoRev(fileName, "listAllEntityTemplatesBy") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val type: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listAllEntityTemplatesBy.type")!!.let {
+                    (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "listAllEntityTemplatesBy") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = type as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "listAllEntityTemplatesBy") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val searchString: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "listAllEntityTemplatesBy.searchString")?.let {
+                    (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "listAllEntityTemplatesBy") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                val searchString: kotlin.String? = TestUtils.getParameter(fileName, "listAllEntityTemplatesBy.searchString")
-                    if (searchString as? Collection<*> == null) {
-                        searchString.also {
-                    if (TestUtils.isAutoRev(fileName, "listAllEntityTemplatesBy") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val includeEntities: kotlin.Boolean? = TestUtils.getParameter<kotlin.Boolean>(fileName, "listAllEntityTemplatesBy.includeEntities")?.let {
+                    (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "listAllEntityTemplatesBy") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.Boolean ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = searchString as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "listAllEntityTemplatesBy") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
-                val includeEntities: kotlin.Boolean? = TestUtils.getParameter(fileName, "listAllEntityTemplatesBy.includeEntities")
-                    if (includeEntities as? Collection<*> == null) {
-                        includeEntities.also {
-                    if (TestUtils.isAutoRev(fileName, "listAllEntityTemplatesBy") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.Boolean>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = includeEntities as? Collection<kotlin.Boolean> ?: emptyList<kotlin.Boolean>() as Collection<kotlin.Boolean>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "listAllEntityTemplatesBy") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).listAllEntityTemplatesBy(type,searchString,includeEntities)
 
@@ -789,94 +624,34 @@ class EntityTemplateApiTest() {
                 println("Endpoint listEntityTemplatesBy skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listEntityTemplatesBy")
-                val userId: kotlin.String = TestUtils.getParameter(fileName, "listEntityTemplatesBy.userId")!!
-                    if (userId as? Collection<*> == null) {
-                        userId.also {
-                    if (TestUtils.isAutoRev(fileName, "listEntityTemplatesBy") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val userId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listEntityTemplatesBy.userId")!!.let {
+                    (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "listEntityTemplatesBy") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = userId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "listEntityTemplatesBy") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val type: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listEntityTemplatesBy.type")!!.let {
+                    (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "listEntityTemplatesBy") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                val type: kotlin.String = TestUtils.getParameter(fileName, "listEntityTemplatesBy.type")!!
-                    if (type as? Collection<*> == null) {
-                        type.also {
-                    if (TestUtils.isAutoRev(fileName, "listEntityTemplatesBy") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val searchString: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "listEntityTemplatesBy.searchString")?.let {
+                    (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "listEntityTemplatesBy") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = type as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "listEntityTemplatesBy") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val includeEntities: kotlin.Boolean? = TestUtils.getParameter<kotlin.Boolean>(fileName, "listEntityTemplatesBy.includeEntities")?.let {
+                    (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "listEntityTemplatesBy") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.Boolean ?: it
                     }
-                }
-                val searchString: kotlin.String? = TestUtils.getParameter(fileName, "listEntityTemplatesBy.searchString")
-                    if (searchString as? Collection<*> == null) {
-                        searchString.also {
-                    if (TestUtils.isAutoRev(fileName, "listEntityTemplatesBy") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = searchString as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "listEntityTemplatesBy") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
-                val includeEntities: kotlin.Boolean? = TestUtils.getParameter(fileName, "listEntityTemplatesBy.includeEntities")
-                    if (includeEntities as? Collection<*> == null) {
-                        includeEntities.also {
-                    if (TestUtils.isAutoRev(fileName, "listEntityTemplatesBy") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.Boolean>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = includeEntities as? Collection<kotlin.Boolean> ?: emptyList<kotlin.Boolean>() as Collection<kotlin.Boolean>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "listEntityTemplatesBy") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).listEntityTemplatesBy(userId,type,searchString,includeEntities)
 
@@ -936,94 +711,34 @@ class EntityTemplateApiTest() {
                 println("Endpoint listEntityTemplatesByKeyword skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listEntityTemplatesByKeyword")
-                val userId: kotlin.String = TestUtils.getParameter(fileName, "listEntityTemplatesByKeyword.userId")!!
-                    if (userId as? Collection<*> == null) {
-                        userId.also {
-                    if (TestUtils.isAutoRev(fileName, "listEntityTemplatesByKeyword") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val userId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listEntityTemplatesByKeyword.userId")!!.let {
+                    (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "listEntityTemplatesByKeyword") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = userId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "listEntityTemplatesByKeyword") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val type: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listEntityTemplatesByKeyword.type")!!.let {
+                    (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "listEntityTemplatesByKeyword") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                val type: kotlin.String = TestUtils.getParameter(fileName, "listEntityTemplatesByKeyword.type")!!
-                    if (type as? Collection<*> == null) {
-                        type.also {
-                    if (TestUtils.isAutoRev(fileName, "listEntityTemplatesByKeyword") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val keyword: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listEntityTemplatesByKeyword.keyword")!!.let {
+                    (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "listEntityTemplatesByKeyword") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = type as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "listEntityTemplatesByKeyword") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val includeEntities: kotlin.Boolean? = TestUtils.getParameter<kotlin.Boolean>(fileName, "listEntityTemplatesByKeyword.includeEntities")?.let {
+                    (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "listEntityTemplatesByKeyword") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.Boolean ?: it
                     }
-                }
-                val keyword: kotlin.String = TestUtils.getParameter(fileName, "listEntityTemplatesByKeyword.keyword")!!
-                    if (keyword as? Collection<*> == null) {
-                        keyword.also {
-                    if (TestUtils.isAutoRev(fileName, "listEntityTemplatesByKeyword") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = keyword as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "listEntityTemplatesByKeyword") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
-                val includeEntities: kotlin.Boolean? = TestUtils.getParameter(fileName, "listEntityTemplatesByKeyword.includeEntities")
-                    if (includeEntities as? Collection<*> == null) {
-                        includeEntities.also {
-                    if (TestUtils.isAutoRev(fileName, "listEntityTemplatesByKeyword") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.Boolean>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = includeEntities as? Collection<kotlin.Boolean> ?: emptyList<kotlin.Boolean>() as Collection<kotlin.Boolean>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "listEntityTemplatesByKeyword") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).listEntityTemplatesByKeyword(userId,type,keyword,includeEntities)
 
@@ -1083,28 +798,13 @@ class EntityTemplateApiTest() {
                 println("Endpoint modifyEntityTemplate skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyEntityTemplate")
-                val entityTemplateDto: EntityTemplateDto = TestUtils.getParameter(fileName, "modifyEntityTemplate.entityTemplateDto")!!
-                    if (entityTemplateDto as? Collection<*> == null) {
-                        entityTemplateDto.also {
-                    if (TestUtils.isAutoRev(fileName, "modifyEntityTemplate") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<EntityTemplateDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val entityTemplateDto: EntityTemplateDto = TestUtils.getParameter<EntityTemplateDto>(fileName, "modifyEntityTemplate.entityTemplateDto")!!.let {
+                    (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyEntityTemplate") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? EntityTemplateDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = entityTemplateDto as? Collection<EntityTemplateDto> ?: emptyList<EntityTemplateDto>() as Collection<EntityTemplateDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "modifyEntityTemplate") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).modifyEntityTemplate(entityTemplateDto)
 
@@ -1164,28 +864,13 @@ class EntityTemplateApiTest() {
                 println("Endpoint modifyEntityTemplates skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyEntityTemplates")
-                val entityTemplateDto: kotlin.collections.List<EntityTemplateDto> = TestUtils.getParameter(fileName, "modifyEntityTemplates.entityTemplateDto")!!
-                    if (entityTemplateDto as? Collection<*> == null) {
-                        entityTemplateDto.also {
-                    if (TestUtils.isAutoRev(fileName, "modifyEntityTemplates") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.collections.List<EntityTemplateDto>>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = entityTemplateDto as? Collection<EntityTemplateDto> ?: emptyList<EntityTemplateDto>() as Collection<EntityTemplateDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "modifyEntityTemplates") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
+                val entityTemplateDto: kotlin.collections.List<EntityTemplateDto> = TestUtils.getParameter<kotlin.collections.List<EntityTemplateDto>>(fileName, "modifyEntityTemplates.entityTemplateDto")!!.map {
+                    (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyEntityTemplates") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } ?: it
+                    } as kotlin.collections.List<EntityTemplateDto>
 
                 val response = api(credentialsFile).modifyEntityTemplates(entityTemplateDto)
 
@@ -1261,7 +946,7 @@ class EntityTemplateApiTest() {
             else -> {
                 val toSkip : kotlin.collections.List<String> = when {
                     functionName.let { name -> listOf("create").any { name.startsWith(it) } } -> listOf("id", "rev", "created", "modified")
-                    functionName.let { name -> listOf("set").any { name.startsWith(it) } } -> listOf("rev")
+                    functionName.let { name -> listOf("set",  "modify").any { name.startsWith(it) } } -> listOf("rev")
                     else -> emptyList()
                 }
                 val diffs = filterDiffs(objectFromFile, response, response.differences(objectFromFile), toSkip)

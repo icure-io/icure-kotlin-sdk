@@ -134,28 +134,13 @@ class KeywordApiTest() {
                 println("Endpoint createKeyword skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createKeyword")
-                val keywordDto: KeywordDto = TestUtils.getParameter(fileName, "createKeyword.keywordDto")!!
-                    if (keywordDto as? Collection<*> == null) {
-                        keywordDto.also {
-                    if (TestUtils.isAutoRev(fileName, "createKeyword") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getKeyword(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<KeywordDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val keywordDto: KeywordDto = TestUtils.getParameter<KeywordDto>(fileName, "createKeyword.keywordDto")!!.let {
+                    (it as? KeywordDto)?.takeIf { TestUtils.isAutoRev(fileName, "createKeyword") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getKeyword(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? KeywordDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = keywordDto as? Collection<KeywordDto> ?: emptyList<KeywordDto>() as Collection<KeywordDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "createKeyword") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getKeyword(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).createKeyword(keywordDto)
 
@@ -215,28 +200,13 @@ class KeywordApiTest() {
                 println("Endpoint deleteKeywords skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteKeywords")
-                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter(fileName, "deleteKeywords.listOfIdsDto")!!
-                    if (listOfIdsDto as? Collection<*> == null) {
-                        listOfIdsDto.also {
-                    if (TestUtils.isAutoRev(fileName, "deleteKeywords") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getKeyword(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<ListOfIdsDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "deleteKeywords.listOfIdsDto")!!.let {
+                    (it as? KeywordDto)?.takeIf { TestUtils.isAutoRev(fileName, "deleteKeywords") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getKeyword(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? ListOfIdsDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = listOfIdsDto as? Collection<ListOfIdsDto> ?: emptyList<ListOfIdsDto>() as Collection<ListOfIdsDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "deleteKeywords") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getKeyword(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).deleteKeywords(listOfIdsDto)
 
@@ -296,28 +266,13 @@ class KeywordApiTest() {
                 println("Endpoint getKeyword skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getKeyword")
-                val keywordId: kotlin.String = TestUtils.getParameter(fileName, "getKeyword.keywordId")!!
-                    if (keywordId as? Collection<*> == null) {
-                        keywordId.also {
-                    if (TestUtils.isAutoRev(fileName, "getKeyword") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getKeyword(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val keywordId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getKeyword.keywordId")!!.let {
+                    (it as? KeywordDto)?.takeIf { TestUtils.isAutoRev(fileName, "getKeyword") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getKeyword(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = keywordId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getKeyword") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getKeyword(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).getKeyword(keywordId)
 
@@ -436,28 +391,13 @@ class KeywordApiTest() {
                 println("Endpoint getKeywordsByUser skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getKeywordsByUser")
-                val userId: kotlin.String = TestUtils.getParameter(fileName, "getKeywordsByUser.userId")!!
-                    if (userId as? Collection<*> == null) {
-                        userId.also {
-                    if (TestUtils.isAutoRev(fileName, "getKeywordsByUser") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getKeyword(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val userId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getKeywordsByUser.userId")!!.let {
+                    (it as? KeywordDto)?.takeIf { TestUtils.isAutoRev(fileName, "getKeywordsByUser") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getKeyword(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = userId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getKeywordsByUser") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getKeyword(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).getKeywordsByUser(userId)
 
@@ -517,28 +457,13 @@ class KeywordApiTest() {
                 println("Endpoint modifyKeyword skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyKeyword")
-                val keywordDto: KeywordDto = TestUtils.getParameter(fileName, "modifyKeyword.keywordDto")!!
-                    if (keywordDto as? Collection<*> == null) {
-                        keywordDto.also {
-                    if (TestUtils.isAutoRev(fileName, "modifyKeyword") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getKeyword(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<KeywordDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val keywordDto: KeywordDto = TestUtils.getParameter<KeywordDto>(fileName, "modifyKeyword.keywordDto")!!.let {
+                    (it as? KeywordDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyKeyword") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getKeyword(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? KeywordDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = keywordDto as? Collection<KeywordDto> ?: emptyList<KeywordDto>() as Collection<KeywordDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "modifyKeyword") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getKeyword(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).modifyKeyword(keywordDto)
 
@@ -614,7 +539,7 @@ class KeywordApiTest() {
             else -> {
                 val toSkip : kotlin.collections.List<String> = when {
                     functionName.let { name -> listOf("create").any { name.startsWith(it) } } -> listOf("id", "rev", "created", "modified")
-                    functionName.let { name -> listOf("set").any { name.startsWith(it) } } -> listOf("rev")
+                    functionName.let { name -> listOf("set",  "modify").any { name.startsWith(it) } } -> listOf("rev")
                     else -> emptyList()
                 }
                 val diffs = filterDiffs(objectFromFile, response, response.differences(objectFromFile), toSkip)

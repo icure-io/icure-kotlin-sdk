@@ -136,28 +136,13 @@ class ClassificationTemplateApiTest() {
                 println("Endpoint createClassificationTemplate skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createClassificationTemplate")
-                val classificationTemplateDto: ClassificationTemplateDto = TestUtils.getParameter(fileName, "createClassificationTemplate.classificationTemplateDto")!!
-                    if (classificationTemplateDto as? Collection<*> == null) {
-                        classificationTemplateDto.also {
-                    if (TestUtils.isAutoRev(fileName, "createClassificationTemplate") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getClassificationTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<ClassificationTemplateDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val classificationTemplateDto: ClassificationTemplateDto = TestUtils.getParameter<ClassificationTemplateDto>(fileName, "createClassificationTemplate.classificationTemplateDto")!!.let {
+                    (it as? ClassificationTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "createClassificationTemplate") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getClassificationTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? ClassificationTemplateDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = classificationTemplateDto as? Collection<ClassificationTemplateDto> ?: emptyList<ClassificationTemplateDto>() as Collection<ClassificationTemplateDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "createClassificationTemplate") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getClassificationTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).createClassificationTemplate(classificationTemplateDto)
 
@@ -217,28 +202,13 @@ class ClassificationTemplateApiTest() {
                 println("Endpoint deleteClassificationTemplates skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteClassificationTemplates")
-                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter(fileName, "deleteClassificationTemplates.listOfIdsDto")!!
-                    if (listOfIdsDto as? Collection<*> == null) {
-                        listOfIdsDto.also {
-                    if (TestUtils.isAutoRev(fileName, "deleteClassificationTemplates") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getClassificationTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<ListOfIdsDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "deleteClassificationTemplates.listOfIdsDto")!!.let {
+                    (it as? ClassificationTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "deleteClassificationTemplates") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getClassificationTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? ListOfIdsDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = listOfIdsDto as? Collection<ListOfIdsDto> ?: emptyList<ListOfIdsDto>() as Collection<ListOfIdsDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "deleteClassificationTemplates") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getClassificationTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).deleteClassificationTemplates(listOfIdsDto)
 
@@ -298,72 +268,27 @@ class ClassificationTemplateApiTest() {
                 println("Endpoint findClassificationTemplatesBy skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "findClassificationTemplatesBy")
-                val startKey: kotlin.String? = TestUtils.getParameter(fileName, "findClassificationTemplatesBy.startKey")
-                    if (startKey as? Collection<*> == null) {
-                        startKey.also {
-                    if (TestUtils.isAutoRev(fileName, "findClassificationTemplatesBy") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getClassificationTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val startKey: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findClassificationTemplatesBy.startKey")?.let {
+                    (it as? ClassificationTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "findClassificationTemplatesBy") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getClassificationTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = startKey as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findClassificationTemplatesBy") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getClassificationTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val startDocumentId: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findClassificationTemplatesBy.startDocumentId")?.let {
+                    (it as? ClassificationTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "findClassificationTemplatesBy") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getClassificationTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                val startDocumentId: kotlin.String? = TestUtils.getParameter(fileName, "findClassificationTemplatesBy.startDocumentId")
-                    if (startDocumentId as? Collection<*> == null) {
-                        startDocumentId.also {
-                    if (TestUtils.isAutoRev(fileName, "findClassificationTemplatesBy") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getClassificationTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val limit: kotlin.Int? = TestUtils.getParameter<kotlin.Int>(fileName, "findClassificationTemplatesBy.limit")?.let {
+                    (it as? ClassificationTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "findClassificationTemplatesBy") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getClassificationTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.Int ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = startDocumentId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findClassificationTemplatesBy") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getClassificationTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
-                val limit: kotlin.Int? = TestUtils.getParameter(fileName, "findClassificationTemplatesBy.limit")
-                    if (limit as? Collection<*> == null) {
-                        limit.also {
-                    if (TestUtils.isAutoRev(fileName, "findClassificationTemplatesBy") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getClassificationTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.Int>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = limit as? Collection<kotlin.Int> ?: emptyList<kotlin.Int>() as Collection<kotlin.Int>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findClassificationTemplatesBy") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getClassificationTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).findClassificationTemplatesBy(startKey,startDocumentId,limit)
 
@@ -423,28 +348,13 @@ class ClassificationTemplateApiTest() {
                 println("Endpoint getClassificationTemplate skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getClassificationTemplate")
-                val classificationTemplateId: kotlin.String = TestUtils.getParameter(fileName, "getClassificationTemplate.classificationTemplateId")!!
-                    if (classificationTemplateId as? Collection<*> == null) {
-                        classificationTemplateId.also {
-                    if (TestUtils.isAutoRev(fileName, "getClassificationTemplate") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getClassificationTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val classificationTemplateId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getClassificationTemplate.classificationTemplateId")!!.let {
+                    (it as? ClassificationTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "getClassificationTemplate") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getClassificationTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = classificationTemplateId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getClassificationTemplate") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getClassificationTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).getClassificationTemplate(classificationTemplateId)
 
@@ -504,28 +414,13 @@ class ClassificationTemplateApiTest() {
                 println("Endpoint getClassificationTemplateByIds skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getClassificationTemplateByIds")
-                val ids: kotlin.String = TestUtils.getParameter(fileName, "getClassificationTemplateByIds.ids")!!
-                    if (ids as? Collection<*> == null) {
-                        ids.also {
-                    if (TestUtils.isAutoRev(fileName, "getClassificationTemplateByIds") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getClassificationTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val ids: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getClassificationTemplateByIds.ids")!!.let {
+                    (it as? ClassificationTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "getClassificationTemplateByIds") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getClassificationTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = ids as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getClassificationTemplateByIds") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getClassificationTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).getClassificationTemplateByIds(ids)
 
@@ -585,50 +480,20 @@ class ClassificationTemplateApiTest() {
                 println("Endpoint listClassificationTemplatesByHCPartyPatientForeignKeys skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listClassificationTemplatesByHCPartyPatientForeignKeys")
-                val hcPartyId: kotlin.String = TestUtils.getParameter(fileName, "listClassificationTemplatesByHCPartyPatientForeignKeys.hcPartyId")!!
-                    if (hcPartyId as? Collection<*> == null) {
-                        hcPartyId.also {
-                    if (TestUtils.isAutoRev(fileName, "listClassificationTemplatesByHCPartyPatientForeignKeys") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getClassificationTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val hcPartyId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listClassificationTemplatesByHCPartyPatientForeignKeys.hcPartyId")!!.let {
+                    (it as? ClassificationTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "listClassificationTemplatesByHCPartyPatientForeignKeys") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getClassificationTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = hcPartyId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "listClassificationTemplatesByHCPartyPatientForeignKeys") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getClassificationTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val secretFKeys: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listClassificationTemplatesByHCPartyPatientForeignKeys.secretFKeys")!!.let {
+                    (it as? ClassificationTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "listClassificationTemplatesByHCPartyPatientForeignKeys") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getClassificationTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                val secretFKeys: kotlin.String = TestUtils.getParameter(fileName, "listClassificationTemplatesByHCPartyPatientForeignKeys.secretFKeys")!!
-                    if (secretFKeys as? Collection<*> == null) {
-                        secretFKeys.also {
-                    if (TestUtils.isAutoRev(fileName, "listClassificationTemplatesByHCPartyPatientForeignKeys") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getClassificationTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = secretFKeys as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "listClassificationTemplatesByHCPartyPatientForeignKeys") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getClassificationTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).listClassificationTemplatesByHCPartyPatientForeignKeys(hcPartyId,secretFKeys)
 
@@ -688,28 +553,13 @@ class ClassificationTemplateApiTest() {
                 println("Endpoint modifyClassificationTemplate skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyClassificationTemplate")
-                val classificationTemplateDto: ClassificationTemplateDto = TestUtils.getParameter(fileName, "modifyClassificationTemplate.classificationTemplateDto")!!
-                    if (classificationTemplateDto as? Collection<*> == null) {
-                        classificationTemplateDto.also {
-                    if (TestUtils.isAutoRev(fileName, "modifyClassificationTemplate") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getClassificationTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<ClassificationTemplateDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val classificationTemplateDto: ClassificationTemplateDto = TestUtils.getParameter<ClassificationTemplateDto>(fileName, "modifyClassificationTemplate.classificationTemplateDto")!!.let {
+                    (it as? ClassificationTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyClassificationTemplate") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getClassificationTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? ClassificationTemplateDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = classificationTemplateDto as? Collection<ClassificationTemplateDto> ?: emptyList<ClassificationTemplateDto>() as Collection<ClassificationTemplateDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "modifyClassificationTemplate") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getClassificationTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).modifyClassificationTemplate(classificationTemplateDto)
 
@@ -769,50 +619,20 @@ class ClassificationTemplateApiTest() {
                 println("Endpoint newClassificationTemplateDelegations skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "newClassificationTemplateDelegations")
-                val classificationTemplateId: kotlin.String = TestUtils.getParameter(fileName, "newClassificationTemplateDelegations.classificationTemplateId")!!
-                    if (classificationTemplateId as? Collection<*> == null) {
-                        classificationTemplateId.also {
-                    if (TestUtils.isAutoRev(fileName, "newClassificationTemplateDelegations") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getClassificationTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val classificationTemplateId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "newClassificationTemplateDelegations.classificationTemplateId")!!.let {
+                    (it as? ClassificationTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "newClassificationTemplateDelegations") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getClassificationTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = classificationTemplateId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "newClassificationTemplateDelegations") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getClassificationTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
-                val delegationDto: kotlin.collections.List<DelegationDto> = TestUtils.getParameter(fileName, "newClassificationTemplateDelegations.delegationDto")!!
-                    if (delegationDto as? Collection<*> == null) {
-                        delegationDto.also {
-                    if (TestUtils.isAutoRev(fileName, "newClassificationTemplateDelegations") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getClassificationTemplate(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.collections.List<DelegationDto>>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = delegationDto as? Collection<DelegationDto> ?: emptyList<DelegationDto>() as Collection<DelegationDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "newClassificationTemplateDelegations") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getClassificationTemplate(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
+                val delegationDto: kotlin.collections.List<DelegationDto> = TestUtils.getParameter<kotlin.collections.List<DelegationDto>>(fileName, "newClassificationTemplateDelegations.delegationDto")!!.map {
+                    (it as? ClassificationTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "newClassificationTemplateDelegations") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getClassificationTemplate(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } ?: it
+                    } as kotlin.collections.List<DelegationDto>
 
                 val response = api(credentialsFile).newClassificationTemplateDelegations(classificationTemplateId,delegationDto)
 
@@ -888,7 +708,7 @@ class ClassificationTemplateApiTest() {
             else -> {
                 val toSkip : kotlin.collections.List<String> = when {
                     functionName.let { name -> listOf("create").any { name.startsWith(it) } } -> listOf("id", "rev", "created", "modified")
-                    functionName.let { name -> listOf("set").any { name.startsWith(it) } } -> listOf("rev")
+                    functionName.let { name -> listOf("set",  "modify").any { name.startsWith(it) } } -> listOf("rev")
                     else -> emptyList()
                 }
                 val diffs = filterDiffs(objectFromFile, response, response.differences(objectFromFile), toSkip)

@@ -135,28 +135,13 @@ class CalendarItemApiTest() {
                 println("Endpoint createCalendarItem skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createCalendarItem")
-                val calendarItemDto: CalendarItemDto = TestUtils.getParameter(fileName, "createCalendarItem.calendarItemDto")!!
-                    if (calendarItemDto as? Collection<*> == null) {
-                        calendarItemDto.also {
-                    if (TestUtils.isAutoRev(fileName, "createCalendarItem") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<CalendarItemDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val calendarItemDto: CalendarItemDto = TestUtils.getParameter<CalendarItemDto>(fileName, "createCalendarItem.calendarItemDto")!!.let {
+                    (it as? CalendarItemDto)?.takeIf { TestUtils.isAutoRev(fileName, "createCalendarItem") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? CalendarItemDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = calendarItemDto as? Collection<CalendarItemDto> ?: emptyList<CalendarItemDto>() as Collection<CalendarItemDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "createCalendarItem") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).createCalendarItem(calendarItemDto)
 
@@ -216,28 +201,13 @@ class CalendarItemApiTest() {
                 println("Endpoint deleteCalendarItems skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteCalendarItems")
-                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter(fileName, "deleteCalendarItems.listOfIdsDto")!!
-                    if (listOfIdsDto as? Collection<*> == null) {
-                        listOfIdsDto.also {
-                    if (TestUtils.isAutoRev(fileName, "deleteCalendarItems") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<ListOfIdsDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "deleteCalendarItems.listOfIdsDto")!!.let {
+                    (it as? CalendarItemDto)?.takeIf { TestUtils.isAutoRev(fileName, "deleteCalendarItems") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? ListOfIdsDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = listOfIdsDto as? Collection<ListOfIdsDto> ?: emptyList<ListOfIdsDto>() as Collection<ListOfIdsDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "deleteCalendarItems") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).deleteCalendarItems(listOfIdsDto)
 
@@ -297,50 +267,20 @@ class CalendarItemApiTest() {
                 println("Endpoint findCalendarItemsByHCPartyPatientForeignKeys skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "findCalendarItemsByHCPartyPatientForeignKeys")
-                val hcPartyId: kotlin.String = TestUtils.getParameter(fileName, "findCalendarItemsByHCPartyPatientForeignKeys.hcPartyId")!!
-                    if (hcPartyId as? Collection<*> == null) {
-                        hcPartyId.also {
-                    if (TestUtils.isAutoRev(fileName, "findCalendarItemsByHCPartyPatientForeignKeys") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val hcPartyId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "findCalendarItemsByHCPartyPatientForeignKeys.hcPartyId")!!.let {
+                    (it as? CalendarItemDto)?.takeIf { TestUtils.isAutoRev(fileName, "findCalendarItemsByHCPartyPatientForeignKeys") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = hcPartyId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findCalendarItemsByHCPartyPatientForeignKeys") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val secretFKeys: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "findCalendarItemsByHCPartyPatientForeignKeys.secretFKeys")!!.let {
+                    (it as? CalendarItemDto)?.takeIf { TestUtils.isAutoRev(fileName, "findCalendarItemsByHCPartyPatientForeignKeys") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                val secretFKeys: kotlin.String = TestUtils.getParameter(fileName, "findCalendarItemsByHCPartyPatientForeignKeys.secretFKeys")!!
-                    if (secretFKeys as? Collection<*> == null) {
-                        secretFKeys.also {
-                    if (TestUtils.isAutoRev(fileName, "findCalendarItemsByHCPartyPatientForeignKeys") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = secretFKeys as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "findCalendarItemsByHCPartyPatientForeignKeys") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).findCalendarItemsByHCPartyPatientForeignKeys(hcPartyId,secretFKeys)
 
@@ -400,28 +340,13 @@ class CalendarItemApiTest() {
                 println("Endpoint getCalendarItem skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getCalendarItem")
-                val calendarItemId: kotlin.String = TestUtils.getParameter(fileName, "getCalendarItem.calendarItemId")!!
-                    if (calendarItemId as? Collection<*> == null) {
-                        calendarItemId.also {
-                    if (TestUtils.isAutoRev(fileName, "getCalendarItem") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val calendarItemId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getCalendarItem.calendarItemId")!!.let {
+                    (it as? CalendarItemDto)?.takeIf { TestUtils.isAutoRev(fileName, "getCalendarItem") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = calendarItemId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getCalendarItem") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).getCalendarItem(calendarItemId)
 
@@ -540,72 +465,27 @@ class CalendarItemApiTest() {
                 println("Endpoint getCalendarItemsByPeriodAndHcPartyId skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getCalendarItemsByPeriodAndHcPartyId")
-                val startDate: kotlin.Long = TestUtils.getParameter(fileName, "getCalendarItemsByPeriodAndHcPartyId.startDate")!!
-                    if (startDate as? Collection<*> == null) {
-                        startDate.also {
-                    if (TestUtils.isAutoRev(fileName, "getCalendarItemsByPeriodAndHcPartyId") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.Long>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val startDate: kotlin.Long = TestUtils.getParameter<kotlin.Long>(fileName, "getCalendarItemsByPeriodAndHcPartyId.startDate")!!.let {
+                    (it as? CalendarItemDto)?.takeIf { TestUtils.isAutoRev(fileName, "getCalendarItemsByPeriodAndHcPartyId") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.Long ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = startDate as? Collection<kotlin.Long> ?: emptyList<kotlin.Long>() as Collection<kotlin.Long>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getCalendarItemsByPeriodAndHcPartyId") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val endDate: kotlin.Long = TestUtils.getParameter<kotlin.Long>(fileName, "getCalendarItemsByPeriodAndHcPartyId.endDate")!!.let {
+                    (it as? CalendarItemDto)?.takeIf { TestUtils.isAutoRev(fileName, "getCalendarItemsByPeriodAndHcPartyId") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.Long ?: it
                     }
-                }
-                val endDate: kotlin.Long = TestUtils.getParameter(fileName, "getCalendarItemsByPeriodAndHcPartyId.endDate")!!
-                    if (endDate as? Collection<*> == null) {
-                        endDate.also {
-                    if (TestUtils.isAutoRev(fileName, "getCalendarItemsByPeriodAndHcPartyId") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.Long>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val hcPartyId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getCalendarItemsByPeriodAndHcPartyId.hcPartyId")!!.let {
+                    (it as? CalendarItemDto)?.takeIf { TestUtils.isAutoRev(fileName, "getCalendarItemsByPeriodAndHcPartyId") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = endDate as? Collection<kotlin.Long> ?: emptyList<kotlin.Long>() as Collection<kotlin.Long>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getCalendarItemsByPeriodAndHcPartyId") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
-                val hcPartyId: kotlin.String = TestUtils.getParameter(fileName, "getCalendarItemsByPeriodAndHcPartyId.hcPartyId")!!
-                    if (hcPartyId as? Collection<*> == null) {
-                        hcPartyId.also {
-                    if (TestUtils.isAutoRev(fileName, "getCalendarItemsByPeriodAndHcPartyId") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = hcPartyId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getCalendarItemsByPeriodAndHcPartyId") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).getCalendarItemsByPeriodAndHcPartyId(startDate,endDate,hcPartyId)
 
@@ -665,28 +545,13 @@ class CalendarItemApiTest() {
                 println("Endpoint getCalendarItemsWithIds skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getCalendarItemsWithIds")
-                val listOfIdsDto: ListOfIdsDto? = TestUtils.getParameter(fileName, "getCalendarItemsWithIds.listOfIdsDto")
-                    if (listOfIdsDto as? Collection<*> == null) {
-                        listOfIdsDto.also {
-                    if (TestUtils.isAutoRev(fileName, "getCalendarItemsWithIds") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<ListOfIdsDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val listOfIdsDto: ListOfIdsDto? = TestUtils.getParameter<ListOfIdsDto>(fileName, "getCalendarItemsWithIds.listOfIdsDto")?.let {
+                    (it as? CalendarItemDto)?.takeIf { TestUtils.isAutoRev(fileName, "getCalendarItemsWithIds") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? ListOfIdsDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = listOfIdsDto as? Collection<ListOfIdsDto> ?: emptyList<ListOfIdsDto>() as Collection<ListOfIdsDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getCalendarItemsWithIds") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).getCalendarItemsWithIds(listOfIdsDto)
 
@@ -746,72 +611,27 @@ class CalendarItemApiTest() {
                 println("Endpoint getCalendarsByPeriodAndAgendaId skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getCalendarsByPeriodAndAgendaId")
-                val startDate: kotlin.Long = TestUtils.getParameter(fileName, "getCalendarsByPeriodAndAgendaId.startDate")!!
-                    if (startDate as? Collection<*> == null) {
-                        startDate.also {
-                    if (TestUtils.isAutoRev(fileName, "getCalendarsByPeriodAndAgendaId") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.Long>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val startDate: kotlin.Long = TestUtils.getParameter<kotlin.Long>(fileName, "getCalendarsByPeriodAndAgendaId.startDate")!!.let {
+                    (it as? CalendarItemDto)?.takeIf { TestUtils.isAutoRev(fileName, "getCalendarsByPeriodAndAgendaId") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.Long ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = startDate as? Collection<kotlin.Long> ?: emptyList<kotlin.Long>() as Collection<kotlin.Long>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getCalendarsByPeriodAndAgendaId") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
+                val endDate: kotlin.Long = TestUtils.getParameter<kotlin.Long>(fileName, "getCalendarsByPeriodAndAgendaId.endDate")!!.let {
+                    (it as? CalendarItemDto)?.takeIf { TestUtils.isAutoRev(fileName, "getCalendarsByPeriodAndAgendaId") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.Long ?: it
                     }
-                }
-                val endDate: kotlin.Long = TestUtils.getParameter(fileName, "getCalendarsByPeriodAndAgendaId.endDate")!!
-                    if (endDate as? Collection<*> == null) {
-                        endDate.also {
-                    if (TestUtils.isAutoRev(fileName, "getCalendarsByPeriodAndAgendaId") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.Long>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val agendaId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getCalendarsByPeriodAndAgendaId.agendaId")!!.let {
+                    (it as? CalendarItemDto)?.takeIf { TestUtils.isAutoRev(fileName, "getCalendarsByPeriodAndAgendaId") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = endDate as? Collection<kotlin.Long> ?: emptyList<kotlin.Long>() as Collection<kotlin.Long>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getCalendarsByPeriodAndAgendaId") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
-                val agendaId: kotlin.String = TestUtils.getParameter(fileName, "getCalendarsByPeriodAndAgendaId.agendaId")!!
-                    if (agendaId as? Collection<*> == null) {
-                        agendaId.also {
-                    if (TestUtils.isAutoRev(fileName, "getCalendarsByPeriodAndAgendaId") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.String>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = agendaId as? Collection<kotlin.String> ?: emptyList<kotlin.String>() as Collection<kotlin.String>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "getCalendarsByPeriodAndAgendaId") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).getCalendarsByPeriodAndAgendaId(startDate,endDate,agendaId)
 
@@ -871,28 +691,13 @@ class CalendarItemApiTest() {
                 println("Endpoint modifyCalendarItem skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyCalendarItem")
-                val calendarItemDto: CalendarItemDto = TestUtils.getParameter(fileName, "modifyCalendarItem.calendarItemDto")!!
-                    if (calendarItemDto as? Collection<*> == null) {
-                        calendarItemDto.also {
-                    if (TestUtils.isAutoRev(fileName, "modifyCalendarItem") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<CalendarItemDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                val calendarItemDto: CalendarItemDto = TestUtils.getParameter<CalendarItemDto>(fileName, "modifyCalendarItem.calendarItemDto")!!.let {
+                    (it as? CalendarItemDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyCalendarItem") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? CalendarItemDto ?: it
                     }
-                }
-                } else {
-                    val paramAsCollection = calendarItemDto as? Collection<CalendarItemDto> ?: emptyList<CalendarItemDto>() as Collection<CalendarItemDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "modifyCalendarItem") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
 
                 val response = api(credentialsFile).modifyCalendarItem(calendarItemDto)
 
@@ -952,28 +757,13 @@ class CalendarItemApiTest() {
                 println("Endpoint setCalendarItemsDelegations skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "setCalendarItemsDelegations")
-                val icureStubDto: kotlin.collections.List<IcureStubDto>? = TestUtils.getParameter(fileName, "setCalendarItemsDelegations.icureStubDto")
-                    if (icureStubDto as? Collection<*> == null) {
-                        icureStubDto.also {
-                    if (TestUtils.isAutoRev(fileName, "setCalendarItemsDelegations") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<kotlin.collections.List<IcureStubDto>>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = icureStubDto as? Collection<IcureStubDto> ?: emptyList<IcureStubDto>() as Collection<IcureStubDto>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "setCalendarItemsDelegations") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
+                val icureStubDto: kotlin.collections.List<IcureStubDto>? = TestUtils.getParameter<kotlin.collections.List<IcureStubDto>>(fileName, "setCalendarItemsDelegations.icureStubDto")?.map {
+                    (it as? CalendarItemDto)?.takeIf { TestUtils.isAutoRev(fileName, "setCalendarItemsDelegations") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } ?: it
+                    } as? kotlin.collections.List<IcureStubDto>
 
                 val response = api(credentialsFile).setCalendarItemsDelegations(icureStubDto)
 
@@ -1049,7 +839,7 @@ class CalendarItemApiTest() {
             else -> {
                 val toSkip : kotlin.collections.List<String> = when {
                     functionName.let { name -> listOf("create").any { name.startsWith(it) } } -> listOf("id", "rev", "created", "modified")
-                    functionName.let { name -> listOf("set").any { name.startsWith(it) } } -> listOf("rev")
+                    functionName.let { name -> listOf("set",  "modify").any { name.startsWith(it) } } -> listOf("rev")
                     else -> emptyList()
                 }
                 val diffs = filterDiffs(objectFromFile, response, response.differences(objectFromFile), toSkip)
