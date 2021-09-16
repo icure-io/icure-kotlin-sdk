@@ -126,17 +126,17 @@ class {{classname}}Test() {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "{{operationId}}")
                 {{#allParams}}
                 val {{paramName}}: {{{dataType}}}{{^required}}?{{/required}} = TestUtils.getParameter<{{{dataType}}}>(fileName, "{{operationId}}.{{paramName}}"){{#required}}!!{{/required}}{{#isArray}}.map {
-                    if (TestUtils.isAutoRev(fileName, "{{operationId}}") && it != null) {
+                    (it as? {{classBaseName}}Dto)?.takeIf { TestUtils.isAutoRev(fileName, "{{operationId}}") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
                     val currentRev = api(credentialsFile).get{{classBaseName}}(id.getter.call(it) as String).rev
                     it.copy(rev = currentRev)
-                    } else it
+                    } as? {{{dataType}}} ?: it
                     }{{/isArray}}{{^isArray}}.let {
-                    if (TestUtils.isAutoRev(fileName, "{{operationId}}") && it != null) {
+                    (it as? {{classBaseName}}Dto)?.takeIf { TestUtils.isAutoRev(fileName, "{{operationId}}") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
                     val currentRev = api(credentialsFile).get{{classBaseName}}(id.getter.call(it) as String).rev
                     it.copy(rev = currentRev)
-                    } else it
+                    } as? {{{dataType}}} ?: it
                     }{{/isArray}}
                 {{/allParams}}
 
