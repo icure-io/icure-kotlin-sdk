@@ -125,28 +125,19 @@ class {{classname}}Test() {
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "{{operationId}}")
                 {{#allParams}}
-                val {{paramName}}: {{{dataType}}}{{^required}}?{{/required}} = TestUtils.getParameter(fileName, "{{operationId}}.{{paramName}}"){{#required}}!!{{/required}}
-                    if ({{paramName}} as? Collection<*> == null) {
-                        {{paramName}}.also {
+                val {{paramName}}: {{{dataType}}}{{^required}}?{{/required}} = TestUtils.getParameter(fileName, "{{operationId}}.{{paramName}}"){{#required}}!!{{/required}}{{#isArray}}.map {
                     if (TestUtils.isAutoRev(fileName, "{{operationId}}") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).get{{classBaseName}}(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<{{{dataType}}}>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
-                    }
-                }
-                } else {
-                    val paramAsCollection = {{paramName}} as? Collection<{{{baseType}}}{{^baseType}}{{{dataType}}}{{/baseType}}> ?: emptyList<{{{baseType}}}{{^baseType}}{{{dataType}}}{{/baseType}}>() as Collection<{{{baseType}}}{{^baseType}}{{{dataType}}}{{/baseType}}>
-                    paramAsCollection.forEach {
-                        if (TestUtils.isAutoRev(fileName, "{{operationId}}") && it != null) {
-                            val id = it::class.memberProperties.first { it.name == "id" }
-
-                            val currentRev = api(credentialsFile).get{{classBaseName}}(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
-                        }
-                    }
-                }
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).get{{classBaseName}}(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } else it
+                    }{{/isArray}}{{^isArray}}.let {
+                    if (TestUtils.isAutoRev(fileName, "{{operationId}}") && it != null) {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).get{{classBaseName}}(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } else it
+                    }{{/isArray}}
                 {{/allParams}}
 
                 {{#returnType}}val response = {{/returnType}}api(credentialsFile).{{operationId}}({{#allParams}}{{paramName}}{{^-last}},{{/-last}}{{/allParams}})
