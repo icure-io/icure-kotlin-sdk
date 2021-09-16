@@ -584,25 +584,28 @@ class ReceiptApiTest() {
                 println("Endpoint modifyReceipt skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyReceipt")
-                val receiptDto: ReceiptDto = TestUtils.getParameter(fileName, "modifyReceipt.receiptDto")!!
-                    if (receiptDto as? Collection<*> == null) {
-                        receiptDto.also {
-                    if (TestUtils.isAutoRev(fileName, "modifyReceipt") && it != null) {
-                        val id = it::class.memberProperties.first { it.name == "id" }
-                        val currentRev = api(credentialsFile).getReceipt(id.getter.call(it) as String).rev
-                        val rev = object: TypeReference<ReceiptDto>(){}.type::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                        rev.setter.call(it, currentRev)
+                var receiptDto: ReceiptDto = TestUtils.getParameter(fileName, "modifyReceipt.receiptDto")!!
+
+                if (receiptDto as? Collection<*> == null) {
+                    receiptDto.also {
+                        if (TestUtils.isAutoRev(fileName, "modifyReceipt") && it != null) {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+                            val currentRev = api(credentialsFile).getReceipt(id.getter.call(it) as String).rev
+
+                            receiptDto = it.copy(rev = currentRev)
+                        }
                     }
-                }
                 } else {
                     val paramAsCollection = receiptDto as? Collection<ReceiptDto> ?: emptyList<ReceiptDto>() as Collection<ReceiptDto>
-                    paramAsCollection.forEach {
+                    receiptDto = paramAsCollection.map {
                         if (TestUtils.isAutoRev(fileName, "modifyReceipt") && it != null) {
                             val id = it::class.memberProperties.first { it.name == "id" }
 
                             val currentRev = api(credentialsFile).getReceipt(id.getter.call(it) as String).rev
-                            val rev = it::class.memberProperties.filterIsInstance<KMutableProperty<*>>().first { it.name == "rev" }
-                            rev.setter.call(it, currentRev)
+                            it.copy(rev = currentRev)
+                        }
+                        else {
+                            it
                         }
                     }
                 }

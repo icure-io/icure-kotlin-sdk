@@ -111,7 +111,7 @@ class ReceiptApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
 
         return RequestConfig(
-            method = RequestMethod.DELETE,
+            method = RequestMethod.POST,
             path = "/rest/v2/receipt/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
