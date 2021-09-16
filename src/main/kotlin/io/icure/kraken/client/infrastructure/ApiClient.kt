@@ -61,7 +61,8 @@ open class ApiClient(val baseUrl: String, val httpClient: WebClient, val authHea
         return contentType ?: "application/octet-stream"
     }
 
-    protected suspend inline fun <reified I, reified T : Any?> request(requestConfig: RequestConfig<I>): T? {
+    protected inline suspend fun <reified I, reified T : Any?> request(requestConfig: RequestConfig<I>): T? {
+
         val uri = URI(baseUrl).resolve(requestConfig.path).params(
             requestConfig.query.mapValues(defaultMultiValueConverter)
         )

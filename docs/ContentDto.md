@@ -14,6 +14,8 @@ Name | Type | Description | Notes
 **measureValue** | [**MeasureDto**](MeasureDto.md) |  |  [optional]
 **medicationValue** | [**MedicationDto**](MedicationDto.md) |  |  [optional]
 **compoundValue** | [**kotlin.collections.List&lt;ServiceDto&gt;**](ServiceDto.md) | The service for which the content is being filled |  [optional]
+**ratio** | [**PairMeasureMeasure**](PairMeasureMeasure.md) |  |  [optional]
+**range** | [**PairMeasureMeasure**](PairMeasureMeasure.md) |  |  [optional]
 
 
 

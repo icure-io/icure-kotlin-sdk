@@ -1,5 +1,5 @@
 
-# MeasureDto
+# Measure
 
 ## Properties
 Name | Type | Description | Notes
@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **severityCode** | **kotlin.String** |  |  [optional]
 **evolution** | **kotlin.Int** |  |  [optional]
 **unit** | **kotlin.String** |  |  [optional]
-**unitCodes** | [**kotlin.collections.Set&lt;CodeStubDto&gt;**](CodeStubDto.md) |  |  [optional]
+**unitCodes** | [**kotlin.collections.Set&lt;CodeStub&gt;**](CodeStub.md) |  |  [optional]
 **comment** | **kotlin.String** |  |  [optional]
 **comparator** | **kotlin.String** |  |  [optional]
 

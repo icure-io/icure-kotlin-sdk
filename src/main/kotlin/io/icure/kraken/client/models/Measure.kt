@@ -12,7 +12,7 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.CodeStubDto
+import io.icure.kraken.client.models.CodeStub
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
@@ -21,7 +21,7 @@ import com.github.pozo.KotlinBuilder
 
 
 /**
- * Values of measurements recorded. Fields included would be the value, permissible range (min. and max.), severity, unit of measurement, etc 
+ * 
  *
  * @param `value` 
  * @param min 
@@ -39,7 +39,7 @@ import com.github.pozo.KotlinBuilder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @KotlinBuilder
-data class MeasureDto (
+data class Measure (
 
     @field:JsonProperty("value")
     val `value`: kotlin.Double? = null,
@@ -66,7 +66,7 @@ data class MeasureDto (
     val unit: kotlin.String? = null,
 
     @field:JsonProperty("unitCodes")
-    val unitCodes: kotlin.collections.Set<CodeStubDto>? = null,
+    val unitCodes: kotlin.collections.Set<CodeStub>? = null,
 
     @field:JsonProperty("comment")
     val comment: kotlin.String? = null,
