@@ -195,63 +195,41 @@ class {{classname}}Test() {
     private suspend fun assertAreEquals(functionName: String, objectFromFile: Any?, response: Any) {
         when {
             objectFromFile as? Iterable<Any> != null -> {
-                val iterableResponse = (response as? Collection<Any> ?: (emptyList<Any>()))
-                if (functionName.startsWith("create") || functionName.startsWith("new")) { // new
-                    for (fileElement in objectFromFile) {
-                        fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>()
-                            .firstOrNull { it.name == "id" }?.setter?.call(fileElement, null)
-                        fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>()
-                            .firstOrNull { it.name == "rev" }?.setter?.call(fileElement, null)
-                    }
-                    for (responseElement in iterableResponse) {
-                        responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>()
-                            .firstOrNull { it.name == "id" }?.setter?.call(responseElement, null)
-                        responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>()
-                            .firstOrNull { it.name == "rev" }?.setter?.call(responseElement, null)
-                    }
+                val toSkip : kotlin.collections.List<String> = when {
+                    functionName.let { name -> listOf("create", "new").any { name.startsWith(it) } } -> listOf("id", "rev")
+                    functionName.let { name -> listOf("modify", "set", "delete", "list").any { name.startsWith(it) } } -> listOf("rev")
+                    else -> emptyList()
                 }
-                else if (functionName.startsWith("modify") || functionName.startsWith("set") || functionName.startsWith("delete") || functionName.startsWith("list")) { // + set + delete
-                    for (fileElement in objectFromFile) {
-                        fileElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>()
-                            .firstOrNull { it.name == "rev" }?.setter?.call(fileElement, null)
+
+                val diffs = objectFromFile
+                    .takeUnless { (it as ArrayList<Any>).size != (response as ArrayList<Any>).size }
+                    ?.let { objectFromFile
+                        .zip(response as Iterable<Any>)
+                        .map { pair -> filterDiffs(pair.first, pair.second, pair.first.differences(pair.second), toSkip) }
+                        .flatten()
+                        .toList()
                     }
-                    for (responseElement in iterableResponse) {
-                        responseElement::class.memberProperties.filterIsInstance<KMutableProperty<*>>()
-                            .firstOrNull { it.name == "rev" }?.setter?.call(responseElement, null)
-                    }
-                }
-                val diffs = response.differences(objectFromFile)
+                    ?: listOf(Diff("Lists are of different sizes ${(objectFromFile as ArrayList<Any>).size} <-> ${(response as ArrayList<Any>).size}", PropertyType.ListItem, listOf(), objectFromFile, response))
+
                 assertTrue(diffs.isEmpty())
             }
             objectFromFile as? Flow<ByteBuffer> != null -> {
                 objectFromFile.fold(ByteBuffer.allocate(0)) { acc, bb ->
                     ByteBuffer.allocate(bb.limit() + acc.limit()).apply { this.put(acc); this.put(bb) }
-                }.array().contentEquals(
+                }.let { buf -> ByteArray(buf.remaining()).also { buf.get(it) }}.contentEquals(
                     (response as Flow<ByteBuffer>).fold(ByteBuffer.allocate(0)) { acc, bb ->
                         ByteBuffer.allocate(bb.limit() + acc.limit()).apply { this.put(acc); this.put(bb) }
-                    }.array()
+                    }.let { buf -> ByteArray(buf.remaining()).also { buf.get(it) }}
                 )
             }
             else -> {
-                when {
-                    functionName.startsWith("create") || functionName.startsWith("modify") -> {
-                        assertThat(objectFromFile as Any).isEqualToIgnoringGivenProperties(
-                            response,
-                            *(response::class.memberProperties.filter { it.name == "rev" || it.name == "id" || it.name == "created" || it.name == "modified" }
-                                .mapNotNull { it as? KProperty1<Any, Any> }.toTypedArray())
-                        )
-                    }
-                    functionName.startsWith("set") -> {
-                        assertThat(objectFromFile as Any).isEqualToIgnoringGivenProperties(
-                            response,
-                            *(response::class.memberProperties.filter { it.name == "rev" }
-                                .mapNotNull { it as? KProperty1<Any, Any> }.toTypedArray())
-                        )
-                    }
-                    else -> {
-                        assertEquals(objectFromFile, response)
-                    }
+                val toSkip : kotlin.collections.List<String> = when {
+                    functionName.let { name -> listOf("create").any { name.startsWith(it) } } -> listOf("id", "rev", "created", "modified")
+                    functionName.let { name -> listOf("set").any { name.startsWith(it) } } -> listOf("rev")
+                    else -> emptyList()
                 }
+                val diffs = filterDiffs(objectFromFile, response, response.differences(objectFromFile), toSkip)
+                assertTrue(diffs.isEmpty())
             }
         }
     }

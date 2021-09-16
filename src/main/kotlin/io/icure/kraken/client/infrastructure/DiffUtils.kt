@@ -14,86 +14,116 @@
 package io.icure.kraken.client.infrastructure
 
 import kotlin.reflect.KProperty1
+import kotlin.reflect.KTypeProjection.Companion.STAR
+import kotlin.reflect.full.createType
+import kotlin.reflect.full.isSubtypeOf
 import kotlin.reflect.full.memberProperties
 
+data class Diff(val propertyName: String, val propertyType: PropertyType, val diffs: List<Diff> = listOf(), val leftItem: Any? = null, val rightItem: Any? = null) {
+    private fun toString(prefix: String): String {
+        return if (diffs.isEmpty()) "\n$prefix$propertyName" else "\n$prefix$propertyName -> [${diffs.joinToString("\n,") { it.toString("  $prefix") }}\n$prefix]"
+    }
+
+    override fun toString() = toString("")
+}
+
+enum class PropertyType {
+    Primitive, Object, List, ListItem, Set, SetItem
+}
+
+@ExperimentalStdlibApi
 fun <K : Any> K.differences(o: K?): List<Diff> {
     val self: K = this
     return o?.let { other ->
         if (self is List<*>) {
             (this as List<*>).mapIndexedNotNull { idx, v ->
                 when {
-                    idx >= (other as List<*>).size -> {
-                        Diff("${idx} <-> missing", listOf())
-                    }
-                    v != other[idx] -> {
-                        Diff("${idx} <-> ${idx}", v?.differences(other[idx]) ?: listOf())
-                    }
-                    else -> {
-                        null
-                    }
+                    idx>=(other as List<*>).size -> Diff("$idx <-> missing", PropertyType.ListItem, listOf(), v, null)
+                    v != other[idx] -> Diff("$idx <-> $idx", PropertyType.ListItem, v?.differences(other[idx]) ?: listOf(), v, other[idx])
+                    else -> null
                 }
-            } + if ((other as List<*>).size > (this as List<*>).size) other.takeLast(other.size - this.size)
-                .mapIndexed { idx, _ ->
-                    Diff("missing <-> ${idx + this.size}", listOf())
-                } else listOf()
+            } + if ((other as List<*>).size>(this as List<*>).size) other.takeLast(other.size - this.size).mapIndexed { idx, v ->
+                Diff("missing <-> ${idx+this.size}", PropertyType.ListItem, listOf(), null, v)
+            } else listOf()
         } else if (self is Set<*>) {
             val notInSelf = (other as Set<*>) - self
-
             val notInOther = self - (other as Set<*>)
 
             val othersTreated = mutableSetOf<Any>()
 
-            notInSelf.map { s ->
-                Diff(
-                    "<-",
-                    notInOther.map { o -> o to (s?.differences(o) ?: listOf()) }.minByOrNull { it.second.size }?.let {
-                        it.first?.let { it1 -> othersTreated.add(it1) }
-                        it.second.toList()
-                    } ?: listOf())
-            }.toList() +
-                    (notInOther - othersTreated).map { o ->
-                        Diff("->",
-                            notInSelf.map { s -> s?.differences(o) ?: listOf() }.minByOrNull { it.size }?.toList()
-                                ?: listOf()
-                        )
+            notInSelf.map { oth ->
+                val lessDifferent = notInOther.map { slf -> slf to (oth?.differences(slf) ?: listOf()) }.minByOrNull { it.second.size }
+                    ?.also { it.first?.let { it1 -> othersTreated.add(it1) } }
+                Diff("<-", PropertyType.SetItem, lessDifferent?.second?.toList() ?: listOf(), lessDifferent, oth) }.toList() +
+                    (notInOther - othersTreated).map { slf ->
+                        val lessDifferent = notInSelf.map { oth -> oth to (oth?.differences(slf) ?: listOf()) }.minByOrNull { it.second.size }
+                        Diff("->", PropertyType.SetItem, lessDifferent?.second?.toList() ?: listOf(), slf, lessDifferent)
                     }.toList()
-        } else if (self is ByteArray) {
-            when {
-                other !is ByteArray -> {
-                    listOf(Diff("self"))
-                }
-                self.size != other.size -> {
-                    listOf(Diff("self"))
-                }
-                self.withIndex().any { iv -> iv.value != other[iv.index] } -> self.withIndex()
-                    .filter { iv -> iv.value != other[iv.index] }.map { iv ->
-                        Diff(iv.index.toString())
-                    }
-                else -> listOf()
-            }
         } else {
-            val props: Collection<KProperty1<Any, *>> = try {
-                (this::class).memberProperties as Collection<KProperty1<Any, *>>
-            } catch (e: Exception) {
-                listOf()
-            }
+            val props: Collection<KProperty1<Any, *>> = try { (this::class).memberProperties as Collection<KProperty1<Any, *>> } catch (e:Exception) { listOf() }
             props.filter {
                 try {
-                    val selfValue = it.get(self)
-                    val otherValue = it.get(other)
-                    selfValue != otherValue
+                    it.get(self) != it.get(other)
                 } catch (e: Exception) {
                     false
                 }
             }.map { kp ->
-                Diff(kp.name, kp.get(self)?.let { s -> (s as Any?)?.differences((kp.get(other))) } ?: listOf())
+                val isPrimitive =
+                    kp.returnType.isSubtypeOf(Boolean::class.createType(listOf(), true))
+                            || kp.returnType.isSubtypeOf(String::class.createType(listOf(), true))
+                            || kp.returnType.isSubtypeOf(Number::class.createType(listOf(), true))
+                val isList = kp.returnType.isSubtypeOf(List::class.createType(listOf(STAR)))
+                val isSet = kp.returnType.isSubtypeOf(Set::class.createType(listOf(STAR)))
+                Diff(kp.name, if (isPrimitive) PropertyType.Primitive else if (isList) PropertyType.List else if (isSet) PropertyType.Set else PropertyType.Object, kp.takeIf { !isPrimitive } ?.get(self)?.let { s -> (s as Any?)?.differences((kp.get(other))) } ?: listOf(), kp.get(self), kp.get(other))
             }
         }
     } ?: listOf()
 }
 
-data class Diff(val propertyName: String, val diffs: List<Diff> = listOf()) {
-    fun toString(prefix: String = ""): String {
-        return "$prefix$propertyName, diffs=\n${diffs.joinToString("\n") { prefix + it.toString("  $prefix") }})"
+fun <K> filterDiffs(
+    comparedObject: K,
+    referenceObject: K,
+    rawDiffs: List<Diff>,
+    toSkip: List<String>
+): List<Diff> {
+    val compProps = (comparedObject!!::class).memberProperties as Collection<KProperty1<K, *>>
+    val refProps = (referenceObject!!::class).memberProperties as Collection<KProperty1<K, *>>
+    val differences = rawDiffs.mapNotNull { diff ->
+        //Simple cases
+        if (toSkip.contains(diff.propertyName))
+            null
+        else if (toSkip.any { ts ->
+                val match = Regex("\\+" + diff.propertyName + "(->.+)?").matchEntire(ts)
+
+                match != null
+                        && compProps.any { it.name == diff.propertyName && it.get(comparedObject) == null
+                        && (match.groupValues[1].isEmpty() || it.get(referenceObject).toString() == match.groupValues[1].substring(2))
+
+                }
+            }) {
+            null
+        } else if (toSkip.contains("-" + diff.propertyName) && refProps.any {
+                it.name == diff.propertyName && it.get(
+                    referenceObject
+                ) == null
+            }) {
+            null
+        } else {
+            toSkip.fold(diff) { modDiff, ts ->
+                val match = Regex("^([+-]?)(${diff.propertyName}\\.)(.+)").matchEntire(ts)
+                val subTs = match?.let { it.groupValues[1] + it.groupValues[3] }
+                if (subTs != null && (modDiff.propertyType == PropertyType.List || modDiff.propertyType == PropertyType.Set)) {
+                    modDiff.copy(diffs = diff.diffs.mapNotNull { if (it.leftItem == null || it.rightItem == null) it else it.let { it ->
+                        val filterDiffs = filterDiffs(it.leftItem, it.rightItem, it.diffs, listOf(subTs))
+                        it.copy(diffs = filterDiffs)
+                    }.takeIf { it.diffs.isNotEmpty() } })
+                } else if (subTs != null && (modDiff.propertyType == PropertyType.Object)) {
+                    modDiff.copy(diffs = filterDiffs(modDiff.leftItem, modDiff.rightItem, modDiff.diffs, listOf(subTs)))
+                } else {
+                    modDiff
+                }
+            }.takeIf { d -> (d.propertyType != PropertyType.List && d.propertyType != PropertyType.Set && d.propertyType != PropertyType.Object) || d.leftItem == null || d.rightItem == null || d.diffs.isNotEmpty()}
+        }
     }
+    return differences
 }
