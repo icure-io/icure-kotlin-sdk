@@ -502,9 +502,9 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     /**
     * Get all messages starting by a prefix between two date
     * 
+    * @param transportGuid  (optional)
     * @param from  (optional)
     * @param to  (optional)
-    * @param transportGuid  (optional)
     * @param startKey  (optional)
     * @param startDocumentId  (optional)
     * @param limit  (optional)
@@ -516,8 +516,8 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findMessagesByTransportGuidSentDate(from: kotlin.Long?, to: kotlin.Long?, transportGuid: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, hcpId: kotlin.String?) : PaginatedListMessageDto?  {
-        val localVariableConfig = findMessagesByTransportGuidSentDateRequestConfig(from = from, to = to, transportGuid = transportGuid, startKey = startKey, startDocumentId = startDocumentId, limit = limit, hcpId = hcpId)
+    suspend fun findMessagesByTransportGuidSentDate(transportGuid: kotlin.String?, from: kotlin.Long?, to: kotlin.Long?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, hcpId: kotlin.String?) : PaginatedListMessageDto?  {
+        val localVariableConfig = findMessagesByTransportGuidSentDateRequestConfig(transportGuid = transportGuid, from = from, to = to, startKey = startKey, startDocumentId = startDocumentId, limit = limit, hcpId = hcpId)
 
         return request<Unit, PaginatedListMessageDto>(
             localVariableConfig
@@ -527,27 +527,27 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     /**
     * To obtain the request config of the operation findMessagesByTransportGuidSentDate
     *
+    * @param transportGuid  (optional)
     * @param from  (optional)
     * @param to  (optional)
-    * @param transportGuid  (optional)
     * @param startKey  (optional)
     * @param startDocumentId  (optional)
     * @param limit  (optional)
     * @param hcpId  (optional)
     * @return RequestConfig
     */
-    fun findMessagesByTransportGuidSentDateRequestConfig(from: kotlin.Long?, to: kotlin.Long?, transportGuid: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, hcpId: kotlin.String?) : RequestConfig<Unit> {
+    fun findMessagesByTransportGuidSentDateRequestConfig(transportGuid: kotlin.String?, from: kotlin.Long?, to: kotlin.Long?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, hcpId: kotlin.String?) : RequestConfig<Unit> {
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
+                if (transportGuid != null) {
+                    put("transportGuid", listOf(transportGuid.toString()))
+                }
                 if (from != null) {
                     put("from", listOf(from.toString()))
                 }
                 if (to != null) {
                     put("to", listOf(to.toString()))
-                }
-                if (transportGuid != null) {
-                    put("transportGuid", listOf(transportGuid.toString()))
                 }
                 if (startKey != null) {
                     put("startKey", listOf(startKey.toString()))

@@ -468,7 +468,7 @@ No authorization required
 
 <a name="findMessagesByTransportGuidSentDate"></a>
 # **findMessagesByTransportGuidSentDate**
-> PaginatedListMessageDto findMessagesByTransportGuidSentDate(from, to, transportGuid, startKey, startDocumentId, limit, hcpId)
+> PaginatedListMessageDto findMessagesByTransportGuidSentDate(transportGuid, from, to, startKey, startDocumentId, limit, hcpId)
 
 Get all messages starting by a prefix between two date
 
@@ -479,15 +479,15 @@ Get all messages starting by a prefix between two date
 //import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
+val transportGuid : kotlin.String = transportGuid_example // kotlin.String | 
 val from : kotlin.Long = 789 // kotlin.Long | 
 val to : kotlin.Long = 789 // kotlin.Long | 
-val transportGuid : kotlin.String = transportGuid_example // kotlin.String | 
 val startKey : kotlin.String = startKey_example // kotlin.String | 
 val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | 
 val limit : kotlin.Int = 56 // kotlin.Int | 
 val hcpId : kotlin.String = hcpId_example // kotlin.String | 
 try {
-    val result : PaginatedListMessageDto = apiInstance.findMessagesByTransportGuidSentDate(from, to, transportGuid, startKey, startDocumentId, limit, hcpId)
+    val result : PaginatedListMessageDto = apiInstance.findMessagesByTransportGuidSentDate(transportGuid, from, to, startKey, startDocumentId, limit, hcpId)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling MessageApi#findMessagesByTransportGuidSentDate")
@@ -502,9 +502,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **transportGuid** | **kotlin.String**|  | [optional]
  **from** | **kotlin.Long**|  | [optional]
  **to** | **kotlin.Long**|  | [optional]
- **transportGuid** | **kotlin.String**|  | [optional]
  **startKey** | **kotlin.String**|  | [optional]
  **startDocumentId** | **kotlin.String**|  | [optional]
  **limit** | **kotlin.Int**|  | [optional]
