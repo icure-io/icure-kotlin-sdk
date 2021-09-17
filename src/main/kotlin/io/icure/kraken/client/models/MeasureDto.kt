@@ -21,7 +21,7 @@ import com.github.pozo.KotlinBuilder
 
 
 /**
- * Values of measurements recorded. Fields included would be the value, permissible range (min. and max.), severity, unit of measurement, etc 
+ * 
  *
  * @param `value` 
  * @param min 

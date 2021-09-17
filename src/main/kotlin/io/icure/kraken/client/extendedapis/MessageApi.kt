@@ -133,7 +133,7 @@ suspend fun MessageApi.findMessagesByTransportGuid(user: UserDto, transportGuid:
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun MessageApi.findMessagesByTransportGuidSentDate(user: UserDto, from: Long?, to: Long?, transportGuid: String?, startKey: String?, startDocumentId: String?, limit: Int?, hcpId: String?, config: CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>) : io.icure.kraken.client.models.decrypted.PaginatedListMessageDto?  {
-    return this.findMessagesByTransportGuidSentDate(from, to, transportGuid, startKey, startDocumentId, limit, hcpId)?.let {
+    return this.findMessagesByTransportGuidSentDate(transportGuid, from, to, startKey, startDocumentId, limit, hcpId)?.let {
         io.icure.kraken.client.models.decrypted.PaginatedListMessageDto(
             pageSize = it.pageSize,
             totalSize = it.totalSize,
