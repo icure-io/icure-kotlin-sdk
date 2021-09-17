@@ -531,7 +531,7 @@ class TimeTableApiTest() {
         when {
             objectFromFile as? Iterable<Any> != null -> {
                 val toSkip : kotlin.collections.List<String> = when {
-                    functionName.let { name -> listOf("create", "new").any { name.startsWith(it) } } -> listOf("id", "rev")
+                    functionName.let { name -> listOf("create", "new", "get").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
                     functionName.let { name -> listOf("modify", "set", "delete", "list").any { name.startsWith(it) } } -> listOf("rev")
                     else -> emptyList()
                 }
@@ -559,8 +559,8 @@ class TimeTableApiTest() {
             }
             else -> {
                 val toSkip : kotlin.collections.List<String> = when {
-                    functionName.let { name -> listOf("create").any { name.startsWith(it) } } -> listOf("id", "rev", "created", "modified")
-                    functionName.let { name -> listOf("set",  "modify").any { name.startsWith(it) } } -> listOf("rev")
+                    functionName.let { name -> listOf("create", "get", "modify", "new").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "deletionDate")
+                    functionName.let { name -> listOf("set").any { name.startsWith(it) } } -> listOf("rev")
                     else -> emptyList()
                 }
                 val diffs = filterDiffs(objectFromFile, response, response.differences(objectFromFile), toSkip)

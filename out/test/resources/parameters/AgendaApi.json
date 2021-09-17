@@ -2,31 +2,33 @@
   "beforeElements": {
     "bodies": [
       {
-        "id": "2106191a-c0e1-42d0-89a4-89abd288b000",
+        "id": "21216e7d-2ac2-4686-b310-02d6225f80ac",
         "name": "Simon"
       },
       {
-        "id": "2106191a-c0e1-42d0-89a4-89abd288b001",
+        "id": "968b7082-8e0a-49cb-bc0c-ef066ff7f9d5",
         "name": "Michal"
       }
     ]
   },
   "afterElements": {
     "family": "healthdata",
-    "deleteIds": ["2106191a-c0e1-42d0-89a4-89abd288b000", "2106191a-c0e1-42d0-89a4-89abd288b001",  "2106191a-c0e1-42d0-89a4-89abd288b002", "2106191a-c0e1-42d0-89a4-89abd288b005"]
+    "deleteIds": ["21216e7d-2ac2-4686-b310-02d6225f80ac", "968b7082-8e0a-49cb-bc0c-ef066ff7f9d5", "bfaf4b19-2e99-49ba-bc5d-3e739e4fb6c4"]
   },
   "createAgenda": {
     "agendaDto": {
-      "id": "2106191a-c0e1-42d0-89a4-89abd288b005",
+      "id": "bfaf4b19-2e99-49ba-bc5d-3e739e4fb6c4",
       "name": "Vladimir"
     }
   },
-  "deleteAgenda": {
+  "deleteAgendas": {
     "skipEndpoint": true,
-    "agendaIds": "2106191a-c0e1-42d0-89a4-89abd288b001"
+    "listOfIdsDto": {
+      "ids": ["968b7082-8e0a-49cb-bc0c-ef066ff7f9d5"]
+    }
   },
   "getAgenda": {
-    "agendaId": "2106191a-c0e1-42d0-89a4-89abd288b010"
+    "agendaId": "968b7082-8e0a-49cb-bc0c-ef066ff7f9d5"
   },
   "getAgendas": {
   },
@@ -41,7 +43,7 @@
   "modifyAgenda": {
     "autoRev": true,
     "agendaDto": {
-      "id": "2106191a-c0e1-42d0-89a4-89abd288b000",
+      "id": "21216e7d-2ac2-4686-b310-02d6225f80ac",
       "name": "sha"
     }
   },

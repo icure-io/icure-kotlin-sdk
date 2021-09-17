@@ -785,6 +785,13 @@ class MessageApiTest() {
                 println("Endpoint findMessagesByTransportGuidSentDate skipped")
             } else {
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "findMessagesByTransportGuidSentDate")
+                val transportGuid: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findMessagesByTransportGuidSentDate.transportGuid")?.let {
+                    (it as? MessageDto)?.takeIf { TestUtils.isAutoRev(fileName, "findMessagesByTransportGuidSentDate") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getMessage(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
+                    }
                 val from: kotlin.Long? = TestUtils.getParameter<kotlin.Long>(fileName, "findMessagesByTransportGuidSentDate.from")?.let {
                     (it as? MessageDto)?.takeIf { TestUtils.isAutoRev(fileName, "findMessagesByTransportGuidSentDate") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
@@ -798,13 +805,6 @@ class MessageApiTest() {
                     val currentRev = api(credentialsFile).getMessage(id.getter.call(it) as String).rev
                     it.copy(rev = currentRev)
                     } as? kotlin.Long ?: it
-                    }
-                val transportGuid: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findMessagesByTransportGuidSentDate.transportGuid")?.let {
-                    (it as? MessageDto)?.takeIf { TestUtils.isAutoRev(fileName, "findMessagesByTransportGuidSentDate") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getMessage(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
-                    } as? kotlin.String ?: it
                     }
                 val startKey: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findMessagesByTransportGuidSentDate.startKey")?.let {
                     (it as? MessageDto)?.takeIf { TestUtils.isAutoRev(fileName, "findMessagesByTransportGuidSentDate") }?.let {
@@ -835,7 +835,7 @@ class MessageApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).findMessagesByTransportGuidSentDate(from,to,transportGuid,startKey,startDocumentId,limit,hcpId)
+                val response = api(credentialsFile).findMessagesByTransportGuidSentDate(transportGuid,from,to,startKey,startDocumentId,limit,hcpId)
 
                     val testFileName = "MessageApi.findMessagesByTransportGuidSentDate"
                     val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1495,7 +1495,7 @@ class MessageApiTest() {
         when {
             objectFromFile as? Iterable<Any> != null -> {
                 val toSkip : kotlin.collections.List<String> = when {
-                    functionName.let { name -> listOf("create", "new").any { name.startsWith(it) } } -> listOf("id", "rev")
+                    functionName.let { name -> listOf("create", "new", "get").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
                     functionName.let { name -> listOf("modify", "set", "delete", "list").any { name.startsWith(it) } } -> listOf("rev")
                     else -> emptyList()
                 }
@@ -1523,8 +1523,8 @@ class MessageApiTest() {
             }
             else -> {
                 val toSkip : kotlin.collections.List<String> = when {
-                    functionName.let { name -> listOf("create").any { name.startsWith(it) } } -> listOf("id", "rev", "created", "modified")
-                    functionName.let { name -> listOf("set",  "modify").any { name.startsWith(it) } } -> listOf("rev")
+                    functionName.let { name -> listOf("create", "get", "modify", "new").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "deletionDate")
+                    functionName.let { name -> listOf("set").any { name.startsWith(it) } } -> listOf("rev")
                     else -> emptyList()
                 }
                 val diffs = filterDiffs(objectFromFile, response, response.differences(objectFromFile), toSkip)

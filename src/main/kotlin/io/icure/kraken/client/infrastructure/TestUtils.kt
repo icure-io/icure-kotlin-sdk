@@ -54,7 +54,7 @@ class TestUtils {
                     when(T::class){
                         Long::class -> (methodParams[paramElements[1]] as Double?)?.toLong() as T? ?:  (getGlobalParam(paramElements[1]) as Double?)?.toLong() as T?
                         Flow::class -> flowOf(methodParams[paramElements[1]]) as T?
-                        else -> objectMapper.readValue(objectMapper.writeValueAsString(methodParams[paramElements[1]]), T::class.java) ?: getGlobalObjectParam(
+                        else -> objectMapper.readValue(objectMapper.writeValueAsString(methodParams[paramElements[1]])) ?: getGlobalObjectParam(
                             paramElements[1]
                         )
                     }
