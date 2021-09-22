@@ -5,6 +5,9 @@ import io.icure.kraken.client.crypto.CryptoConfig
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
 import io.icure.kraken.client.crypto.fromHexString
+import io.icure.kraken.client.infrastructure.MultiValueMap
+import io.icure.kraken.client.infrastructure.RequestConfig
+import io.icure.kraken.client.infrastructure.RequestMethod
 import io.icure.kraken.client.models.*
 import io.icure.kraken.client.models.decrypted.DocumentDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
