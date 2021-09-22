@@ -14,9 +14,9 @@ fun collectionDelimiter(collectionFormat: String) = when(collectionFormat) {
 }
 
 val defaultMultiValueConverter: (item: Any?) -> String = { item ->
-    val itemString = if (item is Map<*, *>) {
-        if (item.values is List<*>) {
-            item.values.joinToString(",")
+    val itemString = if (item is Map.Entry<*, *>) {
+        if (item.value is List<*>) {
+            (item.value as List<*>).joinToString(",")
         } else {
             "$item"
         }
