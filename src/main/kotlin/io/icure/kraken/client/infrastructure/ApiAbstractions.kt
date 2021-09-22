@@ -14,9 +14,13 @@ fun collectionDelimiter(collectionFormat: String) = when(collectionFormat) {
 }
 
 val defaultMultiValueConverter: (item: Any?) -> String = { item ->
-    val itemString = if(item is List<*>){
-        item.joinToString(",")
-    } else{
+    val itemString = if (item is Map<*, *>) {
+        if (item.values is List<*>) {
+            item.values.joinToString(",")
+        } else {
+            "$item"
+        }
+    } else {
         "$item"
     }
     URLEncoder.encode(itemString, StandardCharsets.UTF_8)
