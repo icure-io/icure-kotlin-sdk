@@ -618,7 +618,9 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
                     put("enckeys", listOf(enckeys.toString()))
                 }
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf(
+            "Content-Type" to "application/octet-stream"
+        )
 
         return RequestConfig(
             method = RequestMethod.PUT,
