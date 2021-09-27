@@ -1,11 +1,11 @@
 {
   "afterElements": {
     "family": "healthdata",
-    "deleteIds": ["fabc5f7c-1cc3-4385-a1f2-e3e04c059001", "fabc5f7c-1cc3-4385-a1f2-e3e04c059002", "fabc5f7c-1cc3-4385-a1f2-e3e04c059003"]
+    "deleteIds": ["cfbee13e-fee3-4713-80af-39f101bb3a12", "86bf29a1-80f0-4c3e-8587-270a26c7a8eb", "2741b3a2-2a35-4ef5-8961-42a5f2cd393a"]
   },
   "createTimeTable": {
-    "body": {
-      "id" : "fabc5f7c-1cc3-4385-a1f2-e3e04c059003",
+    "timeTableDto": {
+      "id" : "2741b3a2-2a35-4ef5-8961-42a5f2cd393a",
       "name": "fromTests",
       "agendaId": "fromTestsAgenda",
       "startTime": 3,
@@ -31,10 +31,12 @@
     }
   },
   "deleteTimeTable": {
-    "timeTableIds": "fabc5f7c-1cc3-4385-a1f2-e3e04c059001"
+    "listOfIdsDto": {
+      "ids": ["cfbee13e-fee3-4713-80af-39f101bb3a12"]
+    }
   },
   "getTimeTable": {
-    "timeTableId": "11b8c317-8b38-4049-b8c3-178b3800490a"
+    "timeTableId": "86bf29a1-80f0-4c3e-8587-270a26c7a8eb"
   },
   "getTimeTablesByAgendaId": {
     "agendaId": "agenda1"
@@ -45,8 +47,8 @@
     "agendaId": "agenda1"
   },
   "modifyTimeTable": {
-    "body": {
-      "id" : "fabc5f7c-1cc3-4385-a1f2-e3e04c059002",
+    "timeTableDto": {
+      "id" : "86bf29a1-80f0-4c3e-8587-270a26c7a8eb",
       "name" : "modifiedFromTests"
     },
     "autoRev" : true
@@ -56,8 +58,8 @@
   },
   "beforeElements": {
     "bodies": [
-      {"id" : "fabc5f7c-1cc3-4385-a1f2-e3e04c059001", "name": "forTestDeletion", "agendaId": "fromTestsAgenda", "startTime": 3, "endTime": 5, "items": [{"days": ["day1"], "hours": [{"startHour": 4, "endHour": 5}], "calendarItemTypeId": "string", "homeVisit": false, "unavailable": true, "placeId": "string"}]},
-      {"id" : "fabc5f7c-1cc3-4385-a1f2-e3e04c059002", "name": "forTestModification", "agendaId": "fromTestsAgenda", "startTime": 3, "endTime": 5, "items": [{"days": ["day1"], "hours": [{"startHour": 4, "endHour": 5}], "calendarItemTypeId": "string", "homeVisit": false, "unavailable": true, "placeId": "string"}]}
+      {"id" : "cfbee13e-fee3-4713-80af-39f101bb3a12", "name": "forTestDeletion", "agendaId": "fromTestsAgenda", "startTime": 3, "endTime": 5, "items": [{"days": ["day1"], "hours": [{"startHour": 4, "endHour": 5}], "calendarItemTypeId": "string", "homeVisit": false, "unavailable": true, "placeId": "string"}]},
+      {"id" : "86bf29a1-80f0-4c3e-8587-270a26c7a8eb", "name": "forTestModification", "agendaId": "fromTestsAgenda", "startTime": 3, "endTime": 5, "items": [{"days": ["day1"], "hours": [{"startHour": 4, "endHour": 5}], "calendarItemTypeId": "string", "homeVisit": false, "unavailable": true, "placeId": "string"}]}
     ]
   }
 }
