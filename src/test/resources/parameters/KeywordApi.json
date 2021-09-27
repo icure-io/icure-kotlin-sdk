@@ -1,28 +1,33 @@
 {
   "beforeElements": {
     "bodies": [
-      {"id": "b59d1be8-581e-4e92-82d2-33a029d348a1", "rev": null, "deletionDate": null, "value": "testKeyword", "subWords": [{"value": "testKeyword", "subWords": [{"value": "Examen du dofin : ", "subWords": []}]}], "userId": "DrDujardinFrederic"}
+      {"id": "17b50e16-cf89-4506-891b-e113431cbed5", "rev": null, "deletionDate": null, "value": "testKeyword", "subWords": [{"value": "testKeyword", "subWords": [{"value": "Examen du dofin : ", "subWords": []}]}], "userId": "DrDujardinFrederic"},
+      {"id": "9f52b4d5-f395-46e0-8137-edaa6336e60c", "rev": null, "deletionDate": null, "value": "testKeywordForDeletion", "subWords": [{"value": "testKeywordForDeletion", "subWords": [{"value": "Examen du dofin : ", "subWords": []}]}], "userId": "DrDujardinJanette"}
     ]
   },
   "afterElements": {
     "family": "base",
-    "deleteIds": ["c108dc58-f0c1-49a5-88dc-58f0c1d9a562", "d39b6027-595a-40c7-81a9-50250e055389"]
+    "deleteIds": ["17b50e16-cf89-4506-891b-e113431cbed5", "4f1ce937-db36-419a-805d-242512b74589", "9f52b4d5-f395-46e0-8137-edaa6336e60c"]
   },
   "createKeyword": {
-    "body": {"id": "d39b6027-595a-40c7-81a9-50250e055389", "rev": null, "deletionDate": null, "value": "testKeyword", "subWords": [{"value": "testKeyword", "subWords": [{"value": "Examen du dofin : ", "subWords": []}]}], "userId": "DrDujardinFrederic"}
+    "keywordDto": {"id": "4f1ce937-db36-419a-805d-242512b74589", "rev": null, "deletionDate": null, "value": "testKeyword", "subWords": [{"value": "testKeyword", "subWords": [{"value": "Examen du dofin : ", "subWords": []}]}], "userId": "DrDujardinFrederic"}
   },
   "deleteKeywords": {
-    "keywordIds": "b59d1be8-581e-4e92-82d2-33a029d348a1"
+    "listOfIdsDto": {
+      "ids":["9f52b4d5-f395-46e0-8137-edaa6336e60c"]
+    }
   },
   "getKeyword": {
-    "keywordId": "4e49fb8f-455d-4636-89fb-8f455d063691"
+    "keywordId": "17b50e16-cf89-4506-891b-e113431cbed5"
   },
-  "getKeywords": {},
+  "getKeywords": {
+  },
   "getKeywordsByUser": {
     "userId": "DrDujardinFrederic"
   },
   "modifyKeyword": {
-    "body": {"id": "c108dc58-f0c1-49a5-88dc-58f0c1d9a562","value": "mofifiedFromTests", "subWords": [{"value": "lombalgie basse  médiane", "subWords": [{}, {"value": "type mécanique", "subWords": []}, {"value": "type inflammatoire", "subWords": []}]}], "userId": "testRunner"}
+    "keywordDto": {"id": "17b50e16-cf89-4506-891b-e113431cbed5","value": "mofifiedFromTests", "subWords": [{"value": "lombalgie basse  médiane", "subWords": [{}, {"value": "type mécanique", "subWords": []}, {"value": "type inflammatoire", "subWords": []}]}], "userId": "testRunner"},
+    "autoRev" : true
   },
   "fallback": {
   }
