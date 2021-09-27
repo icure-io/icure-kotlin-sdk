@@ -111,7 +111,7 @@ class MedicalLocationApi(basePath: kotlin.String = defaultBasePath, webClient: W
 
 
         return RequestConfig(
-            method = RequestMethod.DELETE,
+            method = RequestMethod.POST,
             path = "/rest/v2/medicallocation/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
