@@ -20,17 +20,19 @@
     "deleteIds": ["2256191a-c0e1-42d0-89a4-89abd288b000", "2256191a-c0e1-42d0-89a4-89abd288b001", "2256191a-c0e1-42d0-89a4-89abd288b002", "2256191a-c0e1-42d0-89a4-89abd288b005"]
   },
   "createCalendarItemType": {
-    "body": {
+    "calendarItemTypeDto": {
       "id": "2256191a-c0e1-42d0-89a4-89abd288b005",
       "name": "test5-created"
     }
   },
-  "deleteCalendarItemType": {
+  "deleteCalendarItemTypes": {
     "skipEndpoint": true,
-    "calendarItemTypeIds": "2256191a-c0e1-42d0-89a4-89abd288b001"
+    "listOfIdsDto": {
+      "ids":"2256191a-c0e1-42d0-89a4-89abd288b001"
+    }
   },
   "getCalendarItemType": {
-    "calendarItemTypeId": "6e9446f7-f7dc-4774-925f-5f103296c0cd"
+    "calendarItemTypeId": "2256191a-c0e1-42d0-89a4-89abd288b001"
   },
   "getCalendarItemTypes": {
   },
@@ -38,7 +40,7 @@
   },
   "modifyCalendarItemType": {
     "autoRev": true,
-    "body": {
+    "calendarItemTypeDto": {
       "id": "2256191a-c0e1-42d0-89a4-89abd288b000",
       "name": "test0-modified"
     }
