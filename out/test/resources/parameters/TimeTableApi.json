@@ -49,7 +49,9 @@
   "modifyTimeTable": {
     "timeTableDto": {
       "id" : "86bf29a1-80f0-4c3e-8587-270a26c7a8eb",
-      "name" : "modifiedFromTests"
+      "name" : "modifiedFromTests",
+      "startTime": 3,
+      "endTime": 5
     },
     "autoRev" : true
   },
