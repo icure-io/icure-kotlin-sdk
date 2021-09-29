@@ -5,7 +5,7 @@ All URIs are relative to *http://localhost:16043*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createMedicalLocation**](MedicalLocationApi.md#createMedicalLocation) | **POST** /rest/v2/medicallocation | Creates a medical location
-[**deleteMedicalLocations**](MedicalLocationApi.md#deleteMedicalLocations) | **DELETE** /rest/v2/medicallocation/delete/batch | Deletes medical locations
+[**deleteMedicalLocations**](MedicalLocationApi.md#deleteMedicalLocations) | **POST** /rest/v2/medicallocation/delete/batch | Deletes medical locations
 [**getMedicalLocation**](MedicalLocationApi.md#getMedicalLocation) | **GET** /rest/v2/medicallocation/{locationId} | Gets a medical location
 [**getMedicalLocations**](MedicalLocationApi.md#getMedicalLocations) | **GET** /rest/v2/medicallocation | Gets all medical locations
 [**modifyMedicalLocation**](MedicalLocationApi.md#modifyMedicalLocation) | **PUT** /rest/v2/medicallocation | Modifies a medical location

@@ -154,7 +154,7 @@ class HealthElementApi(basePath: kotlin.String = defaultBasePath, webClient: Web
 
 
         return RequestConfig(
-            method = RequestMethod.DELETE,
+            method = RequestMethod.POST,
             path = "/rest/v2/helement/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,

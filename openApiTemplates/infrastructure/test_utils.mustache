@@ -3,12 +3,16 @@
 package io.icure.kraken.client.infrastructure
 
 import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.core.json.JsonReadFeature
 import com.fasterxml.jackson.core.type.TypeReference
-import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.*
+import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.readValue
+import io.icure.kraken.client.models.filter.AbstractFilterDto
+import io.icure.kraken.client.models.filter.healthelement.HealthElementByHcPartyTagCodeFilter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
@@ -24,10 +28,21 @@ import kotlin.system.exitProcess
 
 class TestUtils {
     companion object {
-        val objectMapper = ObjectMapper().registerModule(KotlinModule()).registerModule(JavaTimeModule()).apply {
-            setSerializationInclusion(JsonInclude.Include.NON_NULL)
-            configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
-        }
+        val objectMapper = ObjectMapper()
+            .registerModule(KotlinModule())
+            .registerModule(object:SimpleModule() {
+                override fun setupModule(context: SetupContext?) {
+                    addDeserializer(ByteArrayWrapper::class.java, ByteArrayWrapperDeserializer())
+                    addSerializer(ByteArrayWrapper::class.java, ByteArrayWrapperSerializer())
+                    addDeserializer(AbstractFilterDto::class.java, FilterDeserializer())
+                    super.setupModule(context)
+                }
+            })
+            .registerModule(JavaTimeModule()).apply {
+                setSerializationInclusion(JsonInclude.Include.NON_NULL)
+                configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
+                configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
+            }
 
         val globalParams: Map<String, Any> = objectMapper.readValue(this::class.java.classLoader.getResource("parameters/Global.json").readText(),
             object: TypeReference<Map<String, Any>>() {})
@@ -202,4 +217,22 @@ fun File.readAsFlow() = flow {
 
 data class UsernamePassword(val username: String, val password: String) {
     fun toBasicAuth() = "Basic ${java.util.Base64.getEncoder().encodeToString("$username:$password".toByteArray())}"
+}
+
+class FilterDeserializer : JsonDeserializer<AbstractFilterDto<*>>() {
+    private val discriminator = "\$type"
+    private val subclasses: MutableMap<String, Class<AbstractFilterDto<*>>> = HashMap()
+
+    init {
+        subclasses["HealthElementByHcPartyTagCodeFilter"] = HealthElementByHcPartyTagCodeFilter::class.java as Class<AbstractFilterDto<*>>
+    }
+
+    override fun deserialize(p: JsonParser?, ctxt: DeserializationContext?): AbstractFilterDto<*> {
+        val codec =  p?.codec ?: throw IllegalArgumentException("Missing codec")
+        val tree = codec.readTree<JsonNode>(p)
+        val discr = tree[discriminator].textValue() ?: throw IllegalArgumentException("Missing discriminator $discriminator in object")
+        val selectedSubClass = subclasses[discr] ?: throw IllegalArgumentException("Invalid subclass $discr in object")
+        return codec.treeToValue(tree, selectedSubClass)
+    }
+
 }

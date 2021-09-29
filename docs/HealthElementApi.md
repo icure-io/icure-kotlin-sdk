@@ -6,7 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createHealthElement**](HealthElementApi.md#createHealthElement) | **POST** /rest/v2/helement | Create a health element with the current user
 [**createHealthElements**](HealthElementApi.md#createHealthElements) | **POST** /rest/v2/helement/batch | Create a batch of healthcare elements
-[**deleteHealthElements**](HealthElementApi.md#deleteHealthElements) | **DELETE** /rest/v2/helement/delete/batch | Delete health elements.
+[**deleteHealthElements**](HealthElementApi.md#deleteHealthElements) | **POST** /rest/v2/helement/delete/batch | Delete health elements.
 [**filterHealthElementsBy**](HealthElementApi.md#filterHealthElementsBy) | **POST** /rest/v2/helement/filter | Filter health elements for the current user (HcParty)
 [**getHealthElement**](HealthElementApi.md#getHealthElement) | **GET** /rest/v2/helement/{healthElementId} | Get a health element
 [**listHealthElementsByHCPartyAndPatientForeignKeys**](HealthElementApi.md#listHealthElementsByHCPartyAndPatientForeignKeys) | **GET** /rest/v2/helement/byHcPartySecretForeignKeys | List health elements found By Healthcare Party and secret foreign keyelementIds.

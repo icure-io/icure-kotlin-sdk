@@ -38,6 +38,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
+import io.icure.kraken.client.models.filter.AbstractFilterDto
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -79,9 +80,10 @@ class DocumentTemplateApiTest() {
         .registerModule(KotlinModule())
         .registerModule(object:SimpleModule() {
             override fun setupModule(context: SetupContext?) {
-                super.setupModule(context)
+                addDeserializer(AbstractFilterDto::class.java, FilterDeserializer())
                 addDeserializer(ByteArrayWrapper::class.java, ByteArrayWrapperDeserializer())
                 addSerializer(ByteArrayWrapper::class.java, ByteArrayWrapperSerializer())
+                super.setupModule(context)
             }
         })
         .registerModule(JavaTimeModule())
@@ -1001,8 +1003,8 @@ class DocumentTemplateApiTest() {
         when {
             objectFromFile as? Iterable<Any> != null -> {
                 val toSkip : kotlin.collections.List<String> = when {
-                    functionName.let { name -> listOf("create", "new", "get").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
-                    functionName.let { name -> listOf("modify", "set", "delete", "list").any { name.startsWith(it) } } -> listOf("rev")
+                    functionName.let { name -> listOf("create", "new", "get", "list").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
+                    functionName.let { name -> listOf("modify", "set", "delete").any { name.startsWith(it) } } -> listOf("rev")
                     else -> emptyList()
                 }
 

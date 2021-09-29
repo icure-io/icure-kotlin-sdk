@@ -264,7 +264,7 @@ Class | Method | HTTP request | Description
 *FrontEndMigrationApi* | [**modifyFrontEndMigration**](docs/FrontEndMigrationApi.md#modifyfrontendmigration) | **PUT** /rest/v2/frontendmigration | Modifies a front end migration
 *HealthElementApi* | [**createHealthElement**](docs/HealthElementApi.md#createhealthelement) | **POST** /rest/v2/helement | Create a health element with the current user
 *HealthElementApi* | [**createHealthElements**](docs/HealthElementApi.md#createhealthelements) | **POST** /rest/v2/helement/batch | Create a batch of healthcare elements
-*HealthElementApi* | [**deleteHealthElements**](docs/HealthElementApi.md#deletehealthelements) | **DELETE** /rest/v2/helement/delete/batch | Delete health elements.
+*HealthElementApi* | [**deleteHealthElements**](docs/HealthElementApi.md#deletehealthelements) | **POST** /rest/v2/helement/delete/batch | Delete health elements.
 *HealthElementApi* | [**filterHealthElementsBy**](docs/HealthElementApi.md#filterhealthelementsby) | **POST** /rest/v2/helement/filter | Filter health elements for the current user (HcParty)
 *HealthElementApi* | [**getHealthElement**](docs/HealthElementApi.md#gethealthelement) | **GET** /rest/v2/helement/{healthElementId} | Get a health element
 *HealthElementApi* | [**listHealthElementsByHCPartyAndPatientForeignKeys**](docs/HealthElementApi.md#listhealthelementsbyhcpartyandpatientforeignkeys) | **GET** /rest/v2/helement/byHcPartySecretForeignKeys | List health elements found By Healthcare Party and secret foreign keyelementIds.
@@ -350,7 +350,7 @@ Class | Method | HTTP request | Description
 *KeywordApi* | [**modifyKeyword**](docs/KeywordApi.md#modifykeyword) | **PUT** /rest/v2/keyword | Modify a keyword
 *MedexApi* | [**generateMedex**](docs/MedexApi.md#generatemedex) | **POST** /rest/v2/medex/generate | Generate a Medex XML String
 *MedicalLocationApi* | [**createMedicalLocation**](docs/MedicalLocationApi.md#createmedicallocation) | **POST** /rest/v2/medicallocation | Creates a medical location
-*MedicalLocationApi* | [**deleteMedicalLocations**](docs/MedicalLocationApi.md#deletemedicallocations) | **DELETE** /rest/v2/medicallocation/delete/batch | Deletes medical locations
+*MedicalLocationApi* | [**deleteMedicalLocations**](docs/MedicalLocationApi.md#deletemedicallocations) | **POST** /rest/v2/medicallocation/delete/batch | Deletes medical locations
 *MedicalLocationApi* | [**getMedicalLocation**](docs/MedicalLocationApi.md#getmedicallocation) | **GET** /rest/v2/medicallocation/{locationId} | Gets a medical location
 *MedicalLocationApi* | [**getMedicalLocations**](docs/MedicalLocationApi.md#getmedicallocations) | **GET** /rest/v2/medicallocation | Gets all medical locations
 *MedicalLocationApi* | [**modifyMedicalLocation**](docs/MedicalLocationApi.md#modifymedicallocation) | **PUT** /rest/v2/medicallocation | Modifies a medical location
