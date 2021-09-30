@@ -2,32 +2,34 @@
   "beforeElements": {
     "bodies": [
       {
-        "id": "1096191a-c0e1-42d0-89a4-89abd288b000",
+        "id": "650daca7-6a89-45b4-8376-25f6a18d7183",
         "title": "Simon Hardy",
         "startTime": 20200101083000,
         "endTime": 20200101090000,
         "duration": 1800,
         "author": "ebd30407-9f33-4cd5-9999-079f334cd5e8",
-        "responsible": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98"
+        "responsible": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98",
+        "agendaId": "8b010b0e-8625-4a74-bcac-ca14dca7f810"
       },
       {
-        "id": "1096191a-c0e1-42d0-89a4-89abd288b001",
+        "id": "07cfb20f-0d55-4c29-a509-0c0643132337",
         "title": "Michal Borkowski",
         "startTime": 20200101093000,
         "endTime": 20200101103000,
         "duration": 3600,
         "author": "ebd30407-9f33-4cd5-9999-079f334cd5e8",
-        "responsible": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98"
+        "responsible": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98",
+        "agendaId": "8b010b0e-8625-4a74-bcac-ca14dca7f810"
       }
     ]
   },
   "afterElements": {
     "family": "healthdata",
-    "deleteIds": ["1096191a-c0e1-42d0-89a4-89abd288b000", "1096191a-c0e1-42d0-89a4-89abd288b001", "1096191a-c0e1-42d0-89a4-89abd288b005"]
+    "deleteIds": ["650daca7-6a89-45b4-8376-25f6a18d7183", "07cfb20f-0d55-4c29-a509-0c0643132337", "611ff005-1c75-478e-9543-f6c931cb0a56"]
   },
   "createCalendarItem": {
-    "body": {
-      "id": "1096191a-c0e1-42d0-89a4-89abd288b005",
+    "calendarItemDto": {
+      "id": "611ff005-1c75-478e-9543-f6c931cb0a56",
       "title": "Olivier Voortman",
       "startTime": 20200101083000,
       "endTime": 20200101090000,
@@ -36,17 +38,18 @@
       "responsible": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98"
     }
   },
-  "deleteCalendarItem": {
-
-    "calendarItemIds": "1096191a-c0e1-42d0-89a4-89abd288b001"
+  "deleteCalendarItems": {
+    "listOfIdsDto": {
+      "ids":["07cfb20f-0d55-4c29-a509-0c0643132337"]
+    }
   },
-  "findByHCPartyPatientSecretFKeys": {
-
+  "findCalendarItemsByHCPartyPatientForeignKeys": {
+    "skipEndpoint": true,
     "hcPartyId": null, 
     "secretFKeys": null
   },
   "getCalendarItem": {
-    "calendarItemId": "1096191a-c0e1-42d0-89a4-89abd288bb5a"
+    "calendarItemId": "650daca7-6a89-45b4-8376-25f6a18d7183"
   },
   "getCalendarItems": {
   },
@@ -56,20 +59,19 @@
     "hcPartyId": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98"
   },
   "getCalendarItemsWithIds": {
-    "body": {
+    "listOfIdsDto": {
       "ids": ["1096191a-c0e1-42d0-89a4-89abd288bb5a", "12ba5bec-309e-411d-b228-b88acb7f1902"]
     }
   },
   "getCalendarsByPeriodAndAgendaId": {
-
-    "startDate": null, 
-    "endDate": null, 
-    "agendaId": null
+    "startDate": 20190704093000,
+    "endDate": 20190705093000,
+    "agendaId": "8b010b0e-8625-4a74-bcac-ca14dca7f810\""
   },
   "modifyCalendarItem": {
     "autoRev": true,
-    "body": {
-      "id": "1096191a-c0e1-42d0-89a4-89abd288b000",
+    "calendarItemDto": {
+      "id": "650daca7-6a89-45b4-8376-25f6a18d7183",
       "title": "Simon Hardy",
       "startTime": 20200101083000,
       "endTime": 20200101090000,
@@ -79,7 +81,7 @@
     }
   },
   "setCalendarItemsDelegations": {
-
+    "skipEndpoint": true,
     "body": null
   },
   

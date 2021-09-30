@@ -22,7 +22,6 @@
     }
   },
   "deleteAgendas": {
-
     "listOfIdsDto": {
       "ids": ["968b7082-8e0a-49cb-bc0c-ef066ff7f9d5"]
     }
@@ -33,11 +32,11 @@
   "getAgendas": {
   },
   "getAgendasForUser": {
-
+    "skipEndpoint": true,
     "userId": null
   },
   "getReadableAgendasForUser": {
-
+    "skipEndpoint": true,
     "userId": null
   },
   "modifyAgenda": {

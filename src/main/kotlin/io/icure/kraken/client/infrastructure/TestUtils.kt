@@ -67,7 +67,7 @@ class TestUtils {
                 val methodParams: Map<String, Any>? = localParams[paramElements[0]] as Map<String, Any>?
                 methodParams?.let {
                     when(T::class){
-                        Long::class -> (methodParams[paramElements[1]] as Int?)?.toLong() as T? ?:  (getGlobalParam(paramElements[1]) as Int?)?.toLong() as T?
+                        Long::class -> (methodParams[paramElements[1]] as? Long?)?.toLong() as T? ?:(methodParams[paramElements[1]] as? Int?)?.toLong() as T? ?: (getGlobalParam(paramElements[1]) as Long?)?.toLong() as T?
                         Flow::class -> flowOf(methodParams[paramElements[1]]) as T?
                         else -> objectMapper.readValue(objectMapper.writeValueAsString(methodParams[paramElements[1]])) ?: getGlobalObjectParam(
                             paramElements[1]

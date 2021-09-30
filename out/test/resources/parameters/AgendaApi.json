@@ -22,7 +22,6 @@
     }
   },
   "deleteAgendas": {
-    "skipEndpoint": true,
     "listOfIdsDto": {
       "ids": ["968b7082-8e0a-49cb-bc0c-ef066ff7f9d5"]
     }

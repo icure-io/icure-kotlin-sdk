@@ -58,7 +58,7 @@
     "delegationDto": [{"delegatedTo": "67fe7079-0fe9-4574-8665-23dcff91578d", "key": "f9cea2dc-5b06-47c4-a8ff-4a60e0849192", "owner": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98", "tag": "string"}]
   },
   "setClassificationsDelegations": {
-
+    "skipEndpoint": true,
     "body": null
   },
   
