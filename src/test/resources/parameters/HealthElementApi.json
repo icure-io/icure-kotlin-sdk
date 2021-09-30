@@ -51,7 +51,7 @@
     "delegationDto": [{"delegatedTo": "8c9292c0-dcaf-4d62-bc5b-7cd8bedcf38a", "key": "c01888da-72a7-4f3d-86b8-48c1ccac5449", "owner": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98", "tag": "string"}]
   },
   "setHealthElementsDelegations": {
-    "skipEndpoint": true,
+
     "body": null
   },
   "fallback": {

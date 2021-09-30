@@ -6,7 +6,7 @@
     }
   },
   "deleteArticle": {
-    "skipEndpoint": true,
+
     "articleIds": "0bf2ac3d-a572-47d0-ad49-a33fba990296"
   },
   "getArticle": {

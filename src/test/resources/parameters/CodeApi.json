@@ -35,7 +35,7 @@
     }
   },
   "filterBy": {
-    "skipEndpoint": true,
+
     "startKey": null, 
     "startDocumentId": "anormal|A1|1",
     "limit": null, 
@@ -72,7 +72,7 @@
     "limit": 100
   },
   "findPaginatedCodesWithLink": {
-    "skipEndpoint": true,
+
     "linkType": null, 
     "linkedId": null, 
     "startKey": null, 

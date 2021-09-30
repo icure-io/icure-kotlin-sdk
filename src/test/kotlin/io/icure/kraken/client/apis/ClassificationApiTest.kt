@@ -131,12 +131,13 @@ class ClassificationApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun createClassificationTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "createClassification")) {
-                assert(true)
-                println("Endpoint createClassification skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "createClassification")) {
+            assert(true)
+            println("Endpoint createClassification skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createClassification")
                 val classificationDto: ClassificationDto = TestUtils.getParameter<ClassificationDto>(fileName, "createClassification.classificationDto")!!.let {
                     (it as? ClassificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "createClassification") }?.let {
@@ -148,41 +149,41 @@ class ClassificationApiTest() {
 
                 val response = api(credentialsFile).createClassification(classificationDto)
 
-                    val testFileName = "ClassificationApi.createClassification"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ClassificationDto>? != null) {
-                            if ("ClassificationDto".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<ClassificationDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "ClassificationApi.createClassification"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ClassificationDto>? != null) {
+                        if ("ClassificationDto".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<ClassificationDto>() {}
-                        })
-                        assertAreEquals("createClassification", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<ClassificationDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<ClassificationDto>() {}
+                    })
+                    assertAreEquals("createClassification", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -197,12 +198,13 @@ class ClassificationApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun deleteClassificationsTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "deleteClassifications")) {
-                assert(true)
-                println("Endpoint deleteClassifications skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "deleteClassifications")) {
+            assert(true)
+            println("Endpoint deleteClassifications skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteClassifications")
                 val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "deleteClassifications.listOfIdsDto")!!.let {
                     (it as? ClassificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "deleteClassifications") }?.let {
@@ -214,41 +216,41 @@ class ClassificationApiTest() {
 
                 val response = api(credentialsFile).deleteClassifications(listOfIdsDto)
 
-                    val testFileName = "ClassificationApi.deleteClassifications"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocIdentifier>? != null) {
-                            if ("kotlin.collections.List<DocIdentifier>".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<DocIdentifier>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "ClassificationApi.deleteClassifications"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocIdentifier>? != null) {
+                        if ("kotlin.collections.List<DocIdentifier>".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<kotlin.collections.List<DocIdentifier>>() {}
-                        })
-                        assertAreEquals("deleteClassifications", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<DocIdentifier>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<kotlin.collections.List<DocIdentifier>>() {}
+                    })
+                    assertAreEquals("deleteClassifications", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -263,12 +265,13 @@ class ClassificationApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun findClassificationsByHCPartyPatientForeignKeysTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "findClassificationsByHCPartyPatientForeignKeys")) {
-                assert(true)
-                println("Endpoint findClassificationsByHCPartyPatientForeignKeys skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "findClassificationsByHCPartyPatientForeignKeys")) {
+            assert(true)
+            println("Endpoint findClassificationsByHCPartyPatientForeignKeys skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "findClassificationsByHCPartyPatientForeignKeys")
                 val hcPartyId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "findClassificationsByHCPartyPatientForeignKeys.hcPartyId")!!.let {
                     (it as? ClassificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "findClassificationsByHCPartyPatientForeignKeys") }?.let {
@@ -287,41 +290,41 @@ class ClassificationApiTest() {
 
                 val response = api(credentialsFile).findClassificationsByHCPartyPatientForeignKeys(hcPartyId,secretFKeys)
 
-                    val testFileName = "ClassificationApi.findClassificationsByHCPartyPatientForeignKeys"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ClassificationDto>? != null) {
-                            if ("kotlin.collections.List<ClassificationDto>".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<ClassificationDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "ClassificationApi.findClassificationsByHCPartyPatientForeignKeys"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ClassificationDto>? != null) {
+                        if ("kotlin.collections.List<ClassificationDto>".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<kotlin.collections.List<ClassificationDto>>() {}
-                        })
-                        assertAreEquals("findClassificationsByHCPartyPatientForeignKeys", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<ClassificationDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<kotlin.collections.List<ClassificationDto>>() {}
+                    })
+                    assertAreEquals("findClassificationsByHCPartyPatientForeignKeys", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -336,12 +339,13 @@ class ClassificationApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getClassificationTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "getClassification")) {
-                assert(true)
-                println("Endpoint getClassification skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "getClassification")) {
+            assert(true)
+            println("Endpoint getClassification skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getClassification")
                 val classificationId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getClassification.classificationId")!!.let {
                     (it as? ClassificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "getClassification") }?.let {
@@ -353,41 +357,41 @@ class ClassificationApiTest() {
 
                 val response = api(credentialsFile).getClassification(classificationId)
 
-                    val testFileName = "ClassificationApi.getClassification"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ClassificationDto>? != null) {
-                            if ("ClassificationDto".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<ClassificationDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "ClassificationApi.getClassification"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ClassificationDto>? != null) {
+                        if ("ClassificationDto".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<ClassificationDto>() {}
-                        })
-                        assertAreEquals("getClassification", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<ClassificationDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<ClassificationDto>() {}
+                    })
+                    assertAreEquals("getClassification", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -402,12 +406,13 @@ class ClassificationApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getClassificationByHcPartyIdTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "getClassificationByHcPartyId")) {
-                assert(true)
-                println("Endpoint getClassificationByHcPartyId skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "getClassificationByHcPartyId")) {
+            assert(true)
+            println("Endpoint getClassificationByHcPartyId skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getClassificationByHcPartyId")
                 val ids: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getClassificationByHcPartyId.ids")!!.let {
                     (it as? ClassificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "getClassificationByHcPartyId") }?.let {
@@ -419,41 +424,41 @@ class ClassificationApiTest() {
 
                 val response = api(credentialsFile).getClassificationByHcPartyId(ids)
 
-                    val testFileName = "ClassificationApi.getClassificationByHcPartyId"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ClassificationDto>? != null) {
-                            if ("kotlin.collections.List<ClassificationDto>".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<ClassificationDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "ClassificationApi.getClassificationByHcPartyId"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ClassificationDto>? != null) {
+                        if ("kotlin.collections.List<ClassificationDto>".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<kotlin.collections.List<ClassificationDto>>() {}
-                        })
-                        assertAreEquals("getClassificationByHcPartyId", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<ClassificationDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<kotlin.collections.List<ClassificationDto>>() {}
+                    })
+                    assertAreEquals("getClassificationByHcPartyId", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -468,12 +473,13 @@ class ClassificationApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun modifyClassificationTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "modifyClassification")) {
-                assert(true)
-                println("Endpoint modifyClassification skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "modifyClassification")) {
+            assert(true)
+            println("Endpoint modifyClassification skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyClassification")
                 val classificationDto: ClassificationDto = TestUtils.getParameter<ClassificationDto>(fileName, "modifyClassification.classificationDto")!!.let {
                     (it as? ClassificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyClassification") }?.let {
@@ -485,41 +491,41 @@ class ClassificationApiTest() {
 
                 val response = api(credentialsFile).modifyClassification(classificationDto)
 
-                    val testFileName = "ClassificationApi.modifyClassification"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ClassificationDto>? != null) {
-                            if ("ClassificationDto".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<ClassificationDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "ClassificationApi.modifyClassification"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ClassificationDto>? != null) {
+                        if ("ClassificationDto".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<ClassificationDto>() {}
-                        })
-                        assertAreEquals("modifyClassification", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<ClassificationDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<ClassificationDto>() {}
+                    })
+                    assertAreEquals("modifyClassification", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -534,12 +540,13 @@ class ClassificationApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun newClassificationDelegationsTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "newClassificationDelegations")) {
-                assert(true)
-                println("Endpoint newClassificationDelegations skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "newClassificationDelegations")) {
+            assert(true)
+            println("Endpoint newClassificationDelegations skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "newClassificationDelegations")
                 val classificationId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "newClassificationDelegations.classificationId")!!.let {
                     (it as? ClassificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "newClassificationDelegations") }?.let {
@@ -558,41 +565,41 @@ class ClassificationApiTest() {
 
                 val response = api(credentialsFile).newClassificationDelegations(classificationId,delegationDto)
 
-                    val testFileName = "ClassificationApi.newClassificationDelegations"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ClassificationDto>? != null) {
-                            if ("ClassificationDto".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<ClassificationDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "ClassificationApi.newClassificationDelegations"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ClassificationDto>? != null) {
+                        if ("ClassificationDto".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<ClassificationDto>() {}
-                        })
-                        assertAreEquals("newClassificationDelegations", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<ClassificationDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<ClassificationDto>() {}
+                    })
+                    assertAreEquals("newClassificationDelegations", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -607,12 +614,13 @@ class ClassificationApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun setClassificationsDelegationsTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "setClassificationsDelegations")) {
-                assert(true)
-                println("Endpoint setClassificationsDelegations skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "setClassificationsDelegations")) {
+            assert(true)
+            println("Endpoint setClassificationsDelegations skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "setClassificationsDelegations")
                 val icureStubDto: kotlin.collections.List<IcureStubDto> = TestUtils.getParameter<kotlin.collections.List<IcureStubDto>>(fileName, "setClassificationsDelegations.icureStubDto")!!.map {
                     (it as? ClassificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "setClassificationsDelegations") }?.let {
@@ -624,41 +632,41 @@ class ClassificationApiTest() {
 
                 val response = api(credentialsFile).setClassificationsDelegations(icureStubDto)
 
-                    val testFileName = "ClassificationApi.setClassificationsDelegations"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<IcureStubDto>? != null) {
-                            if ("kotlin.collections.List<IcureStubDto>".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<IcureStubDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "ClassificationApi.setClassificationsDelegations"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<IcureStubDto>? != null) {
+                        if ("kotlin.collections.List<IcureStubDto>".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<kotlin.collections.List<IcureStubDto>>() {}
-                        })
-                        assertAreEquals("setClassificationsDelegations", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<IcureStubDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<kotlin.collections.List<IcureStubDto>>() {}
+                    })
+                    assertAreEquals("setClassificationsDelegations", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     

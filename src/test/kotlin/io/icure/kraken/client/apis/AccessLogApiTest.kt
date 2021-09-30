@@ -130,12 +130,13 @@ class AccessLogApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun createAccessLogTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "createAccessLog")) {
-                assert(true)
-                println("Endpoint createAccessLog skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "createAccessLog")) {
+            assert(true)
+            println("Endpoint createAccessLog skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createAccessLog")
                 val accessLogDto: AccessLogDto = TestUtils.getParameter<AccessLogDto>(fileName, "createAccessLog.accessLogDto")!!.let {
                     (it as? AccessLogDto)?.takeIf { TestUtils.isAutoRev(fileName, "createAccessLog") }?.let {
@@ -147,41 +148,41 @@ class AccessLogApiTest() {
 
                 val response = api(credentialsFile).createAccessLog(accessLogDto)
 
-                    val testFileName = "AccessLogApi.createAccessLog"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<AccessLogDto>? != null) {
-                            if ("AccessLogDto".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<AccessLogDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "AccessLogApi.createAccessLog"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<AccessLogDto>? != null) {
+                        if ("AccessLogDto".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<AccessLogDto>() {}
-                        })
-                        assertAreEquals("createAccessLog", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<AccessLogDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<AccessLogDto>() {}
+                    })
+                    assertAreEquals("createAccessLog", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -196,12 +197,13 @@ class AccessLogApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun deleteAccessLogsTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "deleteAccessLogs")) {
-                assert(true)
-                println("Endpoint deleteAccessLogs skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "deleteAccessLogs")) {
+            assert(true)
+            println("Endpoint deleteAccessLogs skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteAccessLogs")
                 val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "deleteAccessLogs.listOfIdsDto")!!.let {
                     (it as? AccessLogDto)?.takeIf { TestUtils.isAutoRev(fileName, "deleteAccessLogs") }?.let {
@@ -213,41 +215,41 @@ class AccessLogApiTest() {
 
                 val response = api(credentialsFile).deleteAccessLogs(listOfIdsDto)
 
-                    val testFileName = "AccessLogApi.deleteAccessLogs"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocIdentifier>? != null) {
-                            if ("kotlin.collections.List<DocIdentifier>".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<DocIdentifier>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "AccessLogApi.deleteAccessLogs"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocIdentifier>? != null) {
+                        if ("kotlin.collections.List<DocIdentifier>".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<kotlin.collections.List<DocIdentifier>>() {}
-                        })
-                        assertAreEquals("deleteAccessLogs", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<DocIdentifier>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<kotlin.collections.List<DocIdentifier>>() {}
+                    })
+                    assertAreEquals("deleteAccessLogs", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -262,12 +264,13 @@ class AccessLogApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun findAccessLogsByTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "findAccessLogsBy")) {
-                assert(true)
-                println("Endpoint findAccessLogsBy skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "findAccessLogsBy")) {
+            assert(true)
+            println("Endpoint findAccessLogsBy skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "findAccessLogsBy")
                 val fromEpoch: kotlin.Long? = TestUtils.getParameter<kotlin.Long>(fileName, "findAccessLogsBy.fromEpoch")?.let {
                     (it as? AccessLogDto)?.takeIf { TestUtils.isAutoRev(fileName, "findAccessLogsBy") }?.let {
@@ -314,41 +317,41 @@ class AccessLogApiTest() {
 
                 val response = api(credentialsFile).findAccessLogsBy(fromEpoch,toEpoch,startKey,startDocumentId,limit,descending)
 
-                    val testFileName = "AccessLogApi.findAccessLogsBy"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<PaginatedListAccessLogDto>? != null) {
-                            if ("PaginatedListAccessLogDto".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<PaginatedListAccessLogDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "AccessLogApi.findAccessLogsBy"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<PaginatedListAccessLogDto>? != null) {
+                        if ("PaginatedListAccessLogDto".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<PaginatedListAccessLogDto>() {}
-                        })
-                        assertAreEquals("findAccessLogsBy", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<PaginatedListAccessLogDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<PaginatedListAccessLogDto>() {}
+                    })
+                    assertAreEquals("findAccessLogsBy", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -363,12 +366,13 @@ class AccessLogApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun findAccessLogsByUserAfterDateTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "findAccessLogsByUserAfterDate")) {
-                assert(true)
-                println("Endpoint findAccessLogsByUserAfterDate skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "findAccessLogsByUserAfterDate")) {
+            assert(true)
+            println("Endpoint findAccessLogsByUserAfterDate skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "findAccessLogsByUserAfterDate")
                 val userId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "findAccessLogsByUserAfterDate.userId")!!.let {
                     (it as? AccessLogDto)?.takeIf { TestUtils.isAutoRev(fileName, "findAccessLogsByUserAfterDate") }?.let {
@@ -422,41 +426,41 @@ class AccessLogApiTest() {
 
                 val response = api(credentialsFile).findAccessLogsByUserAfterDate(userId,accessType,startDate,startKey,startDocumentId,limit,descending)
 
-                    val testFileName = "AccessLogApi.findAccessLogsByUserAfterDate"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<PaginatedListAccessLogDto>? != null) {
-                            if ("PaginatedListAccessLogDto".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<PaginatedListAccessLogDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "AccessLogApi.findAccessLogsByUserAfterDate"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<PaginatedListAccessLogDto>? != null) {
+                        if ("PaginatedListAccessLogDto".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<PaginatedListAccessLogDto>() {}
-                        })
-                        assertAreEquals("findAccessLogsByUserAfterDate", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<PaginatedListAccessLogDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<PaginatedListAccessLogDto>() {}
+                    })
+                    assertAreEquals("findAccessLogsByUserAfterDate", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -471,12 +475,13 @@ class AccessLogApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getAccessLogTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "getAccessLog")) {
-                assert(true)
-                println("Endpoint getAccessLog skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "getAccessLog")) {
+            assert(true)
+            println("Endpoint getAccessLog skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getAccessLog")
                 val accessLogId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getAccessLog.accessLogId")!!.let {
                     (it as? AccessLogDto)?.takeIf { TestUtils.isAutoRev(fileName, "getAccessLog") }?.let {
@@ -488,41 +493,41 @@ class AccessLogApiTest() {
 
                 val response = api(credentialsFile).getAccessLog(accessLogId)
 
-                    val testFileName = "AccessLogApi.getAccessLog"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<AccessLogDto>? != null) {
-                            if ("AccessLogDto".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<AccessLogDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "AccessLogApi.getAccessLog"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<AccessLogDto>? != null) {
+                        if ("AccessLogDto".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<AccessLogDto>() {}
-                        })
-                        assertAreEquals("getAccessLog", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<AccessLogDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<AccessLogDto>() {}
+                    })
+                    assertAreEquals("getAccessLog", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -537,12 +542,13 @@ class AccessLogApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun listAccessLogsByHCPartyAndPatientForeignKeysTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "listAccessLogsByHCPartyAndPatientForeignKeys")) {
-                assert(true)
-                println("Endpoint listAccessLogsByHCPartyAndPatientForeignKeys skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "listAccessLogsByHCPartyAndPatientForeignKeys")) {
+            assert(true)
+            println("Endpoint listAccessLogsByHCPartyAndPatientForeignKeys skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listAccessLogsByHCPartyAndPatientForeignKeys")
                 val hcPartyId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listAccessLogsByHCPartyAndPatientForeignKeys.hcPartyId")!!.let {
                     (it as? AccessLogDto)?.takeIf { TestUtils.isAutoRev(fileName, "listAccessLogsByHCPartyAndPatientForeignKeys") }?.let {
@@ -561,41 +567,41 @@ class AccessLogApiTest() {
 
                 val response = api(credentialsFile).listAccessLogsByHCPartyAndPatientForeignKeys(hcPartyId,secretFKeys)
 
-                    val testFileName = "AccessLogApi.listAccessLogsByHCPartyAndPatientForeignKeys"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<AccessLogDto>? != null) {
-                            if ("kotlin.collections.List<AccessLogDto>".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<AccessLogDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "AccessLogApi.listAccessLogsByHCPartyAndPatientForeignKeys"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<AccessLogDto>? != null) {
+                        if ("kotlin.collections.List<AccessLogDto>".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<kotlin.collections.List<AccessLogDto>>() {}
-                        })
-                        assertAreEquals("listAccessLogsByHCPartyAndPatientForeignKeys", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<AccessLogDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<kotlin.collections.List<AccessLogDto>>() {}
+                    })
+                    assertAreEquals("listAccessLogsByHCPartyAndPatientForeignKeys", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -610,12 +616,13 @@ class AccessLogApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun modifyAccessLogTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "modifyAccessLog")) {
-                assert(true)
-                println("Endpoint modifyAccessLog skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "modifyAccessLog")) {
+            assert(true)
+            println("Endpoint modifyAccessLog skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyAccessLog")
                 val accessLogDto: AccessLogDto = TestUtils.getParameter<AccessLogDto>(fileName, "modifyAccessLog.accessLogDto")!!.let {
                     (it as? AccessLogDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyAccessLog") }?.let {
@@ -627,41 +634,41 @@ class AccessLogApiTest() {
 
                 val response = api(credentialsFile).modifyAccessLog(accessLogDto)
 
-                    val testFileName = "AccessLogApi.modifyAccessLog"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<AccessLogDto>? != null) {
-                            if ("AccessLogDto".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<AccessLogDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "AccessLogApi.modifyAccessLog"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<AccessLogDto>? != null) {
+                        if ("AccessLogDto".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<AccessLogDto>() {}
-                        })
-                        assertAreEquals("modifyAccessLog", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<AccessLogDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<AccessLogDto>() {}
+                    })
+                    assertAreEquals("modifyAccessLog", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     

@@ -130,12 +130,13 @@ class DocumentTemplateApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun createDocumentTemplateTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "createDocumentTemplate")) {
-                assert(true)
-                println("Endpoint createDocumentTemplate skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "createDocumentTemplate")) {
+            assert(true)
+            println("Endpoint createDocumentTemplate skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createDocumentTemplate")
                 val documentTemplateDto: DocumentTemplateDto = TestUtils.getParameter<DocumentTemplateDto>(fileName, "createDocumentTemplate.documentTemplateDto")!!.let {
                     (it as? DocumentTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "createDocumentTemplate") }?.let {
@@ -147,41 +148,41 @@ class DocumentTemplateApiTest() {
 
                 val response = api(credentialsFile).createDocumentTemplate(documentTemplateDto)
 
-                    val testFileName = "DocumentTemplateApi.createDocumentTemplate"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocumentTemplateDto>? != null) {
-                            if ("DocumentTemplateDto".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<DocumentTemplateDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "DocumentTemplateApi.createDocumentTemplate"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocumentTemplateDto>? != null) {
+                        if ("DocumentTemplateDto".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<DocumentTemplateDto>() {}
-                        })
-                        assertAreEquals("createDocumentTemplate", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<DocumentTemplateDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<DocumentTemplateDto>() {}
+                    })
+                    assertAreEquals("createDocumentTemplate", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -196,12 +197,13 @@ class DocumentTemplateApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun deleteDocumentTemplatesTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "deleteDocumentTemplates")) {
-                assert(true)
-                println("Endpoint deleteDocumentTemplates skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "deleteDocumentTemplates")) {
+            assert(true)
+            println("Endpoint deleteDocumentTemplates skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteDocumentTemplates")
                 val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "deleteDocumentTemplates.listOfIdsDto")!!.let {
                     (it as? DocumentTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "deleteDocumentTemplates") }?.let {
@@ -213,41 +215,41 @@ class DocumentTemplateApiTest() {
 
                 val response = api(credentialsFile).deleteDocumentTemplates(listOfIdsDto)
 
-                    val testFileName = "DocumentTemplateApi.deleteDocumentTemplates"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocIdentifier>? != null) {
-                            if ("kotlin.collections.List<DocIdentifier>".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<DocIdentifier>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "DocumentTemplateApi.deleteDocumentTemplates"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocIdentifier>? != null) {
+                        if ("kotlin.collections.List<DocIdentifier>".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<kotlin.collections.List<DocIdentifier>>() {}
-                        })
-                        assertAreEquals("deleteDocumentTemplates", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<DocIdentifier>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<kotlin.collections.List<DocIdentifier>>() {}
+                    })
+                    assertAreEquals("deleteDocumentTemplates", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -262,12 +264,13 @@ class DocumentTemplateApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getAttachmentTextTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "getAttachmentText")) {
-                assert(true)
-                println("Endpoint getAttachmentText skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "getAttachmentText")) {
+            assert(true)
+            println("Endpoint getAttachmentText skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getAttachmentText")
                 val documentTemplateId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getAttachmentText.documentTemplateId")!!.let {
                     (it as? DocumentTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "getAttachmentText") }?.let {
@@ -286,41 +289,41 @@ class DocumentTemplateApiTest() {
 
                 val response = api(credentialsFile).getAttachmentText(documentTemplateId,attachmentId)
 
-                    val testFileName = "DocumentTemplateApi.getAttachmentText"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>? != null) {
-                            if ("kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "DocumentTemplateApi.getAttachmentText"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>? != null) {
+                        if ("kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>() {}
-                        })
-                        assertAreEquals("getAttachmentText", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>() {}
+                    })
+                    assertAreEquals("getAttachmentText", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -335,12 +338,13 @@ class DocumentTemplateApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getDocumentTemplateTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "getDocumentTemplate")) {
-                assert(true)
-                println("Endpoint getDocumentTemplate skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "getDocumentTemplate")) {
+            assert(true)
+            println("Endpoint getDocumentTemplate skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getDocumentTemplate")
                 val documentTemplateId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getDocumentTemplate.documentTemplateId")!!.let {
                     (it as? DocumentTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "getDocumentTemplate") }?.let {
@@ -352,41 +356,41 @@ class DocumentTemplateApiTest() {
 
                 val response = api(credentialsFile).getDocumentTemplate(documentTemplateId)
 
-                    val testFileName = "DocumentTemplateApi.getDocumentTemplate"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocumentTemplateDto>? != null) {
-                            if ("DocumentTemplateDto".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<DocumentTemplateDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "DocumentTemplateApi.getDocumentTemplate"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocumentTemplateDto>? != null) {
+                        if ("DocumentTemplateDto".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<DocumentTemplateDto>() {}
-                        })
-                        assertAreEquals("getDocumentTemplate", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<DocumentTemplateDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<DocumentTemplateDto>() {}
+                    })
+                    assertAreEquals("getDocumentTemplate", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -401,12 +405,13 @@ class DocumentTemplateApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getDocumentTemplateAttachmentTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "getDocumentTemplateAttachment")) {
-                assert(true)
-                println("Endpoint getDocumentTemplateAttachment skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "getDocumentTemplateAttachment")) {
+            assert(true)
+            println("Endpoint getDocumentTemplateAttachment skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getDocumentTemplateAttachment")
                 val documentTemplateId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getDocumentTemplateAttachment.documentTemplateId")!!.let {
                     (it as? DocumentTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "getDocumentTemplateAttachment") }?.let {
@@ -425,41 +430,41 @@ class DocumentTemplateApiTest() {
 
                 val response = api(credentialsFile).getDocumentTemplateAttachment(documentTemplateId,attachmentId)
 
-                    val testFileName = "DocumentTemplateApi.getDocumentTemplateAttachment"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>? != null) {
-                            if ("kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "DocumentTemplateApi.getDocumentTemplateAttachment"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>? != null) {
+                        if ("kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>() {}
-                        })
-                        assertAreEquals("getDocumentTemplateAttachment", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>() {}
+                    })
+                    assertAreEquals("getDocumentTemplateAttachment", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -474,51 +479,52 @@ class DocumentTemplateApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun listAllDocumentTemplatesTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "listAllDocumentTemplates")) {
-                assert(true)
-                println("Endpoint listAllDocumentTemplates skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "listAllDocumentTemplates")) {
+            assert(true)
+            println("Endpoint listAllDocumentTemplates skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listAllDocumentTemplates")
 
                 val response = api(credentialsFile).listAllDocumentTemplates()
 
-                    val testFileName = "DocumentTemplateApi.listAllDocumentTemplates"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocumentTemplateDto>? != null) {
-                            if ("kotlin.collections.List<DocumentTemplateDto>".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<DocumentTemplateDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "DocumentTemplateApi.listAllDocumentTemplates"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocumentTemplateDto>? != null) {
+                        if ("kotlin.collections.List<DocumentTemplateDto>".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<kotlin.collections.List<DocumentTemplateDto>>() {}
-                        })
-                        assertAreEquals("listAllDocumentTemplates", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<DocumentTemplateDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<kotlin.collections.List<DocumentTemplateDto>>() {}
+                    })
+                    assertAreEquals("listAllDocumentTemplates", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -533,51 +539,52 @@ class DocumentTemplateApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun listDocumentTemplatesTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "listDocumentTemplates")) {
-                assert(true)
-                println("Endpoint listDocumentTemplates skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "listDocumentTemplates")) {
+            assert(true)
+            println("Endpoint listDocumentTemplates skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listDocumentTemplates")
 
                 val response = api(credentialsFile).listDocumentTemplates()
 
-                    val testFileName = "DocumentTemplateApi.listDocumentTemplates"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocumentTemplateDto>? != null) {
-                            if ("kotlin.collections.List<DocumentTemplateDto>".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<DocumentTemplateDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "DocumentTemplateApi.listDocumentTemplates"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocumentTemplateDto>? != null) {
+                        if ("kotlin.collections.List<DocumentTemplateDto>".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<kotlin.collections.List<DocumentTemplateDto>>() {}
-                        })
-                        assertAreEquals("listDocumentTemplates", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<DocumentTemplateDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<kotlin.collections.List<DocumentTemplateDto>>() {}
+                    })
+                    assertAreEquals("listDocumentTemplates", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -592,12 +599,13 @@ class DocumentTemplateApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun listDocumentTemplatesByDocumentTypeTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "listDocumentTemplatesByDocumentType")) {
-                assert(true)
-                println("Endpoint listDocumentTemplatesByDocumentType skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "listDocumentTemplatesByDocumentType")) {
+            assert(true)
+            println("Endpoint listDocumentTemplatesByDocumentType skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listDocumentTemplatesByDocumentType")
                 val documentTypeCode: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listDocumentTemplatesByDocumentType.documentTypeCode")!!.let {
                     (it as? DocumentTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "listDocumentTemplatesByDocumentType") }?.let {
@@ -609,41 +617,41 @@ class DocumentTemplateApiTest() {
 
                 val response = api(credentialsFile).listDocumentTemplatesByDocumentType(documentTypeCode)
 
-                    val testFileName = "DocumentTemplateApi.listDocumentTemplatesByDocumentType"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocumentTemplateDto>? != null) {
-                            if ("kotlin.collections.List<DocumentTemplateDto>".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<DocumentTemplateDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "DocumentTemplateApi.listDocumentTemplatesByDocumentType"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocumentTemplateDto>? != null) {
+                        if ("kotlin.collections.List<DocumentTemplateDto>".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<kotlin.collections.List<DocumentTemplateDto>>() {}
-                        })
-                        assertAreEquals("listDocumentTemplatesByDocumentType", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<DocumentTemplateDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<kotlin.collections.List<DocumentTemplateDto>>() {}
+                    })
+                    assertAreEquals("listDocumentTemplatesByDocumentType", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -658,12 +666,13 @@ class DocumentTemplateApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun listDocumentTemplatesByDocumentTypeForCurrentUserTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "listDocumentTemplatesByDocumentTypeForCurrentUser")) {
-                assert(true)
-                println("Endpoint listDocumentTemplatesByDocumentTypeForCurrentUser skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "listDocumentTemplatesByDocumentTypeForCurrentUser")) {
+            assert(true)
+            println("Endpoint listDocumentTemplatesByDocumentTypeForCurrentUser skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listDocumentTemplatesByDocumentTypeForCurrentUser")
                 val documentTypeCode: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listDocumentTemplatesByDocumentTypeForCurrentUser.documentTypeCode")!!.let {
                     (it as? DocumentTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "listDocumentTemplatesByDocumentTypeForCurrentUser") }?.let {
@@ -675,41 +684,41 @@ class DocumentTemplateApiTest() {
 
                 val response = api(credentialsFile).listDocumentTemplatesByDocumentTypeForCurrentUser(documentTypeCode)
 
-                    val testFileName = "DocumentTemplateApi.listDocumentTemplatesByDocumentTypeForCurrentUser"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocumentTemplateDto>? != null) {
-                            if ("kotlin.collections.List<DocumentTemplateDto>".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<DocumentTemplateDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "DocumentTemplateApi.listDocumentTemplatesByDocumentTypeForCurrentUser"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocumentTemplateDto>? != null) {
+                        if ("kotlin.collections.List<DocumentTemplateDto>".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<kotlin.collections.List<DocumentTemplateDto>>() {}
-                        })
-                        assertAreEquals("listDocumentTemplatesByDocumentTypeForCurrentUser", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<DocumentTemplateDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<kotlin.collections.List<DocumentTemplateDto>>() {}
+                    })
+                    assertAreEquals("listDocumentTemplatesByDocumentTypeForCurrentUser", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -724,12 +733,13 @@ class DocumentTemplateApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun listDocumentTemplatesBySpecialityTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "listDocumentTemplatesBySpeciality")) {
-                assert(true)
-                println("Endpoint listDocumentTemplatesBySpeciality skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "listDocumentTemplatesBySpeciality")) {
+            assert(true)
+            println("Endpoint listDocumentTemplatesBySpeciality skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listDocumentTemplatesBySpeciality")
                 val specialityCode: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listDocumentTemplatesBySpeciality.specialityCode")!!.let {
                     (it as? DocumentTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "listDocumentTemplatesBySpeciality") }?.let {
@@ -741,41 +751,41 @@ class DocumentTemplateApiTest() {
 
                 val response = api(credentialsFile).listDocumentTemplatesBySpeciality(specialityCode)
 
-                    val testFileName = "DocumentTemplateApi.listDocumentTemplatesBySpeciality"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocumentTemplateDto>? != null) {
-                            if ("kotlin.collections.List<DocumentTemplateDto>".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<DocumentTemplateDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "DocumentTemplateApi.listDocumentTemplatesBySpeciality"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocumentTemplateDto>? != null) {
+                        if ("kotlin.collections.List<DocumentTemplateDto>".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<kotlin.collections.List<DocumentTemplateDto>>() {}
-                        })
-                        assertAreEquals("listDocumentTemplatesBySpeciality", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<DocumentTemplateDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<kotlin.collections.List<DocumentTemplateDto>>() {}
+                    })
+                    assertAreEquals("listDocumentTemplatesBySpeciality", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -790,12 +800,13 @@ class DocumentTemplateApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun modifyDocumentTemplateTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "modifyDocumentTemplate")) {
-                assert(true)
-                println("Endpoint modifyDocumentTemplate skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "modifyDocumentTemplate")) {
+            assert(true)
+            println("Endpoint modifyDocumentTemplate skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyDocumentTemplate")
                 val documentTemplateId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "modifyDocumentTemplate.documentTemplateId")!!.let {
                     (it as? DocumentTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyDocumentTemplate") }?.let {
@@ -814,41 +825,41 @@ class DocumentTemplateApiTest() {
 
                 val response = api(credentialsFile).modifyDocumentTemplate(documentTemplateId,documentTemplateDto)
 
-                    val testFileName = "DocumentTemplateApi.modifyDocumentTemplate"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocumentTemplateDto>? != null) {
-                            if ("DocumentTemplateDto".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<DocumentTemplateDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "DocumentTemplateApi.modifyDocumentTemplate"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocumentTemplateDto>? != null) {
+                        if ("DocumentTemplateDto".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<DocumentTemplateDto>() {}
-                        })
-                        assertAreEquals("modifyDocumentTemplate", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<DocumentTemplateDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<DocumentTemplateDto>() {}
+                    })
+                    assertAreEquals("modifyDocumentTemplate", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -863,12 +874,13 @@ class DocumentTemplateApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun setDocumentTemplateAttachmentTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "setDocumentTemplateAttachment")) {
-                assert(true)
-                println("Endpoint setDocumentTemplateAttachment skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "setDocumentTemplateAttachment")) {
+            assert(true)
+            println("Endpoint setDocumentTemplateAttachment skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "setDocumentTemplateAttachment")
                 val documentTemplateId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "setDocumentTemplateAttachment.documentTemplateId")!!.let {
                     (it as? DocumentTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "setDocumentTemplateAttachment") }?.let {
@@ -887,41 +899,41 @@ class DocumentTemplateApiTest() {
 
                 val response = api(credentialsFile).setDocumentTemplateAttachment(documentTemplateId,ioIcureKrakenClientInfrastructureByteArrayWrapper)
 
-                    val testFileName = "DocumentTemplateApi.setDocumentTemplateAttachment"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocumentTemplateDto>? != null) {
-                            if ("DocumentTemplateDto".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<DocumentTemplateDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "DocumentTemplateApi.setDocumentTemplateAttachment"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocumentTemplateDto>? != null) {
+                        if ("DocumentTemplateDto".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<DocumentTemplateDto>() {}
-                        })
-                        assertAreEquals("setDocumentTemplateAttachment", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<DocumentTemplateDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<DocumentTemplateDto>() {}
+                    })
+                    assertAreEquals("setDocumentTemplateAttachment", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -936,12 +948,13 @@ class DocumentTemplateApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun setDocumentTemplateAttachmentJsonTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "setDocumentTemplateAttachmentJson")) {
-                assert(true)
-                println("Endpoint setDocumentTemplateAttachmentJson skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "setDocumentTemplateAttachmentJson")) {
+            assert(true)
+            println("Endpoint setDocumentTemplateAttachmentJson skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "setDocumentTemplateAttachmentJson")
                 val documentTemplateId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "setDocumentTemplateAttachmentJson.documentTemplateId")!!.let {
                     (it as? DocumentTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "setDocumentTemplateAttachmentJson") }?.let {
@@ -960,41 +973,41 @@ class DocumentTemplateApiTest() {
 
                 val response = api(credentialsFile).setDocumentTemplateAttachmentJson(documentTemplateId,byteArrayDto)
 
-                    val testFileName = "DocumentTemplateApi.setDocumentTemplateAttachmentJson"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocumentTemplateDto>? != null) {
-                            if ("DocumentTemplateDto".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<DocumentTemplateDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "DocumentTemplateApi.setDocumentTemplateAttachmentJson"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocumentTemplateDto>? != null) {
+                        if ("DocumentTemplateDto".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<DocumentTemplateDto>() {}
-                        })
-                        assertAreEquals("setDocumentTemplateAttachmentJson", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<DocumentTemplateDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<DocumentTemplateDto>() {}
+                    })
+                    assertAreEquals("setDocumentTemplateAttachmentJson", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     

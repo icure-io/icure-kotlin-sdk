@@ -129,12 +129,13 @@ class TarificationApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun createTarificationTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "createTarification")) {
-                assert(true)
-                println("Endpoint createTarification skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "createTarification")) {
+            assert(true)
+            println("Endpoint createTarification skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createTarification")
                 val tarificationDto: TarificationDto = TestUtils.getParameter<TarificationDto>(fileName, "createTarification.tarificationDto")!!.let {
                     (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "createTarification") }?.let {
@@ -146,41 +147,41 @@ class TarificationApiTest() {
 
                 val response = api(credentialsFile).createTarification(tarificationDto)
 
-                    val testFileName = "TarificationApi.createTarification"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<TarificationDto>? != null) {
-                            if ("TarificationDto".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<TarificationDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "TarificationApi.createTarification"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<TarificationDto>? != null) {
+                        if ("TarificationDto".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<TarificationDto>() {}
-                        })
-                        assertAreEquals("createTarification", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<TarificationDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<TarificationDto>() {}
+                    })
+                    assertAreEquals("createTarification", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -195,12 +196,13 @@ class TarificationApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun findTarificationsByTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "findTarificationsBy")) {
-                assert(true)
-                println("Endpoint findTarificationsBy skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "findTarificationsBy")) {
+            assert(true)
+            println("Endpoint findTarificationsBy skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "findTarificationsBy")
                 val region: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findTarificationsBy.region")?.let {
                     (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "findTarificationsBy") }?.let {
@@ -247,41 +249,41 @@ class TarificationApiTest() {
 
                 val response = api(credentialsFile).findTarificationsBy(region,type,tarification,version,startDocumentId,limit)
 
-                    val testFileName = "TarificationApi.findTarificationsBy"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<PaginatedListTarificationDto>? != null) {
-                            if ("PaginatedListTarificationDto".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<PaginatedListTarificationDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "TarificationApi.findTarificationsBy"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<PaginatedListTarificationDto>? != null) {
+                        if ("PaginatedListTarificationDto".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<PaginatedListTarificationDto>() {}
-                        })
-                        assertAreEquals("findTarificationsBy", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<PaginatedListTarificationDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<PaginatedListTarificationDto>() {}
+                    })
+                    assertAreEquals("findTarificationsBy", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -296,12 +298,13 @@ class TarificationApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun findTarificationsBy1Test(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "findTarificationsBy1")) {
-                assert(true)
-                println("Endpoint findTarificationsBy1 skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "findTarificationsBy1")) {
+            assert(true)
+            println("Endpoint findTarificationsBy1 skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "findTarificationsBy1")
                 val region: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findTarificationsBy1.region")?.let {
                     (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "findTarificationsBy1") }?.let {
@@ -334,41 +337,41 @@ class TarificationApiTest() {
 
                 val response = api(credentialsFile).findTarificationsBy1(region,type,tarification,version)
 
-                    val testFileName = "TarificationApi.findTarificationsBy1"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<TarificationDto>? != null) {
-                            if ("kotlin.collections.List<TarificationDto>".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<TarificationDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "TarificationApi.findTarificationsBy1"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<TarificationDto>? != null) {
+                        if ("kotlin.collections.List<TarificationDto>".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<kotlin.collections.List<TarificationDto>>() {}
-                        })
-                        assertAreEquals("findTarificationsBy1", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<TarificationDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<kotlin.collections.List<TarificationDto>>() {}
+                    })
+                    assertAreEquals("findTarificationsBy1", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -383,12 +386,13 @@ class TarificationApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun findTarificationsByLabelTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "findTarificationsByLabel")) {
-                assert(true)
-                println("Endpoint findTarificationsByLabel skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "findTarificationsByLabel")) {
+            assert(true)
+            println("Endpoint findTarificationsByLabel skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "findTarificationsByLabel")
                 val region: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findTarificationsByLabel.region")?.let {
                     (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "findTarificationsByLabel") }?.let {
@@ -435,41 +439,41 @@ class TarificationApiTest() {
 
                 val response = api(credentialsFile).findTarificationsByLabel(region,types,language,label,startDocumentId,limit)
 
-                    val testFileName = "TarificationApi.findTarificationsByLabel"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<PaginatedListTarificationDto>? != null) {
-                            if ("PaginatedListTarificationDto".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<PaginatedListTarificationDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "TarificationApi.findTarificationsByLabel"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<PaginatedListTarificationDto>? != null) {
+                        if ("PaginatedListTarificationDto".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<PaginatedListTarificationDto>() {}
-                        })
-                        assertAreEquals("findTarificationsByLabel", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<PaginatedListTarificationDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<PaginatedListTarificationDto>() {}
+                    })
+                    assertAreEquals("findTarificationsByLabel", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -484,12 +488,13 @@ class TarificationApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getTarificationTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "getTarification")) {
-                assert(true)
-                println("Endpoint getTarification skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "getTarification")) {
+            assert(true)
+            println("Endpoint getTarification skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getTarification")
                 val tarificationId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getTarification.tarificationId")!!.let {
                     (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "getTarification") }?.let {
@@ -501,41 +506,41 @@ class TarificationApiTest() {
 
                 val response = api(credentialsFile).getTarification(tarificationId)
 
-                    val testFileName = "TarificationApi.getTarification"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<TarificationDto>? != null) {
-                            if ("TarificationDto".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<TarificationDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "TarificationApi.getTarification"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<TarificationDto>? != null) {
+                        if ("TarificationDto".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<TarificationDto>() {}
-                        })
-                        assertAreEquals("getTarification", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<TarificationDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<TarificationDto>() {}
+                    })
+                    assertAreEquals("getTarification", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -550,12 +555,13 @@ class TarificationApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getTarificationWithPartsTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "getTarificationWithParts")) {
-                assert(true)
-                println("Endpoint getTarificationWithParts skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "getTarificationWithParts")) {
+            assert(true)
+            println("Endpoint getTarificationWithParts skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getTarificationWithParts")
                 val type: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getTarificationWithParts.type")!!.let {
                     (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "getTarificationWithParts") }?.let {
@@ -581,41 +587,41 @@ class TarificationApiTest() {
 
                 val response = api(credentialsFile).getTarificationWithParts(type,tarification,version)
 
-                    val testFileName = "TarificationApi.getTarificationWithParts"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<TarificationDto>? != null) {
-                            if ("TarificationDto".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<TarificationDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "TarificationApi.getTarificationWithParts"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<TarificationDto>? != null) {
+                        if ("TarificationDto".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<TarificationDto>() {}
-                        })
-                        assertAreEquals("getTarificationWithParts", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<TarificationDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<TarificationDto>() {}
+                    })
+                    assertAreEquals("getTarificationWithParts", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -630,12 +636,13 @@ class TarificationApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getTarificationsTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "getTarifications")) {
-                assert(true)
-                println("Endpoint getTarifications skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "getTarifications")) {
+            assert(true)
+            println("Endpoint getTarifications skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getTarifications")
                 val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "getTarifications.listOfIdsDto")!!.let {
                     (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "getTarifications") }?.let {
@@ -647,41 +654,41 @@ class TarificationApiTest() {
 
                 val response = api(credentialsFile).getTarifications(listOfIdsDto)
 
-                    val testFileName = "TarificationApi.getTarifications"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<TarificationDto>? != null) {
-                            if ("kotlin.collections.List<TarificationDto>".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<TarificationDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "TarificationApi.getTarifications"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<TarificationDto>? != null) {
+                        if ("kotlin.collections.List<TarificationDto>".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<kotlin.collections.List<TarificationDto>>() {}
-                        })
-                        assertAreEquals("getTarifications", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<TarificationDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<kotlin.collections.List<TarificationDto>>() {}
+                    })
+                    assertAreEquals("getTarifications", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -696,12 +703,13 @@ class TarificationApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun modifyTarificationTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "modifyTarification")) {
-                assert(true)
-                println("Endpoint modifyTarification skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "modifyTarification")) {
+            assert(true)
+            println("Endpoint modifyTarification skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyTarification")
                 val tarificationDto: TarificationDto = TestUtils.getParameter<TarificationDto>(fileName, "modifyTarification.tarificationDto")!!.let {
                     (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyTarification") }?.let {
@@ -713,41 +721,41 @@ class TarificationApiTest() {
 
                 val response = api(credentialsFile).modifyTarification(tarificationDto)
 
-                    val testFileName = "TarificationApi.modifyTarification"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<TarificationDto>? != null) {
-                            if ("TarificationDto".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<TarificationDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "TarificationApi.modifyTarification"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<TarificationDto>? != null) {
+                        if ("TarificationDto".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<TarificationDto>() {}
-                        })
-                        assertAreEquals("modifyTarification", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<TarificationDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<TarificationDto>() {}
+                    })
+                    assertAreEquals("modifyTarification", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     

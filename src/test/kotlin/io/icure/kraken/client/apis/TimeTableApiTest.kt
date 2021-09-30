@@ -129,12 +129,13 @@ class TimeTableApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun createTimeTableTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "createTimeTable")) {
-                assert(true)
-                println("Endpoint createTimeTable skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "createTimeTable")) {
+            assert(true)
+            println("Endpoint createTimeTable skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createTimeTable")
                 val timeTableDto: TimeTableDto = TestUtils.getParameter<TimeTableDto>(fileName, "createTimeTable.timeTableDto")!!.let {
                     (it as? TimeTableDto)?.takeIf { TestUtils.isAutoRev(fileName, "createTimeTable") }?.let {
@@ -146,41 +147,41 @@ class TimeTableApiTest() {
 
                 val response = api(credentialsFile).createTimeTable(timeTableDto)
 
-                    val testFileName = "TimeTableApi.createTimeTable"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<TimeTableDto>? != null) {
-                            if ("TimeTableDto".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<TimeTableDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "TimeTableApi.createTimeTable"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<TimeTableDto>? != null) {
+                        if ("TimeTableDto".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<TimeTableDto>() {}
-                        })
-                        assertAreEquals("createTimeTable", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<TimeTableDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<TimeTableDto>() {}
+                    })
+                    assertAreEquals("createTimeTable", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -195,12 +196,13 @@ class TimeTableApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun deleteTimeTableTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "deleteTimeTable")) {
-                assert(true)
-                println("Endpoint deleteTimeTable skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "deleteTimeTable")) {
+            assert(true)
+            println("Endpoint deleteTimeTable skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteTimeTable")
                 val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "deleteTimeTable.listOfIdsDto")!!.let {
                     (it as? TimeTableDto)?.takeIf { TestUtils.isAutoRev(fileName, "deleteTimeTable") }?.let {
@@ -212,41 +214,41 @@ class TimeTableApiTest() {
 
                 val response = api(credentialsFile).deleteTimeTable(listOfIdsDto)
 
-                    val testFileName = "TimeTableApi.deleteTimeTable"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocIdentifier>? != null) {
-                            if ("kotlin.collections.List<DocIdentifier>".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<DocIdentifier>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "TimeTableApi.deleteTimeTable"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocIdentifier>? != null) {
+                        if ("kotlin.collections.List<DocIdentifier>".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<kotlin.collections.List<DocIdentifier>>() {}
-                        })
-                        assertAreEquals("deleteTimeTable", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<DocIdentifier>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<kotlin.collections.List<DocIdentifier>>() {}
+                    })
+                    assertAreEquals("deleteTimeTable", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -261,12 +263,13 @@ class TimeTableApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getTimeTableTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "getTimeTable")) {
-                assert(true)
-                println("Endpoint getTimeTable skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "getTimeTable")) {
+            assert(true)
+            println("Endpoint getTimeTable skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getTimeTable")
                 val timeTableId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getTimeTable.timeTableId")!!.let {
                     (it as? TimeTableDto)?.takeIf { TestUtils.isAutoRev(fileName, "getTimeTable") }?.let {
@@ -278,41 +281,41 @@ class TimeTableApiTest() {
 
                 val response = api(credentialsFile).getTimeTable(timeTableId)
 
-                    val testFileName = "TimeTableApi.getTimeTable"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<TimeTableDto>? != null) {
-                            if ("TimeTableDto".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<TimeTableDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "TimeTableApi.getTimeTable"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<TimeTableDto>? != null) {
+                        if ("TimeTableDto".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<TimeTableDto>() {}
-                        })
-                        assertAreEquals("getTimeTable", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<TimeTableDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<TimeTableDto>() {}
+                    })
+                    assertAreEquals("getTimeTable", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -327,12 +330,13 @@ class TimeTableApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getTimeTablesByAgendaIdTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "getTimeTablesByAgendaId")) {
-                assert(true)
-                println("Endpoint getTimeTablesByAgendaId skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "getTimeTablesByAgendaId")) {
+            assert(true)
+            println("Endpoint getTimeTablesByAgendaId skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getTimeTablesByAgendaId")
                 val agendaId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getTimeTablesByAgendaId.agendaId")!!.let {
                     (it as? TimeTableDto)?.takeIf { TestUtils.isAutoRev(fileName, "getTimeTablesByAgendaId") }?.let {
@@ -344,41 +348,41 @@ class TimeTableApiTest() {
 
                 val response = api(credentialsFile).getTimeTablesByAgendaId(agendaId)
 
-                    val testFileName = "TimeTableApi.getTimeTablesByAgendaId"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<TimeTableDto>? != null) {
-                            if ("kotlin.collections.List<TimeTableDto>".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<TimeTableDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "TimeTableApi.getTimeTablesByAgendaId"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<TimeTableDto>? != null) {
+                        if ("kotlin.collections.List<TimeTableDto>".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<kotlin.collections.List<TimeTableDto>>() {}
-                        })
-                        assertAreEquals("getTimeTablesByAgendaId", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<TimeTableDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<kotlin.collections.List<TimeTableDto>>() {}
+                    })
+                    assertAreEquals("getTimeTablesByAgendaId", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -393,12 +397,13 @@ class TimeTableApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getTimeTablesByPeriodAndAgendaIdTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "getTimeTablesByPeriodAndAgendaId")) {
-                assert(true)
-                println("Endpoint getTimeTablesByPeriodAndAgendaId skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "getTimeTablesByPeriodAndAgendaId")) {
+            assert(true)
+            println("Endpoint getTimeTablesByPeriodAndAgendaId skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getTimeTablesByPeriodAndAgendaId")
                 val startDate: kotlin.Long = TestUtils.getParameter<kotlin.Long>(fileName, "getTimeTablesByPeriodAndAgendaId.startDate")!!.let {
                     (it as? TimeTableDto)?.takeIf { TestUtils.isAutoRev(fileName, "getTimeTablesByPeriodAndAgendaId") }?.let {
@@ -424,41 +429,41 @@ class TimeTableApiTest() {
 
                 val response = api(credentialsFile).getTimeTablesByPeriodAndAgendaId(startDate,endDate,agendaId)
 
-                    val testFileName = "TimeTableApi.getTimeTablesByPeriodAndAgendaId"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<TimeTableDto>? != null) {
-                            if ("kotlin.collections.List<TimeTableDto>".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<TimeTableDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "TimeTableApi.getTimeTablesByPeriodAndAgendaId"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<TimeTableDto>? != null) {
+                        if ("kotlin.collections.List<TimeTableDto>".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<kotlin.collections.List<TimeTableDto>>() {}
-                        })
-                        assertAreEquals("getTimeTablesByPeriodAndAgendaId", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<TimeTableDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<kotlin.collections.List<TimeTableDto>>() {}
+                    })
+                    assertAreEquals("getTimeTablesByPeriodAndAgendaId", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -473,12 +478,13 @@ class TimeTableApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun modifyTimeTableTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "modifyTimeTable")) {
-                assert(true)
-                println("Endpoint modifyTimeTable skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "modifyTimeTable")) {
+            assert(true)
+            println("Endpoint modifyTimeTable skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyTimeTable")
                 val timeTableDto: TimeTableDto = TestUtils.getParameter<TimeTableDto>(fileName, "modifyTimeTable.timeTableDto")!!.let {
                     (it as? TimeTableDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyTimeTable") }?.let {
@@ -490,41 +496,41 @@ class TimeTableApiTest() {
 
                 val response = api(credentialsFile).modifyTimeTable(timeTableDto)
 
-                    val testFileName = "TimeTableApi.modifyTimeTable"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<TimeTableDto>? != null) {
-                            if ("TimeTableDto".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<TimeTableDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "TimeTableApi.modifyTimeTable"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<TimeTableDto>? != null) {
+                        if ("TimeTableDto".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<TimeTableDto>() {}
-                        })
-                        assertAreEquals("modifyTimeTable", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<TimeTableDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<TimeTableDto>() {}
+                    })
+                    assertAreEquals("modifyTimeTable", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     

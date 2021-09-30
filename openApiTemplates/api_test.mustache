@@ -119,12 +119,13 @@ class {{classname}}Test() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun {{operationId}}Test(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "{{operationId}}")) {
-                assert(true)
-                println("Endpoint {{operationId}} skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "{{operationId}}")) {
+            assert(true)
+            println("Endpoint {{operationId}} skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "{{operationId}}")
                 {{#allParams}}
                 val {{paramName}}: {{{dataType}}}{{^required}}?{{/required}} = TestUtils.getParameter<{{{dataType}}}>(fileName, "{{operationId}}.{{paramName}}"){{#required}}!!{{/required}}{{^required}}?{{/required}}{{#isArray}}.map {
@@ -145,42 +146,42 @@ class {{classname}}Test() {
                 {{#returnType}}val response = {{/returnType}}api(credentialsFile).{{operationId}}({{#allParams}}{{paramName}}{{^-last}},{{/-last}}{{/allParams}})
 
                 {{#returnType}}
-                    val testFileName = "{{classname}}.{{operationId}}"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<{{{returnBaseType}}}>? != null) {
-                            if ("{{{returnType}}}".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<{{{returnBaseType}}}>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "{{classname}}.{{operationId}}"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<{{{returnBaseType}}}>? != null) {
+                        if ("{{{returnType}}}".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            {{#returnType}}object : TypeReference<{{{returnType}}}>() {}{{/returnType}}{{^returnType}}object : TypeReference<Void>() {}{{/returnType}}
-                        })
-                        assertAreEquals("{{operationId}}", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<{{{returnBaseType}}}>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        {{#returnType}}object : TypeReference<{{{returnType}}}>() {}{{/returnType}}{{^returnType}}object : TypeReference<Void>() {}{{/returnType}}
+                    })
+                    assertAreEquals("{{operationId}}", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
                 {{/returnType}}
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     {{/operation}}{{/operations}}

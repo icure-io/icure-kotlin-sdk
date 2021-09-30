@@ -17,7 +17,7 @@
     "accessLogIds": "06a8b70b-9332-48a2-a8b7-0b933268a001"
   },
   "findByHCPartyPatientSecretFKeys": {
-    "skipEndpoint": true,
+
     "hcPartyId": null,
     "secretFKeys": null
   },

@@ -37,11 +37,11 @@
     }
   },
   "deleteCalendarItem": {
-    "skipEndpoint": true,
+
     "calendarItemIds": "1096191a-c0e1-42d0-89a4-89abd288b001"
   },
   "findByHCPartyPatientSecretFKeys": {
-    "skipEndpoint": true,
+
     "hcPartyId": null, 
     "secretFKeys": null
   },
@@ -61,7 +61,7 @@
     }
   },
   "getCalendarsByPeriodAndAgendaId": {
-    "skipEndpoint": true,
+
     "startDate": null, 
     "endDate": null, 
     "agendaId": null
@@ -79,7 +79,7 @@
     }
   },
   "setCalendarItemsDelegations": {
-    "skipEndpoint": true,
+
     "body": null
   },
   

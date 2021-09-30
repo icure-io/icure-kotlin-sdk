@@ -129,12 +129,13 @@ class InsuranceApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun createInsuranceTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "createInsurance")) {
-                assert(true)
-                println("Endpoint createInsurance skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "createInsurance")) {
+            assert(true)
+            println("Endpoint createInsurance skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createInsurance")
                 val insuranceDto: InsuranceDto = TestUtils.getParameter<InsuranceDto>(fileName, "createInsurance.insuranceDto")!!.let {
                     (it as? InsuranceDto)?.takeIf { TestUtils.isAutoRev(fileName, "createInsurance") }?.let {
@@ -146,41 +147,41 @@ class InsuranceApiTest() {
 
                 val response = api(credentialsFile).createInsurance(insuranceDto)
 
-                    val testFileName = "InsuranceApi.createInsurance"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InsuranceDto>? != null) {
-                            if ("InsuranceDto".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<InsuranceDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "InsuranceApi.createInsurance"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InsuranceDto>? != null) {
+                        if ("InsuranceDto".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<InsuranceDto>() {}
-                        })
-                        assertAreEquals("createInsurance", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<InsuranceDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<InsuranceDto>() {}
+                    })
+                    assertAreEquals("createInsurance", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -195,12 +196,13 @@ class InsuranceApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun deleteInsuranceTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "deleteInsurance")) {
-                assert(true)
-                println("Endpoint deleteInsurance skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "deleteInsurance")) {
+            assert(true)
+            println("Endpoint deleteInsurance skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteInsurance")
                 val insuranceId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "deleteInsurance.insuranceId")!!.let {
                     (it as? InsuranceDto)?.takeIf { TestUtils.isAutoRev(fileName, "deleteInsurance") }?.let {
@@ -212,41 +214,41 @@ class InsuranceApiTest() {
 
                 val response = api(credentialsFile).deleteInsurance(insuranceId)
 
-                    val testFileName = "InsuranceApi.deleteInsurance"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocIdentifier>? != null) {
-                            if ("DocIdentifier".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<DocIdentifier>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "InsuranceApi.deleteInsurance"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocIdentifier>? != null) {
+                        if ("DocIdentifier".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<DocIdentifier>() {}
-                        })
-                        assertAreEquals("deleteInsurance", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<DocIdentifier>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<DocIdentifier>() {}
+                    })
+                    assertAreEquals("deleteInsurance", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -261,12 +263,13 @@ class InsuranceApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getInsuranceTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "getInsurance")) {
-                assert(true)
-                println("Endpoint getInsurance skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "getInsurance")) {
+            assert(true)
+            println("Endpoint getInsurance skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getInsurance")
                 val insuranceId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getInsurance.insuranceId")!!.let {
                     (it as? InsuranceDto)?.takeIf { TestUtils.isAutoRev(fileName, "getInsurance") }?.let {
@@ -278,41 +281,41 @@ class InsuranceApiTest() {
 
                 val response = api(credentialsFile).getInsurance(insuranceId)
 
-                    val testFileName = "InsuranceApi.getInsurance"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InsuranceDto>? != null) {
-                            if ("InsuranceDto".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<InsuranceDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "InsuranceApi.getInsurance"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InsuranceDto>? != null) {
+                        if ("InsuranceDto".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<InsuranceDto>() {}
-                        })
-                        assertAreEquals("getInsurance", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<InsuranceDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<InsuranceDto>() {}
+                    })
+                    assertAreEquals("getInsurance", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -327,12 +330,13 @@ class InsuranceApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun getInsurancesTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "getInsurances")) {
-                assert(true)
-                println("Endpoint getInsurances skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "getInsurances")) {
+            assert(true)
+            println("Endpoint getInsurances skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getInsurances")
                 val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "getInsurances.listOfIdsDto")!!.let {
                     (it as? InsuranceDto)?.takeIf { TestUtils.isAutoRev(fileName, "getInsurances") }?.let {
@@ -344,41 +348,41 @@ class InsuranceApiTest() {
 
                 val response = api(credentialsFile).getInsurances(listOfIdsDto)
 
-                    val testFileName = "InsuranceApi.getInsurances"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InsuranceDto>? != null) {
-                            if ("kotlin.collections.List<InsuranceDto>".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<InsuranceDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "InsuranceApi.getInsurances"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InsuranceDto>? != null) {
+                        if ("kotlin.collections.List<InsuranceDto>".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<kotlin.collections.List<InsuranceDto>>() {}
-                        })
-                        assertAreEquals("getInsurances", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<InsuranceDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<kotlin.collections.List<InsuranceDto>>() {}
+                    })
+                    assertAreEquals("getInsurances", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -393,12 +397,13 @@ class InsuranceApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun listInsurancesByCodeTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "listInsurancesByCode")) {
-                assert(true)
-                println("Endpoint listInsurancesByCode skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "listInsurancesByCode")) {
+            assert(true)
+            println("Endpoint listInsurancesByCode skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listInsurancesByCode")
                 val insuranceCode: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listInsurancesByCode.insuranceCode")!!.let {
                     (it as? InsuranceDto)?.takeIf { TestUtils.isAutoRev(fileName, "listInsurancesByCode") }?.let {
@@ -410,41 +415,41 @@ class InsuranceApiTest() {
 
                 val response = api(credentialsFile).listInsurancesByCode(insuranceCode)
 
-                    val testFileName = "InsuranceApi.listInsurancesByCode"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InsuranceDto>? != null) {
-                            if ("kotlin.collections.List<InsuranceDto>".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<InsuranceDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "InsuranceApi.listInsurancesByCode"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InsuranceDto>? != null) {
+                        if ("kotlin.collections.List<InsuranceDto>".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<kotlin.collections.List<InsuranceDto>>() {}
-                        })
-                        assertAreEquals("listInsurancesByCode", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<InsuranceDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<kotlin.collections.List<InsuranceDto>>() {}
+                    })
+                    assertAreEquals("listInsurancesByCode", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -459,12 +464,13 @@ class InsuranceApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun listInsurancesByNameTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "listInsurancesByName")) {
-                assert(true)
-                println("Endpoint listInsurancesByName skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "listInsurancesByName")) {
+            assert(true)
+            println("Endpoint listInsurancesByName skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listInsurancesByName")
                 val insuranceName: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listInsurancesByName.insuranceName")!!.let {
                     (it as? InsuranceDto)?.takeIf { TestUtils.isAutoRev(fileName, "listInsurancesByName") }?.let {
@@ -476,41 +482,41 @@ class InsuranceApiTest() {
 
                 val response = api(credentialsFile).listInsurancesByName(insuranceName)
 
-                    val testFileName = "InsuranceApi.listInsurancesByName"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InsuranceDto>? != null) {
-                            if ("kotlin.collections.List<InsuranceDto>".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<InsuranceDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "InsuranceApi.listInsurancesByName"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InsuranceDto>? != null) {
+                        if ("kotlin.collections.List<InsuranceDto>".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<kotlin.collections.List<InsuranceDto>>() {}
-                        })
-                        assertAreEquals("listInsurancesByName", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<InsuranceDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<kotlin.collections.List<InsuranceDto>>() {}
+                    })
+                    assertAreEquals("listInsurancesByName", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
@@ -525,12 +531,13 @@ class InsuranceApiTest() {
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun modifyInsuranceTest(fileName: String) = runBlocking {
-        try{
-            createForModification(fileName)
-            if (TestUtils.skipEndpoint(fileName, "modifyInsurance")) {
-                assert(true)
-                println("Endpoint modifyInsurance skipped")
-            } else {
+
+        if (TestUtils.skipEndpoint(fileName, "modifyInsurance")) {
+            assert(true)
+            println("Endpoint modifyInsurance skipped")
+        } else {
+            try{
+                createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyInsurance")
                 val insuranceDto: InsuranceDto = TestUtils.getParameter<InsuranceDto>(fileName, "modifyInsurance.insuranceDto")!!.let {
                     (it as? InsuranceDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyInsurance") }?.let {
@@ -542,41 +549,41 @@ class InsuranceApiTest() {
 
                 val response = api(credentialsFile).modifyInsurance(insuranceDto)
 
-                    val testFileName = "InsuranceApi.modifyInsurance"
-                    val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                    try {
-                        val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InsuranceDto>? != null) {
-                            if ("InsuranceDto".contains("String>")) {
-                                object : TypeReference<List<String>>() {}
-                            } else {
-                                object : TypeReference<List<InsuranceDto>>() {}
-                            }
-                        } else if(response as? kotlin.collections.Map<String, String>? != null){
-                            object : TypeReference<Map<String,String>>() {}
+                val testFileName = "InsuranceApi.modifyInsurance"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InsuranceDto>? != null) {
+                        if ("InsuranceDto".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<InsuranceDto>() {}
-                        })
-                        assertAreEquals("modifyInsurance", objectFromFile, response)
-                        println("Comparison successful")
-                    }
-                    catch (e: Exception) {
-                        when (e) {
-                            is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                                file.parentFile.mkdirs()
-                                file.createNewFile()
-                                (response as? Flow<ByteBuffer>)
-                                    ?.let { it.writeToFile(file) }
-                                    ?: objectMapper.writeValue(file, response)
-                                assert(true)
-                                println("File written")
-                            }
+                            object : TypeReference<List<InsuranceDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<InsuranceDto>() {}
+                    })
+                    assertAreEquals("modifyInsurance", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
                         }
                     }
+                }
             }
-        }
-        finally {
-            TestUtils.deleteAfterElements(fileName)
-            alreadyCreatedObjects.remove(fileName)
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
         }
     }
     
