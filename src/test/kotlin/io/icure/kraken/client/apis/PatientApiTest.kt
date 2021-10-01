@@ -66,7 +66,6 @@ import kotlin.reflect.full.callSuspendBy
 import kotlin.reflect.javaType
 import kotlinx.coroutines.flow.flow
 
-
 /**
  * API tests for PatientApi
  */
@@ -2189,7 +2188,7 @@ class PatientApiTest() {
             else -> {
                 val toSkip : kotlin.collections.List<String> = when {
                     functionName.let { name -> listOf("create", "get", "modify", "new").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "deletionDate")
-                    functionName.let { name -> listOf("set", "delete").any { name.startsWith(it) } } -> listOf("rev")
+                    functionName.let { name -> listOf("set", "delete").any { name.startsWith(it) } } -> listOf("rev", "created", "modified",)
                     else -> emptyList()
                 }
                 val diffs = filterDiffs(objectFromFile, response, response.differences(objectFromFile), toSkip)
