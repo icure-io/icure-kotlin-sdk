@@ -112,7 +112,7 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
 
         return RequestConfig(
-            method = RequestMethod.DELETE,
+            method = RequestMethod.POST,
             path = "/rest/v2/calendarItem/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,

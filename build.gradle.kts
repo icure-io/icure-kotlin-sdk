@@ -161,7 +161,8 @@ tasks.register("apiGenerate", Jar::class) {
         }
     }
     dependsOn.add("download-openapi-spec") // required due to https://github.com/OpenAPITools/openapi-generator/issues/8255
-    finalizedBy("apply-custom-fixes", "delete-unused-filter-files")
+
+    finalizedBy("apply-custom-fixes", "delete-unused-filter-files", "delete-unused-tests-files")
 }
 
 tasks.register("download-openapi-spec") {
@@ -225,4 +226,18 @@ tasks.create<Delete>("delete-unused-filter-files") {
     delete(File("$rootDir/src/main/kotlin/io/icure/kraken/client/models/AbstractFilterDtoHealthElement.kt"))
     delete(File("$rootDir/src/main/kotlin/io/icure/kraken/client/models/AbstractFilterDtoContact.kt"))
     delete(File("$rootDir/src/main/kotlin/io/icure/kraken/client/models/AbstractFilterDtoCode.kt"))
+}
+
+
+tasks.create<Delete>("delete-unused-tests-files") {
+    delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/ApplicationsettingsApiTest.kt"))
+    delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/AuthApiTest.kt"))
+    delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/BeefactApiTest.kt"))
+    delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/BekmehrApiTest.kt"))
+    delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/BeresultexportApiTest.kt"))
+    delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/BeresultimportApiTest.kt"))
+    delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/Besamv2ApiTest.kt"))
+    delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/EntityrefApiTest.kt"))
+    delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/IcureApiTest.kt"))
+    delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/MedexApiTest.kt"))
 }

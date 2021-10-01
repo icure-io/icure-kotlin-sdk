@@ -5,7 +5,7 @@ All URIs are relative to *http://localhost:16043*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createCalendarItem**](CalendarItemApi.md#createCalendarItem) | **POST** /rest/v2/calendarItem | Creates a calendarItem
-[**deleteCalendarItems**](CalendarItemApi.md#deleteCalendarItems) | **DELETE** /rest/v2/calendarItem/delete/batch | Deletes an calendarItem
+[**deleteCalendarItems**](CalendarItemApi.md#deleteCalendarItems) | **POST** /rest/v2/calendarItem/delete/batch | Deletes an calendarItem
 [**findCalendarItemsByHCPartyPatientForeignKeys**](CalendarItemApi.md#findCalendarItemsByHCPartyPatientForeignKeys) | **GET** /rest/v2/calendarItem/byHcPartySecretForeignKeys | Find CalendarItems by hcparty and patient
 [**getCalendarItem**](CalendarItemApi.md#getCalendarItem) | **GET** /rest/v2/calendarItem/{calendarItemId} | Gets an calendarItem
 [**getCalendarItems**](CalendarItemApi.md#getCalendarItems) | **GET** /rest/v2/calendarItem | Gets all calendarItems

@@ -119,7 +119,7 @@ Class | Method | HTTP request | Description
 *Besamv2Api* | [**listVmpsByGroupIds**](docs/Besamv2Api.md#listvmpsbygroupids) | **POST** /rest/v2/be_samv2/vmp/byGroupIds | Finding VMPs by group.
 *Besamv2Api* | [**listVmpsByVmpCodes**](docs/Besamv2Api.md#listvmpsbyvmpcodes) | **POST** /rest/v2/be_samv2/vmp/byVmpCodes | Finding VMPs by group.
 *CalendarItemApi* | [**createCalendarItem**](docs/CalendarItemApi.md#createcalendaritem) | **POST** /rest/v2/calendarItem | Creates a calendarItem
-*CalendarItemApi* | [**deleteCalendarItems**](docs/CalendarItemApi.md#deletecalendaritems) | **DELETE** /rest/v2/calendarItem/delete/batch | Deletes an calendarItem
+*CalendarItemApi* | [**deleteCalendarItems**](docs/CalendarItemApi.md#deletecalendaritems) | **POST** /rest/v2/calendarItem/delete/batch | Deletes an calendarItem
 *CalendarItemApi* | [**findCalendarItemsByHCPartyPatientForeignKeys**](docs/CalendarItemApi.md#findcalendaritemsbyhcpartypatientforeignkeys) | **GET** /rest/v2/calendarItem/byHcPartySecretForeignKeys | Find CalendarItems by hcparty and patient
 *CalendarItemApi* | [**getCalendarItem**](docs/CalendarItemApi.md#getcalendaritem) | **GET** /rest/v2/calendarItem/{calendarItemId} | Gets an calendarItem
 *CalendarItemApi* | [**getCalendarItems**](docs/CalendarItemApi.md#getcalendaritems) | **GET** /rest/v2/calendarItem | Gets all calendarItems
