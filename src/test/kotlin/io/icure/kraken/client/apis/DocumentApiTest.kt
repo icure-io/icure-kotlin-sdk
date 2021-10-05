@@ -1139,13 +1139,13 @@ class DocumentApiTest() {
                     it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
                     }
-                val attachment: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> = TestUtils.getParameter<kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>>(fileName, "setDocumentAttachmentMulti.attachment")!!.map {
+                val attachment: io.icure.kraken.client.infrastructure.ByteArrayWrapper = TestUtils.getParameter<io.icure.kraken.client.infrastructure.ByteArrayWrapper>(fileName, "setDocumentAttachmentMulti.attachment")!!.let {
                     (it as? DocumentDto)?.takeIf { TestUtils.isAutoRev(fileName, "setDocumentAttachmentMulti") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
                     val currentRev = api(credentialsFile).getDocument(id.getter.call(it) as String).rev
                     it.copy(rev = currentRev)
-                    } ?: it
-                    } as kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>
+                    } as? io.icure.kraken.client.infrastructure.ByteArrayWrapper ?: it
+                    }
                 val enckeys: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "setDocumentAttachmentMulti.enckeys")?.let {
                     (it as? DocumentDto)?.takeIf { TestUtils.isAutoRev(fileName, "setDocumentAttachmentMulti") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
@@ -1347,8 +1347,9 @@ class DocumentApiTest() {
         when {
             objectFromFile as? Iterable<Any> != null -> {
                 val toSkip : kotlin.collections.List<String> = when {
-                    functionName.let { name -> listOf("create", "new", "get", "list").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
-                    functionName.let { name -> listOf("modify", "set", "delete").any { name.startsWith(it) } } -> listOf("rev")
+                    functionName.let { name -> listOf("create", "new", "get", "list", "set").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
+                    functionName.let { name -> listOf("modify", "delete").any { name.startsWith(it) } } -> listOf("rev")
+                    functionName.let { name -> listOf("append").any { name.startsWith(it) } } -> listOf("id", "created", "modified")
                     else -> emptyList()
                 }
 
@@ -1376,7 +1377,9 @@ class DocumentApiTest() {
             else -> {
                 val toSkip : kotlin.collections.List<String> = when {
                     functionName.let { name -> listOf("create", "get", "modify", "new").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "deletionDate")
-                    functionName.let { name -> listOf("set", "delete").any { name.startsWith(it) } } -> listOf("rev", "created", "modified",)
+                    functionName.let { name -> listOf("set", "delete", "merge").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
+                    functionName.let { name -> listOf("validate").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "sentDate")
+                    functionName.let { name -> listOf("reassign").any { name.startsWith(it) } } -> listOf("id", "created", "invoicingCodes.id")
                     else -> emptyList()
                 }
                 val diffs = filterDiffs(objectFromFile, response, response.differences(objectFromFile), toSkip)

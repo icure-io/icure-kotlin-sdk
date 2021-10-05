@@ -24,6 +24,7 @@ import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.icure.kraken.client.models.filter.AbstractFilterDto
 import io.icure.kraken.client.models.filter.healthelement.HealthElementByHcPartyTagCodeFilter
+import io.icure.kraken.client.models.filter.invoice.InvoiceByHcPartyCodeDateFilter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
@@ -236,6 +237,7 @@ class FilterDeserializer : JsonDeserializer<AbstractFilterDto<*>>() {
 
     init {
         subclasses["HealthElementByHcPartyTagCodeFilter"] = HealthElementByHcPartyTagCodeFilter::class.java as Class<AbstractFilterDto<*>>
+        subclasses["InvoiceByHcPartyCodeDateFilter"] = InvoiceByHcPartyCodeDateFilter::class.java as Class<AbstractFilterDto<*>>
     }
 
     override fun deserialize(p: JsonParser?, ctxt: DeserializationContext?): AbstractFilterDto<*> {
