@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **roles** | **kotlin.collections.Set&lt;kotlin.String&gt;** | Roles specified for the user | 
 **autoDelegations** | **kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Set&lt;kotlin.String&gt;&gt;** | Delegations that are automatically generated client side when a new database object is created by this user | 
 **applicationTokens** | **kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;** | Long lived authentication tokens used for inter-applications authentication. | 
+**authenticationTokens** | [**kotlin.collections.Map&lt;kotlin.String, AuthenticationTokenDto&gt;**](AuthenticationTokenDto.md) | Encrypted and time-limited Authentication tokens used for inter-applications authentication | 
 **rev** | **kotlin.String** | the revision of the user in the database, used for conflict management / optimistic locking. |  [optional]
 **deletionDate** | **kotlin.Long** | hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. |  [optional]
 **created** | **kotlin.Long** |  |  [optional]

@@ -467,6 +467,7 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.ArticleDto](docs/ArticleDto.md)
  - [io.icure.kraken.client.models.AtcDto](docs/AtcDto.md)
  - [io.icure.kraken.client.models.AuthenticationResponse](docs/AuthenticationResponse.md)
+ - [io.icure.kraken.client.models.AuthenticationTokenDto](docs/AuthenticationTokenDto.md)
  - [io.icure.kraken.client.models.ByteArrayDto](docs/ByteArrayDto.md)
  - [io.icure.kraken.client.models.CalendarItemDto](docs/CalendarItemDto.md)
  - [io.icure.kraken.client.models.CalendarItemTagDto](docs/CalendarItemTagDto.md)
