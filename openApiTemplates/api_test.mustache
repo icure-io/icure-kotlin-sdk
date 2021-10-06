@@ -212,9 +212,14 @@ class {{classname}}Test() {
                 objectFromFile.fold(ByteBuffer.allocate(0)) { acc, bb ->
                     ByteBuffer.allocate(bb.limit() + acc.limit()).apply { this.put(acc); this.put(bb) }
                 }.let { buf -> ByteArray(buf.remaining()).also { buf.get(it) }}.contentEquals(
-                    (response as Flow<ByteBuffer>).fold(ByteBuffer.allocate(0)) { acc, bb ->
-                        ByteBuffer.allocate(bb.limit() + acc.limit()).apply { this.put(acc); this.put(bb) }
-                    }.let { buf -> ByteArray(buf.remaining()).also { buf.get(it) }}
+                    (response as Flow<ByteBuffer>).toList().let {
+                it.fold(0 to ByteArray(it.sumOf { it.remaining() })) { (pos, a), b ->
+                    val siz = b.remaining()
+                    (pos + siz) to a.also {
+                        b.get(a, pos, siz)
+                    }
+                }.second
+            }
                 )
             }
             else -> {
