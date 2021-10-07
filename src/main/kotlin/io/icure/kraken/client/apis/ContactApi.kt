@@ -14,6 +14,7 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
+import io.icure.kraken.client.infrastructure.*
 
 import io.icure.kraken.client.models.ContactDto
 import io.icure.kraken.client.models.ContentDto
@@ -36,7 +37,11 @@ import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
+import kotlinx.coroutines.flow.flowOf
+import java.nio.ByteBuffer
+import java.util.*
 import javax.inject.Named
+import kotlinx.coroutines.flow.Flow
 
 @Named
 @ExperimentalStdlibApi
@@ -76,23 +81,23 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun closeForHCPartyPatientForeignKeysRequestConfig(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("hcPartyId", listOf(hcPartyId.toString()))
                 put("secretFKeys", listOf(secretFKeys.toString()))
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.PUT,
             path = "/rest/v2/contact/byHcPartySecretForeignKeys/close",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -120,19 +125,19 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun createContactRequestConfig(contactDto: ContactDto) : RequestConfig<ContactDto> {
-        val localVariableBody = contactDto
+        // val localVariableBody = contactDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = contactDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/contact",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -160,19 +165,19 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun createContactsRequestConfig(contactDto: kotlin.collections.List<ContactDto>) : RequestConfig<kotlin.collections.List<ContactDto>> {
-        val localVariableBody = contactDto
+        // val localVariableBody = contactDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = contactDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/contact/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -200,19 +205,19 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun deleteContactsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/contact/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -244,7 +249,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun filterContactsByRequestConfig(filterChainContact: FilterChainContact, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<FilterChainContact> {
-        val localVariableBody = filterChainContact
+        // val localVariableBody = filterChainContact
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (startDocumentId != null) {
@@ -254,17 +259,17 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("limit", listOf(limit.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = filterChainContact
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/contact/filter",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -296,7 +301,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun filterServicesByRequestConfig(filterChainService: FilterChainService, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<FilterChainService> {
-        val localVariableBody = filterChainService
+        // val localVariableBody = filterChainService
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (startDocumentId != null) {
@@ -306,17 +311,17 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("limit", listOf(limit.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = filterChainService
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/contact/service/filter",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -352,7 +357,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun findContactsByOpeningDateRequestConfig(startKey: kotlin.Long, endKey: kotlin.Long, hcpartyid: kotlin.String, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("startKey", listOf(startKey.toString()))
@@ -365,17 +370,17 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("limit", listOf(limit.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/contact/byOpeningDate",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -403,19 +408,19 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun getContactRequestConfig(contactId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/contact/{contactId}".replace("{"+"contactId"+"}", "$contactId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -443,19 +448,19 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun getContactsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/contact/byIds",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -481,19 +486,19 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun getEmptyContentRequestConfig() : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/contact/service/content/empty",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -523,19 +528,19 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun getServiceCodesOccurencesRequestConfig(codeType: kotlin.String, minOccurences: kotlin.Long) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/contact/service/codes/{codeType}/{minOccurences}".replace("{"+"codeType"+"}", "$codeType").replace("{"+"minOccurences"+"}", "$minOccurences"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -563,19 +568,19 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun getServicesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/contact/service",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -605,24 +610,24 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun getServicesLinkedToRequestConfig(listOfIdsDto: ListOfIdsDto, linkType: kotlin.String?) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (linkType != null) {
                     put("linkType", listOf(linkType.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/contact/service/linkedTo",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -652,23 +657,23 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun listContactByHCPartyServiceIdRequestConfig(hcPartyId: kotlin.String, serviceId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("hcPartyId", listOf(hcPartyId.toString()))
                 put("serviceId", listOf(serviceId.toString()))
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/contact/byHcPartyServiceId",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -696,22 +701,22 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun listContactsByExternalIdRequestConfig(externalId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("externalId", listOf(externalId.toString()))
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/contact/byExternalId",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -741,23 +746,23 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun listContactsByHCPartyAndFormIdRequestConfig(hcPartyId: kotlin.String, formId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("hcPartyId", listOf(hcPartyId.toString()))
                 put("formId", listOf(formId.toString()))
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/contact/byHcPartyFormId",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -787,22 +792,22 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun listContactsByHCPartyAndFormIdsRequestConfig(hcPartyId: kotlin.String, listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("hcPartyId", listOf(hcPartyId.toString()))
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/contact/byHcPartyFormIds",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -832,22 +837,22 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun listContactsByHCPartyAndPatientForeignKeysRequestConfig(hcPartyId: kotlin.String, listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("hcPartyId", listOf(hcPartyId.toString()))
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/contact/byHcPartyPatientForeignKeys",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -881,7 +886,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun listContactsByHCPartyAndPatientSecretFKeysRequestConfig(hcPartyId: kotlin.String, secretFKeys: kotlin.String, planOfActionsIds: kotlin.String?, skipClosedContacts: kotlin.Boolean?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("hcPartyId", listOf(hcPartyId.toString()))
@@ -893,17 +898,17 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("skipClosedContacts", listOf(skipClosedContacts.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/contact/byHcPartySecretForeignKeys",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -933,23 +938,23 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun listContactsDelegationsStubsByHCPartyAndPatientForeignKeysRequestConfig(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("hcPartyId", listOf(hcPartyId.toString()))
                 put("secretFKeys", listOf(secretFKeys.toString()))
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/contact/byHcPartySecretForeignKeys/delegations",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -977,22 +982,22 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun listServicesByAssociationIdRequestConfig(associationId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("associationId", listOf(associationId.toString()))
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/contact/service/associationId",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1020,19 +1025,19 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun matchContactsByRequestConfig(abstractFilterDtoContact: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ContactDto>) : RequestConfig<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ContactDto>> {
-        val localVariableBody = abstractFilterDtoContact
+        // val localVariableBody = abstractFilterDtoContact
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = abstractFilterDtoContact
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/contact/match",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1060,19 +1065,19 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun modifyContactRequestConfig(contactDto: ContactDto) : RequestConfig<ContactDto> {
-        val localVariableBody = contactDto
+        // val localVariableBody = contactDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = contactDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
             path = "/rest/v2/contact",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1100,19 +1105,19 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun modifyContactsRequestConfig(contactDto: kotlin.collections.List<ContactDto>) : RequestConfig<kotlin.collections.List<ContactDto>> {
-        val localVariableBody = contactDto
+        // val localVariableBody = contactDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = contactDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
             path = "/rest/v2/contact/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1140,19 +1145,19 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun modifyContactsDelegationsRequestConfig(icureStubDto: kotlin.collections.List<IcureStubDto>) : RequestConfig<kotlin.collections.List<IcureStubDto>> {
-        val localVariableBody = icureStubDto
+        // val localVariableBody = icureStubDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = icureStubDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
             path = "/rest/v2/contact/delegations",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1182,19 +1187,19 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun newContactDelegationsRequestConfig(contactId: kotlin.String, delegationDto: DelegationDto) : RequestConfig<DelegationDto> {
-        val localVariableBody = delegationDto
+        // val localVariableBody = delegationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = delegationDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/contact/{contactId}/delegate".replace("{"+"contactId"+"}", "$contactId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1222,19 +1227,19 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun setContactsDelegationsRequestConfig(icureStubDto: kotlin.collections.List<IcureStubDto>) : RequestConfig<kotlin.collections.List<IcureStubDto>> {
-        val localVariableBody = icureStubDto
+        // val localVariableBody = icureStubDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = icureStubDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/contact/delegations",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
 }

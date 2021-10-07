@@ -14,6 +14,7 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
+import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.models.AmpDto
 import io.icure.kraken.client.models.ListOfIdsDto
 import io.icure.kraken.client.models.NmpDto
@@ -35,7 +36,11 @@ import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
+import kotlinx.coroutines.flow.flowOf
+import java.nio.ByteBuffer
+import java.util.*
 import javax.inject.Named
+import kotlinx.coroutines.flow.Flow
 
 @Named
 @ExperimentalStdlibApi
@@ -73,19 +78,19 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun findAmpsByDmppCodeRequestConfig(dmppCode: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/be_samv2/amp/byDmppCode/{dmppCode}".replace("{"+"dmppCode"+"}", "$dmppCode"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -119,7 +124,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun findPaginatedAmpsByAtcRequestConfig(atcCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (startKey != null) {
@@ -132,17 +137,17 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("limit", listOf(limit.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/be_samv2/vmp/byAtc/{atcCode}".replace("{"+"atcCode"+"}", "$atcCode"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -176,7 +181,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun findPaginatedAmpsByGroupCodeRequestConfig(vmpgCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (startKey != null) {
@@ -189,17 +194,17 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("limit", listOf(limit.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/be_samv2/amp/byGroupCode/{vmpgCode}".replace("{"+"vmpgCode"+"}", "$vmpgCode"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -233,7 +238,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun findPaginatedAmpsByGroupIdRequestConfig(vmpgId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (startKey != null) {
@@ -246,17 +251,17 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("limit", listOf(limit.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/be_samv2/amp/byGroupId/{vmpgId}".replace("{"+"vmpgId"+"}", "$vmpgId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -292,7 +297,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun findPaginatedAmpsByLabelRequestConfig(language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (language != null) {
@@ -311,17 +316,17 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("limit", listOf(limit.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/be_samv2/amp",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -355,7 +360,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun findPaginatedAmpsByVmpCodeRequestConfig(vmpCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (startKey != null) {
@@ -368,17 +373,17 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("limit", listOf(limit.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/be_samv2/amp/byVmpCode/{vmpCode}".replace("{"+"vmpCode"+"}", "$vmpCode"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -412,7 +417,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun findPaginatedAmpsByVmpIdRequestConfig(vmpId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (startKey != null) {
@@ -425,17 +430,17 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("limit", listOf(limit.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/be_samv2/amp/byVmpId/{vmpId}".replace("{"+"vmpId"+"}", "$vmpId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -471,7 +476,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun findPaginatedNmpsByLabelRequestConfig(language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (language != null) {
@@ -490,17 +495,17 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("limit", listOf(limit.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/be_samv2/nmp",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -536,7 +541,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun findPaginatedVmpGroupsByLabelRequestConfig(language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (language != null) {
@@ -555,17 +560,17 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("limit", listOf(limit.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/be_samv2/vmpgroup",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -599,7 +604,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun findPaginatedVmpGroupsByVmpGroupCodeRequestConfig(vmpgCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (startKey != null) {
@@ -612,17 +617,17 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("limit", listOf(limit.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/be_samv2/vmpgroup/byGroupCode/{vmpgCode}".replace("{"+"vmpgCode"+"}", "$vmpgCode"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -656,7 +661,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun findPaginatedVmpsByGroupCodeRequestConfig(vmpgCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (startKey != null) {
@@ -669,17 +674,17 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("limit", listOf(limit.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/be_samv2/vmp/byGroupCode/{vmpgCode}".replace("{"+"vmpgCode"+"}", "$vmpgCode"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -713,7 +718,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun findPaginatedVmpsByGroupIdRequestConfig(vmpgId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (startKey != null) {
@@ -726,17 +731,17 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("limit", listOf(limit.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/be_samv2/vmp/byGroupId/{vmpgId}".replace("{"+"vmpgId"+"}", "$vmpgId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -772,7 +777,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun findPaginatedVmpsByLabelRequestConfig(language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (language != null) {
@@ -791,17 +796,17 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("limit", listOf(limit.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/be_samv2/vmp",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -835,7 +840,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun findPaginatedVmpsByVmpCodeRequestConfig(vmpCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (startKey != null) {
@@ -848,17 +853,17 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("limit", listOf(limit.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/be_samv2/vmp/byVmpCode/{vmpCode}".replace("{"+"vmpCode"+"}", "$vmpCode"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -884,19 +889,19 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun getSamVersionRequestConfig() : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/be_samv2/v",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -924,19 +929,19 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun listAmpsByDmppCodesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_samv2/amp/byDmppCodes",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -964,19 +969,19 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun listAmpsByGroupCodesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_samv2/amp/byGroupCodes",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1004,19 +1009,19 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun listAmpsByGroupIdsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_samv2/amp/byGroupIds",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1044,19 +1049,19 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun listAmpsByVmpCodesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_samv2/amp/byVmpCodes",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1084,19 +1089,19 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun listAmpsByVmpIdsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_samv2/amp/byVmpIds",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1124,19 +1129,19 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun listNmpsByCnksRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_samv2/nmp/byCnks",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1162,19 +1167,19 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun listPharmaceuticalFormsRequestConfig() : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/be_samv2/pharmaform",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1200,19 +1205,19 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun listSubstancesRequestConfig() : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/be_samv2/substance",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1240,19 +1245,19 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun listVmpGroupsByVmpGroupCodesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_samv2/vmpgroup/byGroupCodes",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1280,19 +1285,19 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun listVmpsByGroupIdsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_samv2/vmp/byGroupIds",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1320,19 +1325,19 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun listVmpsByVmpCodesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_samv2/vmp/byVmpCodes",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
 }

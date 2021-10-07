@@ -14,6 +14,7 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
+import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.models.ListOfIdsDto
 import io.icure.kraken.client.models.PaginatedListTarificationDto
 import io.icure.kraken.client.models.TarificationDto
@@ -26,7 +27,11 @@ import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
+import kotlinx.coroutines.flow.flowOf
+import java.nio.ByteBuffer
+import java.util.*
 import javax.inject.Named
+import kotlinx.coroutines.flow.Flow
 
 @Named
 @ExperimentalStdlibApi
@@ -64,19 +69,19 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @return RequestConfig
     */
     fun createTarificationRequestConfig(tarificationDto: TarificationDto) : RequestConfig<TarificationDto> {
-        val localVariableBody = tarificationDto
+        // val localVariableBody = tarificationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = tarificationDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/tarification",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -114,7 +119,7 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @return RequestConfig
     */
     fun findTarificationsByRequestConfig(region: kotlin.String?, type: kotlin.String?, tarification: kotlin.String?, version: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (region != null) {
@@ -136,17 +141,17 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
                     put("limit", listOf(limit.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/tarification",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -180,7 +185,7 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @return RequestConfig
     */
     fun findTarificationsBy1RequestConfig(region: kotlin.String?, type: kotlin.String?, tarification: kotlin.String?, version: kotlin.String?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (region != null) {
@@ -196,17 +201,17 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
                     put("version", listOf(version.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/tarification/byRegionTypeTarification",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -244,7 +249,7 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @return RequestConfig
     */
     fun findTarificationsByLabelRequestConfig(region: kotlin.String?, types: kotlin.String?, language: kotlin.String?, label: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (region != null) {
@@ -266,17 +271,17 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
                     put("limit", listOf(limit.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/tarification/byLabel",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -304,19 +309,19 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @return RequestConfig
     */
     fun getTarificationRequestConfig(tarificationId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/tarification/{tarificationId}".replace("{"+"tarificationId"+"}", "$tarificationId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -348,19 +353,19 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @return RequestConfig
     */
     fun getTarificationWithPartsRequestConfig(type: kotlin.String, tarification: kotlin.String, version: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/tarification/{type}/{tarification}/{version}".replace("{"+"type"+"}", "$type").replace("{"+"tarification"+"}", "$tarification").replace("{"+"version"+"}", "$version"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -388,19 +393,19 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @return RequestConfig
     */
     fun getTarificationsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/tarification/byIds",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -428,19 +433,19 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @return RequestConfig
     */
     fun modifyTarificationRequestConfig(tarificationDto: TarificationDto) : RequestConfig<TarificationDto> {
-        val localVariableBody = tarificationDto
+        // val localVariableBody = tarificationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = tarificationDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
             path = "/rest/v2/tarification",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
 }

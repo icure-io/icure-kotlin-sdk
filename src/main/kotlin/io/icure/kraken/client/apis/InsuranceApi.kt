@@ -14,6 +14,7 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
+import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.InsuranceDto
 import io.icure.kraken.client.models.ListOfIdsDto
@@ -26,7 +27,11 @@ import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
+import kotlinx.coroutines.flow.flowOf
+import java.nio.ByteBuffer
+import java.util.*
 import javax.inject.Named
+import kotlinx.coroutines.flow.Flow
 
 @Named
 @ExperimentalStdlibApi
@@ -64,19 +69,19 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     * @return RequestConfig
     */
     fun createInsuranceRequestConfig(insuranceDto: InsuranceDto) : RequestConfig<InsuranceDto> {
-        val localVariableBody = insuranceDto
+        // val localVariableBody = insuranceDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = insuranceDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/insurance",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -104,19 +109,19 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     * @return RequestConfig
     */
     fun deleteInsuranceRequestConfig(insuranceId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.DELETE,
             path = "/rest/v2/insurance/{insuranceId}".replace("{"+"insuranceId"+"}", "$insuranceId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -144,19 +149,19 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     * @return RequestConfig
     */
     fun getInsuranceRequestConfig(insuranceId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/insurance/{insuranceId}".replace("{"+"insuranceId"+"}", "$insuranceId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -184,19 +189,19 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     * @return RequestConfig
     */
     fun getInsurancesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/insurance/byIds",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -224,19 +229,19 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     * @return RequestConfig
     */
     fun listInsurancesByCodeRequestConfig(insuranceCode: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/insurance/byCode/{insuranceCode}".replace("{"+"insuranceCode"+"}", "$insuranceCode"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -264,19 +269,19 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     * @return RequestConfig
     */
     fun listInsurancesByNameRequestConfig(insuranceName: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/insurance/byName/{insuranceName}".replace("{"+"insuranceName"+"}", "$insuranceName"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -304,19 +309,19 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     * @return RequestConfig
     */
     fun modifyInsuranceRequestConfig(insuranceDto: InsuranceDto) : RequestConfig<InsuranceDto> {
-        val localVariableBody = insuranceDto
+        // val localVariableBody = insuranceDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = insuranceDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
             path = "/rest/v2/insurance",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
 }

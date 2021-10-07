@@ -14,6 +14,7 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
+import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.models.ClassificationTemplateDto
 import io.icure.kraken.client.models.DelegationDto
 import io.icure.kraken.client.models.DocIdentifier
@@ -28,7 +29,11 @@ import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
+import kotlinx.coroutines.flow.flowOf
+import java.nio.ByteBuffer
+import java.util.*
 import javax.inject.Named
+import kotlinx.coroutines.flow.Flow
 
 @Named
 @ExperimentalStdlibApi
@@ -66,19 +71,19 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     * @return RequestConfig
     */
     fun createClassificationTemplateRequestConfig(classificationTemplateDto: ClassificationTemplateDto) : RequestConfig<ClassificationTemplateDto> {
-        val localVariableBody = classificationTemplateDto
+        // val localVariableBody = classificationTemplateDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = classificationTemplateDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/classificationTemplate",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -106,19 +111,19 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     * @return RequestConfig
     */
     fun deleteClassificationTemplatesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/classificationTemplate/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -150,7 +155,7 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     * @return RequestConfig
     */
     fun findClassificationTemplatesByRequestConfig(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (startKey != null) {
@@ -163,17 +168,17 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
                     put("limit", listOf(limit.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/classificationTemplate",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -201,19 +206,19 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     * @return RequestConfig
     */
     fun getClassificationTemplateRequestConfig(classificationTemplateId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/classificationTemplate/{classificationTemplateId}".replace("{"+"classificationTemplateId"+"}", "$classificationTemplateId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -241,19 +246,19 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     * @return RequestConfig
     */
     fun getClassificationTemplateByIdsRequestConfig(ids: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/classificationTemplate/byIds/{ids}".replace("{"+"ids"+"}", "$ids"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -283,23 +288,23 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     * @return RequestConfig
     */
     fun listClassificationTemplatesByHCPartyPatientForeignKeysRequestConfig(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("hcPartyId", listOf(hcPartyId.toString()))
                 put("secretFKeys", listOf(secretFKeys.toString()))
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/classificationTemplate/byHcPartySecretForeignKeys",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -327,19 +332,19 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     * @return RequestConfig
     */
     fun modifyClassificationTemplateRequestConfig(classificationTemplateDto: ClassificationTemplateDto) : RequestConfig<ClassificationTemplateDto> {
-        val localVariableBody = classificationTemplateDto
+        // val localVariableBody = classificationTemplateDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = classificationTemplateDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
             path = "/rest/v2/classificationTemplate",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -369,19 +374,19 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     * @return RequestConfig
     */
     fun newClassificationTemplateDelegationsRequestConfig(classificationTemplateId: kotlin.String, delegationDto: kotlin.collections.List<DelegationDto>) : RequestConfig<kotlin.collections.List<DelegationDto>> {
-        val localVariableBody = delegationDto
+        // val localVariableBody = delegationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = delegationDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/classificationTemplate/{classificationTemplateId}/delegate".replace("{"+"classificationTemplateId"+"}", "$classificationTemplateId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
 }

@@ -14,6 +14,7 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
+import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.FrontEndMigrationDto
 
@@ -25,7 +26,11 @@ import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
+import kotlinx.coroutines.flow.flowOf
+import java.nio.ByteBuffer
+import java.util.*
 import javax.inject.Named
+import kotlinx.coroutines.flow.Flow
 
 @Named
 @ExperimentalStdlibApi
@@ -63,19 +68,19 @@ class FrontEndMigrationApi(basePath: kotlin.String = defaultBasePath, webClient:
     * @return RequestConfig
     */
     fun createFrontEndMigrationRequestConfig(frontEndMigrationDto: FrontEndMigrationDto) : RequestConfig<FrontEndMigrationDto> {
-        val localVariableBody = frontEndMigrationDto
+        // val localVariableBody = frontEndMigrationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = frontEndMigrationDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/frontendmigration",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -103,19 +108,19 @@ class FrontEndMigrationApi(basePath: kotlin.String = defaultBasePath, webClient:
     * @return RequestConfig
     */
     fun deleteFrontEndMigrationRequestConfig(frontEndMigrationId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.DELETE,
             path = "/rest/v2/frontendmigration/{frontEndMigrationId}".replace("{"+"frontEndMigrationId"+"}", "$frontEndMigrationId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -143,19 +148,19 @@ class FrontEndMigrationApi(basePath: kotlin.String = defaultBasePath, webClient:
     * @return RequestConfig
     */
     fun getFrontEndMigrationRequestConfig(frontEndMigrationId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/frontendmigration/{frontEndMigrationId}".replace("{"+"frontEndMigrationId"+"}", "$frontEndMigrationId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -183,19 +188,19 @@ class FrontEndMigrationApi(basePath: kotlin.String = defaultBasePath, webClient:
     * @return RequestConfig
     */
     fun getFrontEndMigrationByNameRequestConfig(frontEndMigrationName: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/frontendmigration/byName/{frontEndMigrationName}".replace("{"+"frontEndMigrationName"+"}", "$frontEndMigrationName"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -221,19 +226,19 @@ class FrontEndMigrationApi(basePath: kotlin.String = defaultBasePath, webClient:
     * @return RequestConfig
     */
     fun getFrontEndMigrationsRequestConfig() : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/frontendmigration",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -261,19 +266,19 @@ class FrontEndMigrationApi(basePath: kotlin.String = defaultBasePath, webClient:
     * @return RequestConfig
     */
     fun modifyFrontEndMigrationRequestConfig(frontEndMigrationDto: FrontEndMigrationDto) : RequestConfig<FrontEndMigrationDto> {
-        val localVariableBody = frontEndMigrationDto
+        // val localVariableBody = frontEndMigrationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = frontEndMigrationDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
             path = "/rest/v2/frontendmigration",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
 }

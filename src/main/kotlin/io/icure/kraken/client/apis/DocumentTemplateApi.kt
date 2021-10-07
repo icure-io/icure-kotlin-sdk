@@ -14,6 +14,7 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
+import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.models.ByteArrayDto
 import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.DocumentTemplateDto
@@ -27,7 +28,11 @@ import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
+import kotlinx.coroutines.flow.flowOf
+import java.nio.ByteBuffer
+import java.util.*
 import javax.inject.Named
+import kotlinx.coroutines.flow.Flow
 
 @Named
 @ExperimentalStdlibApi
@@ -65,19 +70,19 @@ class DocumentTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: 
     * @return RequestConfig
     */
     fun createDocumentTemplateRequestConfig(documentTemplateDto: DocumentTemplateDto) : RequestConfig<DocumentTemplateDto> {
-        val localVariableBody = documentTemplateDto
+        // val localVariableBody = documentTemplateDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = documentTemplateDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/doctemplate",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -105,19 +110,19 @@ class DocumentTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: 
     * @return RequestConfig
     */
     fun deleteDocumentTemplatesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/doctemplate/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -147,19 +152,19 @@ class DocumentTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: 
     * @return RequestConfig
     */
     fun getAttachmentTextRequestConfig(documentTemplateId: kotlin.String, attachmentId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "application/octet-stream"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/doctemplate/{documentTemplateId}/attachmentText/{attachmentId}".replace("{"+"documentTemplateId"+"}", "$documentTemplateId").replace("{"+"attachmentId"+"}", "$attachmentId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -187,19 +192,19 @@ class DocumentTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: 
     * @return RequestConfig
     */
     fun getDocumentTemplateRequestConfig(documentTemplateId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/doctemplate/{documentTemplateId}".replace("{"+"documentTemplateId"+"}", "$documentTemplateId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -229,19 +234,19 @@ class DocumentTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: 
     * @return RequestConfig
     */
     fun getDocumentTemplateAttachmentRequestConfig(documentTemplateId: kotlin.String, attachmentId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "application/octet-stream"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/doctemplate/{documentTemplateId}/attachment/{attachmentId}".replace("{"+"documentTemplateId"+"}", "$documentTemplateId").replace("{"+"attachmentId"+"}", "$attachmentId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -267,19 +272,19 @@ class DocumentTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: 
     * @return RequestConfig
     */
     fun listAllDocumentTemplatesRequestConfig() : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/doctemplate/find/all",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -305,19 +310,19 @@ class DocumentTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: 
     * @return RequestConfig
     */
     fun listDocumentTemplatesRequestConfig() : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/doctemplate",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -345,19 +350,19 @@ class DocumentTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: 
     * @return RequestConfig
     */
     fun listDocumentTemplatesByDocumentTypeRequestConfig(documentTypeCode: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/doctemplate/byDocumentType/{documentTypeCode}".replace("{"+"documentTypeCode"+"}", "$documentTypeCode"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -385,19 +390,19 @@ class DocumentTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: 
     * @return RequestConfig
     */
     fun listDocumentTemplatesByDocumentTypeForCurrentUserRequestConfig(documentTypeCode: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/doctemplate/byDocumentTypeForCurrentUser/{documentTypeCode}".replace("{"+"documentTypeCode"+"}", "$documentTypeCode"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -425,19 +430,19 @@ class DocumentTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: 
     * @return RequestConfig
     */
     fun listDocumentTemplatesBySpecialityRequestConfig(specialityCode: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/doctemplate/bySpecialty/{specialityCode}".replace("{"+"specialityCode"+"}", "$specialityCode"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -467,19 +472,19 @@ class DocumentTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: 
     * @return RequestConfig
     */
     fun modifyDocumentTemplateRequestConfig(documentTemplateId: kotlin.String, documentTemplateDto: DocumentTemplateDto) : RequestConfig<DocumentTemplateDto> {
-        val localVariableBody = documentTemplateDto
+        // val localVariableBody = documentTemplateDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = documentTemplateDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
             path = "/rest/v2/doctemplate/{documentTemplateId}".replace("{"+"documentTemplateId"+"}", "$documentTemplateId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -509,19 +514,19 @@ class DocumentTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: 
     * @return RequestConfig
     */
     fun setDocumentTemplateAttachmentRequestConfig(documentTemplateId: kotlin.String, ioIcureKrakenClientInfrastructureByteArrayWrapper: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>) : RequestConfig<kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>> {
-        val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
+        // val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/octet-stream")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
 
         return RequestConfig(
             method = RequestMethod.PUT,
             path = "/rest/v2/doctemplate/{documentTemplateId}/attachment".replace("{"+"documentTemplateId"+"}", "$documentTemplateId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -551,19 +556,19 @@ class DocumentTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: 
     * @return RequestConfig
     */
     fun setDocumentTemplateAttachmentJsonRequestConfig(documentTemplateId: kotlin.String, byteArrayDto: ByteArrayDto) : RequestConfig<ByteArrayDto> {
-        val localVariableBody = byteArrayDto
+        // val localVariableBody = byteArrayDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/octet-stream")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = byteArrayDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
             path = "/rest/v2/doctemplate/{documentTemplateId}/attachmentJson".replace("{"+"documentTemplateId"+"}", "$documentTemplateId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
 }

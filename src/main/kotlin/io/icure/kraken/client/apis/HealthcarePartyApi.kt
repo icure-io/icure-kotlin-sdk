@@ -14,6 +14,7 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
+import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.HealthcarePartyDto
 import io.icure.kraken.client.models.ListOfIdsDto
@@ -28,7 +29,11 @@ import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
+import kotlinx.coroutines.flow.flowOf
+import java.nio.ByteBuffer
+import java.util.*
 import javax.inject.Named
+import kotlinx.coroutines.flow.Flow
 
 @Named
 @ExperimentalStdlibApi
@@ -66,19 +71,19 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
     * @return RequestConfig
     */
     fun createHealthcarePartyRequestConfig(healthcarePartyDto: HealthcarePartyDto) : RequestConfig<HealthcarePartyDto> {
-        val localVariableBody = healthcarePartyDto
+        // val localVariableBody = healthcarePartyDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = healthcarePartyDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/hcparty",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -108,19 +113,19 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
     * @return RequestConfig
     */
     fun createHealthcarePartyInGroupRequestConfig(groupId: kotlin.String, healthcarePartyDto: HealthcarePartyDto) : RequestConfig<HealthcarePartyDto> {
-        val localVariableBody = healthcarePartyDto
+        // val localVariableBody = healthcarePartyDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = healthcarePartyDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/hcparty/inGroup/{groupId}".replace("{"+"groupId"+"}", "$groupId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -148,19 +153,19 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
     * @return RequestConfig
     */
     fun deleteHealthcarePartiesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/hcparty/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -190,19 +195,19 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
     * @return RequestConfig
     */
     fun deleteHealthcarePartiesInGroupRequestConfig(groupId: kotlin.String, listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/hcparty/delete/batch/inGroup/{groupId}".replace("{"+"groupId"+"}", "$groupId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -236,7 +241,7 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
     * @return RequestConfig
     */
     fun findHealthcarePartiesByRequestConfig(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, desc: kotlin.Boolean?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (startKey != null) {
@@ -252,17 +257,17 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
                     put("desc", listOf(desc.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/hcparty",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -298,7 +303,7 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
     * @return RequestConfig
     */
     fun findHealthcarePartiesByNameRequestConfig(name: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, desc: kotlin.Boolean?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (name != null) {
@@ -317,17 +322,17 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
                     put("desc", listOf(desc.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/hcparty/byName",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -363,24 +368,24 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
     * @return RequestConfig
     */
     fun findHealthcarePartiesBySpecialityAndPostCodeRequestConfig(type: kotlin.String, spec: kotlin.String, firstCode: kotlin.String, lastCode: kotlin.String, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (limit != null) {
                     put("limit", listOf(limit.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/hcparty/bySpecialityAndPostCode/{type}/{spec}/{firstCode}/to/{lastCode}".replace("{"+"type"+"}", "$type").replace("{"+"spec"+"}", "$spec").replace("{"+"firstCode"+"}", "$firstCode").replace("{"+"lastCode"+"}", "$lastCode"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -416,7 +421,7 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
     * @return RequestConfig
     */
     fun findHealthcarePartiesBySsinOrNihiiRequestConfig(searchValue: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, desc: kotlin.Boolean?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (startKey != null) {
@@ -432,17 +437,17 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
                     put("desc", listOf(desc.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/hcparty/byNihiiOrSsin/{searchValue}".replace("{"+"searchValue"+"}", "$searchValue"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -468,19 +473,19 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
     * @return RequestConfig
     */
     fun getCurrentHealthcarePartyRequestConfig() : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/hcparty/current",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -508,19 +513,19 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
     * @return RequestConfig
     */
     fun getHcPartyKeysForDelegateRequestConfig(healthcarePartyId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/hcparty/byKeys/{healthcarePartyId}".replace("{"+"healthcarePartyId"+"}", "$healthcarePartyId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -548,19 +553,19 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
     * @return RequestConfig
     */
     fun getHealthcarePartiesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/hcparty/byIds",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -588,19 +593,19 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
     * @return RequestConfig
     */
     fun getHealthcarePartyRequestConfig(healthcarePartyId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/hcparty/{healthcarePartyId}".replace("{"+"healthcarePartyId"+"}", "$healthcarePartyId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -628,19 +633,19 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
     * @return RequestConfig
     */
     fun getPublicKeyRequestConfig(healthcarePartyId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/hcparty/{healthcarePartyId}/publicKey".replace("{"+"healthcarePartyId"+"}", "$healthcarePartyId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -668,19 +673,19 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
     * @return RequestConfig
     */
     fun listHealthcarePartiesByNameRequestConfig(name: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/hcparty/byNameStrict/{name}".replace("{"+"name"+"}", "$name"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -708,19 +713,19 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
     * @return RequestConfig
     */
     fun listHealthcarePartiesByParentIdRequestConfig(parentId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/hcparty/{parentId}/children".replace("{"+"parentId"+"}", "$parentId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -748,19 +753,19 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
     * @return RequestConfig
     */
     fun modifyHealthcarePartyRequestConfig(healthcarePartyDto: HealthcarePartyDto) : RequestConfig<HealthcarePartyDto> {
-        val localVariableBody = healthcarePartyDto
+        // val localVariableBody = healthcarePartyDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = healthcarePartyDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
             path = "/rest/v2/hcparty",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -790,19 +795,19 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
     * @return RequestConfig
     */
     fun modifyHealthcarePartyInGroupRequestConfig(groupId: kotlin.String, healthcarePartyDto: HealthcarePartyDto) : RequestConfig<HealthcarePartyDto> {
-        val localVariableBody = healthcarePartyDto
+        // val localVariableBody = healthcarePartyDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = healthcarePartyDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
             path = "/rest/v2/hcparty/inGroup/{groupId}".replace("{"+"groupId"+"}", "$groupId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
 }

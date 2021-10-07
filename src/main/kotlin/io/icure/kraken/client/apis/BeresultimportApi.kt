@@ -14,6 +14,7 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
+import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.models.ContactDto
 import io.icure.kraken.client.models.ResultInfoDto
 
@@ -25,7 +26,11 @@ import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
+import kotlinx.coroutines.flow.flowOf
+import java.nio.ByteBuffer
+import java.util.*
 import javax.inject.Named
+import kotlinx.coroutines.flow.Flow
 
 @Named
 @ExperimentalStdlibApi
@@ -65,22 +70,22 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: We
     * @return RequestConfig
     */
     fun canHandleRequestConfig(id: kotlin.String, enckeys: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("enckeys", listOf(enckeys.toString()))
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/be_result_import/canhandle/{id}".replace("{"+"id"+"}", "$id"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -122,7 +127,7 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: We
     * @return RequestConfig
     */
     fun doImportRequestConfig(documentId: kotlin.String, hcpId: kotlin.String, language: kotlin.String, protocolIds: kotlin.String, formIds: kotlin.String, planOfActionId: kotlin.String, enckeys: kotlin.String, ctc: ContactDto) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("protocolIds", listOf(protocolIds.toString()))
@@ -131,17 +136,17 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: We
                 put("enckeys", listOf(enckeys.toString()))
                 put("ctc", listOf(ctc.toString()))
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/be_result_import/import/{documentId}/{hcpId}/{language}".replace("{"+"documentId"+"}", "$documentId").replace("{"+"hcpId"+"}", "$hcpId").replace("{"+"language"+"}", "$language"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -175,7 +180,7 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: We
     * @return RequestConfig
     */
     fun getInfosRequestConfig(id: kotlin.String, language: kotlin.String, enckeys: kotlin.String, full: kotlin.Boolean?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("language", listOf(language.toString()))
@@ -184,17 +189,17 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: We
                     put("full", listOf(full.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/be_result_import/infos/{id}".replace("{"+"id"+"}", "$id"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
 }

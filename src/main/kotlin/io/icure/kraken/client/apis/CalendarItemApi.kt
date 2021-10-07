@@ -14,6 +14,7 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
+import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.models.CalendarItemDto
 import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.IcureStubDto
@@ -27,7 +28,11 @@ import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
+import kotlinx.coroutines.flow.flowOf
+import java.nio.ByteBuffer
+import java.util.*
 import javax.inject.Named
+import kotlinx.coroutines.flow.Flow
 
 @Named
 @ExperimentalStdlibApi
@@ -65,19 +70,19 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @return RequestConfig
     */
     fun createCalendarItemRequestConfig(calendarItemDto: CalendarItemDto) : RequestConfig<CalendarItemDto> {
-        val localVariableBody = calendarItemDto
+        // val localVariableBody = calendarItemDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = calendarItemDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/calendarItem",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -105,19 +110,19 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @return RequestConfig
     */
     fun deleteCalendarItemsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/calendarItem/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -147,23 +152,23 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @return RequestConfig
     */
     fun findCalendarItemsByHCPartyPatientForeignKeysRequestConfig(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("hcPartyId", listOf(hcPartyId.toString()))
                 put("secretFKeys", listOf(secretFKeys.toString()))
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/calendarItem/byHcPartySecretForeignKeys",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -191,19 +196,19 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @return RequestConfig
     */
     fun getCalendarItemRequestConfig(calendarItemId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/calendarItem/{calendarItemId}".replace("{"+"calendarItemId"+"}", "$calendarItemId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -229,19 +234,19 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @return RequestConfig
     */
     fun getCalendarItemsRequestConfig() : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/calendarItem",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -273,24 +278,24 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @return RequestConfig
     */
     fun getCalendarItemsByPeriodAndHcPartyIdRequestConfig(startDate: kotlin.Long, endDate: kotlin.Long, hcPartyId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("startDate", listOf(startDate.toString()))
                 put("endDate", listOf(endDate.toString()))
                 put("hcPartyId", listOf(hcPartyId.toString()))
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/calendarItem/byPeriodAndHcPartyId",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -318,19 +323,19 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @return RequestConfig
     */
     fun getCalendarItemsWithIdsRequestConfig(listOfIdsDto: ListOfIdsDto?) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/calendarItem/byIds",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -362,24 +367,24 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @return RequestConfig
     */
     fun getCalendarsByPeriodAndAgendaIdRequestConfig(startDate: kotlin.Long, endDate: kotlin.Long, agendaId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("startDate", listOf(startDate.toString()))
                 put("endDate", listOf(endDate.toString()))
                 put("agendaId", listOf(agendaId.toString()))
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/calendarItem/byPeriodAndAgendaId",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -407,19 +412,19 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @return RequestConfig
     */
     fun modifyCalendarItemRequestConfig(calendarItemDto: CalendarItemDto) : RequestConfig<CalendarItemDto> {
-        val localVariableBody = calendarItemDto
+        // val localVariableBody = calendarItemDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = calendarItemDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
             path = "/rest/v2/calendarItem",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -447,19 +452,19 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @return RequestConfig
     */
     fun setCalendarItemsDelegationsRequestConfig(icureStubDto: kotlin.collections.List<IcureStubDto>?) : RequestConfig<kotlin.collections.List<IcureStubDto>> {
-        val localVariableBody = icureStubDto
+        // val localVariableBody = icureStubDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = icureStubDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/calendarItem/delegations",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
 }

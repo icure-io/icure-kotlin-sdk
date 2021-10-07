@@ -14,6 +14,7 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
+import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.EntityTemplateDto
 import io.icure.kraken.client.models.ListOfIdsDto
@@ -26,7 +27,11 @@ import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
+import kotlinx.coroutines.flow.flowOf
+import java.nio.ByteBuffer
+import java.util.*
 import javax.inject.Named
+import kotlinx.coroutines.flow.Flow
 
 @Named
 @ExperimentalStdlibApi
@@ -64,19 +69,19 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
     * @return RequestConfig
     */
     fun createEntityTemplateRequestConfig(entityTemplateDto: EntityTemplateDto) : RequestConfig<EntityTemplateDto> {
-        val localVariableBody = entityTemplateDto
+        // val localVariableBody = entityTemplateDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = entityTemplateDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/entitytemplate",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -104,19 +109,19 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
     * @return RequestConfig
     */
     fun createEntityTemplatesRequestConfig(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>) : RequestConfig<kotlin.collections.List<EntityTemplateDto>> {
-        val localVariableBody = entityTemplateDto
+        // val localVariableBody = entityTemplateDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = entityTemplateDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/entitytemplate/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -144,19 +149,19 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
     * @return RequestConfig
     */
     fun deleteEntityTemplateRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/entitytemplate/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -188,24 +193,24 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
     * @return RequestConfig
     */
     fun findAllEntityTemplatesByKeywordRequestConfig(type: kotlin.String, keyword: kotlin.String, includeEntities: kotlin.Boolean?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (includeEntities != null) {
                     put("includeEntities", listOf(includeEntities.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/entitytemplate/findAll/{type}/keyword/{keyword}".replace("{"+"type"+"}", "$type").replace("{"+"keyword"+"}", "$keyword"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -233,19 +238,19 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
     * @return RequestConfig
     */
     fun getEntityTemplateRequestConfig(entityTemplateId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/entitytemplate/{entityTemplateId}".replace("{"+"entityTemplateId"+"}", "$entityTemplateId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -273,19 +278,19 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
     * @return RequestConfig
     */
     fun getEntityTemplatesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/entitytemplate/byIds",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -317,7 +322,7 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
     * @return RequestConfig
     */
     fun listAllEntityTemplatesByRequestConfig(type: kotlin.String, searchString: kotlin.String?, includeEntities: kotlin.Boolean?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (searchString != null) {
@@ -327,17 +332,17 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
                     put("includeEntities", listOf(includeEntities.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/entitytemplate/findAll/{type}".replace("{"+"type"+"}", "$type"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -371,7 +376,7 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
     * @return RequestConfig
     */
     fun listEntityTemplatesByRequestConfig(userId: kotlin.String, type: kotlin.String, searchString: kotlin.String?, includeEntities: kotlin.Boolean?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (searchString != null) {
@@ -381,17 +386,17 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
                     put("includeEntities", listOf(includeEntities.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/entitytemplate/find/{userId}/{type}".replace("{"+"userId"+"}", "$userId").replace("{"+"type"+"}", "$type"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -425,24 +430,24 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
     * @return RequestConfig
     */
     fun listEntityTemplatesByKeywordRequestConfig(userId: kotlin.String, type: kotlin.String, keyword: kotlin.String, includeEntities: kotlin.Boolean?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (includeEntities != null) {
                     put("includeEntities", listOf(includeEntities.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/entitytemplate/find/{userId}/{type}/keyword/{keyword}".replace("{"+"userId"+"}", "$userId").replace("{"+"type"+"}", "$type").replace("{"+"keyword"+"}", "$keyword"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -470,19 +475,19 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
     * @return RequestConfig
     */
     fun modifyEntityTemplateRequestConfig(entityTemplateDto: EntityTemplateDto) : RequestConfig<EntityTemplateDto> {
-        val localVariableBody = entityTemplateDto
+        // val localVariableBody = entityTemplateDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = entityTemplateDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
             path = "/rest/v2/entitytemplate",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -510,19 +515,19 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
     * @return RequestConfig
     */
     fun modifyEntityTemplatesRequestConfig(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>) : RequestConfig<kotlin.collections.List<EntityTemplateDto>> {
-        val localVariableBody = entityTemplateDto
+        // val localVariableBody = entityTemplateDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = entityTemplateDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
             path = "/rest/v2/entitytemplate/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
 }

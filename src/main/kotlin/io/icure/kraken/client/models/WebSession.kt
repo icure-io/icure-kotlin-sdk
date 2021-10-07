@@ -27,8 +27,8 @@ import com.github.pozo.KotlinBuilder
  * @param attributes 
  * @param lastAccessTime 
  * @param creationTime 
- * @param started 
  * @param expired 
+ * @param started 
  * @param maxIdleTime 
  */
 
@@ -49,11 +49,11 @@ data class WebSession (
     @field:JsonProperty("creationTime")
     val creationTime: java.time.OffsetDateTime? = null,
 
-    @field:JsonProperty("started")
-    val started: kotlin.Boolean? = null,
-
     @field:JsonProperty("expired")
     val expired: kotlin.Boolean? = null,
+
+    @field:JsonProperty("started")
+    val started: kotlin.Boolean? = null,
 
     @field:JsonProperty("maxIdleTime")
     val maxIdleTime: WebSessionMaxIdleTime? = null

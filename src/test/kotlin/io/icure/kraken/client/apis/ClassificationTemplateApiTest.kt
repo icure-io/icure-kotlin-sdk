@@ -60,6 +60,7 @@ import java.nio.ByteBuffer
 import kotlin.reflect.full.callSuspendBy
 import kotlin.reflect.javaType
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.toList
 
 /**
  * API tests for ClassificationTemplateApi
@@ -692,6 +693,7 @@ class ClassificationTemplateApiTest() {
                     functionName.let { name -> listOf("create", "new", "get", "list", "set").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
                     functionName.let { name -> listOf("modify", "delete").any { name.startsWith(it) } } -> listOf("rev")
                     functionName.let { name -> listOf("append").any { name.startsWith(it) } } -> listOf("id", "created", "modified")
+                    functionName.let { name -> listOf("find").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
                     else -> emptyList()
                 }
 
@@ -704,28 +706,38 @@ class ClassificationTemplateApiTest() {
                         .toList()
                     }
                     ?: listOf(Diff("Lists are of different sizes ${(objectFromFile as ArrayList<Any>).size} <-> ${(response as ArrayList<Any>).size}", PropertyType.ListItem, listOf(), objectFromFile, response))
-
-                assertTrue(diffs.isEmpty())
+                assertTrue(diffs.isEmpty(), diffs.joinToString { it.toString() })
             }
             objectFromFile as? Flow<ByteBuffer> != null -> {
-                objectFromFile.fold(ByteBuffer.allocate(0)) { acc, bb ->
-                    ByteBuffer.allocate(bb.limit() + acc.limit()).apply { this.put(acc); this.put(bb) }
-                }.let { buf -> ByteArray(buf.remaining()).also { buf.get(it) }}.contentEquals(
-                    (response as Flow<ByteBuffer>).fold(ByteBuffer.allocate(0)) { acc, bb ->
-                        ByteBuffer.allocate(bb.limit() + acc.limit()).apply { this.put(acc); this.put(bb) }
-                    }.let { buf -> ByteArray(buf.remaining()).also { buf.get(it) }}
+                assertTrue(objectFromFile.toList().let {
+                    it.fold(0 to ByteArray(it.sumOf { it.remaining() })) { (pos, a), b ->
+                        val siz = b.remaining()
+                        (pos + siz) to a.also {
+                            b.get(a, pos, siz)
+                        }
+                    }.second
+                }.contentEquals(
+                    (response as Flow<ByteBuffer>).toList().let {
+                        it.fold(0 to ByteArray(it.sumOf { it.remaining() })) { (pos, a), b ->
+                            val siz = b.remaining()
+                            (pos + siz) to a.also {
+                                b.get(a, pos, siz)
+                            }
+                        }.second
+                    }
                 )
-            }
+            )}
             else -> {
                 val toSkip : kotlin.collections.List<String> = when {
                     functionName.let { name -> listOf("create", "get", "modify", "new").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "deletionDate")
                     functionName.let { name -> listOf("set", "delete", "merge").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
                     functionName.let { name -> listOf("validate").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "sentDate")
                     functionName.let { name -> listOf("reassign").any { name.startsWith(it) } } -> listOf("id", "created", "invoicingCodes.id")
+                    functionName.let { name -> listOf("findMessages").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]")
                     else -> emptyList()
                 }
                 val diffs = filterDiffs(objectFromFile, response, response.differences(objectFromFile), toSkip)
-                assertTrue(diffs.isEmpty())
+                assertTrue(diffs.isEmpty(), diffs.joinToString { it.toString() })
             }
         }
     }

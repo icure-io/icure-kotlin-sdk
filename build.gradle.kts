@@ -1,10 +1,10 @@
-val kotlinVersion = "1.4.21"
-val kotlinCoroutinesVersion = "1.4.2"
-val jacksonVersion = "2.12.4"
+val kotlinVersion = "1.4.32"
+val kotlinCoroutinesVersion = "1.4.3"
+val jacksonVersion = "2.12.5"
 
 plugins {
-    kotlin("jvm") version "1.4.21"
-    kotlin("kapt") version "1.4.21"
+    kotlin("jvm") version "1.4.32"
+    kotlin("kapt") version "1.4.32"
 }
 
 buildscript {
@@ -54,7 +54,7 @@ dependencies {
     implementation(group = "com.fasterxml.jackson.core", name = "jackson-databind", version = jacksonVersion)
     implementation(group = "com.fasterxml.jackson.module", name = "jackson-module-kotlin", version = jacksonVersion)
     implementation(group = "com.fasterxml.jackson.datatype", name = "jackson-datatype-jsr310", version = jacksonVersion)
-    implementation(group = "io.icure", name = "async-jackson-http-client", version = "0.1.6-2da275e27f")
+    implementation(group = "io.icure", name = "async-jackson-http-client", version = "0.1.13-f8f31a9805")
     implementation(group = "javax.inject", name = "javax.inject", version = "1")
     implementation(group = "org.mapstruct", name = "mapstruct", version = "1.3.1.Final")
     implementation(group = "com.github.ben-manes.caffeine", name = "caffeine", version = "3.0.3")
@@ -66,7 +66,7 @@ dependencies {
     implementation(group = "org.slf4j", name = "jcl-over-slf4j", version = "1.7.12")
     implementation(group = "org.slf4j", name = "log4j-over-slf4j", version = "1.7.12")
 
-    implementation(group = "io.projectreactor.netty", name = "reactor-netty", version = "1.0.10")
+    implementation(group = "io.projectreactor.netty", name = "reactor-netty", version = "1.0.11")
     // Bouncy Castle
     implementation(group = "org.bouncycastle", name = "bcprov-jdk15on", version = "1.69")
     implementation(group = "org.bouncycastle", name = "bcmail-jdk15on", version = "1.69")
@@ -76,60 +76,17 @@ dependencies {
     testImplementation(group = "com.willowtreeapps.assertk", name = "assertk-jvm", version = "0.24")
 }
 
-//java{
-//    sourceSets{
-//        main{
-//            java{
-//                exclude("**/AccesslogApiTest.kt",
-//                    "**/AgendaApiTest.kt",
-//                    "**/ApplicationsettingsApiTest.kt",
-//                    "**/ArticleApiTest.kt",
-//                    "**/AuthApiTest.kt",
-//                    "**/BeefactApiTest.kt",
-//                    "**/BekmehrApiTest.kt",
-//                    "**/BemikronoApiTest.kt",
-//                    "**/BeresultexportApiTest.kt",
-//                    "**/BeresultimportApiTest.kt",
-//                    "**/Besamv2ApiTest.kt",
-//                    "**/CalendarItemApiTest.kt",
-//                    "**/CalendarItemTypeApiTest.kt",
-//                    "**/ClassificationApiTest.kt",
-//                    "**/ClassificationTemplateApiTest.kt",
-//                    "**/CodeApiTest.kt",
-//                    "**/ContactApiTest.kt",
-//                    "**/DoctemplateApiTest.kt",
-//                    "**/DocumentApiTest.kt",
-//                    "**/EntityrefApiTest.kt",
-//                    "**/EntitytemplateApiTest.kt",
-//                    "**/FormApiTest.kt",
-//                    "**/FrontendmigrationApiTest.kt",
-//                    "**/GroupApiTest.kt",
-//                    "**/HcpartyApiTest.kt",
-//                    "**/HelementApiTest.kt",
-//                    "**/IcureApiTest.kt",
-//                    "**/InsuranceApiTest.kt",
-//                    "**/InvoiceApiTest.kt",
-//                    "**/KeywordApiTest.kt",
-//                    "**/MedexApiTest.kt",
-//                    "**/MedicallocationApiTest.kt",
-//                    "**/MessageApiTest.kt",
-//                    "**/PlaceApiTest.kt",
-//                    "**/PubsubApiTest.kt",
-//                    "**/ReceiptApiTest.kt",
-//                    "**/TarificationApiTest.kt",
-//                    "**/TimeTableApiTest.kt",
-//                    "**/TmpApiTest.kt",
-//                    "**/UserApiTest.kt")
-//
-//                excludes.forEach { print("Excluded : ${it}${System.lineSeparator()}") }
-//            }
-//        }
-//    }
-//}
 
 java {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        freeCompilerArgs = listOf("-Xjsr305=strict")
+        jvmTarget = "11"
+    }
 }
 
 tasks.getByName("publish") {

@@ -14,6 +14,7 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
+import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.models.CodeDto
 import io.icure.kraken.client.models.FilterChainCode
 import io.icure.kraken.client.models.ListOfIdsDto
@@ -27,7 +28,11 @@ import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
+import kotlinx.coroutines.flow.flowOf
+import java.nio.ByteBuffer
+import java.util.*
 import javax.inject.Named
+import kotlinx.coroutines.flow.Flow
 
 @Named
 @ExperimentalStdlibApi
@@ -65,19 +70,19 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     * @return RequestConfig
     */
     fun createCodeRequestConfig(codeDto: CodeDto) : RequestConfig<CodeDto> {
-        val localVariableBody = codeDto
+        // val localVariableBody = codeDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = codeDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/code",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -117,7 +122,7 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     * @return RequestConfig
     */
     fun filterCodesByRequestConfig(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, skip: kotlin.Int?, sort: kotlin.String?, desc: kotlin.Boolean?, filterChainCode: FilterChainCode?) : RequestConfig<FilterChainCode> {
-        val localVariableBody = filterChainCode
+        // val localVariableBody = filterChainCode
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (startKey != null) {
@@ -139,17 +144,17 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
                     put("desc", listOf(desc.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = filterChainCode
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/code/filter",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -189,7 +194,7 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     * @return RequestConfig
     */
     fun findCodesByLabelRequestConfig(region: kotlin.String?, types: kotlin.String?, language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (region != null) {
@@ -214,17 +219,17 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
                     put("limit", listOf(limit.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/code/byLabel",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -260,7 +265,7 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     * @return RequestConfig
     */
     fun findCodesByLinkRequestConfig(linkType: kotlin.String, linkedId: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (linkedId != null) {
@@ -276,17 +281,17 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
                     put("limit", listOf(limit.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/code/byLink/{linkType}".replace("{"+"linkType"+"}", "$linkType"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -326,7 +331,7 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     * @return RequestConfig
     */
     fun findCodesByTypeRequestConfig(region: kotlin.String?, type: kotlin.String?, code: kotlin.String?, version: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (region != null) {
@@ -351,17 +356,17 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
                     put("limit", listOf(limit.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/code",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -389,19 +394,19 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     * @return RequestConfig
     */
     fun getCodeRequestConfig(codeId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/code/{codeId}".replace("{"+"codeId"+"}", "$codeId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -433,19 +438,19 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     * @return RequestConfig
     */
     fun getCodeWithPartsRequestConfig(type: kotlin.String, code: kotlin.String, version: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/code/{type}/{code}/{version}".replace("{"+"type"+"}", "$type").replace("{"+"code"+"}", "$code").replace("{"+"version"+"}", "$version"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -473,19 +478,19 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     * @return RequestConfig
     */
     fun getCodesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/code/byIds",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -515,7 +520,7 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     * @return RequestConfig
     */
     fun listCodeTypesByRequestConfig(region: kotlin.String?, type: kotlin.String?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (region != null) {
@@ -525,17 +530,17 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
                     put("type", listOf(type.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/code/codetype/byRegionType",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -569,7 +574,7 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     * @return RequestConfig
     */
     fun listCodesByRegionTypeCodeVersionRequestConfig(region: kotlin.String?, type: kotlin.String?, code: kotlin.String?, version: kotlin.String?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (region != null) {
@@ -585,17 +590,17 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
                     put("version", listOf(version.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/code/byRegionTypeCode",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -625,7 +630,7 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     * @return RequestConfig
     */
     fun listTagTypesByRequestConfig(region: kotlin.String?, type: kotlin.String?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (region != null) {
@@ -635,17 +640,17 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
                     put("type", listOf(type.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/code/tagtype/byRegionType",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -673,19 +678,19 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     * @return RequestConfig
     */
     fun modifyCodeRequestConfig(codeDto: CodeDto) : RequestConfig<CodeDto> {
-        val localVariableBody = codeDto
+        // val localVariableBody = codeDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = codeDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
             path = "/rest/v2/code",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
 }

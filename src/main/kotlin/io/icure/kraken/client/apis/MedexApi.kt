@@ -14,6 +14,7 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
+import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.models.MedexInfoDto
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -24,7 +25,11 @@ import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
+import kotlinx.coroutines.flow.flowOf
+import java.nio.ByteBuffer
+import java.util.*
 import javax.inject.Named
+import kotlinx.coroutines.flow.Flow
 
 @Named
 @ExperimentalStdlibApi
@@ -62,19 +67,19 @@ class MedexApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     * @return RequestConfig
     */
     fun generateMedexRequestConfig(medexInfoDto: MedexInfoDto) : RequestConfig<MedexInfoDto> {
-        val localVariableBody = medexInfoDto
+        // val localVariableBody = medexInfoDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "application/xml"
-
+        val localVariableBody = medexInfoDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/medex/generate",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
 }

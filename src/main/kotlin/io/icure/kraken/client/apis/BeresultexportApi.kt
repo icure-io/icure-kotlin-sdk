@@ -14,6 +14,7 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
+import io.icure.kraken.client.infrastructure.*
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -23,7 +24,11 @@ import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
+import kotlinx.coroutines.flow.flowOf
+import java.nio.ByteBuffer
+import java.util.*
 import javax.inject.Named
+import kotlinx.coroutines.flow.Flow
 
 @Named
 @ExperimentalStdlibApi
@@ -71,19 +76,19 @@ class BeresultexportApi(basePath: kotlin.String = defaultBasePath, webClient: We
     * @return RequestConfig
     */
     fun exportHealthOneRequestConfig(fromHcpId: kotlin.String, toHcpId: kotlin.String, patId: kotlin.String, date: kotlin.Long, ref: kotlin.String, ioIcureKrakenClientInfrastructureByteArrayWrapper: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>) : RequestConfig<kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>> {
-        val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
+        // val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/octet-stream")
         localVariableHeaders["Accept"] = "application/octet-stream"
-
+        val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_result_export/hl1/{fromHcpId}/{toHcpId}/{patId}/{date}/{ref}".replace("{"+"fromHcpId"+"}", "$fromHcpId").replace("{"+"toHcpId"+"}", "$toHcpId").replace("{"+"patId"+"}", "$patId").replace("{"+"date"+"}", "$date").replace("{"+"ref"+"}", "$ref"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -123,24 +128,24 @@ class BeresultexportApi(basePath: kotlin.String = defaultBasePath, webClient: We
     * @return RequestConfig
     */
     fun exportKmehrReportRequestConfig(fromHcpId: kotlin.String, toHcpId: kotlin.String, patId: kotlin.String, date: kotlin.Long, ref: kotlin.String, ioIcureKrakenClientInfrastructureByteArrayWrapper: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>, mimeType: kotlin.Boolean?) : RequestConfig<kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>> {
-        val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
+        // val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (mimeType != null) {
                     put("mimeType", listOf(mimeType.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/octet-stream")
         localVariableHeaders["Accept"] = "application/octet-stream"
-
+        val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_result_export/kmehrreport/{fromHcpId}/{toHcpId}/{patId}/{date}/{ref}".replace("{"+"fromHcpId"+"}", "$fromHcpId").replace("{"+"toHcpId"+"}", "$toHcpId").replace("{"+"patId"+"}", "$patId").replace("{"+"date"+"}", "$date").replace("{"+"ref"+"}", "$ref"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -178,19 +183,19 @@ class BeresultexportApi(basePath: kotlin.String = defaultBasePath, webClient: We
     * @return RequestConfig
     */
     fun exportMedidocRequestConfig(fromHcpId: kotlin.String, toHcpId: kotlin.String, patId: kotlin.String, date: kotlin.Long, ref: kotlin.String, ioIcureKrakenClientInfrastructureByteArrayWrapper: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>) : RequestConfig<kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>> {
-        val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
+        // val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/octet-stream")
         localVariableHeaders["Accept"] = "application/octet-stream"
-
+        val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_result_export/medidoc/{fromHcpId}/{toHcpId}/{patId}/{date}/{ref}".replace("{"+"fromHcpId"+"}", "$fromHcpId").replace("{"+"toHcpId"+"}", "$toHcpId").replace("{"+"patId"+"}", "$patId").replace("{"+"date"+"}", "$date").replace("{"+"ref"+"}", "$ref"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
 }

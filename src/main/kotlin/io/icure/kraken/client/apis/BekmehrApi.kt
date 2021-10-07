@@ -14,6 +14,7 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
+import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.models.CheckSMFPatientResult
 import io.icure.kraken.client.models.ContentDto
 import io.icure.kraken.client.models.DiaryNoteExportInfoDto
@@ -33,7 +34,11 @@ import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
+import kotlinx.coroutines.flow.flowOf
+import java.nio.ByteBuffer
+import java.util.*
 import javax.inject.Named
+import kotlinx.coroutines.flow.Flow
 
 @Named
 @ExperimentalStdlibApi
@@ -79,7 +84,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun checkIfSMFPatientsExistsRequestConfig(documentId: kotlin.String, documentKey: kotlin.String?, patientId: kotlin.String?, language: kotlin.String?, requestBody: kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>>?) : RequestConfig<kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>>> {
-        val localVariableBody = requestBody
+        // val localVariableBody = requestBody
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (documentKey != null) {
@@ -92,17 +97,17 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("language", listOf(language.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = requestBody
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_kmehr/smf/{documentId}/checkIfSMFPatientsExists".replace("{"+"documentId"+"}", "$documentId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -148,7 +153,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun generateContactreportExportRequestConfig(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, ioIcureKrakenClientInfrastructureByteArrayWrapper: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>) : RequestConfig<kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>> {
-        val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
+        // val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("date", listOf(date.toString()))
@@ -159,17 +164,17 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 put("recipientLastName", listOf(recipientLastName.toString()))
                 put("mimeType", listOf(mimeType.toString()))
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/octet-stream")
         localVariableHeaders["Accept"] = "application/octet-stream"
-
+        val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_kmehr/contactreport/{patientId}/export/{id}".replace("{"+"patientId"+"}", "$patientId").replace("{"+"id"+"}", "$id"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -201,22 +206,22 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun generateDiaryNoteRequestConfig(patientId: kotlin.String, language: kotlin.String, diaryNoteExportInfoDto: DiaryNoteExportInfoDto) : RequestConfig<DiaryNoteExportInfoDto> {
-        val localVariableBody = diaryNoteExportInfoDto
+        // val localVariableBody = diaryNoteExportInfoDto
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("language", listOf(language.toString()))
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "application/octet-stream"
-
+        val localVariableBody = diaryNoteExportInfoDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_kmehr/diarynote/{patientId}/export".replace("{"+"patientId"+"}", "$patientId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -262,7 +267,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun generateLabresultExportRequestConfig(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, ioIcureKrakenClientInfrastructureByteArrayWrapper: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>) : RequestConfig<kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>> {
-        val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
+        // val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("date", listOf(date.toString()))
@@ -273,17 +278,17 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 put("recipientLastName", listOf(recipientLastName.toString()))
                 put("mimeType", listOf(mimeType.toString()))
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/octet-stream")
         localVariableHeaders["Accept"] = "application/octet-stream"
-
+        val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_kmehr/labresult/{patientId}/export/{id}".replace("{"+"patientId"+"}", "$patientId").replace("{"+"id"+"}", "$id"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -319,24 +324,24 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun generateMedicationSchemeExportRequestConfig(patientId: kotlin.String, language: kotlin.String, recipientSafe: kotlin.String, version: kotlin.Int, medicationSchemeExportInfoDto: MedicationSchemeExportInfoDto) : RequestConfig<MedicationSchemeExportInfoDto> {
-        val localVariableBody = medicationSchemeExportInfoDto
+        // val localVariableBody = medicationSchemeExportInfoDto
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("language", listOf(language.toString()))
                 put("recipientSafe", listOf(recipientSafe.toString()))
                 put("version", listOf(version.toString()))
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "application/octet-stream"
-
+        val localVariableBody = medicationSchemeExportInfoDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_kmehr/medicationscheme/{patientId}/export".replace("{"+"patientId"+"}", "$patientId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -382,7 +387,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun generateNoteExportRequestConfig(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, ioIcureKrakenClientInfrastructureByteArrayWrapper: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>) : RequestConfig<kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>> {
-        val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
+        // val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("date", listOf(date.toString()))
@@ -393,17 +398,17 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 put("recipientLastName", listOf(recipientLastName.toString()))
                 put("mimeType", listOf(mimeType.toString()))
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/octet-stream")
         localVariableHeaders["Accept"] = "application/octet-stream"
-
+        val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_kmehr/note/{patientId}/export/{id}".replace("{"+"patientId"+"}", "$patientId").replace("{"+"id"+"}", "$id"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -433,24 +438,24 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun generatePatientInfoExportRequestConfig(patientId: kotlin.String, language: kotlin.String?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (language != null) {
                     put("language", listOf(language.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "application/octet-stream"
-
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_kmehr/patientinfo/{patientId}/export".replace("{"+"patientId"+"}", "$patientId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -496,7 +501,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun generatePrescriptionExportRequestConfig(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, ioIcureKrakenClientInfrastructureByteArrayWrapper: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>) : RequestConfig<kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>> {
-        val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
+        // val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("date", listOf(date.toString()))
@@ -507,17 +512,17 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 put("recipientLastName", listOf(recipientLastName.toString()))
                 put("mimeType", listOf(mimeType.toString()))
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/octet-stream")
         localVariableHeaders["Accept"] = "application/octet-stream"
-
+        val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_kmehr/prescription/{patientId}/export/{id}".replace("{"+"patientId"+"}", "$patientId").replace("{"+"id"+"}", "$id"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -563,7 +568,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun generateReportExportRequestConfig(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, ioIcureKrakenClientInfrastructureByteArrayWrapper: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>) : RequestConfig<kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>> {
-        val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
+        // val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("date", listOf(date.toString()))
@@ -574,17 +579,17 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 put("recipientLastName", listOf(recipientLastName.toString()))
                 put("mimeType", listOf(mimeType.toString()))
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/octet-stream")
         localVariableHeaders["Accept"] = "application/octet-stream"
-
+        val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_kmehr/report/{patientId}/export/{id}".replace("{"+"patientId"+"}", "$patientId").replace("{"+"id"+"}", "$id"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -630,7 +635,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun generateRequestExportRequestConfig(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, ioIcureKrakenClientInfrastructureByteArrayWrapper: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>) : RequestConfig<kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>> {
-        val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
+        // val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("date", listOf(date.toString()))
@@ -641,17 +646,17 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 put("recipientLastName", listOf(recipientLastName.toString()))
                 put("mimeType", listOf(mimeType.toString()))
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/octet-stream")
         localVariableHeaders["Accept"] = "application/octet-stream"
-
+        val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_kmehr/request/{patientId}/export/{id}".replace("{"+"patientId"+"}", "$patientId").replace("{"+"id"+"}", "$id"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -697,7 +702,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun generateResultExportRequestConfig(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, ioIcureKrakenClientInfrastructureByteArrayWrapper: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>) : RequestConfig<kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>> {
-        val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
+        // val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("date", listOf(date.toString()))
@@ -708,17 +713,17 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 put("recipientLastName", listOf(recipientLastName.toString()))
                 put("mimeType", listOf(mimeType.toString()))
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/octet-stream")
         localVariableHeaders["Accept"] = "application/octet-stream"
-
+        val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_kmehr/result/{patientId}/export/{id}".replace("{"+"patientId"+"}", "$patientId").replace("{"+"id"+"}", "$id"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -750,22 +755,22 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun generateSmfExportRequestConfig(patientId: kotlin.String, language: kotlin.String, softwareMedicalFileExportDto: SoftwareMedicalFileExportDto) : RequestConfig<SoftwareMedicalFileExportDto> {
-        val localVariableBody = softwareMedicalFileExportDto
+        // val localVariableBody = softwareMedicalFileExportDto
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("language", listOf(language.toString()))
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "application/octet-stream"
-
+        val localVariableBody = softwareMedicalFileExportDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_kmehr/smf/{patientId}/export".replace("{"+"patientId"+"}", "$patientId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -797,22 +802,22 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun generateSumehrRequestConfig(patientId: kotlin.String, language: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : RequestConfig<SumehrExportInfoDto> {
-        val localVariableBody = sumehrExportInfoDto
+        // val localVariableBody = sumehrExportInfoDto
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("language", listOf(language.toString()))
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "application/octet-stream"
-
+        val localVariableBody = sumehrExportInfoDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_kmehr/sumehr/{patientId}/export".replace("{"+"patientId"+"}", "$patientId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -844,22 +849,22 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun generateSumehrV2RequestConfig(patientId: kotlin.String, language: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : RequestConfig<SumehrExportInfoDto> {
-        val localVariableBody = sumehrExportInfoDto
+        // val localVariableBody = sumehrExportInfoDto
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("language", listOf(language.toString()))
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "application/octet-stream"
-
+        val localVariableBody = sumehrExportInfoDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_kmehr/sumehrv2/{patientId}/export".replace("{"+"patientId"+"}", "$patientId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -889,19 +894,19 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun getSumehrContentRequestConfig(patientId: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : RequestConfig<SumehrExportInfoDto> {
-        val localVariableBody = sumehrExportInfoDto
+        // val localVariableBody = sumehrExportInfoDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = sumehrExportInfoDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_kmehr/sumehr/{patientId}/content".replace("{"+"patientId"+"}", "$patientId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -931,19 +936,19 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun getSumehrMd5RequestConfig(patientId: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : RequestConfig<SumehrExportInfoDto> {
-        val localVariableBody = sumehrExportInfoDto
+        // val localVariableBody = sumehrExportInfoDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = sumehrExportInfoDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_kmehr/sumehr/{patientId}/md5".replace("{"+"patientId"+"}", "$patientId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -973,19 +978,19 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun getSumehrV2ContentRequestConfig(patientId: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : RequestConfig<SumehrExportInfoDto> {
-        val localVariableBody = sumehrExportInfoDto
+        // val localVariableBody = sumehrExportInfoDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = sumehrExportInfoDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_kmehr/sumehrv2/{patientId}/content".replace("{"+"patientId"+"}", "$patientId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1015,19 +1020,19 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun getSumehrV2Md5RequestConfig(patientId: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : RequestConfig<SumehrExportInfoDto> {
-        val localVariableBody = sumehrExportInfoDto
+        // val localVariableBody = sumehrExportInfoDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = sumehrExportInfoDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_kmehr/sumehrv2/{patientId}/md5".replace("{"+"patientId"+"}", "$patientId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1065,7 +1070,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun importMedicationSchemeRequestConfig(documentId: kotlin.String, documentKey: kotlin.String?, dryRun: kotlin.Boolean?, patientId: kotlin.String?, language: kotlin.String?, requestBody: kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>>?) : RequestConfig<kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>>> {
-        val localVariableBody = requestBody
+        // val localVariableBody = requestBody
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (documentKey != null) {
@@ -1081,17 +1086,17 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("language", listOf(language.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = requestBody
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_kmehr/medicationscheme/{documentId}/import".replace("{"+"documentId"+"}", "$documentId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1129,7 +1134,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun importSmfRequestConfig(documentId: kotlin.String, documentKey: kotlin.String?, patientId: kotlin.String?, language: kotlin.String?, dryRun: kotlin.Boolean?, requestBody: kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>>?) : RequestConfig<kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>>> {
-        val localVariableBody = requestBody
+        // val localVariableBody = requestBody
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (documentKey != null) {
@@ -1145,17 +1150,17 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("dryRun", listOf(dryRun.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = requestBody
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_kmehr/smf/{documentId}/import".replace("{"+"documentId"+"}", "$documentId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1193,7 +1198,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun importSumehrRequestConfig(documentId: kotlin.String, documentKey: kotlin.String?, dryRun: kotlin.Boolean?, patientId: kotlin.String?, language: kotlin.String?, requestBody: kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>>?) : RequestConfig<kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>>> {
-        val localVariableBody = requestBody
+        // val localVariableBody = requestBody
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (documentKey != null) {
@@ -1209,17 +1214,17 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("language", listOf(language.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = requestBody
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_kmehr/sumehr/{documentId}/import".replace("{"+"documentId"+"}", "$documentId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1259,7 +1264,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun importSumehrByItemIdRequestConfig(documentId: kotlin.String, itemId: kotlin.String, documentKey: kotlin.String?, dryRun: kotlin.Boolean?, patientId: kotlin.String?, language: kotlin.String?, requestBody: kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>>?) : RequestConfig<kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>>> {
-        val localVariableBody = requestBody
+        // val localVariableBody = requestBody
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("itemId", listOf(itemId.toString()))
@@ -1276,17 +1281,17 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("language", listOf(language.toString()))
                 }
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = requestBody
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_kmehr/sumehr/{documentId}/importbyitemid".replace("{"+"documentId"+"}", "$documentId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1316,19 +1321,19 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun isSumehrV2ValidRequestConfig(patientId: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : RequestConfig<SumehrExportInfoDto> {
-        val localVariableBody = sumehrExportInfoDto
+        // val localVariableBody = sumehrExportInfoDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = sumehrExportInfoDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_kmehr/sumehrv2/{patientId}/valid".replace("{"+"patientId"+"}", "$patientId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1358,19 +1363,19 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun isSumehrValidRequestConfig(patientId: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : RequestConfig<SumehrExportInfoDto> {
-        val localVariableBody = sumehrExportInfoDto
+        // val localVariableBody = sumehrExportInfoDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-
+        val localVariableBody = sumehrExportInfoDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_kmehr/sumehr/{patientId}/valid".replace("{"+"patientId"+"}", "$patientId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1402,22 +1407,22 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun validateSumehrRequestConfig(patientId: kotlin.String, language: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : RequestConfig<SumehrExportInfoDto> {
-        val localVariableBody = sumehrExportInfoDto
+        // val localVariableBody = sumehrExportInfoDto
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("language", listOf(language.toString()))
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "application/octet-stream"
-
+        val localVariableBody = sumehrExportInfoDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_kmehr/sumehr/{patientId}/validate".replace("{"+"patientId"+"}", "$patientId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1449,22 +1454,22 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun validateSumehrV2RequestConfig(patientId: kotlin.String, language: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : RequestConfig<SumehrExportInfoDto> {
-        val localVariableBody = sumehrExportInfoDto
+        // val localVariableBody = sumehrExportInfoDto
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("language", listOf(language.toString()))
             }
+        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "application/octet-stream"
-
+        val localVariableBody = sumehrExportInfoDto
 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_kmehr/sumehrv2/{patientId}/validate".replace("{"+"patientId"+"}", "$patientId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
 }
