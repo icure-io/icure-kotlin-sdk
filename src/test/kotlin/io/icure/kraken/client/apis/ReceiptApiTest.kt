@@ -133,8 +133,7 @@ class ReceiptApiTest() {
 	fun createReceiptTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createReceipt")) {
-            assert(true)
-            println("Endpoint createReceipt skipped")
+            assertTrue(false, "Test of createReceipt endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -200,8 +199,7 @@ class ReceiptApiTest() {
 	fun deleteReceiptsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "deleteReceipts")) {
-            assert(true)
-            println("Endpoint deleteReceipts skipped")
+            assertTrue(false, "Test of deleteReceipts endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -267,8 +265,7 @@ class ReceiptApiTest() {
 	fun getReceiptTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getReceipt")) {
-            assert(true)
-            println("Endpoint getReceipt skipped")
+            assertTrue(false, "Test of getReceipt endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -334,8 +331,7 @@ class ReceiptApiTest() {
 	fun getReceiptAttachmentTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getReceiptAttachment")) {
-            assert(true)
-            println("Endpoint getReceiptAttachment skipped")
+            assertTrue(false, "Test of getReceiptAttachment endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -415,8 +411,7 @@ class ReceiptApiTest() {
 	fun listByReferenceTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listByReference")) {
-            assert(true)
-            println("Endpoint listByReference skipped")
+            assertTrue(false, "Test of listByReference endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -482,8 +477,7 @@ class ReceiptApiTest() {
 	fun modifyReceiptTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyReceipt")) {
-            assert(true)
-            println("Endpoint modifyReceipt skipped")
+            assertTrue(false, "Test of modifyReceipt endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -549,8 +543,7 @@ class ReceiptApiTest() {
 	fun setReceiptAttachmentTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "setReceiptAttachment")) {
-            assert(true)
-            println("Endpoint setReceiptAttachment skipped")
+            assertTrue(false, "Test of setReceiptAttachment endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)

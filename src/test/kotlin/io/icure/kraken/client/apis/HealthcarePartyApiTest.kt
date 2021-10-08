@@ -135,8 +135,7 @@ class HealthcarePartyApiTest() {
 	fun createHealthcarePartyTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createHealthcareParty")) {
-            assert(true)
-            println("Endpoint createHealthcareParty skipped")
+            assertTrue(false, "Test of createHealthcareParty endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -202,8 +201,7 @@ class HealthcarePartyApiTest() {
 	fun createHealthcarePartyInGroupTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createHealthcarePartyInGroup")) {
-            assert(true)
-            println("Endpoint createHealthcarePartyInGroup skipped")
+            assertTrue(false, "Test of createHealthcarePartyInGroup endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -276,8 +274,7 @@ class HealthcarePartyApiTest() {
 	fun deleteHealthcarePartiesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "deleteHealthcareParties")) {
-            assert(true)
-            println("Endpoint deleteHealthcareParties skipped")
+            assertTrue(false, "Test of deleteHealthcareParties endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -343,8 +340,7 @@ class HealthcarePartyApiTest() {
 	fun deleteHealthcarePartiesInGroupTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "deleteHealthcarePartiesInGroup")) {
-            assert(true)
-            println("Endpoint deleteHealthcarePartiesInGroup skipped")
+            assertTrue(false, "Test of deleteHealthcarePartiesInGroup endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -417,8 +413,7 @@ class HealthcarePartyApiTest() {
 	fun findHealthcarePartiesByTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "findHealthcarePartiesBy")) {
-            assert(true)
-            println("Endpoint findHealthcarePartiesBy skipped")
+            assertTrue(false, "Test of findHealthcarePartiesBy endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -505,8 +500,7 @@ class HealthcarePartyApiTest() {
 	fun findHealthcarePartiesByNameTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "findHealthcarePartiesByName")) {
-            assert(true)
-            println("Endpoint findHealthcarePartiesByName skipped")
+            assertTrue(false, "Test of findHealthcarePartiesByName endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -600,8 +594,7 @@ class HealthcarePartyApiTest() {
 	fun findHealthcarePartiesBySpecialityAndPostCodeTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "findHealthcarePartiesBySpecialityAndPostCode")) {
-            assert(true)
-            println("Endpoint findHealthcarePartiesBySpecialityAndPostCode skipped")
+            assertTrue(false, "Test of findHealthcarePartiesBySpecialityAndPostCode endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -695,8 +688,7 @@ class HealthcarePartyApiTest() {
 	fun findHealthcarePartiesBySsinOrNihiiTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "findHealthcarePartiesBySsinOrNihii")) {
-            assert(true)
-            println("Endpoint findHealthcarePartiesBySsinOrNihii skipped")
+            assertTrue(false, "Test of findHealthcarePartiesBySsinOrNihii endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -790,8 +782,7 @@ class HealthcarePartyApiTest() {
 	fun getCurrentHealthcarePartyTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getCurrentHealthcareParty")) {
-            assert(true)
-            println("Endpoint getCurrentHealthcareParty skipped")
+            assertTrue(false, "Test of getCurrentHealthcareParty endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -850,8 +841,7 @@ class HealthcarePartyApiTest() {
 	fun getHcPartyKeysForDelegateTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getHcPartyKeysForDelegate")) {
-            assert(true)
-            println("Endpoint getHcPartyKeysForDelegate skipped")
+            assertTrue(false, "Test of getHcPartyKeysForDelegate endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -917,8 +907,7 @@ class HealthcarePartyApiTest() {
 	fun getHealthcarePartiesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getHealthcareParties")) {
-            assert(true)
-            println("Endpoint getHealthcareParties skipped")
+            assertTrue(false, "Test of getHealthcareParties endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -984,8 +973,7 @@ class HealthcarePartyApiTest() {
 	fun getHealthcarePartyTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getHealthcareParty")) {
-            assert(true)
-            println("Endpoint getHealthcareParty skipped")
+            assertTrue(false, "Test of getHealthcareParty endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1051,8 +1039,7 @@ class HealthcarePartyApiTest() {
 	fun getPublicKeyTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getPublicKey")) {
-            assert(true)
-            println("Endpoint getPublicKey skipped")
+            assertTrue(false, "Test of getPublicKey endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1118,8 +1105,7 @@ class HealthcarePartyApiTest() {
 	fun listHealthcarePartiesByNameTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listHealthcarePartiesByName")) {
-            assert(true)
-            println("Endpoint listHealthcarePartiesByName skipped")
+            assertTrue(false, "Test of listHealthcarePartiesByName endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1185,8 +1171,7 @@ class HealthcarePartyApiTest() {
 	fun listHealthcarePartiesByParentIdTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listHealthcarePartiesByParentId")) {
-            assert(true)
-            println("Endpoint listHealthcarePartiesByParentId skipped")
+            assertTrue(false, "Test of listHealthcarePartiesByParentId endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1252,8 +1237,7 @@ class HealthcarePartyApiTest() {
 	fun modifyHealthcarePartyTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyHealthcareParty")) {
-            assert(true)
-            println("Endpoint modifyHealthcareParty skipped")
+            assertTrue(false, "Test of modifyHealthcareParty endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1319,8 +1303,7 @@ class HealthcarePartyApiTest() {
 	fun modifyHealthcarePartyInGroupTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyHealthcarePartyInGroup")) {
-            assert(true)
-            println("Endpoint modifyHealthcarePartyInGroup skipped")
+            assertTrue(false, "Test of modifyHealthcarePartyInGroup endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)

@@ -133,8 +133,7 @@ class TimeTableApiTest() {
 	fun createTimeTableTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createTimeTable")) {
-            assert(true)
-            println("Endpoint createTimeTable skipped")
+            assertTrue(false, "Test of createTimeTable endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -200,8 +199,7 @@ class TimeTableApiTest() {
 	fun deleteTimeTableTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "deleteTimeTable")) {
-            assert(true)
-            println("Endpoint deleteTimeTable skipped")
+            assertTrue(false, "Test of deleteTimeTable endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -267,8 +265,7 @@ class TimeTableApiTest() {
 	fun getTimeTableTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getTimeTable")) {
-            assert(true)
-            println("Endpoint getTimeTable skipped")
+            assertTrue(false, "Test of getTimeTable endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -334,8 +331,7 @@ class TimeTableApiTest() {
 	fun getTimeTablesByAgendaIdTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getTimeTablesByAgendaId")) {
-            assert(true)
-            println("Endpoint getTimeTablesByAgendaId skipped")
+            assertTrue(false, "Test of getTimeTablesByAgendaId endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -401,8 +397,7 @@ class TimeTableApiTest() {
 	fun getTimeTablesByPeriodAndAgendaIdTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getTimeTablesByPeriodAndAgendaId")) {
-            assert(true)
-            println("Endpoint getTimeTablesByPeriodAndAgendaId skipped")
+            assertTrue(false, "Test of getTimeTablesByPeriodAndAgendaId endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -482,8 +477,7 @@ class TimeTableApiTest() {
 	fun modifyTimeTableTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyTimeTable")) {
-            assert(true)
-            println("Endpoint modifyTimeTable skipped")
+            assertTrue(false, "Test of modifyTimeTable endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)

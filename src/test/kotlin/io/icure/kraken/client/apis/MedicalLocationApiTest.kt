@@ -133,8 +133,7 @@ class MedicalLocationApiTest() {
 	fun createMedicalLocationTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createMedicalLocation")) {
-            assert(true)
-            println("Endpoint createMedicalLocation skipped")
+            assertTrue(false, "Test of createMedicalLocation endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -200,8 +199,7 @@ class MedicalLocationApiTest() {
 	fun deleteMedicalLocationsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "deleteMedicalLocations")) {
-            assert(true)
-            println("Endpoint deleteMedicalLocations skipped")
+            assertTrue(false, "Test of deleteMedicalLocations endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -267,8 +265,7 @@ class MedicalLocationApiTest() {
 	fun getMedicalLocationTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getMedicalLocation")) {
-            assert(true)
-            println("Endpoint getMedicalLocation skipped")
+            assertTrue(false, "Test of getMedicalLocation endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -334,8 +331,7 @@ class MedicalLocationApiTest() {
 	fun getMedicalLocationsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getMedicalLocations")) {
-            assert(true)
-            println("Endpoint getMedicalLocations skipped")
+            assertTrue(false, "Test of getMedicalLocations endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -394,8 +390,7 @@ class MedicalLocationApiTest() {
 	fun modifyMedicalLocationTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyMedicalLocation")) {
-            assert(true)
-            println("Endpoint modifyMedicalLocation skipped")
+            assertTrue(false, "Test of modifyMedicalLocation endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)

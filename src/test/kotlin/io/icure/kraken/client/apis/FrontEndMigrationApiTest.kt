@@ -132,8 +132,7 @@ class FrontEndMigrationApiTest() {
 	fun createFrontEndMigrationTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createFrontEndMigration")) {
-            assert(true)
-            println("Endpoint createFrontEndMigration skipped")
+            assertTrue(false, "Test of createFrontEndMigration endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -199,8 +198,7 @@ class FrontEndMigrationApiTest() {
 	fun deleteFrontEndMigrationTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "deleteFrontEndMigration")) {
-            assert(true)
-            println("Endpoint deleteFrontEndMigration skipped")
+            assertTrue(false, "Test of deleteFrontEndMigration endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -266,8 +264,7 @@ class FrontEndMigrationApiTest() {
 	fun getFrontEndMigrationTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getFrontEndMigration")) {
-            assert(true)
-            println("Endpoint getFrontEndMigration skipped")
+            assertTrue(false, "Test of getFrontEndMigration endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -333,8 +330,7 @@ class FrontEndMigrationApiTest() {
 	fun getFrontEndMigrationByNameTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getFrontEndMigrationByName")) {
-            assert(true)
-            println("Endpoint getFrontEndMigrationByName skipped")
+            assertTrue(false, "Test of getFrontEndMigrationByName endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -400,8 +396,7 @@ class FrontEndMigrationApiTest() {
 	fun getFrontEndMigrationsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getFrontEndMigrations")) {
-            assert(true)
-            println("Endpoint getFrontEndMigrations skipped")
+            assertTrue(false, "Test of getFrontEndMigrations endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -460,8 +455,7 @@ class FrontEndMigrationApiTest() {
 	fun modifyFrontEndMigrationTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyFrontEndMigration")) {
-            assert(true)
-            println("Endpoint modifyFrontEndMigration skipped")
+            assertTrue(false, "Test of modifyFrontEndMigration endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)

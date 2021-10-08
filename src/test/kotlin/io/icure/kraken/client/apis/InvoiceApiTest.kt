@@ -139,8 +139,7 @@ class InvoiceApiTest() {
 	fun appendCodesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "appendCodes")) {
-            assert(true)
-            println("Endpoint appendCodes skipped")
+            assertTrue(false, "Test of appendCodes endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -255,8 +254,7 @@ class InvoiceApiTest() {
 	fun createInvoiceTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createInvoice")) {
-            assert(true)
-            println("Endpoint createInvoice skipped")
+            assertTrue(false, "Test of createInvoice endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -322,8 +320,7 @@ class InvoiceApiTest() {
 	fun createInvoicesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createInvoices")) {
-            assert(true)
-            println("Endpoint createInvoices skipped")
+            assertTrue(false, "Test of createInvoices endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -389,8 +386,7 @@ class InvoiceApiTest() {
 	fun deleteInvoiceTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "deleteInvoice")) {
-            assert(true)
-            println("Endpoint deleteInvoice skipped")
+            assertTrue(false, "Test of deleteInvoice endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -456,8 +452,7 @@ class InvoiceApiTest() {
 	fun filterInvoicesByTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "filterInvoicesBy")) {
-            assert(true)
-            println("Endpoint filterInvoicesBy skipped")
+            assertTrue(false, "Test of filterInvoicesBy endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -523,8 +518,7 @@ class InvoiceApiTest() {
 	fun findInvoicesByAuthorTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "findInvoicesByAuthor")) {
-            assert(true)
-            println("Endpoint findInvoicesByAuthor skipped")
+            assertTrue(false, "Test of findInvoicesByAuthor endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -625,8 +619,7 @@ class InvoiceApiTest() {
 	fun getInvoiceTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getInvoice")) {
-            assert(true)
-            println("Endpoint getInvoice skipped")
+            assertTrue(false, "Test of getInvoice endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -692,8 +685,7 @@ class InvoiceApiTest() {
 	fun getInvoicesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getInvoices")) {
-            assert(true)
-            println("Endpoint getInvoices skipped")
+            assertTrue(false, "Test of getInvoices endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -759,8 +751,7 @@ class InvoiceApiTest() {
 	fun getTarificationsCodesOccurencesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getTarificationsCodesOccurences")) {
-            assert(true)
-            println("Endpoint getTarificationsCodesOccurences skipped")
+            assertTrue(false, "Test of getTarificationsCodesOccurences endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -826,8 +817,7 @@ class InvoiceApiTest() {
 	fun listAllHcpsByStatusTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listAllHcpsByStatus")) {
-            assert(true)
-            println("Endpoint listAllHcpsByStatus skipped")
+            assertTrue(false, "Test of listAllHcpsByStatus endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -914,8 +904,7 @@ class InvoiceApiTest() {
 	fun listInvoicesByContactIdsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listInvoicesByContactIds")) {
-            assert(true)
-            println("Endpoint listInvoicesByContactIds skipped")
+            assertTrue(false, "Test of listInvoicesByContactIds endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -981,8 +970,7 @@ class InvoiceApiTest() {
 	fun listInvoicesByHCPartyAndPatientForeignKeysTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listInvoicesByHCPartyAndPatientForeignKeys")) {
-            assert(true)
-            println("Endpoint listInvoicesByHCPartyAndPatientForeignKeys skipped")
+            assertTrue(false, "Test of listInvoicesByHCPartyAndPatientForeignKeys endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1055,8 +1043,7 @@ class InvoiceApiTest() {
 	fun listInvoicesByHcPartyAndGroupIdTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listInvoicesByHcPartyAndGroupId")) {
-            assert(true)
-            println("Endpoint listInvoicesByHcPartyAndGroupId skipped")
+            assertTrue(false, "Test of listInvoicesByHcPartyAndGroupId endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1129,8 +1116,7 @@ class InvoiceApiTest() {
 	fun listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDateTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate")) {
-            assert(true)
-            println("Endpoint listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate skipped")
+            assertTrue(false, "Test of listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1231,8 +1217,7 @@ class InvoiceApiTest() {
 	fun listInvoicesByHcpartySendingModeStatusDateTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listInvoicesByHcpartySendingModeStatusDate")) {
-            assert(true)
-            println("Endpoint listInvoicesByHcpartySendingModeStatusDate skipped")
+            assertTrue(false, "Test of listInvoicesByHcpartySendingModeStatusDate endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1326,8 +1311,7 @@ class InvoiceApiTest() {
 	fun listInvoicesByIdsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listInvoicesByIds")) {
-            assert(true)
-            println("Endpoint listInvoicesByIds skipped")
+            assertTrue(false, "Test of listInvoicesByIds endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1393,8 +1377,7 @@ class InvoiceApiTest() {
 	fun listInvoicesByRecipientsIdsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listInvoicesByRecipientsIds")) {
-            assert(true)
-            println("Endpoint listInvoicesByRecipientsIds skipped")
+            assertTrue(false, "Test of listInvoicesByRecipientsIds endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1460,8 +1443,7 @@ class InvoiceApiTest() {
 	fun listInvoicesByServiceIdsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listInvoicesByServiceIds")) {
-            assert(true)
-            println("Endpoint listInvoicesByServiceIds skipped")
+            assertTrue(false, "Test of listInvoicesByServiceIds endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1527,8 +1509,7 @@ class InvoiceApiTest() {
 	fun listInvoicesDelegationsStubsByHCPartyAndPatientForeignKeysTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listInvoicesDelegationsStubsByHCPartyAndPatientForeignKeys")) {
-            assert(true)
-            println("Endpoint listInvoicesDelegationsStubsByHCPartyAndPatientForeignKeys skipped")
+            assertTrue(false, "Test of listInvoicesDelegationsStubsByHCPartyAndPatientForeignKeys endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1601,8 +1582,7 @@ class InvoiceApiTest() {
 	fun listToInsurancesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listToInsurances")) {
-            assert(true)
-            println("Endpoint listToInsurances skipped")
+            assertTrue(false, "Test of listToInsurances endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1668,8 +1648,7 @@ class InvoiceApiTest() {
 	fun listToInsurancesUnsentTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listToInsurancesUnsent")) {
-            assert(true)
-            println("Endpoint listToInsurancesUnsent skipped")
+            assertTrue(false, "Test of listToInsurancesUnsent endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1735,8 +1714,7 @@ class InvoiceApiTest() {
 	fun listToPatientsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listToPatients")) {
-            assert(true)
-            println("Endpoint listToPatients skipped")
+            assertTrue(false, "Test of listToPatients endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1802,8 +1780,7 @@ class InvoiceApiTest() {
 	fun listToPatientsUnsentTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listToPatientsUnsent")) {
-            assert(true)
-            println("Endpoint listToPatientsUnsent skipped")
+            assertTrue(false, "Test of listToPatientsUnsent endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1869,8 +1846,7 @@ class InvoiceApiTest() {
 	fun mergeToTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "mergeTo")) {
-            assert(true)
-            println("Endpoint mergeTo skipped")
+            assertTrue(false, "Test of mergeTo endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1943,8 +1919,7 @@ class InvoiceApiTest() {
 	fun modifyInvoiceTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyInvoice")) {
-            assert(true)
-            println("Endpoint modifyInvoice skipped")
+            assertTrue(false, "Test of modifyInvoice endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -2010,8 +1985,7 @@ class InvoiceApiTest() {
 	fun modifyInvoicesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyInvoices")) {
-            assert(true)
-            println("Endpoint modifyInvoices skipped")
+            assertTrue(false, "Test of modifyInvoices endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -2077,8 +2051,7 @@ class InvoiceApiTest() {
 	fun newInvoiceDelegationsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "newInvoiceDelegations")) {
-            assert(true)
-            println("Endpoint newInvoiceDelegations skipped")
+            assertTrue(false, "Test of newInvoiceDelegations endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -2151,8 +2124,7 @@ class InvoiceApiTest() {
 	fun reassignInvoiceTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "reassignInvoice")) {
-            assert(true)
-            println("Endpoint reassignInvoice skipped")
+            assertTrue(false, "Test of reassignInvoice endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -2218,8 +2190,7 @@ class InvoiceApiTest() {
 	fun removeCodesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "removeCodes")) {
-            assert(true)
-            println("Endpoint removeCodes skipped")
+            assertTrue(false, "Test of removeCodes endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -2306,8 +2277,7 @@ class InvoiceApiTest() {
 	fun setInvoicesDelegationsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "setInvoicesDelegations")) {
-            assert(true)
-            println("Endpoint setInvoicesDelegations skipped")
+            assertTrue(false, "Test of setInvoicesDelegations endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -2373,8 +2343,7 @@ class InvoiceApiTest() {
 	fun validateTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "validate")) {
-            assert(true)
-            println("Endpoint validate skipped")
+            assertTrue(false, "Test of validate endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)

@@ -138,8 +138,7 @@ class GroupApiTest() {
 	fun createGroupTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createGroup")) {
-            assert(true)
-            println("Endpoint createGroup skipped")
+            assertTrue(false, "Test of createGroup endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -247,8 +246,7 @@ class GroupApiTest() {
 	fun getGroupTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getGroup")) {
-            assert(true)
-            println("Endpoint getGroup skipped")
+            assertTrue(false, "Test of getGroup endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -314,8 +312,7 @@ class GroupApiTest() {
 	fun getReplicationInfo1Test(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getReplicationInfo1")) {
-            assert(true)
-            println("Endpoint getReplicationInfo1 skipped")
+            assertTrue(false, "Test of getReplicationInfo1 endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -381,8 +378,7 @@ class GroupApiTest() {
 	fun initDesignDocsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "initDesignDocs")) {
-            assert(true)
-            println("Endpoint initDesignDocs skipped")
+            assertTrue(false, "Test of initDesignDocs endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -462,8 +458,7 @@ class GroupApiTest() {
 	fun listGroupsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listGroups")) {
-            assert(true)
-            println("Endpoint listGroups skipped")
+            assertTrue(false, "Test of listGroups endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -522,8 +517,7 @@ class GroupApiTest() {
 	fun modifyGroupNameTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyGroupName")) {
-            assert(true)
-            println("Endpoint modifyGroupName skipped")
+            assertTrue(false, "Test of modifyGroupName endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -596,8 +590,7 @@ class GroupApiTest() {
 	fun modifyGroupPropertiesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyGroupProperties")) {
-            assert(true)
-            println("Endpoint modifyGroupProperties skipped")
+            assertTrue(false, "Test of modifyGroupProperties endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -670,8 +663,7 @@ class GroupApiTest() {
 	fun registerNewGroupAdministratorTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "registerNewGroupAdministrator")) {
-            assert(true)
-            println("Endpoint registerNewGroupAdministrator skipped")
+            assertTrue(false, "Test of registerNewGroupAdministrator endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -737,8 +729,7 @@ class GroupApiTest() {
 	fun resetStorageTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "resetStorage")) {
-            assert(true)
-            println("Endpoint resetStorage skipped")
+            assertTrue(false, "Test of resetStorage endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -825,8 +816,7 @@ class GroupApiTest() {
 	fun setGroupPasswordTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "setGroupPassword")) {
-            assert(true)
-            println("Endpoint setGroupPassword skipped")
+            assertTrue(false, "Test of setGroupPassword endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -899,8 +889,7 @@ class GroupApiTest() {
 	fun solveConflictsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "solveConflicts")) {
-            assert(true)
-            println("Endpoint solveConflicts skipped")
+            assertTrue(false, "Test of solveConflicts endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)

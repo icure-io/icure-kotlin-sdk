@@ -134,8 +134,7 @@ class AccessLogApiTest() {
 	fun createAccessLogTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createAccessLog")) {
-            assert(true)
-            println("Endpoint createAccessLog skipped")
+            assertTrue(false, "Test of createAccessLog endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -201,8 +200,7 @@ class AccessLogApiTest() {
 	fun deleteAccessLogsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "deleteAccessLogs")) {
-            assert(true)
-            println("Endpoint deleteAccessLogs skipped")
+            assertTrue(false, "Test of deleteAccessLogs endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -268,8 +266,7 @@ class AccessLogApiTest() {
 	fun findAccessLogsByTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "findAccessLogsBy")) {
-            assert(true)
-            println("Endpoint findAccessLogsBy skipped")
+            assertTrue(false, "Test of findAccessLogsBy endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -370,8 +367,7 @@ class AccessLogApiTest() {
 	fun findAccessLogsByUserAfterDateTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "findAccessLogsByUserAfterDate")) {
-            assert(true)
-            println("Endpoint findAccessLogsByUserAfterDate skipped")
+            assertTrue(false, "Test of findAccessLogsByUserAfterDate endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -479,8 +475,7 @@ class AccessLogApiTest() {
 	fun getAccessLogTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getAccessLog")) {
-            assert(true)
-            println("Endpoint getAccessLog skipped")
+            assertTrue(false, "Test of getAccessLog endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -546,8 +541,7 @@ class AccessLogApiTest() {
 	fun listAccessLogsByHCPartyAndPatientForeignKeysTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listAccessLogsByHCPartyAndPatientForeignKeys")) {
-            assert(true)
-            println("Endpoint listAccessLogsByHCPartyAndPatientForeignKeys skipped")
+            assertTrue(false, "Test of listAccessLogsByHCPartyAndPatientForeignKeys endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -620,8 +614,7 @@ class AccessLogApiTest() {
 	fun modifyAccessLogTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyAccessLog")) {
-            assert(true)
-            println("Endpoint modifyAccessLog skipped")
+            assertTrue(false, "Test of modifyAccessLog endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)

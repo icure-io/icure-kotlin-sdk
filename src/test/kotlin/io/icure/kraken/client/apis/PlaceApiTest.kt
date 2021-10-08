@@ -133,8 +133,7 @@ class PlaceApiTest() {
 	fun createPlaceTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createPlace")) {
-            assert(true)
-            println("Endpoint createPlace skipped")
+            assertTrue(false, "Test of createPlace endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -200,8 +199,7 @@ class PlaceApiTest() {
 	fun deletePlacesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "deletePlaces")) {
-            assert(true)
-            println("Endpoint deletePlaces skipped")
+            assertTrue(false, "Test of deletePlaces endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -267,8 +265,7 @@ class PlaceApiTest() {
 	fun getPlaceTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getPlace")) {
-            assert(true)
-            println("Endpoint getPlace skipped")
+            assertTrue(false, "Test of getPlace endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -334,8 +331,7 @@ class PlaceApiTest() {
 	fun getPlacesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getPlaces")) {
-            assert(true)
-            println("Endpoint getPlaces skipped")
+            assertTrue(false, "Test of getPlaces endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -394,8 +390,7 @@ class PlaceApiTest() {
 	fun modifyPlaceTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyPlace")) {
-            assert(true)
-            println("Endpoint modifyPlace skipped")
+            assertTrue(false, "Test of modifyPlace endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)

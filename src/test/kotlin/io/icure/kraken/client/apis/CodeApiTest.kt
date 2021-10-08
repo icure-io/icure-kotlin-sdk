@@ -134,8 +134,7 @@ class CodeApiTest() {
 	fun createCodeTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createCode")) {
-            assert(true)
-            println("Endpoint createCode skipped")
+            assertTrue(false, "Test of createCode endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -201,8 +200,7 @@ class CodeApiTest() {
 	fun filterCodesByTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "filterCodesBy")) {
-            assert(true)
-            println("Endpoint filterCodesBy skipped")
+            assertTrue(false, "Test of filterCodesBy endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -310,8 +308,7 @@ class CodeApiTest() {
 	fun findCodesByLabelTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "findCodesByLabel")) {
-            assert(true)
-            println("Endpoint findCodesByLabel skipped")
+            assertTrue(false, "Test of findCodesByLabel endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -419,8 +416,7 @@ class CodeApiTest() {
 	fun findCodesByLinkTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "findCodesByLink")) {
-            assert(true)
-            println("Endpoint findCodesByLink skipped")
+            assertTrue(false, "Test of findCodesByLink endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -514,8 +510,7 @@ class CodeApiTest() {
 	fun findCodesByTypeTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "findCodesByType")) {
-            assert(true)
-            println("Endpoint findCodesByType skipped")
+            assertTrue(false, "Test of findCodesByType endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -623,8 +618,7 @@ class CodeApiTest() {
 	fun getCodeTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getCode")) {
-            assert(true)
-            println("Endpoint getCode skipped")
+            assertTrue(false, "Test of getCode endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -690,8 +684,7 @@ class CodeApiTest() {
 	fun getCodeWithPartsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getCodeWithParts")) {
-            assert(true)
-            println("Endpoint getCodeWithParts skipped")
+            assertTrue(false, "Test of getCodeWithParts endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -771,8 +764,7 @@ class CodeApiTest() {
 	fun getCodesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getCodes")) {
-            assert(true)
-            println("Endpoint getCodes skipped")
+            assertTrue(false, "Test of getCodes endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -838,8 +830,7 @@ class CodeApiTest() {
 	fun listCodeTypesByTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listCodeTypesBy")) {
-            assert(true)
-            println("Endpoint listCodeTypesBy skipped")
+            assertTrue(false, "Test of listCodeTypesBy endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -912,8 +903,7 @@ class CodeApiTest() {
 	fun listCodesByRegionTypeCodeVersionTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listCodesByRegionTypeCodeVersion")) {
-            assert(true)
-            println("Endpoint listCodesByRegionTypeCodeVersion skipped")
+            assertTrue(false, "Test of listCodesByRegionTypeCodeVersion endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1000,8 +990,7 @@ class CodeApiTest() {
 	fun listTagTypesByTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listTagTypesBy")) {
-            assert(true)
-            println("Endpoint listTagTypesBy skipped")
+            assertTrue(false, "Test of listTagTypesBy endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1074,8 +1063,7 @@ class CodeApiTest() {
 	fun modifyCodeTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyCode")) {
-            assert(true)
-            println("Endpoint modifyCode skipped")
+            assertTrue(false, "Test of modifyCode endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)

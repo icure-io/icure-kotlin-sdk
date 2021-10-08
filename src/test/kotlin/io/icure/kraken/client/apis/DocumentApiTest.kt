@@ -134,8 +134,7 @@ class DocumentApiTest() {
 	fun createDocumentTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createDocument")) {
-            assert(true)
-            println("Endpoint createDocument skipped")
+            assertTrue(false, "Test of createDocument endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -201,8 +200,7 @@ class DocumentApiTest() {
 	fun deleteAttachmentTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "deleteAttachment")) {
-            assert(true)
-            println("Endpoint deleteAttachment skipped")
+            assertTrue(false, "Test of deleteAttachment endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -268,8 +266,7 @@ class DocumentApiTest() {
 	fun deleteDocumentTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "deleteDocument")) {
-            assert(true)
-            println("Endpoint deleteDocument skipped")
+            assertTrue(false, "Test of deleteDocument endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -335,8 +332,7 @@ class DocumentApiTest() {
 	fun findWithoutDelegationTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "findWithoutDelegation")) {
-            assert(true)
-            println("Endpoint findWithoutDelegation skipped")
+            assertTrue(false, "Test of findWithoutDelegation endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -402,8 +398,7 @@ class DocumentApiTest() {
 	fun getDocumentTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getDocument")) {
-            assert(true)
-            println("Endpoint getDocument skipped")
+            assertTrue(false, "Test of getDocument endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -469,8 +464,7 @@ class DocumentApiTest() {
 	fun getDocumentAttachmentTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getDocumentAttachment")) {
-            assert(true)
-            println("Endpoint getDocumentAttachment skipped")
+            assertTrue(false, "Test of getDocumentAttachment endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -557,8 +551,7 @@ class DocumentApiTest() {
 	fun getDocumentByExternalUuidTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getDocumentByExternalUuid")) {
-            assert(true)
-            println("Endpoint getDocumentByExternalUuid skipped")
+            assertTrue(false, "Test of getDocumentByExternalUuid endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -624,8 +617,7 @@ class DocumentApiTest() {
 	fun getDocumentsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getDocuments")) {
-            assert(true)
-            println("Endpoint getDocuments skipped")
+            assertTrue(false, "Test of getDocuments endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -691,8 +683,7 @@ class DocumentApiTest() {
 	fun getDocumentsByExternalUuidTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getDocumentsByExternalUuid")) {
-            assert(true)
-            println("Endpoint getDocumentsByExternalUuid skipped")
+            assertTrue(false, "Test of getDocumentsByExternalUuid endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -758,8 +749,7 @@ class DocumentApiTest() {
 	fun listDocumentByTypeHCPartyMessageSecretFKeysTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listDocumentByTypeHCPartyMessageSecretFKeys")) {
-            assert(true)
-            println("Endpoint listDocumentByTypeHCPartyMessageSecretFKeys skipped")
+            assertTrue(false, "Test of listDocumentByTypeHCPartyMessageSecretFKeys endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -839,8 +829,7 @@ class DocumentApiTest() {
 	fun listDocumentsByHCPartyAndPatientForeignKeysTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listDocumentsByHCPartyAndPatientForeignKeys")) {
-            assert(true)
-            println("Endpoint listDocumentsByHCPartyAndPatientForeignKeys skipped")
+            assertTrue(false, "Test of listDocumentsByHCPartyAndPatientForeignKeys endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -913,8 +902,7 @@ class DocumentApiTest() {
 	fun modifyDocumentTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyDocument")) {
-            assert(true)
-            println("Endpoint modifyDocument skipped")
+            assertTrue(false, "Test of modifyDocument endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -980,8 +968,7 @@ class DocumentApiTest() {
 	fun modifyDocumentsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyDocuments")) {
-            assert(true)
-            println("Endpoint modifyDocuments skipped")
+            assertTrue(false, "Test of modifyDocuments endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1047,8 +1034,7 @@ class DocumentApiTest() {
 	fun setDocumentAttachmentTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "setDocumentAttachment")) {
-            assert(true)
-            println("Endpoint setDocumentAttachment skipped")
+            assertTrue(false, "Test of setDocumentAttachment endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1128,8 +1114,7 @@ class DocumentApiTest() {
 	fun setDocumentAttachmentMultiTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "setDocumentAttachmentMulti")) {
-            assert(true)
-            println("Endpoint setDocumentAttachmentMulti skipped")
+            assertTrue(false, "Test of setDocumentAttachmentMulti endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1209,8 +1194,7 @@ class DocumentApiTest() {
 	fun setDocumentsDelegationsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "setDocumentsDelegations")) {
-            assert(true)
-            println("Endpoint setDocumentsDelegations skipped")
+            assertTrue(false, "Test of setDocumentsDelegations endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1276,8 +1260,7 @@ class DocumentApiTest() {
 	fun setSafeDocumentAttachmentTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "setSafeDocumentAttachment")) {
-            assert(true)
-            println("Endpoint setSafeDocumentAttachment skipped")
+            assertTrue(false, "Test of setSafeDocumentAttachment endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)

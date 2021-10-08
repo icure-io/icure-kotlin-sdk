@@ -133,8 +133,7 @@ class InsuranceApiTest() {
 	fun createInsuranceTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createInsurance")) {
-            assert(true)
-            println("Endpoint createInsurance skipped")
+            assertTrue(false, "Test of createInsurance endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -200,8 +199,7 @@ class InsuranceApiTest() {
 	fun deleteInsuranceTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "deleteInsurance")) {
-            assert(true)
-            println("Endpoint deleteInsurance skipped")
+            assertTrue(false, "Test of deleteInsurance endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -267,8 +265,7 @@ class InsuranceApiTest() {
 	fun getInsuranceTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getInsurance")) {
-            assert(true)
-            println("Endpoint getInsurance skipped")
+            assertTrue(false, "Test of getInsurance endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -334,8 +331,7 @@ class InsuranceApiTest() {
 	fun getInsurancesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getInsurances")) {
-            assert(true)
-            println("Endpoint getInsurances skipped")
+            assertTrue(false, "Test of getInsurances endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -401,8 +397,7 @@ class InsuranceApiTest() {
 	fun listInsurancesByCodeTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listInsurancesByCode")) {
-            assert(true)
-            println("Endpoint listInsurancesByCode skipped")
+            assertTrue(false, "Test of listInsurancesByCode endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -468,8 +463,7 @@ class InsuranceApiTest() {
 	fun listInsurancesByNameTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listInsurancesByName")) {
-            assert(true)
-            println("Endpoint listInsurancesByName skipped")
+            assertTrue(false, "Test of listInsurancesByName endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -535,8 +529,7 @@ class InsuranceApiTest() {
 	fun modifyInsuranceTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyInsurance")) {
-            assert(true)
-            println("Endpoint modifyInsurance skipped")
+            assertTrue(false, "Test of modifyInsurance endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)

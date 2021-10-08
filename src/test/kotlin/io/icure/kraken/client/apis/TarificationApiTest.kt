@@ -133,8 +133,7 @@ class TarificationApiTest() {
 	fun createTarificationTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createTarification")) {
-            assert(true)
-            println("Endpoint createTarification skipped")
+            assertTrue(false, "Test of createTarification endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -200,8 +199,7 @@ class TarificationApiTest() {
 	fun findTarificationsByTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "findTarificationsBy")) {
-            assert(true)
-            println("Endpoint findTarificationsBy skipped")
+            assertTrue(false, "Test of findTarificationsBy endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -302,8 +300,7 @@ class TarificationApiTest() {
 	fun findTarificationsBy1Test(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "findTarificationsBy1")) {
-            assert(true)
-            println("Endpoint findTarificationsBy1 skipped")
+            assertTrue(false, "Test of findTarificationsBy1 endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -390,8 +387,7 @@ class TarificationApiTest() {
 	fun findTarificationsByLabelTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "findTarificationsByLabel")) {
-            assert(true)
-            println("Endpoint findTarificationsByLabel skipped")
+            assertTrue(false, "Test of findTarificationsByLabel endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -492,8 +488,7 @@ class TarificationApiTest() {
 	fun getTarificationTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getTarification")) {
-            assert(true)
-            println("Endpoint getTarification skipped")
+            assertTrue(false, "Test of getTarification endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -559,8 +554,7 @@ class TarificationApiTest() {
 	fun getTarificationWithPartsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getTarificationWithParts")) {
-            assert(true)
-            println("Endpoint getTarificationWithParts skipped")
+            assertTrue(false, "Test of getTarificationWithParts endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -640,8 +634,7 @@ class TarificationApiTest() {
 	fun getTarificationsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getTarifications")) {
-            assert(true)
-            println("Endpoint getTarifications skipped")
+            assertTrue(false, "Test of getTarifications endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -707,8 +700,7 @@ class TarificationApiTest() {
 	fun modifyTarificationTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyTarification")) {
-            assert(true)
-            println("Endpoint modifyTarification skipped")
+            assertTrue(false, "Test of modifyTarification endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)

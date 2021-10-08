@@ -133,8 +133,7 @@ class ArticleApiTest() {
 	fun createArticleTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createArticle")) {
-            assert(true)
-            println("Endpoint createArticle skipped")
+            assertTrue(false, "Test of createArticle endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -200,8 +199,7 @@ class ArticleApiTest() {
 	fun deleteArticlesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "deleteArticles")) {
-            assert(true)
-            println("Endpoint deleteArticles skipped")
+            assertTrue(false, "Test of deleteArticles endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -267,8 +265,7 @@ class ArticleApiTest() {
 	fun getArticleTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getArticle")) {
-            assert(true)
-            println("Endpoint getArticle skipped")
+            assertTrue(false, "Test of getArticle endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -334,8 +331,7 @@ class ArticleApiTest() {
 	fun getArticlesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getArticles")) {
-            assert(true)
-            println("Endpoint getArticles skipped")
+            assertTrue(false, "Test of getArticles endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -394,8 +390,7 @@ class ArticleApiTest() {
 	fun modifyArticleTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyArticle")) {
-            assert(true)
-            println("Endpoint modifyArticle skipped")
+            assertTrue(false, "Test of modifyArticle endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)

@@ -133,8 +133,7 @@ class EntityTemplateApiTest() {
 	fun createEntityTemplateTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createEntityTemplate")) {
-            assert(true)
-            println("Endpoint createEntityTemplate skipped")
+            assertTrue(false, "Test of createEntityTemplate endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -200,8 +199,7 @@ class EntityTemplateApiTest() {
 	fun createEntityTemplatesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createEntityTemplates")) {
-            assert(true)
-            println("Endpoint createEntityTemplates skipped")
+            assertTrue(false, "Test of createEntityTemplates endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -267,8 +265,7 @@ class EntityTemplateApiTest() {
 	fun deleteEntityTemplateTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "deleteEntityTemplate")) {
-            assert(true)
-            println("Endpoint deleteEntityTemplate skipped")
+            assertTrue(false, "Test of deleteEntityTemplate endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -334,8 +331,7 @@ class EntityTemplateApiTest() {
 	fun findAllEntityTemplatesByKeywordTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "findAllEntityTemplatesByKeyword")) {
-            assert(true)
-            println("Endpoint findAllEntityTemplatesByKeyword skipped")
+            assertTrue(false, "Test of findAllEntityTemplatesByKeyword endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -415,8 +411,7 @@ class EntityTemplateApiTest() {
 	fun getEntityTemplateTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getEntityTemplate")) {
-            assert(true)
-            println("Endpoint getEntityTemplate skipped")
+            assertTrue(false, "Test of getEntityTemplate endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -482,8 +477,7 @@ class EntityTemplateApiTest() {
 	fun getEntityTemplatesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getEntityTemplates")) {
-            assert(true)
-            println("Endpoint getEntityTemplates skipped")
+            assertTrue(false, "Test of getEntityTemplates endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -549,8 +543,7 @@ class EntityTemplateApiTest() {
 	fun listAllEntityTemplatesByTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listAllEntityTemplatesBy")) {
-            assert(true)
-            println("Endpoint listAllEntityTemplatesBy skipped")
+            assertTrue(false, "Test of listAllEntityTemplatesBy endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -630,8 +623,7 @@ class EntityTemplateApiTest() {
 	fun listEntityTemplatesByTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listEntityTemplatesBy")) {
-            assert(true)
-            println("Endpoint listEntityTemplatesBy skipped")
+            assertTrue(false, "Test of listEntityTemplatesBy endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -718,8 +710,7 @@ class EntityTemplateApiTest() {
 	fun listEntityTemplatesByKeywordTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listEntityTemplatesByKeyword")) {
-            assert(true)
-            println("Endpoint listEntityTemplatesByKeyword skipped")
+            assertTrue(false, "Test of listEntityTemplatesByKeyword endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -806,8 +797,7 @@ class EntityTemplateApiTest() {
 	fun modifyEntityTemplateTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyEntityTemplate")) {
-            assert(true)
-            println("Endpoint modifyEntityTemplate skipped")
+            assertTrue(false, "Test of modifyEntityTemplate endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -873,8 +863,7 @@ class EntityTemplateApiTest() {
 	fun modifyEntityTemplatesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyEntityTemplates")) {
-            assert(true)
-            println("Endpoint modifyEntityTemplates skipped")
+            assertTrue(false, "Test of modifyEntityTemplates endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)

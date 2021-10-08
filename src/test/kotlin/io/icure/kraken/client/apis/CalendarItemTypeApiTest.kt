@@ -133,8 +133,7 @@ class CalendarItemTypeApiTest() {
 	fun createCalendarItemTypeTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createCalendarItemType")) {
-            assert(true)
-            println("Endpoint createCalendarItemType skipped")
+            assertTrue(false, "Test of createCalendarItemType endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -200,8 +199,7 @@ class CalendarItemTypeApiTest() {
 	fun deleteCalendarItemTypesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "deleteCalendarItemTypes")) {
-            assert(true)
-            println("Endpoint deleteCalendarItemTypes skipped")
+            assertTrue(false, "Test of deleteCalendarItemTypes endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -267,8 +265,7 @@ class CalendarItemTypeApiTest() {
 	fun getCalendarItemTypeTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getCalendarItemType")) {
-            assert(true)
-            println("Endpoint getCalendarItemType skipped")
+            assertTrue(false, "Test of getCalendarItemType endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -334,8 +331,7 @@ class CalendarItemTypeApiTest() {
 	fun getCalendarItemTypesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getCalendarItemTypes")) {
-            assert(true)
-            println("Endpoint getCalendarItemTypes skipped")
+            assertTrue(false, "Test of getCalendarItemTypes endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -394,8 +390,7 @@ class CalendarItemTypeApiTest() {
 	fun getCalendarItemTypesIncludeDeletedTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getCalendarItemTypesIncludeDeleted")) {
-            assert(true)
-            println("Endpoint getCalendarItemTypesIncludeDeleted skipped")
+            assertTrue(false, "Test of getCalendarItemTypesIncludeDeleted endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -454,8 +449,7 @@ class CalendarItemTypeApiTest() {
 	fun modifyCalendarItemTypeTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyCalendarItemType")) {
-            assert(true)
-            println("Endpoint modifyCalendarItemType skipped")
+            assertTrue(false, "Test of modifyCalendarItemType endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)

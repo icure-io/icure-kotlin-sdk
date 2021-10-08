@@ -137,8 +137,7 @@ class MessageApiTest() {
 	fun createMessageTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createMessage")) {
-            assert(true)
-            println("Endpoint createMessage skipped")
+            assertTrue(false, "Test of createMessage endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -204,8 +203,7 @@ class MessageApiTest() {
 	fun deleteDelegationTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "deleteDelegation")) {
-            assert(true)
-            println("Endpoint deleteDelegation skipped")
+            assertTrue(false, "Test of deleteDelegation endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -278,8 +276,7 @@ class MessageApiTest() {
 	fun deleteMessagesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "deleteMessages")) {
-            assert(true)
-            println("Endpoint deleteMessages skipped")
+            assertTrue(false, "Test of deleteMessages endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -345,8 +342,7 @@ class MessageApiTest() {
 	fun findMessagesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "findMessages")) {
-            assert(true)
-            println("Endpoint findMessages skipped")
+            assertTrue(false, "Test of findMessages endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -426,8 +422,7 @@ class MessageApiTest() {
 	fun findMessagesByFromAddressTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "findMessagesByFromAddress")) {
-            assert(true)
-            println("Endpoint findMessagesByFromAddress skipped")
+            assertTrue(false, "Test of findMessagesByFromAddress endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -521,8 +516,7 @@ class MessageApiTest() {
 	fun findMessagesByHCPartyPatientForeignKeysTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "findMessagesByHCPartyPatientForeignKeys")) {
-            assert(true)
-            println("Endpoint findMessagesByHCPartyPatientForeignKeys skipped")
+            assertTrue(false, "Test of findMessagesByHCPartyPatientForeignKeys endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -588,8 +582,7 @@ class MessageApiTest() {
 	fun findMessagesByToAddressTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "findMessagesByToAddress")) {
-            assert(true)
-            println("Endpoint findMessagesByToAddress skipped")
+            assertTrue(false, "Test of findMessagesByToAddress endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -690,8 +683,7 @@ class MessageApiTest() {
 	fun findMessagesByTransportGuidTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "findMessagesByTransportGuid")) {
-            assert(true)
-            println("Endpoint findMessagesByTransportGuid skipped")
+            assertTrue(false, "Test of findMessagesByTransportGuid endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -792,8 +784,7 @@ class MessageApiTest() {
 	fun findMessagesByTransportGuidSentDateTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "findMessagesByTransportGuidSentDate")) {
-            assert(true)
-            println("Endpoint findMessagesByTransportGuidSentDate skipped")
+            assertTrue(false, "Test of findMessagesByTransportGuidSentDate endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -901,8 +892,7 @@ class MessageApiTest() {
 	fun getChildrenMessagesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getChildrenMessages")) {
-            assert(true)
-            println("Endpoint getChildrenMessages skipped")
+            assertTrue(false, "Test of getChildrenMessages endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -968,8 +958,7 @@ class MessageApiTest() {
 	fun getMessageTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getMessage")) {
-            assert(true)
-            println("Endpoint getMessage skipped")
+            assertTrue(false, "Test of getMessage endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1035,8 +1024,7 @@ class MessageApiTest() {
 	fun getMessagesChildrenTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getMessagesChildren")) {
-            assert(true)
-            println("Endpoint getMessagesChildren skipped")
+            assertTrue(false, "Test of getMessagesChildren endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1102,8 +1090,7 @@ class MessageApiTest() {
 	fun listMessagesByInvoicesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listMessagesByInvoices")) {
-            assert(true)
-            println("Endpoint listMessagesByInvoices skipped")
+            assertTrue(false, "Test of listMessagesByInvoices endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1169,8 +1156,7 @@ class MessageApiTest() {
 	fun listMessagesByTransportGuidsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listMessagesByTransportGuids")) {
-            assert(true)
-            println("Endpoint listMessagesByTransportGuids skipped")
+            assertTrue(false, "Test of listMessagesByTransportGuids endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1243,8 +1229,7 @@ class MessageApiTest() {
 	fun modifyMessageTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyMessage")) {
-            assert(true)
-            println("Endpoint modifyMessage skipped")
+            assertTrue(false, "Test of modifyMessage endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1310,8 +1295,7 @@ class MessageApiTest() {
 	fun newMessageDelegationsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "newMessageDelegations")) {
-            assert(true)
-            println("Endpoint newMessageDelegations skipped")
+            assertTrue(false, "Test of newMessageDelegations endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1384,8 +1368,7 @@ class MessageApiTest() {
 	fun setMessagesReadStatusTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "setMessagesReadStatus")) {
-            assert(true)
-            println("Endpoint setMessagesReadStatus skipped")
+            assertTrue(false, "Test of setMessagesReadStatus endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1451,8 +1434,7 @@ class MessageApiTest() {
 	fun setMessagesStatusBitsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "setMessagesStatusBits")) {
-            assert(true)
-            println("Endpoint setMessagesStatusBits skipped")
+            assertTrue(false, "Test of setMessagesStatusBits endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1520,7 +1502,7 @@ class MessageApiTest() {
                     functionName.let { name -> listOf("create", "new", "get", "list", "set").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
                     functionName.let { name -> listOf("modify", "delete").any { name.startsWith(it) } } -> listOf("rev")
                     functionName.let { name -> listOf("append").any { name.startsWith(it) } } -> listOf("id", "created", "modified")
-                    functionName.let { name -> listOf("find").any { name.startsWith(it) } } -> listOf("created", "rev", "modified")
+                    functionName.let { name -> listOf("find").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]")
                     else -> emptyList()
                 }
 
@@ -1560,7 +1542,7 @@ class MessageApiTest() {
                     functionName.let { name -> listOf("set", "delete", "merge").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
                     functionName.let { name -> listOf("validate").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "sentDate")
                     functionName.let { name -> listOf("reassign").any { name.startsWith(it) } } -> listOf("id", "created", "invoicingCodes.id")
-                    functionName.let { name -> listOf("find").any { name.startsWith(it) } } -> listOf("rows.[modified, created, rev]")
+                    functionName.let { name -> listOf("find").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]")
                     else -> emptyList()
                 }
                 val diffs = filterDiffs(objectFromFile, response, response.differences(objectFromFile), toSkip)

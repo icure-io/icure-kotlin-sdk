@@ -123,8 +123,7 @@ class {{classname}}Test() {
 	fun {{operationId}}Test(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "{{operationId}}")) {
-            assert(true)
-            println("Endpoint {{operationId}} skipped")
+            assertTrue(false, "Test of {{operationId}} endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)

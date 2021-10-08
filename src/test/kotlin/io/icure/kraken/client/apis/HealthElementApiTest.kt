@@ -136,8 +136,7 @@ class HealthElementApiTest() {
 	fun createHealthElementTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createHealthElement")) {
-            assert(true)
-            println("Endpoint createHealthElement skipped")
+            assertTrue(false, "Test of createHealthElement endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -203,8 +202,7 @@ class HealthElementApiTest() {
 	fun createHealthElementsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createHealthElements")) {
-            assert(true)
-            println("Endpoint createHealthElements skipped")
+            assertTrue(false, "Test of createHealthElements endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -270,8 +268,7 @@ class HealthElementApiTest() {
 	fun deleteHealthElementsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "deleteHealthElements")) {
-            assert(true)
-            println("Endpoint deleteHealthElements skipped")
+            assertTrue(false, "Test of deleteHealthElements endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -337,8 +334,7 @@ class HealthElementApiTest() {
 	fun filterHealthElementsByTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "filterHealthElementsBy")) {
-            assert(true)
-            println("Endpoint filterHealthElementsBy skipped")
+            assertTrue(false, "Test of filterHealthElementsBy endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -404,8 +400,7 @@ class HealthElementApiTest() {
 	fun getHealthElementTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getHealthElement")) {
-            assert(true)
-            println("Endpoint getHealthElement skipped")
+            assertTrue(false, "Test of getHealthElement endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -471,8 +466,7 @@ class HealthElementApiTest() {
 	fun listHealthElementsByHCPartyAndPatientForeignKeysTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listHealthElementsByHCPartyAndPatientForeignKeys")) {
-            assert(true)
-            println("Endpoint listHealthElementsByHCPartyAndPatientForeignKeys skipped")
+            assertTrue(false, "Test of listHealthElementsByHCPartyAndPatientForeignKeys endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -545,8 +539,7 @@ class HealthElementApiTest() {
 	fun listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeysTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys")) {
-            assert(true)
-            println("Endpoint listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys skipped")
+            assertTrue(false, "Test of listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -619,8 +612,7 @@ class HealthElementApiTest() {
 	fun modifyHealthElementTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyHealthElement")) {
-            assert(true)
-            println("Endpoint modifyHealthElement skipped")
+            assertTrue(false, "Test of modifyHealthElement endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -686,8 +678,7 @@ class HealthElementApiTest() {
 	fun modifyHealthElementsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyHealthElements")) {
-            assert(true)
-            println("Endpoint modifyHealthElements skipped")
+            assertTrue(false, "Test of modifyHealthElements endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -753,8 +744,7 @@ class HealthElementApiTest() {
 	fun newHealthElementDelegationsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "newHealthElementDelegations")) {
-            assert(true)
-            println("Endpoint newHealthElementDelegations skipped")
+            assertTrue(false, "Test of newHealthElementDelegations endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -827,8 +817,7 @@ class HealthElementApiTest() {
 	fun setHealthElementsDelegationsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "setHealthElementsDelegations")) {
-            assert(true)
-            println("Endpoint setHealthElementsDelegations skipped")
+            assertTrue(false, "Test of setHealthElementsDelegations endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
