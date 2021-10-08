@@ -631,7 +631,7 @@ class ReceiptApiTest() {
                     functionName.let { name -> listOf("create", "new", "get", "list", "set").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
                     functionName.let { name -> listOf("modify", "delete").any { name.startsWith(it) } } -> listOf("rev")
                     functionName.let { name -> listOf("append").any { name.startsWith(it) } } -> listOf("id", "created", "modified")
-                    functionName.let { name -> listOf("find").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
+                    functionName.let { name -> listOf("find").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]")
                     else -> emptyList()
                 }
 
@@ -671,7 +671,7 @@ class ReceiptApiTest() {
                     functionName.let { name -> listOf("set", "delete", "merge").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
                     functionName.let { name -> listOf("validate").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "sentDate")
                     functionName.let { name -> listOf("reassign").any { name.startsWith(it) } } -> listOf("id", "created", "invoicingCodes.id")
-                    functionName.let { name -> listOf("findMessages").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]")
+                    functionName.let { name -> listOf("find").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]")
                     else -> emptyList()
                 }
                 val diffs = filterDiffs(objectFromFile, response, response.differences(objectFromFile), toSkip)

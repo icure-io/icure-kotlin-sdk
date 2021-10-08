@@ -95,13 +95,13 @@ import kotlinx.coroutines.flow.Flow
                 {{/queryParams}}
             }
             {{/hasQueryParams}}
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf({{#hasFormParams}}"Content-Type" to {{^consumes}}"multipart/form-data; boundary=${boundary}"{{/consumes}}{{#consumes.0}}"{{{mediaType}}}"{{/consumes.0}}{{/hasFormParams}}{{^hasFormParams}}{{#consumes.0}}"Content-Type" to "{{{mediaType}}}"{{/consumes.0}}{{/hasFormParams}})
         {{#produces.0}}localVariableHeaders["Accept"] = "{{{mediaType}}}"{{/produces.0}}
         val localVariableBody = {{#hasBodyParam}}{{#bodyParams}}{{{paramName}}}{{/bodyParams}}{{/hasBodyParam}}{{^hasBodyParam}}{{^hasFormParams}}null{{/hasFormParams}}{{#hasFormParams}}{{#formParams.0}}when({{{baseName}}}.javaClass){
             List<*>::javaClass -> ({{{baseName}}} as List<ByteArrayWrapper>).flatMap { it.byteArray.toList() }.toByteArray()
             else -> ({{{baseName}}} as ByteArrayWrapper).byteArray
         }
+        val boundary = UUID.randomUUID().toString()
         {{/formParams.0}}{{/hasFormParams}}{{/hasBodyParam}}
         {{#headerParams}}
         {{{paramName}}}{{^required}}?{{/required}}.apply { localVariableHeaders["{{baseName}}"] = {{#isContainer}}this.joinToString(separator = collectionDelimiter("{{collectionFormat}}")){{/isContainer}}{{^isContainer}}this.toString(){{/isContainer}} }

@@ -103,7 +103,6 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("gracePeriod", listOf(gracePeriod.toString()))
                 }
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = invoicingCodeDto
@@ -143,7 +142,6 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun createInvoiceRequestConfig(invoiceDto: InvoiceDto) : RequestConfig<InvoiceDto> {
         // val localVariableBody = invoiceDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = invoiceDto
@@ -183,7 +181,6 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun createInvoicesRequestConfig(invoiceDto: kotlin.collections.List<InvoiceDto>) : RequestConfig<kotlin.collections.List<InvoiceDto>> {
         // val localVariableBody = invoiceDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = invoiceDto
@@ -223,7 +220,6 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun deleteInvoiceRequestConfig(invoiceId: kotlin.String) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -263,7 +259,6 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun filterInvoicesByRequestConfig(filterChainInvoice: FilterChainInvoice) : RequestConfig<FilterChainInvoice> {
         // val localVariableBody = filterChainInvoice
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = filterChainInvoice
@@ -330,7 +325,6 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("limit", listOf(limit.toString()))
                 }
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -370,7 +364,6 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun getInvoiceRequestConfig(invoiceId: kotlin.String) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -410,7 +403,6 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun getInvoicesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
         // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = listOfIdsDto
@@ -450,7 +442,6 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun getTarificationsCodesOccurencesRequestConfig(minOccurences: kotlin.Long) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -504,7 +495,6 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("to", listOf(to.toString()))
                 }
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = listOfIdsDto
@@ -544,7 +534,6 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun listInvoicesByContactIdsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
         // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = listOfIdsDto
@@ -590,7 +579,6 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 put("hcPartyId", listOf(hcPartyId.toString()))
                 put("secretFKeys", listOf(secretFKeys.toString()))
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -632,7 +620,6 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun listInvoicesByHcPartyAndGroupIdRequestConfig(hcPartyId: kotlin.String, groupId: kotlin.String) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -690,7 +677,6 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("to", listOf(to.toString()))
                 }
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -752,7 +738,6 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("to", listOf(to.toString()))
                 }
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -792,7 +777,6 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun listInvoicesByIdsRequestConfig(invoiceIds: kotlin.String) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -832,7 +816,6 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun listInvoicesByRecipientsIdsRequestConfig(recipientIds: kotlin.String) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -872,7 +855,6 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun listInvoicesByServiceIdsRequestConfig(serviceIds: kotlin.String) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -918,7 +900,6 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 put("hcPartyId", listOf(hcPartyId.toString()))
                 put("secretFKeys", listOf(secretFKeys.toString()))
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -963,7 +944,6 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("userIds", listOf(userIds.toString()))
                 }
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -1008,7 +988,6 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("userIds", listOf(userIds.toString()))
                 }
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -1053,7 +1032,6 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("hcPartyId", listOf(hcPartyId.toString()))
                 }
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -1098,7 +1076,6 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("hcPartyId", listOf(hcPartyId.toString()))
                 }
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -1140,7 +1117,6 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun mergeToRequestConfig(invoiceId: kotlin.String, listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
         // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = listOfIdsDto
@@ -1180,7 +1156,6 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun modifyInvoiceRequestConfig(invoiceDto: InvoiceDto) : RequestConfig<InvoiceDto> {
         // val localVariableBody = invoiceDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = invoiceDto
@@ -1220,7 +1195,6 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun modifyInvoicesRequestConfig(invoiceDto: kotlin.collections.List<InvoiceDto>) : RequestConfig<kotlin.collections.List<InvoiceDto>> {
         // val localVariableBody = invoiceDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = invoiceDto
@@ -1262,7 +1236,6 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun newInvoiceDelegationsRequestConfig(invoiceId: kotlin.String, delegationDto: kotlin.collections.List<DelegationDto>) : RequestConfig<kotlin.collections.List<DelegationDto>> {
         // val localVariableBody = delegationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = delegationDto
@@ -1302,7 +1275,6 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun reassignInvoiceRequestConfig(invoiceDto: InvoiceDto) : RequestConfig<InvoiceDto> {
         // val localVariableBody = invoiceDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = invoiceDto
@@ -1351,7 +1323,6 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             .apply {
                 put("secretFKeys", listOf(secretFKeys.toString()))
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = requestBody
@@ -1391,7 +1362,6 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun setInvoicesDelegationsRequestConfig(icureStubDto: kotlin.collections.List<IcureStubDto>) : RequestConfig<kotlin.collections.List<IcureStubDto>> {
         // val localVariableBody = icureStubDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = icureStubDto
@@ -1439,7 +1409,6 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 put("scheme", listOf(scheme.toString()))
                 put("forcedValue", listOf(forcedValue.toString()))
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null

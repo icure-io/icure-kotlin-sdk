@@ -12,6 +12,7 @@
  */
 package io.icure.kraken.client.models
 
+import io.icure.kraken.client.models.PropertyStubDto
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
@@ -20,18 +21,18 @@ import com.github.pozo.KotlinBuilder
 
 
 /**
- * The ids of databases to reset
+ * The new properties for the group
  *
- * @param ids 
+ * @param properties 
  */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @KotlinBuilder
-data class ListOfIdsDto (
+data class ListOfPropertiesDto (
 
-    @field:JsonProperty("ids")
-    val ids: kotlin.collections.List<kotlin.String> = listOf()
+    @field:JsonProperty("properties")
+    val properties: kotlin.collections.List<PropertyStubDto> = listOf()
 
 )
 

@@ -75,7 +75,6 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun createMessageRequestConfig(messageDto: MessageDto) : RequestConfig<MessageDto> {
         // val localVariableBody = messageDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = messageDto
@@ -117,7 +116,6 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun deleteDelegationRequestConfig(messageId: kotlin.String, delegateId: kotlin.String) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -157,7 +155,6 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun deleteMessagesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
         // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = listOfIdsDto
@@ -212,7 +209,6 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("limit", listOf(limit.toString()))
                 }
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -277,7 +273,6 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("hcpId", listOf(hcpId.toString()))
                 }
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -320,7 +315,6 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             .apply {
                 put("secretFKeys", listOf(secretFKeys.toString()))
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -390,7 +384,6 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("hcpId", listOf(hcpId.toString()))
                 }
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -460,7 +453,6 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("hcpId", listOf(hcpId.toString()))
                 }
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -535,7 +527,6 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("hcpId", listOf(hcpId.toString()))
                 }
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -575,7 +566,6 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun getChildrenMessagesRequestConfig(messageId: kotlin.String) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -615,7 +605,6 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun getMessageRequestConfig(messageId: kotlin.String) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -655,7 +644,6 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun getMessagesChildrenRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
         // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = listOfIdsDto
@@ -695,7 +683,6 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun listMessagesByInvoicesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
         // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = listOfIdsDto
@@ -740,7 +727,6 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             .apply {
                 put("hcpId", listOf(hcpId.toString()))
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = listOfIdsDto
@@ -780,7 +766,6 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun modifyMessageRequestConfig(messageDto: MessageDto) : RequestConfig<MessageDto> {
         // val localVariableBody = messageDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = messageDto
@@ -822,7 +807,6 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun newMessageDelegationsRequestConfig(messageId: kotlin.String, delegationDto: kotlin.collections.List<DelegationDto>) : RequestConfig<kotlin.collections.List<DelegationDto>> {
         // val localVariableBody = delegationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = delegationDto
@@ -862,7 +846,6 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun setMessagesReadStatusRequestConfig(messagesReadStatusUpdate: MessagesReadStatusUpdate) : RequestConfig<MessagesReadStatusUpdate> {
         // val localVariableBody = messagesReadStatusUpdate
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = messagesReadStatusUpdate
@@ -904,7 +887,6 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun setMessagesStatusBitsRequestConfig(status: kotlin.Int, listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
         // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = listOfIdsDto

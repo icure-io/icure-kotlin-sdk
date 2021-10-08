@@ -69,7 +69,6 @@ class MedexApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     fun generateMedexRequestConfig(medexInfoDto: MedexInfoDto) : RequestConfig<MedexInfoDto> {
         // val localVariableBody = medexInfoDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "application/xml"
         val localVariableBody = medexInfoDto

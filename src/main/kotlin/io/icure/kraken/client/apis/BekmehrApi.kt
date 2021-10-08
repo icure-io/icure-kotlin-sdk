@@ -97,7 +97,6 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("language", listOf(language.toString()))
                 }
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = requestBody
@@ -164,7 +163,6 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 put("recipientLastName", listOf(recipientLastName.toString()))
                 put("mimeType", listOf(mimeType.toString()))
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/octet-stream")
         localVariableHeaders["Accept"] = "application/octet-stream"
         val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
@@ -211,7 +209,6 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             .apply {
                 put("language", listOf(language.toString()))
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "application/octet-stream"
         val localVariableBody = diaryNoteExportInfoDto
@@ -278,7 +275,6 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 put("recipientLastName", listOf(recipientLastName.toString()))
                 put("mimeType", listOf(mimeType.toString()))
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/octet-stream")
         localVariableHeaders["Accept"] = "application/octet-stream"
         val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
@@ -331,7 +327,6 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 put("recipientSafe", listOf(recipientSafe.toString()))
                 put("version", listOf(version.toString()))
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "application/octet-stream"
         val localVariableBody = medicationSchemeExportInfoDto
@@ -398,7 +393,6 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 put("recipientLastName", listOf(recipientLastName.toString()))
                 put("mimeType", listOf(mimeType.toString()))
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/octet-stream")
         localVariableHeaders["Accept"] = "application/octet-stream"
         val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
@@ -445,7 +439,6 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("language", listOf(language.toString()))
                 }
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "application/octet-stream"
         val localVariableBody = null
@@ -512,7 +505,6 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 put("recipientLastName", listOf(recipientLastName.toString()))
                 put("mimeType", listOf(mimeType.toString()))
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/octet-stream")
         localVariableHeaders["Accept"] = "application/octet-stream"
         val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
@@ -579,7 +571,6 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 put("recipientLastName", listOf(recipientLastName.toString()))
                 put("mimeType", listOf(mimeType.toString()))
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/octet-stream")
         localVariableHeaders["Accept"] = "application/octet-stream"
         val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
@@ -646,7 +637,6 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 put("recipientLastName", listOf(recipientLastName.toString()))
                 put("mimeType", listOf(mimeType.toString()))
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/octet-stream")
         localVariableHeaders["Accept"] = "application/octet-stream"
         val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
@@ -713,7 +703,6 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 put("recipientLastName", listOf(recipientLastName.toString()))
                 put("mimeType", listOf(mimeType.toString()))
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/octet-stream")
         localVariableHeaders["Accept"] = "application/octet-stream"
         val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
@@ -760,7 +749,6 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             .apply {
                 put("language", listOf(language.toString()))
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "application/octet-stream"
         val localVariableBody = softwareMedicalFileExportDto
@@ -807,7 +795,6 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             .apply {
                 put("language", listOf(language.toString()))
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "application/octet-stream"
         val localVariableBody = sumehrExportInfoDto
@@ -854,7 +841,6 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             .apply {
                 put("language", listOf(language.toString()))
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "application/octet-stream"
         val localVariableBody = sumehrExportInfoDto
@@ -896,7 +882,6 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun getSumehrContentRequestConfig(patientId: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : RequestConfig<SumehrExportInfoDto> {
         // val localVariableBody = sumehrExportInfoDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = sumehrExportInfoDto
@@ -938,7 +923,6 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun getSumehrMd5RequestConfig(patientId: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : RequestConfig<SumehrExportInfoDto> {
         // val localVariableBody = sumehrExportInfoDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = sumehrExportInfoDto
@@ -980,7 +964,6 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun getSumehrV2ContentRequestConfig(patientId: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : RequestConfig<SumehrExportInfoDto> {
         // val localVariableBody = sumehrExportInfoDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = sumehrExportInfoDto
@@ -1022,7 +1005,6 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun getSumehrV2Md5RequestConfig(patientId: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : RequestConfig<SumehrExportInfoDto> {
         // val localVariableBody = sumehrExportInfoDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = sumehrExportInfoDto
@@ -1086,7 +1068,6 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("language", listOf(language.toString()))
                 }
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = requestBody
@@ -1150,7 +1131,6 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("dryRun", listOf(dryRun.toString()))
                 }
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = requestBody
@@ -1214,7 +1194,6 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("language", listOf(language.toString()))
                 }
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = requestBody
@@ -1281,7 +1260,6 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("language", listOf(language.toString()))
                 }
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = requestBody
@@ -1323,7 +1301,6 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun isSumehrV2ValidRequestConfig(patientId: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : RequestConfig<SumehrExportInfoDto> {
         // val localVariableBody = sumehrExportInfoDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = sumehrExportInfoDto
@@ -1365,7 +1342,6 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun isSumehrValidRequestConfig(patientId: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : RequestConfig<SumehrExportInfoDto> {
         // val localVariableBody = sumehrExportInfoDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = sumehrExportInfoDto
@@ -1412,7 +1388,6 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             .apply {
                 put("language", listOf(language.toString()))
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "application/octet-stream"
         val localVariableBody = sumehrExportInfoDto
@@ -1459,7 +1434,6 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             .apply {
                 put("language", listOf(language.toString()))
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "application/octet-stream"
         val localVariableBody = sumehrExportInfoDto

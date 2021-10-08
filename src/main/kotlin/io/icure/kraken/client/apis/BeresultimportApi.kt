@@ -75,7 +75,6 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: We
             .apply {
                 put("enckeys", listOf(enckeys.toString()))
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -136,7 +135,6 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: We
                 put("enckeys", listOf(enckeys.toString()))
                 put("ctc", listOf(ctc.toString()))
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -189,7 +187,6 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: We
                     put("full", listOf(full.toString()))
                 }
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null

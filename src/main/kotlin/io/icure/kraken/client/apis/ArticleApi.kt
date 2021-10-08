@@ -71,7 +71,6 @@ class ArticleApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun createArticleRequestConfig(articleDto: ArticleDto) : RequestConfig<ArticleDto> {
         // val localVariableBody = articleDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = articleDto
@@ -111,7 +110,6 @@ class ArticleApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun deleteArticlesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
         // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = listOfIdsDto
@@ -151,7 +149,6 @@ class ArticleApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun getArticleRequestConfig(articleId: kotlin.String) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -189,7 +186,6 @@ class ArticleApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun getArticlesRequestConfig() : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -229,7 +225,6 @@ class ArticleApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun modifyArticleRequestConfig(articleDto: ArticleDto) : RequestConfig<ArticleDto> {
         // val localVariableBody = articleDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = articleDto

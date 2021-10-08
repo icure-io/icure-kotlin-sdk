@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**assignHealthcareParty**](UserApi.md#assignHealthcareParty) | **PUT** /rest/v2/user/current/hcparty/{healthcarePartyId} | Assign a healthcare party ID to current user
 [**checkPassword**](UserApi.md#checkPassword) | **GET** /rest/v2/user/checkPassword | 
+[**checkTokenValidity**](UserApi.md#checkTokenValidity) | **GET** /rest/v2/user/token/{userId} | Check token validity
 [**createUser**](UserApi.md#createUser) | **POST** /rest/v2/user | Create a user
 [**createUserInGroup**](UserApi.md#createUserInGroup) | **POST** /rest/v2/user/inGroup/{groupId} | Create a user
 [**deleteUser**](UserApi.md#deleteUser) | **DELETE** /rest/v2/user/{userId} | Delete a User based on his/her ID.
@@ -16,6 +17,7 @@ Method | HTTP request | Description
 [**getCurrentSession**](UserApi.md#getCurrentSession) | **GET** /rest/v2/user/session | Get Currently logged-in user session.
 [**getCurrentUser**](UserApi.md#getCurrentUser) | **GET** /rest/v2/user/current | Get presently logged-in user.
 [**getMatchingUsers**](UserApi.md#getMatchingUsers) | **GET** /rest/v2/user/matches | Get presently logged-in user.
+[**getToken**](UserApi.md#getToken) | **POST** /rest/v2/user/token/{userId}/{key} | Require a new temporary token for authentication
 [**getUser**](UserApi.md#getUser) | **GET** /rest/v2/user/{userId} | Get a user by his ID
 [**getUserByEmail**](UserApi.md#getUserByEmail) | **GET** /rest/v2/user/byEmail/{email} | Get a user by his Email/Login
 [**listUsersBy**](UserApi.md#listUsersBy) | **GET** /rest/v2/user | List users with(out) pagination
@@ -103,6 +105,53 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **password** | **kotlin.String**|  |
+
+### Return type
+
+**kotlin.Boolean**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="checkTokenValidity"></a>
+# **checkTokenValidity**
+> kotlin.Boolean checkTokenValidity(userId, token)
+
+Check token validity
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = UserApi()
+val userId : kotlin.String = userId_example // kotlin.String | 
+val token : kotlin.String = token_example // kotlin.String | 
+try {
+    val result : kotlin.Boolean = apiInstance.checkTokenValidity(userId, token)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling UserApi#checkTokenValidity")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling UserApi#checkTokenValidity")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **userId** | **kotlin.String**|  |
+ **token** | **kotlin.String**|  |
 
 ### Return type
 
@@ -565,6 +614,55 @@ This endpoint does not need any parameter.
 ### Return type
 
 [**kotlin.collections.List&lt;UserGroupDto&gt;**](UserGroupDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="getToken"></a>
+# **getToken**
+> kotlin.String getToken(userId, key, tokenValidity)
+
+Require a new temporary token for authentication
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = UserApi()
+val userId : kotlin.String = userId_example // kotlin.String | 
+val key : kotlin.String = key_example // kotlin.String | The token key. Only one instance of a token with a defined key can exist at the same time
+val tokenValidity : kotlin.Long = 789 // kotlin.Long | The token validity in seconds
+try {
+    val result : kotlin.String = apiInstance.getToken(userId, key, tokenValidity)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling UserApi#getToken")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling UserApi#getToken")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **userId** | **kotlin.String**|  |
+ **key** | **kotlin.String**| The token key. Only one instance of a token with a defined key can exist at the same time |
+ **tokenValidity** | **kotlin.Long**| The token validity in seconds | [optional]
+
+### Return type
+
+**kotlin.String**
 
 ### Authorization
 

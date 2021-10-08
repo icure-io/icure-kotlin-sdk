@@ -76,7 +76,6 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     fun getIndexingInfoRequestConfig() : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -114,7 +113,6 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     fun getProcessInfoRequestConfig() : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "text/plain"
         val localVariableBody = null
@@ -152,7 +150,6 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     fun getReplicationInfoRequestConfig() : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -192,7 +189,6 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     fun getReplicatorInfoRequestConfig(id: kotlin.String) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -230,7 +226,6 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     fun getVersionRequestConfig() : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "text/plain"
         val localVariableBody = null
@@ -268,7 +263,6 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     fun isReadyRequestConfig() : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "text/plain"
         val localVariableBody = null
@@ -313,7 +307,6 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
                     put("limit", listOf(limit.toString()))
                 }
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -363,7 +356,6 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
                     put("limit", listOf(limit.toString()))
                 }
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -408,7 +400,6 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
                     put("limit", listOf(limit.toString()))
                 }
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -453,7 +444,6 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
                     put("limit", listOf(limit.toString()))
                 }
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -498,7 +488,6 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
                     put("limit", listOf(limit.toString()))
                 }
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -543,7 +532,6 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
                     put("limit", listOf(limit.toString()))
                 }
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -588,7 +576,6 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
                     put("limit", listOf(limit.toString()))
                 }
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -635,7 +622,6 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
                     put("warmup", listOf(warmup.toString()))
                 }
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null

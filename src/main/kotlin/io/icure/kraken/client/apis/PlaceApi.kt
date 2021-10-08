@@ -71,7 +71,6 @@ class PlaceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     fun createPlaceRequestConfig(placeDto: PlaceDto) : RequestConfig<PlaceDto> {
         // val localVariableBody = placeDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = placeDto
@@ -111,7 +110,6 @@ class PlaceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     fun deletePlacesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
         // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = listOfIdsDto
@@ -151,7 +149,6 @@ class PlaceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     fun getPlaceRequestConfig(placeId: kotlin.String) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -189,7 +186,6 @@ class PlaceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     fun getPlacesRequestConfig() : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -229,7 +225,6 @@ class PlaceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     fun modifyPlaceRequestConfig(placeDto: PlaceDto) : RequestConfig<PlaceDto> {
         // val localVariableBody = placeDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = placeDto

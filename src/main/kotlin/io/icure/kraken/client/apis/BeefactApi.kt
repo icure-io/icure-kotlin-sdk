@@ -76,7 +76,6 @@ class BeefactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun createBatchAndMessageRequestConfig(insuranceId: kotlin.String, newMessageId: kotlin.String, numericalRef: kotlin.Long, mapOfIdsDto: MapOfIdsDto) : RequestConfig<MapOfIdsDto> {
         // val localVariableBody = mapOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = mapOfIdsDto

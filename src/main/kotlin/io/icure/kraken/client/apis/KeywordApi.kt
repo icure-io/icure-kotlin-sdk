@@ -71,7 +71,6 @@ class KeywordApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun createKeywordRequestConfig(keywordDto: KeywordDto) : RequestConfig<KeywordDto> {
         // val localVariableBody = keywordDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = keywordDto
@@ -111,7 +110,6 @@ class KeywordApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun deleteKeywordsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
         // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = listOfIdsDto
@@ -151,7 +149,6 @@ class KeywordApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun getKeywordRequestConfig(keywordId: kotlin.String) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -189,7 +186,6 @@ class KeywordApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun getKeywordsRequestConfig() : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -229,7 +225,6 @@ class KeywordApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun getKeywordsByUserRequestConfig(userId: kotlin.String) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -269,7 +264,6 @@ class KeywordApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     fun modifyKeywordRequestConfig(keywordDto: KeywordDto) : RequestConfig<KeywordDto> {
         // val localVariableBody = keywordDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = keywordDto

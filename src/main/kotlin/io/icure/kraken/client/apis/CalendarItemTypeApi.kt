@@ -71,7 +71,6 @@ class CalendarItemTypeApi(basePath: kotlin.String = defaultBasePath, webClient: 
     fun createCalendarItemTypeRequestConfig(calendarItemTypeDto: CalendarItemTypeDto) : RequestConfig<CalendarItemTypeDto> {
         // val localVariableBody = calendarItemTypeDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = calendarItemTypeDto
@@ -111,7 +110,6 @@ class CalendarItemTypeApi(basePath: kotlin.String = defaultBasePath, webClient: 
     fun deleteCalendarItemTypesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
         // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = listOfIdsDto
@@ -151,7 +149,6 @@ class CalendarItemTypeApi(basePath: kotlin.String = defaultBasePath, webClient: 
     fun getCalendarItemTypeRequestConfig(calendarItemTypeId: kotlin.String) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -189,7 +186,6 @@ class CalendarItemTypeApi(basePath: kotlin.String = defaultBasePath, webClient: 
     fun getCalendarItemTypesRequestConfig() : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -227,7 +223,6 @@ class CalendarItemTypeApi(basePath: kotlin.String = defaultBasePath, webClient: 
     fun getCalendarItemTypesIncludeDeletedRequestConfig() : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -267,7 +262,6 @@ class CalendarItemTypeApi(basePath: kotlin.String = defaultBasePath, webClient: 
     fun modifyCalendarItemTypeRequestConfig(calendarItemTypeDto: CalendarItemTypeDto) : RequestConfig<CalendarItemTypeDto> {
         // val localVariableBody = calendarItemTypeDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = calendarItemTypeDto

@@ -257,6 +257,80 @@ class UserApiTest() {
     }
     
     /**
+     * Check token validity
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @ParameterizedTest
+    @MethodSource("fileNames") // six numbers
+	fun checkTokenValidityTest(fileName: String) = runBlocking {
+
+        if (TestUtils.skipEndpoint(fileName, "checkTokenValidity")) {
+            assert(true)
+            println("Endpoint checkTokenValidity skipped")
+        } else {
+            try{
+                createForModification(fileName)
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "checkTokenValidity")
+                val userId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "checkTokenValidity.userId")!!.let {
+                    (it as? UserDto)?.takeIf { TestUtils.isAutoRev(fileName, "checkTokenValidity") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getUser(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
+                    }
+                val token: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "checkTokenValidity.token")!!.let {
+                    (it as? UserDto)?.takeIf { TestUtils.isAutoRev(fileName, "checkTokenValidity") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getUser(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
+                    }
+
+                val response = api(credentialsFile).checkTokenValidity(userId,token)
+
+                val testFileName = "UserApi.checkTokenValidity"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<kotlin.Boolean>? != null) {
+                        if ("kotlin.Boolean".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
+                        } else {
+                            object : TypeReference<List<kotlin.Boolean>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<kotlin.Boolean>() {}
+                    })
+                    assertAreEquals("checkTokenValidity", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
+                        }
+                    }
+                }
+            }
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
+        }
+    }
+    
+    /**
      * Create a user
      *
      * Create a user. HealthcareParty ID should be set. Email or Login have to be set. If login hasn&#39;t been set, Email will be used for Login instead.
@@ -927,6 +1001,87 @@ class UserApiTest() {
     }
     
     /**
+     * Require a new temporary token for authentication
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @ParameterizedTest
+    @MethodSource("fileNames") // six numbers
+	fun getTokenTest(fileName: String) = runBlocking {
+
+        if (TestUtils.skipEndpoint(fileName, "getToken")) {
+            assert(true)
+            println("Endpoint getToken skipped")
+        } else {
+            try{
+                createForModification(fileName)
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "getToken")
+                val userId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getToken.userId")!!.let {
+                    (it as? UserDto)?.takeIf { TestUtils.isAutoRev(fileName, "getToken") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getUser(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
+                    }
+                val key: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getToken.key")!!.let {
+                    (it as? UserDto)?.takeIf { TestUtils.isAutoRev(fileName, "getToken") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getUser(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
+                    }
+                val tokenValidity: kotlin.Long? = TestUtils.getParameter<kotlin.Long>(fileName, "getToken.tokenValidity")?.let {
+                    (it as? UserDto)?.takeIf { TestUtils.isAutoRev(fileName, "getToken") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getUser(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.Long ?: it
+                    }
+
+                val response = api(credentialsFile).getToken(userId,key,tokenValidity)
+
+                val testFileName = "UserApi.getToken"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<kotlin.String>? != null) {
+                        if ("kotlin.String".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
+                        } else {
+                            object : TypeReference<List<kotlin.String>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<kotlin.String>() {}
+                    })
+                    assertAreEquals("getToken", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
+                        }
+                    }
+                }
+            }
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
+        }
+    }
+    
+    /**
      * Get a user by his ID
      *
      * General information about the user
@@ -1452,7 +1607,7 @@ class UserApiTest() {
                     functionName.let { name -> listOf("create", "new", "get", "list", "set").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
                     functionName.let { name -> listOf("modify", "delete").any { name.startsWith(it) } } -> listOf("rev")
                     functionName.let { name -> listOf("append").any { name.startsWith(it) } } -> listOf("id", "created", "modified")
-                    functionName.let { name -> listOf("find").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
+                    functionName.let { name -> listOf("find").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]")
                     else -> emptyList()
                 }
 
@@ -1492,7 +1647,7 @@ class UserApiTest() {
                     functionName.let { name -> listOf("set", "delete", "merge").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
                     functionName.let { name -> listOf("validate").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "sentDate")
                     functionName.let { name -> listOf("reassign").any { name.startsWith(it) } } -> listOf("id", "created", "invoicingCodes.id")
-                    functionName.let { name -> listOf("findMessages").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]")
+                    functionName.let { name -> listOf("find").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]")
                     else -> emptyList()
                 }
                 val diffs = filterDiffs(objectFromFile, response, response.differences(objectFromFile), toSkip)

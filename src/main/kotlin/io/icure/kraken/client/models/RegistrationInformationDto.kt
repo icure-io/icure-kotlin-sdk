@@ -20,18 +20,30 @@ import com.github.pozo.KotlinBuilder
 
 
 /**
- * The ids of databases to reset
+ * 
  *
- * @param ids 
+ * @param firstName 
+ * @param lastName 
+ * @param emailAddress 
+ * @param userOptions 
  */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @KotlinBuilder
-data class ListOfIdsDto (
+data class RegistrationInformationDto (
 
-    @field:JsonProperty("ids")
-    val ids: kotlin.collections.List<kotlin.String> = listOf()
+    @field:JsonProperty("firstName")
+    val firstName: kotlin.String,
+
+    @field:JsonProperty("lastName")
+    val lastName: kotlin.String,
+
+    @field:JsonProperty("emailAddress")
+    val emailAddress: kotlin.String,
+
+    @field:JsonProperty("userOptions")
+    val userOptions: kotlin.collections.Map<kotlin.String, kotlin.String>? = null
 
 )
 

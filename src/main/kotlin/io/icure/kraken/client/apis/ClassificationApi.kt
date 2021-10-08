@@ -73,7 +73,6 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
     fun createClassificationRequestConfig(classificationDto: ClassificationDto) : RequestConfig<ClassificationDto> {
         // val localVariableBody = classificationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = classificationDto
@@ -113,7 +112,6 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
     fun deleteClassificationsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
         // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = listOfIdsDto
@@ -159,7 +157,6 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
                 put("hcPartyId", listOf(hcPartyId.toString()))
                 put("secretFKeys", listOf(secretFKeys.toString()))
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -199,7 +196,6 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
     fun getClassificationRequestConfig(classificationId: kotlin.String) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -239,7 +235,6 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
     fun getClassificationByHcPartyIdRequestConfig(ids: kotlin.String) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -279,7 +274,6 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
     fun modifyClassificationRequestConfig(classificationDto: ClassificationDto) : RequestConfig<ClassificationDto> {
         // val localVariableBody = classificationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = classificationDto
@@ -321,7 +315,6 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
     fun newClassificationDelegationsRequestConfig(classificationId: kotlin.String, delegationDto: kotlin.collections.List<DelegationDto>) : RequestConfig<kotlin.collections.List<DelegationDto>> {
         // val localVariableBody = delegationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = delegationDto
@@ -361,7 +354,6 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
     fun setClassificationsDelegationsRequestConfig(icureStubDto: kotlin.collections.List<IcureStubDto>) : RequestConfig<kotlin.collections.List<IcureStubDto>> {
         // val localVariableBody = icureStubDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = icureStubDto

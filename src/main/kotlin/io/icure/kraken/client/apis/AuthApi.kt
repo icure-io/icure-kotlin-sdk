@@ -46,7 +46,7 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     /**
     * login
     * Login using username and password
-    * @param session  
+    * @param webSession  
     * @return AuthenticationResponse
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -54,29 +54,25 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun login(session: WebSession) : AuthenticationResponse  {
-        val localVariableConfig = loginRequestConfig(session = session)
+    suspend fun login(webSession: WebSession) : AuthenticationResponse  {
+        val localVariableConfig = loginRequestConfig(webSession = webSession)
 
-        return request<Unit, AuthenticationResponse>(
+        return request<WebSession, AuthenticationResponse>(
             localVariableConfig
         )!!
     }
     /**
     * To obtain the request config of the operation login
     *
-    * @param session  
+    * @param webSession  
     * @return RequestConfig
     */
-    fun loginRequestConfig(session: WebSession) : RequestConfig<Unit> {
-        // val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
-            .apply {
-                put("session", listOf(session.toString()))
-            }
-        val boundary = UUID.randomUUID().toString()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+    fun loginRequestConfig(webSession: WebSession) : RequestConfig<WebSession> {
+        // val localVariableBody = webSession
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-        val localVariableBody = null
+        val localVariableBody = webSession
 
         return RequestConfig(
             method = RequestMethod.POST,
@@ -111,7 +107,6 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     fun logoutRequestConfig() : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -149,7 +144,6 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     fun logoutPostRequestConfig() : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -191,7 +185,6 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     fun tokenRequestConfig(method: kotlin.String, path: kotlin.String) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null

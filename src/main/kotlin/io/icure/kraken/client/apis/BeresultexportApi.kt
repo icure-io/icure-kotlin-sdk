@@ -78,7 +78,6 @@ class BeresultexportApi(basePath: kotlin.String = defaultBasePath, webClient: We
     fun exportHealthOneRequestConfig(fromHcpId: kotlin.String, toHcpId: kotlin.String, patId: kotlin.String, date: kotlin.Long, ref: kotlin.String, ioIcureKrakenClientInfrastructureByteArrayWrapper: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>) : RequestConfig<kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>> {
         // val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/octet-stream")
         localVariableHeaders["Accept"] = "application/octet-stream"
         val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
@@ -135,7 +134,6 @@ class BeresultexportApi(basePath: kotlin.String = defaultBasePath, webClient: We
                     put("mimeType", listOf(mimeType.toString()))
                 }
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/octet-stream")
         localVariableHeaders["Accept"] = "application/octet-stream"
         val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
@@ -185,7 +183,6 @@ class BeresultexportApi(basePath: kotlin.String = defaultBasePath, webClient: We
     fun exportMedidocRequestConfig(fromHcpId: kotlin.String, toHcpId: kotlin.String, patId: kotlin.String, date: kotlin.Long, ref: kotlin.String, ioIcureKrakenClientInfrastructureByteArrayWrapper: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>) : RequestConfig<kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>> {
         // val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/octet-stream")
         localVariableHeaders["Accept"] = "application/octet-stream"
         val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper

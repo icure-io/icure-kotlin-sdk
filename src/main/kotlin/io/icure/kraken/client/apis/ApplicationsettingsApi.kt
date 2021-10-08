@@ -67,7 +67,6 @@ class ApplicationsettingsApi(basePath: kotlin.String = defaultBasePath, webClien
     fun getApplicationSettingsRequestConfig() : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null

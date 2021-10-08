@@ -73,7 +73,6 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     fun createClassificationTemplateRequestConfig(classificationTemplateDto: ClassificationTemplateDto) : RequestConfig<ClassificationTemplateDto> {
         // val localVariableBody = classificationTemplateDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = classificationTemplateDto
@@ -113,7 +112,6 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     fun deleteClassificationTemplatesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
         // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = listOfIdsDto
@@ -168,7 +166,6 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
                     put("limit", listOf(limit.toString()))
                 }
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -208,7 +205,6 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     fun getClassificationTemplateRequestConfig(classificationTemplateId: kotlin.String) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -248,7 +244,6 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     fun getClassificationTemplateByIdsRequestConfig(ids: kotlin.String) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -294,7 +289,6 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
                 put("hcPartyId", listOf(hcPartyId.toString()))
                 put("secretFKeys", listOf(secretFKeys.toString()))
             }
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -334,7 +328,6 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     fun modifyClassificationTemplateRequestConfig(classificationTemplateDto: ClassificationTemplateDto) : RequestConfig<ClassificationTemplateDto> {
         // val localVariableBody = classificationTemplateDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = classificationTemplateDto
@@ -376,7 +369,6 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     fun newClassificationTemplateDelegationsRequestConfig(classificationTemplateId: kotlin.String, delegationDto: kotlin.collections.List<DelegationDto>) : RequestConfig<kotlin.collections.List<DelegationDto>> {
         // val localVariableBody = delegationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val boundary = UUID.randomUUID().toString()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = delegationDto

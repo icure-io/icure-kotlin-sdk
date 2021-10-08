@@ -262,6 +262,17 @@ Class | Method | HTTP request | Description
 *FrontEndMigrationApi* | [**getFrontEndMigrationByName**](docs/FrontEndMigrationApi.md#getfrontendmigrationbyname) | **GET** /rest/v2/frontendmigration/byName/{frontEndMigrationName} | Gets an front end migration
 *FrontEndMigrationApi* | [**getFrontEndMigrations**](docs/FrontEndMigrationApi.md#getfrontendmigrations) | **GET** /rest/v2/frontendmigration | Gets a front end migration
 *FrontEndMigrationApi* | [**modifyFrontEndMigration**](docs/FrontEndMigrationApi.md#modifyfrontendmigration) | **PUT** /rest/v2/frontendmigration | Modifies a front end migration
+*GroupApi* | [**createGroup**](docs/GroupApi.md#creategroup) | **POST** /rest/v2/group/{id} | Create a group
+*GroupApi* | [**getGroup**](docs/GroupApi.md#getgroup) | **GET** /rest/v2/group/{id} | Get a group by id
+*GroupApi* | [**getReplicationInfo1**](docs/GroupApi.md#getreplicationinfo1) | **GET** /rest/v2/group/{id}/r | Get index info
+*GroupApi* | [**initDesignDocs**](docs/GroupApi.md#initdesigndocs) | **PUT** /rest/v2/group/{id}/dd | Init design docs
+*GroupApi* | [**listGroups**](docs/GroupApi.md#listgroups) | **GET** /rest/v2/group | List groups
+*GroupApi* | [**modifyGroupName**](docs/GroupApi.md#modifygroupname) | **PUT** /rest/v2/group/{id}/name/{name} | Update group name
+*GroupApi* | [**modifyGroupProperties**](docs/GroupApi.md#modifygroupproperties) | **PUT** /rest/v2/group/{id}/properties | Update group properties
+*GroupApi* | [**registerNewGroupAdministrator**](docs/GroupApi.md#registernewgroupadministrator) | **POST** /rest/v2/group/register/trial | Create a group
+*GroupApi* | [**resetStorage**](docs/GroupApi.md#resetstorage) | **POST** /rest/v2/group/{id}/reset/storage | Reset storage for group
+*GroupApi* | [**setGroupPassword**](docs/GroupApi.md#setgrouppassword) | **PUT** /rest/v2/group/{id}/password | Set group password
+*GroupApi* | [**solveConflicts**](docs/GroupApi.md#solveconflicts) | **POST** /rest/v2/group/{id}/conflicts | Solve conflicts for group
 *HealthElementApi* | [**createHealthElement**](docs/HealthElementApi.md#createhealthelement) | **POST** /rest/v2/helement | Create a health element with the current user
 *HealthElementApi* | [**createHealthElements**](docs/HealthElementApi.md#createhealthelements) | **POST** /rest/v2/helement/batch | Create a batch of healthcare elements
 *HealthElementApi* | [**deleteHealthElements**](docs/HealthElementApi.md#deletehealthelements) | **POST** /rest/v2/helement/delete/batch | Delete health elements.
@@ -426,6 +437,7 @@ Class | Method | HTTP request | Description
 *TimeTableApi* | [**modifyTimeTable**](docs/TimeTableApi.md#modifytimetable) | **PUT** /rest/v2/timeTable | Modifies an timeTable
 *UserApi* | [**assignHealthcareParty**](docs/UserApi.md#assignhealthcareparty) | **PUT** /rest/v2/user/current/hcparty/{healthcarePartyId} | Assign a healthcare party ID to current user
 *UserApi* | [**checkPassword**](docs/UserApi.md#checkpassword) | **GET** /rest/v2/user/checkPassword | 
+*UserApi* | [**checkTokenValidity**](docs/UserApi.md#checktokenvalidity) | **GET** /rest/v2/user/token/{userId} | Check token validity
 *UserApi* | [**createUser**](docs/UserApi.md#createuser) | **POST** /rest/v2/user | Create a user
 *UserApi* | [**createUserInGroup**](docs/UserApi.md#createuseringroup) | **POST** /rest/v2/user/inGroup/{groupId} | Create a user
 *UserApi* | [**deleteUser**](docs/UserApi.md#deleteuser) | **DELETE** /rest/v2/user/{userId} | Delete a User based on his/her ID.
@@ -436,6 +448,7 @@ Class | Method | HTTP request | Description
 *UserApi* | [**getCurrentSession**](docs/UserApi.md#getcurrentsession) | **GET** /rest/v2/user/session | Get Currently logged-in user session.
 *UserApi* | [**getCurrentUser**](docs/UserApi.md#getcurrentuser) | **GET** /rest/v2/user/current | Get presently logged-in user.
 *UserApi* | [**getMatchingUsers**](docs/UserApi.md#getmatchingusers) | **GET** /rest/v2/user/matches | Get presently logged-in user.
+*UserApi* | [**getToken**](docs/UserApi.md#gettoken) | **POST** /rest/v2/user/token/{userId}/{key} | Require a new temporary token for authentication
 *UserApi* | [**getUser**](docs/UserApi.md#getuser) | **GET** /rest/v2/user/{userId} | Get a user by his ID
 *UserApi* | [**getUserByEmail**](docs/UserApi.md#getuserbyemail) | **GET** /rest/v2/user/byEmail/{email} | Get a user by his Email/Login
 *UserApi* | [**listUsersBy**](docs/UserApi.md#listusersby) | **GET** /rest/v2/user | List users with(out) pagination
@@ -486,6 +499,8 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.ContactDto](docs/ContactDto.md)
  - [io.icure.kraken.client.models.ContentDto](docs/ContentDto.md)
  - [io.icure.kraken.client.models.CopaymentDto](docs/CopaymentDto.md)
+ - [io.icure.kraken.client.models.DatabaseInitialisationDto](docs/DatabaseInitialisationDto.md)
+ - [io.icure.kraken.client.models.DatabaseSynchronizationDto](docs/DatabaseSynchronizationDto.md)
  - [io.icure.kraken.client.models.DelegationDto](docs/DelegationDto.md)
  - [io.icure.kraken.client.models.DeviceTypeDto](docs/DeviceTypeDto.md)
  - [io.icure.kraken.client.models.DiaryNoteExportInfoDto](docs/DiaryNoteExportInfoDto.md)
@@ -524,6 +539,7 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.FormTemplateLayout](docs/FormTemplateLayout.md)
  - [io.icure.kraken.client.models.Formula](docs/Formula.md)
  - [io.icure.kraken.client.models.FrontEndMigrationDto](docs/FrontEndMigrationDto.md)
+ - [io.icure.kraken.client.models.GroupDto](docs/GroupDto.md)
  - [io.icure.kraken.client.models.GuiCode](docs/GuiCode.md)
  - [io.icure.kraken.client.models.GuiCodeType](docs/GuiCodeType.md)
  - [io.icure.kraken.client.models.HealthElementDto](docs/HealthElementDto.md)
@@ -549,6 +565,7 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.LabelledOccurenceDto](docs/LabelledOccurenceDto.md)
  - [io.icure.kraken.client.models.LetterValueDto](docs/LetterValueDto.md)
  - [io.icure.kraken.client.models.ListOfIdsDto](docs/ListOfIdsDto.md)
+ - [io.icure.kraken.client.models.ListOfPropertiesDto](docs/ListOfPropertiesDto.md)
  - [io.icure.kraken.client.models.MapOfIdsDto](docs/MapOfIdsDto.md)
  - [io.icure.kraken.client.models.MeasureDto](docs/MeasureDto.md)
  - [io.icure.kraken.client.models.MedexInfoDto](docs/MedexInfoDto.md)
@@ -604,9 +621,12 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.ReceiptDto](docs/ReceiptDto.md)
  - [io.icure.kraken.client.models.ReferralPeriodDto](docs/ReferralPeriodDto.md)
  - [io.icure.kraken.client.models.RegimenItemDto](docs/RegimenItemDto.md)
+ - [io.icure.kraken.client.models.RegistrationInformationDto](docs/RegistrationInformationDto.md)
+ - [io.icure.kraken.client.models.RegistrationSuccessDto](docs/RegistrationSuccessDto.md)
  - [io.icure.kraken.client.models.ReimbursementCriterionDto](docs/ReimbursementCriterionDto.md)
  - [io.icure.kraken.client.models.ReimbursementDto](docs/ReimbursementDto.md)
  - [io.icure.kraken.client.models.RenewalDto](docs/RenewalDto.md)
+ - [io.icure.kraken.client.models.ReplicationDto](docs/ReplicationDto.md)
  - [io.icure.kraken.client.models.ReplicationInfoDto](docs/ReplicationInfoDto.md)
  - [io.icure.kraken.client.models.ReplicationStats](docs/ReplicationStats.md)
  - [io.icure.kraken.client.models.ReplicatorDocument](docs/ReplicatorDocument.md)
