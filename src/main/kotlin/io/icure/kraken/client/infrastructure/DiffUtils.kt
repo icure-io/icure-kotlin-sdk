@@ -80,6 +80,9 @@ fun <K : Any> K.differences(o: K?): List<Diff> {
     } ?: listOf()
 }
 
+/**
+ * @param toSkip Array of field names to skip. + or - can be written at the start if the field name can appear/disappear during the process. Children properties can also be ignored by passing the "<fieldname>.<child>". Object properties in arrays can also be targeted by this, but only the 1st layer. eg. `rows.[modified, created, rev]`.
+ */
 fun <K> filterDiffs(
     comparedObject: K,
     referenceObject: K,
@@ -112,7 +115,7 @@ fun <K> filterDiffs(
             toSkip.fold(diff) { modDiff, ts ->
                 val match = Regex("^([+-]?)(${diff.propertyName}\\.)(.+|\\[.+])").matchEntire(ts)
                 val subTs = match?.let { match -> match.groupValues[3].let {
-                    if (it.startsWith("[")) it.substring(1, it.length - 1).split(",").map { match.groupValues[1] + it } else listOf(match.groupValues[1] + it)}
+                    if (it.startsWith("[")) it.substring(1, it.length - 1).split(",").map { match.groupValues[1] + it }.map { it.trim() } else listOf(match.groupValues[1].trim() + it)}
                 }
                 if (subTs != null && (modDiff.propertyType == PropertyType.List || modDiff.propertyType == PropertyType.Set)) {
                     modDiff.copy(diffs = diff.diffs.mapNotNull { if (it.leftItem == null || it.rightItem == null) it else it.let { it ->

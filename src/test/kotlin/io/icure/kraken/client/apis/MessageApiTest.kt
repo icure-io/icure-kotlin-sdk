@@ -78,7 +78,8 @@ class MessageApiTest() {
         fun fileNames() = listOf("MessageApi.json")
     }
 
-    fun api(fileName: String) = MessageApi(basePath = "http://127.0.0.1:16043", authHeader = fileName.basicAuth())
+    // http://127.0.0.1:16043
+    fun api(fileName: String) = MessageApi(basePath = java.lang.System.getProperty("API_URL"), authHeader = fileName.basicAuth())
     private val workingFolder = "/tmp/icureTests/"
     private val objectMapper = ObjectMapper()
         .registerModule(KotlinModule())
@@ -1519,7 +1520,7 @@ class MessageApiTest() {
                     functionName.let { name -> listOf("create", "new", "get", "list", "set").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
                     functionName.let { name -> listOf("modify", "delete").any { name.startsWith(it) } } -> listOf("rev")
                     functionName.let { name -> listOf("append").any { name.startsWith(it) } } -> listOf("id", "created", "modified")
-                    functionName.let { name -> listOf("find").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]")
+                    functionName.let { name -> listOf("find").any { name.startsWith(it) } } -> listOf("created", "rev", "modified")
                     else -> emptyList()
                 }
 
@@ -1559,7 +1560,7 @@ class MessageApiTest() {
                     functionName.let { name -> listOf("set", "delete", "merge").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
                     functionName.let { name -> listOf("validate").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "sentDate")
                     functionName.let { name -> listOf("reassign").any { name.startsWith(it) } } -> listOf("id", "created", "invoicingCodes.id")
-                    functionName.let { name -> listOf("find").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]")
+                    functionName.let { name -> listOf("find").any { name.startsWith(it) } } -> listOf("rows.[modified, created, rev]")
                     else -> emptyList()
                 }
                 val diffs = filterDiffs(objectFromFile, response, response.differences(objectFromFile), toSkip)

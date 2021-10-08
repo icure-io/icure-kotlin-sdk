@@ -74,7 +74,8 @@ class ReceiptApiTest() {
         fun fileNames() = listOf("ReceiptApi.json")
     }
 
-    fun api(fileName: String) = ReceiptApi(basePath = "http://127.0.0.1:16043", authHeader = fileName.basicAuth())
+    // http://127.0.0.1:16043
+    fun api(fileName: String) = ReceiptApi(basePath = java.lang.System.getProperty("API_URL"), authHeader = fileName.basicAuth())
     private val workingFolder = "/tmp/icureTests/"
     private val objectMapper = ObjectMapper()
         .registerModule(KotlinModule())

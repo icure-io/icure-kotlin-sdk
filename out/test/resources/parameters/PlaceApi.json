@@ -4,7 +4,7 @@
     "deleteIds": ["0c7811c6-33b4-41c7-baa3-173378e11a09", "0c7811c6-33b4-41c7-baa3-173378e11a10", "0c7811c6-33b4-41c7-baa3-173378e11a11"]
   },
   "createPlace": {
-    "body": {
+    "placeDto": {
       "id" : "0c7811c6-33b4-41c7-baa3-173378e11a11",
       "name": "createdPlace",
       "address": {
@@ -30,17 +30,19 @@
       }
     }
   },
-  "deletePlace": {
-    "placeIds": "0c7811c6-33b4-41c7-baa3-173378e11a10"
+  "deletePlaces": {
+    "listOfIdsDto": {
+      "ids": ["0c7811c6-33b4-41c7-baa3-173378e11a10"]
+    }
   },
   "getPlace": {
-    "placeId": "60318422-316a-4789-b184-22316a078998"
+    "placeId": "0c7811c6-33b4-41c7-baa3-173378e11a09"
   },
   "getPlaces": {
   },
   "modifyPlace": {
     "autoRev" : true,
-    "body": {
+    "placeDto": {
       "id" : "0c7811c6-33b4-41c7-baa3-173378e11a09",
       "name": "nameChangedFromTests"
     }

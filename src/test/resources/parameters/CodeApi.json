@@ -2,6 +2,7 @@
   "beforeElements": {
     "bodies": [
       {
+        "id": "35dfe579-12c3-40c7-bbf3-884cc15a0fb7",
         "author": "Simon",
         "regions": ["BE", "FR"],
         "type": "normal",
@@ -13,13 +14,14 @@
         "links": ["L", "M"]
       },
       {
+        "id": "b5986af8-a81f-4d36-a787-916986b2f490",
         "author": "Simon",
         "regions": ["BE"],
         "type": "anormal",
         "code": "A1",
         "links": ["L"]
       },
-      {"author": "Simon", "regions": ["UK"], "type": "normal", "code": "A2", "label": {"additionalProp1": "p1", "additionalProp2": "p2"}}
+      {"id":"8b083c40-9dfc-4b7f-a4a5-467829da1cbb","author": "Simon", "regions": ["UK"], "type": "normal", "code": "A2", "label": {"additionalProp1": "p1", "additionalProp2": "p2"}}
     ]
   },
   "afterElements": {

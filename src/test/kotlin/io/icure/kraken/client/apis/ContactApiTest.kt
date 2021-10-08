@@ -84,7 +84,8 @@ class ContactApiTest() {
         fun fileNames() = listOf("ContactApi.json")
     }
 
-    fun api(fileName: String) = ContactApi(basePath = "http://127.0.0.1:16043", authHeader = fileName.basicAuth())
+    // http://127.0.0.1:16043
+    fun api(fileName: String) = ContactApi(basePath = java.lang.System.getProperty("API_URL"), authHeader = fileName.basicAuth())
     private val workingFolder = "/tmp/icureTests/"
     private val objectMapper = ObjectMapper()
         .registerModule(KotlinModule())
