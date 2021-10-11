@@ -32,6 +32,7 @@ import java.nio.ByteBuffer
 import java.util.*
 import javax.inject.Named
 import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -155,7 +156,7 @@ class KeywordApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/keyword/{keywordId}".replace("{"+"keywordId"+"}", "$keywordId"),
+            path = "/rest/v2/keyword/{keywordId}".replace("{"+"keywordId"+"}", "${URLEncoder.encode(keywordId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -231,7 +232,7 @@ class KeywordApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/keyword/byUser/{userId}".replace("{"+"userId"+"}", "$userId"),
+            path = "/rest/v2/keyword/byUser/{userId}".replace("{"+"userId"+"}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

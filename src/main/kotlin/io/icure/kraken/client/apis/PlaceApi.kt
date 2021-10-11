@@ -32,6 +32,7 @@ import java.nio.ByteBuffer
 import java.util.*
 import javax.inject.Named
 import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -155,7 +156,7 @@ class PlaceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/place/{placeId}".replace("{"+"placeId"+"}", "$placeId"),
+            path = "/rest/v2/place/{placeId}".replace("{"+"placeId"+"}", "${URLEncoder.encode(placeId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

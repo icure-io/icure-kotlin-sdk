@@ -42,6 +42,7 @@ import java.nio.ByteBuffer
 import java.util.*
 import javax.inject.Named
 import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -409,7 +410,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/contact/{contactId}".replace("{"+"contactId"+"}", "$contactId"),
+            path = "/rest/v2/contact/{contactId}".replace("{"+"contactId"+"}", "${URLEncoder.encode(contactId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -526,7 +527,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/contact/service/codes/{codeType}/{minOccurences}".replace("{"+"codeType"+"}", "$codeType").replace("{"+"minOccurences"+"}", "$minOccurences"),
+            path = "/rest/v2/contact/service/codes/{codeType}/{minOccurences}".replace("{"+"codeType"+"}", "${URLEncoder.encode(codeType.toString(), Charsets.UTF_8)}").replace("{"+"minOccurences"+"}", "${URLEncoder.encode(minOccurences.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -1170,7 +1171,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/contact/{contactId}/delegate".replace("{"+"contactId"+"}", "$contactId"),
+            path = "/rest/v2/contact/{contactId}/delegate".replace("{"+"contactId"+"}", "${URLEncoder.encode(contactId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

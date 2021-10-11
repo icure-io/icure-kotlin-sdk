@@ -33,6 +33,7 @@ import java.nio.ByteBuffer
 import java.util.*
 import javax.inject.Named
 import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -284,7 +285,7 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/code/byLink/{linkType}".replace("{"+"linkType"+"}", "$linkType"),
+            path = "/rest/v2/code/byLink/{linkType}".replace("{"+"linkType"+"}", "${URLEncoder.encode(linkType.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -397,7 +398,7 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/code/{codeId}".replace("{"+"codeId"+"}", "$codeId"),
+            path = "/rest/v2/code/{codeId}".replace("{"+"codeId"+"}", "${URLEncoder.encode(codeId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -440,7 +441,7 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/code/{type}/{code}/{version}".replace("{"+"type"+"}", "$type").replace("{"+"code"+"}", "$code").replace("{"+"version"+"}", "$version"),
+            path = "/rest/v2/code/{type}/{code}/{version}".replace("{"+"type"+"}", "${URLEncoder.encode(type.toString(), Charsets.UTF_8)}").replace("{"+"code"+"}", "${URLEncoder.encode(code.toString(), Charsets.UTF_8)}").replace("{"+"version"+"}", "${URLEncoder.encode(version.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -500,9 +501,11 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     suspend fun listCodeTypesBy(region: kotlin.String?, type: kotlin.String?) : kotlin.collections.List<kotlin.String>  {
         val localVariableConfig = listCodeTypesByRequestConfig(region = region, type = type)
 
-        return request<Unit, kotlin.collections.List<kotlin.String>>(
+        val result = request<Unit, kotlin.collections.List<kotlin.String>>(
             localVariableConfig
-        )!!
+        )
+
+        return result!!
     }
     /**
     * To obtain the request config of the operation listCodeTypesBy

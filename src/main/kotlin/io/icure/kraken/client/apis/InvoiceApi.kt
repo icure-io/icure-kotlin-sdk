@@ -38,6 +38,7 @@ import java.nio.ByteBuffer
 import java.util.*
 import javax.inject.Named
 import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -109,7 +110,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/invoice/byauthor/{userId}/append/{type}/{sentMediumType}".replace("{"+"userId"+"}", "$userId").replace("{"+"type"+"}", "$type").replace("{"+"sentMediumType"+"}", "$sentMediumType"),
+            path = "/rest/v2/invoice/byauthor/{userId}/append/{type}/{sentMediumType}".replace("{"+"userId"+"}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}").replace("{"+"type"+"}", "${URLEncoder.encode(type.toString(), Charsets.UTF_8)}").replace("{"+"sentMediumType"+"}", "${URLEncoder.encode(sentMediumType.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -226,7 +227,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.DELETE,
-            path = "/rest/v2/invoice/{invoiceId}".replace("{"+"invoiceId"+"}", "$invoiceId"),
+            path = "/rest/v2/invoice/{invoiceId}".replace("{"+"invoiceId"+"}", "${URLEncoder.encode(invoiceId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -331,7 +332,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/invoice/byauthor/{hcPartyId}".replace("{"+"hcPartyId"+"}", "$hcPartyId"),
+            path = "/rest/v2/invoice/byauthor/{hcPartyId}".replace("{"+"hcPartyId"+"}", "${URLEncoder.encode(hcPartyId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -370,7 +371,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/invoice/{invoiceId}".replace("{"+"invoiceId"+"}", "$invoiceId"),
+            path = "/rest/v2/invoice/{invoiceId}".replace("{"+"invoiceId"+"}", "${URLEncoder.encode(invoiceId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -448,7 +449,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/invoice/codes/{minOccurences}".replace("{"+"minOccurences"+"}", "$minOccurences"),
+            path = "/rest/v2/invoice/codes/{minOccurences}".replace("{"+"minOccurences"+"}", "${URLEncoder.encode(minOccurences.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -501,7 +502,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/invoice/allHcpsByStatus/{status}".replace("{"+"status"+"}", "$status"),
+            path = "/rest/v2/invoice/allHcpsByStatus/{status}".replace("{"+"status"+"}", "${URLEncoder.encode(status.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -626,7 +627,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/invoice/byHcPartyGroupId/{hcPartyId}/{groupId}".replace("{"+"hcPartyId"+"}", "$hcPartyId").replace("{"+"groupId"+"}", "$groupId"),
+            path = "/rest/v2/invoice/byHcPartyGroupId/{hcPartyId}/{groupId}".replace("{"+"hcPartyId"+"}", "${URLEncoder.encode(hcPartyId.toString(), Charsets.UTF_8)}").replace("{"+"groupId"+"}", "${URLEncoder.encode(groupId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -683,7 +684,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/invoice/byHcParty/{hcPartyId}/mediumType/{sentMediumType}/invoiceType/{invoiceType}/sent/{sent}".replace("{"+"hcPartyId"+"}", "$hcPartyId").replace("{"+"sentMediumType"+"}", "$sentMediumType").replace("{"+"invoiceType"+"}", "$invoiceType").replace("{"+"sent"+"}", "$sent"),
+            path = "/rest/v2/invoice/byHcParty/{hcPartyId}/mediumType/{sentMediumType}/invoiceType/{invoiceType}/sent/{sent}".replace("{"+"hcPartyId"+"}", "${URLEncoder.encode(hcPartyId.toString(), Charsets.UTF_8)}").replace("{"+"sentMediumType"+"}", "${URLEncoder.encode(sentMediumType.toString(), Charsets.UTF_8)}").replace("{"+"invoiceType"+"}", "${URLEncoder.encode(invoiceType.toString(), Charsets.UTF_8)}").replace("{"+"sent"+"}", "${URLEncoder.encode(sent.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -744,7 +745,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/invoice/byHcpartySendingModeStatusDate/{hcPartyId}".replace("{"+"hcPartyId"+"}", "$hcPartyId"),
+            path = "/rest/v2/invoice/byHcpartySendingModeStatusDate/{hcPartyId}".replace("{"+"hcPartyId"+"}", "${URLEncoder.encode(hcPartyId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -783,7 +784,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/invoice/byIds/{invoiceIds}".replace("{"+"invoiceIds"+"}", "$invoiceIds"),
+            path = "/rest/v2/invoice/byIds/{invoiceIds}".replace("{"+"invoiceIds"+"}", "${URLEncoder.encode(invoiceIds.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -822,7 +823,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/invoice/to/{recipientIds}".replace("{"+"recipientIds"+"}", "$recipientIds"),
+            path = "/rest/v2/invoice/to/{recipientIds}".replace("{"+"recipientIds"+"}", "${URLEncoder.encode(recipientIds.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -861,7 +862,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/invoice/byServiceIds/{serviceIds}".replace("{"+"serviceIds"+"}", "$serviceIds"),
+            path = "/rest/v2/invoice/byServiceIds/{serviceIds}".replace("{"+"serviceIds"+"}", "${URLEncoder.encode(serviceIds.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -1123,7 +1124,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/invoice/mergeTo/{invoiceId}".replace("{"+"invoiceId"+"}", "$invoiceId"),
+            path = "/rest/v2/invoice/mergeTo/{invoiceId}".replace("{"+"invoiceId"+"}", "${URLEncoder.encode(invoiceId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -1242,7 +1243,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v2/invoice/{invoiceId}/delegate".replace("{"+"invoiceId"+"}", "$invoiceId"),
+            path = "/rest/v2/invoice/{invoiceId}/delegate".replace("{"+"invoiceId"+"}", "${URLEncoder.encode(invoiceId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -1329,7 +1330,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/invoice/byauthor/{userId}/service/{serviceId}".replace("{"+"userId"+"}", "$userId").replace("{"+"serviceId"+"}", "$serviceId"),
+            path = "/rest/v2/invoice/byauthor/{userId}/service/{serviceId}".replace("{"+"userId"+"}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}").replace("{"+"serviceId"+"}", "${URLEncoder.encode(serviceId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -1415,7 +1416,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/invoice/validate/{invoiceId}".replace("{"+"invoiceId"+"}", "$invoiceId"),
+            path = "/rest/v2/invoice/validate/{invoiceId}".replace("{"+"invoiceId"+"}", "${URLEncoder.encode(invoiceId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

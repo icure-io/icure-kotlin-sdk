@@ -32,6 +32,7 @@ import java.nio.ByteBuffer
 import java.util.*
 import javax.inject.Named
 import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -203,7 +204,7 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/entitytemplate/findAll/{type}/keyword/{keyword}".replace("{"+"type"+"}", "$type").replace("{"+"keyword"+"}", "$keyword"),
+            path = "/rest/v2/entitytemplate/findAll/{type}/keyword/{keyword}".replace("{"+"type"+"}", "${URLEncoder.encode(type.toString(), Charsets.UTF_8)}").replace("{"+"keyword"+"}", "${URLEncoder.encode(keyword.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -242,7 +243,7 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/entitytemplate/{entityTemplateId}".replace("{"+"entityTemplateId"+"}", "$entityTemplateId"),
+            path = "/rest/v2/entitytemplate/{entityTemplateId}".replace("{"+"entityTemplateId"+"}", "${URLEncoder.encode(entityTemplateId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -332,7 +333,7 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/entitytemplate/findAll/{type}".replace("{"+"type"+"}", "$type"),
+            path = "/rest/v2/entitytemplate/findAll/{type}".replace("{"+"type"+"}", "${URLEncoder.encode(type.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -385,7 +386,7 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/entitytemplate/find/{userId}/{type}".replace("{"+"userId"+"}", "$userId").replace("{"+"type"+"}", "$type"),
+            path = "/rest/v2/entitytemplate/find/{userId}/{type}".replace("{"+"userId"+"}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}").replace("{"+"type"+"}", "${URLEncoder.encode(type.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -435,7 +436,7 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/entitytemplate/find/{userId}/{type}/keyword/{keyword}".replace("{"+"userId"+"}", "$userId").replace("{"+"type"+"}", "$type").replace("{"+"keyword"+"}", "$keyword"),
+            path = "/rest/v2/entitytemplate/find/{userId}/{type}/keyword/{keyword}".replace("{"+"userId"+"}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}").replace("{"+"type"+"}", "${URLEncoder.encode(type.toString(), Charsets.UTF_8)}").replace("{"+"keyword"+"}", "${URLEncoder.encode(keyword.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

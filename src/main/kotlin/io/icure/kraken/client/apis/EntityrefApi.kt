@@ -30,6 +30,7 @@ import java.nio.ByteBuffer
 import java.util.*
 import javax.inject.Named
 import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -114,7 +115,7 @@ class EntityrefApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/entityref/latest/{prefix}".replace("{"+"prefix"+"}", "$prefix"),
+            path = "/rest/v2/entityref/latest/{prefix}".replace("{"+"prefix"+"}", "${URLEncoder.encode(prefix.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

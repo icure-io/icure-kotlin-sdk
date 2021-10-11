@@ -32,6 +32,7 @@ import java.nio.ByteBuffer
 import java.util.*
 import javax.inject.Named
 import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -155,7 +156,7 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/timeTable/{timeTableId}".replace("{"+"timeTableId"+"}", "$timeTableId"),
+            path = "/rest/v2/timeTable/{timeTableId}".replace("{"+"timeTableId"+"}", "${URLEncoder.encode(timeTableId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

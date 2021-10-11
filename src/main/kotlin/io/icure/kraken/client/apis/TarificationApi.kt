@@ -32,6 +32,7 @@ import java.nio.ByteBuffer
 import java.util.*
 import javax.inject.Named
 import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -313,7 +314,7 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/tarification/{tarificationId}".replace("{"+"tarificationId"+"}", "$tarificationId"),
+            path = "/rest/v2/tarification/{tarificationId}".replace("{"+"tarificationId"+"}", "${URLEncoder.encode(tarificationId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -356,7 +357,7 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/tarification/{type}/{tarification}/{version}".replace("{"+"type"+"}", "$type").replace("{"+"tarification"+"}", "$tarification").replace("{"+"version"+"}", "$version"),
+            path = "/rest/v2/tarification/{type}/{tarification}/{version}".replace("{"+"type"+"}", "${URLEncoder.encode(type.toString(), Charsets.UTF_8)}").replace("{"+"tarification"+"}", "${URLEncoder.encode(tarification.toString(), Charsets.UTF_8)}").replace("{"+"version"+"}", "${URLEncoder.encode(version.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

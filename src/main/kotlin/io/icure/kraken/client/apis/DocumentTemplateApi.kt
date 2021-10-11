@@ -33,6 +33,7 @@ import java.nio.ByteBuffer
 import java.util.*
 import javax.inject.Named
 import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -158,7 +159,7 @@ class DocumentTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/doctemplate/{documentTemplateId}/attachmentText/{attachmentId}".replace("{"+"documentTemplateId"+"}", "$documentTemplateId").replace("{"+"attachmentId"+"}", "$attachmentId"),
+            path = "/rest/v2/doctemplate/{documentTemplateId}/attachmentText/{attachmentId}".replace("{"+"documentTemplateId"+"}", "${URLEncoder.encode(documentTemplateId.toString(), Charsets.UTF_8)}").replace("{"+"attachmentId"+"}", "${URLEncoder.encode(attachmentId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -197,7 +198,7 @@ class DocumentTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/doctemplate/{documentTemplateId}".replace("{"+"documentTemplateId"+"}", "$documentTemplateId"),
+            path = "/rest/v2/doctemplate/{documentTemplateId}".replace("{"+"documentTemplateId"+"}", "${URLEncoder.encode(documentTemplateId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -238,7 +239,7 @@ class DocumentTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/doctemplate/{documentTemplateId}/attachment/{attachmentId}".replace("{"+"documentTemplateId"+"}", "$documentTemplateId").replace("{"+"attachmentId"+"}", "$attachmentId"),
+            path = "/rest/v2/doctemplate/{documentTemplateId}/attachment/{attachmentId}".replace("{"+"documentTemplateId"+"}", "${URLEncoder.encode(documentTemplateId.toString(), Charsets.UTF_8)}").replace("{"+"attachmentId"+"}", "${URLEncoder.encode(attachmentId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -351,7 +352,7 @@ class DocumentTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/doctemplate/byDocumentType/{documentTypeCode}".replace("{"+"documentTypeCode"+"}", "$documentTypeCode"),
+            path = "/rest/v2/doctemplate/byDocumentType/{documentTypeCode}".replace("{"+"documentTypeCode"+"}", "${URLEncoder.encode(documentTypeCode.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -390,7 +391,7 @@ class DocumentTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/doctemplate/byDocumentTypeForCurrentUser/{documentTypeCode}".replace("{"+"documentTypeCode"+"}", "$documentTypeCode"),
+            path = "/rest/v2/doctemplate/byDocumentTypeForCurrentUser/{documentTypeCode}".replace("{"+"documentTypeCode"+"}", "${URLEncoder.encode(documentTypeCode.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -429,7 +430,7 @@ class DocumentTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/doctemplate/bySpecialty/{specialityCode}".replace("{"+"specialityCode"+"}", "$specialityCode"),
+            path = "/rest/v2/doctemplate/bySpecialty/{specialityCode}".replace("{"+"specialityCode"+"}", "${URLEncoder.encode(specialityCode.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -470,7 +471,7 @@ class DocumentTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: 
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v2/doctemplate/{documentTemplateId}".replace("{"+"documentTemplateId"+"}", "$documentTemplateId"),
+            path = "/rest/v2/doctemplate/{documentTemplateId}".replace("{"+"documentTemplateId"+"}", "${URLEncoder.encode(documentTemplateId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -511,7 +512,7 @@ class DocumentTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: 
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v2/doctemplate/{documentTemplateId}/attachment".replace("{"+"documentTemplateId"+"}", "$documentTemplateId"),
+            path = "/rest/v2/doctemplate/{documentTemplateId}/attachment".replace("{"+"documentTemplateId"+"}", "${URLEncoder.encode(documentTemplateId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -552,7 +553,7 @@ class DocumentTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: 
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v2/doctemplate/{documentTemplateId}/attachmentJson".replace("{"+"documentTemplateId"+"}", "$documentTemplateId"),
+            path = "/rest/v2/doctemplate/{documentTemplateId}/attachmentJson".replace("{"+"documentTemplateId"+"}", "${URLEncoder.encode(documentTemplateId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

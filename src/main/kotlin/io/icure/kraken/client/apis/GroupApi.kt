@@ -37,6 +37,7 @@ import java.nio.ByteBuffer
 import java.util.*
 import javax.inject.Named
 import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -107,7 +108,7 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/group/{id}".replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/group/{id}".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -146,7 +147,7 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/group/{id}".replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/group/{id}".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -185,7 +186,7 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/group/{id}/r".replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/group/{id}/r".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -236,7 +237,7 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v2/group/{id}/dd".replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/group/{id}/dd".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -314,7 +315,7 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v2/group/{id}/name/{name}".replace("{"+"id"+"}", "$id").replace("{"+"name"+"}", "$name"),
+            path = "/rest/v2/group/{id}/name/{name}".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}").replace("{"+"name"+"}", "${URLEncoder.encode(name.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -355,7 +356,7 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v2/group/{id}/properties".replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/group/{id}/properties".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -447,7 +448,7 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/group/{id}/reset/storage".replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/group/{id}/reset/storage".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -489,7 +490,7 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v2/group/{id}/password".replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/group/{id}/password".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -540,7 +541,7 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/group/{id}/conflicts".replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/group/{id}/conflicts".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

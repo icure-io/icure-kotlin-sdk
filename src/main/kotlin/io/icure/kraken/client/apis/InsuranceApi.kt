@@ -32,6 +32,7 @@ import java.nio.ByteBuffer
 import java.util.*
 import javax.inject.Named
 import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -116,7 +117,7 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return RequestConfig(
             method = RequestMethod.DELETE,
-            path = "/rest/v2/insurance/{insuranceId}".replace("{"+"insuranceId"+"}", "$insuranceId"),
+            path = "/rest/v2/insurance/{insuranceId}".replace("{"+"insuranceId"+"}", "${URLEncoder.encode(insuranceId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -155,7 +156,7 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/insurance/{insuranceId}".replace("{"+"insuranceId"+"}", "$insuranceId"),
+            path = "/rest/v2/insurance/{insuranceId}".replace("{"+"insuranceId"+"}", "${URLEncoder.encode(insuranceId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -233,7 +234,7 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/insurance/byCode/{insuranceCode}".replace("{"+"insuranceCode"+"}", "$insuranceCode"),
+            path = "/rest/v2/insurance/byCode/{insuranceCode}".replace("{"+"insuranceCode"+"}", "${URLEncoder.encode(insuranceCode.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -272,7 +273,7 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/insurance/byName/{insuranceName}".replace("{"+"insuranceName"+"}", "$insuranceName"),
+            path = "/rest/v2/insurance/byName/{insuranceName}".replace("{"+"insuranceName"+"}", "${URLEncoder.encode(insuranceName.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

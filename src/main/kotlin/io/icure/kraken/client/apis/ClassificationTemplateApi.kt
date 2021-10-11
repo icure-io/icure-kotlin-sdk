@@ -34,6 +34,7 @@ import java.nio.ByteBuffer
 import java.util.*
 import javax.inject.Named
 import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -211,7 +212,7 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/classificationTemplate/{classificationTemplateId}".replace("{"+"classificationTemplateId"+"}", "$classificationTemplateId"),
+            path = "/rest/v2/classificationTemplate/{classificationTemplateId}".replace("{"+"classificationTemplateId"+"}", "${URLEncoder.encode(classificationTemplateId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -250,7 +251,7 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/classificationTemplate/byIds/{ids}".replace("{"+"ids"+"}", "$ids"),
+            path = "/rest/v2/classificationTemplate/byIds/{ids}".replace("{"+"ids"+"}", "${URLEncoder.encode(ids.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -375,7 +376,7 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/classificationTemplate/{classificationTemplateId}/delegate".replace("{"+"classificationTemplateId"+"}", "$classificationTemplateId"),
+            path = "/rest/v2/classificationTemplate/{classificationTemplateId}/delegate".replace("{"+"classificationTemplateId"+"}", "${URLEncoder.encode(classificationTemplateId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

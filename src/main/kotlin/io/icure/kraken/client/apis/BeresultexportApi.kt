@@ -29,6 +29,7 @@ import java.nio.ByteBuffer
 import java.util.*
 import javax.inject.Named
 import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -84,7 +85,7 @@ class BeresultexportApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/be_result_export/hl1/{fromHcpId}/{toHcpId}/{patId}/{date}/{ref}".replace("{"+"fromHcpId"+"}", "$fromHcpId").replace("{"+"toHcpId"+"}", "$toHcpId").replace("{"+"patId"+"}", "$patId").replace("{"+"date"+"}", "$date").replace("{"+"ref"+"}", "$ref"),
+            path = "/rest/v2/be_result_export/hl1/{fromHcpId}/{toHcpId}/{patId}/{date}/{ref}".replace("{"+"fromHcpId"+"}", "${URLEncoder.encode(fromHcpId.toString(), Charsets.UTF_8)}").replace("{"+"toHcpId"+"}", "${URLEncoder.encode(toHcpId.toString(), Charsets.UTF_8)}").replace("{"+"patId"+"}", "${URLEncoder.encode(patId.toString(), Charsets.UTF_8)}").replace("{"+"date"+"}", "${URLEncoder.encode(date.toString(), Charsets.UTF_8)}").replace("{"+"ref"+"}", "${URLEncoder.encode(ref.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -140,7 +141,7 @@ class BeresultexportApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/be_result_export/kmehrreport/{fromHcpId}/{toHcpId}/{patId}/{date}/{ref}".replace("{"+"fromHcpId"+"}", "$fromHcpId").replace("{"+"toHcpId"+"}", "$toHcpId").replace("{"+"patId"+"}", "$patId").replace("{"+"date"+"}", "$date").replace("{"+"ref"+"}", "$ref"),
+            path = "/rest/v2/be_result_export/kmehrreport/{fromHcpId}/{toHcpId}/{patId}/{date}/{ref}".replace("{"+"fromHcpId"+"}", "${URLEncoder.encode(fromHcpId.toString(), Charsets.UTF_8)}").replace("{"+"toHcpId"+"}", "${URLEncoder.encode(toHcpId.toString(), Charsets.UTF_8)}").replace("{"+"patId"+"}", "${URLEncoder.encode(patId.toString(), Charsets.UTF_8)}").replace("{"+"date"+"}", "${URLEncoder.encode(date.toString(), Charsets.UTF_8)}").replace("{"+"ref"+"}", "${URLEncoder.encode(ref.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -189,7 +190,7 @@ class BeresultexportApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/be_result_export/medidoc/{fromHcpId}/{toHcpId}/{patId}/{date}/{ref}".replace("{"+"fromHcpId"+"}", "$fromHcpId").replace("{"+"toHcpId"+"}", "$toHcpId").replace("{"+"patId"+"}", "$patId").replace("{"+"date"+"}", "$date").replace("{"+"ref"+"}", "$ref"),
+            path = "/rest/v2/be_result_export/medidoc/{fromHcpId}/{toHcpId}/{patId}/{date}/{ref}".replace("{"+"fromHcpId"+"}", "${URLEncoder.encode(fromHcpId.toString(), Charsets.UTF_8)}").replace("{"+"toHcpId"+"}", "${URLEncoder.encode(toHcpId.toString(), Charsets.UTF_8)}").replace("{"+"patId"+"}", "${URLEncoder.encode(patId.toString(), Charsets.UTF_8)}").replace("{"+"date"+"}", "${URLEncoder.encode(date.toString(), Charsets.UTF_8)}").replace("{"+"ref"+"}", "${URLEncoder.encode(ref.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

@@ -31,6 +31,7 @@ import java.nio.ByteBuffer
 import java.util.*
 import javax.inject.Named
 import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -191,7 +192,7 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/auth/token/{method}/{path}".replace("{"+"method"+"}", "$method").replace("{"+"path"+"}", "$path"),
+            path = "/rest/v2/auth/token/{method}/{path}".replace("{"+"method"+"}", "${URLEncoder.encode(method.toString(), Charsets.UTF_8)}").replace("{"+"path"+"}", "${URLEncoder.encode(path.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

@@ -32,6 +32,7 @@ import java.nio.ByteBuffer
 import java.util.*
 import javax.inject.Named
 import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -155,7 +156,7 @@ class ReceiptApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/receipt/{receiptId}".replace("{"+"receiptId"+"}", "$receiptId"),
+            path = "/rest/v2/receipt/{receiptId}".replace("{"+"receiptId"+"}", "${URLEncoder.encode(receiptId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -201,7 +202,7 @@ class ReceiptApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/receipt/{receiptId}/attachment/{attachmentId}".replace("{"+"receiptId"+"}", "$receiptId").replace("{"+"attachmentId"+"}", "$attachmentId"),
+            path = "/rest/v2/receipt/{receiptId}/attachment/{attachmentId}".replace("{"+"receiptId"+"}", "${URLEncoder.encode(receiptId.toString(), Charsets.UTF_8)}").replace("{"+"attachmentId"+"}", "${URLEncoder.encode(attachmentId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -240,7 +241,7 @@ class ReceiptApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/receipt/byRef/{ref}".replace("{"+"ref"+"}", "$ref"),
+            path = "/rest/v2/receipt/byRef/{ref}".replace("{"+"ref"+"}", "${URLEncoder.encode(ref.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -329,7 +330,7 @@ class ReceiptApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v2/receipt/{receiptId}/attachment/{blobType}".replace("{"+"receiptId"+"}", "$receiptId").replace("{"+"blobType"+"}", "$blobType"),
+            path = "/rest/v2/receipt/{receiptId}/attachment/{blobType}".replace("{"+"receiptId"+"}", "${URLEncoder.encode(receiptId.toString(), Charsets.UTF_8)}").replace("{"+"blobType"+"}", "${URLEncoder.encode(blobType.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

@@ -33,6 +33,7 @@ import java.nio.ByteBuffer
 import java.util.*
 import javax.inject.Named
 import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -201,7 +202,7 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/calendarItem/{calendarItemId}".replace("{"+"calendarItemId"+"}", "$calendarItemId"),
+            path = "/rest/v2/calendarItem/{calendarItemId}".replace("{"+"calendarItemId"+"}", "${URLEncoder.encode(calendarItemId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

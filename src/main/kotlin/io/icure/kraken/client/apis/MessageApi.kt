@@ -36,6 +36,7 @@ import java.nio.ByteBuffer
 import java.util.*
 import javax.inject.Named
 import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -122,7 +123,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.DELETE,
-            path = "/rest/v2/message/{messageId}/delegate/{delegateId}".replace("{"+"messageId"+"}", "$messageId").replace("{"+"delegateId"+"}", "$delegateId"),
+            path = "/rest/v2/message/{messageId}/delegate/{delegateId}".replace("{"+"messageId"+"}", "${URLEncoder.encode(messageId.toString(), Charsets.UTF_8)}").replace("{"+"delegateId"+"}", "${URLEncoder.encode(delegateId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -572,7 +573,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/message/{messageId}/children".replace("{"+"messageId"+"}", "$messageId"),
+            path = "/rest/v2/message/{messageId}/children".replace("{"+"messageId"+"}", "${URLEncoder.encode(messageId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -611,7 +612,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/message/{messageId}".replace("{"+"messageId"+"}", "$messageId"),
+            path = "/rest/v2/message/{messageId}".replace("{"+"messageId"+"}", "${URLEncoder.encode(messageId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -813,7 +814,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v2/message/{messageId}/delegate".replace("{"+"messageId"+"}", "$messageId"),
+            path = "/rest/v2/message/{messageId}/delegate".replace("{"+"messageId"+"}", "${URLEncoder.encode(messageId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -893,7 +894,7 @@ class MessageApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v2/message/status/{status}".replace("{"+"status"+"}", "$status"),
+            path = "/rest/v2/message/status/{status}".replace("{"+"status"+"}", "${URLEncoder.encode(status.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

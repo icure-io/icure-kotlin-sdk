@@ -33,6 +33,7 @@ import java.nio.ByteBuffer
 import java.util.*
 import javax.inject.Named
 import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -117,7 +118,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return RequestConfig(
             method = RequestMethod.DELETE,
-            path = "/rest/v2/document/{documentId}/attachment".replace("{"+"documentId"+"}", "$documentId"),
+            path = "/rest/v2/document/{documentId}/attachment".replace("{"+"documentId"+"}", "${URLEncoder.encode(documentId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -239,7 +240,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/document/{documentId}".replace("{"+"documentId"+"}", "$documentId"),
+            path = "/rest/v2/document/{documentId}".replace("{"+"documentId"+"}", "${URLEncoder.encode(documentId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -292,7 +293,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/document/{documentId}/attachment/{attachmentId}".replace("{"+"documentId"+"}", "$documentId").replace("{"+"attachmentId"+"}", "$attachmentId"),
+            path = "/rest/v2/document/{documentId}/attachment/{attachmentId}".replace("{"+"documentId"+"}", "${URLEncoder.encode(documentId.toString(), Charsets.UTF_8)}").replace("{"+"attachmentId"+"}", "${URLEncoder.encode(attachmentId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -331,7 +332,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/document/externaluuid/{externalUuid}".replace("{"+"externalUuid"+"}", "$externalUuid"),
+            path = "/rest/v2/document/externaluuid/{externalUuid}".replace("{"+"externalUuid"+"}", "${URLEncoder.encode(externalUuid.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -409,7 +410,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/document/externaluuid/{externalUuid}/all".replace("{"+"externalUuid"+"}", "$externalUuid"),
+            path = "/rest/v2/document/externaluuid/{externalUuid}/all".replace("{"+"externalUuid"+"}", "${URLEncoder.encode(externalUuid.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -628,7 +629,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v2/document/{documentId}/attachment".replace("{"+"documentId"+"}", "$documentId"),
+            path = "/rest/v2/document/{documentId}/attachment".replace("{"+"documentId"+"}", "${URLEncoder.encode(documentId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -681,7 +682,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v2/document/{documentId}/attachment/multipart".replace("{"+"documentId"+"}", "$documentId"),
+            path = "/rest/v2/document/{documentId}/attachment/multipart".replace("{"+"documentId"+"}", "${URLEncoder.encode(documentId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody.let { flowOf(

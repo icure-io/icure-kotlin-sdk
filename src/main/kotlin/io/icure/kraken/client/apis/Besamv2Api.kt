@@ -41,6 +41,7 @@ import java.nio.ByteBuffer
 import java.util.*
 import javax.inject.Named
 import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -86,7 +87,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/be_samv2/amp/byDmppCode/{dmppCode}".replace("{"+"dmppCode"+"}", "$dmppCode"),
+            path = "/rest/v2/be_samv2/amp/byDmppCode/{dmppCode}".replace("{"+"dmppCode"+"}", "${URLEncoder.encode(dmppCode.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -142,7 +143,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/be_samv2/vmp/byAtc/{atcCode}".replace("{"+"atcCode"+"}", "$atcCode"),
+            path = "/rest/v2/be_samv2/vmp/byAtc/{atcCode}".replace("{"+"atcCode"+"}", "${URLEncoder.encode(atcCode.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -198,7 +199,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/be_samv2/amp/byGroupCode/{vmpgCode}".replace("{"+"vmpgCode"+"}", "$vmpgCode"),
+            path = "/rest/v2/be_samv2/amp/byGroupCode/{vmpgCode}".replace("{"+"vmpgCode"+"}", "${URLEncoder.encode(vmpgCode.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -254,7 +255,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/be_samv2/amp/byGroupId/{vmpgId}".replace("{"+"vmpgId"+"}", "$vmpgId"),
+            path = "/rest/v2/be_samv2/amp/byGroupId/{vmpgId}".replace("{"+"vmpgId"+"}", "${URLEncoder.encode(vmpgId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -374,7 +375,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/be_samv2/amp/byVmpCode/{vmpCode}".replace("{"+"vmpCode"+"}", "$vmpCode"),
+            path = "/rest/v2/be_samv2/amp/byVmpCode/{vmpCode}".replace("{"+"vmpCode"+"}", "${URLEncoder.encode(vmpCode.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -430,7 +431,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/be_samv2/amp/byVmpId/{vmpId}".replace("{"+"vmpId"+"}", "$vmpId"),
+            path = "/rest/v2/be_samv2/amp/byVmpId/{vmpId}".replace("{"+"vmpId"+"}", "${URLEncoder.encode(vmpId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -614,7 +615,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/be_samv2/vmpgroup/byGroupCode/{vmpgCode}".replace("{"+"vmpgCode"+"}", "$vmpgCode"),
+            path = "/rest/v2/be_samv2/vmpgroup/byGroupCode/{vmpgCode}".replace("{"+"vmpgCode"+"}", "${URLEncoder.encode(vmpgCode.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -670,7 +671,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/be_samv2/vmp/byGroupCode/{vmpgCode}".replace("{"+"vmpgCode"+"}", "$vmpgCode"),
+            path = "/rest/v2/be_samv2/vmp/byGroupCode/{vmpgCode}".replace("{"+"vmpgCode"+"}", "${URLEncoder.encode(vmpgCode.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -726,7 +727,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/be_samv2/vmp/byGroupId/{vmpgId}".replace("{"+"vmpgId"+"}", "$vmpgId"),
+            path = "/rest/v2/be_samv2/vmp/byGroupId/{vmpgId}".replace("{"+"vmpgId"+"}", "${URLEncoder.encode(vmpgId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -846,7 +847,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/be_samv2/vmp/byVmpCode/{vmpCode}".replace("{"+"vmpCode"+"}", "$vmpCode"),
+            path = "/rest/v2/be_samv2/vmp/byVmpCode/{vmpCode}".replace("{"+"vmpCode"+"}", "${URLEncoder.encode(vmpCode.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

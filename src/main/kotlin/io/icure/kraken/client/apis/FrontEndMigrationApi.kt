@@ -31,6 +31,7 @@ import java.nio.ByteBuffer
 import java.util.*
 import javax.inject.Named
 import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -115,7 +116,7 @@ class FrontEndMigrationApi(basePath: kotlin.String = defaultBasePath, webClient:
 
         return RequestConfig(
             method = RequestMethod.DELETE,
-            path = "/rest/v2/frontendmigration/{frontEndMigrationId}".replace("{"+"frontEndMigrationId"+"}", "$frontEndMigrationId"),
+            path = "/rest/v2/frontendmigration/{frontEndMigrationId}".replace("{"+"frontEndMigrationId"+"}", "${URLEncoder.encode(frontEndMigrationId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -154,7 +155,7 @@ class FrontEndMigrationApi(basePath: kotlin.String = defaultBasePath, webClient:
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/frontendmigration/{frontEndMigrationId}".replace("{"+"frontEndMigrationId"+"}", "$frontEndMigrationId"),
+            path = "/rest/v2/frontendmigration/{frontEndMigrationId}".replace("{"+"frontEndMigrationId"+"}", "${URLEncoder.encode(frontEndMigrationId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -193,7 +194,7 @@ class FrontEndMigrationApi(basePath: kotlin.String = defaultBasePath, webClient:
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/frontendmigration/byName/{frontEndMigrationName}".replace("{"+"frontEndMigrationName"+"}", "$frontEndMigrationName"),
+            path = "/rest/v2/frontendmigration/byName/{frontEndMigrationName}".replace("{"+"frontEndMigrationName"+"}", "${URLEncoder.encode(frontEndMigrationName.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

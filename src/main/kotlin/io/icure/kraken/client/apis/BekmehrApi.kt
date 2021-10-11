@@ -39,6 +39,7 @@ import java.nio.ByteBuffer
 import java.util.*
 import javax.inject.Named
 import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -103,7 +104,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/be_kmehr/smf/{documentId}/checkIfSMFPatientsExists".replace("{"+"documentId"+"}", "$documentId"),
+            path = "/rest/v2/be_kmehr/smf/{documentId}/checkIfSMFPatientsExists".replace("{"+"documentId"+"}", "${URLEncoder.encode(documentId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -169,7 +170,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/be_kmehr/contactreport/{patientId}/export/{id}".replace("{"+"patientId"+"}", "$patientId").replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/be_kmehr/contactreport/{patientId}/export/{id}".replace("{"+"patientId"+"}", "${URLEncoder.encode(patientId.toString(), Charsets.UTF_8)}").replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -215,7 +216,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/be_kmehr/diarynote/{patientId}/export".replace("{"+"patientId"+"}", "$patientId"),
+            path = "/rest/v2/be_kmehr/diarynote/{patientId}/export".replace("{"+"patientId"+"}", "${URLEncoder.encode(patientId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -281,7 +282,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/be_kmehr/labresult/{patientId}/export/{id}".replace("{"+"patientId"+"}", "$patientId").replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/be_kmehr/labresult/{patientId}/export/{id}".replace("{"+"patientId"+"}", "${URLEncoder.encode(patientId.toString(), Charsets.UTF_8)}").replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -333,7 +334,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/be_kmehr/medicationscheme/{patientId}/export".replace("{"+"patientId"+"}", "$patientId"),
+            path = "/rest/v2/be_kmehr/medicationscheme/{patientId}/export".replace("{"+"patientId"+"}", "${URLEncoder.encode(patientId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -399,7 +400,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/be_kmehr/note/{patientId}/export/{id}".replace("{"+"patientId"+"}", "$patientId").replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/be_kmehr/note/{patientId}/export/{id}".replace("{"+"patientId"+"}", "${URLEncoder.encode(patientId.toString(), Charsets.UTF_8)}").replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -445,7 +446,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/be_kmehr/patientinfo/{patientId}/export".replace("{"+"patientId"+"}", "$patientId"),
+            path = "/rest/v2/be_kmehr/patientinfo/{patientId}/export".replace("{"+"patientId"+"}", "${URLEncoder.encode(patientId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -511,7 +512,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/be_kmehr/prescription/{patientId}/export/{id}".replace("{"+"patientId"+"}", "$patientId").replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/be_kmehr/prescription/{patientId}/export/{id}".replace("{"+"patientId"+"}", "${URLEncoder.encode(patientId.toString(), Charsets.UTF_8)}").replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -577,7 +578,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/be_kmehr/report/{patientId}/export/{id}".replace("{"+"patientId"+"}", "$patientId").replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/be_kmehr/report/{patientId}/export/{id}".replace("{"+"patientId"+"}", "${URLEncoder.encode(patientId.toString(), Charsets.UTF_8)}").replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -643,7 +644,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/be_kmehr/request/{patientId}/export/{id}".replace("{"+"patientId"+"}", "$patientId").replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/be_kmehr/request/{patientId}/export/{id}".replace("{"+"patientId"+"}", "${URLEncoder.encode(patientId.toString(), Charsets.UTF_8)}").replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -709,7 +710,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/be_kmehr/result/{patientId}/export/{id}".replace("{"+"patientId"+"}", "$patientId").replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/be_kmehr/result/{patientId}/export/{id}".replace("{"+"patientId"+"}", "${URLEncoder.encode(patientId.toString(), Charsets.UTF_8)}").replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -755,7 +756,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/be_kmehr/smf/{patientId}/export".replace("{"+"patientId"+"}", "$patientId"),
+            path = "/rest/v2/be_kmehr/smf/{patientId}/export".replace("{"+"patientId"+"}", "${URLEncoder.encode(patientId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -801,7 +802,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/be_kmehr/sumehr/{patientId}/export".replace("{"+"patientId"+"}", "$patientId"),
+            path = "/rest/v2/be_kmehr/sumehr/{patientId}/export".replace("{"+"patientId"+"}", "${URLEncoder.encode(patientId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -847,7 +848,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/be_kmehr/sumehrv2/{patientId}/export".replace("{"+"patientId"+"}", "$patientId"),
+            path = "/rest/v2/be_kmehr/sumehrv2/{patientId}/export".replace("{"+"patientId"+"}", "${URLEncoder.encode(patientId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -888,7 +889,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/be_kmehr/sumehr/{patientId}/content".replace("{"+"patientId"+"}", "$patientId"),
+            path = "/rest/v2/be_kmehr/sumehr/{patientId}/content".replace("{"+"patientId"+"}", "${URLEncoder.encode(patientId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -929,7 +930,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/be_kmehr/sumehr/{patientId}/md5".replace("{"+"patientId"+"}", "$patientId"),
+            path = "/rest/v2/be_kmehr/sumehr/{patientId}/md5".replace("{"+"patientId"+"}", "${URLEncoder.encode(patientId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -970,7 +971,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/be_kmehr/sumehrv2/{patientId}/content".replace("{"+"patientId"+"}", "$patientId"),
+            path = "/rest/v2/be_kmehr/sumehrv2/{patientId}/content".replace("{"+"patientId"+"}", "${URLEncoder.encode(patientId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -1011,7 +1012,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/be_kmehr/sumehrv2/{patientId}/md5".replace("{"+"patientId"+"}", "$patientId"),
+            path = "/rest/v2/be_kmehr/sumehrv2/{patientId}/md5".replace("{"+"patientId"+"}", "${URLEncoder.encode(patientId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -1074,7 +1075,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/be_kmehr/medicationscheme/{documentId}/import".replace("{"+"documentId"+"}", "$documentId"),
+            path = "/rest/v2/be_kmehr/medicationscheme/{documentId}/import".replace("{"+"documentId"+"}", "${URLEncoder.encode(documentId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -1137,7 +1138,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/be_kmehr/smf/{documentId}/import".replace("{"+"documentId"+"}", "$documentId"),
+            path = "/rest/v2/be_kmehr/smf/{documentId}/import".replace("{"+"documentId"+"}", "${URLEncoder.encode(documentId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -1200,7 +1201,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/be_kmehr/sumehr/{documentId}/import".replace("{"+"documentId"+"}", "$documentId"),
+            path = "/rest/v2/be_kmehr/sumehr/{documentId}/import".replace("{"+"documentId"+"}", "${URLEncoder.encode(documentId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -1266,7 +1267,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/be_kmehr/sumehr/{documentId}/importbyitemid".replace("{"+"documentId"+"}", "$documentId"),
+            path = "/rest/v2/be_kmehr/sumehr/{documentId}/importbyitemid".replace("{"+"documentId"+"}", "${URLEncoder.encode(documentId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -1307,7 +1308,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/be_kmehr/sumehrv2/{patientId}/valid".replace("{"+"patientId"+"}", "$patientId"),
+            path = "/rest/v2/be_kmehr/sumehrv2/{patientId}/valid".replace("{"+"patientId"+"}", "${URLEncoder.encode(patientId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -1348,7 +1349,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/be_kmehr/sumehr/{patientId}/valid".replace("{"+"patientId"+"}", "$patientId"),
+            path = "/rest/v2/be_kmehr/sumehr/{patientId}/valid".replace("{"+"patientId"+"}", "${URLEncoder.encode(patientId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -1394,7 +1395,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/be_kmehr/sumehr/{patientId}/validate".replace("{"+"patientId"+"}", "$patientId"),
+            path = "/rest/v2/be_kmehr/sumehr/{patientId}/validate".replace("{"+"patientId"+"}", "${URLEncoder.encode(patientId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -1440,7 +1441,7 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/be_kmehr/sumehrv2/{patientId}/validate".replace("{"+"patientId"+"}", "$patientId"),
+            path = "/rest/v2/be_kmehr/sumehrv2/{patientId}/validate".replace("{"+"patientId"+"}", "${URLEncoder.encode(patientId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

@@ -39,6 +39,7 @@ import java.nio.ByteBuffer
 import java.util.*
 import javax.inject.Named
 import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -195,7 +196,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/icure/r/{id}".replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/icure/r/{id}".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -628,7 +629,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/icure/dd/{entityName}".replace("{"+"entityName"+"}", "$entityName"),
+            path = "/rest/v2/icure/dd/{entityName}".replace("{"+"entityName"+"}", "${URLEncoder.encode(entityName.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

@@ -2,11 +2,12 @@
   "beforeElements": {
     "bodies": [
       {
-        "id": "35dfe579-12c3-40c7-bbf3-884cc15a0fb7",
+        "id": "normal|A0|1",
         "author": "Simon",
         "regions": ["BE", "FR"],
         "type": "normal",
         "code": "A0",
+        "version": 1,
         "label": {
           "additionalProp1": "prop1",
           "additionalProp2": "prop2"
@@ -14,14 +15,15 @@
         "links": ["L", "M"]
       },
       {
-        "id": "b5986af8-a81f-4d36-a787-916986b2f490",
+        "id": "anormal|A1|1",
         "author": "Simon",
         "regions": ["BE"],
         "type": "anormal",
         "code": "A1",
+        "version": 1,
         "links": ["L"]
       },
-      {"id":"8b083c40-9dfc-4b7f-a4a5-467829da1cbb","author": "Simon", "regions": ["UK"], "type": "normal", "code": "A2", "label": {"additionalProp1": "p1", "additionalProp2": "p2"}}
+      {"id":"normal|A2|1", "version": 1,"author": "Simon", "regions": ["UK"], "type": "normal", "code": "A2", "label": {"additionalProp1": "p1", "additionalProp2": "p2"}}
     ]
   },
   "afterElements": {
@@ -29,7 +31,8 @@
     "deleteIds": ["normal|A0|1", "anormal|A1|1", "normal|A2|1", "normal|A5|1"]
   },
   "createCode": {
-    "body": {
+    "codeDto": {
+      "id": "normal|A5|1",
       "author": "Simon",
       "regions": ["BE", "FR", "UK", "USA"],
       "type": "normal",
@@ -37,7 +40,6 @@
     }
   },
   "filterBy": {
-
     "startKey": null, 
     "startDocumentId": "anormal|A1|1",
     "limit": null, 
@@ -46,25 +48,17 @@
     "desc": null, 
     "body": null
   },
-  "findCodeTypes": {
+  "listCodeTypesBy": {
     "region": "BE",
-    "type": null
+    "type": "normal"
   },
-  "findCodes": {
+  "listCodesByRegionTypeCodeVersion": {
     "region": "BE",
     "type": "normal",
     "code": "A0",
     "version": "1"
   },
-  "findPaginatedCodes": {
-    "region": "BE",
-    "type": null, 
-    "code": "A0",
-    "version": null, 
-    "startDocumentId": null, 
-    "limit": null
-  },
-  "findPaginatedCodesByLabel": {
+  "findCodesByLabel": {
     "region": "be",
     "types": "CD-HCPARTY",
     "language": "fr",
@@ -73,17 +67,16 @@
     "startDocumentId": null, 
     "limit": 100
   },
-  "findPaginatedCodesWithLink": {
-
-    "linkType": null, 
+  "findCodesByLink": {
+    "linkType": "L",
     "linkedId": null, 
     "startKey": null, 
     "startDocumentId": null, 
     "limit": null
   },
-  "findTagTypes": {
-    "region": null,
-    "type": null
+  "listTagTypesBy": {
+    "region": "BE",
+    "type": "normal"
   },
   "getCode": {
     "codeId": "normal|A0|1"
@@ -94,11 +87,13 @@
     "version": "1"
   },
   "getCodes": {
-    "codeIds": "normal|A0|1"
+    "listOfIdsDto": {
+      "ids":["normal|A0|1"]
+    }
   },
   "modifyCode": {
     "autoRev": true,
-    "body": {
+    "codeDto": {
       "id": "normal|A0|1",
       "author": "SHA",
       "regions": ["BE", "FR"],

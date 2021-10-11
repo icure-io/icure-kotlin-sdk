@@ -35,6 +35,7 @@ import java.nio.ByteBuffer
 import java.util.*
 import javax.inject.Named
 import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -197,7 +198,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.DELETE,
-            path = "/rest/v2/form/template/{formTemplateId}".replace("{"+"formTemplateId"+"}", "$formTemplateId"),
+            path = "/rest/v2/form/template/{formTemplateId}".replace("{"+"formTemplateId"+"}", "${URLEncoder.encode(formTemplateId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -277,7 +278,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/form/childrenOf/{formId}/{hcPartyId}".replace("{"+"formId"+"}", "$formId").replace("{"+"hcPartyId"+"}", "$hcPartyId"),
+            path = "/rest/v2/form/childrenOf/{formId}/{hcPartyId}".replace("{"+"formId"+"}", "${URLEncoder.encode(formId.toString(), Charsets.UTF_8)}").replace("{"+"hcPartyId"+"}", "${URLEncoder.encode(hcPartyId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -316,7 +317,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/form/{formId}".replace("{"+"formId"+"}", "$formId"),
+            path = "/rest/v2/form/{formId}".replace("{"+"formId"+"}", "${URLEncoder.encode(formId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -355,7 +356,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/form/logicalUuid/{logicalUuid}".replace("{"+"logicalUuid"+"}", "$logicalUuid"),
+            path = "/rest/v2/form/logicalUuid/{logicalUuid}".replace("{"+"logicalUuid"+"}", "${URLEncoder.encode(logicalUuid.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -394,7 +395,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/form/uniqueId/{uniqueId}".replace("{"+"uniqueId"+"}", "$uniqueId"),
+            path = "/rest/v2/form/uniqueId/{uniqueId}".replace("{"+"uniqueId"+"}", "${URLEncoder.encode(uniqueId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -433,7 +434,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/form/template/{formTemplateId}".replace("{"+"formTemplateId"+"}", "$formTemplateId"),
+            path = "/rest/v2/form/template/{formTemplateId}".replace("{"+"formTemplateId"+"}", "${URLEncoder.encode(formTemplateId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -518,7 +519,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/form/template/{specialityCode}/guid/{formTemplateGuid}".replace("{"+"formTemplateGuid"+"}", "$formTemplateGuid").replace("{"+"specialityCode"+"}", "$specialityCode"),
+            path = "/rest/v2/form/template/{specialityCode}/guid/{formTemplateGuid}".replace("{"+"formTemplateGuid"+"}", "${URLEncoder.encode(formTemplateGuid.toString(), Charsets.UTF_8)}").replace("{"+"specialityCode"+"}", "${URLEncoder.encode(specialityCode.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -596,7 +597,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/form/all/logicalUuid/{logicalUuid}".replace("{"+"logicalUuid"+"}", "$logicalUuid"),
+            path = "/rest/v2/form/all/logicalUuid/{logicalUuid}".replace("{"+"logicalUuid"+"}", "${URLEncoder.encode(logicalUuid.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -635,7 +636,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/form/all/uniqueId/{uniqueId}".replace("{"+"uniqueId"+"}", "$uniqueId"),
+            path = "/rest/v2/form/all/uniqueId/{uniqueId}".replace("{"+"uniqueId"+"}", "${URLEncoder.encode(uniqueId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -681,7 +682,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/form/template/bySpecialty/{specialityCode}".replace("{"+"specialityCode"+"}", "$specialityCode"),
+            path = "/rest/v2/form/template/bySpecialty/{specialityCode}".replace("{"+"specialityCode"+"}", "${URLEncoder.encode(specialityCode.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -905,7 +906,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/form/delegate/{formId}".replace("{"+"formId"+"}", "$formId"),
+            path = "/rest/v2/form/delegate/{formId}".replace("{"+"formId"+"}", "${URLEncoder.encode(formId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -990,7 +991,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v2/form/template/{formTemplateId}/attachment/multipart".replace("{"+"formTemplateId"+"}", "$formTemplateId"),
+            path = "/rest/v2/form/template/{formTemplateId}/attachment/multipart".replace("{"+"formTemplateId"+"}", "${URLEncoder.encode(formTemplateId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody.let { flowOf(
@@ -1038,7 +1039,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v2/form/template/{formTemplateId}".replace("{"+"formTemplateId"+"}", "$formTemplateId"),
+            path = "/rest/v2/form/template/{formTemplateId}".replace("{"+"formTemplateId"+"}", "${URLEncoder.encode(formTemplateId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

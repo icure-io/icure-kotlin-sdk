@@ -31,6 +31,7 @@ import java.nio.ByteBuffer
 import java.util.*
 import javax.inject.Named
 import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -81,7 +82,7 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/be_result_import/canhandle/{id}".replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/be_result_import/canhandle/{id}".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -141,7 +142,7 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/be_result_import/import/{documentId}/{hcpId}/{language}".replace("{"+"documentId"+"}", "$documentId").replace("{"+"hcpId"+"}", "$hcpId").replace("{"+"language"+"}", "$language"),
+            path = "/rest/v2/be_result_import/import/{documentId}/{hcpId}/{language}".replace("{"+"documentId"+"}", "${URLEncoder.encode(documentId.toString(), Charsets.UTF_8)}").replace("{"+"hcpId"+"}", "${URLEncoder.encode(hcpId.toString(), Charsets.UTF_8)}").replace("{"+"language"+"}", "${URLEncoder.encode(language.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -193,7 +194,7 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/be_result_import/infos/{id}".replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/be_result_import/infos/{id}".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

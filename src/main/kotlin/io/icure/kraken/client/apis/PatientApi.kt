@@ -39,6 +39,7 @@ import java.nio.ByteBuffer
 import java.util.*
 import javax.inject.Named
 import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -84,7 +85,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/patient/hcParty/{hcPartyId}/count".replace("{"+"hcPartyId"+"}", "$hcPartyId"),
+            path = "/rest/v2/patient/hcParty/{hcPartyId}/count".replace("{"+"hcPartyId"+"}", "${URLEncoder.encode(hcPartyId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -402,7 +403,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/patient/byAccess/{userId}".replace("{"+"userId"+"}", "$userId"),
+            path = "/rest/v2/patient/byAccess/{userId}".replace("{"+"userId"+"}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -653,7 +654,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/patient/modifiedAfter/{date}".replace("{"+"date"+"}", "$date"),
+            path = "/rest/v2/patient/modifiedAfter/{date}".replace("{"+"date"+"}", "${URLEncoder.encode(date.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -746,7 +747,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/patient/{patientId}".replace("{"+"patientId"+"}", "$patientId"),
+            path = "/rest/v2/patient/{patientId}".replace("{"+"patientId"+"}", "${URLEncoder.encode(patientId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -785,7 +786,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/patient/byExternalId/{externalId}".replace("{"+"externalId"+"}", "$externalId"),
+            path = "/rest/v2/patient/byExternalId/{externalId}".replace("{"+"externalId"+"}", "${URLEncoder.encode(externalId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -828,7 +829,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/patient/{hcPartyId}/{system}/{id}".replace("{"+"hcPartyId"+"}", "$hcPartyId").replace("{"+"system"+"}", "$system").replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/patient/{hcPartyId}/{system}/{id}".replace("{"+"hcPartyId"+"}", "${URLEncoder.encode(hcPartyId.toString(), Charsets.UTF_8)}").replace("{"+"system"+"}", "${URLEncoder.encode(system.toString(), Charsets.UTF_8)}").replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -867,7 +868,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/patient/{patientId}/keys".replace("{"+"patientId"+"}", "$patientId"),
+            path = "/rest/v2/patient/{patientId}/keys".replace("{"+"patientId"+"}", "${URLEncoder.encode(patientId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -994,7 +995,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/patient/merges/{date}".replace("{"+"date"+"}", "$date"),
+            path = "/rest/v2/patient/merges/{date}".replace("{"+"date"+"}", "${URLEncoder.encode(date.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -1074,7 +1075,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v2/patient/mergeInto/{toId}/from/{fromIds}".replace("{"+"toId"+"}", "$toId").replace("{"+"fromIds"+"}", "$fromIds"),
+            path = "/rest/v2/patient/mergeInto/{toId}/from/{fromIds}".replace("{"+"toId"+"}", "${URLEncoder.encode(toId.toString(), Charsets.UTF_8)}").replace("{"+"fromIds"+"}", "${URLEncoder.encode(fromIds.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -1166,7 +1167,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v2/patient/{patientId}/referral/{referralId}".replace("{"+"patientId"+"}", "$patientId").replace("{"+"referralId"+"}", "$referralId"),
+            path = "/rest/v2/patient/{patientId}/referral/{referralId}".replace("{"+"patientId"+"}", "${URLEncoder.encode(patientId.toString(), Charsets.UTF_8)}").replace("{"+"referralId"+"}", "${URLEncoder.encode(referralId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -1246,7 +1247,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/patient/{patientId}/delegate".replace("{"+"patientId"+"}", "$patientId"),
+            path = "/rest/v2/patient/{patientId}/delegate".replace("{"+"patientId"+"}", "${URLEncoder.encode(patientId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -1285,7 +1286,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v2/patient/undelete/{patientIds}".replace("{"+"patientIds"+"}", "$patientIds"),
+            path = "/rest/v2/patient/undelete/{patientIds}".replace("{"+"patientIds"+"}", "${URLEncoder.encode(patientIds.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

@@ -33,6 +33,7 @@ import java.nio.ByteBuffer
 import java.util.*
 import javax.inject.Named
 import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -297,7 +298,7 @@ class AccessLogApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/accesslog/{accessLogId}".replace("{"+"accessLogId"+"}", "$accessLogId"),
+            path = "/rest/v2/accesslog/{accessLogId}".replace("{"+"accessLogId"+"}", "${URLEncoder.encode(accessLogId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

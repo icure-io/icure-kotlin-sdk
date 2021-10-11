@@ -31,6 +31,7 @@ import java.nio.ByteBuffer
 import java.util.*
 import javax.inject.Named
 import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -82,7 +83,7 @@ class BeefactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/be_efact/{insuranceId}/{newMessageId}/{numericalRef}".replace("{"+"insuranceId"+"}", "$insuranceId").replace("{"+"newMessageId"+"}", "$newMessageId").replace("{"+"numericalRef"+"}", "$numericalRef"),
+            path = "/rest/v2/be_efact/{insuranceId}/{newMessageId}/{numericalRef}".replace("{"+"insuranceId"+"}", "${URLEncoder.encode(insuranceId.toString(), Charsets.UTF_8)}").replace("{"+"newMessageId"+"}", "${URLEncoder.encode(newMessageId.toString(), Charsets.UTF_8)}").replace("{"+"numericalRef"+"}", "${URLEncoder.encode(numericalRef.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

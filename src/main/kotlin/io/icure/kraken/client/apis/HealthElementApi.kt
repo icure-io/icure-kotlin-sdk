@@ -35,6 +35,7 @@ import java.nio.ByteBuffer
 import java.util.*
 import javax.inject.Named
 import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -236,7 +237,7 @@ class HealthElementApi(basePath: kotlin.String = defaultBasePath, webClient: Web
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/helement/{healthElementId}".replace("{"+"healthElementId"+"}", "$healthElementId"),
+            path = "/rest/v2/helement/{healthElementId}".replace("{"+"healthElementId"+"}", "${URLEncoder.encode(healthElementId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -445,7 +446,7 @@ class HealthElementApi(basePath: kotlin.String = defaultBasePath, webClient: Web
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/helement/{healthElementId}/delegate".replace("{"+"healthElementId"+"}", "$healthElementId"),
+            path = "/rest/v2/helement/{healthElementId}/delegate".replace("{"+"healthElementId"+"}", "${URLEncoder.encode(healthElementId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

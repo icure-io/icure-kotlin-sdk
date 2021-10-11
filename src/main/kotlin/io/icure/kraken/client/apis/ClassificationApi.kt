@@ -34,6 +34,7 @@ import java.nio.ByteBuffer
 import java.util.*
 import javax.inject.Named
 import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -202,7 +203,7 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/classification/{classificationId}".replace("{"+"classificationId"+"}", "$classificationId"),
+            path = "/rest/v2/classification/{classificationId}".replace("{"+"classificationId"+"}", "${URLEncoder.encode(classificationId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -241,7 +242,7 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/classification/byIds/{ids}".replace("{"+"ids"+"}", "$ids"),
+            path = "/rest/v2/classification/byIds/{ids}".replace("{"+"ids"+"}", "${URLEncoder.encode(ids.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -321,7 +322,7 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/classification/{classificationId}/delegate".replace("{"+"classificationId"+"}", "$classificationId"),
+            path = "/rest/v2/classification/{classificationId}/delegate".replace("{"+"classificationId"+"}", "${URLEncoder.encode(classificationId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

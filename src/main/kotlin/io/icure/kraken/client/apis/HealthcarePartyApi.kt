@@ -34,6 +34,7 @@ import java.nio.ByteBuffer
 import java.util.*
 import javax.inject.Named
 import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -120,7 +121,7 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/hcparty/inGroup/{groupId}".replace("{"+"groupId"+"}", "$groupId"),
+            path = "/rest/v2/hcparty/inGroup/{groupId}".replace("{"+"groupId"+"}", "${URLEncoder.encode(groupId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -200,7 +201,7 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/hcparty/delete/batch/inGroup/{groupId}".replace("{"+"groupId"+"}", "$groupId"),
+            path = "/rest/v2/hcparty/delete/batch/inGroup/{groupId}".replace("{"+"groupId"+"}", "${URLEncoder.encode(groupId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -375,7 +376,7 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/hcparty/bySpecialityAndPostCode/{type}/{spec}/{firstCode}/to/{lastCode}".replace("{"+"type"+"}", "$type").replace("{"+"spec"+"}", "$spec").replace("{"+"firstCode"+"}", "$firstCode").replace("{"+"lastCode"+"}", "$lastCode"),
+            path = "/rest/v2/hcparty/bySpecialityAndPostCode/{type}/{spec}/{firstCode}/to/{lastCode}".replace("{"+"type"+"}", "${URLEncoder.encode(type.toString(), Charsets.UTF_8)}").replace("{"+"spec"+"}", "${URLEncoder.encode(spec.toString(), Charsets.UTF_8)}").replace("{"+"firstCode"+"}", "${URLEncoder.encode(firstCode.toString(), Charsets.UTF_8)}").replace("{"+"lastCode"+"}", "${URLEncoder.encode(lastCode.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -436,7 +437,7 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/hcparty/byNihiiOrSsin/{searchValue}".replace("{"+"searchValue"+"}", "$searchValue"),
+            path = "/rest/v2/hcparty/byNihiiOrSsin/{searchValue}".replace("{"+"searchValue"+"}", "${URLEncoder.encode(searchValue.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -512,7 +513,7 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/hcparty/byKeys/{healthcarePartyId}".replace("{"+"healthcarePartyId"+"}", "$healthcarePartyId"),
+            path = "/rest/v2/hcparty/byKeys/{healthcarePartyId}".replace("{"+"healthcarePartyId"+"}", "${URLEncoder.encode(healthcarePartyId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -590,7 +591,7 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/hcparty/{healthcarePartyId}".replace("{"+"healthcarePartyId"+"}", "$healthcarePartyId"),
+            path = "/rest/v2/hcparty/{healthcarePartyId}".replace("{"+"healthcarePartyId"+"}", "${URLEncoder.encode(healthcarePartyId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -629,7 +630,7 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/hcparty/{healthcarePartyId}/publicKey".replace("{"+"healthcarePartyId"+"}", "$healthcarePartyId"),
+            path = "/rest/v2/hcparty/{healthcarePartyId}/publicKey".replace("{"+"healthcarePartyId"+"}", "${URLEncoder.encode(healthcarePartyId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -668,7 +669,7 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/hcparty/byNameStrict/{name}".replace("{"+"name"+"}", "$name"),
+            path = "/rest/v2/hcparty/byNameStrict/{name}".replace("{"+"name"+"}", "${URLEncoder.encode(name.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -707,7 +708,7 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/hcparty/{parentId}/children".replace("{"+"parentId"+"}", "$parentId"),
+            path = "/rest/v2/hcparty/{parentId}/children".replace("{"+"parentId"+"}", "${URLEncoder.encode(parentId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -787,7 +788,7 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v2/hcparty/inGroup/{groupId}".replace("{"+"groupId"+"}", "$groupId"),
+            path = "/rest/v2/hcparty/inGroup/{groupId}".replace("{"+"groupId"+"}", "${URLEncoder.encode(groupId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

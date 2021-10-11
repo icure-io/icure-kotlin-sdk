@@ -4,7 +4,8 @@
     "deleteIds": ["customTests|1234|1.0", "customTests|12345|1.0"]
   },
   "createTarification": {
-    "body": {
+    "tarificationDto": {
+      "id": "customTests|1234|1.0",
       "regions": [
         "be"
       ],
@@ -15,42 +16,48 @@
   },
   "findPaginatedTarifications": {
     "region": "fr",
-    "type": "INAMI-RIZIV",
+    "type": "customTests",
     "tarification": null, 
-    "version": null, 
+    "version": 1.0,
     "startDocumentId": null, 
     "limit": 10
   },
   "findPaginatedTarificationsByLabel": {
     "region": "be",
-    "types": "INAMI-RIZIV",
+    "types": "customTests",
     "language": "fr",
     "label": "Kyste",
-    "startDocumentId": "INAMI-RIZIV|229235|1.0",
+    "startDocumentId": "customTests|12345|1.00",
     "limit": 5
   },
-  "findTarifications": {
+  "findTarificationsBy": {
     "region": "fr",
-    "type": "INAMI-RIZIV",
-    "tarification": "INAMI-RIZIV|229235|1.0",
-    "version": null
+    "type": "customTests",
+    "tarification": null,
+    "version": 1.0
+  },
+  "findTarificationsBy1": {
+    "region": "fr",
+    "type": "customTests",
+    "tarification": null,
+    "version": 1.0
   },
   "getTarification": {
-    "tarificationId": "INAMI-RIZIV|101010|1.0"
+    "tarificationId": "customTests|12345|1.0"
   },
   "getTarificationWithParts": {
-    "type": "INAMI-RIZIV",
-    "tarification": "229235",
+    "type": "customTests",
+    "tarification": "12345",
     "version": "1.0"
   },
   "getTarifications": {
-    "body": {
-      "ids" : ["INAMI-RIZIV|101010|1.0", "INAMI-RIZIV|101356|1.0"]
+    "listOfIdsDto": {
+      "ids" : ["customTests|12345|1.0"]
     }
   },
   "modifyTarification": {
     "autoRev" : true,
-    "body": {
+    "tarificationDto": {
       "id" : "customTests|12345|1.0",
       "type": "customTests",
       "version": "1.0",
@@ -66,6 +73,7 @@
   "beforeElements": {
     "bodies": [
       {
+        "id": "customTests|12345|1.0",
         "regions": [
           "be"
         ],
