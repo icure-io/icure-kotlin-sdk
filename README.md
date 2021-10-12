@@ -397,7 +397,7 @@ Class | Method | HTTP request | Description
 *PatientApi* | [**fuzzySearch**](docs/PatientApi.md#fuzzysearch) | **GET** /rest/v2/patient/fuzzy | Filter patients for the current user (HcParty) 
 *PatientApi* | [**getPatient**](docs/PatientApi.md#getpatient) | **GET** /rest/v2/patient/{patientId} | Get patient
 *PatientApi* | [**getPatientByExternalId**](docs/PatientApi.md#getpatientbyexternalid) | **GET** /rest/v2/patient/byExternalId/{externalId} | Get the patient having the provided externalId
-*PatientApi* | [**getPatientByHealrhcarepartyAndIdentifier**](docs/PatientApi.md#getpatientbyhealrhcarepartyandidentifier) | **GET** /rest/v2/patient/{hcPartyId}/{system}/{id} | Get patient by identifier
+*PatientApi* | [**getPatientByHealthcarepartyAndIdentifier**](docs/PatientApi.md#getpatientbyhealthcarepartyandidentifier) | **GET** /rest/v2/patient/{hcPartyId}/{system}/{id} | Get patient by identifier
 *PatientApi* | [**getPatientHcPartyKeysForDelegate**](docs/PatientApi.md#getpatienthcpartykeysfordelegate) | **GET** /rest/v2/patient/{patientId}/keys | Get the patient (identified by patientId) hcparty keys. Those keys are AES keys (encrypted) used to share information between HCPs and a patient.
 *PatientApi* | [**getPatients**](docs/PatientApi.md#getpatients) | **POST** /rest/v2/patient/byIds | Get patients by id
 *PatientApi* | [**listDeletedPatientsByName**](docs/PatientApi.md#listdeletedpatientsbyname) | **GET** /rest/v2/patient/deleted/by_name | Find deleted patients

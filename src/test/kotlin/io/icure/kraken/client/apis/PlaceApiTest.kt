@@ -449,7 +449,7 @@ class PlaceApiTest() {
             objectFromFile as? Iterable<Any> != null -> {
                 val toSkip : kotlin.collections.List<String> = when {
                     functionName.let { name -> listOf("create", "new", "get", "list", "set").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
-                    functionName.let { name -> listOf("modify", "delete").any { name.startsWith(it) } } -> listOf("rev")
+                    functionName.let { name -> listOf("modify", "delete", "undelete").any { name.startsWith(it) } } -> listOf("rev")
                     functionName.let { name -> listOf("append").any { name.startsWith(it) } } -> listOf("id", "created", "modified")
                     functionName.let { name -> listOf("find").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]")
                     else -> emptyList()

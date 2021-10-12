@@ -1,16 +1,19 @@
 {
   "beforeElements": {
-    "bodies": null
+    "bodies": [
+      {"id": "406fa7e7-79b0-4adc-9f3c-3a400b31b1b9", "layoutAttachmentId": "18a4c054058fb88f81d7d32a36d90e483ffe04ad200e9bf54cedd2319b62a82f", "logicalUuid": "f3022b9b-b08c-4d4d-b701-aa7cde00fb43", "group": {"guid": "86fa8b48-be94-4c49-93a5-82a3bf93aa02", "name": "Topaz"}, "name": "Cheville/Pied/oeil", "specialty": {"type": "CD-HCPARTY", "code": "deptgeneralpractice", "version": "1"}, "guid": "8aef6be3-615a-412a-9e92-4935c52a7c64", "author": "beead3d0-f0a9-4502-9adf-10de593e9110", "java_type": "org.taktik.icure.entities.FormTemplate", "rev_history": {}, "_attachments": {"18a4c054058fb88f81d7d32a36d90e483ffe04ad200e9bf54cedd2319b62a82f": {"content_type": "application/json", "revpos": 44, "digest": "md5-CfbWUBUa+fToxPbArU5Gnw==", "length": 1332, "stub": true}}},
+      {"id": "1880910e-94f0-4ff8-b8ae-45433e413a11", "layoutAttachmentId": "18a4c054058fb88f81d7d32a36d90e483ffe04ad200e9bf54cedd2319b62a82f", "logicalUuid": "47078767-c710-4f4e-97a5-5bf5ac30ef14", "group": {"guid": "86fa8b48-be94-4c49-93a5-82a3bf93aa02", "name": "Topaz"}, "name": "Cheville/Pied/oeil", "specialty": {"type": "CD-HCPARTY", "code": "deptgeneralpractice", "version": "1"}, "guid": "8aef6be3-615a-412a-9e92-4935c52a7c64", "author": "beead3d0-f0a9-4502-9adf-10de593e9110", "java_type": "org.taktik.icure.entities.FormTemplate", "rev_history": {}, "_attachments": {"18a4c054058fb88f81d7d32a36d90e483ffe04ad200e9bf54cedd2319b62a82f": {"content_type": "application/json", "revpos": 44, "digest": "md5-CfbWUBUa+fToxPbArU5Gnw==", "length": 1332, "stub": true}}}
+    ]
   },
   "afterElements": {
     "family": "healthdata",
-    "deleteIds": ["e283f27b-47d5-40a7-8154-d466a287ede8"]
+    "deleteIds": ["e283f27b-47d5-40a7-8154-d466a287ede8", "1880910e-94f0-4ff8-b8ae-45433e413a11", "406fa7e7-79b0-4adc-9f3c-3a400b31b1b9"]
   },
   "convertLegacyFormTemplates": {
     "body": null
   },
   "createForm": {
-    "body": {"id": "e283f27b-47d5-40a7-8154-d466a287ede8", "layoutAttachmentId": "18a4c054058fb88f81d7d32a36d90e483ffe04ad200e9bf54cedd2319b62a82f", "group": {"guid": "86fa8b48-be94-4c49-93a5-82a3bf93aa02", "name": "Topaz"}, "name": "Cheville/Pied/oeil", "specialty": {"type": "CD-HCPARTY", "code": "deptgeneralpractice", "version": "1"}, "guid": "8aef6be3-615a-412a-9e92-4935c52a7c64", "author": "beead3d0-f0a9-4502-9adf-10de593e9110", "java_type": "org.taktik.icure.entities.FormTemplate", "rev_history": {}, "_attachments": {"18a4c054058fb88f81d7d32a36d90e483ffe04ad200e9bf54cedd2319b62a82f": {"content_type": "application/json", "revpos": 44, "digest": "md5-CfbWUBUa+fToxPbArU5Gnw==", "length": 1332, "stub": true}}}
+    "formDto": {"id": "e283f27b-47d5-40a7-8154-d466a287ede8", "layoutAttachmentId": "18a4c054058fb88f81d7d32a36d90e483ffe04ad200e9bf54cedd2319b62a82f", "group": {"guid": "86fa8b48-be94-4c49-93a5-82a3bf93aa02", "name": "Topaz"}, "name": "Cheville/Pied/oeil", "specialty": {"type": "CD-HCPARTY", "code": "deptgeneralpractice", "version": "1"}, "guid": "8aef6be3-615a-412a-9e92-4935c52a7c64", "author": "beead3d0-f0a9-4502-9adf-10de593e9110", "java_type": "org.taktik.icure.entities.FormTemplate", "rev_history": {}, "_attachments": {"18a4c054058fb88f81d7d32a36d90e483ffe04ad200e9bf54cedd2319b62a82f": {"content_type": "application/json", "revpos": 44, "digest": "md5-CfbWUBUa+fToxPbArU5Gnw==", "length": 1332, "stub": true}}}
   },
   "createFormTemplate": {
     "body": null
@@ -19,7 +22,9 @@
     "formTemplateId": null
   },
   "deleteForms": {
-    "formIds": null
+    "listOfIdsDto": {
+      "ids": ["406fa7e7-79b0-4adc-9f3c-3a400b31b1b9"]
+    }
   },
   "findByHCPartyPatientSecretFKeys": {
     "hcPartyId": null, 
@@ -81,6 +86,9 @@
   "updateFormTemplate": {
     "formTemplateId": null, 
     "body": null
+  },
+  "getFormsByLogicalUuid": {
+    "logicalUuid": "f3022b9b-b08c-4d4d-b701-aa7cde00fb43"
   },
   "fallback": {
   }

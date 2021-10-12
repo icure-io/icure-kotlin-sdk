@@ -805,22 +805,22 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getPatientByHealrhcarepartyAndIdentifier(hcPartyId: kotlin.String, system: kotlin.String, id: kotlin.String) : kotlin.collections.List<PatientDto>  {
-        val localVariableConfig = getPatientByHealrhcarepartyAndIdentifierRequestConfig(hcPartyId = hcPartyId, system = system, id = id)
+    suspend fun getPatientByHealthcarepartyAndIdentifier(hcPartyId: kotlin.String, system: kotlin.String, id: kotlin.String) : kotlin.collections.List<PatientDto>  {
+        val localVariableConfig = getPatientByHealthcarepartyAndIdentifierRequestConfig(hcPartyId = hcPartyId, system = system, id = id)
 
         return request<Unit, kotlin.collections.List<PatientDto>>(
             localVariableConfig
         )!!
     }
     /**
-    * To obtain the request config of the operation getPatientByHealrhcarepartyAndIdentifier
+    * To obtain the request config of the operation getPatientByHealthcarepartyAndIdentifier
     *
     * @param hcPartyId  
     * @param system  
     * @param id  
     * @return RequestConfig
     */
-    fun getPatientByHealrhcarepartyAndIdentifierRequestConfig(hcPartyId: kotlin.String, system: kotlin.String, id: kotlin.String) : RequestConfig<Unit> {
+    fun getPatientByHealthcarepartyAndIdentifierRequestConfig(hcPartyId: kotlin.String, system: kotlin.String, id: kotlin.String) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()

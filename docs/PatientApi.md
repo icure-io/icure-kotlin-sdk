@@ -18,7 +18,7 @@ Method | HTTP request | Description
 [**fuzzySearch**](PatientApi.md#fuzzySearch) | **GET** /rest/v2/patient/fuzzy | Filter patients for the current user (HcParty) 
 [**getPatient**](PatientApi.md#getPatient) | **GET** /rest/v2/patient/{patientId} | Get patient
 [**getPatientByExternalId**](PatientApi.md#getPatientByExternalId) | **GET** /rest/v2/patient/byExternalId/{externalId} | Get the patient having the provided externalId
-[**getPatientByHealrhcarepartyAndIdentifier**](PatientApi.md#getPatientByHealrhcarepartyAndIdentifier) | **GET** /rest/v2/patient/{hcPartyId}/{system}/{id} | Get patient by identifier
+[**getPatientByHealthcarepartyAndIdentifier**](PatientApi.md#getPatientByHealthcarepartyAndIdentifier) | **GET** /rest/v2/patient/{hcPartyId}/{system}/{id} | Get patient by identifier
 [**getPatientHcPartyKeysForDelegate**](PatientApi.md#getPatientHcPartyKeysForDelegate) | **GET** /rest/v2/patient/{patientId}/keys | Get the patient (identified by patientId) hcparty keys. Those keys are AES keys (encrypted) used to share information between HCPs and a patient.
 [**getPatients**](PatientApi.md#getPatients) | **POST** /rest/v2/patient/byIds | Get patients by id
 [**listDeletedPatientsByName**](PatientApi.md#listDeletedPatientsByName) | **GET** /rest/v2/patient/deleted/by_name | Find deleted patients
@@ -752,9 +752,9 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: */*
 
-<a name="getPatientByHealrhcarepartyAndIdentifier"></a>
-# **getPatientByHealrhcarepartyAndIdentifier**
-> kotlin.collections.List&lt;PatientDto&gt; getPatientByHealrhcarepartyAndIdentifier(hcPartyId, system, id)
+<a name="getPatientByHealthcarepartyAndIdentifier"></a>
+# **getPatientByHealthcarepartyAndIdentifier**
+> kotlin.collections.List&lt;PatientDto&gt; getPatientByHealthcarepartyAndIdentifier(hcPartyId, system, id)
 
 Get patient by identifier
 
@@ -771,13 +771,13 @@ val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String |
 val system : kotlin.String = system_example // kotlin.String | 
 val id : kotlin.String = id_example // kotlin.String | 
 try {
-    val result : kotlin.collections.List<PatientDto> = apiInstance.getPatientByHealrhcarepartyAndIdentifier(hcPartyId, system, id)
+    val result : kotlin.collections.List<PatientDto> = apiInstance.getPatientByHealthcarepartyAndIdentifier(hcPartyId, system, id)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling PatientApi#getPatientByHealrhcarepartyAndIdentifier")
+    println("4xx response calling PatientApi#getPatientByHealthcarepartyAndIdentifier")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling PatientApi#getPatientByHealrhcarepartyAndIdentifier")
+    println("5xx response calling PatientApi#getPatientByHealthcarepartyAndIdentifier")
     e.printStackTrace()
 }
 ```

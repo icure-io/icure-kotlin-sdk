@@ -2,9 +2,7 @@ package io.icure.kraken.client.infrastructure
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.core.json.JsonReadFeature
-import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import io.icure.asyncjacksonhttpclient.net.params
@@ -13,7 +11,6 @@ import io.icure.asyncjacksonhttpclient.net.web.HttpMethod
 import io.icure.asyncjacksonhttpclient.net.web.Request
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.parser.toObject
-import io.icure.kraken.client.models.filter.AbstractFilterDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -46,21 +43,10 @@ open class ApiClient(val baseUrl: String, val httpClient: WebClient, val authHea
         var accessToken: String? = null
         var timeoutDuration: Duration? = null
 
-        val objectMapper = ObjectMapper()
-            .registerModule(KotlinModule())
-            .registerModule(object: SimpleModule() {
-                override fun setupModule(context: SetupContext?) {
-                    addDeserializer(ByteArrayWrapper::class.java, ByteArrayWrapperDeserializer())
-                    addSerializer(ByteArrayWrapper::class.java, ByteArrayWrapperSerializer())
-                    addDeserializer(AbstractFilterDto::class.java, FilterDeserializer())
-                    super.setupModule(context)
-                }
-            })
-            .registerModule(JavaTimeModule()).apply {
-                setSerializationInclusion(JsonInclude.Include.NON_NULL)
-                configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
-                configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
-            }
+        val objectMapper = ObjectMapper().registerModule(KotlinModule()).registerModule(JavaTimeModule()).apply {
+            setSerializationInclusion(JsonInclude.Include.NON_NULL)
+            configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
+        }
 
     }
 

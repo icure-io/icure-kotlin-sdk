@@ -501,11 +501,9 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     suspend fun listCodeTypesBy(region: kotlin.String?, type: kotlin.String?) : kotlin.collections.List<kotlin.String>  {
         val localVariableConfig = listCodeTypesByRequestConfig(region = region, type = type)
 
-        val result = request<Unit, kotlin.collections.List<kotlin.String>>(
+        return request<Unit, kotlin.collections.List<kotlin.String>>(
             localVariableConfig
-        )
-
-        return result!!
+        )!!
     }
     /**
     * To obtain the request config of the operation listCodeTypesBy

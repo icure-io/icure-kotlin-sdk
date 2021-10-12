@@ -9,8 +9,8 @@
         "code": "A0",
         "version": 1,
         "label": {
-          "additionalProp1": "prop1",
-          "additionalProp2": "prop2"
+          "fr": "Bonjour le monde",
+          "en": "Hello world"
         },
         "links": ["L", "M"]
       },
@@ -36,17 +36,26 @@
       "author": "Simon",
       "regions": ["BE", "FR", "UK", "USA"],
       "type": "normal",
-      "code": "A5"
+      "code": "A5",
+      "version": 1
     }
   },
-  "filterBy": {
+  "filterCodesBy": {
     "startKey": null, 
-    "startDocumentId": "anormal|A1|1",
-    "limit": null, 
+    "startDocumentId": null,
+    "limit": 10,
     "skip": null, 
     "sort": null, 
     "desc": null, 
-    "body": null
+    "filterChainCode":{
+      "filter": {
+        "$type": "CodeByRegionTypeLabelLanguageFilter",
+        "region": "BE",
+        "type": "normal",
+        "code": "A0",
+        "label": "Bonjour le monde"
+      }
+    }
   },
   "listCodeTypesBy": {
     "region": "BE",
@@ -100,8 +109,7 @@
       "type": "normal",
       "code": "A0",
       "label": {
-        "additionalProp1": "prop1-modified",
-        "additionalProp2": "prop2"
+        "fr": "Bonjour le monde!"
       },
       "links": ["L", "M", "N"]
     }
