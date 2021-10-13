@@ -51,7 +51,6 @@ import com.github.pozo.KotlinBuilder
  * @param consultationCode 
  * @param hasRelatedCode 
  * @param needsPrescriber 
- * @param nGroup 
  * @param ngroup 
  */
 
@@ -138,9 +137,6 @@ data class TarificationDto (
 
     @field:JsonProperty("needsPrescriber")
     val needsPrescriber: kotlin.Boolean? = null,
-
-    @field:JsonProperty("nGroup")
-    val nGroup: kotlin.String? = null,
 
     @field:JsonProperty("ngroup")
     val ngroup: kotlin.String? = null
