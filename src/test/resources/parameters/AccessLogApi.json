@@ -26,6 +26,9 @@
     "limit": null,
     "descending": null
   },
+  "findAccessLogsBy": {
+    "startDocumentId": "06a8b70b-9332-48a2-a8b7-0b933268a001"
+  },
   "getAccessLog": {
     "accessLogId": "94fb88f8-b865-4fbb-bb88-f8b8652fbbf5"
   },
