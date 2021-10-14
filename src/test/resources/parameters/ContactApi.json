@@ -31,14 +31,14 @@
   "filterContactsBy": {
     "startKey": null,
     "startDocumentId": null,
-    "limit": null,
-    "filterChainContact": {"filter" :{"$type": "ContactByServiceIdsFilter", "ids" : ["1f41ffbf-3ead-4866-90c5-335ec69bfed4", "d5b9247f-85f9-49ec-b924-7f85f9e9eca6"]}}
+    "limit": 20,
+    "filterChainContact": {"filter" :{"$type": "ContactByHcPartyPatientTagCodeDateFilter", "healthcarePartyId": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98", "startServiceValueDate": 12345}}
   },
   "filterServicesBy": {
     "startKey": null,
     "startDocumentId": null,
     "limit": 20,
-    "body": {"filter" :{"$type": "ContactByServiceIdsFilter", "ids" : ["1f41ffbf-3ead-4866-90c5-335ec69bfed4", "d5b9247f-85f9-49ec-b924-7f85f9e9eca6"]}}
+    "filterChainService": {"filter" :{"$type": "ServiceByHcPartyTagCodeDateFilter", "startValueDate": 12345, "code": "Objective", "healthcarePartyId": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98"}}
   },
   "listContactsByHCPartyAndFormId": {
     "hcPartyId": "70d2af51-545d-4124-92af-51545d1124d8",
@@ -92,10 +92,7 @@
     "limit": 20
   },
   "matchContactsBy": {
-    "abstractFilterDtoContact": {
-      "$type" : "ContactByServiceIdsFilter",
-      "ids" : ["1f41ffbf-3ead-4866-90c5-335ec69bfed4", "d5b9247f-85f9-49ec-b924-7f85f9e9eca6"]
-    }
+    "abstractFilterDtoContact": {"$type": "ContactByHcPartyPatientTagCodeDateFilter", "healthcarePartyId": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98", "startServiceValueDate": 12345}
   },
   "modifyContact": {
     "autoRev" : true,

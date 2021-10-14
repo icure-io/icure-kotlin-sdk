@@ -143,7 +143,7 @@ class ContactApiTest() {
 	fun closeForHCPartyPatientForeignKeysTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "closeForHCPartyPatientForeignKeys")) {
-            assertTrue(false, "Test of closeForHCPartyPatientForeignKeys endpoint has been skipped")
+            assertTrue(true, "Test of closeForHCPartyPatientForeignKeys endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -216,7 +216,7 @@ class ContactApiTest() {
 	fun createContactTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createContact")) {
-            assertTrue(false, "Test of createContact endpoint has been skipped")
+            assertTrue(true, "Test of createContact endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -282,7 +282,7 @@ class ContactApiTest() {
 	fun createContactsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createContacts")) {
-            assertTrue(false, "Test of createContacts endpoint has been skipped")
+            assertTrue(true, "Test of createContacts endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -348,7 +348,7 @@ class ContactApiTest() {
 	fun deleteContactsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "deleteContacts")) {
-            assertTrue(false, "Test of deleteContacts endpoint has been skipped")
+            assertTrue(true, "Test of deleteContacts endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -414,7 +414,7 @@ class ContactApiTest() {
 	fun filterContactsByTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "filterContactsBy")) {
-            assertTrue(false, "Test of filterContactsBy endpoint has been skipped")
+            assertTrue(true, "Test of filterContactsBy endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -494,7 +494,7 @@ class ContactApiTest() {
 	fun filterServicesByTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "filterServicesBy")) {
-            assertTrue(false, "Test of filterServicesBy endpoint has been skipped")
+            assertTrue(true, "Test of filterServicesBy endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -574,7 +574,7 @@ class ContactApiTest() {
 	fun findContactsByOpeningDateTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "findContactsByOpeningDate")) {
-            assertTrue(false, "Test of findContactsByOpeningDate endpoint has been skipped")
+            assertTrue(true, "Test of findContactsByOpeningDate endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -668,7 +668,7 @@ class ContactApiTest() {
 	fun getContactTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getContact")) {
-            assertTrue(false, "Test of getContact endpoint has been skipped")
+            assertTrue(true, "Test of getContact endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -734,7 +734,7 @@ class ContactApiTest() {
 	fun getContactsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getContacts")) {
-            assertTrue(false, "Test of getContacts endpoint has been skipped")
+            assertTrue(true, "Test of getContacts endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -800,7 +800,7 @@ class ContactApiTest() {
 	fun getEmptyContentTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getEmptyContent")) {
-            assertTrue(false, "Test of getEmptyContent endpoint has been skipped")
+            assertTrue(true, "Test of getEmptyContent endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -859,7 +859,7 @@ class ContactApiTest() {
 	fun getServiceCodesOccurencesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getServiceCodesOccurences")) {
-            assertTrue(false, "Test of getServiceCodesOccurences endpoint has been skipped")
+            assertTrue(true, "Test of getServiceCodesOccurences endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -932,7 +932,7 @@ class ContactApiTest() {
 	fun getServicesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getServices")) {
-            assertTrue(false, "Test of getServices endpoint has been skipped")
+            assertTrue(true, "Test of getServices endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -998,7 +998,7 @@ class ContactApiTest() {
 	fun getServicesLinkedToTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getServicesLinkedTo")) {
-            assertTrue(false, "Test of getServicesLinkedTo endpoint has been skipped")
+            assertTrue(true, "Test of getServicesLinkedTo endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1071,7 +1071,7 @@ class ContactApiTest() {
 	fun listContactByHCPartyServiceIdTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listContactByHCPartyServiceId")) {
-            assertTrue(false, "Test of listContactByHCPartyServiceId endpoint has been skipped")
+            assertTrue(true, "Test of listContactByHCPartyServiceId endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1144,7 +1144,7 @@ class ContactApiTest() {
 	fun listContactsByExternalIdTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listContactsByExternalId")) {
-            assertTrue(false, "Test of listContactsByExternalId endpoint has been skipped")
+            assertTrue(true, "Test of listContactsByExternalId endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1210,7 +1210,7 @@ class ContactApiTest() {
 	fun listContactsByHCPartyAndFormIdTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listContactsByHCPartyAndFormId")) {
-            assertTrue(false, "Test of listContactsByHCPartyAndFormId endpoint has been skipped")
+            assertTrue(true, "Test of listContactsByHCPartyAndFormId endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1283,7 +1283,7 @@ class ContactApiTest() {
 	fun listContactsByHCPartyAndFormIdsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listContactsByHCPartyAndFormIds")) {
-            assertTrue(false, "Test of listContactsByHCPartyAndFormIds endpoint has been skipped")
+            assertTrue(true, "Test of listContactsByHCPartyAndFormIds endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1356,7 +1356,7 @@ class ContactApiTest() {
 	fun listContactsByHCPartyAndPatientForeignKeysTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listContactsByHCPartyAndPatientForeignKeys")) {
-            assertTrue(false, "Test of listContactsByHCPartyAndPatientForeignKeys endpoint has been skipped")
+            assertTrue(true, "Test of listContactsByHCPartyAndPatientForeignKeys endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1429,7 +1429,7 @@ class ContactApiTest() {
 	fun listContactsByHCPartyAndPatientSecretFKeysTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listContactsByHCPartyAndPatientSecretFKeys")) {
-            assertTrue(false, "Test of listContactsByHCPartyAndPatientSecretFKeys endpoint has been skipped")
+            assertTrue(true, "Test of listContactsByHCPartyAndPatientSecretFKeys endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1516,7 +1516,7 @@ class ContactApiTest() {
 	fun listContactsDelegationsStubsByHCPartyAndPatientForeignKeysTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listContactsDelegationsStubsByHCPartyAndPatientForeignKeys")) {
-            assertTrue(false, "Test of listContactsDelegationsStubsByHCPartyAndPatientForeignKeys endpoint has been skipped")
+            assertTrue(true, "Test of listContactsDelegationsStubsByHCPartyAndPatientForeignKeys endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1589,7 +1589,7 @@ class ContactApiTest() {
 	fun listServicesByAssociationIdTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listServicesByAssociationId")) {
-            assertTrue(false, "Test of listServicesByAssociationId endpoint has been skipped")
+            assertTrue(true, "Test of listServicesByAssociationId endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1655,7 +1655,7 @@ class ContactApiTest() {
 	fun matchContactsByTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "matchContactsBy")) {
-            assertTrue(false, "Test of matchContactsBy endpoint has been skipped")
+            assertTrue(true, "Test of matchContactsBy endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1721,7 +1721,7 @@ class ContactApiTest() {
 	fun modifyContactTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyContact")) {
-            assertTrue(false, "Test of modifyContact endpoint has been skipped")
+            assertTrue(true, "Test of modifyContact endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1787,7 +1787,7 @@ class ContactApiTest() {
 	fun modifyContactsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyContacts")) {
-            assertTrue(false, "Test of modifyContacts endpoint has been skipped")
+            assertTrue(true, "Test of modifyContacts endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1853,7 +1853,7 @@ class ContactApiTest() {
 	fun modifyContactsDelegationsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyContactsDelegations")) {
-            assertTrue(false, "Test of modifyContactsDelegations endpoint has been skipped")
+            assertTrue(true, "Test of modifyContactsDelegations endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1919,7 +1919,7 @@ class ContactApiTest() {
 	fun newContactDelegationsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "newContactDelegations")) {
-            assertTrue(false, "Test of newContactDelegations endpoint has been skipped")
+            assertTrue(true, "Test of newContactDelegations endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1992,7 +1992,7 @@ class ContactApiTest() {
 	fun setContactsDelegationsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "setContactsDelegations")) {
-            assertTrue(false, "Test of setContactsDelegations endpoint has been skipped")
+            assertTrue(true, "Test of setContactsDelegations endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -2053,7 +2053,7 @@ class ContactApiTest() {
                     functionName.let { name -> listOf("create", "new", "get", "list", "set").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
                     functionName.let { name -> listOf("modify", "delete", "undelete").any { name.startsWith(it) } } -> listOf("rev")
                     functionName.let { name -> listOf("append").any { name.startsWith(it) } } -> listOf("id", "created", "modified")
-                    functionName.let { name -> listOf("find").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]")
+                    functionName.let { name -> listOf("find", "filter").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]", "created", "modified", "rev")
                     else -> emptyList()
                 }
 
