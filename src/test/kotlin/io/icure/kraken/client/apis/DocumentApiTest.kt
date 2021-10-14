@@ -134,7 +134,7 @@ class DocumentApiTest() {
 	fun createDocumentTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createDocument")) {
-            assertTrue(false, "Test of createDocument endpoint has been skipped")
+            assertTrue(true, "Test of createDocument endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -200,7 +200,7 @@ class DocumentApiTest() {
 	fun deleteAttachmentTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "deleteAttachment")) {
-            assertTrue(false, "Test of deleteAttachment endpoint has been skipped")
+            assertTrue(true, "Test of deleteAttachment endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -266,7 +266,7 @@ class DocumentApiTest() {
 	fun deleteDocumentTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "deleteDocument")) {
-            assertTrue(false, "Test of deleteDocument endpoint has been skipped")
+            assertTrue(true, "Test of deleteDocument endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -332,7 +332,7 @@ class DocumentApiTest() {
 	fun findWithoutDelegationTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "findWithoutDelegation")) {
-            assertTrue(false, "Test of findWithoutDelegation endpoint has been skipped")
+            assertTrue(true, "Test of findWithoutDelegation endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -398,7 +398,7 @@ class DocumentApiTest() {
 	fun getDocumentTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getDocument")) {
-            assertTrue(false, "Test of getDocument endpoint has been skipped")
+            assertTrue(true, "Test of getDocument endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -464,7 +464,7 @@ class DocumentApiTest() {
 	fun getDocumentAttachmentTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getDocumentAttachment")) {
-            assertTrue(false, "Test of getDocumentAttachment endpoint has been skipped")
+            assertTrue(true, "Test of getDocumentAttachment endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -551,7 +551,7 @@ class DocumentApiTest() {
 	fun getDocumentByExternalUuidTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getDocumentByExternalUuid")) {
-            assertTrue(false, "Test of getDocumentByExternalUuid endpoint has been skipped")
+            assertTrue(true, "Test of getDocumentByExternalUuid endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -617,7 +617,7 @@ class DocumentApiTest() {
 	fun getDocumentsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getDocuments")) {
-            assertTrue(false, "Test of getDocuments endpoint has been skipped")
+            assertTrue(true, "Test of getDocuments endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -683,7 +683,7 @@ class DocumentApiTest() {
 	fun getDocumentsByExternalUuidTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getDocumentsByExternalUuid")) {
-            assertTrue(false, "Test of getDocumentsByExternalUuid endpoint has been skipped")
+            assertTrue(true, "Test of getDocumentsByExternalUuid endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -749,7 +749,7 @@ class DocumentApiTest() {
 	fun listDocumentByTypeHCPartyMessageSecretFKeysTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listDocumentByTypeHCPartyMessageSecretFKeys")) {
-            assertTrue(false, "Test of listDocumentByTypeHCPartyMessageSecretFKeys endpoint has been skipped")
+            assertTrue(true, "Test of listDocumentByTypeHCPartyMessageSecretFKeys endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -829,7 +829,7 @@ class DocumentApiTest() {
 	fun listDocumentsByHCPartyAndPatientForeignKeysTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listDocumentsByHCPartyAndPatientForeignKeys")) {
-            assertTrue(false, "Test of listDocumentsByHCPartyAndPatientForeignKeys endpoint has been skipped")
+            assertTrue(true, "Test of listDocumentsByHCPartyAndPatientForeignKeys endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -902,7 +902,7 @@ class DocumentApiTest() {
 	fun modifyDocumentTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyDocument")) {
-            assertTrue(false, "Test of modifyDocument endpoint has been skipped")
+            assertTrue(true, "Test of modifyDocument endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -968,7 +968,7 @@ class DocumentApiTest() {
 	fun modifyDocumentsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyDocuments")) {
-            assertTrue(false, "Test of modifyDocuments endpoint has been skipped")
+            assertTrue(true, "Test of modifyDocuments endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1034,7 +1034,7 @@ class DocumentApiTest() {
 	fun setDocumentAttachmentTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "setDocumentAttachment")) {
-            assertTrue(false, "Test of setDocumentAttachment endpoint has been skipped")
+            assertTrue(true, "Test of setDocumentAttachment endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1114,7 +1114,7 @@ class DocumentApiTest() {
 	fun setDocumentAttachmentMultiTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "setDocumentAttachmentMulti")) {
-            assertTrue(false, "Test of setDocumentAttachmentMulti endpoint has been skipped")
+            assertTrue(true, "Test of setDocumentAttachmentMulti endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1194,7 +1194,7 @@ class DocumentApiTest() {
 	fun setDocumentsDelegationsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "setDocumentsDelegations")) {
-            assertTrue(false, "Test of setDocumentsDelegations endpoint has been skipped")
+            assertTrue(true, "Test of setDocumentsDelegations endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1260,7 +1260,7 @@ class DocumentApiTest() {
 	fun setSafeDocumentAttachmentTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "setSafeDocumentAttachment")) {
-            assertTrue(false, "Test of setSafeDocumentAttachment endpoint has been skipped")
+            assertTrue(true, "Test of setSafeDocumentAttachment endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1335,7 +1335,7 @@ class DocumentApiTest() {
                     functionName.let { name -> listOf("create", "new", "get", "list", "set").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
                     functionName.let { name -> listOf("modify", "delete", "undelete").any { name.startsWith(it) } } -> listOf("rev")
                     functionName.let { name -> listOf("append").any { name.startsWith(it) } } -> listOf("id", "created", "modified")
-                    functionName.let { name -> listOf("find").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]")
+                    functionName.let { name -> listOf("find", "filter").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]", "created", "modified", "rev")
                     else -> emptyList()
                 }
 

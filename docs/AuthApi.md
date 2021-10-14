@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 <a name="login"></a>
 # **login**
-> AuthenticationResponse login(webSession)
+> AuthenticationResponse login(loginCredentials)
 
 login
 
@@ -25,9 +25,9 @@ Login using username and password
 //import io.icure.kraken.client.models.*
 
 val apiInstance = AuthApi()
-val webSession : WebSession =  // WebSession | 
+val loginCredentials : LoginCredentials =  // LoginCredentials | 
 try {
-    val result : AuthenticationResponse = apiInstance.login(webSession)
+    val result : AuthenticationResponse = apiInstance.login(loginCredentials)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling AuthApi#login")
@@ -42,7 +42,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **webSession** | [**WebSession**](WebSession.md)|  |
+ **loginCredentials** | [**LoginCredentials**](LoginCredentials.md)|  |
 
 ### Return type
 

@@ -123,7 +123,7 @@ class {{classname}}Test() {
 	fun {{operationId}}Test(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "{{operationId}}")) {
-            assertTrue(false, "Test of {{operationId}} endpoint has been skipped")
+            assertTrue(true, "Test of {{operationId}} endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -194,7 +194,7 @@ class {{classname}}Test() {
                     functionName.let { name -> listOf("create", "new", "get", "list", "set").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
                     functionName.let { name -> listOf("modify", "delete", "undelete").any { name.startsWith(it) } } -> listOf("rev")
                     functionName.let { name -> listOf("append").any { name.startsWith(it) } } -> listOf("id", "created", "modified")
-                    functionName.let { name -> listOf("find").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]")
+                    functionName.let { name -> listOf("find", "filter").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]", "created", "modified", "rev")
                     else -> emptyList()
                 }
 

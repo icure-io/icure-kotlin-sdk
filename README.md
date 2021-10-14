@@ -566,6 +566,7 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.LetterValueDto](docs/LetterValueDto.md)
  - [io.icure.kraken.client.models.ListOfIdsDto](docs/ListOfIdsDto.md)
  - [io.icure.kraken.client.models.ListOfPropertiesDto](docs/ListOfPropertiesDto.md)
+ - [io.icure.kraken.client.models.LoginCredentials](docs/LoginCredentials.md)
  - [io.icure.kraken.client.models.MapOfIdsDto](docs/MapOfIdsDto.md)
  - [io.icure.kraken.client.models.MeasureDto](docs/MeasureDto.md)
  - [io.icure.kraken.client.models.MedexInfoDto](docs/MedexInfoDto.md)
@@ -671,9 +672,6 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.VmpStubDto](docs/VmpStubDto.md)
  - [io.icure.kraken.client.models.VtmDto](docs/VtmDto.md)
  - [io.icure.kraken.client.models.WadaDto](docs/WadaDto.md)
- - [io.icure.kraken.client.models.WebSession](docs/WebSession.md)
- - [io.icure.kraken.client.models.WebSessionMaxIdleTime](docs/WebSessionMaxIdleTime.md)
- - [io.icure.kraken.client.models.WebSessionMaxIdleTimeUnits](docs/WebSessionMaxIdleTimeUnits.md)
  - [io.icure.kraken.client.models.Weekday](docs/Weekday.md)
 
 

@@ -136,7 +136,7 @@ class FormApiTest() {
 	fun createFormTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createForm")) {
-            assertTrue(false, "Test of createForm endpoint has been skipped")
+            assertTrue(true, "Test of createForm endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -202,7 +202,7 @@ class FormApiTest() {
 	fun createFormTemplateTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createFormTemplate")) {
-            assertTrue(false, "Test of createFormTemplate endpoint has been skipped")
+            assertTrue(true, "Test of createFormTemplate endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -268,7 +268,7 @@ class FormApiTest() {
 	fun createFormsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createForms")) {
-            assertTrue(false, "Test of createForms endpoint has been skipped")
+            assertTrue(true, "Test of createForms endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -334,7 +334,7 @@ class FormApiTest() {
 	fun deleteFormTemplateTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "deleteFormTemplate")) {
-            assertTrue(false, "Test of deleteFormTemplate endpoint has been skipped")
+            assertTrue(true, "Test of deleteFormTemplate endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -400,7 +400,7 @@ class FormApiTest() {
 	fun deleteFormsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "deleteForms")) {
-            assertTrue(false, "Test of deleteForms endpoint has been skipped")
+            assertTrue(true, "Test of deleteForms endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -466,7 +466,7 @@ class FormApiTest() {
 	fun getChildrenFormsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getChildrenForms")) {
-            assertTrue(false, "Test of getChildrenForms endpoint has been skipped")
+            assertTrue(true, "Test of getChildrenForms endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -539,7 +539,7 @@ class FormApiTest() {
 	fun getFormTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getForm")) {
-            assertTrue(false, "Test of getForm endpoint has been skipped")
+            assertTrue(true, "Test of getForm endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -605,7 +605,7 @@ class FormApiTest() {
 	fun getFormByLogicalUuidTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getFormByLogicalUuid")) {
-            assertTrue(false, "Test of getFormByLogicalUuid endpoint has been skipped")
+            assertTrue(true, "Test of getFormByLogicalUuid endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -671,7 +671,7 @@ class FormApiTest() {
 	fun getFormByUniqueIdTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getFormByUniqueId")) {
-            assertTrue(false, "Test of getFormByUniqueId endpoint has been skipped")
+            assertTrue(true, "Test of getFormByUniqueId endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -737,7 +737,7 @@ class FormApiTest() {
 	fun getFormTemplateTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getFormTemplate")) {
-            assertTrue(false, "Test of getFormTemplate endpoint has been skipped")
+            assertTrue(true, "Test of getFormTemplate endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -803,7 +803,7 @@ class FormApiTest() {
 	fun getFormTemplatesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getFormTemplates")) {
-            assertTrue(false, "Test of getFormTemplates endpoint has been skipped")
+            assertTrue(true, "Test of getFormTemplates endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -869,7 +869,7 @@ class FormApiTest() {
 	fun getFormTemplatesByGuidTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getFormTemplatesByGuid")) {
-            assertTrue(false, "Test of getFormTemplatesByGuid endpoint has been skipped")
+            assertTrue(true, "Test of getFormTemplatesByGuid endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -942,7 +942,7 @@ class FormApiTest() {
 	fun getFormsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getForms")) {
-            assertTrue(false, "Test of getForms endpoint has been skipped")
+            assertTrue(true, "Test of getForms endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1008,7 +1008,7 @@ class FormApiTest() {
 	fun getFormsByLogicalUuidTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getFormsByLogicalUuid")) {
-            assertTrue(false, "Test of getFormsByLogicalUuid endpoint has been skipped")
+            assertTrue(true, "Test of getFormsByLogicalUuid endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1074,7 +1074,7 @@ class FormApiTest() {
 	fun getFormsByUniqueIdTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getFormsByUniqueId")) {
-            assertTrue(false, "Test of getFormsByUniqueId endpoint has been skipped")
+            assertTrue(true, "Test of getFormsByUniqueId endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1140,7 +1140,7 @@ class FormApiTest() {
 	fun listFormTemplatesBySpecialityTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listFormTemplatesBySpeciality")) {
-            assertTrue(false, "Test of listFormTemplatesBySpeciality endpoint has been skipped")
+            assertTrue(true, "Test of listFormTemplatesBySpeciality endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1213,7 +1213,7 @@ class FormApiTest() {
 	fun listFormsByHCPartyAndPatientForeignKeysTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listFormsByHCPartyAndPatientForeignKeys")) {
-            assertTrue(false, "Test of listFormsByHCPartyAndPatientForeignKeys endpoint has been skipped")
+            assertTrue(true, "Test of listFormsByHCPartyAndPatientForeignKeys endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1307,7 +1307,7 @@ class FormApiTest() {
 	fun listFormsDelegationsStubsByHCPartyAndPatientForeignKeysTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listFormsDelegationsStubsByHCPartyAndPatientForeignKeys")) {
-            assertTrue(false, "Test of listFormsDelegationsStubsByHCPartyAndPatientForeignKeys endpoint has been skipped")
+            assertTrue(true, "Test of listFormsDelegationsStubsByHCPartyAndPatientForeignKeys endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1380,7 +1380,7 @@ class FormApiTest() {
 	fun modifyFormTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyForm")) {
-            assertTrue(false, "Test of modifyForm endpoint has been skipped")
+            assertTrue(true, "Test of modifyForm endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1446,7 +1446,7 @@ class FormApiTest() {
 	fun modifyFormsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyForms")) {
-            assertTrue(false, "Test of modifyForms endpoint has been skipped")
+            assertTrue(true, "Test of modifyForms endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1512,7 +1512,7 @@ class FormApiTest() {
 	fun newFormDelegationsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "newFormDelegations")) {
-            assertTrue(false, "Test of newFormDelegations endpoint has been skipped")
+            assertTrue(true, "Test of newFormDelegations endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1585,7 +1585,7 @@ class FormApiTest() {
 	fun setFormsDelegationsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "setFormsDelegations")) {
-            assertTrue(false, "Test of setFormsDelegations endpoint has been skipped")
+            assertTrue(true, "Test of setFormsDelegations endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1651,7 +1651,7 @@ class FormApiTest() {
 	fun setTemplateAttachmentMultiTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "setTemplateAttachmentMulti")) {
-            assertTrue(false, "Test of setTemplateAttachmentMulti endpoint has been skipped")
+            assertTrue(true, "Test of setTemplateAttachmentMulti endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1724,7 +1724,7 @@ class FormApiTest() {
 	fun updateFormTemplateTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "updateFormTemplate")) {
-            assertTrue(false, "Test of updateFormTemplate endpoint has been skipped")
+            assertTrue(true, "Test of updateFormTemplate endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1792,7 +1792,7 @@ class FormApiTest() {
                     functionName.let { name -> listOf("create", "new", "get", "list", "set").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
                     functionName.let { name -> listOf("modify", "delete", "undelete").any { name.startsWith(it) } } -> listOf("rev")
                     functionName.let { name -> listOf("append").any { name.startsWith(it) } } -> listOf("id", "created", "modified")
-                    functionName.let { name -> listOf("find").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]")
+                    functionName.let { name -> listOf("find", "filter").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]", "created", "modified", "rev")
                     else -> emptyList()
                 }
 

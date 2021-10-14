@@ -135,7 +135,7 @@ class ClassificationTemplateApiTest() {
 	fun createClassificationTemplateTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createClassificationTemplate")) {
-            assertTrue(false, "Test of createClassificationTemplate endpoint has been skipped")
+            assertTrue(true, "Test of createClassificationTemplate endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -201,7 +201,7 @@ class ClassificationTemplateApiTest() {
 	fun deleteClassificationTemplatesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "deleteClassificationTemplates")) {
-            assertTrue(false, "Test of deleteClassificationTemplates endpoint has been skipped")
+            assertTrue(true, "Test of deleteClassificationTemplates endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -267,7 +267,7 @@ class ClassificationTemplateApiTest() {
 	fun findClassificationTemplatesByTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "findClassificationTemplatesBy")) {
-            assertTrue(false, "Test of findClassificationTemplatesBy endpoint has been skipped")
+            assertTrue(true, "Test of findClassificationTemplatesBy endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -347,7 +347,7 @@ class ClassificationTemplateApiTest() {
 	fun getClassificationTemplateTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getClassificationTemplate")) {
-            assertTrue(false, "Test of getClassificationTemplate endpoint has been skipped")
+            assertTrue(true, "Test of getClassificationTemplate endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -413,7 +413,7 @@ class ClassificationTemplateApiTest() {
 	fun getClassificationTemplateByIdsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getClassificationTemplateByIds")) {
-            assertTrue(false, "Test of getClassificationTemplateByIds endpoint has been skipped")
+            assertTrue(true, "Test of getClassificationTemplateByIds endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -479,7 +479,7 @@ class ClassificationTemplateApiTest() {
 	fun listClassificationTemplatesByHCPartyPatientForeignKeysTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listClassificationTemplatesByHCPartyPatientForeignKeys")) {
-            assertTrue(false, "Test of listClassificationTemplatesByHCPartyPatientForeignKeys endpoint has been skipped")
+            assertTrue(true, "Test of listClassificationTemplatesByHCPartyPatientForeignKeys endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -552,7 +552,7 @@ class ClassificationTemplateApiTest() {
 	fun modifyClassificationTemplateTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyClassificationTemplate")) {
-            assertTrue(false, "Test of modifyClassificationTemplate endpoint has been skipped")
+            assertTrue(true, "Test of modifyClassificationTemplate endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -618,7 +618,7 @@ class ClassificationTemplateApiTest() {
 	fun newClassificationTemplateDelegationsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "newClassificationTemplateDelegations")) {
-            assertTrue(false, "Test of newClassificationTemplateDelegations endpoint has been skipped")
+            assertTrue(true, "Test of newClassificationTemplateDelegations endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -686,7 +686,7 @@ class ClassificationTemplateApiTest() {
                     functionName.let { name -> listOf("create", "new", "get", "list", "set").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
                     functionName.let { name -> listOf("modify", "delete", "undelete").any { name.startsWith(it) } } -> listOf("rev")
                     functionName.let { name -> listOf("append").any { name.startsWith(it) } } -> listOf("id", "created", "modified")
-                    functionName.let { name -> listOf("find").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]")
+                    functionName.let { name -> listOf("find", "filter").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]", "created", "modified", "rev")
                     else -> emptyList()
                 }
 

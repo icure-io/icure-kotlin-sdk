@@ -32,7 +32,7 @@
     "desc": null, 
     "filterChainPatient": {
       "filter": {
-        "$type": "PatientByHcPartyFilter",
+        "$type": "PatientByIdsFilter",
         "healthcarePartyId" : "782f1bcd-9f3f-408a-af1b-cd9f3f908a98"
       }
     }

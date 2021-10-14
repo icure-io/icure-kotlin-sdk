@@ -140,7 +140,7 @@ class PatientApiTest() {
 	fun countOfPatientsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "countOfPatients")) {
-            assertTrue(false, "Test of countOfPatients endpoint has been skipped")
+            assertTrue(true, "Test of countOfPatients endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -206,7 +206,7 @@ class PatientApiTest() {
 	fun createPatientTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createPatient")) {
-            assertTrue(false, "Test of createPatient endpoint has been skipped")
+            assertTrue(true, "Test of createPatient endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -272,7 +272,7 @@ class PatientApiTest() {
 	fun createPatientsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createPatients")) {
-            assertTrue(false, "Test of createPatients endpoint has been skipped")
+            assertTrue(true, "Test of createPatients endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -338,7 +338,7 @@ class PatientApiTest() {
 	fun deletePatientsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "deletePatients")) {
-            assertTrue(false, "Test of deletePatients endpoint has been skipped")
+            assertTrue(true, "Test of deletePatients endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -404,7 +404,7 @@ class PatientApiTest() {
 	fun filterPatientsByTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "filterPatientsBy")) {
-            assertTrue(false, "Test of filterPatientsBy endpoint has been skipped")
+            assertTrue(true, "Test of filterPatientsBy endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -512,7 +512,7 @@ class PatientApiTest() {
 	fun findDeletedPatientsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "findDeletedPatients")) {
-            assertTrue(false, "Test of findDeletedPatients endpoint has been skipped")
+            assertTrue(true, "Test of findDeletedPatients endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -606,7 +606,7 @@ class PatientApiTest() {
 	fun findPatientsByAccessLogUserAfterDateTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "findPatientsByAccessLogUserAfterDate")) {
-            assertTrue(false, "Test of findPatientsByAccessLogUserAfterDate endpoint has been skipped")
+            assertTrue(true, "Test of findPatientsByAccessLogUserAfterDate endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -707,7 +707,7 @@ class PatientApiTest() {
 	fun findPatientsByHealthcarePartyTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "findPatientsByHealthcareParty")) {
-            assertTrue(false, "Test of findPatientsByHealthcareParty endpoint has been skipped")
+            assertTrue(true, "Test of findPatientsByHealthcareParty endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -808,7 +808,7 @@ class PatientApiTest() {
 	fun findPatientsByNameBirthSsinAutoTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "findPatientsByNameBirthSsinAuto")) {
-            assertTrue(false, "Test of findPatientsByNameBirthSsinAuto endpoint has been skipped")
+            assertTrue(true, "Test of findPatientsByNameBirthSsinAuto endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -909,7 +909,7 @@ class PatientApiTest() {
 	fun findPatientsIdsByHealthcarePartyTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "findPatientsIdsByHealthcareParty")) {
-            assertTrue(false, "Test of findPatientsIdsByHealthcareParty endpoint has been skipped")
+            assertTrue(true, "Test of findPatientsIdsByHealthcareParty endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -996,7 +996,7 @@ class PatientApiTest() {
 	fun findPatientsModifiedAfterTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "findPatientsModifiedAfter")) {
-            assertTrue(false, "Test of findPatientsModifiedAfter endpoint has been skipped")
+            assertTrue(true, "Test of findPatientsModifiedAfter endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1083,7 +1083,7 @@ class PatientApiTest() {
 	fun fuzzySearchTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "fuzzySearch")) {
-            assertTrue(false, "Test of fuzzySearch endpoint has been skipped")
+            assertTrue(true, "Test of fuzzySearch endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1163,7 +1163,7 @@ class PatientApiTest() {
 	fun getPatientTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getPatient")) {
-            assertTrue(false, "Test of getPatient endpoint has been skipped")
+            assertTrue(true, "Test of getPatient endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1229,7 +1229,7 @@ class PatientApiTest() {
 	fun getPatientByExternalIdTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getPatientByExternalId")) {
-            assertTrue(false, "Test of getPatientByExternalId endpoint has been skipped")
+            assertTrue(true, "Test of getPatientByExternalId endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1295,7 +1295,7 @@ class PatientApiTest() {
 	fun getPatientByHealthcarepartyAndIdentifierTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getPatientByHealthcarepartyAndIdentifier")) {
-            assertTrue(false, "Test of getPatientByHealthcarepartyAndIdentifier endpoint has been skipped")
+            assertTrue(true, "Test of getPatientByHealthcarepartyAndIdentifier endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1375,7 +1375,7 @@ class PatientApiTest() {
 	fun getPatientHcPartyKeysForDelegateTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getPatientHcPartyKeysForDelegate")) {
-            assertTrue(false, "Test of getPatientHcPartyKeysForDelegate endpoint has been skipped")
+            assertTrue(true, "Test of getPatientHcPartyKeysForDelegate endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1441,7 +1441,7 @@ class PatientApiTest() {
 	fun getPatientsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getPatients")) {
-            assertTrue(false, "Test of getPatients endpoint has been skipped")
+            assertTrue(true, "Test of getPatients endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1507,7 +1507,7 @@ class PatientApiTest() {
 	fun listDeletedPatientsByNameTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listDeletedPatientsByName")) {
-            assertTrue(false, "Test of listDeletedPatientsByName endpoint has been skipped")
+            assertTrue(true, "Test of listDeletedPatientsByName endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1580,7 +1580,7 @@ class PatientApiTest() {
 	fun listOfMergesAfterTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listOfMergesAfter")) {
-            assertTrue(false, "Test of listOfMergesAfter endpoint has been skipped")
+            assertTrue(true, "Test of listOfMergesAfter endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1646,7 +1646,7 @@ class PatientApiTest() {
 	fun matchPatientsByTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "matchPatientsBy")) {
-            assertTrue(false, "Test of matchPatientsBy endpoint has been skipped")
+            assertTrue(true, "Test of matchPatientsBy endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1712,7 +1712,7 @@ class PatientApiTest() {
 	fun mergeIntoTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "mergeInto")) {
-            assertTrue(false, "Test of mergeInto endpoint has been skipped")
+            assertTrue(true, "Test of mergeInto endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1785,7 +1785,7 @@ class PatientApiTest() {
 	fun modifyPatientTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyPatient")) {
-            assertTrue(false, "Test of modifyPatient endpoint has been skipped")
+            assertTrue(true, "Test of modifyPatient endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1851,7 +1851,7 @@ class PatientApiTest() {
 	fun modifyPatientReferralTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyPatientReferral")) {
-            assertTrue(false, "Test of modifyPatientReferral endpoint has been skipped")
+            assertTrue(true, "Test of modifyPatientReferral endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1938,7 +1938,7 @@ class PatientApiTest() {
 	fun modifyPatientsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyPatients")) {
-            assertTrue(false, "Test of modifyPatients endpoint has been skipped")
+            assertTrue(true, "Test of modifyPatients endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -2004,7 +2004,7 @@ class PatientApiTest() {
 	fun newPatientDelegationsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "newPatientDelegations")) {
-            assertTrue(false, "Test of newPatientDelegations endpoint has been skipped")
+            assertTrue(true, "Test of newPatientDelegations endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -2077,7 +2077,7 @@ class PatientApiTest() {
 	fun undeletePatientTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "undeletePatient")) {
-            assertTrue(false, "Test of undeletePatient endpoint has been skipped")
+            assertTrue(true, "Test of undeletePatient endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -2138,7 +2138,7 @@ class PatientApiTest() {
                     functionName.let { name -> listOf("create", "new", "get", "list", "set").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
                     functionName.let { name -> listOf("modify", "delete", "undelete").any { name.startsWith(it) } } -> listOf("rev")
                     functionName.let { name -> listOf("append").any { name.startsWith(it) } } -> listOf("id", "created", "modified")
-                    functionName.let { name -> listOf("find").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]")
+                    functionName.let { name -> listOf("find", "filter").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]", "created", "modified", "rev")
                     else -> emptyList()
                 }
 

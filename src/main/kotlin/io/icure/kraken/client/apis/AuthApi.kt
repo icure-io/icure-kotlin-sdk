@@ -16,7 +16,7 @@ import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.models.AuthenticationResponse
-import io.icure.kraken.client.models.WebSession
+import io.icure.kraken.client.models.LoginCredentials
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -47,7 +47,7 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     /**
     * login
     * Login using username and password
-    * @param webSession  
+    * @param loginCredentials  
     * @return AuthenticationResponse
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -55,25 +55,25 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun login(webSession: WebSession) : AuthenticationResponse  {
-        val localVariableConfig = loginRequestConfig(webSession = webSession)
+    suspend fun login(loginCredentials: LoginCredentials) : AuthenticationResponse  {
+        val localVariableConfig = loginRequestConfig(loginCredentials = loginCredentials)
 
-        return request<WebSession, AuthenticationResponse>(
+        return request<LoginCredentials, AuthenticationResponse>(
             localVariableConfig
         )!!
     }
     /**
     * To obtain the request config of the operation login
     *
-    * @param webSession  
+    * @param loginCredentials  
     * @return RequestConfig
     */
-    fun loginRequestConfig(webSession: WebSession) : RequestConfig<WebSession> {
-        // val localVariableBody = webSession
+    fun loginRequestConfig(loginCredentials: LoginCredentials) : RequestConfig<LoginCredentials> {
+        // val localVariableBody = loginCredentials
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-        val localVariableBody = webSession
+        val localVariableBody = loginCredentials
 
         return RequestConfig(
             method = RequestMethod.POST,

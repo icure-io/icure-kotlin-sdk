@@ -133,7 +133,7 @@ class ArticleApiTest() {
 	fun createArticleTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createArticle")) {
-            assertTrue(false, "Test of createArticle endpoint has been skipped")
+            assertTrue(true, "Test of createArticle endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -199,7 +199,7 @@ class ArticleApiTest() {
 	fun deleteArticlesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "deleteArticles")) {
-            assertTrue(false, "Test of deleteArticles endpoint has been skipped")
+            assertTrue(true, "Test of deleteArticles endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -265,7 +265,7 @@ class ArticleApiTest() {
 	fun getArticleTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getArticle")) {
-            assertTrue(false, "Test of getArticle endpoint has been skipped")
+            assertTrue(true, "Test of getArticle endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -331,7 +331,7 @@ class ArticleApiTest() {
 	fun getArticlesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getArticles")) {
-            assertTrue(false, "Test of getArticles endpoint has been skipped")
+            assertTrue(true, "Test of getArticles endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -390,7 +390,7 @@ class ArticleApiTest() {
 	fun modifyArticleTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyArticle")) {
-            assertTrue(false, "Test of modifyArticle endpoint has been skipped")
+            assertTrue(true, "Test of modifyArticle endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -451,7 +451,7 @@ class ArticleApiTest() {
                     functionName.let { name -> listOf("create", "new", "get", "list", "set").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
                     functionName.let { name -> listOf("modify", "delete", "undelete").any { name.startsWith(it) } } -> listOf("rev")
                     functionName.let { name -> listOf("append").any { name.startsWith(it) } } -> listOf("id", "created", "modified")
-                    functionName.let { name -> listOf("find").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]")
+                    functionName.let { name -> listOf("find", "filter").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]", "created", "modified", "rev")
                     else -> emptyList()
                 }
 

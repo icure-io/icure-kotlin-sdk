@@ -133,7 +133,7 @@ class KeywordApiTest() {
 	fun createKeywordTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createKeyword")) {
-            assertTrue(false, "Test of createKeyword endpoint has been skipped")
+            assertTrue(true, "Test of createKeyword endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -199,7 +199,7 @@ class KeywordApiTest() {
 	fun deleteKeywordsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "deleteKeywords")) {
-            assertTrue(false, "Test of deleteKeywords endpoint has been skipped")
+            assertTrue(true, "Test of deleteKeywords endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -265,7 +265,7 @@ class KeywordApiTest() {
 	fun getKeywordTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getKeyword")) {
-            assertTrue(false, "Test of getKeyword endpoint has been skipped")
+            assertTrue(true, "Test of getKeyword endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -331,7 +331,7 @@ class KeywordApiTest() {
 	fun getKeywordsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getKeywords")) {
-            assertTrue(false, "Test of getKeywords endpoint has been skipped")
+            assertTrue(true, "Test of getKeywords endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -390,7 +390,7 @@ class KeywordApiTest() {
 	fun getKeywordsByUserTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getKeywordsByUser")) {
-            assertTrue(false, "Test of getKeywordsByUser endpoint has been skipped")
+            assertTrue(true, "Test of getKeywordsByUser endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -456,7 +456,7 @@ class KeywordApiTest() {
 	fun modifyKeywordTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyKeyword")) {
-            assertTrue(false, "Test of modifyKeyword endpoint has been skipped")
+            assertTrue(true, "Test of modifyKeyword endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -517,7 +517,7 @@ class KeywordApiTest() {
                     functionName.let { name -> listOf("create", "new", "get", "list", "set").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
                     functionName.let { name -> listOf("modify", "delete", "undelete").any { name.startsWith(it) } } -> listOf("rev")
                     functionName.let { name -> listOf("append").any { name.startsWith(it) } } -> listOf("id", "created", "modified")
-                    functionName.let { name -> listOf("find").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]")
+                    functionName.let { name -> listOf("find", "filter").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]", "created", "modified", "rev")
                     else -> emptyList()
                 }
 

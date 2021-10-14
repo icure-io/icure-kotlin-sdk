@@ -133,7 +133,7 @@ class AgendaApiTest() {
 	fun createAgendaTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createAgenda")) {
-            assertTrue(false, "Test of createAgenda endpoint has been skipped")
+            assertTrue(true, "Test of createAgenda endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -199,7 +199,7 @@ class AgendaApiTest() {
 	fun deleteAgendasTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "deleteAgendas")) {
-            assertTrue(false, "Test of deleteAgendas endpoint has been skipped")
+            assertTrue(true, "Test of deleteAgendas endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -265,7 +265,7 @@ class AgendaApiTest() {
 	fun getAgendaTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getAgenda")) {
-            assertTrue(false, "Test of getAgenda endpoint has been skipped")
+            assertTrue(true, "Test of getAgenda endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -331,7 +331,7 @@ class AgendaApiTest() {
 	fun getAgendasTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getAgendas")) {
-            assertTrue(false, "Test of getAgendas endpoint has been skipped")
+            assertTrue(true, "Test of getAgendas endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -390,7 +390,7 @@ class AgendaApiTest() {
 	fun getAgendasForUserTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getAgendasForUser")) {
-            assertTrue(false, "Test of getAgendasForUser endpoint has been skipped")
+            assertTrue(true, "Test of getAgendasForUser endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -456,7 +456,7 @@ class AgendaApiTest() {
 	fun getReadableAgendasForUserTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getReadableAgendasForUser")) {
-            assertTrue(false, "Test of getReadableAgendasForUser endpoint has been skipped")
+            assertTrue(true, "Test of getReadableAgendasForUser endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -522,7 +522,7 @@ class AgendaApiTest() {
 	fun modifyAgendaTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyAgenda")) {
-            assertTrue(false, "Test of modifyAgenda endpoint has been skipped")
+            assertTrue(true, "Test of modifyAgenda endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -583,7 +583,7 @@ class AgendaApiTest() {
                     functionName.let { name -> listOf("create", "new", "get", "list", "set").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
                     functionName.let { name -> listOf("modify", "delete", "undelete").any { name.startsWith(it) } } -> listOf("rev")
                     functionName.let { name -> listOf("append").any { name.startsWith(it) } } -> listOf("id", "created", "modified")
-                    functionName.let { name -> listOf("find").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]")
+                    functionName.let { name -> listOf("find", "filter").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]", "created", "modified", "rev")
                     else -> emptyList()
                 }
 

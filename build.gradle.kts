@@ -125,7 +125,7 @@ tasks.register("apiGenerate", Jar::class) {
 tasks.register("download-openapi-spec") {
     doLast {
         val destFile = File("${rootDir}/icure-openapi-spec.json")
-        val url = "http://localhost:16043/v3/api-docs/v2"
+        val url = "${System.getProperty("API_URL")}/v3/api-docs/v2"
         ant.invokeMethod("get", mapOf("src" to url, "dest" to destFile))
     }
 }

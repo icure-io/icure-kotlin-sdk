@@ -135,7 +135,7 @@ class ClassificationApiTest() {
 	fun createClassificationTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createClassification")) {
-            assertTrue(false, "Test of createClassification endpoint has been skipped")
+            assertTrue(true, "Test of createClassification endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -201,7 +201,7 @@ class ClassificationApiTest() {
 	fun deleteClassificationsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "deleteClassifications")) {
-            assertTrue(false, "Test of deleteClassifications endpoint has been skipped")
+            assertTrue(true, "Test of deleteClassifications endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -267,7 +267,7 @@ class ClassificationApiTest() {
 	fun findClassificationsByHCPartyPatientForeignKeysTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "findClassificationsByHCPartyPatientForeignKeys")) {
-            assertTrue(false, "Test of findClassificationsByHCPartyPatientForeignKeys endpoint has been skipped")
+            assertTrue(true, "Test of findClassificationsByHCPartyPatientForeignKeys endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -340,7 +340,7 @@ class ClassificationApiTest() {
 	fun getClassificationTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getClassification")) {
-            assertTrue(false, "Test of getClassification endpoint has been skipped")
+            assertTrue(true, "Test of getClassification endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -406,7 +406,7 @@ class ClassificationApiTest() {
 	fun getClassificationByHcPartyIdTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getClassificationByHcPartyId")) {
-            assertTrue(false, "Test of getClassificationByHcPartyId endpoint has been skipped")
+            assertTrue(true, "Test of getClassificationByHcPartyId endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -472,7 +472,7 @@ class ClassificationApiTest() {
 	fun modifyClassificationTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyClassification")) {
-            assertTrue(false, "Test of modifyClassification endpoint has been skipped")
+            assertTrue(true, "Test of modifyClassification endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -538,7 +538,7 @@ class ClassificationApiTest() {
 	fun newClassificationDelegationsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "newClassificationDelegations")) {
-            assertTrue(false, "Test of newClassificationDelegations endpoint has been skipped")
+            assertTrue(true, "Test of newClassificationDelegations endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -611,7 +611,7 @@ class ClassificationApiTest() {
 	fun setClassificationsDelegationsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "setClassificationsDelegations")) {
-            assertTrue(false, "Test of setClassificationsDelegations endpoint has been skipped")
+            assertTrue(true, "Test of setClassificationsDelegations endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -672,7 +672,7 @@ class ClassificationApiTest() {
                     functionName.let { name -> listOf("create", "new", "get", "list", "set").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
                     functionName.let { name -> listOf("modify", "delete", "undelete").any { name.startsWith(it) } } -> listOf("rev")
                     functionName.let { name -> listOf("append").any { name.startsWith(it) } } -> listOf("id", "created", "modified")
-                    functionName.let { name -> listOf("find").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]")
+                    functionName.let { name -> listOf("find", "filter").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]", "created", "modified", "rev")
                     else -> emptyList()
                 }
 

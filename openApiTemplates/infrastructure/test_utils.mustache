@@ -2,6 +2,7 @@
 
 package io.icure.kraken.client.infrastructure
 
+import io.icure.kraken.client.models.filter.AbstractFilterDto
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.core.json.JsonReadFeature
@@ -11,12 +12,6 @@ import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.readValue
-import io.icure.kraken.client.models.filter.AbstractFilterDto
-import io.icure.kraken.client.models.filter.healthelement.HealthElementByHcPartyTagCodeFilter
-import io.icure.kraken.client.models.filter.invoice.InvoiceByHcPartyCodeDateFilter
-import io.icure.kraken.client.models.filter.contact.ContactByServiceIdsFilter
-import io.icure.kraken.client.models.filter.patient.PatientByHcPartyFilter
-import io.icure.kraken.client.models.filter.code.CodeByRegionTypeLabelLanguageFilter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
@@ -223,24 +218,3 @@ data class UsernamePassword(val username: String, val password: String) {
     fun toBasicAuth() = "Basic ${java.util.Base64.getEncoder().encodeToString("$username:$password".toByteArray())}"
 }
 
-class FilterDeserializer : JsonDeserializer<AbstractFilterDto<*>>() {
-    private val discriminator = "\$type"
-    private val subclasses: MutableMap<String, Class<AbstractFilterDto<*>>> = HashMap()
-
-    init {
-        subclasses["HealthElementByHcPartyTagCodeFilter"] = HealthElementByHcPartyTagCodeFilter::class.java as Class<AbstractFilterDto<*>>
-        subclasses["InvoiceByHcPartyCodeDateFilter"] = InvoiceByHcPartyCodeDateFilter::class.java as Class<AbstractFilterDto<*>>
-        subclasses["ContactByServiceIdsFilter"] = ContactByServiceIdsFilter::class.java as Class<AbstractFilterDto<*>>
-        subclasses["PatientByHcPartyFilter"] = PatientByHcPartyFilter::class.java as Class<AbstractFilterDto<*>>
-        subclasses["CodeByRegionTypeLabelLanguageFilter"] = CodeByRegionTypeLabelLanguageFilter::class.java as Class<AbstractFilterDto<*>>
-    }
-
-    override fun deserialize(p: JsonParser?, ctxt: DeserializationContext?): AbstractFilterDto<*> {
-        val codec =  p?.codec ?: throw IllegalArgumentException("Missing codec")
-        val tree = codec.readTree<JsonNode>(p)
-        val discr = tree[discriminator].textValue() ?: throw IllegalArgumentException("Missing discriminator $discriminator in object")
-        val selectedSubClass = subclasses[discr] ?: throw IllegalArgumentException("Invalid subclass $discr in object")
-        return codec.treeToValue(tree, selectedSubClass)
-    }
-
-}

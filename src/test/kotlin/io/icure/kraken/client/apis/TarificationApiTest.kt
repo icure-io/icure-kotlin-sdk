@@ -133,7 +133,7 @@ class TarificationApiTest() {
 	fun createTarificationTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createTarification")) {
-            assertTrue(false, "Test of createTarification endpoint has been skipped")
+            assertTrue(true, "Test of createTarification endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -199,7 +199,7 @@ class TarificationApiTest() {
 	fun findTarificationsByTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "findTarificationsBy")) {
-            assertTrue(false, "Test of findTarificationsBy endpoint has been skipped")
+            assertTrue(true, "Test of findTarificationsBy endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -300,7 +300,7 @@ class TarificationApiTest() {
 	fun findTarificationsBy1Test(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "findTarificationsBy1")) {
-            assertTrue(false, "Test of findTarificationsBy1 endpoint has been skipped")
+            assertTrue(true, "Test of findTarificationsBy1 endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -387,7 +387,7 @@ class TarificationApiTest() {
 	fun findTarificationsByLabelTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "findTarificationsByLabel")) {
-            assertTrue(false, "Test of findTarificationsByLabel endpoint has been skipped")
+            assertTrue(true, "Test of findTarificationsByLabel endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -488,7 +488,7 @@ class TarificationApiTest() {
 	fun getTarificationTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getTarification")) {
-            assertTrue(false, "Test of getTarification endpoint has been skipped")
+            assertTrue(true, "Test of getTarification endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -554,7 +554,7 @@ class TarificationApiTest() {
 	fun getTarificationWithPartsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getTarificationWithParts")) {
-            assertTrue(false, "Test of getTarificationWithParts endpoint has been skipped")
+            assertTrue(true, "Test of getTarificationWithParts endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -634,7 +634,7 @@ class TarificationApiTest() {
 	fun getTarificationsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getTarifications")) {
-            assertTrue(false, "Test of getTarifications endpoint has been skipped")
+            assertTrue(true, "Test of getTarifications endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -700,7 +700,7 @@ class TarificationApiTest() {
 	fun modifyTarificationTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyTarification")) {
-            assertTrue(false, "Test of modifyTarification endpoint has been skipped")
+            assertTrue(true, "Test of modifyTarification endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -761,7 +761,7 @@ class TarificationApiTest() {
                     functionName.let { name -> listOf("create", "new", "get", "list", "set").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
                     functionName.let { name -> listOf("modify", "delete", "undelete").any { name.startsWith(it) } } -> listOf("rev")
                     functionName.let { name -> listOf("append").any { name.startsWith(it) } } -> listOf("id", "created", "modified")
-                    functionName.let { name -> listOf("find").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]")
+                    functionName.let { name -> listOf("find", "filter").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]", "created", "modified", "rev")
                     else -> emptyList()
                 }
 

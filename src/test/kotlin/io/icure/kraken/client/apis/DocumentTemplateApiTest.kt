@@ -134,7 +134,7 @@ class DocumentTemplateApiTest() {
 	fun createDocumentTemplateTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createDocumentTemplate")) {
-            assertTrue(false, "Test of createDocumentTemplate endpoint has been skipped")
+            assertTrue(true, "Test of createDocumentTemplate endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -200,7 +200,7 @@ class DocumentTemplateApiTest() {
 	fun deleteDocumentTemplatesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "deleteDocumentTemplates")) {
-            assertTrue(false, "Test of deleteDocumentTemplates endpoint has been skipped")
+            assertTrue(true, "Test of deleteDocumentTemplates endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -266,7 +266,7 @@ class DocumentTemplateApiTest() {
 	fun getAttachmentTextTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getAttachmentText")) {
-            assertTrue(false, "Test of getAttachmentText endpoint has been skipped")
+            assertTrue(true, "Test of getAttachmentText endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -339,7 +339,7 @@ class DocumentTemplateApiTest() {
 	fun getDocumentTemplateTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getDocumentTemplate")) {
-            assertTrue(false, "Test of getDocumentTemplate endpoint has been skipped")
+            assertTrue(true, "Test of getDocumentTemplate endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -405,7 +405,7 @@ class DocumentTemplateApiTest() {
 	fun getDocumentTemplateAttachmentTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getDocumentTemplateAttachment")) {
-            assertTrue(false, "Test of getDocumentTemplateAttachment endpoint has been skipped")
+            assertTrue(true, "Test of getDocumentTemplateAttachment endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -478,7 +478,7 @@ class DocumentTemplateApiTest() {
 	fun listAllDocumentTemplatesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listAllDocumentTemplates")) {
-            assertTrue(false, "Test of listAllDocumentTemplates endpoint has been skipped")
+            assertTrue(true, "Test of listAllDocumentTemplates endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -537,7 +537,7 @@ class DocumentTemplateApiTest() {
 	fun listDocumentTemplatesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listDocumentTemplates")) {
-            assertTrue(false, "Test of listDocumentTemplates endpoint has been skipped")
+            assertTrue(true, "Test of listDocumentTemplates endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -596,7 +596,7 @@ class DocumentTemplateApiTest() {
 	fun listDocumentTemplatesByDocumentTypeTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listDocumentTemplatesByDocumentType")) {
-            assertTrue(false, "Test of listDocumentTemplatesByDocumentType endpoint has been skipped")
+            assertTrue(true, "Test of listDocumentTemplatesByDocumentType endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -662,7 +662,7 @@ class DocumentTemplateApiTest() {
 	fun listDocumentTemplatesByDocumentTypeForCurrentUserTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listDocumentTemplatesByDocumentTypeForCurrentUser")) {
-            assertTrue(false, "Test of listDocumentTemplatesByDocumentTypeForCurrentUser endpoint has been skipped")
+            assertTrue(true, "Test of listDocumentTemplatesByDocumentTypeForCurrentUser endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -728,7 +728,7 @@ class DocumentTemplateApiTest() {
 	fun listDocumentTemplatesBySpecialityTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listDocumentTemplatesBySpeciality")) {
-            assertTrue(false, "Test of listDocumentTemplatesBySpeciality endpoint has been skipped")
+            assertTrue(true, "Test of listDocumentTemplatesBySpeciality endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -794,7 +794,7 @@ class DocumentTemplateApiTest() {
 	fun modifyDocumentTemplateTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyDocumentTemplate")) {
-            assertTrue(false, "Test of modifyDocumentTemplate endpoint has been skipped")
+            assertTrue(true, "Test of modifyDocumentTemplate endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -867,7 +867,7 @@ class DocumentTemplateApiTest() {
 	fun setDocumentTemplateAttachmentTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "setDocumentTemplateAttachment")) {
-            assertTrue(false, "Test of setDocumentTemplateAttachment endpoint has been skipped")
+            assertTrue(true, "Test of setDocumentTemplateAttachment endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -940,7 +940,7 @@ class DocumentTemplateApiTest() {
 	fun setDocumentTemplateAttachmentJsonTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "setDocumentTemplateAttachmentJson")) {
-            assertTrue(false, "Test of setDocumentTemplateAttachmentJson endpoint has been skipped")
+            assertTrue(true, "Test of setDocumentTemplateAttachmentJson endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1008,7 +1008,7 @@ class DocumentTemplateApiTest() {
                     functionName.let { name -> listOf("create", "new", "get", "list", "set").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
                     functionName.let { name -> listOf("modify", "delete", "undelete").any { name.startsWith(it) } } -> listOf("rev")
                     functionName.let { name -> listOf("append").any { name.startsWith(it) } } -> listOf("id", "created", "modified")
-                    functionName.let { name -> listOf("find").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]")
+                    functionName.let { name -> listOf("find", "filter").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]", "created", "modified", "rev")
                     else -> emptyList()
                 }
 

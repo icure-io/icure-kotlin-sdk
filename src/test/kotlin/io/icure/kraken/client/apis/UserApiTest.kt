@@ -136,7 +136,7 @@ class UserApiTest() {
 	fun assignHealthcarePartyTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "assignHealthcareParty")) {
-            assertTrue(false, "Test of assignHealthcareParty endpoint has been skipped")
+            assertTrue(true, "Test of assignHealthcareParty endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -202,7 +202,7 @@ class UserApiTest() {
 	fun checkPasswordTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "checkPassword")) {
-            assertTrue(false, "Test of checkPassword endpoint has been skipped")
+            assertTrue(true, "Test of checkPassword endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -268,7 +268,7 @@ class UserApiTest() {
 	fun checkTokenValidityTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "checkTokenValidity")) {
-            assertTrue(false, "Test of checkTokenValidity endpoint has been skipped")
+            assertTrue(true, "Test of checkTokenValidity endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -341,7 +341,7 @@ class UserApiTest() {
 	fun createUserTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createUser")) {
-            assertTrue(false, "Test of createUser endpoint has been skipped")
+            assertTrue(true, "Test of createUser endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -407,7 +407,7 @@ class UserApiTest() {
 	fun createUserInGroupTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createUserInGroup")) {
-            assertTrue(false, "Test of createUserInGroup endpoint has been skipped")
+            assertTrue(true, "Test of createUserInGroup endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -480,7 +480,7 @@ class UserApiTest() {
 	fun deleteUserTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "deleteUser")) {
-            assertTrue(false, "Test of deleteUser endpoint has been skipped")
+            assertTrue(true, "Test of deleteUser endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -546,7 +546,7 @@ class UserApiTest() {
 	fun deleteUserInGroupTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "deleteUserInGroup")) {
-            assertTrue(false, "Test of deleteUserInGroup endpoint has been skipped")
+            assertTrue(true, "Test of deleteUserInGroup endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -619,7 +619,7 @@ class UserApiTest() {
 	fun encodePasswordTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "encodePassword")) {
-            assertTrue(false, "Test of encodePassword endpoint has been skipped")
+            assertTrue(true, "Test of encodePassword endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -685,7 +685,7 @@ class UserApiTest() {
 	fun findByHcpartyIdTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "findByHcpartyId")) {
-            assertTrue(false, "Test of findByHcpartyId endpoint has been skipped")
+            assertTrue(true, "Test of findByHcpartyId endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -751,7 +751,7 @@ class UserApiTest() {
 	fun forgottenPasswordTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "forgottenPassword")) {
-            assertTrue(false, "Test of forgottenPassword endpoint has been skipped")
+            assertTrue(true, "Test of forgottenPassword endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -824,7 +824,7 @@ class UserApiTest() {
 	fun getCurrentSessionTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getCurrentSession")) {
-            assertTrue(false, "Test of getCurrentSession endpoint has been skipped")
+            assertTrue(true, "Test of getCurrentSession endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -883,7 +883,7 @@ class UserApiTest() {
 	fun getCurrentUserTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getCurrentUser")) {
-            assertTrue(false, "Test of getCurrentUser endpoint has been skipped")
+            assertTrue(true, "Test of getCurrentUser endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -942,7 +942,7 @@ class UserApiTest() {
 	fun getMatchingUsersTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getMatchingUsers")) {
-            assertTrue(false, "Test of getMatchingUsers endpoint has been skipped")
+            assertTrue(true, "Test of getMatchingUsers endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1001,7 +1001,7 @@ class UserApiTest() {
 	fun getTokenTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getToken")) {
-            assertTrue(false, "Test of getToken endpoint has been skipped")
+            assertTrue(true, "Test of getToken endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1081,7 +1081,7 @@ class UserApiTest() {
 	fun getUserTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getUser")) {
-            assertTrue(false, "Test of getUser endpoint has been skipped")
+            assertTrue(true, "Test of getUser endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1147,7 +1147,7 @@ class UserApiTest() {
 	fun getUserByEmailTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getUserByEmail")) {
-            assertTrue(false, "Test of getUserByEmail endpoint has been skipped")
+            assertTrue(true, "Test of getUserByEmail endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1213,7 +1213,7 @@ class UserApiTest() {
 	fun listUsersByTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listUsersBy")) {
-            assertTrue(false, "Test of listUsersBy endpoint has been skipped")
+            assertTrue(true, "Test of listUsersBy endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1293,7 +1293,7 @@ class UserApiTest() {
 	fun listUsersInGroupTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listUsersInGroup")) {
-            assertTrue(false, "Test of listUsersInGroup endpoint has been skipped")
+            assertTrue(true, "Test of listUsersInGroup endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1380,7 +1380,7 @@ class UserApiTest() {
 	fun modifyPropertiesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyProperties")) {
-            assertTrue(false, "Test of modifyProperties endpoint has been skipped")
+            assertTrue(true, "Test of modifyProperties endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1453,7 +1453,7 @@ class UserApiTest() {
 	fun modifyUserTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyUser")) {
-            assertTrue(false, "Test of modifyUser endpoint has been skipped")
+            assertTrue(true, "Test of modifyUser endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1519,7 +1519,7 @@ class UserApiTest() {
 	fun modifyUserInGroupTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyUserInGroup")) {
-            assertTrue(false, "Test of modifyUserInGroup endpoint has been skipped")
+            assertTrue(true, "Test of modifyUserInGroup endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -1587,7 +1587,7 @@ class UserApiTest() {
                     functionName.let { name -> listOf("create", "new", "get", "list", "set").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
                     functionName.let { name -> listOf("modify", "delete", "undelete").any { name.startsWith(it) } } -> listOf("rev")
                     functionName.let { name -> listOf("append").any { name.startsWith(it) } } -> listOf("id", "created", "modified")
-                    functionName.let { name -> listOf("find").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]")
+                    functionName.let { name -> listOf("find", "filter").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]", "created", "modified", "rev")
                     else -> emptyList()
                 }
 

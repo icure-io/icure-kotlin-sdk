@@ -133,7 +133,7 @@ class PlaceApiTest() {
 	fun createPlaceTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createPlace")) {
-            assertTrue(false, "Test of createPlace endpoint has been skipped")
+            assertTrue(true, "Test of createPlace endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -199,7 +199,7 @@ class PlaceApiTest() {
 	fun deletePlacesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "deletePlaces")) {
-            assertTrue(false, "Test of deletePlaces endpoint has been skipped")
+            assertTrue(true, "Test of deletePlaces endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -265,7 +265,7 @@ class PlaceApiTest() {
 	fun getPlaceTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getPlace")) {
-            assertTrue(false, "Test of getPlace endpoint has been skipped")
+            assertTrue(true, "Test of getPlace endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -331,7 +331,7 @@ class PlaceApiTest() {
 	fun getPlacesTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getPlaces")) {
-            assertTrue(false, "Test of getPlaces endpoint has been skipped")
+            assertTrue(true, "Test of getPlaces endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -390,7 +390,7 @@ class PlaceApiTest() {
 	fun modifyPlaceTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyPlace")) {
-            assertTrue(false, "Test of modifyPlace endpoint has been skipped")
+            assertTrue(true, "Test of modifyPlace endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -451,7 +451,7 @@ class PlaceApiTest() {
                     functionName.let { name -> listOf("create", "new", "get", "list", "set").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
                     functionName.let { name -> listOf("modify", "delete", "undelete").any { name.startsWith(it) } } -> listOf("rev")
                     functionName.let { name -> listOf("append").any { name.startsWith(it) } } -> listOf("id", "created", "modified")
-                    functionName.let { name -> listOf("find").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]")
+                    functionName.let { name -> listOf("find", "filter").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]", "created", "modified", "rev")
                     else -> emptyList()
                 }
 

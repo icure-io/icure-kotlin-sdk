@@ -136,7 +136,7 @@ class HealthElementApiTest() {
 	fun createHealthElementTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createHealthElement")) {
-            assertTrue(false, "Test of createHealthElement endpoint has been skipped")
+            assertTrue(true, "Test of createHealthElement endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -202,7 +202,7 @@ class HealthElementApiTest() {
 	fun createHealthElementsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "createHealthElements")) {
-            assertTrue(false, "Test of createHealthElements endpoint has been skipped")
+            assertTrue(true, "Test of createHealthElements endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -268,7 +268,7 @@ class HealthElementApiTest() {
 	fun deleteHealthElementsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "deleteHealthElements")) {
-            assertTrue(false, "Test of deleteHealthElements endpoint has been skipped")
+            assertTrue(true, "Test of deleteHealthElements endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -334,7 +334,7 @@ class HealthElementApiTest() {
 	fun filterHealthElementsByTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "filterHealthElementsBy")) {
-            assertTrue(false, "Test of filterHealthElementsBy endpoint has been skipped")
+            assertTrue(true, "Test of filterHealthElementsBy endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -400,7 +400,7 @@ class HealthElementApiTest() {
 	fun getHealthElementTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "getHealthElement")) {
-            assertTrue(false, "Test of getHealthElement endpoint has been skipped")
+            assertTrue(true, "Test of getHealthElement endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -466,7 +466,7 @@ class HealthElementApiTest() {
 	fun listHealthElementsByHCPartyAndPatientForeignKeysTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listHealthElementsByHCPartyAndPatientForeignKeys")) {
-            assertTrue(false, "Test of listHealthElementsByHCPartyAndPatientForeignKeys endpoint has been skipped")
+            assertTrue(true, "Test of listHealthElementsByHCPartyAndPatientForeignKeys endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -539,7 +539,7 @@ class HealthElementApiTest() {
 	fun listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeysTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys")) {
-            assertTrue(false, "Test of listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys endpoint has been skipped")
+            assertTrue(true, "Test of listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -612,7 +612,7 @@ class HealthElementApiTest() {
 	fun modifyHealthElementTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyHealthElement")) {
-            assertTrue(false, "Test of modifyHealthElement endpoint has been skipped")
+            assertTrue(true, "Test of modifyHealthElement endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -678,7 +678,7 @@ class HealthElementApiTest() {
 	fun modifyHealthElementsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "modifyHealthElements")) {
-            assertTrue(false, "Test of modifyHealthElements endpoint has been skipped")
+            assertTrue(true, "Test of modifyHealthElements endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -744,7 +744,7 @@ class HealthElementApiTest() {
 	fun newHealthElementDelegationsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "newHealthElementDelegations")) {
-            assertTrue(false, "Test of newHealthElementDelegations endpoint has been skipped")
+            assertTrue(true, "Test of newHealthElementDelegations endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -817,7 +817,7 @@ class HealthElementApiTest() {
 	fun setHealthElementsDelegationsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "setHealthElementsDelegations")) {
-            assertTrue(false, "Test of setHealthElementsDelegations endpoint has been skipped")
+            assertTrue(true, "Test of setHealthElementsDelegations endpoint has been skipped")
         } else {
             try{
                 createForModification(fileName)
@@ -878,7 +878,7 @@ class HealthElementApiTest() {
                     functionName.let { name -> listOf("create", "new", "get", "list", "set").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
                     functionName.let { name -> listOf("modify", "delete", "undelete").any { name.startsWith(it) } } -> listOf("rev")
                     functionName.let { name -> listOf("append").any { name.startsWith(it) } } -> listOf("id", "created", "modified")
-                    functionName.let { name -> listOf("find").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]")
+                    functionName.let { name -> listOf("find", "filter").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]", "created", "modified", "rev")
                     else -> emptyList()
                 }
 
