@@ -1663,13 +1663,13 @@ class FormApiTest() {
                     it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
                     }
-                val attachment: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> = TestUtils.getParameter<kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>>(fileName, "setTemplateAttachmentMulti.attachment")!!.map {
+                val attachment: io.icure.kraken.client.infrastructure.ByteArrayWrapper = TestUtils.getParameter<io.icure.kraken.client.infrastructure.ByteArrayWrapper>(fileName, "setTemplateAttachmentMulti.attachment")!!.let {
                     (it as? FormDto)?.takeIf { TestUtils.isAutoRev(fileName, "setTemplateAttachmentMulti") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
                     val currentRev = api(credentialsFile).getForm(id.getter.call(it) as String).rev
                     it.copy(rev = currentRev)
-                    } ?: it
-                    } as kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>
+                    } as? io.icure.kraken.client.infrastructure.ByteArrayWrapper ?: it
+                    }
 
                 val response = api(credentialsFile).setTemplateAttachmentMulti(formTemplateId,attachment)
 

@@ -1,6 +1,6 @@
 # FormApi
 
-All URIs are relative to *https://kraken.icure.dev*
+All URIs are relative to *http://localhost:16043*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -1076,7 +1076,7 @@ Update a form template&#39;s layout
 
 val apiInstance = FormApi()
 val formTemplateId : kotlin.String = formTemplateId_example // kotlin.String | 
-val attachment : kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> = BYTE_ARRAY_DATA_HERE // kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> | 
+val attachment : io.icure.kraken.client.infrastructure.ByteArrayWrapper = BYTE_ARRAY_DATA_HERE // io.icure.kraken.client.infrastructure.ByteArrayWrapper | 
 try {
     val result : kotlin.String = apiInstance.setTemplateAttachmentMulti(formTemplateId, attachment)
     println(result)
@@ -1094,7 +1094,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **formTemplateId** | **kotlin.String**|  |
- **attachment** | [**kotlin.collections.List&lt;io.icure.kraken.client.infrastructure.ByteArrayWrapper&gt;**](io.icure.kraken.client.infrastructure.ByteArrayWrapper.md)|  |
+ **attachment** | **io.icure.kraken.client.infrastructure.ByteArrayWrapper**|  |
 
 ### Return type
 

@@ -44,7 +44,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
-            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "https://kraken.icure.dev")
+            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "http://localhost:16043")
         }
     }
 
@@ -963,7 +963,7 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setTemplateAttachmentMulti(formTemplateId: kotlin.String, attachment: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>) : kotlin.String  {
+    suspend fun setTemplateAttachmentMulti(formTemplateId: kotlin.String, attachment: io.icure.kraken.client.infrastructure.ByteArrayWrapper) : kotlin.String  {
         val localVariableConfig = setTemplateAttachmentMultiRequestConfig(formTemplateId = formTemplateId, attachment = attachment)
 
         return request<Flow<ByteBuffer>, kotlin.String>(
@@ -977,15 +977,12 @@ class FormApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     * @param attachment  
     * @return RequestConfig
     */
-    fun setTemplateAttachmentMultiRequestConfig(formTemplateId: kotlin.String, attachment: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>) : RequestConfig<Flow<ByteBuffer>> {
+    fun setTemplateAttachmentMultiRequestConfig(formTemplateId: kotlin.String, attachment: io.icure.kraken.client.infrastructure.ByteArrayWrapper) : RequestConfig<Flow<ByteBuffer>> {
         // val localVariableBody = mapOf("attachment" to attachment)
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "multipart/form-data")
         localVariableHeaders["Accept"] = "*/*"
-        val localVariableBody = when(attachment.javaClass){
-            List<*>::javaClass -> (attachment as List<ByteArrayWrapper>).flatMap { it.byteArray.toList() }.toByteArray()
-            else -> (attachment as ByteArrayWrapper).byteArray
-        }
+        val localVariableBody = attachment.byteArray
         val boundary = UUID.randomUUID().toString()
         
 
