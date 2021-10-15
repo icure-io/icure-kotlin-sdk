@@ -44,9 +44,8 @@
     }
   },
   "findCalendarItemsByHCPartyPatientForeignKeys": {
-    "skipEndpoint": true,
-    "hcPartyId": null, 
-    "secretFKeys": null
+    "hcPartyId": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98",
+    "secretFKeys": ""
   },
   "getCalendarItem": {
     "calendarItemId": "650daca7-6a89-45b4-8376-25f6a18d7183"

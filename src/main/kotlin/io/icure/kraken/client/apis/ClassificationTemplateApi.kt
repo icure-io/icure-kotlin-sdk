@@ -43,7 +43,7 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
-            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "https://kraken.svc.icure.cloud")
+            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "https://kraken.icure.dev")
         }
     }
 

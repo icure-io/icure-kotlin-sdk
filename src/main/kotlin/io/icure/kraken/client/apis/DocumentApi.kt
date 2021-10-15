@@ -42,7 +42,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
-            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "https://kraken.svc.icure.cloud")
+            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "https://kraken.icure.dev")
         }
     }
 
@@ -648,7 +648,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setDocumentAttachmentMulti(documentId: kotlin.String, attachment: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>, enckeys: kotlin.String?) : DocumentDto  {
+    suspend fun setDocumentAttachmentMulti(documentId: kotlin.String, attachment: io.icure.kraken.client.infrastructure.ByteArrayWrapper, enckeys: kotlin.String?) : DocumentDto  {
         val localVariableConfig = setDocumentAttachmentMultiRequestConfig(documentId = documentId, attachment = attachment, enckeys = enckeys)
 
         return request<Flow<ByteBuffer>, DocumentDto>(
@@ -663,7 +663,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     * @param enckeys  (optional)
     * @return RequestConfig
     */
-    fun setDocumentAttachmentMultiRequestConfig(documentId: kotlin.String, attachment: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>, enckeys: kotlin.String?) : RequestConfig<Flow<ByteBuffer>> {
+    fun setDocumentAttachmentMultiRequestConfig(documentId: kotlin.String, attachment: io.icure.kraken.client.infrastructure.ByteArrayWrapper, enckeys: kotlin.String?) : RequestConfig<Flow<ByteBuffer>> {
         // val localVariableBody = mapOf("attachment" to attachment)
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {

@@ -1,6 +1,6 @@
 # EntityTemplateApi
 
-All URIs are relative to *https://kraken.svc.icure.cloud*
+All URIs are relative to *https://kraken.icure.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
