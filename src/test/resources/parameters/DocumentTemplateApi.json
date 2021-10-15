@@ -21,14 +21,18 @@
   "findAllDocumentTemplates": {
   },
   "listDocumentTemplates": {
+    "skipEndpoint": true
   },
   "listDocumentTemplatesByDocumentType": {
+    "skipEndpoint": true,
     "documentTypeCode": "CD-HCPARTY"
   },
   "listDocumentTemplatesByDocumentTypeForCurrentUser": {
+    "skipEndpoint": true,
     "documentTypeCode": "CD-HCPARTY"
   },
   "listDocumentTemplatesBySpeciality": {
+    "skipEndpoint": true,
     "specialityCode": "deptgeneralpractice"
   },
   "getDocumentTemplateAttachment": {
@@ -40,13 +44,16 @@
     "attachmentId": "68f617fd-1a5b-42c1-935d-27892686b899"
   },
   "getDocumentTemplate": {
+    "skipEndpoint": true,
     "documentTemplateId": "805c23ce-eaff-4a7d-a710-25c09d984871"
   },
   "setDocumentTemplateAttachment": {
+    "skipEndpoint": true,
     "documentTemplateId": "3472f6b8-6bdc-4fa3-8574-2a1305a90ab1",
     "ioIcureKrakenClientInfrastructureByteArrayWrapper": ["aGVsbG8gd29ybGQ="]
   },
   "setDocumentTemplateAttachmentJson": {
+    "skipEndpoint": true,
     "documentTemplateId": "3472f6b8-6bdc-4fa3-8574-2a1305a90ab1",
     "byteArrayDto": {
       "data":["aGVsbG8gd29ybGQ="]
