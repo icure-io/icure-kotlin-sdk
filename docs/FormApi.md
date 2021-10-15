@@ -1,6 +1,6 @@
 # FormApi
 
-All URIs are relative to *http://localhost:16043*
+All URIs are relative to *https://kraken.svc.icure.cloud*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------

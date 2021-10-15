@@ -31,7 +31,7 @@ This runs all tests and packages the library.
 <a name="documentation-for-api-endpoints"></a>
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://localhost:16043*
+All URIs are relative to *https://kraken.svc.icure.cloud*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------

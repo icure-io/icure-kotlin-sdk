@@ -58,7 +58,7 @@ data class ContentDto (
     val fuzzyDateValue: kotlin.Long? = null,
 
     @field:JsonProperty("binaryValue")
-    val binaryValue: kotlin.ByteArray? = null,
+    val binaryValue: io.icure.kraken.client.infrastructure.ByteArrayWrapper? = null,
 
     /* Id of the document in which the content is being filled. */
     @field:JsonProperty("documentId")
@@ -72,7 +72,13 @@ data class ContentDto (
 
     /* The service for which the content is being filled */
     @field:JsonProperty("compoundValue")
-    val compoundValue: kotlin.collections.List<ServiceDto>? = null
+    val compoundValue: kotlin.collections.List<ServiceDto>? = null,
+
+    @field:JsonProperty("ratio")
+    val ratio: kotlin.collections.List<MeasureDto>? = null,
+
+    @field:JsonProperty("range")
+    val range: kotlin.collections.List<MeasureDto>? = null
 
 )
 

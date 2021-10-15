@@ -1,6 +1,6 @@
 # DocumentApi
 
-All URIs are relative to *http://localhost:16043*
+All URIs are relative to *https://kraken.svc.icure.cloud*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -691,7 +691,7 @@ Creates a document&#39;s attachment
 
 val apiInstance = DocumentApi()
 val documentId : kotlin.String = documentId_example // kotlin.String | 
-val attachment : io.icure.kraken.client.infrastructure.ByteArrayWrapper = BYTE_ARRAY_DATA_HERE // io.icure.kraken.client.infrastructure.ByteArrayWrapper | 
+val attachment : kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> = BYTE_ARRAY_DATA_HERE // kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> | 
 val enckeys : kotlin.String = enckeys_example // kotlin.String | 
 try {
     val result : DocumentDto = apiInstance.setDocumentAttachmentMulti(documentId, attachment, enckeys)
@@ -710,7 +710,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **documentId** | **kotlin.String**|  |
- **attachment** | **io.icure.kraken.client.infrastructure.ByteArrayWrapper**|  |
+ **attachment** | [**kotlin.collections.List&lt;io.icure.kraken.client.infrastructure.ByteArrayWrapper&gt;**](io.icure.kraken.client.infrastructure.ByteArrayWrapper.md)|  |
  **enckeys** | **kotlin.String**|  | [optional]
 
 ### Return type

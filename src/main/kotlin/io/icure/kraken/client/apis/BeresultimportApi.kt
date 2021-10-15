@@ -40,7 +40,7 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: We
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
-            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "http://localhost:16043")
+            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "https://kraken.svc.icure.cloud")
         }
     }
 

@@ -109,36 +109,36 @@ class TestUtils {
             return null
         }
 
-		fun isAutoRev(parmatersFileName: String, callingFunctionName: String): Boolean {
-			val isAutoRev  = getParameter<Boolean>(parmatersFileName, "$callingFunctionName.autoRev")
-			return isAutoRev ?: false
-		}
+        fun isAutoRev(parmatersFileName: String, callingFunctionName: String): Boolean {
+            val isAutoRev  = getParameter<Boolean>(parmatersFileName, "$callingFunctionName.autoRev")
+            return isAutoRev ?: false
+        }
 
-		fun skipEndpoint(parmatersFileName: String, callingFunctionName: String): Boolean {
-			val skipEndpoint  = getParameter<Boolean>(parmatersFileName, "$callingFunctionName.skipEndpoint")
-			return skipEndpoint ?: false
-		}
+        fun skipEndpoint(parmatersFileName: String, callingFunctionName: String): Boolean {
+            val skipEndpoint  = getParameter<Boolean>(parmatersFileName, "$callingFunctionName.skipEndpoint")
+            return skipEndpoint ?: false
+        }
 
         fun getCredentialsFile(parmatersFileName: String, callingFunctionName: String): String {
             val credentialsFileFromParametersFile  = getParameter<String>(parmatersFileName, "$callingFunctionName.credentialsFile")
             return credentialsFileFromParametersFile ?: infereCredentialsFile(callingFunctionName)
         }
 
-		fun deleteAfterElements(parametersFileName: String) {
-			val callingFunctionName = "afterElements"
-			val usernamePassword: UsernamePassword = Companion.objectMapper.readValue(File(".credentialsCouchDb").readText())!!
-			val u = usernamePassword.username
-			val p = usernamePassword.password
-			val family  = getParameter<String>(parametersFileName, "$callingFunctionName.family")
-			val ids  = getParameter<List<String>>(parametersFileName, "$callingFunctionName.deleteIds")
-			if (family != null && ids != null) {
-				ids.forEach {
-					val command = "id=\"$it\"; rev=$(curl -s -X GET https://$u:$p@couch.svcacc.icure.cloud/icure-test-2-tz-dev-team-$family/\$id | jq -r '._rev') && curl -s -X DELETE \"https://$u:$p@couch.svcacc.icure.cloud/icure-test-2-tz-dev-team-$family/\$id?rev=\$rev\""
-					println(command)
-					command.runCommand()
-				}
-			}
-		}
+        fun deleteAfterElements(parametersFileName: String) {
+            val callingFunctionName = "afterElements"
+            val usernamePassword: UsernamePassword = Companion.objectMapper.readValue(File(".credentialsCouchDb").readText())!!
+            val u = usernamePassword.username
+            val p = usernamePassword.password
+            val family  = getParameter<String>(parametersFileName, "$callingFunctionName.family")
+            val ids  = getParameter<List<String>>(parametersFileName, "$callingFunctionName.deleteIds")
+            if (family != null && ids != null) {
+                ids.forEach {
+                    val command = "id=\"$it\"; rev=$(curl -s -X GET https://$u:$p@couch.svcacc.icure.cloud/icure-test-2-tz-dev-team-$family/\$id | jq -r '._rev') && curl -s -X DELETE \"https://$u:$p@couch.svcacc.icure.cloud/icure-test-2-tz-dev-team-$family/\$id?rev=\$rev\""
+                    println(command)
+                    command.runCommand()
+                }
+            }
+        }
 
         private fun infereCredentialsFile(callingFunctionName: String): String {
             return when {
@@ -228,4 +228,3 @@ fun File.readAsFlow() = flow {
 data class UsernamePassword(val username: String, val password: String) {
     fun toBasicAuth() = "Basic ${java.util.Base64.getEncoder().encodeToString("$username:$password".toByteArray())}"
 }
-
