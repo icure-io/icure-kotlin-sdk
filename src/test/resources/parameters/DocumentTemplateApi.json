@@ -36,10 +36,12 @@
     "specialityCode": "deptgeneralpractice"
   },
   "getDocumentTemplateAttachment": {
+    "skipEndpoint": true,
     "documentTemplateId": "3472f6b8-6bdc-4fa3-8574-2a1305a90ab1",
     "attachmentId": "68f617fd-1a5b-42c1-935d-27892686b899"
   },
   "getAttachmentText": {
+    "skipEndpoint": true,
     "documentTemplateId": "3472f6b8-6bdc-4fa3-8574-2a1305a90ab1",
     "attachmentId": "68f617fd-1a5b-42c1-935d-27892686b899"
   },

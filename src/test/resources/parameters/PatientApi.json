@@ -96,6 +96,7 @@
     "lastName": "Adami"
   },
   "listOfMergesAfter": {
+    "skipEndpoint": true,
     "date": 123456789
   },
   "listOfPatientsModifiedAfter": {
@@ -135,6 +136,7 @@
     "sortDirection": null
   },
   "matchPatientsBy": {
+    "skipEndpoint": true,
     "abstractFilterDtoPatient": {
       "$type": "PatientByHcPartyFilter",
       "healthcarePartyId" : "782f1bcd-9f3f-408a-af1b-cd9f3f908a98"
@@ -168,6 +170,7 @@
     "patientIds": "be98cf02-28a2-4fe0-acda-b4c13332268a"
   },
   "getPatientHcPartyKeysForDelegate": {
+    "skipEndpoint": true,
     "patientId": "ecb7b653-7f83-4a41-acfe-a6bf0178b40e"
   },
   "findPatientsModifiedAfter": {

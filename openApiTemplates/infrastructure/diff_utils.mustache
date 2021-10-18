@@ -10,7 +10,7 @@ import kotlin.reflect.full.memberProperties
 
 data class Diff(val propertyName: String, val propertyType: PropertyType, val diffs: List<Diff> = listOf(), val leftItem: Any? = null, val rightItem: Any? = null) {
     private fun toString(prefix: String): String {
-        return if (diffs.isEmpty()) "\n$prefix$propertyName" else "\n$prefix$propertyName -> [${diffs.joinToString("\n,") { it.toString("  $prefix") }}\n$prefix]"
+        return if (diffs.isEmpty()) "\n$prefix$propertyName : [ $leftItem != $rightItem ]" else "\n$prefix$propertyName -> [${diffs.joinToString(",") { it.toString("  $prefix") }}\n$prefix]"
     }
 
     override fun toString() = toString("")

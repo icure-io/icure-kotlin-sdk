@@ -17,6 +17,7 @@
     }
   },
   "getReceiptAttachment": {
+    "skipEndpoint": true,
     "receiptId": "004787e1-7861-4ac1-b621-a4a70a0e44a6",
     "attachmentId": "163ad071bde19185ef1658c689ddf69869a7acd8148990f486acbe2e445a254a",
     "enckeys": "ccd36d62-7759-4121-8eac-ee7a67eeba23"

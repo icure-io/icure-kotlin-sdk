@@ -70,6 +70,7 @@
     "version": "1"
   },
   "findCodesByLabel": {
+    "skipEndpoint": true,
     "region": "be",
     "types": "CD-HCPARTY",
     "language": "fr",
