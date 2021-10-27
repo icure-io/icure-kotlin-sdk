@@ -14,16 +14,16 @@ fun collectionDelimiter(collectionFormat: String) = when(collectionFormat) {
 }
 
 val defaultMultiValueConverter: (item: Any?) -> String = { item ->
-    val itemString = if (item is Map.Entry<*, *>) {
-        if (item.value is List<*>) {
-            (item.value as List<*>).joinToString(",")
-        } else {
-            "$item"
-        }
-    } else {
-        "$item"
-    }
-    URLEncoder.encode(itemString, StandardCharsets.UTF_8)
+   val itemString = if (item is Map.Entry<*, *>) {
+       if (item.value is List<*>) {
+           (item.value as List<*>).joinToString(",")
+       } else {
+           "$item"
+       }
+   } else {
+       "$item"
+   }
+   URLEncoder.encode(itemString, StandardCharsets.UTF_8)
 }
 
 fun <T : Any?> toMultiValue(items: Array<T>, collectionFormat: String, map: (item: T) -> String = defaultMultiValueConverter)
