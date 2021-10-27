@@ -15,7 +15,7 @@ package io.icure.kraken.client.apis
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.models.AuthenticationResponse
-import io.icure.kraken.client.models.WebSession
+import io.icure.kraken.client.models.LoginCredentials
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -41,7 +41,7 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     /**
     * login
     * Login using username and password
-    * @param session  
+    * @param loginCredentials  
     * @return AuthenticationResponse
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -49,10 +49,10 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun login(session: WebSession) : AuthenticationResponse?  {
-        val localVariableConfig = loginRequestConfig(session = session)
+    suspend fun login(loginCredentials: LoginCredentials) : AuthenticationResponse?  {
+        val localVariableConfig = loginRequestConfig(loginCredentials = loginCredentials)
 
-        return request<Unit, AuthenticationResponse>(
+        return request<LoginCredentials, AuthenticationResponse>(
             localVariableConfig
         )
     }
@@ -60,15 +60,12 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     /**
     * To obtain the request config of the operation login
     *
-    * @param session  
+    * @param loginCredentials  
     * @return RequestConfig
     */
-    fun loginRequestConfig(session: WebSession) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
-            .apply {
-                put("session", listOf(session.toString()))
-            }
+    fun loginRequestConfig(loginCredentials: LoginCredentials) : RequestConfig<LoginCredentials> {
+        val localVariableBody = loginCredentials
+        val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(

@@ -49,6 +49,7 @@ Class | Method | HTTP request | Description
 *AgendaApi* | [**getAgendasForUser**](docs/AgendaApi.md#getagendasforuser) | **GET** /rest/v1/agenda/byUser | Gets all agendas for user
 *AgendaApi* | [**getReadableAgendasForUser**](docs/AgendaApi.md#getreadableagendasforuser) | **GET** /rest/v1/agenda/readableForUser | Gets readable agendas for user
 *AgendaApi* | [**modifyAgenda**](docs/AgendaApi.md#modifyagenda) | **PUT** /rest/v1/agenda | Modifies an agenda
+*AnonymousAccessApi* | [**listHealthcarePartiesInGroup**](docs/AnonymousAccessApi.md#listhealthcarepartiesingroup) | **GET** /rest/v1/aa/hcparty/inGroup/{groupId} | List healthcare parties for a provided group id
 *ApplicationsettingsApi* | [**getApplicationSettings**](docs/ApplicationsettingsApi.md#getapplicationsettings) | **GET** /rest/v1/appsettings | Gets all application settings
 *ArticleApi* | [**createArticle**](docs/ArticleApi.md#createarticle) | **POST** /rest/v1/article | Creates a article
 *ArticleApi* | [**deleteArticle**](docs/ArticleApi.md#deletearticle) | **DELETE** /rest/v1/article/{articleIds} | Deletes an article
@@ -421,7 +422,9 @@ Class | Method | HTTP request | Description
 *PatientApi* | [**modifyPatient**](docs/PatientApi.md#modifypatient) | **PUT** /rest/v1/patient | Modify a patient
 *PatientApi* | [**modifyPatientReferral**](docs/PatientApi.md#modifypatientreferral) | **PUT** /rest/v1/patient/{patientId}/referral/{referralId} | Set a patient referral doctor
 *PatientApi* | [**newPatientDelegations**](docs/PatientApi.md#newpatientdelegations) | **POST** /rest/v1/patient/{patientId}/delegate | Delegates a patients to a healthcare party
+*PatientApi* | [**registerPatient**](docs/PatientApi.md#registerpatient) | **POST** /rest/v1/patient/register/forHcp/{hcPartyId}/inGroup/{groupId} | Register a patient
 *PatientApi* | [**undeletePatient**](docs/PatientApi.md#undeletepatient) | **PUT** /rest/v1/patient/undelete/{patientIds} | undelete previously deleted patients
+*PermissionApi* | [**modifyUserPermissions**](docs/PermissionApi.md#modifyuserpermissions) | **PUT** /rest/v1/permissions/{userId} | Add / Revoke permissions to user
 *PlaceApi* | [**createPlace**](docs/PlaceApi.md#createplace) | **POST** /rest/v1/place | Creates a place
 *PlaceApi* | [**deletePlace**](docs/PlaceApi.md#deleteplace) | **DELETE** /rest/v1/place/{placeIds} | Deletes an place
 *PlaceApi* | [**getPlace**](docs/PlaceApi.md#getplace) | **GET** /rest/v1/place/{placeId} | Gets an place
@@ -522,6 +525,7 @@ Class | Method | HTTP request | Description
 *TmpApi* | [**replicateToTmpDatabase**](docs/TmpApi.md#replicatetotmpdatabase) | **POST** /rest/v1/tmp/replicate/from/{from} | 
 *UserApi* | [**assignHealthcareParty**](docs/UserApi.md#assignhealthcareparty) | **PUT** /rest/v1/user/current/hcparty/{healthcarePartyId} | Assign a healthcare party ID to current user
 *UserApi* | [**checkPassword**](docs/UserApi.md#checkpassword) | **GET** /rest/v1/user/checkPassword | 
+*UserApi* | [**checkTokenValidity**](docs/UserApi.md#checktokenvalidity) | **GET** /rest/v1/user/token/{userId} | Check token validity
 *UserApi* | [**createUser**](docs/UserApi.md#createuser) | **POST** /rest/v1/user | Create a user
 *UserApi* | [**createUserInGroup**](docs/UserApi.md#createuseringroup) | **POST** /rest/v1/user/inGroup/{groupId} | Create a user
 *UserApi* | [**deleteUser**](docs/UserApi.md#deleteuser) | **DELETE** /rest/v1/user/{userId} | Delete a User based on his/her ID.
@@ -532,6 +536,8 @@ Class | Method | HTTP request | Description
 *UserApi* | [**getCurrentSession**](docs/UserApi.md#getcurrentsession) | **GET** /rest/v1/user/session | Get Currently logged-in user session.
 *UserApi* | [**getCurrentUser**](docs/UserApi.md#getcurrentuser) | **GET** /rest/v1/user/current | Get presently logged-in user.
 *UserApi* | [**getMatchingUsers**](docs/UserApi.md#getmatchingusers) | **GET** /rest/v1/user/matches | Get presently logged-in user.
+*UserApi* | [**getToken**](docs/UserApi.md#gettoken) | **POST** /rest/v1/user/token/{userId}/{key} | Require a new temporary token for authentication
+*UserApi* | [**getTokenInGroup**](docs/UserApi.md#gettokeningroup) | **POST** /rest/v1/user/inGroup/{groupId}/token/{userId}/{key} | Require a new temporary token for authentication inside provided group
 *UserApi* | [**getUser**](docs/UserApi.md#getuser) | **GET** /rest/v1/user/{userId} | Get a user by his ID
 *UserApi* | [**getUserByEmail**](docs/UserApi.md#getuserbyemail) | **GET** /rest/v1/user/byEmail/{email} | Get a user by his Email/Login
 *UserApi* | [**listUsers**](docs/UserApi.md#listusers) | **GET** /rest/v1/user | List users with(out) pagination
@@ -565,6 +571,7 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.ArticleDto](docs/ArticleDto.md)
  - [io.icure.kraken.client.models.AtcDto](docs/AtcDto.md)
  - [io.icure.kraken.client.models.AuthenticationResponse](docs/AuthenticationResponse.md)
+ - [io.icure.kraken.client.models.AuthenticationTokenDto](docs/AuthenticationTokenDto.md)
  - [io.icure.kraken.client.models.CalendarItemDto](docs/CalendarItemDto.md)
  - [io.icure.kraken.client.models.CalendarItemTagDto](docs/CalendarItemTagDto.md)
  - [io.icure.kraken.client.models.CalendarItemTypeDto](docs/CalendarItemTypeDto.md)
@@ -650,6 +657,7 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.LetterValueDto](docs/LetterValueDto.md)
  - [io.icure.kraken.client.models.ListOfIdsDto](docs/ListOfIdsDto.md)
  - [io.icure.kraken.client.models.ListOfPropertiesDto](docs/ListOfPropertiesDto.md)
+ - [io.icure.kraken.client.models.LoginCredentials](docs/LoginCredentials.md)
  - [io.icure.kraken.client.models.MapOfIdsDto](docs/MapOfIdsDto.md)
  - [io.icure.kraken.client.models.MeasureDto](docs/MeasureDto.md)
  - [io.icure.kraken.client.models.MedexInfoDto](docs/MedexInfoDto.md)
@@ -696,6 +704,7 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.PartnershipDto](docs/PartnershipDto.md)
  - [io.icure.kraken.client.models.PatientDto](docs/PatientDto.md)
  - [io.icure.kraken.client.models.PatientHealthCarePartyDto](docs/PatientHealthCarePartyDto.md)
+ - [io.icure.kraken.client.models.PatientRegistrationSuccessDto](docs/PatientRegistrationSuccessDto.md)
  - [io.icure.kraken.client.models.PaymentDto](docs/PaymentDto.md)
  - [io.icure.kraken.client.models.PeriodicityDto](docs/PeriodicityDto.md)
  - [io.icure.kraken.client.models.PermissionDto](docs/PermissionDto.md)
@@ -762,9 +771,6 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.VmpStubDto](docs/VmpStubDto.md)
  - [io.icure.kraken.client.models.VtmDto](docs/VtmDto.md)
  - [io.icure.kraken.client.models.WadaDto](docs/WadaDto.md)
- - [io.icure.kraken.client.models.WebSession](docs/WebSession.md)
- - [io.icure.kraken.client.models.WebSessionMaxIdleTime](docs/WebSessionMaxIdleTime.md)
- - [io.icure.kraken.client.models.WebSessionMaxIdleTimeUnits](docs/WebSessionMaxIdleTimeUnits.md)
  - [io.icure.kraken.client.models.Weekday](docs/Weekday.md)
 
 

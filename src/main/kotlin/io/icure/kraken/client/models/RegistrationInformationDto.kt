@@ -43,7 +43,7 @@ data class RegistrationInformationDto (
     val emailAddress: kotlin.String,
 
     @field:JsonProperty("userOptions")
-    val userOptions: kotlin.collections.Map<kotlin.String, kotlin.String>? = null
+    val userOptions: kotlin.String? = null
 
 )
 

@@ -12,6 +12,7 @@
  */
 package io.icure.kraken.client.models
 
+import io.icure.kraken.client.models.AuthenticationTokenDto
 import io.icure.kraken.client.models.PermissionDto
 import io.icure.kraken.client.models.PropertyStubDto
 
@@ -29,7 +30,8 @@ import com.github.pozo.KotlinBuilder
  * @param permissions If permission to modify patient data is granted or revoked
  * @param roles Roles specified for the user
  * @param autoDelegations Delegations that are automatically generated client side when a new database object is created by this user
- * @param applicationTokens Long lived authentication tokens used for inter-applications authentication.
+ * @param applicationTokens 
+ * @param authenticationTokens Encrypted and time-limited Authentication tokens used for inter-applications authentication
  * @param rev the revision of the user in the database, used for conflict management / optimistic locking.
  * @param deletionDate hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called.
  * @param created 
@@ -73,9 +75,13 @@ data class UserDto (
     @field:JsonProperty("autoDelegations")
     val autoDelegations: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<kotlin.String>> = mapOf(),
 
-    /* Long lived authentication tokens used for inter-applications authentication. */
     @field:JsonProperty("applicationTokens")
+    @Deprecated(message = "This property is deprecated.")
     val applicationTokens: kotlin.collections.Map<kotlin.String, kotlin.String> = mapOf(),
+
+    /* Encrypted and time-limited Authentication tokens used for inter-applications authentication */
+    @field:JsonProperty("authenticationTokens")
+    val authenticationTokens: kotlin.collections.Map<kotlin.String, AuthenticationTokenDto> = mapOf(),
 
     /* the revision of the user in the database, used for conflict management / optimistic locking. */
     @field:JsonProperty("rev")

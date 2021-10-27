@@ -24,6 +24,7 @@ import io.icure.kraken.client.models.ListOfIdsDto
 import io.icure.kraken.client.models.PaginatedListPatientDto
 import io.icure.kraken.client.models.PaginatedListString
 import io.icure.kraken.client.models.PatientDto
+import io.icure.kraken.client.models.PatientRegistrationSuccessDto
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -1451,6 +1452,49 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v1/patient/{patientId}/delegate".replace("{"+"patientId"+"}", "$patientId"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
+    * Register a patient
+    * Register a new patient into the system
+    * @param hcPartyId  
+    * @param groupId  
+    * @param patientDto  
+    * @return PatientRegistrationSuccessDto
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun registerPatient(hcPartyId: kotlin.String, groupId: kotlin.String, patientDto: PatientDto) : PatientRegistrationSuccessDto?  {
+        val localVariableConfig = registerPatientRequestConfig(hcPartyId = hcPartyId, groupId = groupId, patientDto = patientDto)
+
+        return request<PatientDto, PatientRegistrationSuccessDto>(
+            localVariableConfig
+        )
+    }
+
+    /**
+    * To obtain the request config of the operation registerPatient
+    *
+    * @param hcPartyId  
+    * @param groupId  
+    * @param patientDto  
+    * @return RequestConfig
+    */
+    fun registerPatientRequestConfig(hcPartyId: kotlin.String, groupId: kotlin.String, patientDto: PatientDto) : RequestConfig<PatientDto> {
+        val localVariableBody = patientDto
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v1/patient/register/forHcp/{hcPartyId}/inGroup/{groupId}".replace("{"+"hcPartyId"+"}", "$hcPartyId").replace("{"+"groupId"+"}", "$groupId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody

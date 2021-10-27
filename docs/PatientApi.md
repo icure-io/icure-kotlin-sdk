@@ -33,6 +33,7 @@ Method | HTTP request | Description
 [**modifyPatient**](PatientApi.md#modifyPatient) | **PUT** /rest/v1/patient | Modify a patient
 [**modifyPatientReferral**](PatientApi.md#modifyPatientReferral) | **PUT** /rest/v1/patient/{patientId}/referral/{referralId} | Set a patient referral doctor
 [**newPatientDelegations**](PatientApi.md#newPatientDelegations) | **POST** /rest/v1/patient/{patientId}/delegate | Delegates a patients to a healthcare party
+[**registerPatient**](PatientApi.md#registerPatient) | **POST** /rest/v1/patient/register/forHcp/{hcPartyId}/inGroup/{groupId} | Register a patient
 [**undeletePatient**](PatientApi.md#undeletePatient) | **PUT** /rest/v1/patient/undelete/{patientIds} | undelete previously deleted patients
 
 
@@ -1481,6 +1482,57 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**PatientDto**](PatientDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="registerPatient"></a>
+# **registerPatient**
+> PatientRegistrationSuccessDto registerPatient(hcPartyId, groupId, patientDto)
+
+Register a patient
+
+Register a new patient into the system
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = PatientApi()
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
+val groupId : kotlin.String = groupId_example // kotlin.String | 
+val patientDto : PatientDto =  // PatientDto | 
+try {
+    val result : PatientRegistrationSuccessDto = apiInstance.registerPatient(hcPartyId, groupId, patientDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling PatientApi#registerPatient")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling PatientApi#registerPatient")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **hcPartyId** | **kotlin.String**|  |
+ **groupId** | **kotlin.String**|  |
+ **patientDto** | [**PatientDto**](PatientDto.md)|  |
+
+### Return type
+
+[**PatientRegistrationSuccessDto**](PatientRegistrationSuccessDto.md)
 
 ### Authorization
 
