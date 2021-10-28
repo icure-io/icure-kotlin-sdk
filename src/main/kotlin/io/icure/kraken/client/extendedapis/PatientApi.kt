@@ -219,13 +219,18 @@ suspend fun CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>.e
 }
 
 suspend fun CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>.decryptPatient(myId: String, patient: io.icure.kraken.client.models.PatientDto): PatientDto {
+    return try {
         val key = this.crypto.decryptEncryptionKeys(myId, patient.encryptionKeys).firstOrNull()?.let { aesKey ->
             aesKey.replace(
                 "-",
                 ""
             ).fromHexString()
         } ?: throw IllegalArgumentException("No encryption key for user")
-        return this.unmarshaller(patient, decryptAES(data = Base64.getDecoder().decode(patient.encryptedSelf), key = key))
+        this.unmarshaller(patient, decryptAES(data = Base64.getDecoder().decode(patient.encryptedSelf), key = key))
+    }
+    catch (ex : IllegalArgumentException){
+        PatientMapperFactory.instance.map(patient)
+    }
 }
 
 @Mapper
