@@ -117,6 +117,65 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     }
 
     /**
+    * Get Availabilities for HCP and agendaId
+    * 
+    * @param startDate  
+    * @param endDate  
+    * @param agendaId  
+    * @param hcpId  
+    * @param duration  
+    * @param limit  (optional)
+    * @return kotlin.collections.List<kotlin.Long>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun getAvailabilitiesByPeriodAndAgendaId(startDate: kotlin.Long, endDate: kotlin.Long, agendaId: kotlin.String, hcpId: kotlin.String, duration: kotlin.Long, limit: kotlin.Int?) : kotlin.collections.List<kotlin.Long>?  {
+        val localVariableConfig = getAvailabilitiesByPeriodAndAgendaIdRequestConfig(startDate = startDate, endDate = endDate, agendaId = agendaId, hcpId = hcpId, duration = duration, limit = limit)
+
+        return request<Unit, kotlin.collections.List<kotlin.Long>>(
+            localVariableConfig
+        )
+    }
+
+    /**
+    * To obtain the request config of the operation getAvailabilitiesByPeriodAndAgendaId
+    *
+    * @param startDate  
+    * @param endDate  
+    * @param agendaId  
+    * @param hcpId  
+    * @param duration  
+    * @param limit  (optional)
+    * @return RequestConfig
+    */
+    fun getAvailabilitiesByPeriodAndAgendaIdRequestConfig(startDate: kotlin.Long, endDate: kotlin.Long, agendaId: kotlin.String, hcpId: kotlin.String, duration: kotlin.Long, limit: kotlin.Int?) : RequestConfig<Unit> {
+        val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                put("startDate", listOf(startDate.toString()))
+                put("endDate", listOf(endDate.toString()))
+                put("agendaId", listOf(agendaId.toString()))
+                put("hcpId", listOf(hcpId.toString()))
+                put("duration", listOf(duration.toString()))
+                if (limit != null) {
+                    put("limit", listOf(limit.toString()))
+                }
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v1/timeTable/available",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
     * Gets a timeTable
     * 
     * @param timeTableId  

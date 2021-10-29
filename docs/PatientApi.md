@@ -1494,7 +1494,7 @@ No authorization required
 
 <a name="registerPatient"></a>
 # **registerPatient**
-> PatientRegistrationSuccessDto registerPatient(hcPartyId, groupId, patientDto)
+> PatientRegistrationSuccessDto registerPatient(hcPartyId, groupId, patientDto, useShortToken)
 
 Register a patient
 
@@ -1510,8 +1510,9 @@ val apiInstance = PatientApi()
 val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
 val groupId : kotlin.String = groupId_example // kotlin.String | 
 val patientDto : PatientDto =  // PatientDto | 
+val useShortToken : kotlin.Boolean = true // kotlin.Boolean | 
 try {
-    val result : PatientRegistrationSuccessDto = apiInstance.registerPatient(hcPartyId, groupId, patientDto)
+    val result : PatientRegistrationSuccessDto = apiInstance.registerPatient(hcPartyId, groupId, patientDto, useShortToken)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling PatientApi#registerPatient")
@@ -1529,6 +1530,7 @@ Name | Type | Description  | Notes
  **hcPartyId** | **kotlin.String**|  |
  **groupId** | **kotlin.String**|  |
  **patientDto** | [**PatientDto**](PatientDto.md)|  |
+ **useShortToken** | **kotlin.Boolean**|  | [optional]
 
 ### Return type
 

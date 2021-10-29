@@ -451,6 +451,7 @@ Class | Method | HTTP request | Description
 *TarificationApi* | [**modifyTarification**](docs/TarificationApi.md#modifytarification) | **PUT** /rest/v1/tarification | Modify a tarification
 *TimeTableApi* | [**createTimeTable**](docs/TimeTableApi.md#createtimetable) | **POST** /rest/v1/timeTable | Creates a timeTable
 *TimeTableApi* | [**deleteTimeTable**](docs/TimeTableApi.md#deletetimetable) | **DELETE** /rest/v1/timeTable/{timeTableIds} | Deletes an timeTable
+*TimeTableApi* | [**getAvailabilitiesByPeriodAndAgendaId**](docs/TimeTableApi.md#getavailabilitiesbyperiodandagendaid) | **POST** /rest/v1/timeTable/available | Get Availabilities for HCP and agendaId
 *TimeTableApi* | [**getTimeTable**](docs/TimeTableApi.md#gettimetable) | **GET** /rest/v1/timeTable/{timeTableId} | Gets a timeTable
 *TimeTableApi* | [**getTimeTablesByAgendaId**](docs/TimeTableApi.md#gettimetablesbyagendaid) | **POST** /rest/v1/timeTable/byAgendaId | Get TimeTables by AgendaId
 *TimeTableApi* | [**getTimeTablesByPeriodAndAgendaId**](docs/TimeTableApi.md#gettimetablesbyperiodandagendaid) | **POST** /rest/v1/timeTable/byPeriodAndAgendaId | Get TimeTables by Period and AgendaId
