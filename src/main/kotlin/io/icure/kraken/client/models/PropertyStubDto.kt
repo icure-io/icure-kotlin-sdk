@@ -24,8 +24,10 @@ import com.github.pozo.KotlinBuilder
 /**
  * Extra properties
  *
+ * @param id 
  * @param type 
  * @param typedValue 
+ * @param deletionDate 
  * @param encryptedSelf The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys.
  */
 
@@ -34,11 +36,17 @@ import com.github.pozo.KotlinBuilder
 @KotlinBuilder
 data class PropertyStubDto (
 
+    @field:JsonProperty("id")
+    val id: kotlin.String? = null,
+
     @field:JsonProperty("type")
     val type: PropertyTypeStubDto? = null,
 
     @field:JsonProperty("typedValue")
     val typedValue: TypedValueDtoObject? = null,
+
+    @field:JsonProperty("deletionDate")
+    val deletionDate: kotlin.Long? = null,
 
     /* The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys. */
     @field:JsonProperty("encryptedSelf")

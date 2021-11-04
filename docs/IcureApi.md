@@ -10,6 +10,7 @@ Method | HTTP request | Description
 [**getReplicatorInfo**](IcureApi.md#getReplicatorInfo) | **GET** /rest/v1/icure/r/{id} | Get replication info
 [**getVersion**](IcureApi.md#getVersion) | **GET** /rest/v1/icure/v | Get version
 [**isReady**](IcureApi.md#isReady) | **GET** /rest/v1/icure/ok | Check if a user exists
+[**loglevel**](IcureApi.md#loglevel) | **POST** /rest/v1/icure/loglevel/{loglevel} | 
 [**resolveContactsConflicts**](IcureApi.md#resolveContactsConflicts) | **POST** /rest/v1/icure/conflicts/contact | Resolve contacts conflicts
 [**resolveDocumentsConflicts**](IcureApi.md#resolveDocumentsConflicts) | **POST** /rest/v1/icure/conflicts/document | resolve documents conflicts
 [**resolveFormsConflicts**](IcureApi.md#resolveFormsConflicts) | **POST** /rest/v1/icure/conflicts/form | resolve forms conflicts
@@ -256,6 +257,53 @@ try {
 
 ### Parameters
 This endpoint does not need any parameter.
+
+### Return type
+
+**kotlin.String**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain
+
+<a name="loglevel"></a>
+# **loglevel**
+> kotlin.String loglevel(loglevel, `package`)
+
+
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = IcureApi()
+val loglevel : kotlin.String = loglevel_example // kotlin.String | 
+val `package` : kotlin.String = `package`_example // kotlin.String | 
+try {
+    val result : kotlin.String = apiInstance.loglevel(loglevel, `package`)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling IcureApi#loglevel")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling IcureApi#loglevel")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **loglevel** | **kotlin.String**|  |
+ **&#x60;package&#x60;** | **kotlin.String**|  |
 
 ### Return type
 

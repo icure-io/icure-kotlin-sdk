@@ -6,7 +6,6 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createTimeTable**](TimeTableApi.md#createTimeTable) | **POST** /rest/v1/timeTable | Creates a timeTable
 [**deleteTimeTable**](TimeTableApi.md#deleteTimeTable) | **DELETE** /rest/v1/timeTable/{timeTableIds} | Deletes an timeTable
-[**getAvailabilitiesByPeriodAndAgendaId**](TimeTableApi.md#getAvailabilitiesByPeriodAndAgendaId) | **POST** /rest/v1/timeTable/available | Get Availabilities for HCP and agendaId
 [**getTimeTable**](TimeTableApi.md#getTimeTable) | **GET** /rest/v1/timeTable/{timeTableId} | Gets a timeTable
 [**getTimeTablesByAgendaId**](TimeTableApi.md#getTimeTablesByAgendaId) | **POST** /rest/v1/timeTable/byAgendaId | Get TimeTables by AgendaId
 [**getTimeTablesByPeriodAndAgendaId**](TimeTableApi.md#getTimeTablesByPeriodAndAgendaId) | **POST** /rest/v1/timeTable/byPeriodAndAgendaId | Get TimeTables by Period and AgendaId
@@ -93,61 +92,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**kotlin.collections.List&lt;DocIdentifier&gt;**](DocIdentifier.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="getAvailabilitiesByPeriodAndAgendaId"></a>
-# **getAvailabilitiesByPeriodAndAgendaId**
-> kotlin.collections.List&lt;kotlin.Long&gt; getAvailabilitiesByPeriodAndAgendaId(startDate, endDate, agendaId, hcpId, duration, limit)
-
-Get Availabilities for HCP and agendaId
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = TimeTableApi()
-val startDate : kotlin.Long = 789 // kotlin.Long | 
-val endDate : kotlin.Long = 789 // kotlin.Long | 
-val agendaId : kotlin.String = agendaId_example // kotlin.String | 
-val hcpId : kotlin.String = hcpId_example // kotlin.String | 
-val duration : kotlin.Long = 789 // kotlin.Long | 
-val limit : kotlin.Int = 56 // kotlin.Int | 
-try {
-    val result : kotlin.collections.List<kotlin.Long> = apiInstance.getAvailabilitiesByPeriodAndAgendaId(startDate, endDate, agendaId, hcpId, duration, limit)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling TimeTableApi#getAvailabilitiesByPeriodAndAgendaId")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling TimeTableApi#getAvailabilitiesByPeriodAndAgendaId")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **startDate** | **kotlin.Long**|  |
- **endDate** | **kotlin.Long**|  |
- **agendaId** | **kotlin.String**|  |
- **hcpId** | **kotlin.String**|  |
- **duration** | **kotlin.Long**|  |
- **limit** | **kotlin.Int**|  | [optional]
-
-### Return type
-
-**kotlin.collections.List&lt;kotlin.Long&gt;**
 
 ### Authorization
 

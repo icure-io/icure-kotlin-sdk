@@ -49,6 +49,8 @@ Class | Method | HTTP request | Description
 *AgendaApi* | [**getAgendasForUser**](docs/AgendaApi.md#getagendasforuser) | **GET** /rest/v1/agenda/byUser | Gets all agendas for user
 *AgendaApi* | [**getReadableAgendasForUser**](docs/AgendaApi.md#getreadableagendasforuser) | **GET** /rest/v1/agenda/readableForUser | Gets readable agendas for user
 *AgendaApi* | [**modifyAgenda**](docs/AgendaApi.md#modifyagenda) | **PUT** /rest/v1/agenda | Modifies an agenda
+*AnonymousAccessApi* | [**getAvailabilitiesByPeriodAndAgendaId**](docs/AnonymousAccessApi.md#getavailabilitiesbyperiodandagendaid) | **GET** /rest/v1/aa/available/inGroup/{groupId}/agenda/{agendaId} | Get Availabilities for HCP and agendaId
+*AnonymousAccessApi* | [**listAgendasInHealthcareParty**](docs/AnonymousAccessApi.md#listagendasinhealthcareparty) | **GET** /rest/v1/aa/agenda/inGroup/{groupId}/forUser/{userId} | List healthcare parties for a provided group id
 *AnonymousAccessApi* | [**listHealthcarePartiesInGroup**](docs/AnonymousAccessApi.md#listhealthcarepartiesingroup) | **GET** /rest/v1/aa/hcparty/inGroup/{groupId} | List healthcare parties for a provided group id
 *ApplicationsettingsApi* | [**getApplicationSettings**](docs/ApplicationsettingsApi.md#getapplicationsettings) | **GET** /rest/v1/appsettings | Gets all application settings
 *ArticleApi* | [**createArticle**](docs/ArticleApi.md#createarticle) | **POST** /rest/v1/article | Creates a article
@@ -316,6 +318,7 @@ Class | Method | HTTP request | Description
 *IcureApi* | [**getReplicatorInfo**](docs/IcureApi.md#getreplicatorinfo) | **GET** /rest/v1/icure/r/{id} | Get replication info
 *IcureApi* | [**getVersion**](docs/IcureApi.md#getversion) | **GET** /rest/v1/icure/v | Get version
 *IcureApi* | [**isReady**](docs/IcureApi.md#isready) | **GET** /rest/v1/icure/ok | Check if a user exists
+*IcureApi* | [**loglevel**](docs/IcureApi.md#loglevel) | **POST** /rest/v1/icure/loglevel/{loglevel} | 
 *IcureApi* | [**resolveContactsConflicts**](docs/IcureApi.md#resolvecontactsconflicts) | **POST** /rest/v1/icure/conflicts/contact | Resolve contacts conflicts
 *IcureApi* | [**resolveDocumentsConflicts**](docs/IcureApi.md#resolvedocumentsconflicts) | **POST** /rest/v1/icure/conflicts/document | resolve documents conflicts
 *IcureApi* | [**resolveFormsConflicts**](docs/IcureApi.md#resolveformsconflicts) | **POST** /rest/v1/icure/conflicts/form | resolve forms conflicts
@@ -451,7 +454,6 @@ Class | Method | HTTP request | Description
 *TarificationApi* | [**modifyTarification**](docs/TarificationApi.md#modifytarification) | **PUT** /rest/v1/tarification | Modify a tarification
 *TimeTableApi* | [**createTimeTable**](docs/TimeTableApi.md#createtimetable) | **POST** /rest/v1/timeTable | Creates a timeTable
 *TimeTableApi* | [**deleteTimeTable**](docs/TimeTableApi.md#deletetimetable) | **DELETE** /rest/v1/timeTable/{timeTableIds} | Deletes an timeTable
-*TimeTableApi* | [**getAvailabilitiesByPeriodAndAgendaId**](docs/TimeTableApi.md#getavailabilitiesbyperiodandagendaid) | **POST** /rest/v1/timeTable/available | Get Availabilities for HCP and agendaId
 *TimeTableApi* | [**getTimeTable**](docs/TimeTableApi.md#gettimetable) | **GET** /rest/v1/timeTable/{timeTableId} | Gets a timeTable
 *TimeTableApi* | [**getTimeTablesByAgendaId**](docs/TimeTableApi.md#gettimetablesbyagendaid) | **POST** /rest/v1/timeTable/byAgendaId | Get TimeTables by AgendaId
 *TimeTableApi* | [**getTimeTablesByPeriodAndAgendaId**](docs/TimeTableApi.md#gettimetablesbyperiodandagendaid) | **POST** /rest/v1/timeTable/byPeriodAndAgendaId | Get TimeTables by Period and AgendaId

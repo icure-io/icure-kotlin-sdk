@@ -271,6 +271,50 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     }
 
     /**
+    * 
+    * 
+    * @param loglevel  
+    * @param `package`  
+    * @return kotlin.String
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun loglevel(loglevel: kotlin.String, `package`: kotlin.String) : kotlin.String?  {
+        val localVariableConfig = loglevelRequestConfig(loglevel = loglevel, `package` = `package`)
+
+        return request<Unit, kotlin.String>(
+            localVariableConfig
+        )
+    }
+
+    /**
+    * To obtain the request config of the operation loglevel
+    *
+    * @param loglevel  
+    * @param `package`  
+    * @return RequestConfig
+    */
+    fun loglevelRequestConfig(loglevel: kotlin.String, `package`: kotlin.String) : RequestConfig<Unit> {
+        val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                put("package", listOf(`package`.toString()))
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v1/icure/loglevel/{loglevel}".replace("{"+"loglevel"+"}", "$loglevel"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
     * Resolve contacts conflicts
     * 
     * @param limit  (optional)
