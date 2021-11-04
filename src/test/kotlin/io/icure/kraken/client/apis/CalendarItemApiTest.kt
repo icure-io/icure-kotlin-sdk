@@ -751,7 +751,7 @@ class CalendarItemApiTest() {
      * @throws ApiException
      *          if the Api call fails
      */
-    @ParameterizedTest
+    /*@ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun setCalendarItemsDelegationsTest(fileName: String) = runBlocking {
 
@@ -807,7 +807,7 @@ class CalendarItemApiTest() {
                 alreadyCreatedObjects.remove(fileName)
             }
         }
-    }
+    }*/
     
 
     private suspend fun assertAreEquals(functionName: String, objectFromFile: Any?, response: Any) {

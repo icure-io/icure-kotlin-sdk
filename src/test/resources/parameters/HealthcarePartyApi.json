@@ -109,6 +109,12 @@
   "modifyHealthcarePartyInGroup": {
     "skipEndpoint": true
   },
+  "findHealthcarePartiesByName": {
+    "skipEndpoint": true
+  },
+  "findHealthcarePartiesBy": {
+    "skipEndpoint": true
+  },
   "fallback": {
   }
 }
