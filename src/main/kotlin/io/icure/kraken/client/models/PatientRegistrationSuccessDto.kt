@@ -22,28 +22,24 @@ import com.github.pozo.KotlinBuilder
 /**
  * 
  *
- * @param firstName 
- * @param lastName 
- * @param emailAddress 
- * @param userOptions 
+ * @param userLogin 
+ * @param userId 
+ * @param token 
  */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @KotlinBuilder
-data class RegistrationInformationDto (
+data class PatientRegistrationSuccessDto (
 
-    @field:JsonProperty("firstName")
-    val firstName: kotlin.String,
+    @field:JsonProperty("userLogin")
+    val userLogin: kotlin.String,
 
-    @field:JsonProperty("lastName")
-    val lastName: kotlin.String,
+    @field:JsonProperty("userId")
+    val userId: kotlin.String,
 
-    @field:JsonProperty("emailAddress")
-    val emailAddress: kotlin.String,
-
-    @field:JsonProperty("userOptions")
-    val userOptions: kotlin.String? = null
+    @field:JsonProperty("token")
+    val token: kotlin.String
 
 )
 

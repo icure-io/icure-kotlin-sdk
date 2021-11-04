@@ -15,8 +15,7 @@ package io.icure.kraken.client.apis
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.infrastructure.*
-import io.icure.kraken.client.models.MapOfIdsDto
-import io.icure.kraken.client.models.MessageWithBatch
+import io.icure.kraken.client.models.PermissionDto
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -36,7 +35,7 @@ import java.net.URLEncoder
 @Named
 @ExperimentalStdlibApi
 @ExperimentalCoroutinesApi
-class BeefactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = NettyWebClient(), authHeader: String? = null) : ApiClient(basePath, webClient, authHeader) {
+class PermissionApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = NettyWebClient(), authHeader: String? = null) : ApiClient(basePath, webClient, authHeader) {
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
@@ -45,45 +44,41 @@ class BeefactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     }
 
     /**
-    * create batch and message
-    * 
-    * @param insuranceId  
-    * @param newMessageId  
-    * @param numericalRef  
-    * @param mapOfIdsDto  
-    * @return MessageWithBatch
+    * Add / Revoke permissions to user
+    * Add a list of granted and revoked permissions to user.
+    * @param userId  
+    * @param permissionDto  
+    * @return kotlin.collections.List<PermissionDto>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createBatchAndMessage(insuranceId: kotlin.String, newMessageId: kotlin.String, numericalRef: kotlin.Long, mapOfIdsDto: MapOfIdsDto) : MessageWithBatch  {
-        val localVariableConfig = createBatchAndMessageRequestConfig(insuranceId = insuranceId, newMessageId = newMessageId, numericalRef = numericalRef, mapOfIdsDto = mapOfIdsDto)
+    suspend fun modifyUserPermissions(userId: kotlin.String, permissionDto: PermissionDto) : kotlin.collections.List<PermissionDto>  {
+        val localVariableConfig = modifyUserPermissionsRequestConfig(userId = userId, permissionDto = permissionDto)
 
-        return request<MapOfIdsDto, MessageWithBatch>(
+        return request<PermissionDto, kotlin.collections.List<PermissionDto>>(
             localVariableConfig
         )!!
     }
     /**
-    * To obtain the request config of the operation createBatchAndMessage
+    * To obtain the request config of the operation modifyUserPermissions
     *
-    * @param insuranceId  
-    * @param newMessageId  
-    * @param numericalRef  
-    * @param mapOfIdsDto  
+    * @param userId  
+    * @param permissionDto  
     * @return RequestConfig
     */
-    fun createBatchAndMessageRequestConfig(insuranceId: kotlin.String, newMessageId: kotlin.String, numericalRef: kotlin.Long, mapOfIdsDto: MapOfIdsDto) : RequestConfig<MapOfIdsDto> {
-        // val localVariableBody = mapOfIdsDto
+    fun modifyUserPermissionsRequestConfig(userId: kotlin.String, permissionDto: PermissionDto) : RequestConfig<PermissionDto> {
+        // val localVariableBody = permissionDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-        val localVariableBody = mapOfIdsDto
+        val localVariableBody = permissionDto
 
         return RequestConfig(
-            method = RequestMethod.POST,
-            path = "/rest/v2/be_efact/{insuranceId}/{newMessageId}/{numericalRef}".replace("{"+"insuranceId"+"}", "${URLEncoder.encode(insuranceId.toString(), Charsets.UTF_8)}").replace("{"+"newMessageId"+"}", "${URLEncoder.encode(newMessageId.toString(), Charsets.UTF_8)}").replace("{"+"numericalRef"+"}", "${URLEncoder.encode(numericalRef.toString(), Charsets.UTF_8)}"),
+            method = RequestMethod.PUT,
+            path = "/rest/v2/permissions/{userId}".replace("{"+"userId"+"}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

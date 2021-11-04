@@ -31,7 +31,7 @@ This runs all tests and packages the library.
 <a name="documentation-for-api-endpoints"></a>
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://localhost:16043*
+All URIs are relative to *https://kraken.icure.dev*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
@@ -49,6 +49,9 @@ Class | Method | HTTP request | Description
 *AgendaApi* | [**getAgendasForUser**](docs/AgendaApi.md#getagendasforuser) | **GET** /rest/v2/agenda/byUser | Gets all agendas for user
 *AgendaApi* | [**getReadableAgendasForUser**](docs/AgendaApi.md#getreadableagendasforuser) | **GET** /rest/v2/agenda/readableForUser | Gets readable agendas for user
 *AgendaApi* | [**modifyAgenda**](docs/AgendaApi.md#modifyagenda) | **PUT** /rest/v2/agenda | Modifies an agenda
+*AnonymousAccessApi* | [**getAvailabilitiesByPeriodAndAgendaId**](docs/AnonymousAccessApi.md#getavailabilitiesbyperiodandagendaid) | **GET** /rest/v2/aa/available/inGroup/{groupId}/agenda/{agendaId} | Get Availabilities for HCP and agendaId
+*AnonymousAccessApi* | [**listAgendasInHealthcareParty**](docs/AnonymousAccessApi.md#listagendasinhealthcareparty) | **GET** /rest/v2/aa/agenda/inGroup/{groupId}/forUser/{userId} | List healthcare parties for a provided group id
+*AnonymousAccessApi* | [**listHealthcarePartiesInGroup**](docs/AnonymousAccessApi.md#listhealthcarepartiesingroup) | **GET** /rest/v2/aa/hcparty/inGroup/{groupId} | List healthcare parties for a provided group id
 *ApplicationsettingsApi* | [**getApplicationSettings**](docs/ApplicationsettingsApi.md#getapplicationsettings) | **GET** /rest/v2/appsettings | Gets all application settings
 *ArticleApi* | [**createArticle**](docs/ArticleApi.md#createarticle) | **POST** /rest/v2/article | Creates a article
 *ArticleApi* | [**deleteArticles**](docs/ArticleApi.md#deletearticles) | **POST** /rest/v2/article/delete/batch | Deletes articles
@@ -408,7 +411,9 @@ Class | Method | HTTP request | Description
 *PatientApi* | [**modifyPatientReferral**](docs/PatientApi.md#modifypatientreferral) | **PUT** /rest/v2/patient/{patientId}/referral/{referralId} | Set a patient referral doctor
 *PatientApi* | [**modifyPatients**](docs/PatientApi.md#modifypatients) | **PUT** /rest/v2/patient/batch | Modify patients in bulk
 *PatientApi* | [**newPatientDelegations**](docs/PatientApi.md#newpatientdelegations) | **POST** /rest/v2/patient/{patientId}/delegate | Delegates a patients to a healthcare party
+*PatientApi* | [**registerPatient**](docs/PatientApi.md#registerpatient) | **POST** /rest/v2/patient/register/forHcp/{hcPartyId}/inGroup/{groupId} | Register a patient
 *PatientApi* | [**undeletePatient**](docs/PatientApi.md#undeletepatient) | **PUT** /rest/v2/patient/undelete/{patientIds} | undelete previously deleted patients
+*PermissionApi* | [**modifyUserPermissions**](docs/PermissionApi.md#modifyuserpermissions) | **PUT** /rest/v2/permissions/{userId} | Add / Revoke permissions to user
 *PlaceApi* | [**createPlace**](docs/PlaceApi.md#createplace) | **POST** /rest/v2/place | Creates a place
 *PlaceApi* | [**deletePlaces**](docs/PlaceApi.md#deleteplaces) | **POST** /rest/v2/place/delete/batch | Deletes places
 *PlaceApi* | [**getPlace**](docs/PlaceApi.md#getplace) | **GET** /rest/v2/place/{placeId} | Gets an place
@@ -606,6 +611,7 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.PartnershipDto](docs/PartnershipDto.md)
  - [io.icure.kraken.client.models.PatientDto](docs/PatientDto.md)
  - [io.icure.kraken.client.models.PatientHealthCarePartyDto](docs/PatientHealthCarePartyDto.md)
+ - [io.icure.kraken.client.models.PatientRegistrationSuccessDto](docs/PatientRegistrationSuccessDto.md)
  - [io.icure.kraken.client.models.PaymentDto](docs/PaymentDto.md)
  - [io.icure.kraken.client.models.PeriodicityDto](docs/PeriodicityDto.md)
  - [io.icure.kraken.client.models.PermissionDto](docs/PermissionDto.md)

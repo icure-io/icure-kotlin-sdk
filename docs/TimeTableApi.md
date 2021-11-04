@@ -1,6 +1,6 @@
 # TimeTableApi
 
-All URIs are relative to *http://localhost:16043*
+All URIs are relative to *https://kraken.icure.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------

@@ -42,7 +42,7 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
-            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "http://localhost:16043")
+            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "https://kraken.icure.dev")
         }
     }
 
@@ -422,7 +422,7 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     /**
     * Update delegations in calendarItems
     * 
-    * @param icureStubDto  (optional)
+    * @param icureStubDto  
     * @return kotlin.collections.List<CalendarItemDto>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -430,7 +430,7 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setCalendarItemsDelegations(icureStubDto: kotlin.collections.List<IcureStubDto>?) : kotlin.collections.List<CalendarItemDto>  {
+    suspend fun setCalendarItemsDelegations(icureStubDto: kotlin.collections.List<IcureStubDto>) : kotlin.collections.List<CalendarItemDto>  {
         val localVariableConfig = setCalendarItemsDelegationsRequestConfig(icureStubDto = icureStubDto)
 
         return request<kotlin.collections.List<IcureStubDto>, kotlin.collections.List<CalendarItemDto>>(
@@ -440,10 +440,10 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     /**
     * To obtain the request config of the operation setCalendarItemsDelegations
     *
-    * @param icureStubDto  (optional)
+    * @param icureStubDto  
     * @return RequestConfig
     */
-    fun setCalendarItemsDelegationsRequestConfig(icureStubDto: kotlin.collections.List<IcureStubDto>?) : RequestConfig<kotlin.collections.List<IcureStubDto>> {
+    fun setCalendarItemsDelegationsRequestConfig(icureStubDto: kotlin.collections.List<IcureStubDto>) : RequestConfig<kotlin.collections.List<IcureStubDto>> {
         // val localVariableBody = icureStubDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")

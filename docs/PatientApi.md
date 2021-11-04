@@ -1,6 +1,6 @@
 # PatientApi
 
-All URIs are relative to *http://localhost:16043*
+All URIs are relative to *https://kraken.icure.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -29,6 +29,7 @@ Method | HTTP request | Description
 [**modifyPatientReferral**](PatientApi.md#modifyPatientReferral) | **PUT** /rest/v2/patient/{patientId}/referral/{referralId} | Set a patient referral doctor
 [**modifyPatients**](PatientApi.md#modifyPatients) | **PUT** /rest/v2/patient/batch | Modify patients in bulk
 [**newPatientDelegations**](PatientApi.md#newPatientDelegations) | **POST** /rest/v2/patient/{patientId}/delegate | Delegates a patients to a healthcare party
+[**registerPatient**](PatientApi.md#registerPatient) | **POST** /rest/v2/patient/register/forHcp/{hcPartyId}/inGroup/{groupId} | Register a patient
 [**undeletePatient**](PatientApi.md#undeletePatient) | **PUT** /rest/v2/patient/undelete/{patientIds} | undelete previously deleted patients
 
 
@@ -1269,6 +1270,57 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**PatientDto**](PatientDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="registerPatient"></a>
+# **registerPatient**
+> PatientRegistrationSuccessDto registerPatient(hcPartyId, groupId, patientDto)
+
+Register a patient
+
+Register a new patient into the system
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = PatientApi()
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
+val groupId : kotlin.String = groupId_example // kotlin.String | 
+val patientDto : PatientDto =  // PatientDto | 
+try {
+    val result : PatientRegistrationSuccessDto = apiInstance.registerPatient(hcPartyId, groupId, patientDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling PatientApi#registerPatient")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling PatientApi#registerPatient")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **hcPartyId** | **kotlin.String**|  |
+ **groupId** | **kotlin.String**|  |
+ **patientDto** | [**PatientDto**](PatientDto.md)|  |
+
+### Return type
+
+[**PatientRegistrationSuccessDto**](PatientRegistrationSuccessDto.md)
 
 ### Authorization
 

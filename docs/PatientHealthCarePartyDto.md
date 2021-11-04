@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 ## Enum: type
 Name | Value
 ---- | -----
-type | doctor, referral, medicalhouse, retirementhome, hospital, other, referringphysician, referralHospital
+type | doctor, referral, medicalhouse, retirementhome, hospital, other, referringphysician, managingOrganization
 
 
 

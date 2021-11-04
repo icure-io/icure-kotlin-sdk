@@ -25,6 +25,7 @@ import io.icure.kraken.client.models.ListOfIdsDto
 import io.icure.kraken.client.models.PaginatedListPatientDto
 import io.icure.kraken.client.models.PaginatedListString
 import io.icure.kraken.client.models.PatientDto
+import io.icure.kraken.client.models.PatientRegistrationSuccessDto
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -48,7 +49,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
-            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "http://localhost:16043")
+            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "https://kraken.icure.dev")
         }
     }
 
@@ -1248,6 +1249,49 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/patient/{patientId}/delegate".replace("{"+"patientId"+"}", "${URLEncoder.encode(patientId.toString(), Charsets.UTF_8)}"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
+    * Register a patient
+    * Register a new patient into the system
+    * @param hcPartyId  
+    * @param groupId  
+    * @param patientDto  
+    * @return PatientRegistrationSuccessDto
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun registerPatient(hcPartyId: kotlin.String, groupId: kotlin.String, patientDto: PatientDto) : PatientRegistrationSuccessDto  {
+        val localVariableConfig = registerPatientRequestConfig(hcPartyId = hcPartyId, groupId = groupId, patientDto = patientDto)
+
+        return request<PatientDto, PatientRegistrationSuccessDto>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation registerPatient
+    *
+    * @param hcPartyId  
+    * @param groupId  
+    * @param patientDto  
+    * @return RequestConfig
+    */
+    fun registerPatientRequestConfig(hcPartyId: kotlin.String, groupId: kotlin.String, patientDto: PatientDto) : RequestConfig<PatientDto> {
+        // val localVariableBody = patientDto
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = patientDto
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v2/patient/register/forHcp/{hcPartyId}/inGroup/{groupId}".replace("{"+"hcPartyId"+"}", "${URLEncoder.encode(hcPartyId.toString(), Charsets.UTF_8)}").replace("{"+"groupId"+"}", "${URLEncoder.encode(groupId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
