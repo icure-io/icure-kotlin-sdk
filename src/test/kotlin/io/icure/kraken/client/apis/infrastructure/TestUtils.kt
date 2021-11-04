@@ -35,6 +35,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.reactive.awaitFirst
 import kotlinx.coroutines.reactive.awaitFirstOrNull
+import org.junit.platform.commons.logging.LoggerFactory
 import reactor.core.publisher.Mono
 import reactor.netty.http.client.HttpClient
 import java.io.File
@@ -50,6 +51,7 @@ import kotlin.system.exitProcess
 
 class TestUtils {
     companion object {
+        val log = LoggerFactory.getLogger(this.javaClass)
         val objectMapper = ObjectMapper()
             .registerModule(KotlinModule())
             .registerModule(object:SimpleModule() {
@@ -150,16 +152,17 @@ class TestUtils {
 
             if (family != null && ids != null) {
                 ids.forEach { id ->
-                    httpClient.get()
+                    val res = httpClient.get()
                         .uri(URI("https://couch.svcacc.icure.cloud/icure-test-2-tz-dev-team-$family/$id"))
                         .responseSingle{ response, bytes ->
                             if (response.status().code()<400) {
                                 bytes.mapNotNull { objectMapper?.readValue(it.toByteArraySafe(), object:TypeReference<IdWithRev>() {}) }
-                                    .mapNotNull {
-                                        it?.let { httpClient.delete().uri(URI("https://couch.svcacc.icure.cloud/icure-test-2-tz-dev-team-$family/$id?rev=${it.rev}")).response() }
+                                    .flatMap {
+                                        it?.let { httpClient.delete().uri(URI("https://couch.svcacc.icure.cloud/icure-test-2-tz-dev-team-$family/$id?rev=${it.rev}")).response() } ?: Mono.empty()
                                     }
                             } else Mono.empty()
                         }.awaitFirstOrNull()
+                    log.info {"Delete : $id <- ${res?.status()?.code()}"}
                 }
             }
         }
