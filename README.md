@@ -31,7 +31,7 @@ This runs all tests and packages the library.
 <a name="documentation-for-api-endpoints"></a>
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://kraken.icure.dev*
+All URIs are relative to *http://localhost:16043*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
@@ -409,7 +409,7 @@ Class | Method | HTTP request | Description
 *PatientApi* | [**findByNameBirthSsinAuto**](docs/PatientApi.md#findbynamebirthssinauto) | **GET** /rest/v1/patient/byNameBirthSsinAuto | Find patients for the current user (HcParty) 
 *PatientApi* | [**fuzzySearch**](docs/PatientApi.md#fuzzysearch) | **GET** /rest/v1/patient/fuzzy | Filter patients for the current user (HcParty) 
 *PatientApi* | [**getPatient**](docs/PatientApi.md#getpatient) | **GET** /rest/v1/patient/{patientId} | Get patient
-*PatientApi* | [**getPatientByHealrhcarepartyAndIdentifier**](docs/PatientApi.md#getpatientbyhealrhcarepartyandidentifier) | **GET** /rest/v1/patient/{hcPartyId}/{system}/{id} | Get patient by identifier
+*PatientApi* | [**getPatientByHealthcarepartyAndIdentifier**](docs/PatientApi.md#getpatientbyhealthcarepartyandidentifier) | **GET** /rest/v1/patient/{hcPartyId}/{id} | Get patient by identifier
 *PatientApi* | [**getPatientHcPartyKeysForDelegate**](docs/PatientApi.md#getpatienthcpartykeysfordelegate) | **GET** /rest/v1/patient/{patientId}/keys | Get the patient (identified by patientId) hcparty keys. Those keys are AES keys (encrypted) used to share information between HCPs and a patient.
 *PatientApi* | [**getPatients**](docs/PatientApi.md#getpatients) | **POST** /rest/v1/patient/byIds | Get patients by id
 *PatientApi* | [**listDeletedPatients**](docs/PatientApi.md#listdeletedpatients) | **GET** /rest/v1/patient/deleted/by_date | Find deleted patients

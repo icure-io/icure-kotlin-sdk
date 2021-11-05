@@ -62,6 +62,7 @@ import com.github.pozo.KotlinBuilder
  * @param details 
  * @param wasMigrated 
  * @param agendaId 
+ * @param recurrenceId 
  * @param flowItem 
  * @param encryptedSelf The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys.
  */
@@ -189,6 +190,9 @@ data class CalendarItemDto (
 
     @field:JsonProperty("agendaId")
     val agendaId: kotlin.String? = null,
+
+    @field:JsonProperty("recurrenceId")
+    val recurrenceId: kotlin.String? = null,
 
     @field:JsonProperty("flowItem")
     val flowItem: FlowItemDto? = null,

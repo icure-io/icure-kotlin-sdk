@@ -41,6 +41,7 @@ import com.github.pozo.KotlinBuilder
  * @param endOfLife Soft delete (unix epoch in ms) timestamp of the object.
  * @param deletionDate hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called.
  * @param parentId 
+ * @param templateId 
  * @param encryptedSelf The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys.
  */
 
@@ -112,6 +113,9 @@ data class ClassificationDto (
 
     @field:JsonProperty("parentId")
     val parentId: kotlin.String? = null,
+
+    @field:JsonProperty("templateId")
+    val templateId: kotlin.String? = null,
 
     /* The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys. */
     @field:JsonProperty("encryptedSelf")

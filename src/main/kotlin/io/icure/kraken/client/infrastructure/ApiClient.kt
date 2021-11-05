@@ -23,7 +23,6 @@ import java.net.URLConnection
 import java.nio.ByteBuffer
 import java.time.Duration
 
-
 @ExperimentalStdlibApi
 @ExperimentalCoroutinesApi
 open class ApiClient(val baseUrl: String, val httpClient: WebClient, val authHeader: String? = null) {

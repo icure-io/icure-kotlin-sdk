@@ -68,6 +68,7 @@ import com.github.pozo.KotlinBuilder
  * @param type 
  * @param contactPerson 
  * @param contactPersonHcpId 
+ * @param supervisorId 
  * @param publicKey The public key of this hcp
  */
 
@@ -229,6 +230,9 @@ data class HealthcarePartyDto (
 
     @field:JsonProperty("contactPersonHcpId")
     val contactPersonHcpId: kotlin.String? = null,
+
+    @field:JsonProperty("supervisorId")
+    val supervisorId: kotlin.String? = null,
 
     /* The public key of this hcp */
     @field:JsonProperty("publicKey")
