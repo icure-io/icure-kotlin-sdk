@@ -15,8 +15,8 @@ import java.util.*
 
 suspend fun PatientDto.initDelegations(user: UserDto, config: CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>): PatientDto {
     val delegations =  (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf())
-    val ek = UUID.randomUUID().toString()
-    val sfk = UUID.randomUUID().toString()
+    val ek = UUID.randomUUID().toString().replace("-","")
+    val sfk = UUID.randomUUID().toString().replace("-","")
     return this.copy(
         responsible = this.responsible ?: user.healthcarePartyId!!,
         author = user.id,
@@ -207,8 +207,8 @@ suspend fun CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>.e
             m + (d to setOf(DelegationDto(listOf(), myId, d, this.crypto.encryptKeyForHcp(myId, d, patient.id, secret))))
         })
     }.let { p ->
-        val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.let { aesKey ->
-            aesKey.replace(
+        val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.split(":")?.takeIf { it.size == 2 }?.let { aesKey ->
+            aesKey[1].replace(
                 "-",
                 ""
             ).fromHexString()
