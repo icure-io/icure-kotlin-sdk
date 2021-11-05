@@ -20,6 +20,8 @@ import java.util.concurrent.TimeUnit
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 class LocalCrypto(private val hcpartyApi: HcpartyApi, private val rsaKeyPairs: Map<String, Pair<RSAPrivateKey, RSAPublicKey>>) : Crypto {
+    private val aesValidKeySizes : Set<Int> = setOf(128, 192, 256)
+
     private val ownerHcpartyKeysCache : Cache<String, Deferred<Optional<Map<String, Pair<String, ByteArray>>>>> = Caffeine.newBuilder()
         .maximumSize(100)
         .expireAfterWrite(5, TimeUnit.MINUTES)
@@ -35,12 +37,26 @@ class LocalCrypto(private val hcpartyApi: HcpartyApi, private val rsaKeyPairs: M
                 getDelegateHcPartyKey(d.delegatedTo!!, d.owner!!)
             } catch (e: Exception) {
                 null
-            }?.let { k -> decryptAES(d.key!!.fromHexString(), k).toString(Charsets.UTF_8).split(":")[1] }
+            }?.let { k -> decryptAES(d.key!!.fromHexString(), k).toString(Charsets.UTF_8)
+                .split(":")[1].replace("-", "")
+            }
         }?.toSet() ?: throw IllegalArgumentException("Missing key for $myId")
     }
 
     override suspend fun encryptKeyForHcp(myId: String, delegateId: String, objectId: String, secret: String): String {
-        return encryptAES("$objectId:$secret".toByteArray(Charsets.UTF_8), getOrCreateHcPartyKey(myId, delegateId)).toHexString()
+        val secretKey = formatKey(secret)
+        if (secretKey.fromHexString().size * 8 !in aesValidKeySizes) {
+            throw IllegalArgumentException("Illegal AES key size : Secret length should be either 128, 192 or 256")
+        }
+        return encryptAES("$objectId:${formatKey(secret)}".toByteArray(Charsets.UTF_8), getOrCreateHcPartyKey(myId, delegateId)).toHexString()
+    }
+
+    private fun formatKey(key: String) : String {
+        return try {
+            UUID.fromString(key).let { key.replace("-", "") }
+        } catch (e : IllegalArgumentException) {
+            key
+        }
     }
 
     suspend fun getDelegateHcPartyKey(delegateId: String, ownerId: String, myPrivateKey: PrivateKey? = null): ByteArray {
