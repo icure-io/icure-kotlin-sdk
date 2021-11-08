@@ -23,7 +23,7 @@ val defaultMultiValueConverter: (item: Any?) -> String = { item ->
    } else {
        "$item"
    }
-   URLEncoder.encode(itemString, StandardCharsets.UTF_8)
+   itemString
 }
 
 fun <T : Any?> toMultiValue(items: Array<T>, collectionFormat: String, map: (item: T) -> String = defaultMultiValueConverter)
