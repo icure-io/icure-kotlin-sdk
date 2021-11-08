@@ -23,7 +23,7 @@ import java.nio.charset.StandardCharsets
    } else {
        "$item"
    }
-   URLEncoder.encode(itemString, StandardCharsets.UTF_8)
+   itemString
 }
 
 {{#nonPublicApi}}internal {{/nonPublicApi}}fun <T : Any?> toMultiValue(items: Array<T>, collectionFormat: String, map: (item: T) -> String = defaultMultiValueConverter)
