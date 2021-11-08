@@ -1,9 +1,7 @@
 package io.icure.kraken.client.infrastructure
 
-import org.apache.commons.validator.GenericValidator
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
-
 
 typealias MultiValueMap = MutableMap<String,List<String>>
 
@@ -25,12 +23,7 @@ val defaultMultiValueConverter: (item: Any?) -> String = { item ->
    } else {
        "$item"
    }
-
-    if (GenericValidator.isUrl(itemString)){
-        EncodingUtil.encodeURIComponent(itemString)?.toString() ?: itemString
-    } else {
-        URLEncoder.encode(itemString, StandardCharsets.UTF_8.toString())
-    }
+   URLEncoder.encode(itemString, StandardCharsets.UTF_8)
 }
 
 fun <T : Any?> toMultiValue(items: Array<T>, collectionFormat: String, map: (item: T) -> String = defaultMultiValueConverter)
