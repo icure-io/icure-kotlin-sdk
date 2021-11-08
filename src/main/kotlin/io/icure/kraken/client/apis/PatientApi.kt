@@ -664,17 +664,17 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param hcPartyId  
     * @param id  
     * @param system  (optional)
-    * @return kotlin.collections.List<PatientDto>
+    * @return PatientDto
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getPatientByHealthcarepartyAndIdentifier(hcPartyId: kotlin.String, id: kotlin.String, system: kotlin.String?) : kotlin.collections.List<PatientDto>?  {
+    suspend fun getPatientByHealthcarepartyAndIdentifier(hcPartyId: kotlin.String, id: kotlin.String, system: kotlin.String?) : PatientDto?  {
         val localVariableConfig = getPatientByHealthcarepartyAndIdentifierRequestConfig(hcPartyId = hcPartyId, id = id, system = system)
 
-        return request<Unit, kotlin.collections.List<PatientDto>>(
+        return request<Unit, PatientDto>(
             localVariableConfig
         )
     }
