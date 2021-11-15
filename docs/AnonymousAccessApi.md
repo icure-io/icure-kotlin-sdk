@@ -5,7 +5,7 @@ All URIs are relative to *https://kraken.icure.dev*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**getAvailabilitiesByPeriodAndAgendaId**](AnonymousAccessApi.md#getAvailabilitiesByPeriodAndAgendaId) | **GET** /rest/v1/aa/available/inGroup/{groupId}/agenda/{agendaId} | Get Availabilities for HCP and agendaId
-[**listAgendasInHealthcareParty**](AnonymousAccessApi.md#listAgendasInHealthcareParty) | **GET** /rest/v1/aa/agenda/inGroup/{groupId}/forUser/{userId} | List healthcare parties for a provided group id
+[**listAgendasInHealthcareParty**](AnonymousAccessApi.md#listAgendasInHealthcareParty) | **GET** /rest/v1/aa/agenda/inGroup/{groupId}/forUser/{userId} | List Agendas for a provided group id
 [**listHealthcarePartiesInGroup**](AnonymousAccessApi.md#listHealthcarePartiesInGroup) | **GET** /rest/v1/aa/hcparty/inGroup/{groupId} | List healthcare parties for a provided group id
 
 
@@ -70,7 +70,7 @@ No authorization required
 # **listAgendasInHealthcareParty**
 > kotlin.collections.List&lt;AgendaDto&gt; listAgendasInHealthcareParty(groupId, userId)
 
-List healthcare parties for a provided group id
+List Agendas for a provided group id
 
 Returns a list of healthcare parties contained in the group owning the providing id
 

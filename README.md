@@ -50,7 +50,7 @@ Class | Method | HTTP request | Description
 *AgendaApi* | [**getReadableAgendasForUser**](docs/AgendaApi.md#getreadableagendasforuser) | **GET** /rest/v1/agenda/readableForUser | Gets readable agendas for user
 *AgendaApi* | [**modifyAgenda**](docs/AgendaApi.md#modifyagenda) | **PUT** /rest/v1/agenda | Modifies an agenda
 *AnonymousAccessApi* | [**getAvailabilitiesByPeriodAndAgendaId**](docs/AnonymousAccessApi.md#getavailabilitiesbyperiodandagendaid) | **GET** /rest/v1/aa/available/inGroup/{groupId}/agenda/{agendaId} | Get Availabilities for HCP and agendaId
-*AnonymousAccessApi* | [**listAgendasInHealthcareParty**](docs/AnonymousAccessApi.md#listagendasinhealthcareparty) | **GET** /rest/v1/aa/agenda/inGroup/{groupId}/forUser/{userId} | List healthcare parties for a provided group id
+*AnonymousAccessApi* | [**listAgendasInHealthcareParty**](docs/AnonymousAccessApi.md#listagendasinhealthcareparty) | **GET** /rest/v1/aa/agenda/inGroup/{groupId}/forUser/{userId} | List Agendas for a provided group id
 *AnonymousAccessApi* | [**listHealthcarePartiesInGroup**](docs/AnonymousAccessApi.md#listhealthcarepartiesingroup) | **GET** /rest/v1/aa/hcparty/inGroup/{groupId} | List healthcare parties for a provided group id
 *ApplicationsettingsApi* | [**getApplicationSettings**](docs/ApplicationsettingsApi.md#getapplicationsettings) | **GET** /rest/v1/appsettings | Gets all application settings
 *ArticleApi* | [**createArticle**](docs/ArticleApi.md#createarticle) | **POST** /rest/v1/article | Creates a article
@@ -189,6 +189,7 @@ Class | Method | HTTP request | Description
 *ContactApi* | [**getContact**](docs/ContactApi.md#getcontact) | **GET** /rest/v1/contact/{contactId} | Get a contact
 *ContactApi* | [**getContacts**](docs/ContactApi.md#getcontacts) | **POST** /rest/v1/contact/byIds | Get contacts by batch
 *ContactApi* | [**getEmptyContent**](docs/ContactApi.md#getemptycontent) | **GET** /rest/v1/contact/service/content/empty | Get an empty content
+*ContactApi* | [**getServiceByHealthcarepartyAndIdentifier**](docs/ContactApi.md#getservicebyhealthcarepartyandidentifier) | **GET** /rest/v1/contact/{hcPartyId}/{value} | Get patient by identifier
 *ContactApi* | [**getServiceCodesOccurences**](docs/ContactApi.md#getservicecodesoccurences) | **GET** /rest/v1/contact/service/codes/{codeType}/{minOccurences} | Get the list of all used codes frequencies in services
 *ContactApi* | [**listContactsByOpeningDate**](docs/ContactApi.md#listcontactsbyopeningdate) | **GET** /rest/v1/contact/byOpeningDate | List contacts bu opening date parties with(out) pagination
 *ContactApi* | [**listServices**](docs/ContactApi.md#listservices) | **POST** /rest/v1/contact/service/byIds | List services with provided ids 

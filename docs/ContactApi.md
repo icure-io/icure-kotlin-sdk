@@ -20,6 +20,7 @@ Method | HTTP request | Description
 [**getContact**](ContactApi.md#getContact) | **GET** /rest/v1/contact/{contactId} | Get a contact
 [**getContacts**](ContactApi.md#getContacts) | **POST** /rest/v1/contact/byIds | Get contacts by batch
 [**getEmptyContent**](ContactApi.md#getEmptyContent) | **GET** /rest/v1/contact/service/content/empty | Get an empty content
+[**getServiceByHealthcarepartyAndIdentifier**](ContactApi.md#getServiceByHealthcarepartyAndIdentifier) | **GET** /rest/v1/contact/{hcPartyId}/{value} | Get patient by identifier
 [**getServiceCodesOccurences**](ContactApi.md#getServiceCodesOccurences) | **GET** /rest/v1/contact/service/codes/{codeType}/{minOccurences} | Get the list of all used codes frequencies in services
 [**listContactsByOpeningDate**](ContactApi.md#listContactsByOpeningDate) | **GET** /rest/v1/contact/byOpeningDate | List contacts bu opening date parties with(out) pagination
 [**listServices**](ContactApi.md#listServices) | **POST** /rest/v1/contact/service/byIds | List services with provided ids 
@@ -784,6 +785,57 @@ This endpoint does not need any parameter.
 ### Return type
 
 [**ContentDto**](ContentDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="getServiceByHealthcarepartyAndIdentifier"></a>
+# **getServiceByHealthcarepartyAndIdentifier**
+> ServiceDto getServiceByHealthcarepartyAndIdentifier(hcPartyId, `value`, system)
+
+Get patient by identifier
+
+It gets patient administrative data based on the identifier (root &amp; extension) parameters.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = ContactApi()
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
+val `value` : kotlin.String = `value`_example // kotlin.String | 
+val system : kotlin.String = system_example // kotlin.String | 
+try {
+    val result : ServiceDto = apiInstance.getServiceByHealthcarepartyAndIdentifier(hcPartyId, `value`, system)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling ContactApi#getServiceByHealthcarepartyAndIdentifier")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling ContactApi#getServiceByHealthcarepartyAndIdentifier")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **hcPartyId** | **kotlin.String**|  |
+ **&#x60;value&#x60;** | **kotlin.String**|  |
+ **system** | **kotlin.String**|  | [optional]
+
+### Return type
+
+[**ServiceDto**](ServiceDto.md)
 
 ### Authorization
 

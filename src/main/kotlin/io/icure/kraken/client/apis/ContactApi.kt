@@ -749,6 +749,54 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     }
 
     /**
+    * Get patient by identifier
+    * It gets patient administrative data based on the identifier (root &amp; extension) parameters.
+    * @param hcPartyId  
+    * @param `value`  
+    * @param system  (optional)
+    * @return ServiceDto
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun getServiceByHealthcarepartyAndIdentifier(hcPartyId: kotlin.String, `value`: kotlin.String, system: kotlin.String?) : ServiceDto?  {
+        val localVariableConfig = getServiceByHealthcarepartyAndIdentifierRequestConfig(hcPartyId = hcPartyId, `value` = `value`, system = system)
+
+        return request<Unit, ServiceDto>(
+            localVariableConfig
+        )
+    }
+
+    /**
+    * To obtain the request config of the operation getServiceByHealthcarepartyAndIdentifier
+    *
+    * @param hcPartyId  
+    * @param `value`  
+    * @param system  (optional)
+    * @return RequestConfig
+    */
+    fun getServiceByHealthcarepartyAndIdentifierRequestConfig(hcPartyId: kotlin.String, `value`: kotlin.String, system: kotlin.String?) : RequestConfig<Unit> {
+        val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                if (system != null) {
+                    put("system", listOf(system.toString()))
+                }
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v1/contact/{hcPartyId}/{value}".replace("{"+"hcPartyId"+"}", "$hcPartyId").replace("{"+"value"+"}", "$`value`"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
     * Get the list of all used codes frequencies in services
     * 
     * @param codeType  

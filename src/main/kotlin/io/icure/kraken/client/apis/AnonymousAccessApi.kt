@@ -99,7 +99,7 @@ class AnonymousAccessApi(basePath: kotlin.String = defaultBasePath, webClient: W
     }
 
     /**
-    * List healthcare parties for a provided group id
+    * List Agendas for a provided group id
     * Returns a list of healthcare parties contained in the group owning the providing id
     * @param groupId Healthcare parties group id 
     * @param userId Healthcare party user id 
