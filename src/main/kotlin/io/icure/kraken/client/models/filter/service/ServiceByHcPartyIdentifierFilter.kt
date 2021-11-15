@@ -1,6 +1,6 @@
 package io.icure.kraken.client.models.filter.service
 
-import io.icure.kraken.client.models.decrypted.ServiceDto
+import io.icure.kraken.client.models.ServiceDto
 import io.icure.kraken.client.models.filter.AbstractFilterDto
 
 data class ServiceByHcPartyIdentifierFilter(
