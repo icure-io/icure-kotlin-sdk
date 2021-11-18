@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:16043",
+      "url": "https://kraken.icure.dev",
       "description": "Generated server url"
     }
   ],

@@ -11,7 +11,7 @@ To generate tests, you have to execute the `apiGenerate` gradle task
 ## How to setup test generation ?
 
 1. Make sure to have the latest version of `openapi-generator-cli.jar` from [icure-openapi-generator](https://bitbucket.taktik.be/projects/ICURE/repos/icure-openapi-generator)
-2. VM Options must include an `API_URL` flag, like : `-DAPI_URL=http://localhost:16043`
+2. VM Options must include an `API_URL` flag, like : `-DAPI_URL=https://kraken.icure.dev`
 3. Make sure to provide credentials in thoses files : `.credentialsReadWrite`, `.credentialsReadOnly` and `.credentialsCouchDB`
 
 ## How to run tests ?
