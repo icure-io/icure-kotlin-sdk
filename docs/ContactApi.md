@@ -20,7 +20,7 @@ Method | HTTP request | Description
 [**getContact**](ContactApi.md#getContact) | **GET** /rest/v1/contact/{contactId} | Get a contact
 [**getContacts**](ContactApi.md#getContacts) | **POST** /rest/v1/contact/byIds | Get contacts by batch
 [**getEmptyContent**](ContactApi.md#getEmptyContent) | **GET** /rest/v1/contact/service/content/empty | Get an empty content
-[**getServiceByHealthcarepartyAndIdentifier**](ContactApi.md#getServiceByHealthcarepartyAndIdentifier) | **GET** /rest/v1/contact/{hcPartyId}/{value} | Get patient by identifier
+[**getServiceByHealthcarepartyAndIdentifier**](ContactApi.md#getServiceByHealthcarepartyAndIdentifier) | **GET** /rest/v1/contact/{hcPartyId}/{value} | Get service by identifier
 [**getServiceCodesOccurences**](ContactApi.md#getServiceCodesOccurences) | **GET** /rest/v1/contact/service/codes/{codeType}/{minOccurences} | Get the list of all used codes frequencies in services
 [**listContactsByOpeningDate**](ContactApi.md#listContactsByOpeningDate) | **GET** /rest/v1/contact/byOpeningDate | List contacts bu opening date parties with(out) pagination
 [**listServices**](ContactApi.md#listServices) | **POST** /rest/v1/contact/service/byIds | List services with provided ids 
@@ -799,9 +799,9 @@ No authorization required
 # **getServiceByHealthcarepartyAndIdentifier**
 > ServiceDto getServiceByHealthcarepartyAndIdentifier(hcPartyId, `value`, system)
 
-Get patient by identifier
+Get service by identifier
 
-It gets patient administrative data based on the identifier (root &amp; extension) parameters.
+It gets service data based on the identifier (root &amp; extension) parameters.
 
 ### Example
 ```kotlin

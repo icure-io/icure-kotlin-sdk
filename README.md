@@ -189,7 +189,7 @@ Class | Method | HTTP request | Description
 *ContactApi* | [**getContact**](docs/ContactApi.md#getcontact) | **GET** /rest/v1/contact/{contactId} | Get a contact
 *ContactApi* | [**getContacts**](docs/ContactApi.md#getcontacts) | **POST** /rest/v1/contact/byIds | Get contacts by batch
 *ContactApi* | [**getEmptyContent**](docs/ContactApi.md#getemptycontent) | **GET** /rest/v1/contact/service/content/empty | Get an empty content
-*ContactApi* | [**getServiceByHealthcarepartyAndIdentifier**](docs/ContactApi.md#getservicebyhealthcarepartyandidentifier) | **GET** /rest/v1/contact/{hcPartyId}/{value} | Get patient by identifier
+*ContactApi* | [**getServiceByHealthcarepartyAndIdentifier**](docs/ContactApi.md#getservicebyhealthcarepartyandidentifier) | **GET** /rest/v1/contact/{hcPartyId}/{value} | Get service by identifier
 *ContactApi* | [**getServiceCodesOccurences**](docs/ContactApi.md#getservicecodesoccurences) | **GET** /rest/v1/contact/service/codes/{codeType}/{minOccurences} | Get the list of all used codes frequencies in services
 *ContactApi* | [**listContactsByOpeningDate**](docs/ContactApi.md#listcontactsbyopeningdate) | **GET** /rest/v1/contact/byOpeningDate | List contacts bu opening date parties with(out) pagination
 *ContactApi* | [**listServices**](docs/ContactApi.md#listservices) | **POST** /rest/v1/contact/service/byIds | List services with provided ids 

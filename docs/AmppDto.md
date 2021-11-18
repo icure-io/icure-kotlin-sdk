@@ -24,6 +24,7 @@ Name | Type | Description | Notes
 **crmLink** | [**SamTextDto**](SamTextDto.md) |  |  [optional]
 **deliveryModusCode** | **kotlin.String** |  |  [optional]
 **deliveryModus** | [**SamTextDto**](SamTextDto.md) |  |  [optional]
+**deliveryModusSpecificationCode** | **kotlin.String** |  |  [optional]
 **deliveryModusSpecification** | [**SamTextDto**](SamTextDto.md) |  |  [optional]
 **dhpcLink** | [**SamTextDto**](SamTextDto.md) |  |  [optional]
 **distributorCompany** | [**CompanyDto**](CompanyDto.md) |  |  [optional]

@@ -749,8 +749,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     }
 
     /**
-    * Get patient by identifier
-    * It gets patient administrative data based on the identifier (root &amp; extension) parameters.
+    * Get service by identifier
+    * It gets service data based on the identifier (root &amp; extension) parameters.
     * @param hcPartyId  
     * @param `value`  
     * @param system  (optional)
