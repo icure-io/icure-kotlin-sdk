@@ -146,7 +146,7 @@ class InsuranceApiTest() {
                     } as? InsuranceDto ?: it
                     }
 
-                val response = api(credentialsFile).createInsurance(insuranceDto)
+                val response = api(credentialsFile).createInsurance(insuranceDto = insuranceDto)
 
                 val testFileName = "InsuranceApi.createInsurance"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -212,7 +212,7 @@ class InsuranceApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).deleteInsurance(insuranceId)
+                val response = api(credentialsFile).deleteInsurance(insuranceId = insuranceId)
 
                 val testFileName = "InsuranceApi.deleteInsurance"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -278,7 +278,7 @@ class InsuranceApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getInsurance(insuranceId)
+                val response = api(credentialsFile).getInsurance(insuranceId = insuranceId)
 
                 val testFileName = "InsuranceApi.getInsurance"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -344,7 +344,7 @@ class InsuranceApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).getInsurances(listOfIdsDto)
+                val response = api(credentialsFile).getInsurances(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "InsuranceApi.getInsurances"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -410,7 +410,7 @@ class InsuranceApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).listInsurancesByCode(insuranceCode)
+                val response = api(credentialsFile).listInsurancesByCode(insuranceCode = insuranceCode)
 
                 val testFileName = "InsuranceApi.listInsurancesByCode"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -476,7 +476,7 @@ class InsuranceApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).listInsurancesByName(insuranceName)
+                val response = api(credentialsFile).listInsurancesByName(insuranceName = insuranceName)
 
                 val testFileName = "InsuranceApi.listInsurancesByName"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -542,7 +542,7 @@ class InsuranceApiTest() {
                     } as? InsuranceDto ?: it
                     }
 
-                val response = api(credentialsFile).modifyInsurance(insuranceDto)
+                val response = api(credentialsFile).modifyInsurance(insuranceDto = insuranceDto)
 
                 val testFileName = "InsuranceApi.modifyInsurance"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")

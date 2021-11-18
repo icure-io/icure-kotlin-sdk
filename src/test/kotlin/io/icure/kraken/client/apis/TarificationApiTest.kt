@@ -146,7 +146,7 @@ class TarificationApiTest() {
                     } as? TarificationDto ?: it
                     }
 
-                val response = api(credentialsFile).createTarification(tarificationDto)
+                val response = api(credentialsFile).createTarification(tarificationDto = tarificationDto)
 
                 val testFileName = "TarificationApi.createTarification"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -247,7 +247,7 @@ class TarificationApiTest() {
                     } as? kotlin.Int ?: it
                     }
 
-                val response = api(credentialsFile).findTarificationsBy(region,type,tarification,version,startDocumentId,limit)
+                val response = api(credentialsFile).findTarificationsBy(region = region,type = type,tarification = tarification,version = version,startDocumentId = startDocumentId,limit = limit)
 
                 val testFileName = "TarificationApi.findTarificationsBy"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -334,7 +334,7 @@ class TarificationApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).findTarificationsBy1(region,type,tarification,version)
+                val response = api(credentialsFile).findTarificationsBy1(region = region,type = type,tarification = tarification,version = version)
 
                 val testFileName = "TarificationApi.findTarificationsBy1"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -435,7 +435,7 @@ class TarificationApiTest() {
                     } as? kotlin.Int ?: it
                     }
 
-                val response = api(credentialsFile).findTarificationsByLabel(region,types,language,label,startDocumentId,limit)
+                val response = api(credentialsFile).findTarificationsByLabel(region = region,types = types,language = language,label = label,startDocumentId = startDocumentId,limit = limit)
 
                 val testFileName = "TarificationApi.findTarificationsByLabel"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -501,7 +501,7 @@ class TarificationApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getTarification(tarificationId)
+                val response = api(credentialsFile).getTarification(tarificationId = tarificationId)
 
                 val testFileName = "TarificationApi.getTarification"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -581,7 +581,7 @@ class TarificationApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getTarificationWithParts(type,tarification,version)
+                val response = api(credentialsFile).getTarificationWithParts(type = type,tarification = tarification,version = version)
 
                 val testFileName = "TarificationApi.getTarificationWithParts"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -647,7 +647,7 @@ class TarificationApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).getTarifications(listOfIdsDto)
+                val response = api(credentialsFile).getTarifications(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "TarificationApi.getTarifications"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -713,7 +713,7 @@ class TarificationApiTest() {
                     } as? TarificationDto ?: it
                     }
 
-                val response = api(credentialsFile).modifyTarification(tarificationDto)
+                val response = api(credentialsFile).modifyTarification(tarificationDto = tarificationDto)
 
                 val testFileName = "TarificationApi.modifyTarification"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")

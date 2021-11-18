@@ -147,7 +147,7 @@ class DocumentTemplateApiTest() {
                     } as? DocumentTemplateDto ?: it
                     }
 
-                val response = api(credentialsFile).createDocumentTemplate(documentTemplateDto)
+                val response = api(credentialsFile).createDocumentTemplate(documentTemplateDto = documentTemplateDto)
 
                 val testFileName = "DocumentTemplateApi.createDocumentTemplate"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -213,7 +213,7 @@ class DocumentTemplateApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).deleteDocumentTemplates(listOfIdsDto)
+                val response = api(credentialsFile).deleteDocumentTemplates(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "DocumentTemplateApi.deleteDocumentTemplates"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -286,7 +286,7 @@ class DocumentTemplateApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getAttachmentText(documentTemplateId,attachmentId)
+                val response = api(credentialsFile).getAttachmentText(documentTemplateId = documentTemplateId,attachmentId = attachmentId)
 
                 val testFileName = "DocumentTemplateApi.getAttachmentText"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -352,7 +352,7 @@ class DocumentTemplateApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getDocumentTemplate(documentTemplateId)
+                val response = api(credentialsFile).getDocumentTemplate(documentTemplateId = documentTemplateId)
 
                 val testFileName = "DocumentTemplateApi.getDocumentTemplate"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -425,7 +425,7 @@ class DocumentTemplateApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getDocumentTemplateAttachment(documentTemplateId,attachmentId)
+                val response = api(credentialsFile).getDocumentTemplateAttachment(documentTemplateId = documentTemplateId,attachmentId = attachmentId)
 
                 val testFileName = "DocumentTemplateApi.getDocumentTemplateAttachment"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -609,7 +609,7 @@ class DocumentTemplateApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).listDocumentTemplatesByDocumentType(documentTypeCode)
+                val response = api(credentialsFile).listDocumentTemplatesByDocumentType(documentTypeCode = documentTypeCode)
 
                 val testFileName = "DocumentTemplateApi.listDocumentTemplatesByDocumentType"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -675,7 +675,7 @@ class DocumentTemplateApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).listDocumentTemplatesByDocumentTypeForCurrentUser(documentTypeCode)
+                val response = api(credentialsFile).listDocumentTemplatesByDocumentTypeForCurrentUser(documentTypeCode = documentTypeCode)
 
                 val testFileName = "DocumentTemplateApi.listDocumentTemplatesByDocumentTypeForCurrentUser"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -741,7 +741,7 @@ class DocumentTemplateApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).listDocumentTemplatesBySpeciality(specialityCode)
+                val response = api(credentialsFile).listDocumentTemplatesBySpeciality(specialityCode = specialityCode)
 
                 val testFileName = "DocumentTemplateApi.listDocumentTemplatesBySpeciality"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -814,7 +814,7 @@ class DocumentTemplateApiTest() {
                     } as? DocumentTemplateDto ?: it
                     }
 
-                val response = api(credentialsFile).modifyDocumentTemplate(documentTemplateId,documentTemplateDto)
+                val response = api(credentialsFile).modifyDocumentTemplate(documentTemplateId = documentTemplateId,documentTemplateDto = documentTemplateDto)
 
                 val testFileName = "DocumentTemplateApi.modifyDocumentTemplate"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -887,7 +887,7 @@ class DocumentTemplateApiTest() {
                     } ?: it
                     } as kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>
 
-                val response = api(credentialsFile).setDocumentTemplateAttachment(documentTemplateId,ioIcureKrakenClientInfrastructureByteArrayWrapper)
+                val response = api(credentialsFile).setDocumentTemplateAttachment(documentTemplateId = documentTemplateId,ioIcureKrakenClientInfrastructureByteArrayWrapper = ioIcureKrakenClientInfrastructureByteArrayWrapper)
 
                 val testFileName = "DocumentTemplateApi.setDocumentTemplateAttachment"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -960,7 +960,7 @@ class DocumentTemplateApiTest() {
                     } as? ByteArrayDto ?: it
                     }
 
-                val response = api(credentialsFile).setDocumentTemplateAttachmentJson(documentTemplateId,byteArrayDto)
+                val response = api(credentialsFile).setDocumentTemplateAttachmentJson(documentTemplateId = documentTemplateId,byteArrayDto = byteArrayDto)
 
                 val testFileName = "DocumentTemplateApi.setDocumentTemplateAttachmentJson"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")

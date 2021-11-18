@@ -45,6 +45,7 @@ Name | Type | Description | Notes
 **type** | **kotlin.String** |  |  [optional]
 **contactPerson** | **kotlin.String** |  |  [optional]
 **contactPersonHcpId** | **kotlin.String** |  |  [optional]
+**supervisorId** | **kotlin.String** |  |  [optional]
 **publicKey** | **kotlin.String** | The public key of this hcp |  [optional]
 
 

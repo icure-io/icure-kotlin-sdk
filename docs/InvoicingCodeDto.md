@@ -44,6 +44,7 @@ Name | Type | Description | Notes
 **prescriberCdHcParty** | **kotlin.String** |  |  [optional]
 **locationNihii** | **kotlin.String** |  |  [optional]
 **locationCdHcParty** | **kotlin.String** |  |  [optional]
+**locationService** | **kotlin.Int** |  |  [optional]
 **canceled** | **kotlin.Boolean** |  |  [optional]
 **accepted** | **kotlin.Boolean** |  |  [optional]
 **pending** | **kotlin.Boolean** |  |  [optional]

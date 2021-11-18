@@ -146,7 +146,7 @@ class KeywordApiTest() {
                     } as? KeywordDto ?: it
                     }
 
-                val response = api(credentialsFile).createKeyword(keywordDto)
+                val response = api(credentialsFile).createKeyword(keywordDto = keywordDto)
 
                 val testFileName = "KeywordApi.createKeyword"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -212,7 +212,7 @@ class KeywordApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).deleteKeywords(listOfIdsDto)
+                val response = api(credentialsFile).deleteKeywords(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "KeywordApi.deleteKeywords"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -278,7 +278,7 @@ class KeywordApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getKeyword(keywordId)
+                val response = api(credentialsFile).getKeyword(keywordId = keywordId)
 
                 val testFileName = "KeywordApi.getKeyword"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -403,7 +403,7 @@ class KeywordApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getKeywordsByUser(userId)
+                val response = api(credentialsFile).getKeywordsByUser(userId = userId)
 
                 val testFileName = "KeywordApi.getKeywordsByUser"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -469,7 +469,7 @@ class KeywordApiTest() {
                     } as? KeywordDto ?: it
                     }
 
-                val response = api(credentialsFile).modifyKeyword(keywordDto)
+                val response = api(credentialsFile).modifyKeyword(keywordDto = keywordDto)
 
                 val testFileName = "KeywordApi.modifyKeyword"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")

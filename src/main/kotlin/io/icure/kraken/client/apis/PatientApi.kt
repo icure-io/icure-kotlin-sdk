@@ -49,7 +49,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
-            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "https://kraken.icure.dev")
+            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "http://localhost:16043")
         }
     }
 
@@ -797,19 +797,19 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * Get patient by identifier
     * It gets patient administrative data based on the identifier (root &amp; extension) parameters.
     * @param hcPartyId  
-    * @param system  
     * @param id  
-    * @return kotlin.collections.List<PatientDto>
+    * @param system  (optional)
+    * @return PatientDto
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getPatientByHealthcarepartyAndIdentifier(hcPartyId: kotlin.String, system: kotlin.String, id: kotlin.String) : kotlin.collections.List<PatientDto>  {
-        val localVariableConfig = getPatientByHealthcarepartyAndIdentifierRequestConfig(hcPartyId = hcPartyId, system = system, id = id)
+    suspend fun getPatientByHealthcarepartyAndIdentifier(hcPartyId: kotlin.String, id: kotlin.String, system: kotlin.String?) : PatientDto  {
+        val localVariableConfig = getPatientByHealthcarepartyAndIdentifierRequestConfig(hcPartyId = hcPartyId, id = id, system = system)
 
-        return request<Unit, kotlin.collections.List<PatientDto>>(
+        return request<Unit, PatientDto>(
             localVariableConfig
         )!!
     }
@@ -817,20 +817,25 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * To obtain the request config of the operation getPatientByHealthcarepartyAndIdentifier
     *
     * @param hcPartyId  
-    * @param system  
     * @param id  
+    * @param system  (optional)
     * @return RequestConfig
     */
-    fun getPatientByHealthcarepartyAndIdentifierRequestConfig(hcPartyId: kotlin.String, system: kotlin.String, id: kotlin.String) : RequestConfig<Unit> {
+    fun getPatientByHealthcarepartyAndIdentifierRequestConfig(hcPartyId: kotlin.String, id: kotlin.String, system: kotlin.String?) : RequestConfig<Unit> {
         // val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                if (system != null) {
+                    put("system", listOf(system.toString()))
+                }
+            }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/patient/{hcPartyId}/{system}/{id}".replace("{"+"hcPartyId"+"}", "${URLEncoder.encode(hcPartyId.toString(), Charsets.UTF_8)}").replace("{"+"system"+"}", "${URLEncoder.encode(system.toString(), Charsets.UTF_8)}").replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/patient/{hcPartyId}/{id}".replace("{"+"hcPartyId"+"}", "${URLEncoder.encode(hcPartyId.toString(), Charsets.UTF_8)}").replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

@@ -39,6 +39,7 @@ Name | Type | Description | Notes
 **details** | **kotlin.String** |  |  [optional]
 **wasMigrated** | **kotlin.Boolean** |  |  [optional]
 **agendaId** | **kotlin.String** |  |  [optional]
+**recurrenceId** | **kotlin.String** |  |  [optional]
 **flowItem** | [**FlowItemDto**](FlowItemDto.md) |  |  [optional]
 **encryptedSelf** | **kotlin.String** | The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys. |  [optional]
 

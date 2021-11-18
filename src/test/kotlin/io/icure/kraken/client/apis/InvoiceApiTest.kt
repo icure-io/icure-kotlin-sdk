@@ -201,7 +201,7 @@ class InvoiceApiTest() {
                     } as? kotlin.Int ?: it
                     }
 
-                val response = api(credentialsFile).appendCodes(userId,type,sentMediumType,secretFKeys,invoicingCodeDto,insuranceId,invoiceId,gracePeriod)
+                val response = api(credentialsFile).appendCodes(userId = userId,type = type,sentMediumType = sentMediumType,secretFKeys = secretFKeys,invoicingCodeDto = invoicingCodeDto,insuranceId = insuranceId,invoiceId = invoiceId,gracePeriod = gracePeriod)
 
                 val testFileName = "InvoiceApi.appendCodes"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -267,7 +267,7 @@ class InvoiceApiTest() {
                     } as? InvoiceDto ?: it
                     }
 
-                val response = api(credentialsFile).createInvoice(invoiceDto)
+                val response = api(credentialsFile).createInvoice(invoiceDto = invoiceDto)
 
                 val testFileName = "InvoiceApi.createInvoice"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -333,7 +333,7 @@ class InvoiceApiTest() {
                     } ?: it
                     } as kotlin.collections.List<InvoiceDto>
 
-                val response = api(credentialsFile).createInvoices(invoiceDto)
+                val response = api(credentialsFile).createInvoices(invoiceDto = invoiceDto)
 
                 val testFileName = "InvoiceApi.createInvoices"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -399,7 +399,7 @@ class InvoiceApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).deleteInvoice(invoiceId)
+                val response = api(credentialsFile).deleteInvoice(invoiceId = invoiceId)
 
                 val testFileName = "InvoiceApi.deleteInvoice"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -465,7 +465,7 @@ class InvoiceApiTest() {
                     } as? FilterChainInvoice ?: it
                     }
 
-                val response = api(credentialsFile).filterInvoicesBy(filterChainInvoice)
+                val response = api(credentialsFile).filterInvoicesBy(filterChainInvoice = filterChainInvoice)
 
                 val testFileName = "InvoiceApi.filterInvoicesBy"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -566,7 +566,7 @@ class InvoiceApiTest() {
                     } as? kotlin.Int ?: it
                     }
 
-                val response = api(credentialsFile).findInvoicesByAuthor(hcPartyId,fromDate,toDate,startKey,startDocumentId,limit)
+                val response = api(credentialsFile).findInvoicesByAuthor(hcPartyId = hcPartyId,fromDate = fromDate,toDate = toDate,startKey = startKey,startDocumentId = startDocumentId,limit = limit)
 
                 val testFileName = "InvoiceApi.findInvoicesByAuthor"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -632,7 +632,7 @@ class InvoiceApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getInvoice(invoiceId)
+                val response = api(credentialsFile).getInvoice(invoiceId = invoiceId)
 
                 val testFileName = "InvoiceApi.getInvoice"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -698,7 +698,7 @@ class InvoiceApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).getInvoices(listOfIdsDto)
+                val response = api(credentialsFile).getInvoices(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "InvoiceApi.getInvoices"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -764,7 +764,7 @@ class InvoiceApiTest() {
                     } as? kotlin.Long ?: it
                     }
 
-                val response = api(credentialsFile).getTarificationsCodesOccurences(minOccurences)
+                val response = api(credentialsFile).getTarificationsCodesOccurences(minOccurences = minOccurences)
 
                 val testFileName = "InvoiceApi.getTarificationsCodesOccurences"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -851,7 +851,7 @@ class InvoiceApiTest() {
                     } as? kotlin.Long ?: it
                     }
 
-                val response = api(credentialsFile).listAllHcpsByStatus(status,listOfIdsDto,from,to)
+                val response = api(credentialsFile).listAllHcpsByStatus(status = status,listOfIdsDto = listOfIdsDto,from = from,to = to)
 
                 val testFileName = "InvoiceApi.listAllHcpsByStatus"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -917,7 +917,7 @@ class InvoiceApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).listInvoicesByContactIds(listOfIdsDto)
+                val response = api(credentialsFile).listInvoicesByContactIds(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "InvoiceApi.listInvoicesByContactIds"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -990,7 +990,7 @@ class InvoiceApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).listInvoicesByHCPartyAndPatientForeignKeys(hcPartyId,secretFKeys)
+                val response = api(credentialsFile).listInvoicesByHCPartyAndPatientForeignKeys(hcPartyId = hcPartyId,secretFKeys = secretFKeys)
 
                 val testFileName = "InvoiceApi.listInvoicesByHCPartyAndPatientForeignKeys"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1063,7 +1063,7 @@ class InvoiceApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).listInvoicesByHcPartyAndGroupId(hcPartyId,groupId)
+                val response = api(credentialsFile).listInvoicesByHcPartyAndGroupId(hcPartyId = hcPartyId,groupId = groupId)
 
                 val testFileName = "InvoiceApi.listInvoicesByHcPartyAndGroupId"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1164,7 +1164,7 @@ class InvoiceApiTest() {
                     } as? kotlin.Long ?: it
                     }
 
-                val response = api(credentialsFile).listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate(hcPartyId,sentMediumType,invoiceType,sent,from,to)
+                val response = api(credentialsFile).listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate(hcPartyId = hcPartyId,sentMediumType = sentMediumType,invoiceType = invoiceType,sent = sent,from = from,to = to)
 
                 val testFileName = "InvoiceApi.listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1258,7 +1258,7 @@ class InvoiceApiTest() {
                     } as? kotlin.Long ?: it
                     }
 
-                val response = api(credentialsFile).listInvoicesByHcpartySendingModeStatusDate(hcPartyId,sendingMode,status,from,to)
+                val response = api(credentialsFile).listInvoicesByHcpartySendingModeStatusDate(hcPartyId = hcPartyId,sendingMode = sendingMode,status = status,from = from,to = to)
 
                 val testFileName = "InvoiceApi.listInvoicesByHcpartySendingModeStatusDate"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1324,7 +1324,7 @@ class InvoiceApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).listInvoicesByIds(invoiceIds)
+                val response = api(credentialsFile).listInvoicesByIds(invoiceIds = invoiceIds)
 
                 val testFileName = "InvoiceApi.listInvoicesByIds"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1390,7 +1390,7 @@ class InvoiceApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).listInvoicesByRecipientsIds(recipientIds)
+                val response = api(credentialsFile).listInvoicesByRecipientsIds(recipientIds = recipientIds)
 
                 val testFileName = "InvoiceApi.listInvoicesByRecipientsIds"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1456,7 +1456,7 @@ class InvoiceApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).listInvoicesByServiceIds(serviceIds)
+                val response = api(credentialsFile).listInvoicesByServiceIds(serviceIds = serviceIds)
 
                 val testFileName = "InvoiceApi.listInvoicesByServiceIds"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1529,7 +1529,7 @@ class InvoiceApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).listInvoicesDelegationsStubsByHCPartyAndPatientForeignKeys(hcPartyId,secretFKeys)
+                val response = api(credentialsFile).listInvoicesDelegationsStubsByHCPartyAndPatientForeignKeys(hcPartyId = hcPartyId,secretFKeys = secretFKeys)
 
                 val testFileName = "InvoiceApi.listInvoicesDelegationsStubsByHCPartyAndPatientForeignKeys"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1595,7 +1595,7 @@ class InvoiceApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).listToInsurances(userIds)
+                val response = api(credentialsFile).listToInsurances(userIds = userIds)
 
                 val testFileName = "InvoiceApi.listToInsurances"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1661,7 +1661,7 @@ class InvoiceApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).listToInsurancesUnsent(userIds)
+                val response = api(credentialsFile).listToInsurancesUnsent(userIds = userIds)
 
                 val testFileName = "InvoiceApi.listToInsurancesUnsent"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1727,7 +1727,7 @@ class InvoiceApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).listToPatients(hcPartyId)
+                val response = api(credentialsFile).listToPatients(hcPartyId = hcPartyId)
 
                 val testFileName = "InvoiceApi.listToPatients"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1793,7 +1793,7 @@ class InvoiceApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).listToPatientsUnsent(hcPartyId)
+                val response = api(credentialsFile).listToPatientsUnsent(hcPartyId = hcPartyId)
 
                 val testFileName = "InvoiceApi.listToPatientsUnsent"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1866,7 +1866,7 @@ class InvoiceApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).mergeTo(invoiceId,listOfIdsDto)
+                val response = api(credentialsFile).mergeTo(invoiceId = invoiceId,listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "InvoiceApi.mergeTo"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1932,7 +1932,7 @@ class InvoiceApiTest() {
                     } as? InvoiceDto ?: it
                     }
 
-                val response = api(credentialsFile).modifyInvoice(invoiceDto)
+                val response = api(credentialsFile).modifyInvoice(invoiceDto = invoiceDto)
 
                 val testFileName = "InvoiceApi.modifyInvoice"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1998,7 +1998,7 @@ class InvoiceApiTest() {
                     } ?: it
                     } as kotlin.collections.List<InvoiceDto>
 
-                val response = api(credentialsFile).modifyInvoices(invoiceDto)
+                val response = api(credentialsFile).modifyInvoices(invoiceDto = invoiceDto)
 
                 val testFileName = "InvoiceApi.modifyInvoices"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -2071,7 +2071,7 @@ class InvoiceApiTest() {
                     } ?: it
                     } as kotlin.collections.List<DelegationDto>
 
-                val response = api(credentialsFile).newInvoiceDelegations(invoiceId,delegationDto)
+                val response = api(credentialsFile).newInvoiceDelegations(invoiceId = invoiceId,delegationDto = delegationDto)
 
                 val testFileName = "InvoiceApi.newInvoiceDelegations"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -2137,7 +2137,7 @@ class InvoiceApiTest() {
                     } as? InvoiceDto ?: it
                     }
 
-                val response = api(credentialsFile).reassignInvoice(invoiceDto)
+                val response = api(credentialsFile).reassignInvoice(invoiceDto = invoiceDto)
 
                 val testFileName = "InvoiceApi.reassignInvoice"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -2224,7 +2224,7 @@ class InvoiceApiTest() {
                     } ?: it
                     } as kotlin.collections.List<kotlin.String>
 
-                val response = api(credentialsFile).removeCodes(userId,serviceId,secretFKeys,requestBody)
+                val response = api(credentialsFile).removeCodes(userId = userId,serviceId = serviceId,secretFKeys = secretFKeys,requestBody = requestBody)
 
                 val testFileName = "InvoiceApi.removeCodes"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -2290,7 +2290,7 @@ class InvoiceApiTest() {
                     } ?: it
                     } as kotlin.collections.List<IcureStubDto>
 
-                val response = api(credentialsFile).setInvoicesDelegations(icureStubDto)
+                val response = api(credentialsFile).setInvoicesDelegations(icureStubDto = icureStubDto)
 
                 val testFileName = "InvoiceApi.setInvoicesDelegations"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -2370,7 +2370,7 @@ class InvoiceApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).validate(invoiceId,scheme,forcedValue)
+                val response = api(credentialsFile).validate(invoiceId = invoiceId,scheme = scheme,forcedValue = forcedValue)
 
                 val testFileName = "InvoiceApi.validate"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")

@@ -23,6 +23,7 @@ import io.icure.kraken.client.models.ListOfIdsDto
 import io.icure.kraken.client.models.PaginatedListPatientDto
 import io.icure.kraken.client.models.PaginatedListString
 import io.icure.kraken.client.models.PatientDto
+import io.icure.kraken.client.models.PatientRegistrationSuccessDto
 import assertk.assertThat
 import assertk.assertions.isEqualToIgnoringGivenProperties
 import java.io.*
@@ -153,7 +154,7 @@ class PatientApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).countOfPatients(hcPartyId)
+                val response = api(credentialsFile).countOfPatients(hcPartyId = hcPartyId)
 
                 val testFileName = "PatientApi.countOfPatients"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -219,7 +220,7 @@ class PatientApiTest() {
                     } as? PatientDto ?: it
                     }
 
-                val response = api(credentialsFile).createPatient(patientDto)
+                val response = api(credentialsFile).createPatient(patientDto = patientDto)
 
                 val testFileName = "PatientApi.createPatient"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -285,7 +286,7 @@ class PatientApiTest() {
                     } ?: it
                     } as kotlin.collections.List<PatientDto>
 
-                val response = api(credentialsFile).createPatients(patientDto)
+                val response = api(credentialsFile).createPatients(patientDto = patientDto)
 
                 val testFileName = "PatientApi.createPatients"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -351,7 +352,7 @@ class PatientApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).deletePatients(listOfIdsDto)
+                val response = api(credentialsFile).deletePatients(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "PatientApi.deletePatients"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -459,7 +460,7 @@ class PatientApiTest() {
                     } as? kotlin.Boolean ?: it
                     }
 
-                val response = api(credentialsFile).filterPatientsBy(filterChainPatient,startKey,startDocumentId,limit,skip,sort,desc)
+                val response = api(credentialsFile).filterPatientsBy(filterChainPatient = filterChainPatient,startKey = startKey,startDocumentId = startDocumentId,limit = limit,skip = skip,sort = sort,desc = desc)
 
                 val testFileName = "PatientApi.filterPatientsBy"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -553,7 +554,7 @@ class PatientApiTest() {
                     } as? kotlin.Int ?: it
                     }
 
-                val response = api(credentialsFile).findDeletedPatients(startDate,endDate,desc,startDocumentId,limit)
+                val response = api(credentialsFile).findDeletedPatients(startDate = startDate,endDate = endDate,desc = desc,startDocumentId = startDocumentId,limit = limit)
 
                 val testFileName = "PatientApi.findDeletedPatients"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -654,7 +655,7 @@ class PatientApiTest() {
                     } as? kotlin.Int ?: it
                     }
 
-                val response = api(credentialsFile).findPatientsByAccessLogUserAfterDate(userId,accessType,startDate,startKey,startDocumentId,limit)
+                val response = api(credentialsFile).findPatientsByAccessLogUserAfterDate(userId = userId,accessType = accessType,startDate = startDate,startKey = startKey,startDocumentId = startDocumentId,limit = limit)
 
                 val testFileName = "PatientApi.findPatientsByAccessLogUserAfterDate"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -755,7 +756,7 @@ class PatientApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).findPatientsByHealthcareParty(hcPartyId,sortField,startKey,startDocumentId,limit,sortDirection)
+                val response = api(credentialsFile).findPatientsByHealthcareParty(hcPartyId = hcPartyId,sortField = sortField,startKey = startKey,startDocumentId = startDocumentId,limit = limit,sortDirection = sortDirection)
 
                 val testFileName = "PatientApi.findPatientsByHealthcareParty"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -856,7 +857,7 @@ class PatientApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).findPatientsByNameBirthSsinAuto(healthcarePartyId,filterValue,startKey,startDocumentId,limit,sortDirection)
+                val response = api(credentialsFile).findPatientsByNameBirthSsinAuto(healthcarePartyId = healthcarePartyId,filterValue = filterValue,startKey = startKey,startDocumentId = startDocumentId,limit = limit,sortDirection = sortDirection)
 
                 val testFileName = "PatientApi.findPatientsByNameBirthSsinAuto"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -943,7 +944,7 @@ class PatientApiTest() {
                     } as? kotlin.Int ?: it
                     }
 
-                val response = api(credentialsFile).findPatientsIdsByHealthcareParty(hcPartyId,startKey,startDocumentId,limit)
+                val response = api(credentialsFile).findPatientsIdsByHealthcareParty(hcPartyId = hcPartyId,startKey = startKey,startDocumentId = startDocumentId,limit = limit)
 
                 val testFileName = "PatientApi.findPatientsIdsByHealthcareParty"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1030,7 +1031,7 @@ class PatientApiTest() {
                     } as? kotlin.Int ?: it
                     }
 
-                val response = api(credentialsFile).findPatientsModifiedAfter(date,startKey,startDocumentId,limit)
+                val response = api(credentialsFile).findPatientsModifiedAfter(date = date,startKey = startKey,startDocumentId = startDocumentId,limit = limit)
 
                 val testFileName = "PatientApi.findPatientsModifiedAfter"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1110,7 +1111,7 @@ class PatientApiTest() {
                     } as? kotlin.Int ?: it
                     }
 
-                val response = api(credentialsFile).fuzzySearch(firstName,lastName,dateOfBirth)
+                val response = api(credentialsFile).fuzzySearch(firstName = firstName,lastName = lastName,dateOfBirth = dateOfBirth)
 
                 val testFileName = "PatientApi.fuzzySearch"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1176,7 +1177,7 @@ class PatientApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getPatient(patientId)
+                val response = api(credentialsFile).getPatient(patientId = patientId)
 
                 val testFileName = "PatientApi.getPatient"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1242,7 +1243,7 @@ class PatientApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getPatientByExternalId(externalId)
+                val response = api(credentialsFile).getPatientByExternalId(externalId = externalId)
 
                 val testFileName = "PatientApi.getPatientByExternalId"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1307,13 +1308,6 @@ class PatientApiTest() {
                     it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
                     }
-                val system: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getPatientByHealthcarepartyAndIdentifier.system")!!.let {
-                    (it as? PatientDto)?.takeIf { TestUtils.isAutoRev(fileName, "getPatientByHealthcarepartyAndIdentifier") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
-                    } as? kotlin.String ?: it
-                    }
                 val id: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getPatientByHealthcarepartyAndIdentifier.id")!!.let {
                     (it as? PatientDto)?.takeIf { TestUtils.isAutoRev(fileName, "getPatientByHealthcarepartyAndIdentifier") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
@@ -1321,14 +1315,21 @@ class PatientApiTest() {
                     it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
                     }
+                val system: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "getPatientByHealthcarepartyAndIdentifier.system")?.let {
+                    (it as? PatientDto)?.takeIf { TestUtils.isAutoRev(fileName, "getPatientByHealthcarepartyAndIdentifier") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
+                    }
 
-                val response = api(credentialsFile).getPatientByHealthcarepartyAndIdentifier(hcPartyId,system,id)
+                val response = api(credentialsFile).getPatientByHealthcarepartyAndIdentifier(hcPartyId = hcPartyId,id = id,system = system)
 
                 val testFileName = "PatientApi.getPatientByHealthcarepartyAndIdentifier"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
                     val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<PatientDto>? != null) {
-                        if ("kotlin.collections.List<PatientDto>".contains("String>")) {
+                        if ("PatientDto".contains("String>")) {
                             object : TypeReference<List<String>>() {}
                         } else {
                             object : TypeReference<List<PatientDto>>() {}
@@ -1336,7 +1337,7 @@ class PatientApiTest() {
                     } else if(response as? kotlin.collections.Map<String, String>? != null){
                         object : TypeReference<Map<String,String>>() {}
                     } else {
-                        object : TypeReference<kotlin.collections.List<PatientDto>>() {}
+                        object : TypeReference<PatientDto>() {}
                     })
                     assertAreEquals("getPatientByHealthcarepartyAndIdentifier", objectFromFile, response)
                     println("Comparison successful")
@@ -1388,7 +1389,7 @@ class PatientApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getPatientHcPartyKeysForDelegate(patientId)
+                val response = api(credentialsFile).getPatientHcPartyKeysForDelegate(patientId = patientId)
 
                 val testFileName = "PatientApi.getPatientHcPartyKeysForDelegate"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1454,7 +1455,7 @@ class PatientApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).getPatients(listOfIdsDto)
+                val response = api(credentialsFile).getPatients(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "PatientApi.getPatients"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1527,7 +1528,7 @@ class PatientApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).listDeletedPatientsByName(firstName,lastName)
+                val response = api(credentialsFile).listDeletedPatientsByName(firstName = firstName,lastName = lastName)
 
                 val testFileName = "PatientApi.listDeletedPatientsByName"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1593,7 +1594,7 @@ class PatientApiTest() {
                     } as? kotlin.Long ?: it
                     }
 
-                val response = api(credentialsFile).listOfMergesAfter(date)
+                val response = api(credentialsFile).listOfMergesAfter(date = date)
 
                 val testFileName = "PatientApi.listOfMergesAfter"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1659,7 +1660,7 @@ class PatientApiTest() {
                     } as? AbstractFilterDtoPatient ?: it
                     }
 
-                val response = api(credentialsFile).matchPatientsBy(abstractFilterDtoPatient)
+                val response = api(credentialsFile).matchPatientsBy(abstractFilterDtoPatient = abstractFilterDtoPatient)
 
                 val testFileName = "PatientApi.matchPatientsBy"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1732,7 +1733,7 @@ class PatientApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).mergeInto(toId,fromIds)
+                val response = api(credentialsFile).mergeInto(toId = toId,fromIds = fromIds)
 
                 val testFileName = "PatientApi.mergeInto"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1798,7 +1799,7 @@ class PatientApiTest() {
                     } as? PatientDto ?: it
                     }
 
-                val response = api(credentialsFile).modifyPatient(patientDto)
+                val response = api(credentialsFile).modifyPatient(patientDto = patientDto)
 
                 val testFileName = "PatientApi.modifyPatient"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1885,7 +1886,7 @@ class PatientApiTest() {
                     } as? kotlin.Long ?: it
                     }
 
-                val response = api(credentialsFile).modifyPatientReferral(patientId,referralId,start,end)
+                val response = api(credentialsFile).modifyPatientReferral(patientId = patientId,referralId = referralId,start = start,end = end)
 
                 val testFileName = "PatientApi.modifyPatientReferral"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1951,7 +1952,7 @@ class PatientApiTest() {
                     } ?: it
                     } as kotlin.collections.List<PatientDto>
 
-                val response = api(credentialsFile).modifyPatients(patientDto)
+                val response = api(credentialsFile).modifyPatients(patientDto = patientDto)
 
                 val testFileName = "PatientApi.modifyPatients"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -2024,7 +2025,7 @@ class PatientApiTest() {
                     } ?: it
                     } as kotlin.collections.List<DelegationDto>
 
-                val response = api(credentialsFile).newPatientDelegations(patientId,delegationDto)
+                val response = api(credentialsFile).newPatientDelegations(patientId = patientId,delegationDto = delegationDto)
 
                 val testFileName = "PatientApi.newPatientDelegations"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -2041,6 +2042,86 @@ class PatientApiTest() {
                         object : TypeReference<PatientDto>() {}
                     })
                     assertAreEquals("newPatientDelegations", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
+                        }
+                    }
+                }
+            }
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
+        }
+    }
+    
+    /**
+     * Register a patient
+     *
+     * Register a new patient into the system
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @ParameterizedTest
+    @MethodSource("fileNames") // six numbers
+	fun registerPatientTest(fileName: String) = runBlocking {
+
+        if (TestUtils.skipEndpoint(fileName, "registerPatient")) {
+            assertTrue(true, "Test of registerPatient endpoint has been skipped")
+        } else {
+            try{
+                createForModification(fileName)
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "registerPatient")
+                val hcPartyId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "registerPatient.hcPartyId")!!.let {
+                    (it as? PatientDto)?.takeIf { TestUtils.isAutoRev(fileName, "registerPatient") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
+                    }
+                val groupId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "registerPatient.groupId")!!.let {
+                    (it as? PatientDto)?.takeIf { TestUtils.isAutoRev(fileName, "registerPatient") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
+                    }
+                val patientDto: PatientDto = TestUtils.getParameter<PatientDto>(fileName, "registerPatient.patientDto")!!.let {
+                    (it as? PatientDto)?.takeIf { TestUtils.isAutoRev(fileName, "registerPatient") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? PatientDto ?: it
+                    }
+
+                val response = api(credentialsFile).registerPatient(hcPartyId = hcPartyId,groupId = groupId,patientDto = patientDto)
+
+                val testFileName = "PatientApi.registerPatient"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<PatientRegistrationSuccessDto>? != null) {
+                        if ("PatientRegistrationSuccessDto".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
+                        } else {
+                            object : TypeReference<List<PatientRegistrationSuccessDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<PatientRegistrationSuccessDto>() {}
+                    })
+                    assertAreEquals("registerPatient", objectFromFile, response)
                     println("Comparison successful")
                 }
                 catch (e: Exception) {
@@ -2090,7 +2171,7 @@ class PatientApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).undeletePatient(patientIds)
+                val response = api(credentialsFile).undeletePatient(patientIds = patientIds)
 
                 val testFileName = "PatientApi.undeletePatient"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")

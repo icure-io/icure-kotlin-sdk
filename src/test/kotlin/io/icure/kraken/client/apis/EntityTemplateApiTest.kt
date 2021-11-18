@@ -146,7 +146,7 @@ class EntityTemplateApiTest() {
                     } as? EntityTemplateDto ?: it
                     }
 
-                val response = api(credentialsFile).createEntityTemplate(entityTemplateDto)
+                val response = api(credentialsFile).createEntityTemplate(entityTemplateDto = entityTemplateDto)
 
                 val testFileName = "EntityTemplateApi.createEntityTemplate"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -212,7 +212,7 @@ class EntityTemplateApiTest() {
                     } ?: it
                     } as kotlin.collections.List<EntityTemplateDto>
 
-                val response = api(credentialsFile).createEntityTemplates(entityTemplateDto)
+                val response = api(credentialsFile).createEntityTemplates(entityTemplateDto = entityTemplateDto)
 
                 val testFileName = "EntityTemplateApi.createEntityTemplates"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -278,7 +278,7 @@ class EntityTemplateApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).deleteEntityTemplate(listOfIdsDto)
+                val response = api(credentialsFile).deleteEntityTemplate(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "EntityTemplateApi.deleteEntityTemplate"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -358,7 +358,7 @@ class EntityTemplateApiTest() {
                     } as? kotlin.Boolean ?: it
                     }
 
-                val response = api(credentialsFile).findAllEntityTemplatesByKeyword(type,keyword,includeEntities)
+                val response = api(credentialsFile).findAllEntityTemplatesByKeyword(type = type,keyword = keyword,includeEntities = includeEntities)
 
                 val testFileName = "EntityTemplateApi.findAllEntityTemplatesByKeyword"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -424,7 +424,7 @@ class EntityTemplateApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getEntityTemplate(entityTemplateId)
+                val response = api(credentialsFile).getEntityTemplate(entityTemplateId = entityTemplateId)
 
                 val testFileName = "EntityTemplateApi.getEntityTemplate"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -490,7 +490,7 @@ class EntityTemplateApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).getEntityTemplates(listOfIdsDto)
+                val response = api(credentialsFile).getEntityTemplates(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "EntityTemplateApi.getEntityTemplates"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -570,7 +570,7 @@ class EntityTemplateApiTest() {
                     } as? kotlin.Boolean ?: it
                     }
 
-                val response = api(credentialsFile).listAllEntityTemplatesBy(type,searchString,includeEntities)
+                val response = api(credentialsFile).listAllEntityTemplatesBy(type = type,searchString = searchString,includeEntities = includeEntities)
 
                 val testFileName = "EntityTemplateApi.listAllEntityTemplatesBy"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -657,7 +657,7 @@ class EntityTemplateApiTest() {
                     } as? kotlin.Boolean ?: it
                     }
 
-                val response = api(credentialsFile).listEntityTemplatesBy(userId,type,searchString,includeEntities)
+                val response = api(credentialsFile).listEntityTemplatesBy(userId = userId,type = type,searchString = searchString,includeEntities = includeEntities)
 
                 val testFileName = "EntityTemplateApi.listEntityTemplatesBy"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -744,7 +744,7 @@ class EntityTemplateApiTest() {
                     } as? kotlin.Boolean ?: it
                     }
 
-                val response = api(credentialsFile).listEntityTemplatesByKeyword(userId,type,keyword,includeEntities)
+                val response = api(credentialsFile).listEntityTemplatesByKeyword(userId = userId,type = type,keyword = keyword,includeEntities = includeEntities)
 
                 val testFileName = "EntityTemplateApi.listEntityTemplatesByKeyword"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -810,7 +810,7 @@ class EntityTemplateApiTest() {
                     } as? EntityTemplateDto ?: it
                     }
 
-                val response = api(credentialsFile).modifyEntityTemplate(entityTemplateDto)
+                val response = api(credentialsFile).modifyEntityTemplate(entityTemplateDto = entityTemplateDto)
 
                 val testFileName = "EntityTemplateApi.modifyEntityTemplate"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -876,7 +876,7 @@ class EntityTemplateApiTest() {
                     } ?: it
                     } as kotlin.collections.List<EntityTemplateDto>
 
-                val response = api(credentialsFile).modifyEntityTemplates(entityTemplateDto)
+                val response = api(credentialsFile).modifyEntityTemplates(entityTemplateDto = entityTemplateDto)
 
                 val testFileName = "EntityTemplateApi.modifyEntityTemplates"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")

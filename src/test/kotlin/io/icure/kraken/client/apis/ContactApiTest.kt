@@ -163,7 +163,7 @@ class ContactApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).closeForHCPartyPatientForeignKeys(hcPartyId,secretFKeys)
+                val response = api(credentialsFile).closeForHCPartyPatientForeignKeys(hcPartyId = hcPartyId,secretFKeys = secretFKeys)
 
                 val testFileName = "ContactApi.closeForHCPartyPatientForeignKeys"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -229,7 +229,7 @@ class ContactApiTest() {
                     } as? ContactDto ?: it
                     }
 
-                val response = api(credentialsFile).createContact(contactDto)
+                val response = api(credentialsFile).createContact(contactDto = contactDto)
 
                 val testFileName = "ContactApi.createContact"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -295,7 +295,7 @@ class ContactApiTest() {
                     } ?: it
                     } as kotlin.collections.List<ContactDto>
 
-                val response = api(credentialsFile).createContacts(contactDto)
+                val response = api(credentialsFile).createContacts(contactDto = contactDto)
 
                 val testFileName = "ContactApi.createContacts"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -361,7 +361,7 @@ class ContactApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).deleteContacts(listOfIdsDto)
+                val response = api(credentialsFile).deleteContacts(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "ContactApi.deleteContacts"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -441,7 +441,7 @@ class ContactApiTest() {
                     } as? kotlin.Int ?: it
                     }
 
-                val response = api(credentialsFile).filterContactsBy(filterChainContact,startDocumentId,limit)
+                val response = api(credentialsFile).filterContactsBy(filterChainContact = filterChainContact,startDocumentId = startDocumentId,limit = limit)
 
                 val testFileName = "ContactApi.filterContactsBy"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -521,7 +521,7 @@ class ContactApiTest() {
                     } as? kotlin.Int ?: it
                     }
 
-                val response = api(credentialsFile).filterServicesBy(filterChainService,startDocumentId,limit)
+                val response = api(credentialsFile).filterServicesBy(filterChainService = filterChainService,startDocumentId = startDocumentId,limit = limit)
 
                 val testFileName = "ContactApi.filterServicesBy"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -615,7 +615,7 @@ class ContactApiTest() {
                     } as? kotlin.Int ?: it
                     }
 
-                val response = api(credentialsFile).findContactsByOpeningDate(startKey,endKey,hcpartyid,startDocumentId,limit)
+                val response = api(credentialsFile).findContactsByOpeningDate(startKey = startKey,endKey = endKey,hcpartyid = hcpartyid,startDocumentId = startDocumentId,limit = limit)
 
                 val testFileName = "ContactApi.findContactsByOpeningDate"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -681,7 +681,7 @@ class ContactApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getContact(contactId)
+                val response = api(credentialsFile).getContact(contactId = contactId)
 
                 val testFileName = "ContactApi.getContact"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -747,7 +747,7 @@ class ContactApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).getContacts(listOfIdsDto)
+                val response = api(credentialsFile).getContacts(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "ContactApi.getContacts"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -879,7 +879,7 @@ class ContactApiTest() {
                     } as? kotlin.Long ?: it
                     }
 
-                val response = api(credentialsFile).getServiceCodesOccurences(codeType,minOccurences)
+                val response = api(credentialsFile).getServiceCodesOccurences(codeType = codeType,minOccurences = minOccurences)
 
                 val testFileName = "ContactApi.getServiceCodesOccurences"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -945,7 +945,7 @@ class ContactApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).getServices(listOfIdsDto)
+                val response = api(credentialsFile).getServices(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "ContactApi.getServices"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1018,7 +1018,7 @@ class ContactApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getServicesLinkedTo(listOfIdsDto,linkType)
+                val response = api(credentialsFile).getServicesLinkedTo(listOfIdsDto = listOfIdsDto,linkType = linkType)
 
                 val testFileName = "ContactApi.getServicesLinkedTo"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1091,7 +1091,7 @@ class ContactApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).listContactByHCPartyServiceId(hcPartyId,serviceId)
+                val response = api(credentialsFile).listContactByHCPartyServiceId(hcPartyId = hcPartyId,serviceId = serviceId)
 
                 val testFileName = "ContactApi.listContactByHCPartyServiceId"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1157,7 +1157,7 @@ class ContactApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).listContactsByExternalId(externalId)
+                val response = api(credentialsFile).listContactsByExternalId(externalId = externalId)
 
                 val testFileName = "ContactApi.listContactsByExternalId"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1230,7 +1230,7 @@ class ContactApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).listContactsByHCPartyAndFormId(hcPartyId,formId)
+                val response = api(credentialsFile).listContactsByHCPartyAndFormId(hcPartyId = hcPartyId,formId = formId)
 
                 val testFileName = "ContactApi.listContactsByHCPartyAndFormId"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1303,7 +1303,7 @@ class ContactApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).listContactsByHCPartyAndFormIds(hcPartyId,listOfIdsDto)
+                val response = api(credentialsFile).listContactsByHCPartyAndFormIds(hcPartyId = hcPartyId,listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "ContactApi.listContactsByHCPartyAndFormIds"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1376,7 +1376,7 @@ class ContactApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).listContactsByHCPartyAndPatientForeignKeys(hcPartyId,listOfIdsDto)
+                val response = api(credentialsFile).listContactsByHCPartyAndPatientForeignKeys(hcPartyId = hcPartyId,listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "ContactApi.listContactsByHCPartyAndPatientForeignKeys"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1463,7 +1463,7 @@ class ContactApiTest() {
                     } as? kotlin.Boolean ?: it
                     }
 
-                val response = api(credentialsFile).listContactsByHCPartyAndPatientSecretFKeys(hcPartyId,secretFKeys,planOfActionsIds,skipClosedContacts)
+                val response = api(credentialsFile).listContactsByHCPartyAndPatientSecretFKeys(hcPartyId = hcPartyId,secretFKeys = secretFKeys,planOfActionsIds = planOfActionsIds,skipClosedContacts = skipClosedContacts)
 
                 val testFileName = "ContactApi.listContactsByHCPartyAndPatientSecretFKeys"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1536,7 +1536,7 @@ class ContactApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).listContactsDelegationsStubsByHCPartyAndPatientForeignKeys(hcPartyId,secretFKeys)
+                val response = api(credentialsFile).listContactsDelegationsStubsByHCPartyAndPatientForeignKeys(hcPartyId = hcPartyId,secretFKeys = secretFKeys)
 
                 val testFileName = "ContactApi.listContactsDelegationsStubsByHCPartyAndPatientForeignKeys"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1602,7 +1602,7 @@ class ContactApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).listServicesByAssociationId(associationId)
+                val response = api(credentialsFile).listServicesByAssociationId(associationId = associationId)
 
                 val testFileName = "ContactApi.listServicesByAssociationId"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1668,7 +1668,7 @@ class ContactApiTest() {
                     } as? AbstractFilterDtoContact ?: it
                     }
 
-                val response = api(credentialsFile).matchContactsBy(abstractFilterDtoContact)
+                val response = api(credentialsFile).matchContactsBy(abstractFilterDtoContact = abstractFilterDtoContact)
 
                 val testFileName = "ContactApi.matchContactsBy"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1734,7 +1734,7 @@ class ContactApiTest() {
                     } as? ContactDto ?: it
                     }
 
-                val response = api(credentialsFile).modifyContact(contactDto)
+                val response = api(credentialsFile).modifyContact(contactDto = contactDto)
 
                 val testFileName = "ContactApi.modifyContact"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1800,7 +1800,7 @@ class ContactApiTest() {
                     } ?: it
                     } as kotlin.collections.List<ContactDto>
 
-                val response = api(credentialsFile).modifyContacts(contactDto)
+                val response = api(credentialsFile).modifyContacts(contactDto = contactDto)
 
                 val testFileName = "ContactApi.modifyContacts"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1866,7 +1866,7 @@ class ContactApiTest() {
                     } ?: it
                     } as kotlin.collections.List<IcureStubDto>
 
-                val response = api(credentialsFile).modifyContactsDelegations(icureStubDto)
+                val response = api(credentialsFile).modifyContactsDelegations(icureStubDto = icureStubDto)
 
                 val testFileName = "ContactApi.modifyContactsDelegations"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1939,7 +1939,7 @@ class ContactApiTest() {
                     } as? DelegationDto ?: it
                     }
 
-                val response = api(credentialsFile).newContactDelegations(contactId,delegationDto)
+                val response = api(credentialsFile).newContactDelegations(contactId = contactId,delegationDto = delegationDto)
 
                 val testFileName = "ContactApi.newContactDelegations"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -2005,7 +2005,7 @@ class ContactApiTest() {
                     } ?: it
                     } as kotlin.collections.List<IcureStubDto>
 
-                val response = api(credentialsFile).setContactsDelegations(icureStubDto)
+                val response = api(credentialsFile).setContactsDelegations(icureStubDto = icureStubDto)
 
                 val testFileName = "ContactApi.setContactsDelegations"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")

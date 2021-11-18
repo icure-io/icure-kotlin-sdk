@@ -50,6 +50,7 @@ import com.github.pozo.KotlinBuilder
  * @param crmLink 
  * @param deliveryModusCode 
  * @param deliveryModus 
+ * @param deliveryModusSpecificationCode 
  * @param deliveryModusSpecification 
  * @param dhpcLink 
  * @param distributorCompany 
@@ -136,6 +137,9 @@ data class AmppDto (
 
     @field:JsonProperty("deliveryModus")
     val deliveryModus: SamTextDto? = null,
+
+    @field:JsonProperty("deliveryModusSpecificationCode")
+    val deliveryModusSpecificationCode: kotlin.String? = null,
 
     @field:JsonProperty("deliveryModusSpecification")
     val deliveryModusSpecification: SamTextDto? = null,

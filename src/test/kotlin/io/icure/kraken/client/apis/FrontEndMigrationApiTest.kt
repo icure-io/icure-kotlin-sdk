@@ -145,7 +145,7 @@ class FrontEndMigrationApiTest() {
                     } as? FrontEndMigrationDto ?: it
                     }
 
-                val response = api(credentialsFile).createFrontEndMigration(frontEndMigrationDto)
+                val response = api(credentialsFile).createFrontEndMigration(frontEndMigrationDto = frontEndMigrationDto)
 
                 val testFileName = "FrontEndMigrationApi.createFrontEndMigration"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -211,7 +211,7 @@ class FrontEndMigrationApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).deleteFrontEndMigration(frontEndMigrationId)
+                val response = api(credentialsFile).deleteFrontEndMigration(frontEndMigrationId = frontEndMigrationId)
 
                 val testFileName = "FrontEndMigrationApi.deleteFrontEndMigration"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -277,7 +277,7 @@ class FrontEndMigrationApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getFrontEndMigration(frontEndMigrationId)
+                val response = api(credentialsFile).getFrontEndMigration(frontEndMigrationId = frontEndMigrationId)
 
                 val testFileName = "FrontEndMigrationApi.getFrontEndMigration"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -343,7 +343,7 @@ class FrontEndMigrationApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getFrontEndMigrationByName(frontEndMigrationName)
+                val response = api(credentialsFile).getFrontEndMigrationByName(frontEndMigrationName = frontEndMigrationName)
 
                 val testFileName = "FrontEndMigrationApi.getFrontEndMigrationByName"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -468,7 +468,7 @@ class FrontEndMigrationApiTest() {
                     } as? FrontEndMigrationDto ?: it
                     }
 
-                val response = api(credentialsFile).modifyFrontEndMigration(frontEndMigrationDto)
+                val response = api(credentialsFile).modifyFrontEndMigration(frontEndMigrationDto = frontEndMigrationDto)
 
                 val testFileName = "FrontEndMigrationApi.modifyFrontEndMigration"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")

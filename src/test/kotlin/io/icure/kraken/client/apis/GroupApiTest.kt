@@ -193,7 +193,7 @@ class GroupApiTest() {
                     } as? kotlin.Int ?: it
                     }
 
-                val response = api(credentialsFile).createGroup(id,name,password,databaseInitialisationDto,server,q,n)
+                val response = api(credentialsFile).createGroup(id = id,name = name,password = password,databaseInitialisationDto = databaseInitialisationDto,server = server,q = q,n = n)
 
                 val testFileName = "GroupApi.createGroup"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -259,7 +259,7 @@ class GroupApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getGroup(id)
+                val response = api(credentialsFile).getGroup(id = id)
 
                 val testFileName = "GroupApi.getGroup"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -325,7 +325,7 @@ class GroupApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getReplicationInfo1(id)
+                val response = api(credentialsFile).getReplicationInfo1(id = id)
 
                 val testFileName = "GroupApi.getReplicationInfo1"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -405,7 +405,7 @@ class GroupApiTest() {
                     } as? kotlin.Boolean ?: it
                     }
 
-                val response = api(credentialsFile).initDesignDocs(id,clazz,warmup)
+                val response = api(credentialsFile).initDesignDocs(id = id,clazz = clazz,warmup = warmup)
 
                 val testFileName = "GroupApi.initDesignDocs"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -537,7 +537,7 @@ class GroupApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).modifyGroupName(id,name)
+                val response = api(credentialsFile).modifyGroupName(id = id,name = name)
 
                 val testFileName = "GroupApi.modifyGroupName"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -610,7 +610,7 @@ class GroupApiTest() {
                     } as? ListOfPropertiesDto ?: it
                     }
 
-                val response = api(credentialsFile).modifyGroupProperties(id,listOfPropertiesDto)
+                val response = api(credentialsFile).modifyGroupProperties(id = id,listOfPropertiesDto = listOfPropertiesDto)
 
                 val testFileName = "GroupApi.modifyGroupProperties"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -676,7 +676,7 @@ class GroupApiTest() {
                     } as? RegistrationInformationDto ?: it
                     }
 
-                val response = api(credentialsFile).registerNewGroupAdministrator(registrationInformationDto)
+                val response = api(credentialsFile).registerNewGroupAdministrator(registrationInformationDto = registrationInformationDto)
 
                 val testFileName = "GroupApi.registerNewGroupAdministrator"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -763,7 +763,7 @@ class GroupApiTest() {
                     } as? kotlin.Int ?: it
                     }
 
-                val response = api(credentialsFile).resetStorage(id,listOfIdsDto,q,n)
+                val response = api(credentialsFile).resetStorage(id = id,listOfIdsDto = listOfIdsDto,q = q,n = n)
 
                 val testFileName = "GroupApi.resetStorage"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -836,7 +836,7 @@ class GroupApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).setGroupPassword(id,password)
+                val response = api(credentialsFile).setGroupPassword(id = id,password = password)
 
                 val testFileName = "GroupApi.setGroupPassword"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -916,7 +916,7 @@ class GroupApiTest() {
                     } as? kotlin.Boolean ?: it
                     }
 
-                val response = api(credentialsFile).solveConflicts(id,limit,warmup)
+                val response = api(credentialsFile).solveConflicts(id = id,limit = limit,warmup = warmup)
 
                 val testFileName = "GroupApi.solveConflicts"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")

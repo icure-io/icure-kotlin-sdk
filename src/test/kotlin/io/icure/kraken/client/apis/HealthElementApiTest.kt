@@ -149,7 +149,7 @@ class HealthElementApiTest() {
                     } as? HealthElementDto ?: it
                     }
 
-                val response = api(credentialsFile).createHealthElement(healthElementDto)
+                val response = api(credentialsFile).createHealthElement(healthElementDto = healthElementDto)
 
                 val testFileName = "HealthElementApi.createHealthElement"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -215,7 +215,7 @@ class HealthElementApiTest() {
                     } ?: it
                     } as kotlin.collections.List<HealthElementDto>
 
-                val response = api(credentialsFile).createHealthElements(healthElementDto)
+                val response = api(credentialsFile).createHealthElements(healthElementDto = healthElementDto)
 
                 val testFileName = "HealthElementApi.createHealthElements"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -281,7 +281,7 @@ class HealthElementApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).deleteHealthElements(listOfIdsDto)
+                val response = api(credentialsFile).deleteHealthElements(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "HealthElementApi.deleteHealthElements"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -347,7 +347,7 @@ class HealthElementApiTest() {
                     } as? FilterChainHealthElement ?: it
                     }
 
-                val response = api(credentialsFile).filterHealthElementsBy(filterChainHealthElement)
+                val response = api(credentialsFile).filterHealthElementsBy(filterChainHealthElement = filterChainHealthElement)
 
                 val testFileName = "HealthElementApi.filterHealthElementsBy"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -413,7 +413,7 @@ class HealthElementApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getHealthElement(healthElementId)
+                val response = api(credentialsFile).getHealthElement(healthElementId = healthElementId)
 
                 val testFileName = "HealthElementApi.getHealthElement"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -486,7 +486,7 @@ class HealthElementApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).listHealthElementsByHCPartyAndPatientForeignKeys(hcPartyId,secretFKeys)
+                val response = api(credentialsFile).listHealthElementsByHCPartyAndPatientForeignKeys(hcPartyId = hcPartyId,secretFKeys = secretFKeys)
 
                 val testFileName = "HealthElementApi.listHealthElementsByHCPartyAndPatientForeignKeys"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -559,7 +559,7 @@ class HealthElementApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys(hcPartyId,secretFKeys)
+                val response = api(credentialsFile).listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys(hcPartyId = hcPartyId,secretFKeys = secretFKeys)
 
                 val testFileName = "HealthElementApi.listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -625,7 +625,7 @@ class HealthElementApiTest() {
                     } as? HealthElementDto ?: it
                     }
 
-                val response = api(credentialsFile).modifyHealthElement(healthElementDto)
+                val response = api(credentialsFile).modifyHealthElement(healthElementDto = healthElementDto)
 
                 val testFileName = "HealthElementApi.modifyHealthElement"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -691,7 +691,7 @@ class HealthElementApiTest() {
                     } ?: it
                     } as kotlin.collections.List<HealthElementDto>
 
-                val response = api(credentialsFile).modifyHealthElements(healthElementDto)
+                val response = api(credentialsFile).modifyHealthElements(healthElementDto = healthElementDto)
 
                 val testFileName = "HealthElementApi.modifyHealthElements"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -764,7 +764,7 @@ class HealthElementApiTest() {
                     } ?: it
                     } as kotlin.collections.List<DelegationDto>
 
-                val response = api(credentialsFile).newHealthElementDelegations(healthElementId,delegationDto)
+                val response = api(credentialsFile).newHealthElementDelegations(healthElementId = healthElementId,delegationDto = delegationDto)
 
                 val testFileName = "HealthElementApi.newHealthElementDelegations"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -830,7 +830,7 @@ class HealthElementApiTest() {
                     } ?: it
                     } as kotlin.collections.List<IcureStubDto>
 
-                val response = api(credentialsFile).setHealthElementsDelegations(icureStubDto)
+                val response = api(credentialsFile).setHealthElementsDelegations(icureStubDto = icureStubDto)
 
                 val testFileName = "HealthElementApi.setHealthElementsDelegations"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")

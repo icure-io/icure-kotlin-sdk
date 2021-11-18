@@ -147,7 +147,7 @@ class AccessLogApiTest() {
                     } as? AccessLogDto ?: it
                     }
 
-                val response = api(credentialsFile).createAccessLog(accessLogDto)
+                val response = api(credentialsFile).createAccessLog(accessLogDto = accessLogDto)
 
                 val testFileName = "AccessLogApi.createAccessLog"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -213,7 +213,7 @@ class AccessLogApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).deleteAccessLogs(listOfIdsDto)
+                val response = api(credentialsFile).deleteAccessLogs(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "AccessLogApi.deleteAccessLogs"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -314,7 +314,7 @@ class AccessLogApiTest() {
                     } as? kotlin.Boolean ?: it
                     }
 
-                val response = api(credentialsFile).findAccessLogsBy(fromEpoch,toEpoch,startKey,startDocumentId,limit,descending)
+                val response = api(credentialsFile).findAccessLogsBy(fromEpoch = fromEpoch,toEpoch = toEpoch,startKey = startKey,startDocumentId = startDocumentId,limit = limit,descending = descending)
 
                 val testFileName = "AccessLogApi.findAccessLogsBy"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -422,7 +422,7 @@ class AccessLogApiTest() {
                     } as? kotlin.Boolean ?: it
                     }
 
-                val response = api(credentialsFile).findAccessLogsByUserAfterDate(userId,accessType,startDate,startKey,startDocumentId,limit,descending)
+                val response = api(credentialsFile).findAccessLogsByUserAfterDate(userId = userId,accessType = accessType,startDate = startDate,startKey = startKey,startDocumentId = startDocumentId,limit = limit,descending = descending)
 
                 val testFileName = "AccessLogApi.findAccessLogsByUserAfterDate"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -488,7 +488,7 @@ class AccessLogApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getAccessLog(accessLogId)
+                val response = api(credentialsFile).getAccessLog(accessLogId = accessLogId)
 
                 val testFileName = "AccessLogApi.getAccessLog"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -561,7 +561,7 @@ class AccessLogApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).listAccessLogsByHCPartyAndPatientForeignKeys(hcPartyId,secretFKeys)
+                val response = api(credentialsFile).listAccessLogsByHCPartyAndPatientForeignKeys(hcPartyId = hcPartyId,secretFKeys = secretFKeys)
 
                 val testFileName = "AccessLogApi.listAccessLogsByHCPartyAndPatientForeignKeys"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -627,7 +627,7 @@ class AccessLogApiTest() {
                     } as? AccessLogDto ?: it
                     }
 
-                val response = api(credentialsFile).modifyAccessLog(accessLogDto)
+                val response = api(credentialsFile).modifyAccessLog(accessLogDto = accessLogDto)
 
                 val testFileName = "AccessLogApi.modifyAccessLog"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")

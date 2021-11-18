@@ -148,7 +148,7 @@ class HealthcarePartyApiTest() {
                     } as? HealthcarePartyDto ?: it
                     }
 
-                val response = api(credentialsFile).createHealthcareParty(healthcarePartyDto)
+                val response = api(credentialsFile).createHealthcareParty(healthcarePartyDto = healthcarePartyDto)
 
                 val testFileName = "HealthcarePartyApi.createHealthcareParty"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -221,7 +221,7 @@ class HealthcarePartyApiTest() {
                     } as? HealthcarePartyDto ?: it
                     }
 
-                val response = api(credentialsFile).createHealthcarePartyInGroup(groupId,healthcarePartyDto)
+                val response = api(credentialsFile).createHealthcarePartyInGroup(groupId = groupId,healthcarePartyDto = healthcarePartyDto)
 
                 val testFileName = "HealthcarePartyApi.createHealthcarePartyInGroup"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -287,7 +287,7 @@ class HealthcarePartyApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).deleteHealthcareParties(listOfIdsDto)
+                val response = api(credentialsFile).deleteHealthcareParties(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "HealthcarePartyApi.deleteHealthcareParties"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -360,7 +360,7 @@ class HealthcarePartyApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).deleteHealthcarePartiesInGroup(groupId,listOfIdsDto)
+                val response = api(credentialsFile).deleteHealthcarePartiesInGroup(groupId = groupId,listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "HealthcarePartyApi.deleteHealthcarePartiesInGroup"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -447,7 +447,7 @@ class HealthcarePartyApiTest() {
                     } as? kotlin.Boolean ?: it
                     }
 
-                val response = api(credentialsFile).findHealthcarePartiesBy(startKey,startDocumentId,limit,desc)
+                val response = api(credentialsFile).findHealthcarePartiesBy(startKey = startKey,startDocumentId = startDocumentId,limit = limit,desc = desc)
 
                 val testFileName = "HealthcarePartyApi.findHealthcarePartiesBy"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -541,7 +541,7 @@ class HealthcarePartyApiTest() {
                     } as? kotlin.Boolean ?: it
                     }
 
-                val response = api(credentialsFile).findHealthcarePartiesByName(name,startKey,startDocumentId,limit,desc)
+                val response = api(credentialsFile).findHealthcarePartiesByName(name = name,startKey = startKey,startDocumentId = startDocumentId,limit = limit,desc = desc)
 
                 val testFileName = "HealthcarePartyApi.findHealthcarePartiesByName"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -635,7 +635,7 @@ class HealthcarePartyApiTest() {
                     } as? kotlin.Int ?: it
                     }
 
-                val response = api(credentialsFile).findHealthcarePartiesBySpecialityAndPostCode(type,spec,firstCode,lastCode,limit)
+                val response = api(credentialsFile).findHealthcarePartiesBySpecialityAndPostCode(type = type,spec = spec,firstCode = firstCode,lastCode = lastCode,limit = limit)
 
                 val testFileName = "HealthcarePartyApi.findHealthcarePartiesBySpecialityAndPostCode"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -729,7 +729,7 @@ class HealthcarePartyApiTest() {
                     } as? kotlin.Boolean ?: it
                     }
 
-                val response = api(credentialsFile).findHealthcarePartiesBySsinOrNihii(searchValue,startKey,startDocumentId,limit,desc)
+                val response = api(credentialsFile).findHealthcarePartiesBySsinOrNihii(searchValue = searchValue,startKey = startKey,startDocumentId = startDocumentId,limit = limit,desc = desc)
 
                 val testFileName = "HealthcarePartyApi.findHealthcarePartiesBySsinOrNihii"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -854,7 +854,7 @@ class HealthcarePartyApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getHcPartyKeysForDelegate(healthcarePartyId)
+                val response = api(credentialsFile).getHcPartyKeysForDelegate(healthcarePartyId = healthcarePartyId)
 
                 val testFileName = "HealthcarePartyApi.getHcPartyKeysForDelegate"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -920,7 +920,7 @@ class HealthcarePartyApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).getHealthcareParties(listOfIdsDto)
+                val response = api(credentialsFile).getHealthcareParties(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "HealthcarePartyApi.getHealthcareParties"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -986,7 +986,7 @@ class HealthcarePartyApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getHealthcareParty(healthcarePartyId)
+                val response = api(credentialsFile).getHealthcareParty(healthcarePartyId = healthcarePartyId)
 
                 val testFileName = "HealthcarePartyApi.getHealthcareParty"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1052,7 +1052,7 @@ class HealthcarePartyApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getPublicKey(healthcarePartyId)
+                val response = api(credentialsFile).getPublicKey(healthcarePartyId = healthcarePartyId)
 
                 val testFileName = "HealthcarePartyApi.getPublicKey"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1118,7 +1118,7 @@ class HealthcarePartyApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).listHealthcarePartiesByName(name)
+                val response = api(credentialsFile).listHealthcarePartiesByName(name = name)
 
                 val testFileName = "HealthcarePartyApi.listHealthcarePartiesByName"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1184,7 +1184,7 @@ class HealthcarePartyApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).listHealthcarePartiesByParentId(parentId)
+                val response = api(credentialsFile).listHealthcarePartiesByParentId(parentId = parentId)
 
                 val testFileName = "HealthcarePartyApi.listHealthcarePartiesByParentId"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1250,7 +1250,7 @@ class HealthcarePartyApiTest() {
                     } as? HealthcarePartyDto ?: it
                     }
 
-                val response = api(credentialsFile).modifyHealthcareParty(healthcarePartyDto)
+                val response = api(credentialsFile).modifyHealthcareParty(healthcarePartyDto = healthcarePartyDto)
 
                 val testFileName = "HealthcarePartyApi.modifyHealthcareParty"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1323,7 +1323,7 @@ class HealthcarePartyApiTest() {
                     } as? HealthcarePartyDto ?: it
                     }
 
-                val response = api(credentialsFile).modifyHealthcarePartyInGroup(groupId,healthcarePartyDto)
+                val response = api(credentialsFile).modifyHealthcarePartyInGroup(groupId = groupId,healthcarePartyDto = healthcarePartyDto)
 
                 val testFileName = "HealthcarePartyApi.modifyHealthcarePartyInGroup"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")

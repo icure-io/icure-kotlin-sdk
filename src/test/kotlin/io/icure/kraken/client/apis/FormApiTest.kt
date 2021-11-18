@@ -149,7 +149,7 @@ class FormApiTest() {
                     } as? FormDto ?: it
                     }
 
-                val response = api(credentialsFile).createForm(formDto)
+                val response = api(credentialsFile).createForm(formDto = formDto)
 
                 val testFileName = "FormApi.createForm"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -215,7 +215,7 @@ class FormApiTest() {
                     } as? FormTemplateDto ?: it
                     }
 
-                val response = api(credentialsFile).createFormTemplate(formTemplateDto)
+                val response = api(credentialsFile).createFormTemplate(formTemplateDto = formTemplateDto)
 
                 val testFileName = "FormApi.createFormTemplate"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -281,7 +281,7 @@ class FormApiTest() {
                     } ?: it
                     } as kotlin.collections.List<FormDto>
 
-                val response = api(credentialsFile).createForms(formDto)
+                val response = api(credentialsFile).createForms(formDto = formDto)
 
                 val testFileName = "FormApi.createForms"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -347,7 +347,7 @@ class FormApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).deleteFormTemplate(formTemplateId)
+                val response = api(credentialsFile).deleteFormTemplate(formTemplateId = formTemplateId)
 
                 val testFileName = "FormApi.deleteFormTemplate"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -413,7 +413,7 @@ class FormApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).deleteForms(listOfIdsDto)
+                val response = api(credentialsFile).deleteForms(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "FormApi.deleteForms"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -486,7 +486,7 @@ class FormApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getChildrenForms(formId,hcPartyId)
+                val response = api(credentialsFile).getChildrenForms(formId = formId,hcPartyId = hcPartyId)
 
                 val testFileName = "FormApi.getChildrenForms"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -552,7 +552,7 @@ class FormApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getForm(formId)
+                val response = api(credentialsFile).getForm(formId = formId)
 
                 val testFileName = "FormApi.getForm"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -618,7 +618,7 @@ class FormApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getFormByLogicalUuid(logicalUuid)
+                val response = api(credentialsFile).getFormByLogicalUuid(logicalUuid = logicalUuid)
 
                 val testFileName = "FormApi.getFormByLogicalUuid"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -684,7 +684,7 @@ class FormApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getFormByUniqueId(uniqueId)
+                val response = api(credentialsFile).getFormByUniqueId(uniqueId = uniqueId)
 
                 val testFileName = "FormApi.getFormByUniqueId"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -750,7 +750,7 @@ class FormApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getFormTemplate(formTemplateId)
+                val response = api(credentialsFile).getFormTemplate(formTemplateId = formTemplateId)
 
                 val testFileName = "FormApi.getFormTemplate"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -816,7 +816,7 @@ class FormApiTest() {
                     } as? kotlin.Boolean ?: it
                     }
 
-                val response = api(credentialsFile).getFormTemplates(loadLayout)
+                val response = api(credentialsFile).getFormTemplates(loadLayout = loadLayout)
 
                 val testFileName = "FormApi.getFormTemplates"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -889,7 +889,7 @@ class FormApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getFormTemplatesByGuid(formTemplateGuid,specialityCode)
+                val response = api(credentialsFile).getFormTemplatesByGuid(formTemplateGuid = formTemplateGuid,specialityCode = specialityCode)
 
                 val testFileName = "FormApi.getFormTemplatesByGuid"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -955,7 +955,7 @@ class FormApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).getForms(listOfIdsDto)
+                val response = api(credentialsFile).getForms(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "FormApi.getForms"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1021,7 +1021,7 @@ class FormApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getFormsByLogicalUuid(logicalUuid)
+                val response = api(credentialsFile).getFormsByLogicalUuid(logicalUuid = logicalUuid)
 
                 val testFileName = "FormApi.getFormsByLogicalUuid"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1087,7 +1087,7 @@ class FormApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getFormsByUniqueId(uniqueId)
+                val response = api(credentialsFile).getFormsByUniqueId(uniqueId = uniqueId)
 
                 val testFileName = "FormApi.getFormsByUniqueId"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1160,7 +1160,7 @@ class FormApiTest() {
                     } as? kotlin.Boolean ?: it
                     }
 
-                val response = api(credentialsFile).listFormTemplatesBySpeciality(specialityCode,loadLayout)
+                val response = api(credentialsFile).listFormTemplatesBySpeciality(specialityCode = specialityCode,loadLayout = loadLayout)
 
                 val testFileName = "FormApi.listFormTemplatesBySpeciality"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1254,7 +1254,7 @@ class FormApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).listFormsByHCPartyAndPatientForeignKeys(hcPartyId,secretFKeys,healthElementId,planOfActionId,formTemplateId)
+                val response = api(credentialsFile).listFormsByHCPartyAndPatientForeignKeys(hcPartyId = hcPartyId,secretFKeys = secretFKeys,healthElementId = healthElementId,planOfActionId = planOfActionId,formTemplateId = formTemplateId)
 
                 val testFileName = "FormApi.listFormsByHCPartyAndPatientForeignKeys"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1327,7 +1327,7 @@ class FormApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).listFormsDelegationsStubsByHCPartyAndPatientForeignKeys(hcPartyId,secretFKeys)
+                val response = api(credentialsFile).listFormsDelegationsStubsByHCPartyAndPatientForeignKeys(hcPartyId = hcPartyId,secretFKeys = secretFKeys)
 
                 val testFileName = "FormApi.listFormsDelegationsStubsByHCPartyAndPatientForeignKeys"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1393,7 +1393,7 @@ class FormApiTest() {
                     } as? FormDto ?: it
                     }
 
-                val response = api(credentialsFile).modifyForm(formDto)
+                val response = api(credentialsFile).modifyForm(formDto = formDto)
 
                 val testFileName = "FormApi.modifyForm"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1459,7 +1459,7 @@ class FormApiTest() {
                     } ?: it
                     } as kotlin.collections.List<FormDto>
 
-                val response = api(credentialsFile).modifyForms(formDto)
+                val response = api(credentialsFile).modifyForms(formDto = formDto)
 
                 val testFileName = "FormApi.modifyForms"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1532,7 +1532,7 @@ class FormApiTest() {
                     } ?: it
                     } as kotlin.collections.List<DelegationDto>
 
-                val response = api(credentialsFile).newFormDelegations(formId,delegationDto)
+                val response = api(credentialsFile).newFormDelegations(formId = formId,delegationDto = delegationDto)
 
                 val testFileName = "FormApi.newFormDelegations"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1598,7 +1598,7 @@ class FormApiTest() {
                     } ?: it
                     } as kotlin.collections.List<IcureStubDto>
 
-                val response = api(credentialsFile).setFormsDelegations(icureStubDto)
+                val response = api(credentialsFile).setFormsDelegations(icureStubDto = icureStubDto)
 
                 val testFileName = "FormApi.setFormsDelegations"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1671,7 +1671,7 @@ class FormApiTest() {
                     } as? io.icure.kraken.client.infrastructure.ByteArrayWrapper ?: it
                     }
 
-                val response = api(credentialsFile).setTemplateAttachmentMulti(formTemplateId,attachment)
+                val response = api(credentialsFile).setTemplateAttachmentMulti(formTemplateId = formTemplateId,attachment = attachment)
 
                 val testFileName = "FormApi.setTemplateAttachmentMulti"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1744,7 +1744,7 @@ class FormApiTest() {
                     } as? FormTemplateDto ?: it
                     }
 
-                val response = api(credentialsFile).updateFormTemplate(formTemplateId,formTemplateDto)
+                val response = api(credentialsFile).updateFormTemplate(formTemplateId = formTemplateId,formTemplateDto = formTemplateDto)
 
                 val testFileName = "FormApi.updateFormTemplate"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")

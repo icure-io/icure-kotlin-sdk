@@ -149,7 +149,7 @@ class UserApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).assignHealthcareParty(healthcarePartyId)
+                val response = api(credentialsFile).assignHealthcareParty(healthcarePartyId = healthcarePartyId)
 
                 val testFileName = "UserApi.assignHealthcareParty"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -215,7 +215,7 @@ class UserApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).checkPassword(password)
+                val response = api(credentialsFile).checkPassword(password = password)
 
                 val testFileName = "UserApi.checkPassword"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -288,7 +288,7 @@ class UserApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).checkTokenValidity(userId,token)
+                val response = api(credentialsFile).checkTokenValidity(userId = userId,token = token)
 
                 val testFileName = "UserApi.checkTokenValidity"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -354,7 +354,7 @@ class UserApiTest() {
                     } as? UserDto ?: it
                     }
 
-                val response = api(credentialsFile).createUser(userDto)
+                val response = api(credentialsFile).createUser(userDto = userDto)
 
                 val testFileName = "UserApi.createUser"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -427,7 +427,7 @@ class UserApiTest() {
                     } as? UserDto ?: it
                     }
 
-                val response = api(credentialsFile).createUserInGroup(groupId,userDto)
+                val response = api(credentialsFile).createUserInGroup(groupId = groupId,userDto = userDto)
 
                 val testFileName = "UserApi.createUserInGroup"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -493,7 +493,7 @@ class UserApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).deleteUser(userId)
+                val response = api(credentialsFile).deleteUser(userId = userId)
 
                 val testFileName = "UserApi.deleteUser"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -566,7 +566,7 @@ class UserApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).deleteUserInGroup(groupId,userId)
+                val response = api(credentialsFile).deleteUserInGroup(groupId = groupId,userId = userId)
 
                 val testFileName = "UserApi.deleteUserInGroup"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -632,7 +632,7 @@ class UserApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).encodePassword(password)
+                val response = api(credentialsFile).encodePassword(password = password)
 
                 val testFileName = "UserApi.encodePassword"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -698,7 +698,7 @@ class UserApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).findByHcpartyId(id)
+                val response = api(credentialsFile).findByHcpartyId(id = id)
 
                 val testFileName = "UserApi.findByHcpartyId"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -771,7 +771,7 @@ class UserApiTest() {
                     } as? EmailTemplateDto ?: it
                     }
 
-                val response = api(credentialsFile).forgottenPassword(email,emailTemplateDto)
+                val response = api(credentialsFile).forgottenPassword(email = email,emailTemplateDto = emailTemplateDto)
 
                 val testFileName = "UserApi.forgottenPassword"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1028,7 +1028,7 @@ class UserApiTest() {
                     } as? kotlin.Long ?: it
                     }
 
-                val response = api(credentialsFile).getToken(userId,key,tokenValidity)
+                val response = api(credentialsFile).getToken(userId = userId,key = key,tokenValidity = tokenValidity)
 
                 val testFileName = "UserApi.getToken"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1094,7 +1094,7 @@ class UserApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getUser(userId)
+                val response = api(credentialsFile).getUser(userId = userId)
 
                 val testFileName = "UserApi.getUser"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1160,7 +1160,7 @@ class UserApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getUserByEmail(email)
+                val response = api(credentialsFile).getUserByEmail(email = email)
 
                 val testFileName = "UserApi.getUserByEmail"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1240,7 +1240,7 @@ class UserApiTest() {
                     } as? kotlin.Int ?: it
                     }
 
-                val response = api(credentialsFile).listUsersBy(startKey,startDocumentId,limit)
+                val response = api(credentialsFile).listUsersBy(startKey = startKey,startDocumentId = startDocumentId,limit = limit)
 
                 val testFileName = "UserApi.listUsersBy"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1327,7 +1327,7 @@ class UserApiTest() {
                     } as? kotlin.Int ?: it
                     }
 
-                val response = api(credentialsFile).listUsersInGroup(groupId,startKey,startDocumentId,limit)
+                val response = api(credentialsFile).listUsersInGroup(groupId = groupId,startKey = startKey,startDocumentId = startDocumentId,limit = limit)
 
                 val testFileName = "UserApi.listUsersInGroup"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1400,7 +1400,7 @@ class UserApiTest() {
                     } ?: it
                     } as? kotlin.collections.List<PropertyStubDto>
 
-                val response = api(credentialsFile).modifyProperties(userId,propertyStubDto)
+                val response = api(credentialsFile).modifyProperties(userId = userId,propertyStubDto = propertyStubDto)
 
                 val testFileName = "UserApi.modifyProperties"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1466,7 +1466,7 @@ class UserApiTest() {
                     } as? UserDto ?: it
                     }
 
-                val response = api(credentialsFile).modifyUser(userDto)
+                val response = api(credentialsFile).modifyUser(userDto = userDto)
 
                 val testFileName = "UserApi.modifyUser"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1539,7 +1539,7 @@ class UserApiTest() {
                     } as? UserDto ?: it
                     }
 
-                val response = api(credentialsFile).modifyUserInGroup(groupId,userDto)
+                val response = api(credentialsFile).modifyUserInGroup(groupId = groupId,userDto = userDto)
 
                 val testFileName = "UserApi.modifyUserInGroup"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")

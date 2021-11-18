@@ -150,7 +150,7 @@ class MessageApiTest() {
                     } as? MessageDto ?: it
                     }
 
-                val response = api(credentialsFile).createMessage(messageDto)
+                val response = api(credentialsFile).createMessage(messageDto = messageDto)
 
                 val testFileName = "MessageApi.createMessage"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -223,7 +223,7 @@ class MessageApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).deleteDelegation(messageId,delegateId)
+                val response = api(credentialsFile).deleteDelegation(messageId = messageId,delegateId = delegateId)
 
                 val testFileName = "MessageApi.deleteDelegation"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -289,7 +289,7 @@ class MessageApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).deleteMessages(listOfIdsDto)
+                val response = api(credentialsFile).deleteMessages(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "MessageApi.deleteMessages"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -369,7 +369,7 @@ class MessageApiTest() {
                     } as? kotlin.Int ?: it
                     }
 
-                val response = api(credentialsFile).findMessages(startKey,startDocumentId,limit)
+                val response = api(credentialsFile).findMessages(startKey = startKey,startDocumentId = startDocumentId,limit = limit)
 
                 val testFileName = "MessageApi.findMessages"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -463,7 +463,7 @@ class MessageApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).findMessagesByFromAddress(fromAddress,startKey,startDocumentId,limit,hcpId)
+                val response = api(credentialsFile).findMessagesByFromAddress(fromAddress = fromAddress,startKey = startKey,startDocumentId = startDocumentId,limit = limit,hcpId = hcpId)
 
                 val testFileName = "MessageApi.findMessagesByFromAddress"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -529,7 +529,7 @@ class MessageApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).findMessagesByHCPartyPatientForeignKeys(secretFKeys)
+                val response = api(credentialsFile).findMessagesByHCPartyPatientForeignKeys(secretFKeys = secretFKeys)
 
                 val testFileName = "MessageApi.findMessagesByHCPartyPatientForeignKeys"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -630,7 +630,7 @@ class MessageApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).findMessagesByToAddress(toAddress,startKey,startDocumentId,limit,reverse,hcpId)
+                val response = api(credentialsFile).findMessagesByToAddress(toAddress = toAddress,startKey = startKey,startDocumentId = startDocumentId,limit = limit,reverse = reverse,hcpId = hcpId)
 
                 val testFileName = "MessageApi.findMessagesByToAddress"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -731,7 +731,7 @@ class MessageApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).findMessagesByTransportGuid(transportGuid,received,startKey,startDocumentId,limit,hcpId)
+                val response = api(credentialsFile).findMessagesByTransportGuid(transportGuid = transportGuid,received = received,startKey = startKey,startDocumentId = startDocumentId,limit = limit,hcpId = hcpId)
 
                 val testFileName = "MessageApi.findMessagesByTransportGuid"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -839,7 +839,7 @@ class MessageApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).findMessagesByTransportGuidSentDate(transportGuid,from,to,startKey,startDocumentId,limit,hcpId)
+                val response = api(credentialsFile).findMessagesByTransportGuidSentDate(transportGuid = transportGuid,from = from,to = to,startKey = startKey,startDocumentId = startDocumentId,limit = limit,hcpId = hcpId)
 
                 val testFileName = "MessageApi.findMessagesByTransportGuidSentDate"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -905,7 +905,7 @@ class MessageApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getChildrenMessages(messageId)
+                val response = api(credentialsFile).getChildrenMessages(messageId = messageId)
 
                 val testFileName = "MessageApi.getChildrenMessages"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -971,7 +971,7 @@ class MessageApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getMessage(messageId)
+                val response = api(credentialsFile).getMessage(messageId = messageId)
 
                 val testFileName = "MessageApi.getMessage"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1037,7 +1037,7 @@ class MessageApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).getMessagesChildren(listOfIdsDto)
+                val response = api(credentialsFile).getMessagesChildren(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "MessageApi.getMessagesChildren"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1103,7 +1103,7 @@ class MessageApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).listMessagesByInvoices(listOfIdsDto)
+                val response = api(credentialsFile).listMessagesByInvoices(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "MessageApi.listMessagesByInvoices"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1176,7 +1176,7 @@ class MessageApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).listMessagesByTransportGuids(hcpId,listOfIdsDto)
+                val response = api(credentialsFile).listMessagesByTransportGuids(hcpId = hcpId,listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "MessageApi.listMessagesByTransportGuids"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1242,7 +1242,7 @@ class MessageApiTest() {
                     } as? MessageDto ?: it
                     }
 
-                val response = api(credentialsFile).modifyMessage(messageDto)
+                val response = api(credentialsFile).modifyMessage(messageDto = messageDto)
 
                 val testFileName = "MessageApi.modifyMessage"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1315,7 +1315,7 @@ class MessageApiTest() {
                     } ?: it
                     } as kotlin.collections.List<DelegationDto>
 
-                val response = api(credentialsFile).newMessageDelegations(messageId,delegationDto)
+                val response = api(credentialsFile).newMessageDelegations(messageId = messageId,delegationDto = delegationDto)
 
                 val testFileName = "MessageApi.newMessageDelegations"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1381,7 +1381,7 @@ class MessageApiTest() {
                     } as? MessagesReadStatusUpdate ?: it
                     }
 
-                val response = api(credentialsFile).setMessagesReadStatus(messagesReadStatusUpdate)
+                val response = api(credentialsFile).setMessagesReadStatus(messagesReadStatusUpdate = messagesReadStatusUpdate)
 
                 val testFileName = "MessageApi.setMessagesReadStatus"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1454,7 +1454,7 @@ class MessageApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).setMessagesStatusBits(status,listOfIdsDto)
+                val response = api(credentialsFile).setMessagesStatusBits(status = status,listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "MessageApi.setMessagesStatusBits"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")

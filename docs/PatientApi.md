@@ -1,6 +1,6 @@
 # PatientApi
 
-All URIs are relative to *https://kraken.icure.dev*
+All URIs are relative to *http://localhost:16043*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -18,7 +18,7 @@ Method | HTTP request | Description
 [**fuzzySearch**](PatientApi.md#fuzzySearch) | **GET** /rest/v2/patient/fuzzy | Filter patients for the current user (HcParty) 
 [**getPatient**](PatientApi.md#getPatient) | **GET** /rest/v2/patient/{patientId} | Get patient
 [**getPatientByExternalId**](PatientApi.md#getPatientByExternalId) | **GET** /rest/v2/patient/byExternalId/{externalId} | Get the patient having the provided externalId
-[**getPatientByHealthcarepartyAndIdentifier**](PatientApi.md#getPatientByHealthcarepartyAndIdentifier) | **GET** /rest/v2/patient/{hcPartyId}/{system}/{id} | Get patient by identifier
+[**getPatientByHealthcarepartyAndIdentifier**](PatientApi.md#getPatientByHealthcarepartyAndIdentifier) | **GET** /rest/v2/patient/{hcPartyId}/{id} | Get patient by identifier
 [**getPatientHcPartyKeysForDelegate**](PatientApi.md#getPatientHcPartyKeysForDelegate) | **GET** /rest/v2/patient/{patientId}/keys | Get the patient (identified by patientId) hcparty keys. Those keys are AES keys (encrypted) used to share information between HCPs and a patient.
 [**getPatients**](PatientApi.md#getPatients) | **POST** /rest/v2/patient/byIds | Get patients by id
 [**listDeletedPatientsByName**](PatientApi.md#listDeletedPatientsByName) | **GET** /rest/v2/patient/deleted/by_name | Find deleted patients
@@ -755,7 +755,7 @@ No authorization required
 
 <a name="getPatientByHealthcarepartyAndIdentifier"></a>
 # **getPatientByHealthcarepartyAndIdentifier**
-> kotlin.collections.List&lt;PatientDto&gt; getPatientByHealthcarepartyAndIdentifier(hcPartyId, system, id)
+> PatientDto getPatientByHealthcarepartyAndIdentifier(hcPartyId, id, system)
 
 Get patient by identifier
 
@@ -769,10 +769,10 @@ It gets patient administrative data based on the identifier (root &amp; extensio
 
 val apiInstance = PatientApi()
 val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val system : kotlin.String = system_example // kotlin.String | 
 val id : kotlin.String = id_example // kotlin.String | 
+val system : kotlin.String = system_example // kotlin.String | 
 try {
-    val result : kotlin.collections.List<PatientDto> = apiInstance.getPatientByHealthcarepartyAndIdentifier(hcPartyId, system, id)
+    val result : PatientDto = apiInstance.getPatientByHealthcarepartyAndIdentifier(hcPartyId, id, system)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling PatientApi#getPatientByHealthcarepartyAndIdentifier")
@@ -788,12 +788,12 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **hcPartyId** | **kotlin.String**|  |
- **system** | **kotlin.String**|  |
  **id** | **kotlin.String**|  |
+ **system** | **kotlin.String**|  | [optional]
 
 ### Return type
 
-[**kotlin.collections.List&lt;PatientDto&gt;**](PatientDto.md)
+[**PatientDto**](PatientDto.md)
 
 ### Authorization
 

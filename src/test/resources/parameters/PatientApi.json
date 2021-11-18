@@ -181,7 +181,9 @@
     "system": "2.16.840.1.113883.19.3.2409",
     "id": "be98cf02-28a2-4fe0-acda-b4c13332268a"
   },
-  
+  "registerPatient": {
+    "skipEndpoint": true
+  },
   "fallback": {
     "healthcarePartyId": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98",
     "hcPartyId": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98",

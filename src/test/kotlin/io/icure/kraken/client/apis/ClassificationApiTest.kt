@@ -148,7 +148,7 @@ class ClassificationApiTest() {
                     } as? ClassificationDto ?: it
                     }
 
-                val response = api(credentialsFile).createClassification(classificationDto)
+                val response = api(credentialsFile).createClassification(classificationDto = classificationDto)
 
                 val testFileName = "ClassificationApi.createClassification"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -214,7 +214,7 @@ class ClassificationApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).deleteClassifications(listOfIdsDto)
+                val response = api(credentialsFile).deleteClassifications(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "ClassificationApi.deleteClassifications"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -287,7 +287,7 @@ class ClassificationApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).findClassificationsByHCPartyPatientForeignKeys(hcPartyId,secretFKeys)
+                val response = api(credentialsFile).findClassificationsByHCPartyPatientForeignKeys(hcPartyId = hcPartyId,secretFKeys = secretFKeys)
 
                 val testFileName = "ClassificationApi.findClassificationsByHCPartyPatientForeignKeys"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -353,7 +353,7 @@ class ClassificationApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getClassification(classificationId)
+                val response = api(credentialsFile).getClassification(classificationId = classificationId)
 
                 val testFileName = "ClassificationApi.getClassification"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -419,7 +419,7 @@ class ClassificationApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getClassificationByHcPartyId(ids)
+                val response = api(credentialsFile).getClassificationByHcPartyId(ids = ids)
 
                 val testFileName = "ClassificationApi.getClassificationByHcPartyId"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -485,7 +485,7 @@ class ClassificationApiTest() {
                     } as? ClassificationDto ?: it
                     }
 
-                val response = api(credentialsFile).modifyClassification(classificationDto)
+                val response = api(credentialsFile).modifyClassification(classificationDto = classificationDto)
 
                 val testFileName = "ClassificationApi.modifyClassification"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -558,7 +558,7 @@ class ClassificationApiTest() {
                     } ?: it
                     } as kotlin.collections.List<DelegationDto>
 
-                val response = api(credentialsFile).newClassificationDelegations(classificationId,delegationDto)
+                val response = api(credentialsFile).newClassificationDelegations(classificationId = classificationId,delegationDto = delegationDto)
 
                 val testFileName = "ClassificationApi.newClassificationDelegations"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -624,7 +624,7 @@ class ClassificationApiTest() {
                     } ?: it
                     } as kotlin.collections.List<IcureStubDto>
 
-                val response = api(credentialsFile).setClassificationsDelegations(icureStubDto)
+                val response = api(credentialsFile).setClassificationsDelegations(icureStubDto = icureStubDto)
 
                 val testFileName = "ClassificationApi.setClassificationsDelegations"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")

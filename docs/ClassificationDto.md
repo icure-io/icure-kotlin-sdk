@@ -21,6 +21,7 @@ Name | Type | Description | Notes
 **endOfLife** | **kotlin.Long** | Soft delete (unix epoch in ms) timestamp of the object. |  [optional]
 **deletionDate** | **kotlin.Long** | hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. |  [optional]
 **parentId** | **kotlin.String** |  |  [optional]
+**templateId** | **kotlin.String** |  |  [optional]
 **encryptedSelf** | **kotlin.String** | The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys. |  [optional]
 
 

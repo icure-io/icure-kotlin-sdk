@@ -146,7 +146,7 @@ class TimeTableApiTest() {
                     } as? TimeTableDto ?: it
                     }
 
-                val response = api(credentialsFile).createTimeTable(timeTableDto)
+                val response = api(credentialsFile).createTimeTable(timeTableDto = timeTableDto)
 
                 val testFileName = "TimeTableApi.createTimeTable"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -212,7 +212,7 @@ class TimeTableApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).deleteTimeTable(listOfIdsDto)
+                val response = api(credentialsFile).deleteTimeTable(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "TimeTableApi.deleteTimeTable"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -278,7 +278,7 @@ class TimeTableApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getTimeTable(timeTableId)
+                val response = api(credentialsFile).getTimeTable(timeTableId = timeTableId)
 
                 val testFileName = "TimeTableApi.getTimeTable"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -344,7 +344,7 @@ class TimeTableApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getTimeTablesByAgendaId(agendaId)
+                val response = api(credentialsFile).getTimeTablesByAgendaId(agendaId = agendaId)
 
                 val testFileName = "TimeTableApi.getTimeTablesByAgendaId"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -424,7 +424,7 @@ class TimeTableApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getTimeTablesByPeriodAndAgendaId(startDate,endDate,agendaId)
+                val response = api(credentialsFile).getTimeTablesByPeriodAndAgendaId(startDate = startDate,endDate = endDate,agendaId = agendaId)
 
                 val testFileName = "TimeTableApi.getTimeTablesByPeriodAndAgendaId"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -490,7 +490,7 @@ class TimeTableApiTest() {
                     } as? TimeTableDto ?: it
                     }
 
-                val response = api(credentialsFile).modifyTimeTable(timeTableDto)
+                val response = api(credentialsFile).modifyTimeTable(timeTableDto = timeTableDto)
 
                 val testFileName = "TimeTableApi.modifyTimeTable"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")

@@ -146,7 +146,7 @@ class MedicalLocationApiTest() {
                     } as? MedicalLocationDto ?: it
                     }
 
-                val response = api(credentialsFile).createMedicalLocation(medicalLocationDto)
+                val response = api(credentialsFile).createMedicalLocation(medicalLocationDto = medicalLocationDto)
 
                 val testFileName = "MedicalLocationApi.createMedicalLocation"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -212,7 +212,7 @@ class MedicalLocationApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).deleteMedicalLocations(listOfIdsDto)
+                val response = api(credentialsFile).deleteMedicalLocations(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "MedicalLocationApi.deleteMedicalLocations"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -278,7 +278,7 @@ class MedicalLocationApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getMedicalLocation(locationId)
+                val response = api(credentialsFile).getMedicalLocation(locationId = locationId)
 
                 val testFileName = "MedicalLocationApi.getMedicalLocation"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -403,7 +403,7 @@ class MedicalLocationApiTest() {
                     } as? MedicalLocationDto ?: it
                     }
 
-                val response = api(credentialsFile).modifyMedicalLocation(medicalLocationDto)
+                val response = api(credentialsFile).modifyMedicalLocation(medicalLocationDto = medicalLocationDto)
 
                 val testFileName = "MedicalLocationApi.modifyMedicalLocation"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")

@@ -147,7 +147,7 @@ class DocumentApiTest() {
                     } as? DocumentDto ?: it
                     }
 
-                val response = api(credentialsFile).createDocument(documentDto)
+                val response = api(credentialsFile).createDocument(documentDto = documentDto)
 
                 val testFileName = "DocumentApi.createDocument"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -213,7 +213,7 @@ class DocumentApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).deleteAttachment(documentId)
+                val response = api(credentialsFile).deleteAttachment(documentId = documentId)
 
                 val testFileName = "DocumentApi.deleteAttachment"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -279,7 +279,7 @@ class DocumentApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).deleteDocument(listOfIdsDto)
+                val response = api(credentialsFile).deleteDocument(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "DocumentApi.deleteDocument"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -345,7 +345,7 @@ class DocumentApiTest() {
                     } as? kotlin.Int ?: it
                     }
 
-                val response = api(credentialsFile).findWithoutDelegation(limit)
+                val response = api(credentialsFile).findWithoutDelegation(limit = limit)
 
                 val testFileName = "DocumentApi.findWithoutDelegation"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -411,7 +411,7 @@ class DocumentApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getDocument(documentId)
+                val response = api(credentialsFile).getDocument(documentId = documentId)
 
                 val testFileName = "DocumentApi.getDocument"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -498,7 +498,7 @@ class DocumentApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getDocumentAttachment(documentId,attachmentId,enckeys,fileName)
+                val response = api(credentialsFile).getDocumentAttachment(documentId = documentId,attachmentId = attachmentId,enckeys = enckeys,fileName = fileName)
 
                 val testFileName = "DocumentApi.getDocumentAttachment"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -564,7 +564,7 @@ class DocumentApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getDocumentByExternalUuid(externalUuid)
+                val response = api(credentialsFile).getDocumentByExternalUuid(externalUuid = externalUuid)
 
                 val testFileName = "DocumentApi.getDocumentByExternalUuid"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -630,7 +630,7 @@ class DocumentApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).getDocuments(listOfIdsDto)
+                val response = api(credentialsFile).getDocuments(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "DocumentApi.getDocuments"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -696,7 +696,7 @@ class DocumentApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getDocumentsByExternalUuid(externalUuid)
+                val response = api(credentialsFile).getDocumentsByExternalUuid(externalUuid = externalUuid)
 
                 val testFileName = "DocumentApi.getDocumentsByExternalUuid"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -776,7 +776,7 @@ class DocumentApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).listDocumentByTypeHCPartyMessageSecretFKeys(documentTypeCode,hcPartyId,secretFKeys)
+                val response = api(credentialsFile).listDocumentByTypeHCPartyMessageSecretFKeys(documentTypeCode = documentTypeCode,hcPartyId = hcPartyId,secretFKeys = secretFKeys)
 
                 val testFileName = "DocumentApi.listDocumentByTypeHCPartyMessageSecretFKeys"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -849,7 +849,7 @@ class DocumentApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).listDocumentsByHCPartyAndPatientForeignKeys(hcPartyId,secretFKeys)
+                val response = api(credentialsFile).listDocumentsByHCPartyAndPatientForeignKeys(hcPartyId = hcPartyId,secretFKeys = secretFKeys)
 
                 val testFileName = "DocumentApi.listDocumentsByHCPartyAndPatientForeignKeys"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -915,7 +915,7 @@ class DocumentApiTest() {
                     } as? DocumentDto ?: it
                     }
 
-                val response = api(credentialsFile).modifyDocument(documentDto)
+                val response = api(credentialsFile).modifyDocument(documentDto = documentDto)
 
                 val testFileName = "DocumentApi.modifyDocument"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -981,7 +981,7 @@ class DocumentApiTest() {
                     } ?: it
                     } as kotlin.collections.List<DocumentDto>
 
-                val response = api(credentialsFile).modifyDocuments(documentDto)
+                val response = api(credentialsFile).modifyDocuments(documentDto = documentDto)
 
                 val testFileName = "DocumentApi.modifyDocuments"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1061,7 +1061,7 @@ class DocumentApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).setDocumentAttachment(documentId,body,enckeys)
+                val response = api(credentialsFile).setDocumentAttachment(documentId = documentId,body = body,enckeys = enckeys)
 
                 val testFileName = "DocumentApi.setDocumentAttachment"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1141,7 +1141,7 @@ class DocumentApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).setDocumentAttachmentMulti(documentId,attachment,enckeys)
+                val response = api(credentialsFile).setDocumentAttachmentMulti(documentId = documentId,attachment = attachment,enckeys = enckeys)
 
                 val testFileName = "DocumentApi.setDocumentAttachmentMulti"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1207,7 +1207,7 @@ class DocumentApiTest() {
                     } ?: it
                     } as kotlin.collections.List<IcureStubDto>
 
-                val response = api(credentialsFile).setDocumentsDelegations(icureStubDto)
+                val response = api(credentialsFile).setDocumentsDelegations(icureStubDto = icureStubDto)
 
                 val testFileName = "DocumentApi.setDocumentsDelegations"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1287,7 +1287,7 @@ class DocumentApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).setSafeDocumentAttachment(documentId,body,enckeys)
+                val response = api(credentialsFile).setSafeDocumentAttachment(documentId = documentId,body = body,enckeys = enckeys)
 
                 val testFileName = "DocumentApi.setSafeDocumentAttachment"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")

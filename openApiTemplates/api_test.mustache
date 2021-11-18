@@ -144,7 +144,7 @@ class {{classname}}Test() {
                     }{{/isArray}}
                 {{/allParams}}
 
-                {{#returnType}}val response = {{/returnType}}api(credentialsFile).{{operationId}}({{#allParams}}{{paramName}}{{^-last}},{{/-last}}{{/allParams}})
+                {{#returnType}}val response = {{/returnType}}api(credentialsFile).{{operationId}}({{#allParams}}{{paramName}} = {{paramName}}{{^-last}},{{/-last}}{{/allParams}})
 
                 {{#returnType}}
                 val testFileName = "{{classname}}.{{operationId}}"

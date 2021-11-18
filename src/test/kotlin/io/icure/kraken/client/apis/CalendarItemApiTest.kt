@@ -147,7 +147,7 @@ class CalendarItemApiTest() {
                     } as? CalendarItemDto ?: it
                     }
 
-                val response = api(credentialsFile).createCalendarItem(calendarItemDto)
+                val response = api(credentialsFile).createCalendarItem(calendarItemDto = calendarItemDto)
 
                 val testFileName = "CalendarItemApi.createCalendarItem"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -213,7 +213,7 @@ class CalendarItemApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).deleteCalendarItems(listOfIdsDto)
+                val response = api(credentialsFile).deleteCalendarItems(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "CalendarItemApi.deleteCalendarItems"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -286,7 +286,7 @@ class CalendarItemApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).findCalendarItemsByHCPartyPatientForeignKeys(hcPartyId,secretFKeys)
+                val response = api(credentialsFile).findCalendarItemsByHCPartyPatientForeignKeys(hcPartyId = hcPartyId,secretFKeys = secretFKeys)
 
                 val testFileName = "CalendarItemApi.findCalendarItemsByHCPartyPatientForeignKeys"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -352,7 +352,7 @@ class CalendarItemApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getCalendarItem(calendarItemId)
+                val response = api(credentialsFile).getCalendarItem(calendarItemId = calendarItemId)
 
                 val testFileName = "CalendarItemApi.getCalendarItem"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -491,7 +491,7 @@ class CalendarItemApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getCalendarItemsByPeriodAndHcPartyId(startDate,endDate,hcPartyId)
+                val response = api(credentialsFile).getCalendarItemsByPeriodAndHcPartyId(startDate = startDate,endDate = endDate,hcPartyId = hcPartyId)
 
                 val testFileName = "CalendarItemApi.getCalendarItemsByPeriodAndHcPartyId"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -557,7 +557,7 @@ class CalendarItemApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).getCalendarItemsWithIds(listOfIdsDto)
+                val response = api(credentialsFile).getCalendarItemsWithIds(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "CalendarItemApi.getCalendarItemsWithIds"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -637,7 +637,7 @@ class CalendarItemApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getCalendarsByPeriodAndAgendaId(startDate,endDate,agendaId)
+                val response = api(credentialsFile).getCalendarsByPeriodAndAgendaId(startDate = startDate,endDate = endDate,agendaId = agendaId)
 
                 val testFileName = "CalendarItemApi.getCalendarsByPeriodAndAgendaId"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -703,7 +703,7 @@ class CalendarItemApiTest() {
                     } as? CalendarItemDto ?: it
                     }
 
-                val response = api(credentialsFile).modifyCalendarItem(calendarItemDto)
+                val response = api(credentialsFile).modifyCalendarItem(calendarItemDto = calendarItemDto)
 
                 val testFileName = "CalendarItemApi.modifyCalendarItem"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -751,7 +751,7 @@ class CalendarItemApiTest() {
      * @throws ApiException
      *          if the Api call fails
      */
-    /*@ParameterizedTest
+    @ParameterizedTest
     @MethodSource("fileNames") // six numbers
 	fun setCalendarItemsDelegationsTest(fileName: String) = runBlocking {
 
@@ -761,15 +761,15 @@ class CalendarItemApiTest() {
             try{
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "setCalendarItemsDelegations")
-                val icureStubDto: kotlin.collections.List<IcureStubDto>? = TestUtils.getParameter<kotlin.collections.List<IcureStubDto>>(fileName, "setCalendarItemsDelegations.icureStubDto")?.map {
+                val icureStubDto: kotlin.collections.List<IcureStubDto> = TestUtils.getParameter<kotlin.collections.List<IcureStubDto>>(fileName, "setCalendarItemsDelegations.icureStubDto")!!.map {
                     (it as? CalendarItemDto)?.takeIf { TestUtils.isAutoRev(fileName, "setCalendarItemsDelegations") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
                     val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
                     it.copy(rev = currentRev)
                     } ?: it
-                    } as? kotlin.collections.List<IcureStubDto>
+                    } as kotlin.collections.List<IcureStubDto>
 
-                val response = api(credentialsFile).setCalendarItemsDelegations(icureStubDto)
+                val response = api(credentialsFile).setCalendarItemsDelegations(icureStubDto = icureStubDto)
 
                 val testFileName = "CalendarItemApi.setCalendarItemsDelegations"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -807,7 +807,7 @@ class CalendarItemApiTest() {
                 alreadyCreatedObjects.remove(fileName)
             }
         }
-    }*/
+    }
     
 
     private suspend fun assertAreEquals(functionName: String, objectFromFile: Any?, response: Any) {

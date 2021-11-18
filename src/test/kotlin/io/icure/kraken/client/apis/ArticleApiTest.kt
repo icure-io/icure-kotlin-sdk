@@ -146,7 +146,7 @@ class ArticleApiTest() {
                     } as? ArticleDto ?: it
                     }
 
-                val response = api(credentialsFile).createArticle(articleDto)
+                val response = api(credentialsFile).createArticle(articleDto = articleDto)
 
                 val testFileName = "ArticleApi.createArticle"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -212,7 +212,7 @@ class ArticleApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).deleteArticles(listOfIdsDto)
+                val response = api(credentialsFile).deleteArticles(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "ArticleApi.deleteArticles"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -278,7 +278,7 @@ class ArticleApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getArticle(articleId)
+                val response = api(credentialsFile).getArticle(articleId = articleId)
 
                 val testFileName = "ArticleApi.getArticle"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -403,7 +403,7 @@ class ArticleApiTest() {
                     } as? ArticleDto ?: it
                     }
 
-                val response = api(credentialsFile).modifyArticle(articleDto)
+                val response = api(credentialsFile).modifyArticle(articleDto = articleDto)
 
                 val testFileName = "ArticleApi.modifyArticle"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")

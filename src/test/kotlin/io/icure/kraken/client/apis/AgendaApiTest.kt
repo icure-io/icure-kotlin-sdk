@@ -146,7 +146,7 @@ class AgendaApiTest() {
                     } as? AgendaDto ?: it
                     }
 
-                val response = api(credentialsFile).createAgenda(agendaDto)
+                val response = api(credentialsFile).createAgenda(agendaDto = agendaDto)
 
                 val testFileName = "AgendaApi.createAgenda"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -212,7 +212,7 @@ class AgendaApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).deleteAgendas(listOfIdsDto)
+                val response = api(credentialsFile).deleteAgendas(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "AgendaApi.deleteAgendas"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -278,7 +278,7 @@ class AgendaApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getAgenda(agendaId)
+                val response = api(credentialsFile).getAgenda(agendaId = agendaId)
 
                 val testFileName = "AgendaApi.getAgenda"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -403,7 +403,7 @@ class AgendaApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getAgendasForUser(userId)
+                val response = api(credentialsFile).getAgendasForUser(userId = userId)
 
                 val testFileName = "AgendaApi.getAgendasForUser"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -469,7 +469,7 @@ class AgendaApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getReadableAgendasForUser(userId)
+                val response = api(credentialsFile).getReadableAgendasForUser(userId = userId)
 
                 val testFileName = "AgendaApi.getReadableAgendasForUser"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -535,7 +535,7 @@ class AgendaApiTest() {
                     } as? AgendaDto ?: it
                     }
 
-                val response = api(credentialsFile).modifyAgenda(agendaDto)
+                val response = api(credentialsFile).modifyAgenda(agendaDto = agendaDto)
 
                 val testFileName = "AgendaApi.modifyAgenda"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")

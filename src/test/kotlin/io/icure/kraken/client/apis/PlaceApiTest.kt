@@ -146,7 +146,7 @@ class PlaceApiTest() {
                     } as? PlaceDto ?: it
                     }
 
-                val response = api(credentialsFile).createPlace(placeDto)
+                val response = api(credentialsFile).createPlace(placeDto = placeDto)
 
                 val testFileName = "PlaceApi.createPlace"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -212,7 +212,7 @@ class PlaceApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).deletePlaces(listOfIdsDto)
+                val response = api(credentialsFile).deletePlaces(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "PlaceApi.deletePlaces"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -278,7 +278,7 @@ class PlaceApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getPlace(placeId)
+                val response = api(credentialsFile).getPlace(placeId = placeId)
 
                 val testFileName = "PlaceApi.getPlace"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -403,7 +403,7 @@ class PlaceApiTest() {
                     } as? PlaceDto ?: it
                     }
 
-                val response = api(credentialsFile).modifyPlace(placeDto)
+                val response = api(credentialsFile).modifyPlace(placeDto = placeDto)
 
                 val testFileName = "PlaceApi.modifyPlace"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")

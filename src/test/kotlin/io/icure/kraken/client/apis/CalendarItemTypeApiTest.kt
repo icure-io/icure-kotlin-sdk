@@ -146,7 +146,7 @@ class CalendarItemTypeApiTest() {
                     } as? CalendarItemTypeDto ?: it
                     }
 
-                val response = api(credentialsFile).createCalendarItemType(calendarItemTypeDto)
+                val response = api(credentialsFile).createCalendarItemType(calendarItemTypeDto = calendarItemTypeDto)
 
                 val testFileName = "CalendarItemTypeApi.createCalendarItemType"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -212,7 +212,7 @@ class CalendarItemTypeApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).deleteCalendarItemTypes(listOfIdsDto)
+                val response = api(credentialsFile).deleteCalendarItemTypes(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "CalendarItemTypeApi.deleteCalendarItemTypes"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -278,7 +278,7 @@ class CalendarItemTypeApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getCalendarItemType(calendarItemTypeId)
+                val response = api(credentialsFile).getCalendarItemType(calendarItemTypeId = calendarItemTypeId)
 
                 val testFileName = "CalendarItemTypeApi.getCalendarItemType"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -462,7 +462,7 @@ class CalendarItemTypeApiTest() {
                     } as? CalendarItemTypeDto ?: it
                     }
 
-                val response = api(credentialsFile).modifyCalendarItemType(calendarItemTypeDto)
+                val response = api(credentialsFile).modifyCalendarItemType(calendarItemTypeDto = calendarItemTypeDto)
 
                 val testFileName = "CalendarItemTypeApi.modifyCalendarItemType"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")

@@ -146,7 +146,7 @@ class ReceiptApiTest() {
                     } as? ReceiptDto ?: it
                     }
 
-                val response = api(credentialsFile).createReceipt(receiptDto)
+                val response = api(credentialsFile).createReceipt(receiptDto = receiptDto)
 
                 val testFileName = "ReceiptApi.createReceipt"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -212,7 +212,7 @@ class ReceiptApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).deleteReceipts(listOfIdsDto)
+                val response = api(credentialsFile).deleteReceipts(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "ReceiptApi.deleteReceipts"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -278,7 +278,7 @@ class ReceiptApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getReceipt(receiptId)
+                val response = api(credentialsFile).getReceipt(receiptId = receiptId)
 
                 val testFileName = "ReceiptApi.getReceipt"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -358,7 +358,7 @@ class ReceiptApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getReceiptAttachment(receiptId,attachmentId,enckeys)
+                val response = api(credentialsFile).getReceiptAttachment(receiptId = receiptId,attachmentId = attachmentId,enckeys = enckeys)
 
                 val testFileName = "ReceiptApi.getReceiptAttachment"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -424,7 +424,7 @@ class ReceiptApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).listByReference(ref)
+                val response = api(credentialsFile).listByReference(ref = ref)
 
                 val testFileName = "ReceiptApi.listByReference"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -490,7 +490,7 @@ class ReceiptApiTest() {
                     } as? ReceiptDto ?: it
                     }
 
-                val response = api(credentialsFile).modifyReceipt(receiptDto)
+                val response = api(credentialsFile).modifyReceipt(receiptDto = receiptDto)
 
                 val testFileName = "ReceiptApi.modifyReceipt"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -577,7 +577,7 @@ class ReceiptApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).setReceiptAttachment(receiptId,blobType,body,enckeys)
+                val response = api(credentialsFile).setReceiptAttachment(receiptId = receiptId,blobType = blobType,body = body,enckeys = enckeys)
 
                 val testFileName = "ReceiptApi.setReceiptAttachment"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")

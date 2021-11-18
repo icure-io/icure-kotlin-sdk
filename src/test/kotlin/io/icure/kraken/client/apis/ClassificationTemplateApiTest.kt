@@ -148,7 +148,7 @@ class ClassificationTemplateApiTest() {
                     } as? ClassificationTemplateDto ?: it
                     }
 
-                val response = api(credentialsFile).createClassificationTemplate(classificationTemplateDto)
+                val response = api(credentialsFile).createClassificationTemplate(classificationTemplateDto = classificationTemplateDto)
 
                 val testFileName = "ClassificationTemplateApi.createClassificationTemplate"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -214,7 +214,7 @@ class ClassificationTemplateApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).deleteClassificationTemplates(listOfIdsDto)
+                val response = api(credentialsFile).deleteClassificationTemplates(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "ClassificationTemplateApi.deleteClassificationTemplates"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -294,7 +294,7 @@ class ClassificationTemplateApiTest() {
                     } as? kotlin.Int ?: it
                     }
 
-                val response = api(credentialsFile).findClassificationTemplatesBy(startKey,startDocumentId,limit)
+                val response = api(credentialsFile).findClassificationTemplatesBy(startKey = startKey,startDocumentId = startDocumentId,limit = limit)
 
                 val testFileName = "ClassificationTemplateApi.findClassificationTemplatesBy"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -360,7 +360,7 @@ class ClassificationTemplateApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getClassificationTemplate(classificationTemplateId)
+                val response = api(credentialsFile).getClassificationTemplate(classificationTemplateId = classificationTemplateId)
 
                 val testFileName = "ClassificationTemplateApi.getClassificationTemplate"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -426,7 +426,7 @@ class ClassificationTemplateApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getClassificationTemplateByIds(ids)
+                val response = api(credentialsFile).getClassificationTemplateByIds(ids = ids)
 
                 val testFileName = "ClassificationTemplateApi.getClassificationTemplateByIds"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -499,7 +499,7 @@ class ClassificationTemplateApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).listClassificationTemplatesByHCPartyPatientForeignKeys(hcPartyId,secretFKeys)
+                val response = api(credentialsFile).listClassificationTemplatesByHCPartyPatientForeignKeys(hcPartyId = hcPartyId,secretFKeys = secretFKeys)
 
                 val testFileName = "ClassificationTemplateApi.listClassificationTemplatesByHCPartyPatientForeignKeys"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -565,7 +565,7 @@ class ClassificationTemplateApiTest() {
                     } as? ClassificationTemplateDto ?: it
                     }
 
-                val response = api(credentialsFile).modifyClassificationTemplate(classificationTemplateDto)
+                val response = api(credentialsFile).modifyClassificationTemplate(classificationTemplateDto = classificationTemplateDto)
 
                 val testFileName = "ClassificationTemplateApi.modifyClassificationTemplate"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -638,7 +638,7 @@ class ClassificationTemplateApiTest() {
                     } ?: it
                     } as kotlin.collections.List<DelegationDto>
 
-                val response = api(credentialsFile).newClassificationTemplateDelegations(classificationTemplateId,delegationDto)
+                val response = api(credentialsFile).newClassificationTemplateDelegations(classificationTemplateId = classificationTemplateId,delegationDto = delegationDto)
 
                 val testFileName = "ClassificationTemplateApi.newClassificationTemplateDelegations"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")

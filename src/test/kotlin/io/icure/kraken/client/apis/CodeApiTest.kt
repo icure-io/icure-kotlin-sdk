@@ -147,7 +147,7 @@ class CodeApiTest() {
                     } as? CodeDto ?: it
                     }
 
-                val response = api(credentialsFile).createCode(codeDto)
+                val response = api(credentialsFile).createCode(codeDto = codeDto)
 
                 val testFileName = "CodeApi.createCode"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -255,7 +255,7 @@ class CodeApiTest() {
                     } as? FilterChainCode ?: it
                     }
 
-                val response = api(credentialsFile).filterCodesBy(startKey,startDocumentId,limit,skip,sort,desc,filterChainCode)
+                val response = api(credentialsFile).filterCodesBy(startKey = startKey,startDocumentId = startDocumentId,limit = limit,skip = skip,sort = sort,desc = desc,filterChainCode = filterChainCode)
 
                 val testFileName = "CodeApi.filterCodesBy"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -363,7 +363,7 @@ class CodeApiTest() {
                     } as? kotlin.Int ?: it
                     }
 
-                val response = api(credentialsFile).findCodesByLabel(region,types,language,label,startKey,startDocumentId,limit)
+                val response = api(credentialsFile).findCodesByLabel(region = region,types = types,language = language,label = label,startKey = startKey,startDocumentId = startDocumentId,limit = limit)
 
                 val testFileName = "CodeApi.findCodesByLabel"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -457,7 +457,7 @@ class CodeApiTest() {
                     } as? kotlin.Int ?: it
                     }
 
-                val response = api(credentialsFile).findCodesByLink(linkType,linkedId,startKey,startDocumentId,limit)
+                val response = api(credentialsFile).findCodesByLink(linkType = linkType,linkedId = linkedId,startKey = startKey,startDocumentId = startDocumentId,limit = limit)
 
                 val testFileName = "CodeApi.findCodesByLink"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -565,7 +565,7 @@ class CodeApiTest() {
                     } as? kotlin.Int ?: it
                     }
 
-                val response = api(credentialsFile).findCodesByType(region,type,code,version,startKey,startDocumentId,limit)
+                val response = api(credentialsFile).findCodesByType(region = region,type = type,code = code,version = version,startKey = startKey,startDocumentId = startDocumentId,limit = limit)
 
                 val testFileName = "CodeApi.findCodesByType"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -631,7 +631,7 @@ class CodeApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getCode(codeId)
+                val response = api(credentialsFile).getCode(codeId = codeId)
 
                 val testFileName = "CodeApi.getCode"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -711,7 +711,7 @@ class CodeApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).getCodeWithParts(type,code,version)
+                val response = api(credentialsFile).getCodeWithParts(type = type,code = code,version = version)
 
                 val testFileName = "CodeApi.getCodeWithParts"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -777,7 +777,7 @@ class CodeApiTest() {
                     } as? ListOfIdsDto ?: it
                     }
 
-                val response = api(credentialsFile).getCodes(listOfIdsDto)
+                val response = api(credentialsFile).getCodes(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "CodeApi.getCodes"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -850,7 +850,7 @@ class CodeApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).listCodeTypesBy(region,type)
+                val response = api(credentialsFile).listCodeTypesBy(region = region,type = type)
 
                 val testFileName = "CodeApi.listCodeTypesBy"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -937,7 +937,7 @@ class CodeApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).listCodesByRegionTypeCodeVersion(region,type,code,version)
+                val response = api(credentialsFile).listCodesByRegionTypeCodeVersion(region = region,type = type,code = code,version = version)
 
                 val testFileName = "CodeApi.listCodesByRegionTypeCodeVersion"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1010,7 +1010,7 @@ class CodeApiTest() {
                     } as? kotlin.String ?: it
                     }
 
-                val response = api(credentialsFile).listTagTypesBy(region,type)
+                val response = api(credentialsFile).listTagTypesBy(region = region,type = type)
 
                 val testFileName = "CodeApi.listTagTypesBy"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -1076,7 +1076,7 @@ class CodeApiTest() {
                     } as? CodeDto ?: it
                     }
 
-                val response = api(credentialsFile).modifyCode(codeDto)
+                val response = api(credentialsFile).modifyCode(codeDto = codeDto)
 
                 val testFileName = "CodeApi.modifyCode"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")

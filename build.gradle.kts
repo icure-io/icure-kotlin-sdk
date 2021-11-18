@@ -187,6 +187,7 @@ tasks.create<Delete>("delete-unused-filter-files") {
 
 
 tasks.create<Delete>("delete-unused-tests-files") {
+    delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/AnonymousAccessApiTest.kt"))
     delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/ApplicationsettingsApiTest.kt"))
     delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/AuthApiTest.kt"))
     delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/BeefactApiTest.kt"))
@@ -197,4 +198,5 @@ tasks.create<Delete>("delete-unused-tests-files") {
     delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/EntityrefApiTest.kt"))
     delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/IcureApiTest.kt"))
     delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/MedexApiTest.kt"))
+    delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/PermissionApiTest.kt"))
 }
