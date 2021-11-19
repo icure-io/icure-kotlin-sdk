@@ -61,7 +61,7 @@ object CryptoUtils {
 
     fun encryptAES(data: ByteArray, key: ByteArray, iv: ByteArray): ByteArray {
         val cipher: Cipher =
-            Cipher.getInstance("AES/CBC/PKCS7Padding") // js WebCrypto uses PKCS7 as mentioned in the standard.
+            Cipher.getInstance("AES/CBC/PKCS7Padding", "BC") // js WebCrypto uses PKCS7 as mentioned in the standard.
         val ivSpec = IvParameterSpec(iv)
         cipher.init(Cipher.ENCRYPT_MODE, SecretKeySpec(key, "AES"), ivSpec)
         return cipher.doFinal(data)
@@ -69,7 +69,7 @@ object CryptoUtils {
 
     fun decryptAES(data: ByteArray, key: ByteArray, iv: ByteArray): ByteArray {
         val cipher: Cipher =
-            Cipher.getInstance("AES/CBC/PKCS7Padding") // js WebCrypto uses PKCS7 as mentioned in the standard.
+            Cipher.getInstance("AES/CBC/PKCS7Padding", "BC") // js WebCrypto uses PKCS7 as mentioned in the standard.
         val ivSpec = IvParameterSpec(iv)
         cipher.init(Cipher.DECRYPT_MODE, SecretKeySpec(key, "AES"), ivSpec)
         return cipher.doFinal(data)
