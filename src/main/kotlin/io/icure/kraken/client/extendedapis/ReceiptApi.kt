@@ -4,7 +4,7 @@ import io.icure.kraken.client.apis.ReceiptApi
 import io.icure.kraken.client.crypto.CryptoConfig
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
-import io.icure.kraken.client.crypto.fromHexString
+import io.icure.kraken.client.crypto.keyFromHexString
 import io.icure.kraken.client.models.*
 import io.icure.kraken.client.models.decrypted.ReceiptDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -92,7 +92,7 @@ suspend fun CryptoConfig<ReceiptDto, io.icure.kraken.client.models.ReceiptDto>.e
             aesKey.replace(
                 "-",
                 ""
-            ).fromHexString()
+            ).keyFromHexString()
         } ?: throw IllegalArgumentException("No encryption key for user")
         val (sanitizedReceipt, marshalledData) = this.marshaller(p)
         sanitizedReceipt.copy(encryptedSelf = Base64.getEncoder().encodeToString(encryptAES(data = marshalledData, key = key)))
@@ -104,7 +104,7 @@ suspend fun CryptoConfig<ReceiptDto, io.icure.kraken.client.models.ReceiptDto>.d
         aesKey.replace(
             "-",
             ""
-        ).fromHexString()
+        ).keyFromHexString()
     } ?: throw IllegalArgumentException("No encryption key for user")
     return this.unmarshaller(receipt, decryptAES(data = Base64.getDecoder().decode(receipt.encryptedSelf), key = key))
 }

@@ -87,20 +87,23 @@ object CryptoUtils {
         return ivBytes
     }
 
-    fun toPublicKey(publicKeyStr: String) = KeyFactory.getInstance("RSA").generatePublic(X509EncodedKeySpec(publicKeyStr.fromHexString())) as RSAPublicKey
+    fun toPublicKey(publicKeyStr: String) = KeyFactory.getInstance("RSA").generatePublic(X509EncodedKeySpec(publicKeyStr.keyFromHexString())) as RSAPublicKey
 
     fun toPrivateKey(privateKeyStr: String) = KeyFactory.getInstance("RSA").generatePrivate(
         PKCS8EncodedKeySpec(
-            privateKeyStr.fromHexString()
+            privateKeyStr.keyFromHexString()
         )) as RSAPrivateKey
 }
 
 @ExperimentalUnsignedTypes // just to make it clear that the experimental unsigned types are used
-fun ByteArray.toHexString() = asUByteArray().joinToString("") { it.toString(16).padStart(2, '0') }
-fun String.fromHexString(): ByteArray {
-    check(length % 2 == 0) { "Must have an even length" }
+fun ByteArray.keyToHexString() = asUByteArray().joinToString("") { it.toString(16).padStart(2, '0') }
+fun String.keyFromHexString(): ByteArray {
+    this.replace("-","").let {
+        check(it.length % 2 == 0) { "Must have an even length" }
 
-    return this.chunked(2)
-        .map { it.toInt(16).toByte() }
-        .toByteArray()
+        return it.chunked(2)
+            .map { it.toInt(16).toByte() }
+            .toByteArray()
+
+    }
 }

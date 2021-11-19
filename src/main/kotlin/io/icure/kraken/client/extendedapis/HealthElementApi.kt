@@ -1,13 +1,11 @@
 package io.icure.kraken.client.extendedapis
 
-import io.icure.kraken.client.apis.ContactApi
 import io.icure.kraken.client.apis.HelementApi
 import io.icure.kraken.client.crypto.CryptoConfig
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
-import io.icure.kraken.client.crypto.fromHexString
+import io.icure.kraken.client.crypto.keyFromHexString
 import io.icure.kraken.client.models.*
-import io.icure.kraken.client.models.decrypted.ContactDto
 import io.icure.kraken.client.models.decrypted.HealthElementDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.mapstruct.Mapper
@@ -169,7 +167,7 @@ suspend fun CryptoConfig<HealthElementDto, io.icure.kraken.client.models.HealthE
             aesKey.replace(
                 "-",
                 ""
-            ).fromHexString()
+            ).keyFromHexString()
         } ?: throw IllegalArgumentException("No encryption key for user")
         val (sanitizedHealthElement, marshalledData) = this.marshaller(p)
         sanitizedHealthElement.copy(encryptedSelf = Base64.getEncoder().encodeToString(encryptAES(data = marshalledData, key = key)))
@@ -181,7 +179,7 @@ suspend fun CryptoConfig<HealthElementDto, io.icure.kraken.client.models.HealthE
         aesKey.replace(
             "-",
             ""
-        ).fromHexString()
+        ).keyFromHexString()
     } ?: throw IllegalArgumentException("No encryption key for user")
     return this.unmarshaller(healthElement, decryptAES(data = Base64.getDecoder().decode(healthElement.encryptedSelf), key = key))
 }

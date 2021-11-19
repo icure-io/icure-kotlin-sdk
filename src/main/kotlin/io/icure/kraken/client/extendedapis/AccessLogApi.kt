@@ -4,7 +4,7 @@ import io.icure.kraken.client.apis.AccesslogApi
 import io.icure.kraken.client.crypto.CryptoConfig
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
-import io.icure.kraken.client.crypto.fromHexString
+import io.icure.kraken.client.crypto.keyFromHexString
 import io.icure.kraken.client.models.*
 import io.icure.kraken.client.models.decrypted.PaginatedListAccessLogDto
 import io.icure.kraken.client.models.decrypted.AccessLogDto
@@ -108,7 +108,7 @@ suspend fun CryptoConfig<AccessLogDto, io.icure.kraken.client.models.AccessLogDt
             aesKey.replace(
                 "-",
                 ""
-            ).fromHexString()
+            ).keyFromHexString()
         } ?: throw IllegalArgumentException("No encryption key for user")
         val (sanitizedAccessLog, marshalledData) = this.marshaller(p)
         sanitizedAccessLog.copy(encryptedSelf = Base64.getEncoder().encodeToString(encryptAES(data = marshalledData, key = key)))
@@ -120,7 +120,7 @@ suspend fun CryptoConfig<AccessLogDto, io.icure.kraken.client.models.AccessLogDt
         aesKey.replace(
             "-",
             ""
-        ).fromHexString()
+        ).keyFromHexString()
     } ?: throw IllegalArgumentException("No encryption key for user")
     return this.unmarshaller(accessLog, decryptAES(data = Base64.getDecoder().decode(accessLog.encryptedSelf), key = key))
 }

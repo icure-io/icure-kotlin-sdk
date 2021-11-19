@@ -4,7 +4,7 @@ import io.icure.kraken.client.apis.ArticleApi
 import io.icure.kraken.client.crypto.CryptoConfig
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
-import io.icure.kraken.client.crypto.fromHexString
+import io.icure.kraken.client.crypto.keyFromHexString
 import io.icure.kraken.client.models.*
 import io.icure.kraken.client.models.decrypted.ArticleDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -84,7 +84,7 @@ suspend fun CryptoConfig<ArticleDto, io.icure.kraken.client.models.ArticleDto>.e
             aesKey.replace(
                 "-",
                 ""
-            ).fromHexString()
+            ).keyFromHexString()
         } ?: throw IllegalArgumentException("No encryption key for user")
         val (sanitizedArticle, marshalledData) = this.marshaller(p)
         sanitizedArticle.copy(encryptedSelf = Base64.getEncoder().encodeToString(encryptAES(data = marshalledData, key = key)))
@@ -96,7 +96,7 @@ suspend fun CryptoConfig<ArticleDto, io.icure.kraken.client.models.ArticleDto>.d
         aesKey.replace(
             "-",
             ""
-        ).fromHexString()
+        ).keyFromHexString()
     } ?: throw IllegalArgumentException("No encryption key for user")
     return this.unmarshaller(article, decryptAES(data = Base64.getDecoder().decode(article.encryptedSelf), key = key))
 }

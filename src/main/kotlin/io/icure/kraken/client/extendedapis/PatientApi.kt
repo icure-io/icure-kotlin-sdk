@@ -4,7 +4,7 @@ import io.icure.kraken.client.apis.PatientApi
 import io.icure.kraken.client.crypto.CryptoConfig
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
-import io.icure.kraken.client.crypto.fromHexString
+import io.icure.kraken.client.crypto.keyFromHexString
 import io.icure.kraken.client.models.*
 import io.icure.kraken.client.models.decrypted.PaginatedListPatientDto
 import io.icure.kraken.client.models.decrypted.PatientDto
@@ -207,7 +207,7 @@ suspend fun CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>.e
             m + (d to setOf(DelegationDto(listOf(), myId, d, this.crypto.encryptKeyForHcp(myId, d, patient.id, secret))))
         })
     }.let { p ->
-        val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.fromHexString()
+        val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.keyFromHexString()
             ?: throw IllegalArgumentException("No encryption key for user")
         val (sanitizedPatient, marshalledData) = this.marshaller(p)
         sanitizedPatient.copy(encryptedSelf = Base64.getEncoder().encodeToString(encryptAES(data = marshalledData, key = key)))
@@ -216,7 +216,7 @@ suspend fun CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>.e
 
 suspend fun CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>.decryptPatient(myId: String, patient: io.icure.kraken.client.models.PatientDto): PatientDto {
     return try {
-        val key = this.crypto.decryptEncryptionKeys(myId, patient.encryptionKeys).firstOrNull()?.fromHexString()
+        val key = this.crypto.decryptEncryptionKeys(myId, patient.encryptionKeys).firstOrNull()?.keyFromHexString()
             ?: throw IllegalArgumentException("No encryption key for user")
         this.unmarshaller(patient, decryptAES(data = Base64.getDecoder().decode(patient.encryptedSelf), key = key))
     }

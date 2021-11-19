@@ -1,13 +1,11 @@
 package io.icure.kraken.client.extendedapis
 
-import io.icure.kraken.client.apis.AccesslogApi
 import io.icure.kraken.client.apis.ClassificationApi
 import io.icure.kraken.client.crypto.CryptoConfig
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
-import io.icure.kraken.client.crypto.fromHexString
+import io.icure.kraken.client.crypto.keyFromHexString
 import io.icure.kraken.client.models.*
-import io.icure.kraken.client.models.decrypted.AccessLogDto
 import io.icure.kraken.client.models.decrypted.ClassificationDto
 import io.icure.kraken.client.models.decrypted.PatientDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -106,7 +104,7 @@ suspend fun CryptoConfig<ClassificationDto, io.icure.kraken.client.models.Classi
             aesKey.replace(
                 "-",
                 ""
-            ).fromHexString()
+            ).keyFromHexString()
         } ?: throw IllegalArgumentException("No encryption key for user")
         val (sanitizedClassification, marshalledData) = this.marshaller(p)
         sanitizedClassification.copy(encryptedSelf = Base64.getEncoder().encodeToString(encryptAES(data = marshalledData, key = key)))
@@ -118,7 +116,7 @@ suspend fun CryptoConfig<ClassificationDto, io.icure.kraken.client.models.Classi
         aesKey.replace(
             "-",
             ""
-        ).fromHexString()
+        ).keyFromHexString()
     } ?: throw IllegalArgumentException("No encryption key for user")
     return this.unmarshaller(classification, decryptAES(data = Base64.getDecoder().decode(classification.encryptedSelf), key = key))
 }

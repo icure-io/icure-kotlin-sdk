@@ -37,18 +37,18 @@ class LocalCrypto(private val hcpartyApi: HcpartyApi, private val rsaKeyPairs: M
                 getDelegateHcPartyKey(d.delegatedTo!!, d.owner!!)
             } catch (e: Exception) {
                 null
-            }?.let { k -> decryptAES(d.key!!.fromHexString(), k).toString(Charsets.UTF_8)
-                .split(":")[1].replace("-", "")
+            }?.let { k -> decryptAES(d.key!!.keyFromHexString(), k).toString(Charsets.UTF_8)
+                .split(":")[1]
             }
         }?.toSet() ?: throw IllegalArgumentException("Missing key for $myId")
     }
 
     override suspend fun encryptKeyForHcp(myId: String, delegateId: String, objectId: String, secret: String): String {
         val secretKey = formatKey(secret)
-        if (secretKey.fromHexString().size * 8 !in aesValidKeySizes) {
+        if (secretKey.keyFromHexString().size * 8 !in aesValidKeySizes) {
             throw IllegalArgumentException("Illegal AES key size : Secret length should be either 128, 192 or 256")
         }
-        return encryptAES("$objectId:${formatKey(secret)}".toByteArray(Charsets.UTF_8), getOrCreateHcPartyKey(myId, delegateId)).toHexString()
+        return encryptAES("$objectId:${formatKey(secret)}".toByteArray(Charsets.UTF_8), getOrCreateHcPartyKey(myId, delegateId)).keyToHexString()
     }
 
     private fun formatKey(key: String) : String {
@@ -78,13 +78,13 @@ class LocalCrypto(private val hcpartyApi: HcpartyApi, private val rsaKeyPairs: M
             } ?: throw IllegalArgumentException("Unknown hcp $myId")
 
         return keyMap[delegateId]?.second ?: CryptoUtils.generateKeyAES().encoded.let {
-            val keyForMe = CryptoUtils.encryptRSA(it, myPublicKey).toHexString()
+            val keyForMe = CryptoUtils.encryptRSA(it, myPublicKey).keyToHexString()
             val keyForDelegate = CryptoUtils.encryptRSA(
                         it,
                         hcpartyApi.getHealthcareParty(delegateId)?.publicKey?.let { pk ->
-                            KeyFactory.getInstance("RSA").generatePublic(X509EncodedKeySpec(pk.fromHexString()))
+                            KeyFactory.getInstance("RSA").generatePublic(X509EncodedKeySpec(pk.keyFromHexString()))
                         } ?: throw IllegalArgumentException("Unknown hcp $delegateId")
-                    ).toHexString()
+                    ).keyToHexString()
             hcpartyApi.getHealthcareParty(myId)?.let { hcp ->
                 ownerHcpartyKeysCache.defPut(myId) {
                     hcpartyApi.modifyHealthcareParty(
@@ -110,7 +110,7 @@ class LocalCrypto(private val hcpartyApi: HcpartyApi, private val rsaKeyPairs: M
         myPrivateKey: PrivateKey
     ) = this.mapValues { (_, v) ->
         v to CryptoUtils.decryptRSA(
-            v.fromHexString() ?: throw IllegalArgumentException("Invalid HCP key for hcp $myId"),
+            v.keyFromHexString() ?: throw IllegalArgumentException("Invalid HCP key for hcp $myId"),
             myPrivateKey
         )
     }

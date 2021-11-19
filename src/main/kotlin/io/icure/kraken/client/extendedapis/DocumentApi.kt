@@ -4,10 +4,7 @@ import io.icure.kraken.client.apis.DocumentApi
 import io.icure.kraken.client.crypto.CryptoConfig
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
-import io.icure.kraken.client.crypto.fromHexString
-import io.icure.kraken.client.infrastructure.MultiValueMap
-import io.icure.kraken.client.infrastructure.RequestConfig
-import io.icure.kraken.client.infrastructure.RequestMethod
+import io.icure.kraken.client.crypto.keyFromHexString
 import io.icure.kraken.client.models.*
 import io.icure.kraken.client.models.decrypted.DocumentDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -154,7 +151,7 @@ suspend fun CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>
             aesKey.replace(
                 "-",
                 ""
-            ).fromHexString()
+            ).keyFromHexString()
         } ?: throw IllegalArgumentException("No encryption key for user")
         val (sanitizedDocument, marshalledData) = this.marshaller(p)
         sanitizedDocument.copy(encryptedSelf = Base64.getEncoder().encodeToString(encryptAES(data = marshalledData, key = key)))
@@ -166,7 +163,7 @@ suspend fun CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>
         aesKey.replace(
             "-",
             ""
-        ).fromHexString()
+        ).keyFromHexString()
     } ?: throw IllegalArgumentException("No encryption key for user")
     return this.unmarshaller(document, decryptAES(data = Base64.getDecoder().decode(document.encryptedSelf), key = key))
 }

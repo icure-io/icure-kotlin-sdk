@@ -4,9 +4,8 @@ import io.icure.kraken.client.apis.FormApi
 import io.icure.kraken.client.crypto.CryptoConfig
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
-import io.icure.kraken.client.crypto.fromHexString
+import io.icure.kraken.client.crypto.keyFromHexString
 import io.icure.kraken.client.models.*
-import io.icure.kraken.client.models.decrypted.ClassificationDto
 import io.icure.kraken.client.models.decrypted.FormDto
 import io.icure.kraken.client.models.decrypted.PatientDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -214,7 +213,7 @@ suspend fun CryptoConfig<FormDto, io.icure.kraken.client.models.FormDto>.encrypt
             aesKey.replace(
                 "-",
                 ""
-            ).fromHexString()
+            ).keyFromHexString()
         } ?: throw IllegalArgumentException("No encryption key for user")
         val (sanitizedForm, marshalledData) = this.marshaller(p)
         sanitizedForm.copy(
@@ -228,7 +227,7 @@ suspend fun CryptoConfig<FormDto, io.icure.kraken.client.models.FormDto>.decrypt
         aesKey.replace(
             "-",
             ""
-        ).fromHexString()
+        ).keyFromHexString()
     } ?: throw IllegalArgumentException("No encryption key for user")
     return this.unmarshaller(form, decryptAES(data = Base64.getDecoder().decode(form.encryptedSelf), key = key))
 }

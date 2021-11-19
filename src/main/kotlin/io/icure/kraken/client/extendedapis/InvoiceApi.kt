@@ -4,7 +4,7 @@ import io.icure.kraken.client.apis.InvoiceApi
 import io.icure.kraken.client.crypto.CryptoConfig
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
-import io.icure.kraken.client.crypto.fromHexString
+import io.icure.kraken.client.crypto.keyFromHexString
 import io.icure.kraken.client.models.*
 import io.icure.kraken.client.models.decrypted.InvoiceDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -413,7 +413,7 @@ suspend fun CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>.e
             aesKey.replace(
                 "-",
                 ""
-            ).fromHexString()
+            ).keyFromHexString()
         } ?: throw IllegalArgumentException("No encryption key for user")
         val (sanitizedInvoice, marshalledData) = this.marshaller(p)
             sanitizedInvoice.copy(
@@ -430,7 +430,7 @@ suspend fun CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>.d
             aesKey.replace(
                 "-",
                 ""
-            ).fromHexString()
+            ).keyFromHexString()
         } ?: throw IllegalArgumentException("No encryption key for user")
         return this.unmarshaller(invoice, decryptAES(data = Base64.getDecoder().decode(invoice.encryptedSelf), key = key))
 }
