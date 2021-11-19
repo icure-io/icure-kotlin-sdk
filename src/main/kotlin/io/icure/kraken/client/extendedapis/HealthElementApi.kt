@@ -22,14 +22,14 @@ suspend fun HealthElementDto.initDelegations(user: UserDto, config: CryptoConfig
         delegations = (delegations + user.healthcarePartyId!!).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    listOf(), user.healthcarePartyId, d, config.crypto.encryptKeyForHcp(user.healthcarePartyId, d, this.id, sfk),
+                    listOf(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, sfk),
                 ),
             ))
         },
         encryptionKeys = (delegations + user.healthcarePartyId!!).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    listOf(), user.healthcarePartyId, d, config.crypto.encryptKeyForHcp(user.healthcarePartyId, d, this.id, ek),
+                    listOf(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, ek),
                 ),
             ))
         },
@@ -80,7 +80,7 @@ suspend fun HelementApi.createHealthElement(user: UserDto, patient: io.icure.kra
                             listOf(),
                             user.healthcarePartyId,
                             d,
-                            config.crypto.encryptKeyForHcp(user.healthcarePartyId, d, ec.id, patient.id),
+                            config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, ec.id, patient.id),
                         ),
                     ))
                 },
@@ -160,7 +160,7 @@ suspend fun CryptoConfig<HealthElementDto, io.icure.kraken.client.models.HealthE
     } else {
         val secret = UUID.randomUUID().toString()
         healthElement.copy(encryptionKeys = (delegations + myId).fold(healthElement.encryptionKeys) { m, d ->
-            m + (d to setOf(DelegationDto(listOf(), myId, d, this.crypto.encryptKeyForHcp(myId, d, healthElement.id, secret))))
+            m + (d to setOf(DelegationDto(listOf(), myId, d, this.crypto.encryptAESKeyForHcp(myId, d, healthElement.id, secret))))
         })
     }.let { p ->
         val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.let { aesKey ->

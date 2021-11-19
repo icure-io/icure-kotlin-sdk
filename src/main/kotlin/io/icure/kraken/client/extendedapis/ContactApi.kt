@@ -27,14 +27,14 @@ suspend fun ContactDto.initDelegations(user: UserDto, config: CryptoConfig<Conta
         delegations = (delegations + user.healthcarePartyId!!).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    listOf(), user.healthcarePartyId, d, config.crypto.encryptKeyForHcp(user.healthcarePartyId, d, this.id, sfk),
+                    listOf(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, sfk),
                 ),
             ))
         },
         encryptionKeys = (delegations + user.healthcarePartyId!!).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    listOf(), user.healthcarePartyId, d, config.crypto.encryptKeyForHcp(user.healthcarePartyId, d, this.id, ek),
+                    listOf(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, ek),
                 ),
             ))
         },
@@ -71,7 +71,7 @@ suspend fun ContactApi.createContact(user: UserDto, patient:PatientDto, contact:
                             listOf(),
                             user.healthcarePartyId,
                             d,
-                            config.crypto.encryptKeyForHcp(user.healthcarePartyId, d, ec.id, patient.id),
+                            config.crypto.encryptValueForHcp(user.healthcarePartyId, d, ec.id, patient.id),
                         ),
                     ))
                 },
@@ -222,7 +222,7 @@ suspend fun CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>.e
     } else {
         val secret = UUID.randomUUID().toString()
         contact.copy(encryptionKeys = (delegations + myId).fold(contact.encryptionKeys) { m, d ->
-            m + (d to setOf(DelegationDto(listOf(), myId, d, this.crypto.encryptKeyForHcp(myId, d, contact.id, secret))))
+            m + (d to setOf(DelegationDto(listOf(), myId, d, this.crypto.encryptAESKeyForHcp(myId, d, contact.id, secret))))
         })
     }.let { p ->
         val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.let { aesKey ->

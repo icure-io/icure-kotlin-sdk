@@ -26,7 +26,7 @@ suspend fun FormDto.initDelegations(user: UserDto, config: CryptoConfig<FormDto,
                     listOf(),
                     user.healthcarePartyId,
                     d,
-                    config.crypto.encryptKeyForHcp(user.healthcarePartyId, d, this.id, sfk),
+                    config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, sfk),
                 ),
             ))
         },
@@ -36,7 +36,7 @@ suspend fun FormDto.initDelegations(user: UserDto, config: CryptoConfig<FormDto,
                     listOf(),
                     user.healthcarePartyId,
                     d,
-                    config.crypto.encryptKeyForHcp(user.healthcarePartyId, d, this.id, ek),
+                    config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, ek),
                 ),
             ))
         },
@@ -206,7 +206,7 @@ suspend fun CryptoConfig<FormDto, io.icure.kraken.client.models.FormDto>.encrypt
     } else {
         val secret = UUID.randomUUID().toString()
         form.copy(encryptionKeys = (delegations + myId).fold(form.encryptionKeys) { m, d ->
-            m + (d to setOf(DelegationDto(listOf(), myId, d, this.crypto.encryptKeyForHcp(myId, d, form.id, secret))))
+            m + (d to setOf(DelegationDto(listOf(), myId, d, this.crypto.encryptAESKeyForHcp(myId, d, form.id, secret))))
         })
     }.let { p ->
         val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.let { aesKey ->
