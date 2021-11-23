@@ -34,6 +34,8 @@ import com.github.pozo.KotlinBuilder
  * @param measureValue
  * @param medicationValue
  * @param compoundValue The service for which the content is being filled
+ * @param ratio
+ * @param range
  */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -72,7 +74,13 @@ data class ContentDto (
 
     /* The service for which the content is being filled */
     @field:JsonProperty("compoundValue")
-    val compoundValue: kotlin.collections.List<ServiceDto>? = null
+    val compoundValue: kotlin.collections.List<ServiceDto>? = null,
+
+    @field:JsonProperty("ratio")
+    val ratio: List<MeasureDto>? = null,
+
+    @field:JsonProperty("range")
+    val range: List<MeasureDto>? = null
 
 )
 
