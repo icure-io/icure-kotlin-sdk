@@ -751,7 +751,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **hcPartyId** | **kotlin.String**|  |
- **sentMediumType** | **kotlin.String**|  | [enum: cdrom, eattest, efact, email, mediprima, paper]
+ **sentMediumType** | **kotlin.String**|  | [enum: cdrom, eattest, efact, email, mediprima, paper, stat]
  **invoiceType** | **kotlin.String**|  | [enum: patient, mutualfund, payingagency, insurance, efact, other]
  **sent** | **kotlin.Boolean**|  |
  **from** | **kotlin.Long**|  | [optional]

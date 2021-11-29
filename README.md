@@ -213,23 +213,23 @@ Class | Method | HTTP request | Description
 *DoctemplateApi* | [**setDocumentTemplateAttachment**](docs/DoctemplateApi.md#setdocumenttemplateattachment) | **PUT** /rest/v1/doctemplate/{documentTemplateId}/attachment | Creates a document's attachment
 *DoctemplateApi* | [**setDocumentTemplateAttachmentJson**](docs/DoctemplateApi.md#setdocumenttemplateattachmentjson) | **PUT** /rest/v1/doctemplate/{documentTemplateId}/attachmentJson | Creates a document's attachment
 *DoctemplateApi* | [**updateDocumentTemplate**](docs/DoctemplateApi.md#updatedocumenttemplate) | **PUT** /rest/v1/doctemplate/{documentTemplateId} | Modify a document template with the current user
-*DocumentApi* | [**createDocument**](docs/DocumentApi.md#createdocument) | **POST** /rest/v1/document | Creates a document
-*DocumentApi* | [**deleteAttachment**](docs/DocumentApi.md#deleteattachment) | **DELETE** /rest/v1/document/{documentId}/attachment | Deletes a document's attachment
-*DocumentApi* | [**deleteDocument**](docs/DocumentApi.md#deletedocument) | **DELETE** /rest/v1/document/{documentIds} | Deletes a document
+*DocumentApi* | [**createDocument**](docs/DocumentApi.md#createdocument) | **POST** /rest/v1/document | Create a document
+*DocumentApi* | [**deleteAttachment**](docs/DocumentApi.md#deleteattachment) | **DELETE** /rest/v1/document/{documentId}/attachment | Delete a document's attachment
+*DocumentApi* | [**deleteDocument**](docs/DocumentApi.md#deletedocument) | **DELETE** /rest/v1/document/{documentIds} | Delete a document
 *DocumentApi* | [**findByTypeHCPartyMessageSecretFKeys**](docs/DocumentApi.md#findbytypehcpartymessagesecretfkeys) | **GET** /rest/v1/document/byTypeHcPartySecretForeignKeys | List documents found By type, By Healthcare Party and secret foreign keys.
 *DocumentApi* | [**findDocumentsByHCPartyPatientForeignKeys**](docs/DocumentApi.md#finddocumentsbyhcpartypatientforeignkeys) | **GET** /rest/v1/document/byHcPartySecretForeignKeys | List documents found By Healthcare Party and secret foreign keys.
 *DocumentApi* | [**findWithoutDelegation**](docs/DocumentApi.md#findwithoutdelegation) | **GET** /rest/v1/document/woDelegation | List documents with no delegation
-*DocumentApi* | [**getDocument**](docs/DocumentApi.md#getdocument) | **GET** /rest/v1/document/{documentId} | Gets a document
+*DocumentApi* | [**getDocument**](docs/DocumentApi.md#getdocument) | **GET** /rest/v1/document/{documentId} | Get a document
 *DocumentApi* | [**getDocumentAttachment**](docs/DocumentApi.md#getdocumentattachment) | **GET** /rest/v1/document/{documentId}/attachment/{attachmentId} | Load document's attachment
-*DocumentApi* | [**getDocumentByExternalUuid**](docs/DocumentApi.md#getdocumentbyexternaluuid) | **GET** /rest/v1/document/externaluuid/{externalUuid} | Gets a document
-*DocumentApi* | [**getDocuments**](docs/DocumentApi.md#getdocuments) | **POST** /rest/v1/document/batch | Gets a document
+*DocumentApi* | [**getDocumentByExternalUuid**](docs/DocumentApi.md#getdocumentbyexternaluuid) | **GET** /rest/v1/document/externaluuid/{externalUuid} | Get a document
+*DocumentApi* | [**getDocuments**](docs/DocumentApi.md#getdocuments) | **POST** /rest/v1/document/batch | Get a batch of document
 *DocumentApi* | [**getDocumentsByExternalUuid**](docs/DocumentApi.md#getdocumentsbyexternaluuid) | **GET** /rest/v1/document/externaluuid/{externalUuid}/all | Get all documents with externalUuid
-*DocumentApi* | [**modifyDocument**](docs/DocumentApi.md#modifydocument) | **PUT** /rest/v1/document | Updates a document
-*DocumentApi* | [**modifyDocuments**](docs/DocumentApi.md#modifydocuments) | **PUT** /rest/v1/document/batch | Updates a batch of documents
-*DocumentApi* | [**setDocumentAttachment**](docs/DocumentApi.md#setdocumentattachment) | **PUT** /rest/v1/document/{documentId}/attachment | Creates a document's attachment
+*DocumentApi* | [**modifyDocument**](docs/DocumentApi.md#modifydocument) | **PUT** /rest/v1/document | Update a document
+*DocumentApi* | [**modifyDocuments**](docs/DocumentApi.md#modifydocuments) | **PUT** /rest/v1/document/batch | Update a batch of documents
+*DocumentApi* | [**setDocumentAttachment**](docs/DocumentApi.md#setdocumentattachment) | **PUT** /rest/v1/document/{documentId}/attachment | Create a document's attachment
+*DocumentApi* | [**setDocumentAttachmentBody**](docs/DocumentApi.md#setdocumentattachmentbody) | **PUT** /rest/v1/document/attachment | Create a document's attachment
 *DocumentApi* | [**setDocumentAttachmentMulti**](docs/DocumentApi.md#setdocumentattachmentmulti) | **PUT** /rest/v1/document/{documentId}/attachment/multipart | Creates a document's attachment
 *DocumentApi* | [**setDocumentsDelegations**](docs/DocumentApi.md#setdocumentsdelegations) | **POST** /rest/v1/document/delegations | Update delegations in healthElements.
-*DocumentApi* | [**setSafeDocumentAttachment**](docs/DocumentApi.md#setsafedocumentattachment) | **PUT** /rest/v1/document/attachment | Creates a document's attachment
 *EntityrefApi* | [**createEntityReference**](docs/EntityrefApi.md#createentityreference) | **POST** /rest/v1/entityref | Create an entity reference
 *EntityrefApi* | [**getLatest**](docs/EntityrefApi.md#getlatest) | **GET** /rest/v1/entityref/latest/{prefix} | Find latest reference for a prefix 
 *EntitytemplateApi* | [**createEntityTemplate**](docs/EntitytemplateApi.md#createentitytemplate) | **POST** /rest/v1/entitytemplate | Create a EntityTemplate
@@ -408,6 +408,8 @@ Class | Method | HTTP request | Description
 *PatientApi* | [**findByAccessLogUserAfterDate**](docs/PatientApi.md#findbyaccessloguserafterdate) | **GET** /rest/v1/patient/byAccess/{userId} | Get Paginated List of Patients sorted by Access logs descending
 *PatientApi* | [**findByExternalId**](docs/PatientApi.md#findbyexternalid) | **GET** /rest/v1/patient/byExternalId/{externalId} | Get the patient having the provided externalId
 *PatientApi* | [**findByNameBirthSsinAuto**](docs/PatientApi.md#findbynamebirthssinauto) | **GET** /rest/v1/patient/byNameBirthSsinAuto | Find patients for the current user (HcParty) 
+*PatientApi* | [**findDuplicatesByName**](docs/PatientApi.md#findduplicatesbyname) | **POST** /rest/v1/patient/duplicates/name | Provides a paginated list of patients with duplicate name for an hecparty
+*PatientApi* | [**findDuplicatesBySsin**](docs/PatientApi.md#findduplicatesbyssin) | **POST** /rest/v1/patient/duplicates/ssin | Provides a paginated list of patients with duplicate ssin for an hecparty
 *PatientApi* | [**fuzzySearch**](docs/PatientApi.md#fuzzysearch) | **GET** /rest/v1/patient/fuzzy | Filter patients for the current user (HcParty) 
 *PatientApi* | [**getPatient**](docs/PatientApi.md#getpatient) | **GET** /rest/v1/patient/{patientId} | Get patient
 *PatientApi* | [**getPatientByHealthcarepartyAndIdentifier**](docs/PatientApi.md#getpatientbyhealthcarepartyandidentifier) | **GET** /rest/v1/patient/{hcPartyId}/{id} | Get patient by identifier
@@ -574,8 +576,10 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.AppointmentImportDto](docs/AppointmentImportDto.md)
  - [io.icure.kraken.client.models.ArticleDto](docs/ArticleDto.md)
  - [io.icure.kraken.client.models.AtcDto](docs/AtcDto.md)
+ - [io.icure.kraken.client.models.Authentication](docs/Authentication.md)
  - [io.icure.kraken.client.models.AuthenticationResponse](docs/AuthenticationResponse.md)
  - [io.icure.kraken.client.models.AuthenticationTokenDto](docs/AuthenticationTokenDto.md)
+ - [io.icure.kraken.client.models.Basic](docs/Basic.md)
  - [io.icure.kraken.client.models.CalendarItemDto](docs/CalendarItemDto.md)
  - [io.icure.kraken.client.models.CalendarItemTagDto](docs/CalendarItemTagDto.md)
  - [io.icure.kraken.client.models.CalendarItemTypeDto](docs/CalendarItemTypeDto.md)
@@ -729,6 +733,7 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.RegistrationSuccessDto](docs/RegistrationSuccessDto.md)
  - [io.icure.kraken.client.models.ReimbursementCriterionDto](docs/ReimbursementCriterionDto.md)
  - [io.icure.kraken.client.models.ReimbursementDto](docs/ReimbursementDto.md)
+ - [io.icure.kraken.client.models.Remote](docs/Remote.md)
  - [io.icure.kraken.client.models.RenewalDto](docs/RenewalDto.md)
  - [io.icure.kraken.client.models.ReplicationDto](docs/ReplicationDto.md)
  - [io.icure.kraken.client.models.ReplicationInfoDto](docs/ReplicationInfoDto.md)

@@ -12,6 +12,7 @@
  */
 package io.icure.kraken.client.models
 
+import io.icure.kraken.client.models.Remote
 import io.icure.kraken.client.models.ReplicationStats
 
 import com.fasterxml.jackson.annotation.JsonProperty
@@ -24,16 +25,18 @@ import com.github.pozo.KotlinBuilder
  * 
  *
  * @param id 
- * @param createTarget 
- * @param continuous 
  * @param rev 
  * @param source 
  * @param target 
  * @param owner 
+ * @param createTarget 
+ * @param continuous 
  * @param docIds 
  * @param replicationState 
  * @param replicationStateTime 
  * @param replicationStats 
+ * @param errorCount 
+ * @param revsInfo 
  * @param revHistory 
  */
 
@@ -45,23 +48,23 @@ data class ReplicatorDocument (
     @field:JsonProperty("_id")
     val id: kotlin.String,
 
-    @field:JsonProperty("create_target")
-    val createTarget: kotlin.Boolean,
-
-    @field:JsonProperty("continuous")
-    val continuous: kotlin.Boolean,
-
     @field:JsonProperty("_rev")
     val rev: kotlin.String? = null,
 
     @field:JsonProperty("source")
-    val source: kotlin.String? = null,
+    val source: Remote? = null,
 
     @field:JsonProperty("target")
-    val target: kotlin.String? = null,
+    val target: Remote? = null,
 
     @field:JsonProperty("owner")
     val owner: kotlin.String? = null,
+
+    @field:JsonProperty("create_target")
+    val createTarget: kotlin.Boolean? = null,
+
+    @field:JsonProperty("continuous")
+    val continuous: kotlin.Boolean? = null,
 
     @field:JsonProperty("doc_ids")
     val docIds: kotlin.collections.List<kotlin.String>? = null,
@@ -70,10 +73,16 @@ data class ReplicatorDocument (
     val replicationState: kotlin.String? = null,
 
     @field:JsonProperty("_replication_state_time")
-    val replicationStateTime: kotlin.String? = null,
+    val replicationStateTime: java.time.OffsetDateTime? = null,
 
     @field:JsonProperty("_replication_stats")
     val replicationStats: ReplicationStats? = null,
+
+    @field:JsonProperty("error_count")
+    val errorCount: kotlin.Int? = null,
+
+    @field:JsonProperty("_revs_info")
+    val revsInfo: kotlin.collections.List<kotlin.collections.Map<kotlin.String, kotlin.String>>? = null,
 
     @field:JsonProperty("rev_history")
     val revHistory: kotlin.collections.Map<kotlin.String, kotlin.String>? = null

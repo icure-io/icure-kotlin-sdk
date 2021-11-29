@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **endOfLife** | **kotlin.Long** | Soft delete (unix epoch in ms) timestamp of the object. |  [optional]
 **deletionDate** | **kotlin.Long** | hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. |  [optional]
 **attachment** | **kotlin.ByteArray** |  |  [optional]
+**documentType** | [**inline**](#DocumentTypeEnum) | The type of document, ex: admission, clinical path, document report,invoice, etc. |  [optional]
 **mainUti** | **kotlin.String** |  |  [optional]
 **name** | **kotlin.String** |  |  [optional]
 **attachmentId** | **kotlin.String** |  |  [optional]
@@ -27,6 +28,13 @@ Name | Type | Description | Notes
 **descr** | **kotlin.String** |  |  [optional]
 **disabled** | **kotlin.String** |  |  [optional]
 **specialty** | [**CodeStubDto**](CodeStubDto.md) |  |  [optional]
+
+
+<a name="DocumentTypeEnum"></a>
+## Enum: documentType
+Name | Value
+---- | -----
+documentType | admission, alert, bvt_sample, clinicalpath, clinicalsummary, contactreport, quote, invoice, death, discharge, dischargereport, ebirth_baby_medicalform, ebirth_baby_notification, ebirth_mother_medicalform, ebirth_mother_notification, ecare_safe_consultation, epidemiology, intervention, labrequest, labresult, medicaladvisoragreement, medicationschemeelement, note, notification, pharmaceuticalprescription, prescription, productdelivery, quickdischargereport, radiationexposuremonitoring, referral, report, request, result, sumehr, telemonitoring, template, template_admin, treatmentsuspension, vaccination
 
 
 <a name="VersionEnum"></a>

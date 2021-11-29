@@ -65,7 +65,7 @@ data class PatientHealthCarePartyDto (
     /**
      * Type of care/relationship.
      *
-     * Values: doctor,referral,medicalhouse,retirementhome,hospital,other,referringphysician,managingOrganization
+     * Values: doctor,referral,medicalhouse,retirementhome,hospital,other,referringphysician,managingorganization
      */
     enum class Type(val value: kotlin.String) {
         @JsonProperty(value = "doctor") doctor("doctor"),
@@ -75,7 +75,7 @@ data class PatientHealthCarePartyDto (
         @JsonProperty(value = "hospital") hospital("hospital"),
         @JsonProperty(value = "other") other("other"),
         @JsonProperty(value = "referringphysician") referringphysician("referringphysician"),
-        @JsonProperty(value = "managingOrganization") managingOrganization("managingOrganization");
+        @JsonProperty(value = "managingorganization") managingorganization("managingorganization");
     }
 }
 

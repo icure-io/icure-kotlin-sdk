@@ -344,7 +344,7 @@ data class InvoiceDto (
     /**
      * Medium of the invoice: CD ROM, Email, paper, etc.
      *
-     * Values: cdrom,eattest,efact,email,mediprima,paper
+     * Values: cdrom,eattest,efact,email,mediprima,paper,stat
      */
     enum class SentMediumType(val value: kotlin.String) {
         @JsonProperty(value = "cdrom") cdrom("cdrom"),
@@ -352,7 +352,8 @@ data class InvoiceDto (
         @JsonProperty(value = "efact") efact("efact"),
         @JsonProperty(value = "email") email("email"),
         @JsonProperty(value = "mediprima") mediprima("mediprima"),
-        @JsonProperty(value = "paper") paper("paper");
+        @JsonProperty(value = "paper") paper("paper"),
+        @JsonProperty(value = "stat") stat("stat");
     }
     /**
      * 

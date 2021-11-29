@@ -41,8 +41,8 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     }
 
     /**
-    * Creates a document
-    * 
+    * Create a document
+    * Creates a document and returns an instance of created document afterward
     * @param documentDto  
     * @return DocumentDto
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
@@ -80,8 +80,8 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     }
 
     /**
-    * Deletes a document&#39;s attachment
-    * 
+    * Delete a document&#39;s attachment
+    * Deletes a document&#39;s attachment and returns the modified document instance afterward
     * @param documentId  
     * @return DocumentDto
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
@@ -119,8 +119,8 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     }
 
     /**
-    * Deletes a document
-    * 
+    * Delete a document
+    * Deletes a batch of documents and returns the list of deleted document ids
     * @param documentIds  
     * @return kotlin.collections.List<DocIdentifier>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
@@ -295,8 +295,8 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     }
 
     /**
-    * Gets a document
-    * 
+    * Get a document
+    * Returns the document corresponding to the identifier passed in the request
     * @param documentId  
     * @return DocumentDto
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
@@ -387,8 +387,8 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     }
 
     /**
-    * Gets a document
-    * 
+    * Get a document
+    * Returns the first document corresponding to the externalUuid passed in the request
     * @param externalUuid  
     * @return DocumentDto
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
@@ -426,8 +426,8 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     }
 
     /**
-    * Gets a document
-    * 
+    * Get a batch of document
+    * Returns a list of document corresponding to the identifiers passed in the body
     * @param listOfIdsDto  
     * @return kotlin.collections.List<DocumentDto>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
@@ -466,7 +466,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
     /**
     * Get all documents with externalUuid
-    * 
+    * Returns a list of document corresponding to the externalUuid passed in the request
     * @param externalUuid  
     * @return kotlin.collections.List<DocumentDto>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
@@ -504,8 +504,8 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     }
 
     /**
-    * Updates a document
-    * 
+    * Update a document
+    * Updates the document and returns an instance of the modified document afterward
     * @param documentDto  
     * @return DocumentDto
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
@@ -543,7 +543,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     }
 
     /**
-    * Updates a batch of documents
+    * Update a batch of documents
     * Returns the modified documents.
     * @param documentDto  
     * @return kotlin.collections.List<DocumentDto>
@@ -582,8 +582,8 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     }
 
     /**
-    * Creates a document&#39;s attachment
-    * 
+    * Create a document&#39;s attachment
+    * Creates a document&#39;s attachment and returns the modified document instance afterward
     * @param documentId  
     * @param body  
     * @param enckeys  (optional)
@@ -623,6 +623,55 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
         return RequestConfig(
             method = RequestMethod.PUT,
             path = "/rest/v1/document/{documentId}/attachment".replace("{"+"documentId"+"}", "$documentId"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
+    * Create a document&#39;s attachment
+    * Creates a document attachment and returns the modified document instance afterward
+    * @param documentId  
+    * @param body  
+    * @param enckeys  (optional)
+    * @return DocumentDto
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun setDocumentAttachmentBody(documentId: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, enckeys: kotlin.String?) : DocumentDto?  {
+        val localVariableConfig = setDocumentAttachmentBodyRequestConfig(documentId = documentId, body = body, enckeys = enckeys)
+
+        return request<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, DocumentDto>(
+            localVariableConfig
+        )
+    }
+
+    /**
+    * To obtain the request config of the operation setDocumentAttachmentBody
+    *
+    * @param documentId  
+    * @param body  
+    * @param enckeys  (optional)
+    * @return RequestConfig
+    */
+    fun setDocumentAttachmentBodyRequestConfig(documentId: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, enckeys: kotlin.String?) : RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
+        val localVariableBody = body
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                put("documentId", listOf(documentId.toString()))
+                if (enckeys != null) {
+                    put("enckeys", listOf(enckeys.toString()))
+                }
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.PUT,
+            path = "/rest/v1/document/attachment",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -710,55 +759,6 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v1/document/delegations",
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Creates a document&#39;s attachment
-    * 
-    * @param documentId  
-    * @param body  
-    * @param enckeys  (optional)
-    * @return DocumentDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setSafeDocumentAttachment(documentId: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, enckeys: kotlin.String?) : DocumentDto?  {
-        val localVariableConfig = setSafeDocumentAttachmentRequestConfig(documentId = documentId, body = body, enckeys = enckeys)
-
-        return request<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, DocumentDto>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation setSafeDocumentAttachment
-    *
-    * @param documentId  
-    * @param body  
-    * @param enckeys  (optional)
-    * @return RequestConfig
-    */
-    fun setSafeDocumentAttachmentRequestConfig(documentId: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, enckeys: kotlin.String?) : RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
-        val localVariableBody = body
-        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
-            .apply {
-                put("documentId", listOf(documentId.toString()))
-                if (enckeys != null) {
-                    put("enckeys", listOf(enckeys.toString()))
-                }
-            }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.PUT,
-            path = "/rest/v1/document/attachment",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody

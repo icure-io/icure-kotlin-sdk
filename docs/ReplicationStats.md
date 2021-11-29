@@ -11,6 +11,8 @@ Name | Type | Description | Notes
 **changesPending** | **kotlin.Int** |  |  [optional]
 **docWriteFailures** | **kotlin.Int** |  |  [optional]
 **checkpointedSourceSeq** | **kotlin.String** |  |  [optional]
+**startTime** | [**java.time.OffsetDateTime**](java.time.OffsetDateTime.md) |  |  [optional]
+**error** | **kotlin.String** |  |  [optional]
 
 
 

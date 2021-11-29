@@ -29,6 +29,8 @@ import com.github.pozo.KotlinBuilder
  * @param changesPending 
  * @param docWriteFailures 
  * @param checkpointedSourceSeq 
+ * @param startTime 
+ * @param error 
  */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -55,7 +57,13 @@ data class ReplicationStats (
     val docWriteFailures: kotlin.Int? = null,
 
     @field:JsonProperty("checkpointed_source_seq")
-    val checkpointedSourceSeq: kotlin.String? = null
+    val checkpointedSourceSeq: kotlin.String? = null,
+
+    @field:JsonProperty("start_time")
+    val startTime: java.time.OffsetDateTime? = null,
+
+    @field:JsonProperty("error")
+    val error: kotlin.String? = null
 
 )
 

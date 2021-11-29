@@ -4,30 +4,32 @@ All URIs are relative to *https://kraken.icure.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createDocument**](DocumentApi.md#createDocument) | **POST** /rest/v1/document | Creates a document
-[**deleteAttachment**](DocumentApi.md#deleteAttachment) | **DELETE** /rest/v1/document/{documentId}/attachment | Deletes a document&#39;s attachment
-[**deleteDocument**](DocumentApi.md#deleteDocument) | **DELETE** /rest/v1/document/{documentIds} | Deletes a document
+[**createDocument**](DocumentApi.md#createDocument) | **POST** /rest/v1/document | Create a document
+[**deleteAttachment**](DocumentApi.md#deleteAttachment) | **DELETE** /rest/v1/document/{documentId}/attachment | Delete a document&#39;s attachment
+[**deleteDocument**](DocumentApi.md#deleteDocument) | **DELETE** /rest/v1/document/{documentIds} | Delete a document
 [**findByTypeHCPartyMessageSecretFKeys**](DocumentApi.md#findByTypeHCPartyMessageSecretFKeys) | **GET** /rest/v1/document/byTypeHcPartySecretForeignKeys | List documents found By type, By Healthcare Party and secret foreign keys.
 [**findDocumentsByHCPartyPatientForeignKeys**](DocumentApi.md#findDocumentsByHCPartyPatientForeignKeys) | **GET** /rest/v1/document/byHcPartySecretForeignKeys | List documents found By Healthcare Party and secret foreign keys.
 [**findWithoutDelegation**](DocumentApi.md#findWithoutDelegation) | **GET** /rest/v1/document/woDelegation | List documents with no delegation
-[**getDocument**](DocumentApi.md#getDocument) | **GET** /rest/v1/document/{documentId} | Gets a document
+[**getDocument**](DocumentApi.md#getDocument) | **GET** /rest/v1/document/{documentId} | Get a document
 [**getDocumentAttachment**](DocumentApi.md#getDocumentAttachment) | **GET** /rest/v1/document/{documentId}/attachment/{attachmentId} | Load document&#39;s attachment
-[**getDocumentByExternalUuid**](DocumentApi.md#getDocumentByExternalUuid) | **GET** /rest/v1/document/externaluuid/{externalUuid} | Gets a document
-[**getDocuments**](DocumentApi.md#getDocuments) | **POST** /rest/v1/document/batch | Gets a document
+[**getDocumentByExternalUuid**](DocumentApi.md#getDocumentByExternalUuid) | **GET** /rest/v1/document/externaluuid/{externalUuid} | Get a document
+[**getDocuments**](DocumentApi.md#getDocuments) | **POST** /rest/v1/document/batch | Get a batch of document
 [**getDocumentsByExternalUuid**](DocumentApi.md#getDocumentsByExternalUuid) | **GET** /rest/v1/document/externaluuid/{externalUuid}/all | Get all documents with externalUuid
-[**modifyDocument**](DocumentApi.md#modifyDocument) | **PUT** /rest/v1/document | Updates a document
-[**modifyDocuments**](DocumentApi.md#modifyDocuments) | **PUT** /rest/v1/document/batch | Updates a batch of documents
-[**setDocumentAttachment**](DocumentApi.md#setDocumentAttachment) | **PUT** /rest/v1/document/{documentId}/attachment | Creates a document&#39;s attachment
+[**modifyDocument**](DocumentApi.md#modifyDocument) | **PUT** /rest/v1/document | Update a document
+[**modifyDocuments**](DocumentApi.md#modifyDocuments) | **PUT** /rest/v1/document/batch | Update a batch of documents
+[**setDocumentAttachment**](DocumentApi.md#setDocumentAttachment) | **PUT** /rest/v1/document/{documentId}/attachment | Create a document&#39;s attachment
+[**setDocumentAttachmentBody**](DocumentApi.md#setDocumentAttachmentBody) | **PUT** /rest/v1/document/attachment | Create a document&#39;s attachment
 [**setDocumentAttachmentMulti**](DocumentApi.md#setDocumentAttachmentMulti) | **PUT** /rest/v1/document/{documentId}/attachment/multipart | Creates a document&#39;s attachment
 [**setDocumentsDelegations**](DocumentApi.md#setDocumentsDelegations) | **POST** /rest/v1/document/delegations | Update delegations in healthElements.
-[**setSafeDocumentAttachment**](DocumentApi.md#setSafeDocumentAttachment) | **PUT** /rest/v1/document/attachment | Creates a document&#39;s attachment
 
 
 <a name="createDocument"></a>
 # **createDocument**
 > DocumentDto createDocument(documentDto)
 
-Creates a document
+Create a document
+
+Creates a document and returns an instance of created document afterward
 
 ### Example
 ```kotlin
@@ -72,7 +74,9 @@ No authorization required
 # **deleteAttachment**
 > DocumentDto deleteAttachment(documentId)
 
-Deletes a document&#39;s attachment
+Delete a document&#39;s attachment
+
+Deletes a document&#39;s attachment and returns the modified document instance afterward
 
 ### Example
 ```kotlin
@@ -117,7 +121,9 @@ No authorization required
 # **deleteDocument**
 > kotlin.collections.List&lt;DocIdentifier&gt; deleteDocument(documentIds)
 
-Deletes a document
+Delete a document
+
+Deletes a batch of documents and returns the list of deleted document ids
 
 ### Example
 ```kotlin
@@ -309,7 +315,9 @@ No authorization required
 # **getDocument**
 > DocumentDto getDocument(documentId)
 
-Gets a document
+Get a document
+
+Returns the document corresponding to the identifier passed in the request
 
 ### Example
 ```kotlin
@@ -405,7 +413,9 @@ No authorization required
 # **getDocumentByExternalUuid**
 > DocumentDto getDocumentByExternalUuid(externalUuid)
 
-Gets a document
+Get a document
+
+Returns the first document corresponding to the externalUuid passed in the request
 
 ### Example
 ```kotlin
@@ -450,7 +460,9 @@ No authorization required
 # **getDocuments**
 > kotlin.collections.List&lt;DocumentDto&gt; getDocuments(listOfIdsDto)
 
-Gets a document
+Get a batch of document
+
+Returns a list of document corresponding to the identifiers passed in the body
 
 ### Example
 ```kotlin
@@ -497,6 +509,8 @@ No authorization required
 
 Get all documents with externalUuid
 
+Returns a list of document corresponding to the externalUuid passed in the request
+
 ### Example
 ```kotlin
 // Import classes:
@@ -540,7 +554,9 @@ No authorization required
 # **modifyDocument**
 > DocumentDto modifyDocument(documentDto)
 
-Updates a document
+Update a document
+
+Updates the document and returns an instance of the modified document afterward
 
 ### Example
 ```kotlin
@@ -585,7 +601,7 @@ No authorization required
 # **modifyDocuments**
 > kotlin.collections.List&lt;DocumentDto&gt; modifyDocuments(documentDto)
 
-Updates a batch of documents
+Update a batch of documents
 
 Returns the modified documents.
 
@@ -632,7 +648,9 @@ No authorization required
 # **setDocumentAttachment**
 > DocumentDto setDocumentAttachment(documentId, body, enckeys)
 
-Creates a document&#39;s attachment
+Create a document&#39;s attachment
+
+Creates a document&#39;s attachment and returns the modified document instance afterward
 
 ### Example
 ```kotlin
@@ -652,6 +670,57 @@ try {
     e.printStackTrace()
 } catch (e: ServerException) {
     println("5xx response calling DocumentApi#setDocumentAttachment")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **documentId** | **kotlin.String**|  |
+ **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
+ **enckeys** | **kotlin.String**|  | [optional]
+
+### Return type
+
+[**DocumentDto**](DocumentDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/octet-stream
+ - **Accept**: */*
+
+<a name="setDocumentAttachmentBody"></a>
+# **setDocumentAttachmentBody**
+> DocumentDto setDocumentAttachmentBody(documentId, body, enckeys)
+
+Create a document&#39;s attachment
+
+Creates a document attachment and returns the modified document instance afterward
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = DocumentApi()
+val documentId : kotlin.String = documentId_example // kotlin.String | 
+val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
+val enckeys : kotlin.String = enckeys_example // kotlin.String | 
+try {
+    val result : DocumentDto = apiInstance.setDocumentAttachmentBody(documentId, body, enckeys)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DocumentApi#setDocumentAttachmentBody")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DocumentApi#setDocumentAttachmentBody")
     e.printStackTrace()
 }
 ```
@@ -771,54 +840,5 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: */*
-
-<a name="setSafeDocumentAttachment"></a>
-# **setSafeDocumentAttachment**
-> DocumentDto setSafeDocumentAttachment(documentId, body, enckeys)
-
-Creates a document&#39;s attachment
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = DocumentApi()
-val documentId : kotlin.String = documentId_example // kotlin.String | 
-val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
-val enckeys : kotlin.String = enckeys_example // kotlin.String | 
-try {
-    val result : DocumentDto = apiInstance.setSafeDocumentAttachment(documentId, body, enckeys)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling DocumentApi#setSafeDocumentAttachment")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling DocumentApi#setSafeDocumentAttachment")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **documentId** | **kotlin.String**|  |
- **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
- **enckeys** | **kotlin.String**|  | [optional]
-
-### Return type
-
-[**DocumentDto**](DocumentDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/octet-stream
  - **Accept**: */*
 
