@@ -12,25 +12,11 @@
  */
 package io.icure.kraken.client.models.decrypted
 
-import io.icure.kraken.client.models.AddressDto
-import io.icure.kraken.client.models.CodeStubDto
-import io.icure.kraken.client.models.DelegationDto
-import io.icure.kraken.client.models.EmploymentInfoDto
-import io.icure.kraken.client.models.FinancialInstitutionInformationDto
-import io.icure.kraken.client.models.InsurabilityDto
-import io.icure.kraken.client.models.MedicalHouseContractDto
-import io.icure.kraken.client.models.PartnershipDto
-import io.icure.kraken.client.models.PatientHealthCarePartyDto
-import io.icure.kraken.client.models.PropertyStubDto
-import io.icure.kraken.client.models.SchoolingInfoDto
-
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.github.pozo.KotlinBuilder
-import io.icure.kraken.client.models.IdentifierDto
-import io.icure.kraken.client.models.PatientDto
-
+import io.icure.kraken.client.models.*
 
 /**
  * This entity is a root level object. It represents a patient It is serialized in JSON and saved in the underlying icure-patient CouchDB database.
