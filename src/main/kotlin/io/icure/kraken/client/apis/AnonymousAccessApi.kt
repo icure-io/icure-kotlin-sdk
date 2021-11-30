@@ -14,7 +14,7 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
-import io.icure.kraken.client.models.AgendaDto
+import io.icure.kraken.client.models.CalendarItemTypeDto
 import io.icure.kraken.client.models.UserDto
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -39,14 +39,14 @@ class AnonymousAccessApi(basePath: kotlin.String = defaultBasePath, webClient: W
     }
 
     /**
-    * Get Availabilities for HCP and agendaId
+    * Get Availabilities for HCP and appointmentType
     * 
     * @param groupId  
-    * @param agendaId  
+    * @param userId  
+    * @param getCalendarItemTypeId  
     * @param startDate  
     * @param endDate  
     * @param hcpId  
-    * @param duration  
     * @param limit  (optional)
     * @return kotlin.collections.List<kotlin.Long>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
@@ -55,8 +55,8 @@ class AnonymousAccessApi(basePath: kotlin.String = defaultBasePath, webClient: W
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getAvailabilitiesByPeriodAndAgendaId(groupId: kotlin.String, agendaId: kotlin.String, startDate: kotlin.Long, endDate: kotlin.Long, hcpId: kotlin.String, duration: kotlin.Long, limit: kotlin.Int?) : kotlin.collections.List<kotlin.Long>?  {
-        val localVariableConfig = getAvailabilitiesByPeriodAndAgendaIdRequestConfig(groupId = groupId, agendaId = agendaId, startDate = startDate, endDate = endDate, hcpId = hcpId, duration = duration, limit = limit)
+    suspend fun getAvailabilitiesByPeriodAndCalendarItemTypeId(groupId: kotlin.String, userId: kotlin.String, getCalendarItemTypeId: kotlin.String, startDate: kotlin.Long, endDate: kotlin.Long, hcpId: kotlin.String, limit: kotlin.Int?) : kotlin.collections.List<kotlin.Long>?  {
+        val localVariableConfig = getAvailabilitiesByPeriodAndCalendarItemTypeIdRequestConfig(groupId = groupId, userId = userId, getCalendarItemTypeId = getCalendarItemTypeId, startDate = startDate, endDate = endDate, hcpId = hcpId, limit = limit)
 
         return request<Unit, kotlin.collections.List<kotlin.Long>>(
             localVariableConfig
@@ -64,25 +64,24 @@ class AnonymousAccessApi(basePath: kotlin.String = defaultBasePath, webClient: W
     }
 
     /**
-    * To obtain the request config of the operation getAvailabilitiesByPeriodAndAgendaId
+    * To obtain the request config of the operation getAvailabilitiesByPeriodAndCalendarItemTypeId
     *
     * @param groupId  
-    * @param agendaId  
+    * @param userId  
+    * @param getCalendarItemTypeId  
     * @param startDate  
     * @param endDate  
     * @param hcpId  
-    * @param duration  
     * @param limit  (optional)
     * @return RequestConfig
     */
-    fun getAvailabilitiesByPeriodAndAgendaIdRequestConfig(groupId: kotlin.String, agendaId: kotlin.String, startDate: kotlin.Long, endDate: kotlin.Long, hcpId: kotlin.String, duration: kotlin.Long, limit: kotlin.Int?) : RequestConfig<Unit> {
+    fun getAvailabilitiesByPeriodAndCalendarItemTypeIdRequestConfig(groupId: kotlin.String, userId: kotlin.String, getCalendarItemTypeId: kotlin.String, startDate: kotlin.Long, endDate: kotlin.Long, hcpId: kotlin.String, limit: kotlin.Int?) : RequestConfig<Unit> {
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("startDate", listOf(startDate.toString()))
                 put("endDate", listOf(endDate.toString()))
                 put("hcpId", listOf(hcpId.toString()))
-                put("duration", listOf(duration.toString()))
                 if (limit != null) {
                     put("limit", listOf(limit.toString()))
                 }
@@ -91,7 +90,7 @@ class AnonymousAccessApi(basePath: kotlin.String = defaultBasePath, webClient: W
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/aa/available/inGroup/{groupId}/agenda/{agendaId}".replace("{"+"groupId"+"}", "$groupId").replace("{"+"agendaId"+"}", "$agendaId"),
+            path = "/rest/v1/aa/available/inGroup/{groupId}/forUser/{userId}/type/{getCalendarItemTypeId}".replace("{"+"groupId"+"}", "$groupId").replace("{"+"userId"+"}", "$userId").replace("{"+"getCalendarItemTypeId"+"}", "$getCalendarItemTypeId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -99,40 +98,48 @@ class AnonymousAccessApi(basePath: kotlin.String = defaultBasePath, webClient: W
     }
 
     /**
-    * List Agendas for a provided group id
-    * Returns a list of healthcare parties contained in the group owning the providing id
+    * List Calendar Item types for a provided group id and user id
+    * Returns a list of Calendar Item types
     * @param groupId Healthcare parties group id 
     * @param userId Healthcare party user id 
-    * @return kotlin.collections.List<AgendaDto>
+    * @param startDate  
+    * @param endDate  
+    * @return kotlin.collections.List<CalendarItemTypeDto>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listAgendasInHealthcareParty(groupId: kotlin.String, userId: kotlin.String) : kotlin.collections.List<AgendaDto>?  {
-        val localVariableConfig = listAgendasInHealthcarePartyRequestConfig(groupId = groupId, userId = userId)
+    suspend fun listAppointmentTypesForUser(groupId: kotlin.String, userId: kotlin.String, startDate: kotlin.Long, endDate: kotlin.Long) : kotlin.collections.List<CalendarItemTypeDto>?  {
+        val localVariableConfig = listAppointmentTypesForUserRequestConfig(groupId = groupId, userId = userId, startDate = startDate, endDate = endDate)
 
-        return request<Unit, kotlin.collections.List<AgendaDto>>(
+        return request<Unit, kotlin.collections.List<CalendarItemTypeDto>>(
             localVariableConfig
         )
     }
 
     /**
-    * To obtain the request config of the operation listAgendasInHealthcareParty
+    * To obtain the request config of the operation listAppointmentTypesForUser
     *
     * @param groupId Healthcare parties group id 
     * @param userId Healthcare party user id 
+    * @param startDate  
+    * @param endDate  
     * @return RequestConfig
     */
-    fun listAgendasInHealthcarePartyRequestConfig(groupId: kotlin.String, userId: kotlin.String) : RequestConfig<Unit> {
+    fun listAppointmentTypesForUserRequestConfig(groupId: kotlin.String, userId: kotlin.String, startDate: kotlin.Long, endDate: kotlin.Long) : RequestConfig<Unit> {
         val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                put("startDate", listOf(startDate.toString()))
+                put("endDate", listOf(endDate.toString()))
+            }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/aa/agenda/inGroup/{groupId}/forUser/{userId}".replace("{"+"groupId"+"}", "$groupId").replace("{"+"userId"+"}", "$userId"),
+            path = "/rest/v1/aa/appointmentType/inGroup/{groupId}/forUser/{userId}".replace("{"+"groupId"+"}", "$groupId").replace("{"+"userId"+"}", "$userId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody

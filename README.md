@@ -49,8 +49,8 @@ Class | Method | HTTP request | Description
 *AgendaApi* | [**getAgendasForUser**](docs/AgendaApi.md#getagendasforuser) | **GET** /rest/v1/agenda/byUser | Gets all agendas for user
 *AgendaApi* | [**getReadableAgendasForUser**](docs/AgendaApi.md#getreadableagendasforuser) | **GET** /rest/v1/agenda/readableForUser | Gets readable agendas for user
 *AgendaApi* | [**modifyAgenda**](docs/AgendaApi.md#modifyagenda) | **PUT** /rest/v1/agenda | Modifies an agenda
-*AnonymousAccessApi* | [**getAvailabilitiesByPeriodAndAgendaId**](docs/AnonymousAccessApi.md#getavailabilitiesbyperiodandagendaid) | **GET** /rest/v1/aa/available/inGroup/{groupId}/agenda/{agendaId} | Get Availabilities for HCP and agendaId
-*AnonymousAccessApi* | [**listAgendasInHealthcareParty**](docs/AnonymousAccessApi.md#listagendasinhealthcareparty) | **GET** /rest/v1/aa/agenda/inGroup/{groupId}/forUser/{userId} | List Agendas for a provided group id
+*AnonymousAccessApi* | [**getAvailabilitiesByPeriodAndCalendarItemTypeId**](docs/AnonymousAccessApi.md#getavailabilitiesbyperiodandcalendaritemtypeid) | **GET** /rest/v1/aa/available/inGroup/{groupId}/forUser/{userId}/type/{getCalendarItemTypeId} | Get Availabilities for HCP and appointmentType
+*AnonymousAccessApi* | [**listAppointmentTypesForUser**](docs/AnonymousAccessApi.md#listappointmenttypesforuser) | **GET** /rest/v1/aa/appointmentType/inGroup/{groupId}/forUser/{userId} | List Calendar Item types for a provided group id and user id
 *AnonymousAccessApi* | [**listHealthcarePartiesInGroup**](docs/AnonymousAccessApi.md#listhealthcarepartiesingroup) | **GET** /rest/v1/aa/hcparty/inGroup/{groupId} | List healthcare parties for a provided group id
 *ApplicationsettingsApi* | [**getApplicationSettings**](docs/ApplicationsettingsApi.md#getapplicationsettings) | **GET** /rest/v1/appsettings | Gets all application settings
 *ArticleApi* | [**createArticle**](docs/ArticleApi.md#createarticle) | **POST** /rest/v1/article | Creates a article

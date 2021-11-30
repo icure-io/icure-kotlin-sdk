@@ -447,7 +447,7 @@ data class PatientDto (
     /**
      * any of `single`, `in_couple`, `married`, `separated`, `divorced`, `divorcing`, `widowed`, `widower`, `complicated`, `unknown`, `contract`, `other`.
      *
-     * Values: single,inCouple,married,separated,divorced,divorcing,widowed,widower,complicated,unknown,`contract`,other
+     * Values: single,inCouple,married,separated,divorced,divorcing,widowed,widower,complicated,unknown,`contract`,other,annulled,interlocutory,polygamous,domesticpartner
      */
     enum class PersonalStatus(val value: kotlin.String) {
         @JsonProperty(value = "single") single("single"),
@@ -461,7 +461,11 @@ data class PatientDto (
         @JsonProperty(value = "complicated") complicated("complicated"),
         @JsonProperty(value = "unknown") unknown("unknown"),
         @JsonProperty(value = "contract") `contract`("contract"),
-        @JsonProperty(value = "other") other("other");
+        @JsonProperty(value = "other") other("other"),
+        @JsonProperty(value = "annulled") annulled("annulled"),
+        @JsonProperty(value = "interlocutory") interlocutory("interlocutory"),
+        @JsonProperty(value = "polygamous") polygamous("polygamous"),
+        @JsonProperty(value = "domesticpartner") domesticpartner("domesticpartner");
     }
 }
 
