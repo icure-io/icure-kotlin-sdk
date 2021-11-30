@@ -450,8 +450,6 @@ data class PatientDto (
         @JsonProperty(value = "contract") `contract`("contract"),
         @JsonProperty(value = "other") other("other"),
         @JsonProperty(value = "annulled") annulled("annulled"),
-        @JsonProperty(value = "interlocutory") interlocutory("interlocutory"),
         @JsonProperty(value = "polygamous") polygamous("polygamous"),
-        @JsonProperty(value = "domesticpartner") domesticpartner("domesticpartner");
     }
 }

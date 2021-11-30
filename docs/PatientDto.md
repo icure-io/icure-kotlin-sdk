@@ -104,7 +104,7 @@ birthSex | male, female, indeterminate, changed, changedToMale, changedToFemale,
 ## Enum: personalStatus
 Name | Value
 ---- | -----
-personalStatus | single, in_couple, married, separated, divorced, divorcing, widowed, widower, complicated, unknown, contract, other, annulled, interlocutory, polygamous, domesticpartner
+personalStatus | single, in_couple, married, separated, divorced, divorcing, widowed, widower, complicated, unknown, contract, other, annulled, polygamous
 
 
 
