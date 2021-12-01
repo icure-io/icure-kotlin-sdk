@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 ## Enum: type
 Name | Value
 ---- | -----
-type | primary_contact, primary_contact_for, family, friend, counselor, contact, brother, brotherinlaw, child, daughter, employer, father, grandchild, grandparent, husband, lawyer, mother, neighbour, notary, partner, sister, sisterinlaw, son, spouse, stepdaughter, stepfather, stepmother, stepson, tutor
+type | primary_contact, primary_contact_for, family, friend, counselor, contact, brother, brotherinlaw, child, daughter, employer, father, grandchild, grandparent, husband, lawyer, mother, neighbour, notary, partner, sister, sisterinlaw, son, spouse, stepdaughter, stepfather, stepmother, stepson, tutor, nextofkin, federalagency, insurancecompany, stateagency, other, unknown
 
 
 <a name="StatusEnum"></a>

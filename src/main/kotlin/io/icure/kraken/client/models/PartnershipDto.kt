@@ -59,7 +59,7 @@ data class PartnershipDto (
     /**
      * Type of relationship.
      *
-     * Values: primaryContact,primaryContactFor,family,friend,counselor,contact,brother,brotherinlaw,child,daughter,employer,father,grandchild,grandparent,husband,lawyer,mother,neighbour,notary,partner,sister,sisterinlaw,son,spouse,stepdaughter,stepfather,stepmother,stepson,tutor
+     * Values: primaryContact,primaryContactFor,family,friend,counselor,contact,brother,brotherinlaw,child,daughter,employer,father,grandchild,grandparent,husband,lawyer,mother,neighbour,notary,partner,sister,sisterinlaw,son,spouse,stepdaughter,stepfather,stepmother,stepson,tutor,nextofkin,federalagency,insurancecompany,stateagency,other,unknown
      */
     enum class Type(val value: kotlin.String) {
         @JsonProperty(value = "primary_contact") primaryContact("primary_contact"),
@@ -90,7 +90,13 @@ data class PartnershipDto (
         @JsonProperty(value = "stepfather") stepfather("stepfather"),
         @JsonProperty(value = "stepmother") stepmother("stepmother"),
         @JsonProperty(value = "stepson") stepson("stepson"),
-        @JsonProperty(value = "tutor") tutor("tutor");
+        @JsonProperty(value = "tutor") tutor("tutor"),
+        @JsonProperty(value = "nextofkin") nextofkin("nextofkin"),
+        @JsonProperty(value = "federalagency") federalagency("federalagency"),
+        @JsonProperty(value = "insurancecompany") insurancecompany("insurancecompany"),
+        @JsonProperty(value = "stateagency") stateagency("stateagency"),
+        @JsonProperty(value = "other") other("other"),
+        @JsonProperty(value = "unknown") unknown("unknown");
     }
     /**
      * Status of the relationship.

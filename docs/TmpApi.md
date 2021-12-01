@@ -3235,7 +3235,7 @@ No authorization required
 
 <a name="replicateToTmpDatabase"></a>
 # **replicateToTmpDatabase**
-> ReplicatorDocument replicateToTmpDatabase(from, requestBody)
+> ReplicatorDocumentDto replicateToTmpDatabase(from, requestBody)
 
 
 
@@ -3249,7 +3249,7 @@ val apiInstance = TmpApi()
 val from : kotlin.String = from_example // kotlin.String | 
 val requestBody : kotlin.collections.List<kotlin.String> =  // kotlin.collections.List<kotlin.String> | 
 try {
-    val result : ReplicatorDocument = apiInstance.replicateToTmpDatabase(from, requestBody)
+    val result : ReplicatorDocumentDto = apiInstance.replicateToTmpDatabase(from, requestBody)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling TmpApi#replicateToTmpDatabase")
@@ -3269,7 +3269,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ReplicatorDocument**](ReplicatorDocument.md)
+[**ReplicatorDocumentDto**](ReplicatorDocumentDto.md)
 
 ### Authorization
 

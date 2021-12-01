@@ -31,7 +31,7 @@ import io.icure.kraken.client.models.PaginatedListHealthElementDto
 import io.icure.kraken.client.models.PaginatedListInvoiceDto
 import io.icure.kraken.client.models.PaginatedListPatientDto
 import io.icure.kraken.client.models.PatientDto
-import io.icure.kraken.client.models.ReplicatorDocument
+import io.icure.kraken.client.models.ReplicatorDocumentDto
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -2758,17 +2758,17 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * 
     * @param from  
     * @param requestBody  
-    * @return ReplicatorDocument
+    * @return ReplicatorDocumentDto
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun replicateToTmpDatabase(from: kotlin.String, requestBody: kotlin.collections.List<kotlin.String>) : ReplicatorDocument?  {
+    suspend fun replicateToTmpDatabase(from: kotlin.String, requestBody: kotlin.collections.List<kotlin.String>) : ReplicatorDocumentDto?  {
         val localVariableConfig = replicateToTmpDatabaseRequestConfig(from = from, requestBody = requestBody)
 
-        return request<kotlin.collections.List<kotlin.String>, ReplicatorDocument>(
+        return request<kotlin.collections.List<kotlin.String>, ReplicatorDocumentDto>(
             localVariableConfig
         )
     }
