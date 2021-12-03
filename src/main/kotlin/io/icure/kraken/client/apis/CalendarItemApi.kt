@@ -90,7 +90,9 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    @Deprecated(message = "This operation is deprecated.")
     suspend fun deleteCalendarItem(calendarItemIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
+        @Suppress("DEPRECATION")
         val localVariableConfig = deleteCalendarItemRequestConfig(calendarItemIds = calendarItemIds)
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
@@ -104,6 +106,7 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @param calendarItemIds  
     * @return RequestConfig
     */
+    @Deprecated(message = "This operation is deprecated.")
     fun deleteCalendarItemRequestConfig(calendarItemIds: kotlin.String) : RequestConfig<Unit> {
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
@@ -112,6 +115,45 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
         return RequestConfig(
             method = RequestMethod.DELETE,
             path = "/rest/v1/calendarItem/{calendarItemIds}".replace("{"+"calendarItemIds"+"}", "$calendarItemIds"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
+    * Deletes calendarItems
+    * 
+    * @param listOfIdsDto  
+    * @return kotlin.collections.List<DocIdentifier>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun deleteCalendarItems(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocIdentifier>?  {
+        val localVariableConfig = deleteCalendarItemsRequestConfig(listOfIdsDto = listOfIdsDto)
+
+        return request<ListOfIdsDto, kotlin.collections.List<DocIdentifier>>(
+            localVariableConfig
+        )
+    }
+
+    /**
+    * To obtain the request config of the operation deleteCalendarItems
+    *
+    * @param listOfIdsDto  
+    * @return RequestConfig
+    */
+    fun deleteCalendarItemsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+        val localVariableBody = listOfIdsDto
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v1/calendarItem/delete/byIds",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -157,6 +199,48 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v1/calendarItem/byHcPartySecretForeignKeys",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
+    * Find CalendarItems by recurrenceId
+    * 
+    * @param recurrenceId  
+    * @return kotlin.collections.List<CalendarItemDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun findCalendarItemsByRecurrenceId(recurrenceId: kotlin.String) : kotlin.collections.List<CalendarItemDto>?  {
+        val localVariableConfig = findCalendarItemsByRecurrenceIdRequestConfig(recurrenceId = recurrenceId)
+
+        return request<Unit, kotlin.collections.List<CalendarItemDto>>(
+            localVariableConfig
+        )
+    }
+
+    /**
+    * To obtain the request config of the operation findCalendarItemsByRecurrenceId
+    *
+    * @param recurrenceId  
+    * @return RequestConfig
+    */
+    fun findCalendarItemsByRecurrenceIdRequestConfig(recurrenceId: kotlin.String) : RequestConfig<Unit> {
+        val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                put("recurrenceId", listOf(recurrenceId.toString()))
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v1/calendarItem/byRecurrenceId",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody

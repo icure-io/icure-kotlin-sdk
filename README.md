@@ -131,7 +131,9 @@ Class | Method | HTTP request | Description
 *Besamv2Api* | [**listVmpsByVmpCodes**](docs/Besamv2Api.md#listvmpsbyvmpcodes) | **POST** /rest/v1/be_samv2/vmp/byVmpCodes | Finding VMPs by group.
 *CalendarItemApi* | [**createCalendarItem**](docs/CalendarItemApi.md#createcalendaritem) | **POST** /rest/v1/calendarItem | Creates a calendarItem
 *CalendarItemApi* | [**deleteCalendarItem**](docs/CalendarItemApi.md#deletecalendaritem) | **DELETE** /rest/v1/calendarItem/{calendarItemIds} | Deletes an calendarItem
+*CalendarItemApi* | [**deleteCalendarItems**](docs/CalendarItemApi.md#deletecalendaritems) | **POST** /rest/v1/calendarItem/delete/byIds | Deletes calendarItems
 *CalendarItemApi* | [**findCalendarItemsByHCPartyPatientForeignKeys**](docs/CalendarItemApi.md#findcalendaritemsbyhcpartypatientforeignkeys) | **GET** /rest/v1/calendarItem/byHcPartySecretForeignKeys | Find CalendarItems by hcparty and patient
+*CalendarItemApi* | [**findCalendarItemsByRecurrenceId**](docs/CalendarItemApi.md#findcalendaritemsbyrecurrenceid) | **GET** /rest/v1/calendarItem/byRecurrenceId | Find CalendarItems by recurrenceId
 *CalendarItemApi* | [**getCalendarItem**](docs/CalendarItemApi.md#getcalendaritem) | **GET** /rest/v1/calendarItem/{calendarItemId} | Gets an calendarItem
 *CalendarItemApi* | [**getCalendarItems**](docs/CalendarItemApi.md#getcalendaritems) | **GET** /rest/v1/calendarItem | Gets all calendarItems
 *CalendarItemApi* | [**getCalendarItemsByPeriodAndHcPartyId**](docs/CalendarItemApi.md#getcalendaritemsbyperiodandhcpartyid) | **POST** /rest/v1/calendarItem/byPeriodAndHcPartyId | Get CalendarItems by Period and HcPartyId
@@ -172,6 +174,7 @@ Class | Method | HTTP request | Description
 *CodeApi* | [**getCode**](docs/CodeApi.md#getcode) | **GET** /rest/v1/code/{codeId} | Get a code by id
 *CodeApi* | [**getCodeWithParts**](docs/CodeApi.md#getcodewithparts) | **GET** /rest/v1/code/{type}/{code}/{version} | Get a code
 *CodeApi* | [**getCodes**](docs/CodeApi.md#getcodes) | **GET** /rest/v1/code/byIds/{codeIds} | Gets a list of codes by ids
+*CodeApi* | [**importCodes**](docs/CodeApi.md#importcodes) | **POST** /rest/v1/code/{codeType} | Import codes
 *CodeApi* | [**modifyCode**](docs/CodeApi.md#modifycode) | **PUT** /rest/v1/code | Modify a code
 *ContactApi* | [**closeForHCPartyPatientForeignKeys**](docs/ContactApi.md#closeforhcpartypatientforeignkeys) | **PUT** /rest/v1/contact/byHcPartySecretForeignKeys/close | Close contacts for Healthcare Party and secret foreign keys.
 *ContactApi* | [**createContact**](docs/ContactApi.md#createcontact) | **POST** /rest/v1/contact | Create a contact with the current user
@@ -718,6 +721,7 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.PeriodicityDto](docs/PeriodicityDto.md)
  - [io.icure.kraken.client.models.PermissionDto](docs/PermissionDto.md)
  - [io.icure.kraken.client.models.PermissionItemDto](docs/PermissionItemDto.md)
+ - [io.icure.kraken.client.models.PersonNameDto](docs/PersonNameDto.md)
  - [io.icure.kraken.client.models.PharmaceuticalFormDto](docs/PharmaceuticalFormDto.md)
  - [io.icure.kraken.client.models.PharmaceuticalFormStubDto](docs/PharmaceuticalFormStubDto.md)
  - [io.icure.kraken.client.models.PlaceDto](docs/PlaceDto.md)

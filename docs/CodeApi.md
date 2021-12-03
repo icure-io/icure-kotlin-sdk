@@ -15,6 +15,7 @@ Method | HTTP request | Description
 [**getCode**](CodeApi.md#getCode) | **GET** /rest/v1/code/{codeId} | Get a code by id
 [**getCodeWithParts**](CodeApi.md#getCodeWithParts) | **GET** /rest/v1/code/{type}/{code}/{version} | Get a code
 [**getCodes**](CodeApi.md#getCodes) | **GET** /rest/v1/code/byIds/{codeIds} | Gets a list of codes by ids
+[**importCodes**](CodeApi.md#importCodes) | **POST** /rest/v1/code/{codeType} | Import codes
 [**modifyCode**](CodeApi.md#modifyCode) | **PUT** /rest/v1/code | Modify a code
 
 
@@ -583,6 +584,53 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**kotlin.collections.List&lt;CodeDto&gt;**](CodeDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="importCodes"></a>
+# **importCodes**
+> kotlin.Any importCodes(codeType)
+
+Import codes
+
+Import codes from the resources XML file depending on the passed pathVariable
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = CodeApi()
+val codeType : kotlin.String = codeType_example // kotlin.String | 
+try {
+    val result : kotlin.Any = apiInstance.importCodes(codeType)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling CodeApi#importCodes")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling CodeApi#importCodes")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **codeType** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.Any**](kotlin.Any.md)
 
 ### Authorization
 

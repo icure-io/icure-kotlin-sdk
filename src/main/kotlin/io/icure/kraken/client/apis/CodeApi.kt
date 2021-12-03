@@ -637,6 +637,45 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     }
 
     /**
+    * Import codes
+    * Import codes from the resources XML file depending on the passed pathVariable
+    * @param codeType  
+    * @return kotlin.Any
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun importCodes(codeType: kotlin.String) : kotlin.Any?  {
+        val localVariableConfig = importCodesRequestConfig(codeType = codeType)
+
+        return request<Unit, kotlin.Any>(
+            localVariableConfig
+        )
+    }
+
+    /**
+    * To obtain the request config of the operation importCodes
+    *
+    * @param codeType  
+    * @return RequestConfig
+    */
+    fun importCodesRequestConfig(codeType: kotlin.String) : RequestConfig<Unit> {
+        val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v1/code/{codeType}".replace("{"+"codeType"+"}", "$codeType"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
     * Modify a code
     * Modification of (type, code, version) is not allowed.
     * @param codeDto  

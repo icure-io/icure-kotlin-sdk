@@ -22,6 +22,7 @@ import io.icure.kraken.client.models.InsurabilityDto
 import io.icure.kraken.client.models.MedicalHouseContractDto
 import io.icure.kraken.client.models.PartnershipDto
 import io.icure.kraken.client.models.PatientHealthCarePartyDto
+import io.icure.kraken.client.models.PersonNameDto
 import io.icure.kraken.client.models.PropertyStubDto
 import io.icure.kraken.client.models.SchoolingInfoDto
 
@@ -38,6 +39,7 @@ import com.github.pozo.KotlinBuilder
  * @param identifier 
  * @param tags A tag is an item from a codification system that qualifies an entity as being member of a certain class, whatever the value it might have taken. If the tag qualifies the content of a field, it means that whatever the content of the field, the tag will always apply. For example, the label of a field is qualified using a tag. LOINC is a codification system typically used for tags.
  * @param codes A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes
+ * @param names the list of all names of the patient, also containing the official full name information. Ordered by preference of use. First element is therefore the official name used for the patient in the application
  * @param languages the list of languages spoken by the patient ordered by fluency (alpha-2 code http://www.loc.gov/standards/iso639-2/ascii_8bits.html).
  * @param addresses the list of addresses (with address type).
  * @param mergedIds The ids of the patients that have been merged inside this patient.
@@ -128,6 +130,10 @@ data class PatientDto (
     /* A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes */
     @field:JsonProperty("codes")
     val codes: kotlin.collections.List<CodeStubDto> = listOf(),
+
+    /* the list of all names of the patient, also containing the official full name information. Ordered by preference of use. First element is therefore the official name used for the patient in the application */
+    @field:JsonProperty("names")
+    val names: kotlin.collections.List<PersonNameDto> = listOf(),
 
     /* the list of languages spoken by the patient ordered by fluency (alpha-2 code http://www.loc.gov/standards/iso639-2/ascii_8bits.html). */
     @field:JsonProperty("languages")

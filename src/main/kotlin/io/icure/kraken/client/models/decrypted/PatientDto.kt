@@ -17,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.github.pozo.KotlinBuilder
 import io.icure.kraken.client.models.*
+import io.icure.kraken.client.models.PatientDto
 
 /**
  * This entity is a root level object. It represents a patient It is serialized in JSON and saved in the underlying icure-patient CouchDB database.
@@ -87,6 +88,7 @@ import io.icure.kraken.client.models.*
  * @param publicKey The public key of this hcp
  * @param encryptedSelf The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys.
  * @param medicalLocationId The id of the medical location where this entity was created.
+ * @param names the list of all names of the patient, also containing the official full name information. Ordered by preference of use. First element is therefore the official name used for the patient in the application
  * @param comment
  * @param warning
  * @param fatherBirthCountry
@@ -115,6 +117,10 @@ data class PatientDto (
     /* A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes */
     @field:JsonProperty("codes")
     val codes: kotlin.collections.List<CodeStubDto> = listOf(),
+
+    /* the list of all names of the patient, also containing the official full name information. Ordered by preference of use. First element is therefore the official name used for the patient in the application */
+    @field:JsonProperty("names")
+    val names: kotlin.collections.List<PersonNameDto> = listOf(),
 
     /* the list of languages spoken by the patient ordered by fluency (alpha-2 code http://www.loc.gov/standards/iso639-2/ascii_8bits.html). */
     @field:JsonProperty("languages")

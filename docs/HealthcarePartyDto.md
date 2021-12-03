@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **kotlin.String** | the Id of the healthcare party. We encourage using either a v4 UUID or a HL7 Id. | 
+**names** | [**kotlin.collections.List&lt;PersonNameDto&gt;**](PersonNameDto.md) | the list of all names of the healthcare party, also containing the official full name information. Ordered by preference of use. First element is therefore the official name used for the healthcare party in the application | 
 **addresses** | [**kotlin.collections.List&lt;AddressDto&gt;**](AddressDto.md) | The list of addresses (with address type). | 
 **languages** | **kotlin.collections.List&lt;kotlin.String&gt;** | The list of languages spoken by the patient ordered by fluency (alpha-2 code http://www.loc.gov/standards/iso639-2/ascii_8bits.html). | 
 **statuses** | [**inline**](#kotlin.collections.Set&lt;StatusesEnum&gt;) | The healthcare party&#39;s status: &#39;trainee&#39; or &#39;withconvention&#39; or &#39;accredited&#39; | 
