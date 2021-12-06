@@ -33,6 +33,7 @@ import com.github.pozo.KotlinBuilder
  * @param unit 
  * @param unitCodes 
  * @param comment 
+ * @param comparator 
  */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -68,7 +69,10 @@ data class MeasureDto (
     val unitCodes: kotlin.collections.Set<CodeStubDto>? = null,
 
     @field:JsonProperty("comment")
-    val comment: kotlin.String? = null
+    val comment: kotlin.String? = null,
+
+    @field:JsonProperty("comparator")
+    val comparator: kotlin.String? = null
 
 )
 

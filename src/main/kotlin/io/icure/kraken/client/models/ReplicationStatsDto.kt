@@ -36,30 +36,30 @@ import com.github.pozo.KotlinBuilder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @KotlinBuilder
-data class ReplicationStats (
+data class ReplicationStatsDto (
 
-    @field:JsonProperty("revisions_checked")
+    @field:JsonProperty("revisionsChecked")
     val revisionsChecked: kotlin.Int? = null,
 
-    @field:JsonProperty("missing_revisions_found")
+    @field:JsonProperty("missingRevisionsFound")
     val missingRevisionsFound: kotlin.Int? = null,
 
-    @field:JsonProperty("docs_read")
+    @field:JsonProperty("docsRead")
     val docsRead: kotlin.Int? = null,
 
-    @field:JsonProperty("docs_written")
+    @field:JsonProperty("docsWritten")
     val docsWritten: kotlin.Int? = null,
 
-    @field:JsonProperty("changes_pending")
+    @field:JsonProperty("changesPending")
     val changesPending: kotlin.Int? = null,
 
-    @field:JsonProperty("doc_write_failures")
+    @field:JsonProperty("docWriteFailures")
     val docWriteFailures: kotlin.Int? = null,
 
-    @field:JsonProperty("checkpointed_source_seq")
+    @field:JsonProperty("checkpointedSourceSeq")
     val checkpointedSourceSeq: kotlin.String? = null,
 
-    @field:JsonProperty("start_time")
+    @field:JsonProperty("startTime")
     val startTime: java.time.OffsetDateTime? = null,
 
     @field:JsonProperty("error")

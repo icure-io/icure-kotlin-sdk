@@ -17,6 +17,7 @@ import io.icure.kraken.client.models.CodeStubDto
 import io.icure.kraken.client.models.FinancialInstitutionInformationDto
 import io.icure.kraken.client.models.FlatRateTarificationDto
 import io.icure.kraken.client.models.HealthcarePartyHistoryStatusDto
+import io.icure.kraken.client.models.PersonNameDto
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
@@ -28,6 +29,7 @@ import com.github.pozo.KotlinBuilder
  * This entity is a root level object. It represents a healthcare party. It is serialized in JSON and saved in the underlying icure-healthcareParty CouchDB database.
  *
  * @param id the Id of the healthcare party. We encourage using either a v4 UUID or a HL7 Id.
+ * @param names the list of all names of the healthcare party, also containing the official full name information. Ordered by preference of use. First element is therefore the official name used for the healthcare party in the application
  * @param addresses The list of addresses (with address type).
  * @param languages The list of languages spoken by the patient ordered by fluency (alpha-2 code http://www.loc.gov/standards/iso639-2/ascii_8bits.html).
  * @param statuses The healthcare party's status: 'trainee' or 'withconvention' or 'accredited'
@@ -80,6 +82,10 @@ data class HealthcarePartyDto (
     /* the Id of the healthcare party. We encourage using either a v4 UUID or a HL7 Id. */
     @field:JsonProperty("id")
     val id: kotlin.String,
+
+    /* the list of all names of the healthcare party, also containing the official full name information. Ordered by preference of use. First element is therefore the official name used for the healthcare party in the application */
+    @field:JsonProperty("names")
+    val names: kotlin.collections.List<PersonNameDto> = listOf(),
 
     /* The list of addresses (with address type). */
     @field:JsonProperty("addresses")

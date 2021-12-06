@@ -1,5 +1,5 @@
 
-# ReplicationStats
+# ReplicationStatsDto
 
 ## Properties
 Name | Type | Description | Notes

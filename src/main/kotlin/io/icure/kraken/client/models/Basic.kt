@@ -22,36 +22,20 @@ import com.github.pozo.KotlinBuilder
 /**
  * 
  *
- * @param id 
- * @param context 
- * @param type 
- * @param code 
- * @param version 
- * @param label 
+ * @param username 
+ * @param password 
  */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @KotlinBuilder
-data class CodeStubDto (
+data class Basic (
 
-    @field:JsonProperty("id")
-    val id: kotlin.String? = null,
+    @field:JsonProperty("username")
+    val username: kotlin.String,
 
-    @field:JsonProperty("context")
-    val context: kotlin.String? = null,
-
-    @field:JsonProperty("type")
-    val type: kotlin.String? = null,
-
-    @field:JsonProperty("code")
-    val code: kotlin.String? = null,
-
-    @field:JsonProperty("version")
-    val version: kotlin.String? = null,
-
-    @field:JsonProperty("label")
-    val label: kotlin.collections.Map<kotlin.String, kotlin.String>? = null
+    @field:JsonProperty("password")
+    val password: kotlin.String
 
 )
 

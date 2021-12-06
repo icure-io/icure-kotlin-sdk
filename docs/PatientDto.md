@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **identifier** | [**kotlin.collections.List&lt;IdentifierDto&gt;**](IdentifierDto.md) |  | 
 **tags** | [**kotlin.collections.Set&lt;CodeStubDto&gt;**](CodeStubDto.md) | A tag is an item from a codification system that qualifies an entity as being member of a certain class, whatever the value it might have taken. If the tag qualifies the content of a field, it means that whatever the content of the field, the tag will always apply. For example, the label of a field is qualified using a tag. LOINC is a codification system typically used for tags. | 
 **codes** | [**kotlin.collections.Set&lt;CodeStubDto&gt;**](CodeStubDto.md) | A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes | 
+**names** | [**kotlin.collections.List&lt;PersonNameDto&gt;**](PersonNameDto.md) | the list of all names of the patient, also containing the official full name information. Ordered by preference of use. First element is therefore the official name used for the patient in the application | 
 **languages** | **kotlin.collections.List&lt;kotlin.String&gt;** | the list of languages spoken by the patient ordered by fluency (alpha-2 code http://www.loc.gov/standards/iso639-2/ascii_8bits.html). | 
 **addresses** | [**kotlin.collections.List&lt;AddressDto&gt;**](AddressDto.md) | the list of addresses (with address type). | 
 **mergedIds** | **kotlin.collections.Set&lt;kotlin.String&gt;** | The ids of the patients that have been merged inside this patient. | 
@@ -104,7 +105,7 @@ birthSex | male, female, indeterminate, changed, changedToMale, changedToFemale,
 ## Enum: personalStatus
 Name | Value
 ---- | -----
-personalStatus | single, in_couple, married, separated, divorced, divorcing, widowed, widower, complicated, unknown, contract, other
+personalStatus | single, in_couple, married, separated, divorced, divorcing, widowed, widower, complicated, unknown, contract, other, annulled, polygamous
 
 
 

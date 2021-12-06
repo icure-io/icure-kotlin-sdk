@@ -23,18 +23,18 @@ import com.github.pozo.KotlinBuilder
 
 
 /**
- * 
+ * The type of the content recorded in the documents for the service
  *
  * @param stringValue 
  * @param numberValue 
  * @param booleanValue 
  * @param instantValue 
- * @param fuzzyDateValue Known values in a date. The format could have a all three (day, month and year) or values on any of these three, whatever is known.
+ * @param fuzzyDateValue Value as date. The format could have a all three (day, month and year) or values on any of these three, whatever is known.
  * @param binaryValue 
- * @param documentId Id of the document in which the content is being filled.
+ * @param documentId Linked document.
  * @param measureValue 
  * @param medicationValue 
- * @param compoundValue The service for which the content is being filled
+ * @param compoundValue 
  * @param ratio 
  * @param range 
  */
@@ -56,14 +56,14 @@ data class ContentDto (
     @field:JsonProperty("instantValue")
     val instantValue: java.time.OffsetDateTime? = null,
 
-    /* Known values in a date. The format could have a all three (day, month and year) or values on any of these three, whatever is known. */
+    /* Value as date. The format could have a all three (day, month and year) or values on any of these three, whatever is known. */
     @field:JsonProperty("fuzzyDateValue")
     val fuzzyDateValue: kotlin.Long? = null,
 
     @field:JsonProperty("binaryValue")
     val binaryValue: io.icure.kraken.client.infrastructure.ByteArrayWrapper? = null,
 
-    /* Id of the document in which the content is being filled. */
+    /* Linked document. */
     @field:JsonProperty("documentId")
     val documentId: kotlin.String? = null,
 
@@ -73,7 +73,6 @@ data class ContentDto (
     @field:JsonProperty("medicationValue")
     val medicationValue: MedicationDto? = null,
 
-    /* The service for which the content is being filled */
     @field:JsonProperty("compoundValue")
     val compoundValue: kotlin.collections.List<ServiceDto>? = null,
 

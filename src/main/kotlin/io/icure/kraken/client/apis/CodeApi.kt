@@ -487,6 +487,45 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     }
 
     /**
+    * Import codes
+    * Import codes from the resources XML file depending on the passed pathVariable
+    * @param codeType  
+    * @return kotlin.Any
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun importCodes(codeType: kotlin.String) : kotlin.Any  {
+        val localVariableConfig = importCodesRequestConfig(codeType = codeType)
+
+        return request<Unit, kotlin.Any>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation importCodes
+    *
+    * @param codeType  
+    * @return RequestConfig
+    */
+    fun importCodesRequestConfig(codeType: kotlin.String) : RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v2/code/{codeType}".replace("{"+"codeType"+"}", "${URLEncoder.encode(codeType.toString(), Charsets.UTF_8)}"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
     * Finding code types.
     * Returns a list of code types matched with given input.
     * @param region Code region (optional)

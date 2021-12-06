@@ -10,6 +10,8 @@ Method | HTTP request | Description
 [**deletePatients**](PatientApi.md#deletePatients) | **POST** /rest/v2/patient/delete/batch | Delete patients.
 [**filterPatientsBy**](PatientApi.md#filterPatientsBy) | **POST** /rest/v2/patient/filter | Filter patients for the current user (HcParty) 
 [**findDeletedPatients**](PatientApi.md#findDeletedPatients) | **GET** /rest/v2/patient/deleted/byDate | Find deleted patients
+[**findDuplicatesByName**](PatientApi.md#findDuplicatesByName) | **POST** /rest/v2/patient/duplicates/name | Provides a paginated list of patients with duplicate name for an hecparty
+[**findDuplicatesBySsin**](PatientApi.md#findDuplicatesBySsin) | **POST** /rest/v2/patient/duplicates/ssin | Provides a paginated list of patients with duplicate ssin for an hecparty
 [**findPatientsByAccessLogUserAfterDate**](PatientApi.md#findPatientsByAccessLogUserAfterDate) | **GET** /rest/v2/patient/byAccess/{userId} | Get Paginated List of Patients sorted by Access logs descending
 [**findPatientsByHealthcareParty**](PatientApi.md#findPatientsByHealthcareParty) | **GET** /rest/v2/patient | List patients for a specific HcParty
 [**findPatientsByNameBirthSsinAuto**](PatientApi.md#findPatientsByNameBirthSsinAuto) | **GET** /rest/v2/patient/byNameBirthSsinAuto | Find patients for the current user (HcParty) 
@@ -319,6 +321,108 @@ Name | Type | Description  | Notes
  **startDate** | **kotlin.Long**| Filter deletions after this date (unix epoch), included | [optional]
  **endDate** | **kotlin.Long**| Filter deletions before this date (unix epoch), included | [optional]
  **desc** | **kotlin.Boolean**| Descending | [optional]
+ **startDocumentId** | **kotlin.String**| A patient document ID | [optional]
+ **limit** | **kotlin.Int**| Number of rows | [optional]
+
+### Return type
+
+[**PaginatedListPatientDto**](PaginatedListPatientDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="findDuplicatesByName"></a>
+# **findDuplicatesByName**
+> PaginatedListPatientDto findDuplicatesByName(hcPartyId, startKey, startDocumentId, limit)
+
+Provides a paginated list of patients with duplicate name for an hecparty
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = PatientApi()
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | Healthcare party id
+val startKey : kotlin.String = startKey_example // kotlin.String | The start key for pagination, depends on the filters used
+val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A patient document ID
+val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
+try {
+    val result : PaginatedListPatientDto = apiInstance.findDuplicatesByName(hcPartyId, startKey, startDocumentId, limit)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling PatientApi#findDuplicatesByName")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling PatientApi#findDuplicatesByName")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **hcPartyId** | **kotlin.String**| Healthcare party id |
+ **startKey** | **kotlin.String**| The start key for pagination, depends on the filters used | [optional]
+ **startDocumentId** | **kotlin.String**| A patient document ID | [optional]
+ **limit** | **kotlin.Int**| Number of rows | [optional]
+
+### Return type
+
+[**PaginatedListPatientDto**](PaginatedListPatientDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="findDuplicatesBySsin"></a>
+# **findDuplicatesBySsin**
+> PaginatedListPatientDto findDuplicatesBySsin(hcPartyId, startKey, startDocumentId, limit)
+
+Provides a paginated list of patients with duplicate ssin for an hecparty
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = PatientApi()
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | Healthcare party id
+val startKey : kotlin.String = startKey_example // kotlin.String | The start key for pagination, depends on the filters used
+val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A patient document ID
+val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
+try {
+    val result : PaginatedListPatientDto = apiInstance.findDuplicatesBySsin(hcPartyId, startKey, startDocumentId, limit)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling PatientApi#findDuplicatesBySsin")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling PatientApi#findDuplicatesBySsin")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **hcPartyId** | **kotlin.String**| Healthcare party id |
+ **startKey** | **kotlin.String**| The start key for pagination, depends on the filters used | [optional]
  **startDocumentId** | **kotlin.String**| A patient document ID | [optional]
  **limit** | **kotlin.Int**| Number of rows | [optional]
 

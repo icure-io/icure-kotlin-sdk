@@ -52,7 +52,7 @@ data class TelecomDto (
     /**
      * The type of telecom method being used, ex: landline phone, mobile phone, email, fax, etc.
      *
-     * Values: mobile,phone,email,fax,skype,im,medibridge,ehealthbox,apicrypt,web,print,disk,other
+     * Values: mobile,phone,email,fax,skype,im,medibridge,ehealthbox,apicrypt,web,print,disk,other,pager
      */
     enum class TelecomType(val value: kotlin.String) {
         @JsonProperty(value = "mobile") mobile("mobile"),
@@ -67,7 +67,8 @@ data class TelecomDto (
         @JsonProperty(value = "web") web("web"),
         @JsonProperty(value = "print") print("print"),
         @JsonProperty(value = "disk") disk("disk"),
-        @JsonProperty(value = "other") other("other");
+        @JsonProperty(value = "other") other("other"),
+        @JsonProperty(value = "pager") pager("pager");
     }
 }
 

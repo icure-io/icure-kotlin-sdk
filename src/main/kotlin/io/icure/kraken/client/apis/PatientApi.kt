@@ -345,6 +345,120 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     }
 
     /**
+    * Provides a paginated list of patients with duplicate name for an hecparty
+    * 
+    * @param hcPartyId Healthcare party id 
+    * @param startKey The start key for pagination, depends on the filters used (optional)
+    * @param startDocumentId A patient document ID (optional)
+    * @param limit Number of rows (optional)
+    * @return PaginatedListPatientDto
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun findDuplicatesByName(hcPartyId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListPatientDto  {
+        val localVariableConfig = findDuplicatesByNameRequestConfig(hcPartyId = hcPartyId, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
+
+        return request<Unit, PaginatedListPatientDto>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation findDuplicatesByName
+    *
+    * @param hcPartyId Healthcare party id 
+    * @param startKey The start key for pagination, depends on the filters used (optional)
+    * @param startDocumentId A patient document ID (optional)
+    * @param limit Number of rows (optional)
+    * @return RequestConfig
+    */
+    fun findDuplicatesByNameRequestConfig(hcPartyId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                put("hcPartyId", listOf(hcPartyId.toString()))
+                if (startKey != null) {
+                    put("startKey", listOf(startKey.toString()))
+                }
+                if (startDocumentId != null) {
+                    put("startDocumentId", listOf(startDocumentId.toString()))
+                }
+                if (limit != null) {
+                    put("limit", listOf(limit.toString()))
+                }
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v2/patient/duplicates/name",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
+    * Provides a paginated list of patients with duplicate ssin for an hecparty
+    * 
+    * @param hcPartyId Healthcare party id 
+    * @param startKey The start key for pagination, depends on the filters used (optional)
+    * @param startDocumentId A patient document ID (optional)
+    * @param limit Number of rows (optional)
+    * @return PaginatedListPatientDto
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun findDuplicatesBySsin(hcPartyId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListPatientDto  {
+        val localVariableConfig = findDuplicatesBySsinRequestConfig(hcPartyId = hcPartyId, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
+
+        return request<Unit, PaginatedListPatientDto>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation findDuplicatesBySsin
+    *
+    * @param hcPartyId Healthcare party id 
+    * @param startKey The start key for pagination, depends on the filters used (optional)
+    * @param startDocumentId A patient document ID (optional)
+    * @param limit Number of rows (optional)
+    * @return RequestConfig
+    */
+    fun findDuplicatesBySsinRequestConfig(hcPartyId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                put("hcPartyId", listOf(hcPartyId.toString()))
+                if (startKey != null) {
+                    put("startKey", listOf(startKey.toString()))
+                }
+                if (startDocumentId != null) {
+                    put("startDocumentId", listOf(startDocumentId.toString()))
+                }
+                if (limit != null) {
+                    put("limit", listOf(limit.toString()))
+                }
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v2/patient/duplicates/ssin",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
     * Get Paginated List of Patients sorted by Access logs descending
     * 
     * @param userId A User ID 

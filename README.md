@@ -49,8 +49,8 @@ Class | Method | HTTP request | Description
 *AgendaApi* | [**getAgendasForUser**](docs/AgendaApi.md#getagendasforuser) | **GET** /rest/v2/agenda/byUser | Gets all agendas for user
 *AgendaApi* | [**getReadableAgendasForUser**](docs/AgendaApi.md#getreadableagendasforuser) | **GET** /rest/v2/agenda/readableForUser | Gets readable agendas for user
 *AgendaApi* | [**modifyAgenda**](docs/AgendaApi.md#modifyagenda) | **PUT** /rest/v2/agenda | Modifies an agenda
-*AnonymousAccessApi* | [**getAvailabilitiesByPeriodAndAgendaId**](docs/AnonymousAccessApi.md#getavailabilitiesbyperiodandagendaid) | **GET** /rest/v2/aa/available/inGroup/{groupId}/agenda/{agendaId} | Get Availabilities for HCP and agendaId
-*AnonymousAccessApi* | [**listAgendasInHealthcareParty**](docs/AnonymousAccessApi.md#listagendasinhealthcareparty) | **GET** /rest/v2/aa/agenda/inGroup/{groupId}/forUser/{userId} | List healthcare parties for a provided group id
+*AnonymousAccessApi* | [**getAvailabilitiesByPeriodAndCalendarItemTypeId**](docs/AnonymousAccessApi.md#getavailabilitiesbyperiodandcalendaritemtypeid) | **GET** /rest/v2/aa/available/inGroup/{groupId}/forUser/{userId}/type/{getCalendarItemTypeId} | Get Availabilities for HCP and appointmentType
+*AnonymousAccessApi* | [**listAppointmentTypesForUser**](docs/AnonymousAccessApi.md#listappointmenttypesforuser) | **GET** /rest/v2/aa/appointmentType/inGroup/{groupId}/forUser/{userId} | List Calendar Item types for a provided group id and user id
 *AnonymousAccessApi* | [**listHealthcarePartiesInGroup**](docs/AnonymousAccessApi.md#listhealthcarepartiesingroup) | **GET** /rest/v2/aa/hcparty/inGroup/{groupId} | List healthcare parties for a provided group id
 *ApplicationsettingsApi* | [**getApplicationSettings**](docs/ApplicationsettingsApi.md#getapplicationsettings) | **GET** /rest/v2/appsettings | Gets all application settings
 *ArticleApi* | [**createArticle**](docs/ArticleApi.md#createarticle) | **POST** /rest/v2/article | Creates a article
@@ -122,8 +122,10 @@ Class | Method | HTTP request | Description
 *Besamv2Api* | [**listVmpsByGroupIds**](docs/Besamv2Api.md#listvmpsbygroupids) | **POST** /rest/v2/be_samv2/vmp/byGroupIds | Finding VMPs by group.
 *Besamv2Api* | [**listVmpsByVmpCodes**](docs/Besamv2Api.md#listvmpsbyvmpcodes) | **POST** /rest/v2/be_samv2/vmp/byVmpCodes | Finding VMPs by group.
 *CalendarItemApi* | [**createCalendarItem**](docs/CalendarItemApi.md#createcalendaritem) | **POST** /rest/v2/calendarItem | Creates a calendarItem
-*CalendarItemApi* | [**deleteCalendarItems**](docs/CalendarItemApi.md#deletecalendaritems) | **POST** /rest/v2/calendarItem/delete/batch | Deletes an calendarItem
+*CalendarItemApi* | [**deleteCalendarItem**](docs/CalendarItemApi.md#deletecalendaritem) | **POST** /rest/v2/calendarItem/{calendarItemIds} | Deletes an calendarItem
+*CalendarItemApi* | [**deleteCalendarItems**](docs/CalendarItemApi.md#deletecalendaritems) | **POST** /rest/v2/calendarItem/delete/batch | Deletes calendarItems
 *CalendarItemApi* | [**findCalendarItemsByHCPartyPatientForeignKeys**](docs/CalendarItemApi.md#findcalendaritemsbyhcpartypatientforeignkeys) | **GET** /rest/v2/calendarItem/byHcPartySecretForeignKeys | Find CalendarItems by hcparty and patient
+*CalendarItemApi* | [**findCalendarItemsByRecurrenceId**](docs/CalendarItemApi.md#findcalendaritemsbyrecurrenceid) | **GET** /rest/v2/calendarItem/byRecurrenceId | Find CalendarItems by recurrenceId
 *CalendarItemApi* | [**getCalendarItem**](docs/CalendarItemApi.md#getcalendaritem) | **GET** /rest/v2/calendarItem/{calendarItemId} | Gets an calendarItem
 *CalendarItemApi* | [**getCalendarItems**](docs/CalendarItemApi.md#getcalendaritems) | **GET** /rest/v2/calendarItem | Gets all calendarItems
 *CalendarItemApi* | [**getCalendarItemsByPeriodAndHcPartyId**](docs/CalendarItemApi.md#getcalendaritemsbyperiodandhcpartyid) | **POST** /rest/v2/calendarItem/byPeriodAndHcPartyId | Get CalendarItems by Period and HcPartyId
@@ -161,6 +163,7 @@ Class | Method | HTTP request | Description
 *CodeApi* | [**getCode**](docs/CodeApi.md#getcode) | **GET** /rest/v2/code/{codeId} | Get a code
 *CodeApi* | [**getCodeWithParts**](docs/CodeApi.md#getcodewithparts) | **GET** /rest/v2/code/{type}/{code}/{version} | Get a code
 *CodeApi* | [**getCodes**](docs/CodeApi.md#getcodes) | **POST** /rest/v2/code/byIds | Get a list of codes by ids
+*CodeApi* | [**importCodes**](docs/CodeApi.md#importcodes) | **POST** /rest/v2/code/{codeType} | Import codes
 *CodeApi* | [**listCodeTypesBy**](docs/CodeApi.md#listcodetypesby) | **GET** /rest/v2/code/codetype/byRegionType | Finding code types.
 *CodeApi* | [**listCodesByRegionTypeCodeVersion**](docs/CodeApi.md#listcodesbyregiontypecodeversion) | **GET** /rest/v2/code/byRegionTypeCode | Finding codes by code, type and version
 *CodeApi* | [**listTagTypesBy**](docs/CodeApi.md#listtagtypesby) | **GET** /rest/v2/code/tagtype/byRegionType | Finding tag types.
@@ -392,6 +395,8 @@ Class | Method | HTTP request | Description
 *PatientApi* | [**deletePatients**](docs/PatientApi.md#deletepatients) | **POST** /rest/v2/patient/delete/batch | Delete patients.
 *PatientApi* | [**filterPatientsBy**](docs/PatientApi.md#filterpatientsby) | **POST** /rest/v2/patient/filter | Filter patients for the current user (HcParty) 
 *PatientApi* | [**findDeletedPatients**](docs/PatientApi.md#finddeletedpatients) | **GET** /rest/v2/patient/deleted/byDate | Find deleted patients
+*PatientApi* | [**findDuplicatesByName**](docs/PatientApi.md#findduplicatesbyname) | **POST** /rest/v2/patient/duplicates/name | Provides a paginated list of patients with duplicate name for an hecparty
+*PatientApi* | [**findDuplicatesBySsin**](docs/PatientApi.md#findduplicatesbyssin) | **POST** /rest/v2/patient/duplicates/ssin | Provides a paginated list of patients with duplicate ssin for an hecparty
 *PatientApi* | [**findPatientsByAccessLogUserAfterDate**](docs/PatientApi.md#findpatientsbyaccessloguserafterdate) | **GET** /rest/v2/patient/byAccess/{userId} | Get Paginated List of Patients sorted by Access logs descending
 *PatientApi* | [**findPatientsByHealthcareParty**](docs/PatientApi.md#findpatientsbyhealthcareparty) | **GET** /rest/v2/patient | List patients for a specific HcParty
 *PatientApi* | [**findPatientsByNameBirthSsinAuto**](docs/PatientApi.md#findpatientsbynamebirthssinauto) | **GET** /rest/v2/patient/byNameBirthSsinAuto | Find patients for the current user (HcParty) 
@@ -440,6 +445,74 @@ Class | Method | HTTP request | Description
 *TimeTableApi* | [**getTimeTablesByAgendaId**](docs/TimeTableApi.md#gettimetablesbyagendaid) | **POST** /rest/v2/timeTable/byAgendaId | Get TimeTables by AgendaId
 *TimeTableApi* | [**getTimeTablesByPeriodAndAgendaId**](docs/TimeTableApi.md#gettimetablesbyperiodandagendaid) | **POST** /rest/v2/timeTable/byPeriodAndAgendaId | Get TimeTables by Period and AgendaId
 *TimeTableApi* | [**modifyTimeTable**](docs/TimeTableApi.md#modifytimetable) | **PUT** /rest/v2/timeTable | Modifies an timeTable
+*TmpApi* | [**createTmpClassification**](docs/TmpApi.md#createtmpclassification) | **POST** /rest/v2/tmp/classification | Create a classification with the current user
+*TmpApi* | [**createTmpClassifications**](docs/TmpApi.md#createtmpclassifications) | **POST** /rest/v2/tmp/classification/batch | Create a classification with the current user
+*TmpApi* | [**createTmpContact**](docs/TmpApi.md#createtmpcontact) | **POST** /rest/v2/tmp/contact | Create a contact with the current user
+*TmpApi* | [**createTmpContacts**](docs/TmpApi.md#createtmpcontacts) | **POST** /rest/v2/tmp/contact/batch | Create a contact with the current user
+*TmpApi* | [**createTmpDatabase**](docs/TmpApi.md#createtmpdatabase) | **POST** /rest/v2/tmp | Create tmp database for current user
+*TmpApi* | [**createTmpDocument**](docs/TmpApi.md#createtmpdocument) | **POST** /rest/v2/tmp/document | Create a document with the current user
+*TmpApi* | [**createTmpDocuments**](docs/TmpApi.md#createtmpdocuments) | **POST** /rest/v2/tmp/document/batch | Create a document with the current user
+*TmpApi* | [**createTmpEntityTemplate**](docs/TmpApi.md#createtmpentitytemplate) | **POST** /rest/v2/tmp/entityTemplate | Create a entityTemplate with the current user
+*TmpApi* | [**createTmpEntityTemplates**](docs/TmpApi.md#createtmpentitytemplates) | **POST** /rest/v2/tmp/entityTemplate/batch | Create a entityTemplate with the current user
+*TmpApi* | [**createTmpForm**](docs/TmpApi.md#createtmpform) | **POST** /rest/v2/tmp/form | Create a form with the current user
+*TmpApi* | [**createTmpForms**](docs/TmpApi.md#createtmpforms) | **POST** /rest/v2/tmp/form/batch | Create a form with the current user
+*TmpApi* | [**createTmpHealthElement**](docs/TmpApi.md#createtmphealthelement) | **POST** /rest/v2/tmp/healthElement | Create a healthElement with the current user
+*TmpApi* | [**createTmpHealthElements**](docs/TmpApi.md#createtmphealthelements) | **POST** /rest/v2/tmp/healthElement/batch | Create a healthElement with the current user
+*TmpApi* | [**createTmpInvoice**](docs/TmpApi.md#createtmpinvoice) | **POST** /rest/v2/tmp/invoice | Create a invoice with the current user
+*TmpApi* | [**createTmpInvoices**](docs/TmpApi.md#createtmpinvoices) | **POST** /rest/v2/tmp/invoice/batch | Create a invoice with the current user
+*TmpApi* | [**createTmpMessage**](docs/TmpApi.md#createtmpmessage) | **POST** /rest/v2/tmp/message | Create a message with the current user
+*TmpApi* | [**createTmpMessages**](docs/TmpApi.md#createtmpmessages) | **POST** /rest/v2/tmp/message/batch | Create a message with the current user
+*TmpApi* | [**createTmpPatient**](docs/TmpApi.md#createtmppatient) | **POST** /rest/v2/tmp/patient | Create a patient with the current user
+*TmpApi* | [**createTmpPatients**](docs/TmpApi.md#createtmppatients) | **POST** /rest/v2/tmp/patient/batch | Create a patient with the current user
+*TmpApi* | [**deleteTmpItems**](docs/TmpApi.md#deletetmpitems) | **POST** /rest/v2/tmp/batch/delete | Soft delete items.
+*TmpApi* | [**destroyTmpDatabase**](docs/TmpApi.md#destroytmpdatabase) | **DELETE** /rest/v2/tmp | Destroy tmp database for current user
+*TmpApi* | [**getTmpClassification**](docs/TmpApi.md#gettmpclassification) | **GET** /rest/v2/tmp/classification/byId/{id} | Get a classification by id
+*TmpApi* | [**getTmpClassifications**](docs/TmpApi.md#gettmpclassifications) | **POST** /rest/v2/tmp/classification/get | Get classifications by ids with the current user
+*TmpApi* | [**getTmpContact**](docs/TmpApi.md#gettmpcontact) | **GET** /rest/v2/tmp/contact/byId/{id} | Get a contact by id
+*TmpApi* | [**getTmpContacts**](docs/TmpApi.md#gettmpcontacts) | **POST** /rest/v2/tmp/contact/get | Get contacts by ids with the current user
+*TmpApi* | [**getTmpDocument**](docs/TmpApi.md#gettmpdocument) | **GET** /rest/v2/tmp/document/byId/{id} | Get a document by id
+*TmpApi* | [**getTmpDocuments**](docs/TmpApi.md#gettmpdocuments) | **POST** /rest/v2/tmp/document/get | Get documents by ids with the current user
+*TmpApi* | [**getTmpEntityTemplate**](docs/TmpApi.md#gettmpentitytemplate) | **GET** /rest/v2/tmp/entityTemplate/byId/{id} | Get a entityTemplate by id
+*TmpApi* | [**getTmpEntityTemplates**](docs/TmpApi.md#gettmpentitytemplates) | **POST** /rest/v2/tmp/entityTemplate/get | Get entityTemplates by ids with the current user
+*TmpApi* | [**getTmpForm**](docs/TmpApi.md#gettmpform) | **GET** /rest/v2/tmp/form/byId/{id} | Get a form by id
+*TmpApi* | [**getTmpForms**](docs/TmpApi.md#gettmpforms) | **POST** /rest/v2/tmp/form/get | Get forms by ids with the current user
+*TmpApi* | [**getTmpHealthElement**](docs/TmpApi.md#gettmphealthelement) | **GET** /rest/v2/tmp/healthElement/byId/{id} | Get a healthElement by id
+*TmpApi* | [**getTmpHealthElements**](docs/TmpApi.md#gettmphealthelements) | **POST** /rest/v2/tmp/healthElement/get | Get healthElements by ids with the current user
+*TmpApi* | [**getTmpInvoice**](docs/TmpApi.md#gettmpinvoice) | **GET** /rest/v2/tmp/invoice/byId/{id} | Get a invoice by id
+*TmpApi* | [**getTmpInvoices**](docs/TmpApi.md#gettmpinvoices) | **POST** /rest/v2/tmp/invoice/get | Get invoices by ids with the current user
+*TmpApi* | [**getTmpMessage**](docs/TmpApi.md#gettmpmessage) | **GET** /rest/v2/tmp/message/byId/{id} | Get a message by id
+*TmpApi* | [**getTmpMessages**](docs/TmpApi.md#gettmpmessages) | **POST** /rest/v2/tmp/message/get | Get messages by ids with the current user
+*TmpApi* | [**getTmpPatient**](docs/TmpApi.md#gettmppatient) | **GET** /rest/v2/tmp/patient/byId/{id} | Get a patient by id
+*TmpApi* | [**getTmpPatients**](docs/TmpApi.md#gettmppatients) | **POST** /rest/v2/tmp/patient/get | Get patients by ids with the current user
+*TmpApi* | [**listTmpClassifications**](docs/TmpApi.md#listtmpclassifications) | **GET** /rest/v2/tmp/classification/list | List classifications with the current user
+*TmpApi* | [**listTmpContacts**](docs/TmpApi.md#listtmpcontacts) | **GET** /rest/v2/tmp/contact/list | List contacts with the current user
+*TmpApi* | [**listTmpDocuments**](docs/TmpApi.md#listtmpdocuments) | **GET** /rest/v2/tmp/document/list | List documents with the current user
+*TmpApi* | [**listTmpEntityTemplates**](docs/TmpApi.md#listtmpentitytemplates) | **GET** /rest/v2/tmp/entityTemplate/list | List entityTemplates with the current user
+*TmpApi* | [**listTmpForms**](docs/TmpApi.md#listtmpforms) | **GET** /rest/v2/tmp/form/list | List forms with the current user
+*TmpApi* | [**listTmpHealthElements**](docs/TmpApi.md#listtmphealthelements) | **GET** /rest/v2/tmp/healthElement/list | List healthElements with the current user
+*TmpApi* | [**listTmpInvoices**](docs/TmpApi.md#listtmpinvoices) | **GET** /rest/v2/tmp/invoice/list | List invoices with the current user
+*TmpApi* | [**listTmpMessages**](docs/TmpApi.md#listtmpmessages) | **GET** /rest/v2/tmp/message/list | List messages with the current user
+*TmpApi* | [**listTmpPatients**](docs/TmpApi.md#listtmppatients) | **GET** /rest/v2/tmp/patient/list | List patients with the current user
+*TmpApi* | [**modifyTmpClassification**](docs/TmpApi.md#modifytmpclassification) | **PUT** /rest/v2/tmp/classification | Modify a classification
+*TmpApi* | [**modifyTmpClassifications**](docs/TmpApi.md#modifytmpclassifications) | **PUT** /rest/v2/tmp/classification/batch | Modify a batch of healthcare elements
+*TmpApi* | [**modifyTmpContact**](docs/TmpApi.md#modifytmpcontact) | **PUT** /rest/v2/tmp/contact | Modify a contact
+*TmpApi* | [**modifyTmpContacts**](docs/TmpApi.md#modifytmpcontacts) | **PUT** /rest/v2/tmp/contact/batch | Modify a batch of healthcare elements
+*TmpApi* | [**modifyTmpDocument**](docs/TmpApi.md#modifytmpdocument) | **PUT** /rest/v2/tmp/document | Modify a document
+*TmpApi* | [**modifyTmpDocuments**](docs/TmpApi.md#modifytmpdocuments) | **PUT** /rest/v2/tmp/document/batch | Modify a batch of healthcare elements
+*TmpApi* | [**modifyTmpEntityTemplate**](docs/TmpApi.md#modifytmpentitytemplate) | **PUT** /rest/v2/tmp/entityTemplate | Modify a entityTemplate
+*TmpApi* | [**modifyTmpEntityTemplates**](docs/TmpApi.md#modifytmpentitytemplates) | **PUT** /rest/v2/tmp/entityTemplate/batch | Modify a batch of healthcare elements
+*TmpApi* | [**modifyTmpForm**](docs/TmpApi.md#modifytmpform) | **PUT** /rest/v2/tmp/form | Modify a form
+*TmpApi* | [**modifyTmpForms**](docs/TmpApi.md#modifytmpforms) | **PUT** /rest/v2/tmp/form/batch | Modify a batch of healthcare elements
+*TmpApi* | [**modifyTmpHealthElement**](docs/TmpApi.md#modifytmphealthelement) | **PUT** /rest/v2/tmp/healthElement | Modify a healthElement
+*TmpApi* | [**modifyTmpHealthElements**](docs/TmpApi.md#modifytmphealthelements) | **PUT** /rest/v2/tmp/healthElement/batch | Modify a batch of healthcare elements
+*TmpApi* | [**modifyTmpInvoice**](docs/TmpApi.md#modifytmpinvoice) | **PUT** /rest/v2/tmp/invoice | Modify a invoice
+*TmpApi* | [**modifyTmpInvoices**](docs/TmpApi.md#modifytmpinvoices) | **PUT** /rest/v2/tmp/invoice/batch | Modify a batch of healthcare elements
+*TmpApi* | [**modifyTmpMessage**](docs/TmpApi.md#modifytmpmessage) | **PUT** /rest/v2/tmp/message | Modify a message
+*TmpApi* | [**modifyTmpMessages**](docs/TmpApi.md#modifytmpmessages) | **PUT** /rest/v2/tmp/message/batch | Modify a batch of healthcare elements
+*TmpApi* | [**modifyTmpPatient**](docs/TmpApi.md#modifytmppatient) | **PUT** /rest/v2/tmp/patient | Modify a patient
+*TmpApi* | [**modifyTmpPatients**](docs/TmpApi.md#modifytmppatients) | **PUT** /rest/v2/tmp/patient/batch | Modify a batch of healthcare elements
+*TmpApi* | [**purgeTmpItems**](docs/TmpApi.md#purgetmpitems) | **POST** /rest/v2/tmp/batch/purge | Hard delete items.
+*TmpApi* | [**replicateToTmpDatabase**](docs/TmpApi.md#replicatetotmpdatabase) | **POST** /rest/v2/tmp/replicate/from/{from} | 
 *UserApi* | [**assignHealthcareParty**](docs/UserApi.md#assignhealthcareparty) | **PUT** /rest/v2/user/current/hcparty/{healthcarePartyId} | Assign a healthcare party ID to current user
 *UserApi* | [**checkPassword**](docs/UserApi.md#checkpassword) | **GET** /rest/v2/user/checkPassword | 
 *UserApi* | [**checkTokenValidity**](docs/UserApi.md#checktokenvalidity) | **GET** /rest/v2/user/token/{userId} | Check token validity
@@ -484,8 +557,11 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.ApplicationSettingsDto](docs/ApplicationSettingsDto.md)
  - [io.icure.kraken.client.models.ArticleDto](docs/ArticleDto.md)
  - [io.icure.kraken.client.models.AtcDto](docs/AtcDto.md)
+ - [io.icure.kraken.client.models.Authentication](docs/Authentication.md)
  - [io.icure.kraken.client.models.AuthenticationResponse](docs/AuthenticationResponse.md)
  - [io.icure.kraken.client.models.AuthenticationTokenDto](docs/AuthenticationTokenDto.md)
+ - [io.icure.kraken.client.models.Basic](docs/Basic.md)
+ - [io.icure.kraken.client.models.BasicDto](docs/BasicDto.md)
  - [io.icure.kraken.client.models.ByteArrayDto](docs/ByteArrayDto.md)
  - [io.icure.kraken.client.models.CalendarItemDto](docs/CalendarItemDto.md)
  - [io.icure.kraken.client.models.CalendarItemTagDto](docs/CalendarItemTagDto.md)
@@ -593,9 +669,14 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.PaginatedDocumentKeyIdPairObject](docs/PaginatedDocumentKeyIdPairObject.md)
  - [io.icure.kraken.client.models.PaginatedListAccessLogDto](docs/PaginatedListAccessLogDto.md)
  - [io.icure.kraken.client.models.PaginatedListAmpDto](docs/PaginatedListAmpDto.md)
+ - [io.icure.kraken.client.models.PaginatedListClassificationDto](docs/PaginatedListClassificationDto.md)
  - [io.icure.kraken.client.models.PaginatedListClassificationTemplateDto](docs/PaginatedListClassificationTemplateDto.md)
  - [io.icure.kraken.client.models.PaginatedListCodeDto](docs/PaginatedListCodeDto.md)
  - [io.icure.kraken.client.models.PaginatedListContactDto](docs/PaginatedListContactDto.md)
+ - [io.icure.kraken.client.models.PaginatedListDocumentDto](docs/PaginatedListDocumentDto.md)
+ - [io.icure.kraken.client.models.PaginatedListEntityTemplateDto](docs/PaginatedListEntityTemplateDto.md)
+ - [io.icure.kraken.client.models.PaginatedListFormDto](docs/PaginatedListFormDto.md)
+ - [io.icure.kraken.client.models.PaginatedListHealthElementDto](docs/PaginatedListHealthElementDto.md)
  - [io.icure.kraken.client.models.PaginatedListHealthcarePartyDto](docs/PaginatedListHealthcarePartyDto.md)
  - [io.icure.kraken.client.models.PaginatedListInvoiceDto](docs/PaginatedListInvoiceDto.md)
  - [io.icure.kraken.client.models.PaginatedListMessageDto](docs/PaginatedListMessageDto.md)
@@ -616,6 +697,7 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.PeriodicityDto](docs/PeriodicityDto.md)
  - [io.icure.kraken.client.models.PermissionDto](docs/PermissionDto.md)
  - [io.icure.kraken.client.models.PermissionItemDto](docs/PermissionItemDto.md)
+ - [io.icure.kraken.client.models.PersonNameDto](docs/PersonNameDto.md)
  - [io.icure.kraken.client.models.PharmaceuticalFormDto](docs/PharmaceuticalFormDto.md)
  - [io.icure.kraken.client.models.PharmaceuticalFormStubDto](docs/PharmaceuticalFormStubDto.md)
  - [io.icure.kraken.client.models.PlaceDto](docs/PlaceDto.md)
@@ -632,11 +714,16 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.RegistrationSuccessDto](docs/RegistrationSuccessDto.md)
  - [io.icure.kraken.client.models.ReimbursementCriterionDto](docs/ReimbursementCriterionDto.md)
  - [io.icure.kraken.client.models.ReimbursementDto](docs/ReimbursementDto.md)
+ - [io.icure.kraken.client.models.Remote](docs/Remote.md)
+ - [io.icure.kraken.client.models.RemoteAuthenticationDto](docs/RemoteAuthenticationDto.md)
+ - [io.icure.kraken.client.models.RemoteDto](docs/RemoteDto.md)
  - [io.icure.kraken.client.models.RenewalDto](docs/RenewalDto.md)
  - [io.icure.kraken.client.models.ReplicationDto](docs/ReplicationDto.md)
  - [io.icure.kraken.client.models.ReplicationInfoDto](docs/ReplicationInfoDto.md)
  - [io.icure.kraken.client.models.ReplicationStats](docs/ReplicationStats.md)
+ - [io.icure.kraken.client.models.ReplicationStatsDto](docs/ReplicationStatsDto.md)
  - [io.icure.kraken.client.models.ReplicatorDocument](docs/ReplicatorDocument.md)
+ - [io.icure.kraken.client.models.ReplicatorDocumentDto](docs/ReplicatorDocumentDto.md)
  - [io.icure.kraken.client.models.ResultInfoDto](docs/ResultInfoDto.md)
  - [io.icure.kraken.client.models.RightDto](docs/RightDto.md)
  - [io.icure.kraken.client.models.RouteOfAdministrationDto](docs/RouteOfAdministrationDto.md)

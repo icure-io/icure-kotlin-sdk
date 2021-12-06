@@ -12,6 +12,7 @@
  */
 package io.icure.kraken.client.models
 
+import io.icure.kraken.client.models.RemoteAuthenticationDto
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
@@ -22,36 +23,20 @@ import com.github.pozo.KotlinBuilder
 /**
  * 
  *
- * @param id 
- * @param context 
- * @param type 
- * @param code 
- * @param version 
- * @param label 
+ * @param url 
+ * @param auth 
  */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @KotlinBuilder
-data class CodeStubDto (
+data class RemoteDto (
 
-    @field:JsonProperty("id")
-    val id: kotlin.String? = null,
+    @field:JsonProperty("url")
+    val url: kotlin.String,
 
-    @field:JsonProperty("context")
-    val context: kotlin.String? = null,
-
-    @field:JsonProperty("type")
-    val type: kotlin.String? = null,
-
-    @field:JsonProperty("code")
-    val code: kotlin.String? = null,
-
-    @field:JsonProperty("version")
-    val version: kotlin.String? = null,
-
-    @field:JsonProperty("label")
-    val label: kotlin.collections.Map<kotlin.String, kotlin.String>? = null
+    @field:JsonProperty("auth")
+    val auth: RemoteAuthenticationDto? = null
 
 )
 

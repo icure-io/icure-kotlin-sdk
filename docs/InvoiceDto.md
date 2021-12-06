@@ -84,7 +84,7 @@ invoiceType | patient, mutualfund, payingagency, insurance, efact, other
 ## Enum: sentMediumType
 Name | Value
 ---- | -----
-sentMediumType | cdrom, eattest, efact, email, mediprima, paper
+sentMediumType | cdrom, eattest, efact, email, mediprima, paper, stat
 
 
 <a name="InterventionTypeEnum"></a>

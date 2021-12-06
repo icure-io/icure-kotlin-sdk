@@ -5,8 +5,10 @@ All URIs are relative to *https://kraken.icure.dev*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createCalendarItem**](CalendarItemApi.md#createCalendarItem) | **POST** /rest/v2/calendarItem | Creates a calendarItem
-[**deleteCalendarItems**](CalendarItemApi.md#deleteCalendarItems) | **POST** /rest/v2/calendarItem/delete/batch | Deletes an calendarItem
+[**deleteCalendarItem**](CalendarItemApi.md#deleteCalendarItem) | **POST** /rest/v2/calendarItem/{calendarItemIds} | Deletes an calendarItem
+[**deleteCalendarItems**](CalendarItemApi.md#deleteCalendarItems) | **POST** /rest/v2/calendarItem/delete/batch | Deletes calendarItems
 [**findCalendarItemsByHCPartyPatientForeignKeys**](CalendarItemApi.md#findCalendarItemsByHCPartyPatientForeignKeys) | **GET** /rest/v2/calendarItem/byHcPartySecretForeignKeys | Find CalendarItems by hcparty and patient
+[**findCalendarItemsByRecurrenceId**](CalendarItemApi.md#findCalendarItemsByRecurrenceId) | **GET** /rest/v2/calendarItem/byRecurrenceId | Find CalendarItems by recurrenceId
 [**getCalendarItem**](CalendarItemApi.md#getCalendarItem) | **GET** /rest/v2/calendarItem/{calendarItemId} | Gets an calendarItem
 [**getCalendarItems**](CalendarItemApi.md#getCalendarItems) | **GET** /rest/v2/calendarItem | Gets all calendarItems
 [**getCalendarItemsByPeriodAndHcPartyId**](CalendarItemApi.md#getCalendarItemsByPeriodAndHcPartyId) | **POST** /rest/v2/calendarItem/byPeriodAndHcPartyId | Get CalendarItems by Period and HcPartyId
@@ -61,11 +63,56 @@ No authorization required
  - **Content-Type**: application/json
  - **Accept**: */*
 
+<a name="deleteCalendarItem"></a>
+# **deleteCalendarItem**
+> kotlin.collections.List&lt;DocIdentifier&gt; deleteCalendarItem(calendarItemIds)
+
+Deletes an calendarItem
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = CalendarItemApi()
+val calendarItemIds : kotlin.String = calendarItemIds_example // kotlin.String | 
+try {
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteCalendarItem(calendarItemIds)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling CalendarItemApi#deleteCalendarItem")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling CalendarItemApi#deleteCalendarItem")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **calendarItemIds** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;DocIdentifier&gt;**](DocIdentifier.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
 <a name="deleteCalendarItems"></a>
 # **deleteCalendarItems**
 > kotlin.collections.List&lt;DocIdentifier&gt; deleteCalendarItems(listOfIdsDto)
 
-Deletes an calendarItem
+Deletes calendarItems
 
 ### Example
 ```kotlin
@@ -139,6 +186,51 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **hcPartyId** | **kotlin.String**|  |
  **secretFKeys** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;CalendarItemDto&gt;**](CalendarItemDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="findCalendarItemsByRecurrenceId"></a>
+# **findCalendarItemsByRecurrenceId**
+> kotlin.collections.List&lt;CalendarItemDto&gt; findCalendarItemsByRecurrenceId(recurrenceId)
+
+Find CalendarItems by recurrenceId
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = CalendarItemApi()
+val recurrenceId : kotlin.String = recurrenceId_example // kotlin.String | 
+try {
+    val result : kotlin.collections.List<CalendarItemDto> = apiInstance.findCalendarItemsByRecurrenceId(recurrenceId)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling CalendarItemApi#findCalendarItemsByRecurrenceId")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling CalendarItemApi#findCalendarItemsByRecurrenceId")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **recurrenceId** | **kotlin.String**|  |
 
 ### Return type
 

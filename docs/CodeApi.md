@@ -12,6 +12,7 @@ Method | HTTP request | Description
 [**getCode**](CodeApi.md#getCode) | **GET** /rest/v2/code/{codeId} | Get a code
 [**getCodeWithParts**](CodeApi.md#getCodeWithParts) | **GET** /rest/v2/code/{type}/{code}/{version} | Get a code
 [**getCodes**](CodeApi.md#getCodes) | **POST** /rest/v2/code/byIds | Get a list of codes by ids
+[**importCodes**](CodeApi.md#importCodes) | **POST** /rest/v2/code/{codeType} | Import codes
 [**listCodeTypesBy**](CodeApi.md#listCodeTypesBy) | **GET** /rest/v2/code/codetype/byRegionType | Finding code types.
 [**listCodesByRegionTypeCodeVersion**](CodeApi.md#listCodesByRegionTypeCodeVersion) | **GET** /rest/v2/code/byRegionTypeCode | Finding codes by code, type and version
 [**listTagTypesBy**](CodeApi.md#listTagTypesBy) | **GET** /rest/v2/code/tagtype/byRegionType | Finding tag types.
@@ -440,6 +441,53 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="importCodes"></a>
+# **importCodes**
+> kotlin.Any importCodes(codeType)
+
+Import codes
+
+Import codes from the resources XML file depending on the passed pathVariable
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = CodeApi()
+val codeType : kotlin.String = codeType_example // kotlin.String | 
+try {
+    val result : kotlin.Any = apiInstance.importCodes(codeType)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling CodeApi#importCodes")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling CodeApi#importCodes")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **codeType** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.Any**](kotlin.Any.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
  - **Accept**: */*
 
 <a name="listCodeTypesBy"></a>
