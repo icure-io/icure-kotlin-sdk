@@ -16,8 +16,19 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.github.pozo.KotlinBuilder
-import io.icure.kraken.client.models.*
-import io.icure.kraken.client.models.PatientDto
+import io.icure.kraken.client.models.AddressDto
+import io.icure.kraken.client.models.CodeStubDto
+import io.icure.kraken.client.models.DelegationDto
+import io.icure.kraken.client.models.EmploymentInfoDto
+import io.icure.kraken.client.models.FinancialInstitutionInformationDto
+import io.icure.kraken.client.models.IdentifierDto
+import io.icure.kraken.client.models.InsurabilityDto
+import io.icure.kraken.client.models.MedicalHouseContractDto
+import io.icure.kraken.client.models.PartnershipDto
+import io.icure.kraken.client.models.PatientHealthCarePartyDto
+import io.icure.kraken.client.models.PersonNameDto
+import io.icure.kraken.client.models.PropertyStubDto
+import io.icure.kraken.client.models.SchoolingInfoDto
 
 /**
  * This entity is a root level object. It represents a patient It is serialized in JSON and saved in the underlying icure-patient CouchDB database.
@@ -105,38 +116,38 @@ data class PatientDto (
 
     /* the Id of the patient. We encourage using either a v4 UUID or a HL7 Id. */
     @field:JsonProperty("id")
-    val id: kotlin.String,
+    val id: String,
 
     @field:JsonProperty("identifier")
-    val identifier: kotlin.collections.List<IdentifierDto> = listOf(),
+    val identifier: List<IdentifierDto> = listOf(),
 
     /* A tag is an item from a codification system that qualifies an entity as being member of a certain class, whatever the value it might have taken. If the tag qualifies the content of a field, it means that whatever the content of the field, the tag will always apply. For example, the label of a field is qualified using a tag. LOINC is a codification system typically used for tags. */
     @field:JsonProperty("tags")
-    val tags: kotlin.collections.List<CodeStubDto> = listOf(),
+    val tags: List<CodeStubDto> = listOf(),
 
     /* A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes */
     @field:JsonProperty("codes")
-    val codes: kotlin.collections.List<CodeStubDto> = listOf(),
+    val codes: List<CodeStubDto> = listOf(),
 
     /* the list of all names of the patient, also containing the official full name information. Ordered by preference of use. First element is therefore the official name used for the patient in the application */
     @field:JsonProperty("names")
-    val names: kotlin.collections.List<PersonNameDto> = listOf(),
+    val names: List<PersonNameDto> = listOf(),
 
     /* the list of languages spoken by the patient ordered by fluency (alpha-2 code http://www.loc.gov/standards/iso639-2/ascii_8bits.html). */
     @field:JsonProperty("languages")
-    val languages: kotlin.collections.List<kotlin.String> = listOf(),
+    val languages: List<String> = listOf(),
 
     /* the list of addresses (with address type). */
     @field:JsonProperty("addresses")
-    val addresses: kotlin.collections.List<AddressDto> = listOf(),
+    val addresses: List<AddressDto> = listOf(),
 
     /* The ids of the patients that have been merged inside this patient. */
     @field:JsonProperty("mergedIds")
-    val mergedIds: kotlin.collections.List<kotlin.String> = listOf(),
+    val mergedIds: List<String> = listOf(),
 
     /* Is the patient active (boolean). */
     @field:JsonProperty("active")
-    val active: kotlin.Boolean = true,
+    val active: Boolean = true,
 
     /* When not active, the reason for deactivation. */
     @field:JsonProperty("deactivationReason")
@@ -144,239 +155,239 @@ data class PatientDto (
 
     /* List of insurance coverages (of class Insurability, see below). */
     @field:JsonProperty("insurabilities")
-    val insurabilities: kotlin.collections.List<InsurabilityDto> = listOf(),
+    val insurabilities: List<InsurabilityDto> = listOf(),
 
     /* List of partners, or persons of contact (of class Partnership, see below). */
     @field:JsonProperty("partnerships")
-    val partnerships: kotlin.collections.List<PartnershipDto> = listOf(),
+    val partnerships: List<PartnershipDto> = listOf(),
 
     /* Links (usually for therapeutic reasons) between this patient and healthcare parties (of class PatientHealthcareParty). */
     @field:JsonProperty("patientHealthCareParties")
-    val patientHealthCareParties: kotlin.collections.List<PatientHealthCarePartyDto> = listOf(),
+    val patientHealthCareParties: List<PatientHealthCarePartyDto> = listOf(),
 
     /* Financial information (Bank, bank account) used to reimburse the patient. */
     @field:JsonProperty("financialInstitutionInformation")
-    val financialInstitutionInformation: kotlin.collections.List<FinancialInstitutionInformationDto> = listOf(),
+    val financialInstitutionInformation: List<FinancialInstitutionInformationDto> = listOf(),
 
     /* Contracts between the patient and the healthcare entity. */
     @field:JsonProperty("medicalHouseContracts")
-    val medicalHouseContracts: kotlin.collections.List<MedicalHouseContractDto> = listOf(),
+    val medicalHouseContracts: List<MedicalHouseContractDto> = listOf(),
 
     /* Codified list of professions exercised by this patient. */
     @field:JsonProperty("patientProfessions")
-    val patientProfessions: kotlin.collections.List<CodeStubDto> = listOf(),
+    val patientProfessions: List<CodeStubDto> = listOf(),
 
     /* Extra parameters */
     @field:JsonProperty("parameters")
-    val parameters: kotlin.collections.Map<kotlin.String, kotlin.collections.List<kotlin.String>> = mapOf(),
+    val parameters: Map<String, List<String>> = mapOf(),
 
     /* Extra properties */
     @field:JsonProperty("properties")
-    val properties: kotlin.collections.List<PropertyStubDto> = listOf(),
+    val properties: List<PropertyStubDto> = listOf(),
 
     /* For each couple of HcParties (delegator and delegate), this map contains the exchange AES key. The delegator is always this hcp, the key of the map is the id of the delegate. The AES exchange key is encrypted using RSA twice : once using this hcp public key (index 0 in the Array) and once using the other hcp public key (index 1 in the Array). For a pair of HcParties. Each HcParty always has one AES exchange key for himself. */
     @field:JsonProperty("hcPartyKeys")
-    val hcPartyKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.List<kotlin.String>> = mapOf(),
+    val hcPartyKeys: Map<String, List<String>> = mapOf(),
 
     /* The privateKeyShamirPartitions are used to share this hcp's private RSA key with a series of other hcParties using Shamir's algorithm. The key of the map is the hcp Id with whom this partition has been shared. The value is \"threshold⎮partition in hex\" encrypted using the the partition's holder's public RSA key */
     @field:JsonProperty("privateKeyShamirPartitions")
-    val privateKeyShamirPartitions: kotlin.collections.Map<kotlin.String, kotlin.String> = mapOf(),
+    val privateKeyShamirPartitions: Map<String, String> = mapOf(),
 
     /* The secretForeignKeys are filled at the to many end of a one to many relationship (for example inside Contact for the Patient -> Contacts relationship). Used when we want to find all contacts for a specific patient. These keys are in clear. You can have several to partition the medical document space. */
     @field:JsonProperty("secretForeignKeys")
-    val secretForeignKeys: kotlin.collections.List<kotlin.String> = listOf(),
+    val secretForeignKeys: List<String> = listOf(),
 
     /* The secretForeignKeys are filled at the to many end of a one to many relationship (for example inside Contact for the Patient -> Contacts relationship). Used when we want to find the patient for a specific contact. These keys are the encrypted id (using the hcParty key for the delegate) that can be found in clear inside the patient. ids encrypted using the hcParty keys. */
     @field:JsonProperty("cryptedForeignKeys")
-    val cryptedForeignKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<DelegationDto>> = mapOf(),
+    val cryptedForeignKeys: Map<String, Set<DelegationDto>> = mapOf(),
 
     /* When a document is created, the responsible generates a cryptographically random master key (never to be used for something else than referencing from other entities). He/she encrypts it using his own AES exchange key and stores it as a delegation. The responsible is thus always in the delegations as well */
     @field:JsonProperty("delegations")
-    val delegations: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<DelegationDto>> = mapOf(),
+    val delegations: Map<String, Set<DelegationDto>> = mapOf(),
 
     /* When a document needs to be encrypted, the responsible generates a cryptographically random master key (different from the delegation key, never to appear in clear anywhere in the db. He/she encrypts it using his own AES exchange key and stores it as a delegation */
     @field:JsonProperty("encryptionKeys")
-    val encryptionKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<DelegationDto>> = mapOf(),
+    val encryptionKeys: Map<String, Set<DelegationDto>> = mapOf(),
 
     @field:JsonProperty("nonDuplicateIds")
     @Deprecated(message = "This property is deprecated.")
-    val nonDuplicateIds: kotlin.collections.List<kotlin.String> = listOf(),
+    val nonDuplicateIds: List<String> = listOf(),
 
     @field:JsonProperty("encryptedAdministrativesDocuments")
     @Deprecated(message = "This property is deprecated.")
-    val encryptedAdministrativesDocuments: kotlin.collections.List<kotlin.String> = listOf(),
+    val encryptedAdministrativesDocuments: List<String> = listOf(),
 
     @field:JsonProperty("schoolingInfos")
     @Deprecated(message = "This property is deprecated.")
-    val schoolingInfos: kotlin.collections.List<SchoolingInfoDto> = listOf(),
+    val schoolingInfos: List<SchoolingInfoDto> = listOf(),
 
     @field:JsonProperty("employementInfos")
     @Deprecated(message = "This property is deprecated.")
-    val employementInfos: kotlin.collections.List<EmploymentInfoDto> = listOf(),
+    val employementInfos: List<EmploymentInfoDto> = listOf(),
 
     /* the revision of the patient in the database, used for conflict management / optimistic locking. */
     @field:JsonProperty("rev")
-    val rev: kotlin.String? = null,
+    val rev: String? = null,
 
     /* The timestamp (unix epoch in ms) of creation of this entity, will be filled automatically if missing. Not enforced by the application server. */
     @field:JsonProperty("created")
-    val created: kotlin.Long? = null,
+    val created: Long? = null,
 
     /* The date (unix epoch in ms) of the latest modification of this entity, will be filled automatically if missing. Not enforced by the application server. */
     @field:JsonProperty("modified")
-    val modified: kotlin.Long? = null,
+    val modified: Long? = null,
 
     /* The id of the User that has created this entity, will be filled automatically if missing. Not enforced by the application server. */
     @field:JsonProperty("author")
-    val author: kotlin.String? = null,
+    val author: String? = null,
 
     /* The id of the HealthcareParty that is responsible for this entity, will be filled automatically if missing. Not enforced by the application server. */
     @field:JsonProperty("responsible")
-    val responsible: kotlin.String? = null,
+    val responsible: String? = null,
 
     /* Soft delete (unix epoch in ms) timestamp of the object. */
     @field:JsonProperty("endOfLife")
-    val endOfLife: kotlin.Long? = null,
+    val endOfLife: Long? = null,
 
     /* hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. */
     @field:JsonProperty("deletionDate")
-    val deletionDate: kotlin.Long? = null,
+    val deletionDate: Long? = null,
 
     /* the firstname (name) of the patient. */
     @field:JsonProperty("firstName")
-    val firstName: kotlin.String? = null,
+    val firstName: String? = null,
 
     /* the lastname (surname) of the patient. This is the official lastname that should be used for official administrative purposes. */
     @field:JsonProperty("lastName")
-    val lastName: kotlin.String? = null,
+    val lastName: String? = null,
 
     /* the name of the company this patient is member of. */
     @field:JsonProperty("companyName")
-    val companyName: kotlin.String? = null,
+    val companyName: String? = null,
 
     /* Mr., Ms., Pr., Dr. ... */
     @field:JsonProperty("civility")
-    val civility: kotlin.String? = null,
+    val civility: String? = null,
 
     /* the gender of the patient: male, female, indeterminate, changed, changedToMale, changedToFemale, unknown */
     @field:JsonProperty("gender")
-    val gender: PatientDto.Gender? = null,
+    val gender: Gender? = null,
 
     /* the birth sex of the patient: male, female, indeterminate, unknown */
     @field:JsonProperty("birthSex")
-    val birthSex: PatientDto.BirthSex? = null,
+    val birthSex: BirthSex? = null,
 
     /* The id of the patient this patient has been merged with. */
     @field:JsonProperty("mergeToPatientId")
-    val mergeToPatientId: kotlin.String? = null,
+    val mergeToPatientId: String? = null,
 
     /* An alias of the person, nickname, ... */
     @field:JsonProperty("alias")
-    val alias: kotlin.String? = null,
+    val alias: String? = null,
 
     /* Social security inscription number. */
     @field:JsonProperty("ssin")
-    val ssin: kotlin.String? = null,
+    val ssin: String? = null,
 
     /* Lastname at birth (can be different of the current name), depending on the country, must be used to design the patient . */
     @field:JsonProperty("maidenName")
-    val maidenName: kotlin.String? = null,
+    val maidenName: String? = null,
 
     /* Lastname of the spouse for a married woman, depending on the country, can be used to design the patient. */
     @field:JsonProperty("spouseName")
-    val spouseName: kotlin.String? = null,
+    val spouseName: String? = null,
 
     /* Lastname of the partner, should not be used to design the patient. */
     @field:JsonProperty("partnerName")
-    val partnerName: kotlin.String? = null,
+    val partnerName: String? = null,
 
     /* any of `single`, `in_couple`, `married`, `separated`, `divorced`, `divorcing`, `widowed`, `widower`, `complicated`, `unknown`, `contract`, `other`. */
     @field:JsonProperty("personalStatus")
-    val personalStatus: PatientDto.PersonalStatus? = null,
+    val personalStatus: PersonalStatus? = null,
 
     /* The birthdate encoded as a fuzzy date on 8 positions (YYYYMMDD) MM and/or DD can be set to 00 if unknown (19740000 is a valid date). */
     @field:JsonProperty("dateOfBirth")
-    val dateOfBirth: kotlin.Int? = null,
+    val dateOfBirth: Int? = null,
 
     /* The date of death encoded as a fuzzy date on 8 positions (YYYYMMDD) MM and/or DD can be set to 00 if unknown (19740000 is a valid date). */
     @field:JsonProperty("dateOfDeath")
-    val dateOfDeath: kotlin.Int? = null,
+    val dateOfDeath: Int? = null,
 
     /* Timestamp of the latest validation of the eID of the person.. */
     @field:JsonProperty("timestampOfLatestEidReading")
-    val timestampOfLatestEidReading: kotlin.Long? = null,
+    val timestampOfLatestEidReading: Long? = null,
 
     /* The place of birth. */
     @field:JsonProperty("placeOfBirth")
-    val placeOfBirth: kotlin.String? = null,
+    val placeOfBirth: String? = null,
 
     /* The place of death. */
     @field:JsonProperty("placeOfDeath")
-    val placeOfDeath: kotlin.String? = null,
+    val placeOfDeath: String? = null,
 
     /* Is the patient deceased. */
     @field:JsonProperty("deceased")
-    val deceased: kotlin.Boolean? = null,
+    val deceased: Boolean? = null,
 
     /* The level of education (college degree, undergraduate, phd). */
     @field:JsonProperty("education")
-    val education: kotlin.String? = null,
+    val education: String? = null,
 
     /* The current professional activity. */
     @field:JsonProperty("profession")
-    val profession: kotlin.String? = null,
+    val profession: String? = null,
 
     /* A text note (can be confidential, encrypted by default). */
     @field:JsonProperty("note")
-    val note: kotlin.String? = null,
+    val note: String? = null,
 
     /* An administrative note, not confidential. */
     @field:JsonProperty("administrativeNote")
-    val administrativeNote: kotlin.String? = null,
+    val administrativeNote: String? = null,
 
     /* The nationality of the patient. */
     @field:JsonProperty("nationality")
-    val nationality: kotlin.String? = null,
+    val nationality: String? = null,
 
     /* The race of the patient. */
     @field:JsonProperty("race")
-    val race: kotlin.String? = null,
+    val race: String? = null,
 
     /* The ethnicity of the patient. */
     @field:JsonProperty("ethnicity")
-    val ethnicity: kotlin.String? = null,
+    val ethnicity: String? = null,
 
     /* The id of the user that usually handles this patient. */
     @field:JsonProperty("preferredUserId")
-    val preferredUserId: kotlin.String? = null,
+    val preferredUserId: String? = null,
 
     /* A picture usually saved in JPEG format. */
     @field:JsonProperty("picture")
-    val picture: kotlin.ByteArray? = null,
+    val picture: ByteArray? = null,
 
     /* An external (from another source) id with no guarantee or requirement for unicity . */
     @field:JsonProperty("externalId")
-    val externalId: kotlin.String? = null,
+    val externalId: String? = null,
 
     /* The public key of this hcp */
     @field:JsonProperty("publicKey")
-    val publicKey: kotlin.String? = null,
+    val publicKey: String? = null,
 
     /* The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys. */
     @field:JsonProperty("encryptedSelf")
-    val encryptedSelf: kotlin.String? = null,
+    val encryptedSelf: String? = null,
 
     /* The id of the medical location where this entity was created. */
     @field:JsonProperty("medicalLocationId")
-    val medicalLocationId: kotlin.String? = null,
+    val medicalLocationId: String? = null,
 
     @field:JsonProperty("comment")
     @Deprecated(message = "This property is deprecated.")
-    val comment: kotlin.String? = null,
+    val comment: String? = null,
 
     @field:JsonProperty("warning")
     @Deprecated(message = "This property is deprecated.")
-    val warning: kotlin.String? = null,
+    val warning: String? = null,
 
     @field:JsonProperty("fatherBirthCountry")
     val fatherBirthCountry: CodeStubDto? = null,
@@ -400,7 +411,7 @@ data class PatientDto (
      *
      * Values: deceased,moved,otherDoctor,retired,noContact,unknown,none
      */
-    enum class DeactivationReason(val value: kotlin.String) {
+    enum class DeactivationReason(val value: String) {
         @JsonProperty(value = "deceased") deceased("deceased"),
         @JsonProperty(value = "moved") moved("moved"),
         @JsonProperty(value = "other_doctor") otherDoctor("other_doctor"),
@@ -414,7 +425,7 @@ data class PatientDto (
      *
      * Values: male,female,indeterminate,changed,changedToMale,changedToFemale,unknown
      */
-    enum class Gender(val value: kotlin.String) {
+    enum class Gender(val value: String) {
         @JsonProperty(value = "male") male("male"),
         @JsonProperty(value = "female") female("female"),
         @JsonProperty(value = "indeterminate") indeterminate("indeterminate"),
@@ -428,7 +439,7 @@ data class PatientDto (
      *
      * Values: male,female,indeterminate,changed,changedToMale,changedToFemale,unknown
      */
-    enum class BirthSex(val value: kotlin.String) {
+    enum class BirthSex(val value: String) {
         @JsonProperty(value = "male") male("male"),
         @JsonProperty(value = "female") female("female"),
         @JsonProperty(value = "indeterminate") indeterminate("indeterminate"),
@@ -442,7 +453,7 @@ data class PatientDto (
      *
      * Values: single,inCouple,married,separated,divorced,divorcing,widowed,widower,complicated,unknown,`contract`,other
      */
-    enum class PersonalStatus(val value: kotlin.String) {
+    enum class PersonalStatus(val value: String) {
         @JsonProperty(value = "single") single("single"),
         @JsonProperty(value = "in_couple") inCouple("in_couple"),
         @JsonProperty(value = "married") married("married"),
