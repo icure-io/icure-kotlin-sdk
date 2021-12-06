@@ -25,7 +25,7 @@ fun HealthcarePartyDto.initHcparty() : HealthcarePartyDto {
 }
 
 fun HealthcarePartyDto.hasName(nameUse: PersonNameDto.Use) : Boolean {
-    return this.names.find { it.use == nameUse } != null
+    return this.names.any { it.use == nameUse }
 }
 
 fun HealthcarePartyDto.findName(nameUse: PersonNameDto.Use) : PersonNameDto? {

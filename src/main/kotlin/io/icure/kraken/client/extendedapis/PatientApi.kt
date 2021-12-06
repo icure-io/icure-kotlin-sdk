@@ -40,7 +40,7 @@ fun PatientDto.initPatient() : PatientDto {
 }
 
 fun PatientDto.hasName(nameUse: PersonNameDto.Use) : Boolean {
-    return this.names.find { it.use == nameUse } != null
+    return this.names.any { it.use == nameUse }
 }
 
 fun PatientDto.findName(nameUse: PersonNameDto.Use) : PersonNameDto? {
