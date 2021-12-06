@@ -113,6 +113,9 @@ data class ClassificationDto (
     @field:JsonProperty("parentId")
     val parentId: kotlin.String? = null,
 
+    @field:JsonProperty("templateId")
+    val templateId: kotlin.String? = null,
+
     /* The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys. */
     @field:JsonProperty("encryptedSelf")
     val encryptedSelf: kotlin.String? = null

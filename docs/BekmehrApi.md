@@ -87,7 +87,7 @@ No authorization required
 
 <a name="generateContactreportExport"></a>
 # **generateContactreportExport**
-> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generateContactreportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, ioIcureKrakenClientInfrastructureByteArrayWrapper)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generateContactreportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
 
 Get Kmehr contactreport
 
@@ -107,9 +107,9 @@ val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
 val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
 val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
 val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val ioIcureKrakenClientInfrastructureByteArrayWrapper : kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> =  // kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> | 
+val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
 try {
-    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateContactreportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, ioIcureKrakenClientInfrastructureByteArrayWrapper)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateContactreportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateContactreportExport")
@@ -133,7 +133,7 @@ Name | Type | Description  | Notes
  **recipientFirstName** | **kotlin.String**|  |
  **recipientLastName** | **kotlin.String**|  |
  **mimeType** | **kotlin.String**|  |
- **ioIcureKrakenClientInfrastructureByteArrayWrapper** | [**kotlin.collections.List&lt;io.icure.kraken.client.infrastructure.ByteArrayWrapper&gt;**](io.icure.kraken.client.infrastructure.ByteArrayWrapper.md)|  |
+ **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
 
 ### Return type
 
@@ -199,7 +199,7 @@ No authorization required
 
 <a name="generateLabresultExport"></a>
 # **generateLabresultExport**
-> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generateLabresultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, ioIcureKrakenClientInfrastructureByteArrayWrapper)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generateLabresultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
 
 Get Kmehr labresult
 
@@ -219,9 +219,9 @@ val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
 val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
 val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
 val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val ioIcureKrakenClientInfrastructureByteArrayWrapper : kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> =  // kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> | 
+val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
 try {
-    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateLabresultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, ioIcureKrakenClientInfrastructureByteArrayWrapper)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateLabresultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateLabresultExport")
@@ -245,7 +245,7 @@ Name | Type | Description  | Notes
  **recipientFirstName** | **kotlin.String**|  |
  **recipientLastName** | **kotlin.String**|  |
  **mimeType** | **kotlin.String**|  |
- **ioIcureKrakenClientInfrastructureByteArrayWrapper** | [**kotlin.collections.List&lt;io.icure.kraken.client.infrastructure.ByteArrayWrapper&gt;**](io.icure.kraken.client.infrastructure.ByteArrayWrapper.md)|  |
+ **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
 
 ### Return type
 
@@ -315,7 +315,7 @@ No authorization required
 
 <a name="generateNoteExport"></a>
 # **generateNoteExport**
-> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generateNoteExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, ioIcureKrakenClientInfrastructureByteArrayWrapper)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generateNoteExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
 
 Get Kmehr note
 
@@ -335,9 +335,9 @@ val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
 val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
 val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
 val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val ioIcureKrakenClientInfrastructureByteArrayWrapper : kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> =  // kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> | 
+val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
 try {
-    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateNoteExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, ioIcureKrakenClientInfrastructureByteArrayWrapper)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateNoteExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateNoteExport")
@@ -361,7 +361,7 @@ Name | Type | Description  | Notes
  **recipientFirstName** | **kotlin.String**|  |
  **recipientLastName** | **kotlin.String**|  |
  **mimeType** | **kotlin.String**|  |
- **ioIcureKrakenClientInfrastructureByteArrayWrapper** | [**kotlin.collections.List&lt;io.icure.kraken.client.infrastructure.ByteArrayWrapper&gt;**](io.icure.kraken.client.infrastructure.ByteArrayWrapper.md)|  |
+ **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
 
 ### Return type
 
@@ -425,7 +425,7 @@ No authorization required
 
 <a name="generatePrescriptionExport"></a>
 # **generatePrescriptionExport**
-> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generatePrescriptionExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, ioIcureKrakenClientInfrastructureByteArrayWrapper)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generatePrescriptionExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
 
 Get Kmehr prescription
 
@@ -445,9 +445,9 @@ val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
 val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
 val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
 val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val ioIcureKrakenClientInfrastructureByteArrayWrapper : kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> =  // kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> | 
+val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
 try {
-    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generatePrescriptionExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, ioIcureKrakenClientInfrastructureByteArrayWrapper)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generatePrescriptionExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generatePrescriptionExport")
@@ -471,7 +471,7 @@ Name | Type | Description  | Notes
  **recipientFirstName** | **kotlin.String**|  |
  **recipientLastName** | **kotlin.String**|  |
  **mimeType** | **kotlin.String**|  |
- **ioIcureKrakenClientInfrastructureByteArrayWrapper** | [**kotlin.collections.List&lt;io.icure.kraken.client.infrastructure.ByteArrayWrapper&gt;**](io.icure.kraken.client.infrastructure.ByteArrayWrapper.md)|  |
+ **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
 
 ### Return type
 
@@ -488,7 +488,7 @@ No authorization required
 
 <a name="generateReportExport"></a>
 # **generateReportExport**
-> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generateReportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, ioIcureKrakenClientInfrastructureByteArrayWrapper)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generateReportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
 
 Get Kmehr report
 
@@ -508,9 +508,9 @@ val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
 val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
 val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
 val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val ioIcureKrakenClientInfrastructureByteArrayWrapper : kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> =  // kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> | 
+val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
 try {
-    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateReportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, ioIcureKrakenClientInfrastructureByteArrayWrapper)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateReportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateReportExport")
@@ -534,7 +534,7 @@ Name | Type | Description  | Notes
  **recipientFirstName** | **kotlin.String**|  |
  **recipientLastName** | **kotlin.String**|  |
  **mimeType** | **kotlin.String**|  |
- **ioIcureKrakenClientInfrastructureByteArrayWrapper** | [**kotlin.collections.List&lt;io.icure.kraken.client.infrastructure.ByteArrayWrapper&gt;**](io.icure.kraken.client.infrastructure.ByteArrayWrapper.md)|  |
+ **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
 
 ### Return type
 
@@ -551,7 +551,7 @@ No authorization required
 
 <a name="generateRequestExport"></a>
 # **generateRequestExport**
-> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generateRequestExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, ioIcureKrakenClientInfrastructureByteArrayWrapper)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generateRequestExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
 
 Get Kmehr request
 
@@ -571,9 +571,9 @@ val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
 val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
 val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
 val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val ioIcureKrakenClientInfrastructureByteArrayWrapper : kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> =  // kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> | 
+val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
 try {
-    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateRequestExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, ioIcureKrakenClientInfrastructureByteArrayWrapper)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateRequestExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateRequestExport")
@@ -597,7 +597,7 @@ Name | Type | Description  | Notes
  **recipientFirstName** | **kotlin.String**|  |
  **recipientLastName** | **kotlin.String**|  |
  **mimeType** | **kotlin.String**|  |
- **ioIcureKrakenClientInfrastructureByteArrayWrapper** | [**kotlin.collections.List&lt;io.icure.kraken.client.infrastructure.ByteArrayWrapper&gt;**](io.icure.kraken.client.infrastructure.ByteArrayWrapper.md)|  |
+ **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
 
 ### Return type
 
@@ -614,7 +614,7 @@ No authorization required
 
 <a name="generateResultExport"></a>
 # **generateResultExport**
-> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generateResultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, ioIcureKrakenClientInfrastructureByteArrayWrapper)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generateResultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
 
 Get Kmehr result
 
@@ -634,9 +634,9 @@ val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
 val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
 val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
 val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val ioIcureKrakenClientInfrastructureByteArrayWrapper : kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> =  // kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> | 
+val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
 try {
-    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateResultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, ioIcureKrakenClientInfrastructureByteArrayWrapper)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateResultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateResultExport")
@@ -660,7 +660,7 @@ Name | Type | Description  | Notes
  **recipientFirstName** | **kotlin.String**|  |
  **recipientLastName** | **kotlin.String**|  |
  **mimeType** | **kotlin.String**|  |
- **ioIcureKrakenClientInfrastructureByteArrayWrapper** | [**kotlin.collections.List&lt;io.icure.kraken.client.infrastructure.ByteArrayWrapper&gt;**](io.icure.kraken.client.infrastructure.ByteArrayWrapper.md)|  |
+ **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
 
 ### Return type
 

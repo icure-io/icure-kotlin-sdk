@@ -352,7 +352,8 @@ data class InvoiceDto (
         @JsonProperty(value = "efact") efact("efact"),
         @JsonProperty(value = "email") email("email"),
         @JsonProperty(value = "mediprima") mediprima("mediprima"),
-        @JsonProperty(value = "paper") paper("paper");
+        @JsonProperty(value = "paper") paper("paper"),
+        @JsonProperty(value = "stat") stat("stat");
     }
     /**
      *

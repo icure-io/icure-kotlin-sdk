@@ -196,6 +196,7 @@ tasks.create<Delete>("delete-unused-tests-files") {
     delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/BeresultimportApiTest.kt"))
     delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/Besamv2ApiTest.kt"))
     delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/EntityrefApiTest.kt"))
+    delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/TmpApiTest.kt"))
     delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/IcureApiTest.kt"))
     delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/MedexApiTest.kt"))
     delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/PermissionApiTest.kt"))

@@ -30,6 +30,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 import com.github.pozo.KotlinBuilder
 import io.icure.kraken.client.models.IdentifierDto
 import io.icure.kraken.client.models.PatientDto
+import io.icure.kraken.client.models.PersonNameDto
 
 
 /**
@@ -129,6 +130,10 @@ data class PatientDto (
     /* A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes */
     @field:JsonProperty("codes")
     val codes: kotlin.collections.List<CodeStubDto> = listOf(),
+
+    /* the list of all names of the patient, also containing the official full name information. Ordered by preference of use. First element is therefore the official name used for the patient in the application */
+    @field:JsonProperty("names")
+    val names: kotlin.collections.List<PersonNameDto> = listOf(),
 
     /* the list of languages spoken by the patient ordered by fluency (alpha-2 code http://www.loc.gov/standards/iso639-2/ascii_8bits.html). */
     @field:JsonProperty("languages")
