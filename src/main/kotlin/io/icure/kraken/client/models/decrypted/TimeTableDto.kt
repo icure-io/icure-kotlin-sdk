@@ -64,6 +64,9 @@ data class TimeTableDto (
     @field:JsonProperty("codes")
     val codes: kotlin.collections.List<CodeStubDto> = listOf(),
 
+    @field:JsonProperty("publicTimeTable")
+    val publicTimeTable: kotlin.Boolean,
+
     @field:JsonProperty("items")
     val items: kotlin.collections.List<TimeTableItemDto> = listOf(),
 

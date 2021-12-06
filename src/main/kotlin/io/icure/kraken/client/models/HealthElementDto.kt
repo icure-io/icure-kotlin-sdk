@@ -16,6 +16,7 @@ import io.icure.kraken.client.models.CareTeamMemberDto
 import io.icure.kraken.client.models.CodeStubDto
 import io.icure.kraken.client.models.DelegationDto
 import io.icure.kraken.client.models.EpisodeDto
+import io.icure.kraken.client.models.IdentifierDto
 import io.icure.kraken.client.models.PlanOfActionDto
 
 import com.fasterxml.jackson.annotation.JsonProperty
@@ -28,6 +29,7 @@ import com.github.pozo.KotlinBuilder
  * This entity is a root level object. It represents a healthcare element. It is serialized in JSON and saved in the underlying CouchDB database.
  *
  * @param id The Id of the healthcare element. We encourage using either a v4 UUID or a HL7 Id.
+ * @param identifier 
  * @param tags A tag is an item from a codification system that qualifies an entity as being member of a certain class, whatever the value it might have taken. If the tag qualifies the content of a field, it means that whatever the content of the field, the tag will always apply. For example, the label of a field is qualified using a tag. LOINC is a codification system typically used for tags.
  * @param codes A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes
  * @param relevant If the healthcare element is relevant or not (Set relevant by default).
@@ -39,7 +41,7 @@ import com.github.pozo.KotlinBuilder
  * @param cryptedForeignKeys The secretForeignKeys are filled at the to many end of a one to many relationship (for example inside Contact for the Patient -> Contacts relationship). Used when we want to find the patient for a specific contact. These keys are the encrypted id (using the hcParty key for the delegate) that can be found in clear inside the patient. ids encrypted using the hcParty keys.
  * @param delegations When a document is created, the responsible generates a cryptographically random master key (never to be used for something else than referencing from other entities). He/she encrypts it using his own AES exchange key and stores it as a delegation. The responsible is thus always in the delegations as well
  * @param encryptionKeys When a document needs to be encrypted, the responsible generates a cryptographically random master key (different from the delegation key, never to appear in clear anywhere in the db. He/she encrypts it using his own AES exchange key and stores it as a delegation
- * @param rev The revision of the patient in the database, used for conflict management / optimistic locking.
+ * @param rev The revision of the healthcare element in the database, used for conflict management / optimistic locking.
  * @param created The timestamp (unix epoch in ms) of creation of this entity, will be filled automatically if missing. Not enforced by the application server.
  * @param modified The date (unix epoch in ms) of the latest modification of this entity, will be filled automatically if missing. Not enforced by the application server.
  * @param author The id of the User that has created this entity, will be filled automatically if missing. Not enforced by the application server.
@@ -68,6 +70,9 @@ data class HealthElementDto (
     /* The Id of the healthcare element. We encourage using either a v4 UUID or a HL7 Id. */
     @field:JsonProperty("id")
     val id: kotlin.String,
+
+    @field:JsonProperty("identifier")
+    val identifier: kotlin.collections.List<IdentifierDto> = listOf(),
 
     /* A tag is an item from a codification system that qualifies an entity as being member of a certain class, whatever the value it might have taken. If the tag qualifies the content of a field, it means that whatever the content of the field, the tag will always apply. For example, the label of a field is qualified using a tag. LOINC is a codification system typically used for tags. */
     @field:JsonProperty("tags")
@@ -113,7 +118,7 @@ data class HealthElementDto (
     @field:JsonProperty("encryptionKeys")
     val encryptionKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<DelegationDto>> = mapOf(),
 
-    /* The revision of the patient in the database, used for conflict management / optimistic locking. */
+    /* The revision of the healthcare element in the database, used for conflict management / optimistic locking. */
     @field:JsonProperty("rev")
     val rev: kotlin.String? = null,
 
