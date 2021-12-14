@@ -794,6 +794,45 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     }
 
     /**
+    * Delete a document&#39;s attachment
+    * Deletes a document&#39;s attachment and returns the modified document instance afterward
+    * @param documentId  
+    * @return DocumentDto
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun deleteTmpDocumentAttachment(documentId: kotlin.String) : DocumentDto?  {
+        val localVariableConfig = deleteTmpDocumentAttachmentRequestConfig(documentId = documentId)
+
+        return request<Unit, DocumentDto>(
+            localVariableConfig
+        )
+    }
+
+    /**
+    * To obtain the request config of the operation deleteTmpDocumentAttachment
+    *
+    * @param documentId  
+    * @return RequestConfig
+    */
+    fun deleteTmpDocumentAttachmentRequestConfig(documentId: kotlin.String) : RequestConfig<Unit> {
+        val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.DELETE,
+            path = "/rest/v1/tmp/document/{documentId}/attachment".replace("{"+"documentId"+"}", "$documentId"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
     * Soft delete items.
     * Response is a set containing the ID&#39;s of deleted items.
     * @param requestBody  
@@ -1058,6 +1097,58 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v1/tmp/document/byId/{id}".replace("{"+"id"+"}", "$id"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
+    * 
+    * 
+    * @param documentId  
+    * @param attachmentId  
+    * @param enckeys  (optional)
+    * @param fileName  (optional)
+    * @return void
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun getTmpDocumentAttachment(documentId: kotlin.String, attachmentId: kotlin.String, enckeys: kotlin.String?, fileName: kotlin.String?) : Unit?  {
+        val localVariableConfig = getTmpDocumentAttachmentRequestConfig(documentId = documentId, attachmentId = attachmentId, enckeys = enckeys, fileName = fileName)
+
+        return request<Unit, Unit>(
+            localVariableConfig
+        )
+    }
+
+    /**
+    * To obtain the request config of the operation getTmpDocumentAttachment
+    *
+    * @param documentId  
+    * @param attachmentId  
+    * @param enckeys  (optional)
+    * @param fileName  (optional)
+    * @return RequestConfig
+    */
+    fun getTmpDocumentAttachmentRequestConfig(documentId: kotlin.String, attachmentId: kotlin.String, enckeys: kotlin.String?, fileName: kotlin.String?) : RequestConfig<Unit> {
+        val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                if (enckeys != null) {
+                    put("enckeys", listOf(enckeys.toString()))
+                }
+                if (fileName != null) {
+                    put("fileName", listOf(fileName.toString()))
+                }
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v1/tmp/document/{documentId}/attachment/{attachmentId}".replace("{"+"documentId"+"}", "$documentId").replace("{"+"attachmentId"+"}", "$attachmentId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -2788,6 +2879,54 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v1/tmp/replicate/from/{from}".replace("{"+"from"+"}", "$from"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
+    * Create a document&#39;s attachment
+    * Creates a document&#39;s attachment and returns the modified document instance afterward
+    * @param documentId  
+    * @param body  
+    * @param enckeys  (optional)
+    * @return DocumentDto
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun setTmpDocumentAttachment(documentId: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, enckeys: kotlin.String?) : DocumentDto?  {
+        val localVariableConfig = setTmpDocumentAttachmentRequestConfig(documentId = documentId, body = body, enckeys = enckeys)
+
+        return request<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, DocumentDto>(
+            localVariableConfig
+        )
+    }
+
+    /**
+    * To obtain the request config of the operation setTmpDocumentAttachment
+    *
+    * @param documentId  
+    * @param body  
+    * @param enckeys  (optional)
+    * @return RequestConfig
+    */
+    fun setTmpDocumentAttachmentRequestConfig(documentId: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, enckeys: kotlin.String?) : RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
+        val localVariableBody = body
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                if (enckeys != null) {
+                    put("enckeys", listOf(enckeys.toString()))
+                }
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.PUT,
+            path = "/rest/v1/tmp/document/{documentId}/attachment".replace("{"+"documentId"+"}", "$documentId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody

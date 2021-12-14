@@ -23,6 +23,7 @@ Method | HTTP request | Description
 [**createTmpMessages**](TmpApi.md#createTmpMessages) | **POST** /rest/v1/tmp/message/batch | Create a message with the current user
 [**createTmpPatient**](TmpApi.md#createTmpPatient) | **POST** /rest/v1/tmp/patient | Create a patient with the current user
 [**createTmpPatients**](TmpApi.md#createTmpPatients) | **POST** /rest/v1/tmp/patient/batch | Create a patient with the current user
+[**deleteTmpDocumentAttachment**](TmpApi.md#deleteTmpDocumentAttachment) | **DELETE** /rest/v1/tmp/document/{documentId}/attachment | Delete a document&#39;s attachment
 [**deleteTmpItems**](TmpApi.md#deleteTmpItems) | **POST** /rest/v1/tmp/batch/delete | Soft delete items.
 [**destroyTmpDatabase**](TmpApi.md#destroyTmpDatabase) | **DELETE** /rest/v1/tmp | Destroy tmp database for current user
 [**getTmpClassification**](TmpApi.md#getTmpClassification) | **GET** /rest/v1/tmp/classification/byId/{id} | Get a classification by id
@@ -30,6 +31,7 @@ Method | HTTP request | Description
 [**getTmpContact**](TmpApi.md#getTmpContact) | **GET** /rest/v1/tmp/contact/byId/{id} | Get a contact by id
 [**getTmpContacts**](TmpApi.md#getTmpContacts) | **POST** /rest/v1/tmp/contact/get | Get contacts by ids with the current user
 [**getTmpDocument**](TmpApi.md#getTmpDocument) | **GET** /rest/v1/tmp/document/byId/{id} | Get a document by id
+[**getTmpDocumentAttachment**](TmpApi.md#getTmpDocumentAttachment) | **GET** /rest/v1/tmp/document/{documentId}/attachment/{attachmentId} | 
 [**getTmpDocuments**](TmpApi.md#getTmpDocuments) | **POST** /rest/v1/tmp/document/get | Get documents by ids with the current user
 [**getTmpEntityTemplate**](TmpApi.md#getTmpEntityTemplate) | **GET** /rest/v1/tmp/entityTemplate/byId/{id} | Get a entityTemplate by id
 [**getTmpEntityTemplates**](TmpApi.md#getTmpEntityTemplates) | **POST** /rest/v1/tmp/entityTemplate/get | Get entityTemplates by ids with the current user
@@ -72,6 +74,7 @@ Method | HTTP request | Description
 [**modifyTmpPatients**](TmpApi.md#modifyTmpPatients) | **PUT** /rest/v1/tmp/patient/batch | Modify a batch of healthcare elements
 [**purgeTmpItems**](TmpApi.md#purgeTmpItems) | **POST** /rest/v1/tmp/batch/purge | Hard delete items.
 [**replicateToTmpDatabase**](TmpApi.md#replicateToTmpDatabase) | **POST** /rest/v1/tmp/replicate/from/{from} | 
+[**setTmpDocumentAttachment**](TmpApi.md#setTmpDocumentAttachment) | **PUT** /rest/v1/tmp/document/{documentId}/attachment | Create a document&#39;s attachment
 
 
 <a name="createTmpClassification"></a>
@@ -963,6 +966,53 @@ No authorization required
  - **Content-Type**: application/json
  - **Accept**: */*
 
+<a name="deleteTmpDocumentAttachment"></a>
+# **deleteTmpDocumentAttachment**
+> DocumentDto deleteTmpDocumentAttachment(documentId)
+
+Delete a document&#39;s attachment
+
+Deletes a document&#39;s attachment and returns the modified document instance afterward
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = TmpApi()
+val documentId : kotlin.String = documentId_example // kotlin.String | 
+try {
+    val result : DocumentDto = apiInstance.deleteTmpDocumentAttachment(documentId)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling TmpApi#deleteTmpDocumentAttachment")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling TmpApi#deleteTmpDocumentAttachment")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **documentId** | **kotlin.String**|  |
+
+### Return type
+
+[**DocumentDto**](DocumentDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
 <a name="deleteTmpItems"></a>
 # **deleteTmpItems**
 > kotlin.collections.List&lt;DocIdentifier&gt; deleteTmpItems(requestBody)
@@ -1287,6 +1337,56 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: */*
+
+<a name="getTmpDocumentAttachment"></a>
+# **getTmpDocumentAttachment**
+> getTmpDocumentAttachment(documentId, attachmentId, enckeys, fileName)
+
+
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = TmpApi()
+val documentId : kotlin.String = documentId_example // kotlin.String | 
+val attachmentId : kotlin.String = attachmentId_example // kotlin.String | 
+val enckeys : kotlin.String = enckeys_example // kotlin.String | 
+val fileName : kotlin.String = fileName_example // kotlin.String | 
+try {
+    apiInstance.getTmpDocumentAttachment(documentId, attachmentId, enckeys, fileName)
+} catch (e: ClientException) {
+    println("4xx response calling TmpApi#getTmpDocumentAttachment")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling TmpApi#getTmpDocumentAttachment")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **documentId** | **kotlin.String**|  |
+ **attachmentId** | **kotlin.String**|  |
+ **enckeys** | **kotlin.String**|  | [optional]
+ **fileName** | **kotlin.String**|  | [optional]
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
 
 <a name="getTmpDocuments"></a>
 # **getTmpDocuments**
@@ -3278,5 +3378,56 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="setTmpDocumentAttachment"></a>
+# **setTmpDocumentAttachment**
+> DocumentDto setTmpDocumentAttachment(documentId, body, enckeys)
+
+Create a document&#39;s attachment
+
+Creates a document&#39;s attachment and returns the modified document instance afterward
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = TmpApi()
+val documentId : kotlin.String = documentId_example // kotlin.String | 
+val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
+val enckeys : kotlin.String = enckeys_example // kotlin.String | 
+try {
+    val result : DocumentDto = apiInstance.setTmpDocumentAttachment(documentId, body, enckeys)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling TmpApi#setTmpDocumentAttachment")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling TmpApi#setTmpDocumentAttachment")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **documentId** | **kotlin.String**|  |
+ **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
+ **enckeys** | **kotlin.String**|  | [optional]
+
+### Return type
+
+[**DocumentDto**](DocumentDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/octet-stream
  - **Accept**: */*
 
