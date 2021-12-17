@@ -194,6 +194,7 @@ Class | Method | HTTP request | Description
 *ContactApi* | [**getEmptyContent**](docs/ContactApi.md#getemptycontent) | **GET** /rest/v1/contact/service/content/empty | Get an empty content
 *ContactApi* | [**getServiceByHealthcarepartyAndIdentifier**](docs/ContactApi.md#getservicebyhealthcarepartyandidentifier) | **GET** /rest/v1/contact/{hcPartyId}/{value} | Get service by identifier
 *ContactApi* | [**getServiceCodesOccurences**](docs/ContactApi.md#getservicecodesoccurences) | **GET** /rest/v1/contact/service/codes/{codeType}/{minOccurences} | Get the list of all used codes frequencies in services
+*ContactApi* | [**getServicesIdsByHealthcarePartyAndIdentifiers**](docs/ContactApi.md#getservicesidsbyhealthcarepartyandidentifiers) | **POST** /rest/v1/contact/services/ids/{hcPartyId}/byIdentifiers | Get services ids by identifiers
 *ContactApi* | [**listContactsByOpeningDate**](docs/ContactApi.md#listcontactsbyopeningdate) | **GET** /rest/v1/contact/byOpeningDate | List contacts bu opening date parties with(out) pagination
 *ContactApi* | [**listServices**](docs/ContactApi.md#listservices) | **POST** /rest/v1/contact/service/byIds | List services with provided ids 
 *ContactApi* | [**listServicesByAssociationId**](docs/ContactApi.md#listservicesbyassociationid) | **GET** /rest/v1/contact/service/associationId | List services by related association id
@@ -417,6 +418,7 @@ Class | Method | HTTP request | Description
 *PatientApi* | [**getPatient**](docs/PatientApi.md#getpatient) | **GET** /rest/v1/patient/{patientId} | Get patient
 *PatientApi* | [**getPatientByHealthcarepartyAndIdentifier**](docs/PatientApi.md#getpatientbyhealthcarepartyandidentifier) | **GET** /rest/v1/patient/{hcPartyId}/{id} | Get patient by identifier
 *PatientApi* | [**getPatientHcPartyKeysForDelegate**](docs/PatientApi.md#getpatienthcpartykeysfordelegate) | **GET** /rest/v1/patient/{patientId}/keys | Get the patient (identified by patientId) hcparty keys. Those keys are AES keys (encrypted) used to share information between HCPs and a patient.
+*PatientApi* | [**getPatientIdsByHealthcarePartyAndIdentifiers**](docs/PatientApi.md#getpatientidsbyhealthcarepartyandidentifiers) | **POST** /rest/v1/patient/ids/{hcPartyId}/byIdentifiers | Get patient ids by identifiers
 *PatientApi* | [**getPatients**](docs/PatientApi.md#getpatients) | **POST** /rest/v1/patient/byIds | Get patients by id
 *PatientApi* | [**listDeletedPatients**](docs/PatientApi.md#listdeletedpatients) | **GET** /rest/v1/patient/deleted/by_date | Find deleted patients
 *PatientApi* | [**listDeletedPatientsByName**](docs/PatientApi.md#listdeletedpatientsbyname) | **GET** /rest/v1/patient/deleted/by_name | Find deleted patients
@@ -483,6 +485,7 @@ Class | Method | HTTP request | Description
 *TmpApi* | [**createTmpMessages**](docs/TmpApi.md#createtmpmessages) | **POST** /rest/v1/tmp/message/batch | Create a message with the current user
 *TmpApi* | [**createTmpPatient**](docs/TmpApi.md#createtmppatient) | **POST** /rest/v1/tmp/patient | Create a patient with the current user
 *TmpApi* | [**createTmpPatients**](docs/TmpApi.md#createtmppatients) | **POST** /rest/v1/tmp/patient/batch | Create a patient with the current user
+*TmpApi* | [**deleteTmpDocumentAttachment**](docs/TmpApi.md#deletetmpdocumentattachment) | **DELETE** /rest/v1/tmp/document/{documentId}/attachment | Delete a document's attachment
 *TmpApi* | [**deleteTmpItems**](docs/TmpApi.md#deletetmpitems) | **POST** /rest/v1/tmp/batch/delete | Soft delete items.
 *TmpApi* | [**destroyTmpDatabase**](docs/TmpApi.md#destroytmpdatabase) | **DELETE** /rest/v1/tmp | Destroy tmp database for current user
 *TmpApi* | [**getTmpClassification**](docs/TmpApi.md#gettmpclassification) | **GET** /rest/v1/tmp/classification/byId/{id} | Get a classification by id
@@ -490,6 +493,7 @@ Class | Method | HTTP request | Description
 *TmpApi* | [**getTmpContact**](docs/TmpApi.md#gettmpcontact) | **GET** /rest/v1/tmp/contact/byId/{id} | Get a contact by id
 *TmpApi* | [**getTmpContacts**](docs/TmpApi.md#gettmpcontacts) | **POST** /rest/v1/tmp/contact/get | Get contacts by ids with the current user
 *TmpApi* | [**getTmpDocument**](docs/TmpApi.md#gettmpdocument) | **GET** /rest/v1/tmp/document/byId/{id} | Get a document by id
+*TmpApi* | [**getTmpDocumentAttachment**](docs/TmpApi.md#gettmpdocumentattachment) | **GET** /rest/v1/tmp/document/{documentId}/attachment/{attachmentId} | 
 *TmpApi* | [**getTmpDocuments**](docs/TmpApi.md#gettmpdocuments) | **POST** /rest/v1/tmp/document/get | Get documents by ids with the current user
 *TmpApi* | [**getTmpEntityTemplate**](docs/TmpApi.md#gettmpentitytemplate) | **GET** /rest/v1/tmp/entityTemplate/byId/{id} | Get a entityTemplate by id
 *TmpApi* | [**getTmpEntityTemplates**](docs/TmpApi.md#gettmpentitytemplates) | **POST** /rest/v1/tmp/entityTemplate/get | Get entityTemplates by ids with the current user
@@ -532,6 +536,7 @@ Class | Method | HTTP request | Description
 *TmpApi* | [**modifyTmpPatients**](docs/TmpApi.md#modifytmppatients) | **PUT** /rest/v1/tmp/patient/batch | Modify a batch of healthcare elements
 *TmpApi* | [**purgeTmpItems**](docs/TmpApi.md#purgetmpitems) | **POST** /rest/v1/tmp/batch/purge | Hard delete items.
 *TmpApi* | [**replicateToTmpDatabase**](docs/TmpApi.md#replicatetotmpdatabase) | **POST** /rest/v1/tmp/replicate/from/{from} | 
+*TmpApi* | [**setTmpDocumentAttachment**](docs/TmpApi.md#settmpdocumentattachment) | **PUT** /rest/v1/tmp/document/{documentId}/attachment | Create a document's attachment
 *UserApi* | [**assignHealthcareParty**](docs/UserApi.md#assignhealthcareparty) | **PUT** /rest/v1/user/current/hcparty/{healthcarePartyId} | Assign a healthcare party ID to current user
 *UserApi* | [**checkPassword**](docs/UserApi.md#checkpassword) | **GET** /rest/v1/user/checkPassword | 
 *UserApi* | [**checkTokenValidity**](docs/UserApi.md#checktokenvalidity) | **GET** /rest/v1/user/token/{userId} | Check token validity
@@ -654,6 +659,7 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.IdentityDocumentReaderDto](docs/IdentityDocumentReaderDto.md)
  - [io.icure.kraken.client.models.ImportMapping](docs/ImportMapping.md)
  - [io.icure.kraken.client.models.ImportResultDto](docs/ImportResultDto.md)
+ - [io.icure.kraken.client.models.IndexedIdentifierDto](docs/IndexedIdentifierDto.md)
  - [io.icure.kraken.client.models.IndexingInfoDto](docs/IndexingInfoDto.md)
  - [io.icure.kraken.client.models.IngredientDto](docs/IngredientDto.md)
  - [io.icure.kraken.client.models.InsurabilityDto](docs/InsurabilityDto.md)

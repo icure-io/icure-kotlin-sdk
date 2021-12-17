@@ -14,6 +14,8 @@ import io.icure.kraken.client.models.decrypted.PatientDto
 import io.icure.kraken.client.models.decrypted.ServiceDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.mapstruct.Mapper
+import org.mapstruct.Mapping
+import org.mapstruct.Mappings
 import org.mapstruct.factory.Mappers
 import java.util.*
 
@@ -206,6 +208,12 @@ suspend fun ContactApi.listServicesLinkedTo(user: UserDto, listOfIdsDto: ListOfI
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
+suspend fun ContactApi.getServiceByHealthcarepartyAndIdentifier(user: UserDto, hcPartyId: String, value: String, system: String?, crypto: Crypto) : ServiceDto? {
+    return this.getServiceByHealthcarepartyAndIdentifier(hcPartyId, value, system)?.let { crypto.decryptServices(user.healthcarePartyId!!, null, listOf(it)).first() }
+}
+
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
 suspend fun ContactApi.newContactDelegations(user: UserDto, contactId: String, delegationDto: DelegationDto, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>) : ContactDto? {
     return this.newContactDelegations(contactId, delegationDto)?.let { config.decryptContact(user.healthcarePartyId!!, it) }
 }
@@ -288,7 +296,7 @@ suspend fun Crypto.decryptServices(myId: String, contactKey: ByteArray?, service
 data class ContentWrapper(val content: Map<String, io.icure.kraken.client.models.decrypted.ContentDto> = mapOf()
 )
 
-@Mapper
+@Mapper(uses = [ServiceMapper::class])
 interface ContactMapper {
     fun map(contact: ContactDto): io.icure.kraken.client.models.ContactDto
     fun map(contact: io.icure.kraken.client.models.ContactDto): ContactDto
@@ -300,8 +308,28 @@ object ContactMapperFactory {
 
 @Mapper
 interface ServiceMapper {
+
+    @Mappings(
+        Mapping(target="qualifiedLinks", expression="java(mapQualifiedLinks(service.getQualifiedLinks()))")
+    )
     fun map(service: ServiceDto): io.icure.kraken.client.models.ServiceDto
+
+    @Mappings(
+        Mapping(target="qualifiedLinks", expression="java(mapRawQualifiedLinks(service.getQualifiedLinks()))")
+    )
     fun map(service: io.icure.kraken.client.models.ServiceDto): ServiceDto
+
+    fun mapQualifiedLinks(qualifiedLinks: Map<ServiceDto.LinkQualification, Map<String, String>>) : Map<String, Map<String, String>> {
+        return qualifiedLinks
+            .map { (key, value) -> key.value to value }
+            .toMap()
+    }
+
+    fun mapRawQualifiedLinks(qualifiedLinks: Map<String, Map<String, String>>) : Map<ServiceDto.LinkQualification, Map<String, String>> {
+        return qualifiedLinks
+            .map { (key, value) -> ServiceDto.LinkQualification.valueOf(key) to value }
+            .toMap()
+    }
 }
 
 object ServiceMapperFactory {

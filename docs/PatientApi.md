@@ -21,6 +21,7 @@ Method | HTTP request | Description
 [**getPatient**](PatientApi.md#getPatient) | **GET** /rest/v1/patient/{patientId} | Get patient
 [**getPatientByHealthcarepartyAndIdentifier**](PatientApi.md#getPatientByHealthcarepartyAndIdentifier) | **GET** /rest/v1/patient/{hcPartyId}/{id} | Get patient by identifier
 [**getPatientHcPartyKeysForDelegate**](PatientApi.md#getPatientHcPartyKeysForDelegate) | **GET** /rest/v1/patient/{patientId}/keys | Get the patient (identified by patientId) hcparty keys. Those keys are AES keys (encrypted) used to share information between HCPs and a patient.
+[**getPatientIdsByHealthcarePartyAndIdentifiers**](PatientApi.md#getPatientIdsByHealthcarePartyAndIdentifiers) | **POST** /rest/v1/patient/ids/{hcPartyId}/byIdentifiers | Get patient ids by identifiers
 [**getPatients**](PatientApi.md#getPatients) | **POST** /rest/v1/patient/byIds | Get patients by id
 [**listDeletedPatients**](PatientApi.md#listDeletedPatients) | **GET** /rest/v1/patient/deleted/by_date | Find deleted patients
 [**listDeletedPatientsByName**](PatientApi.md#listDeletedPatientsByName) | **GET** /rest/v1/patient/deleted/by_name | Find deleted patients
@@ -880,6 +881,55 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="getPatientIdsByHealthcarePartyAndIdentifiers"></a>
+# **getPatientIdsByHealthcarePartyAndIdentifiers**
+> kotlin.collections.List&lt;IndexedIdentifierDto&gt; getPatientIdsByHealthcarePartyAndIdentifiers(hcPartyId, identifierDto)
+
+Get patient ids by identifiers
+
+It gets patient data based on the provided identifiers (root &amp; extension)
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = PatientApi()
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
+val identifierDto : kotlin.collections.List<IdentifierDto> =  // kotlin.collections.List<IdentifierDto> | 
+try {
+    val result : kotlin.collections.List<IndexedIdentifierDto> = apiInstance.getPatientIdsByHealthcarePartyAndIdentifiers(hcPartyId, identifierDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling PatientApi#getPatientIdsByHealthcarePartyAndIdentifiers")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling PatientApi#getPatientIdsByHealthcarePartyAndIdentifiers")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **hcPartyId** | **kotlin.String**|  |
+ **identifierDto** | [**kotlin.collections.List&lt;IdentifierDto&gt;**](IdentifierDto.md)|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;IndexedIdentifierDto&gt;**](IndexedIdentifierDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: */*
 
 <a name="getPatients"></a>

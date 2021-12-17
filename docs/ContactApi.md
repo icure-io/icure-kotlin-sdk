@@ -22,6 +22,7 @@ Method | HTTP request | Description
 [**getEmptyContent**](ContactApi.md#getEmptyContent) | **GET** /rest/v1/contact/service/content/empty | Get an empty content
 [**getServiceByHealthcarepartyAndIdentifier**](ContactApi.md#getServiceByHealthcarepartyAndIdentifier) | **GET** /rest/v1/contact/{hcPartyId}/{value} | Get service by identifier
 [**getServiceCodesOccurences**](ContactApi.md#getServiceCodesOccurences) | **GET** /rest/v1/contact/service/codes/{codeType}/{minOccurences} | Get the list of all used codes frequencies in services
+[**getServicesIdsByHealthcarePartyAndIdentifiers**](ContactApi.md#getServicesIdsByHealthcarePartyAndIdentifiers) | **POST** /rest/v1/contact/services/ids/{hcPartyId}/byIdentifiers | Get services ids by identifiers
 [**listContactsByOpeningDate**](ContactApi.md#listContactsByOpeningDate) | **GET** /rest/v1/contact/byOpeningDate | List contacts bu opening date parties with(out) pagination
 [**listServices**](ContactApi.md#listServices) | **POST** /rest/v1/contact/service/byIds | List services with provided ids 
 [**listServicesByAssociationId**](ContactApi.md#listServicesByAssociationId) | **GET** /rest/v1/contact/service/associationId | List services by related association id
@@ -891,6 +892,55 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="getServicesIdsByHealthcarePartyAndIdentifiers"></a>
+# **getServicesIdsByHealthcarePartyAndIdentifiers**
+> kotlin.collections.List&lt;IndexedIdentifierDto&gt; getServicesIdsByHealthcarePartyAndIdentifiers(hcPartyId, identifierDto)
+
+Get services ids by identifiers
+
+It gets service data based on the provided identifiers (root &amp; extension)
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = ContactApi()
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
+val identifierDto : kotlin.collections.List<IdentifierDto> =  // kotlin.collections.List<IdentifierDto> | 
+try {
+    val result : kotlin.collections.List<IndexedIdentifierDto> = apiInstance.getServicesIdsByHealthcarePartyAndIdentifiers(hcPartyId, identifierDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling ContactApi#getServicesIdsByHealthcarePartyAndIdentifiers")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling ContactApi#getServicesIdsByHealthcarePartyAndIdentifiers")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **hcPartyId** | **kotlin.String**|  |
+ **identifierDto** | [**kotlin.collections.List&lt;IdentifierDto&gt;**](IdentifierDto.md)|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;IndexedIdentifierDto&gt;**](IndexedIdentifierDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: */*
 
 <a name="listContactsByOpeningDate"></a>
