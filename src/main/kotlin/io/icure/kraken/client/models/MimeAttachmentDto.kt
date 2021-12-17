@@ -33,7 +33,7 @@ import com.github.pozo.KotlinBuilder
 data class MimeAttachmentDto (
 
     @field:JsonProperty("data")
-    val `data`: kotlin.ByteArray? = null,
+    val `data`: io.icure.kraken.client.infrastructure.ByteArrayWrapper? = null,
 
     @field:JsonProperty("fileName")
     val fileName: kotlin.String? = null,

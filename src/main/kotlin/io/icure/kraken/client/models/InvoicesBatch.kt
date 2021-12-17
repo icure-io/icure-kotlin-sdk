@@ -47,7 +47,7 @@ data class InvoicesBatch (
     val invoicingMonth: kotlin.Int = 0,
 
     @field:JsonProperty("invoices")
-    val invoices: kotlin.collections.List<EfactInvoice> = listOf(),
+    val invoices: kotlin.collections.List<EfactInvoice> = emptyList(),
 
     @field:JsonProperty("fileRef")
     val fileRef: kotlin.String? = null,

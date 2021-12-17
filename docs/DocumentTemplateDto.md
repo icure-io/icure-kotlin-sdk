@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 **medicalLocationId** | **kotlin.String** | The id of the medical location where this entity was created. |  [optional]
 **endOfLife** | **kotlin.Long** | Soft delete (unix epoch in ms) timestamp of the object. |  [optional]
 **deletionDate** | **kotlin.Long** | hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. |  [optional]
-**attachment** | **kotlin.ByteArray** |  |  [optional]
+**attachment** | [**io.icure.kraken.client.infrastructure.ByteArrayWrapper**](io.icure.kraken.client.infrastructure.ByteArrayWrapper.md) |  |  [optional]
 **documentType** | [**inline**](#DocumentTypeEnum) | The type of document, ex: admission, clinical path, document report,invoice, etc. |  [optional]
 **mainUti** | **kotlin.String** |  |  [optional]
 **name** | **kotlin.String** |  |  [optional]

@@ -32,7 +32,7 @@ import com.github.pozo.KotlinBuilder
 data class ListOfPropertiesDto (
 
     @field:JsonProperty("properties")
-    val properties: kotlin.collections.List<PropertyStubDto> = listOf()
+    val properties: kotlin.collections.List<PropertyStubDto> = emptyList()
 
 )
 

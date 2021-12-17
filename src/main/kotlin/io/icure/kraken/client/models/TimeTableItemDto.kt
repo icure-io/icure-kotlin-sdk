@@ -38,13 +38,13 @@ import com.github.pozo.KotlinBuilder
 data class TimeTableItemDto (
 
     @field:JsonProperty("days")
-    val days: kotlin.collections.List<kotlin.String> = listOf(),
+    val days: kotlin.collections.List<kotlin.String> = emptyList(),
 
     @field:JsonProperty("hours")
-    val hours: kotlin.collections.List<TimeTableHourDto> = listOf(),
+    val hours: kotlin.collections.List<TimeTableHourDto> = emptyList(),
 
     @field:JsonProperty("recurrenceTypes")
-    val recurrenceTypes: kotlin.collections.List<kotlin.String> = listOf(),
+    val recurrenceTypes: kotlin.collections.List<kotlin.String> = emptyList(),
 
     @field:JsonProperty("homeVisit")
     val homeVisit: kotlin.Boolean,

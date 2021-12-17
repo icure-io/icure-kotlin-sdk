@@ -36,10 +36,10 @@ import com.github.pozo.KotlinBuilder
 data class MedicinalproductDto (
 
     @field:JsonProperty("intendedcds")
-    val intendedcds: kotlin.collections.List<CodeStubDto> = listOf(),
+    val intendedcds: kotlin.collections.List<CodeStubDto> = emptyList(),
 
     @field:JsonProperty("deliveredcds")
-    val deliveredcds: kotlin.collections.List<CodeStubDto> = listOf(),
+    val deliveredcds: kotlin.collections.List<CodeStubDto> = emptyList(),
 
     @field:JsonProperty("intendedname")
     val intendedname: kotlin.String? = null,

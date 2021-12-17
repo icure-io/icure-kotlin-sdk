@@ -36,10 +36,10 @@ import com.github.pozo.KotlinBuilder
 data class ImportMapping (
 
     @field:JsonProperty("label")
-    val label: kotlin.collections.Map<kotlin.String, kotlin.String> = mapOf(),
+    val label: kotlin.collections.Map<kotlin.String, kotlin.String> = emptyMap(),
 
     @field:JsonProperty("tags")
-    val tags: kotlin.collections.List<CodeStub> = listOf(),
+    val tags: kotlin.collections.List<CodeStub> = emptyList(),
 
     @field:JsonProperty("lifecycle")
     val lifecycle: kotlin.String? = null,

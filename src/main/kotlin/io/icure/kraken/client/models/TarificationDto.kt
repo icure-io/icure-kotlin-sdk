@@ -64,40 +64,40 @@ data class TarificationDto (
     val id: kotlin.String,
 
     @field:JsonProperty("regions")
-    val regions: kotlin.collections.List<kotlin.String> = listOf(),
+    val regions: kotlin.collections.List<kotlin.String> = emptyList(),
 
     @field:JsonProperty("periodicity")
-    val periodicity: kotlin.collections.List<PeriodicityDto> = listOf(),
+    val periodicity: kotlin.collections.List<PeriodicityDto> = emptyList(),
 
     @field:JsonProperty("links")
-    val links: kotlin.collections.List<kotlin.String> = listOf(),
+    val links: kotlin.collections.List<kotlin.String> = emptyList(),
 
     @field:JsonProperty("qualifiedLinks")
-    val qualifiedLinks: kotlin.collections.Map<kotlin.String, kotlin.collections.List<kotlin.String>> = mapOf(),
+    val qualifiedLinks: kotlin.collections.Map<kotlin.String, kotlin.collections.List<kotlin.String>> = emptyMap(),
 
     @field:JsonProperty("flags")
-    val flags: kotlin.collections.List<TarificationDto.Flags> = listOf(),
+    val flags: kotlin.collections.List<TarificationDto.Flags> = emptyList(),
 
     @field:JsonProperty("searchTerms")
-    val searchTerms: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<kotlin.String>> = mapOf(),
+    val searchTerms: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<kotlin.String>> = emptyMap(),
 
     @field:JsonProperty("appendices")
-    val appendices: kotlin.collections.Map<kotlin.String, kotlin.String> = mapOf(),
+    val appendices: kotlin.collections.Map<kotlin.String, kotlin.String> = emptyMap(),
 
     @field:JsonProperty("disabled")
     val disabled: kotlin.Boolean,
 
     @field:JsonProperty("valorisations")
-    val valorisations: kotlin.collections.List<ValorisationDto> = listOf(),
+    val valorisations: kotlin.collections.List<ValorisationDto> = emptyList(),
 
     @field:JsonProperty("category")
-    val category: kotlin.collections.Map<kotlin.String, kotlin.String> = mapOf(),
+    val category: kotlin.collections.Map<kotlin.String, kotlin.String> = emptyMap(),
 
     @field:JsonProperty("relatedCodes")
-    val relatedCodes: kotlin.collections.List<kotlin.String> = listOf(),
+    val relatedCodes: kotlin.collections.List<kotlin.String> = emptyList(),
 
     @field:JsonProperty("letterValues")
-    val letterValues: kotlin.collections.List<LetterValueDto> = listOf(),
+    val letterValues: kotlin.collections.List<LetterValueDto> = emptyList(),
 
     @field:JsonProperty("rev")
     val rev: kotlin.String? = null,

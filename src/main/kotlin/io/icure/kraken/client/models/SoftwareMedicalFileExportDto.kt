@@ -35,7 +35,7 @@ import com.github.pozo.KotlinBuilder
 data class SoftwareMedicalFileExportDto (
 
     @field:JsonProperty("secretForeignKeys")
-    val secretForeignKeys: kotlin.collections.List<kotlin.String> = listOf(),
+    val secretForeignKeys: kotlin.collections.List<kotlin.String> = emptyList(),
 
     @field:JsonProperty("exportAsPMF")
     val exportAsPMF: kotlin.Boolean,

@@ -31,7 +31,7 @@ import com.github.pozo.KotlinBuilder
 data class MapOfIdsDto (
 
     @field:JsonProperty("mapOfIds")
-    val mapOfIds: kotlin.collections.Map<kotlin.String, kotlin.collections.List<kotlin.String>> = mapOf()
+    val mapOfIds: kotlin.collections.Map<kotlin.String, kotlin.collections.List<kotlin.String>> = emptyMap()
 
 )
 

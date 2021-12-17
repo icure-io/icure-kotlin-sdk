@@ -61,11 +61,11 @@ data class PlanOfActionDto (
 
     /* A tag is an item from a codification system that qualifies an entity as being member of a certain class, whatever the value it might have taken. If the tag qualifies the content of a field, it means that whatever the content of the field, the tag will always apply. For example, the label of a field is qualified using a tag. LOINC is a codification system typically used for tags. */
     @field:JsonProperty("tags")
-    val tags: kotlin.collections.List<CodeStubDto> = listOf(),
+    val tags: kotlin.collections.List<CodeStubDto> = emptyList(),
 
     /* A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes */
     @field:JsonProperty("codes")
-    val codes: kotlin.collections.List<CodeStubDto> = listOf(),
+    val codes: kotlin.collections.List<CodeStubDto> = emptyList(),
 
     /* bit 0: active/inactive, bit 1: relevant/irrelevant, bit 2 : present/absent, ex: 0 = active,relevant and present */
     @field:JsonProperty("status")
@@ -73,11 +73,11 @@ data class PlanOfActionDto (
 
     @field:JsonProperty("documentIds")
     @Deprecated(message = "This property is deprecated.")
-    val documentIds: kotlin.collections.List<kotlin.String> = listOf(),
+    val documentIds: kotlin.collections.List<kotlin.String> = emptyList(),
 
     /* Members of the careteam involved in this approach */
     @field:JsonProperty("careTeamMemberships")
-    val careTeamMemberships: kotlin.collections.List<CareTeamMembershipDto> = listOf(),
+    val careTeamMemberships: kotlin.collections.List<CareTeamMembershipDto> = emptyList(),
 
     @field:JsonProperty("relevant")
     @Deprecated(message = "This property is deprecated.")

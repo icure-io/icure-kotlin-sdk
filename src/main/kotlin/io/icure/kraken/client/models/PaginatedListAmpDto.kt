@@ -42,7 +42,7 @@ data class PaginatedListAmpDto (
     val totalSize: kotlin.Int,
 
     @field:JsonProperty("rows")
-    val rows: kotlin.collections.List<AmpDto> = listOf(),
+    val rows: kotlin.collections.List<AmpDto> = emptyList(),
 
     @field:JsonProperty("nextKeyPair")
     val nextKeyPair: PaginatedDocumentKeyIdPairObject? = null

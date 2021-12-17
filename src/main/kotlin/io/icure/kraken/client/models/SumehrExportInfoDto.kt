@@ -42,10 +42,10 @@ import com.github.pozo.KotlinBuilder
 data class SumehrExportInfoDto (
 
     @field:JsonProperty("secretForeignKeys")
-    val secretForeignKeys: kotlin.collections.List<kotlin.String> = listOf(),
+    val secretForeignKeys: kotlin.collections.List<kotlin.String> = emptyList(),
 
     @field:JsonProperty("excludedIds")
-    val excludedIds: kotlin.collections.List<kotlin.String> = listOf(),
+    val excludedIds: kotlin.collections.List<kotlin.String> = emptyList(),
 
     @field:JsonProperty("comment")
     val comment: kotlin.String = "",

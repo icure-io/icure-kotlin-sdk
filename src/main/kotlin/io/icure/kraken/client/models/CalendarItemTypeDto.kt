@@ -47,13 +47,13 @@ data class CalendarItemTypeDto (
     val duration: kotlin.Int = 0,
 
     @field:JsonProperty("docIds")
-    val docIds: kotlin.collections.List<kotlin.String> = listOf(),
+    val docIds: kotlin.collections.List<kotlin.String> = emptyList(),
 
     @field:JsonProperty("otherInfos")
-    val otherInfos: kotlin.collections.Map<kotlin.String, kotlin.String> = mapOf(),
+    val otherInfos: kotlin.collections.Map<kotlin.String, kotlin.String> = emptyMap(),
 
     @field:JsonProperty("subjectByLanguage")
-    val subjectByLanguage: kotlin.collections.Map<kotlin.String, kotlin.String> = mapOf(),
+    val subjectByLanguage: kotlin.collections.Map<kotlin.String, kotlin.String> = emptyMap(),
 
     @field:JsonProperty("rev")
     val rev: kotlin.String? = null,

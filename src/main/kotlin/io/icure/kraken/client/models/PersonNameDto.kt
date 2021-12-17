@@ -39,15 +39,15 @@ data class PersonNameDto (
 
     /* Given names (not always 'first'). Includes middle names. This repeating element order: Given Names appear in the correct order for presenting the name */
     @field:JsonProperty("firstNames")
-    val firstNames: kotlin.collections.List<kotlin.String> = listOf(),
+    val firstNames: kotlin.collections.List<kotlin.String> = emptyList(),
 
     /* Parts that come before the name. This repeating element order: Prefixes appear in the correct order for presenting the name */
     @field:JsonProperty("prefix")
-    val prefix: kotlin.collections.List<kotlin.String> = listOf(),
+    val prefix: kotlin.collections.List<kotlin.String> = emptyList(),
 
     /* Parts that come after the name. This repeating element order: Suffixes appear in the correct order for presenting the name */
     @field:JsonProperty("suffix")
-    val suffix: kotlin.collections.List<kotlin.String> = listOf(),
+    val suffix: kotlin.collections.List<kotlin.String> = emptyList(),
 
     /* Family name (often called 'Surname') */
     @field:JsonProperty("lastName")

@@ -45,7 +45,7 @@ import com.github.pozo.KotlinBuilder
 data class EfactInvoice (
 
     @field:JsonProperty("items")
-    val items: kotlin.collections.List<InvoiceItem> = listOf(),
+    val items: kotlin.collections.List<InvoiceItem> = emptyList(),
 
     @field:JsonProperty("ignorePrescriptionDate")
     val ignorePrescriptionDate: kotlin.Boolean,

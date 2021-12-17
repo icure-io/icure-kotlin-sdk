@@ -85,52 +85,52 @@ data class HealthcarePartyDto (
 
     /* the list of all names of the healthcare party, also containing the official full name information. Ordered by preference of use. First element is therefore the official name used for the healthcare party in the application */
     @field:JsonProperty("names")
-    val names: kotlin.collections.List<PersonNameDto> = listOf(),
+    val names: kotlin.collections.List<PersonNameDto> = emptyList(),
 
     /* The list of addresses (with address type). */
     @field:JsonProperty("addresses")
-    val addresses: kotlin.collections.List<AddressDto> = listOf(),
+    val addresses: kotlin.collections.List<AddressDto> = emptyList(),
 
     /* The list of languages spoken by the patient ordered by fluency (alpha-2 code http://www.loc.gov/standards/iso639-2/ascii_8bits.html). */
     @field:JsonProperty("languages")
-    val languages: kotlin.collections.List<kotlin.String> = listOf(),
+    val languages: kotlin.collections.List<kotlin.String> = emptyList(),
 
     /* The healthcare party's status: 'trainee' or 'withconvention' or 'accredited' */
     @field:JsonProperty("statuses")
-    val statuses: kotlin.collections.List<HealthcarePartyDto.Statuses> = listOf(),
+    val statuses: kotlin.collections.List<HealthcarePartyDto.Statuses> = emptyList(),
 
     /* The healthcare party's status history */
     @field:JsonProperty("statusHistory")
-    val statusHistory: kotlin.collections.List<HealthcarePartyHistoryStatusDto> = listOf(),
+    val statusHistory: kotlin.collections.List<HealthcarePartyHistoryStatusDto> = emptyList(),
 
     /* Medical specialty of the healthcare party codified using FHIR or Kmehr codificaiton scheme */
     @field:JsonProperty("specialityCodes")
-    val specialityCodes: kotlin.collections.List<CodeStubDto> = listOf(),
+    val specialityCodes: kotlin.collections.List<CodeStubDto> = emptyList(),
 
     /* The type of format for contacting the healthcare party, ex: mobile, phone, email, etc. */
     @field:JsonProperty("sendFormats")
-    val sendFormats: kotlin.collections.Map<kotlin.String, kotlin.String> = mapOf(),
+    val sendFormats: kotlin.collections.Map<kotlin.String, kotlin.String> = emptyMap(),
 
     /* List of financial information (Bank, bank account). */
     @field:JsonProperty("financialInstitutionInformation")
-    val financialInstitutionInformation: kotlin.collections.List<FinancialInstitutionInformationDto> = listOf(),
+    val financialInstitutionInformation: kotlin.collections.List<FinancialInstitutionInformationDto> = emptyList(),
 
     @field:JsonProperty("flatRateTarifications")
-    val flatRateTarifications: kotlin.collections.List<FlatRateTarificationDto> = listOf(),
+    val flatRateTarifications: kotlin.collections.List<FlatRateTarificationDto> = emptyList(),
 
     @field:JsonProperty("importedData")
-    val importedData: kotlin.collections.Map<kotlin.String, kotlin.String> = mapOf(),
+    val importedData: kotlin.collections.Map<kotlin.String, kotlin.String> = emptyMap(),
 
     @field:JsonProperty("options")
-    val options: kotlin.collections.Map<kotlin.String, kotlin.String> = mapOf(),
+    val options: kotlin.collections.Map<kotlin.String, kotlin.String> = emptyMap(),
 
     /* For each couple of HcParties (delegator and delegate), this map contains the exchange AES key. The delegator is always this hcp, the key of the map is the id of the delegate. The AES exchange key is encrypted using RSA twice : once using this hcp public key (index 0 in the Array) and once using the other hcp public key (index 1 in the Array). For a pair of HcParties. Each HcParty always has one AES exchange key for himself. */
     @field:JsonProperty("hcPartyKeys")
-    val hcPartyKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.List<kotlin.String>> = mapOf(),
+    val hcPartyKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.List<kotlin.String>> = emptyMap(),
 
     /* The privateKeyShamirPartitions are used to share this hcp's private RSA key with a series of other hcParties using Shamir's algorithm. The key of the map is the hcp Id with whom this partition has been shared. The value is \"threshold⎮partition in hex\" encrypted using the the partition's holder's public RSA key */
     @field:JsonProperty("privateKeyShamirPartitions")
-    val privateKeyShamirPartitions: kotlin.collections.Map<kotlin.String, kotlin.String> = mapOf(),
+    val privateKeyShamirPartitions: kotlin.collections.Map<kotlin.String, kotlin.String> = emptyMap(),
 
     /* the revision of the healthcare party in the database, used for conflict management / optimistic locking. */
     @field:JsonProperty("rev")
@@ -218,7 +218,7 @@ data class HealthcarePartyDto (
 
     /* A picture usually saved in JPEG format. */
     @field:JsonProperty("picture")
-    val picture: kotlin.ByteArray? = null,
+    val picture: io.icure.kraken.client.infrastructure.ByteArrayWrapper? = null,
 
     /* Text notes. */
     @field:JsonProperty("notes")

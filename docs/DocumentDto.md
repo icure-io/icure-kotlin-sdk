@@ -34,8 +34,8 @@ Name | Type | Description | Notes
 **hash** | **kotlin.String** | Hashed version of the document |  [optional]
 **openingContactId** | **kotlin.String** | Id of the contact during which the document was created |  [optional]
 **attachmentId** | **kotlin.String** | Id of attachment to this document |  [optional]
-**encryptedAttachment** | **kotlin.ByteArray** |  |  [optional]
-**decryptedAttachment** | **kotlin.ByteArray** |  |  [optional]
+**encryptedAttachment** | [**io.icure.kraken.client.infrastructure.ByteArrayWrapper**](io.icure.kraken.client.infrastructure.ByteArrayWrapper.md) |  |  [optional]
+**decryptedAttachment** | [**io.icure.kraken.client.infrastructure.ByteArrayWrapper**](io.icure.kraken.client.infrastructure.ByteArrayWrapper.md) |  |  [optional]
 **encryptedSelf** | **kotlin.String** | The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys. |  [optional]
 
 

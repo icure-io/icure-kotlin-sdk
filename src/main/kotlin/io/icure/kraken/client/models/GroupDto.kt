@@ -49,7 +49,7 @@ data class GroupDto (
 
     /* Extra properties for the user. Those properties are typed (see class Property) */
     @field:JsonProperty("properties")
-    val properties: kotlin.collections.List<PropertyStubDto> = listOf(),
+    val properties: kotlin.collections.List<PropertyStubDto> = emptyList(),
 
     /* The revision of the group in the database, used for conflict management / optimistic locking. */
     @field:JsonProperty("rev")

@@ -36,10 +36,10 @@ import com.github.pozo.KotlinBuilder
 data class MedicationSchemeExportInfoDto (
 
     @field:JsonProperty("secretForeignKeys")
-    val secretForeignKeys: kotlin.collections.List<kotlin.String> = listOf(),
+    val secretForeignKeys: kotlin.collections.List<kotlin.String> = emptyList(),
 
     @field:JsonProperty("services")
-    val services: kotlin.collections.List<ServiceDto> = listOf(),
+    val services: kotlin.collections.List<ServiceDto> = emptyList(),
 
     @field:JsonProperty("recipient")
     val recipient: HealthcarePartyDto? = null,

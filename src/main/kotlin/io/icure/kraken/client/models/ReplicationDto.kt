@@ -40,7 +40,7 @@ data class ReplicationDto (
     val id: kotlin.String,
 
     @field:JsonProperty("databaseSynchronizations")
-    val databaseSynchronizations: kotlin.collections.List<DatabaseSynchronizationDto> = listOf(),
+    val databaseSynchronizations: kotlin.collections.List<DatabaseSynchronizationDto> = emptyList(),
 
     @field:JsonProperty("rev")
     val rev: kotlin.String? = null,

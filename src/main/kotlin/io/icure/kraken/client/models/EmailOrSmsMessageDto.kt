@@ -44,7 +44,7 @@ import com.github.pozo.KotlinBuilder
 data class EmailOrSmsMessageDto (
 
     @field:JsonProperty("attachments")
-    val attachments: kotlin.collections.List<MimeAttachmentDto> = listOf(),
+    val attachments: kotlin.collections.List<MimeAttachmentDto> = emptyList(),
 
     @field:JsonProperty("destinationIsNotPatient")
     val destinationIsNotPatient: kotlin.Boolean = false,

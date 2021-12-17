@@ -50,14 +50,14 @@ data class AgendaDto (
 
     /* A tag is an item from a codification system that qualifies an entity as being member of a certain class, whatever the value it might have taken. If the tag qualifies the content of a field, it means that whatever the content of the field, the tag will always apply. For example, the label of a field is qualified using a tag. LOINC is a codification system typically used for tags. */
     @field:JsonProperty("tags")
-    val tags: kotlin.collections.List<CodeStubDto> = listOf(),
+    val tags: kotlin.collections.List<CodeStubDto> = emptyList(),
 
     /* A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes */
     @field:JsonProperty("codes")
-    val codes: kotlin.collections.List<CodeStubDto> = listOf(),
+    val codes: kotlin.collections.List<CodeStubDto> = emptyList(),
 
     @field:JsonProperty("rights")
-    val rights: kotlin.collections.List<RightDto> = listOf(),
+    val rights: kotlin.collections.List<RightDto> = emptyList(),
 
     @field:JsonProperty("rev")
     val rev: kotlin.String? = null,

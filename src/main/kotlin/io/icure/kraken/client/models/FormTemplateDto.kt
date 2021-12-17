@@ -57,10 +57,10 @@ data class FormTemplateDto (
     val id: kotlin.String,
 
     @field:JsonProperty("reports")
-    val reports: kotlin.collections.List<kotlin.String> = listOf(),
+    val reports: kotlin.collections.List<kotlin.String> = emptyList(),
 
     @field:JsonProperty("tags")
-    val tags: kotlin.collections.List<CodeStubDto> = listOf(),
+    val tags: kotlin.collections.List<CodeStubDto> = emptyList(),
 
     @field:JsonProperty("rev")
     val rev: kotlin.String? = null,

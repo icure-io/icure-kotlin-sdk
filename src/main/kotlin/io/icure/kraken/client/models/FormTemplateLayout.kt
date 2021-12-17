@@ -38,7 +38,7 @@ data class FormTemplateLayout (
     val form: kotlin.String,
 
     @field:JsonProperty("sections")
-    val sections: kotlin.collections.List<Section> = listOf(),
+    val sections: kotlin.collections.List<Section> = emptyList(),
 
     @field:JsonProperty("description")
     val description: kotlin.String? = null,

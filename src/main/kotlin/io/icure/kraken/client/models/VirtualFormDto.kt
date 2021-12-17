@@ -34,7 +34,7 @@ import com.github.pozo.KotlinBuilder
 data class VirtualFormDto (
 
     @field:JsonProperty("standardForms")
-    val standardForms: kotlin.collections.List<CodeStubDto> = listOf(),
+    val standardForms: kotlin.collections.List<CodeStubDto> = emptyList(),
 
     @field:JsonProperty("name")
     val name: SamTextDto? = null

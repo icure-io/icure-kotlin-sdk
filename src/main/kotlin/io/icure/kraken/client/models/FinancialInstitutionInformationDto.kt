@@ -38,7 +38,7 @@ import com.github.pozo.KotlinBuilder
 data class FinancialInstitutionInformationDto (
 
     @field:JsonProperty("preferredFiiForPartners")
-    val preferredFiiForPartners: kotlin.collections.List<kotlin.String> = listOf(),
+    val preferredFiiForPartners: kotlin.collections.List<kotlin.String> = emptyList(),
 
     @field:JsonProperty("name")
     val name: kotlin.String? = null,

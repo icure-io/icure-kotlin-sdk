@@ -31,7 +31,7 @@ import com.github.pozo.KotlinBuilder
 data class ListOfIdsDto (
 
     @field:JsonProperty("ids")
-    val ids: kotlin.collections.List<kotlin.String> = listOf()
+    val ids: kotlin.collections.List<kotlin.String> = emptyList()
 
 )
 

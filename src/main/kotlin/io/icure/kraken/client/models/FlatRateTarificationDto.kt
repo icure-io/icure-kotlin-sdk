@@ -36,7 +36,7 @@ import com.github.pozo.KotlinBuilder
 data class FlatRateTarificationDto (
 
     @field:JsonProperty("valorisations")
-    val valorisations: kotlin.collections.List<ValorisationDto> = listOf(),
+    val valorisations: kotlin.collections.List<ValorisationDto> = emptyList(),
 
     @field:JsonProperty("code")
     val code: kotlin.String? = null,

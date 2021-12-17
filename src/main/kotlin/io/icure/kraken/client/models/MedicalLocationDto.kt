@@ -49,10 +49,10 @@ data class MedicalLocationDto (
     val id: kotlin.String,
 
     @field:JsonProperty("agendaIds")
-    val agendaIds: kotlin.collections.List<kotlin.String> = listOf(),
+    val agendaIds: kotlin.collections.List<kotlin.String> = emptyList(),
 
     @field:JsonProperty("options")
-    val options: kotlin.collections.Map<kotlin.String, kotlin.String> = mapOf(),
+    val options: kotlin.collections.Map<kotlin.String, kotlin.String> = emptyMap(),
 
     @field:JsonProperty("rev")
     val rev: kotlin.String? = null,

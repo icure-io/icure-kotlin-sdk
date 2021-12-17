@@ -34,7 +34,7 @@ import com.github.pozo.KotlinBuilder
 data class DelegationDto (
 
     @field:JsonProperty("tags")
-    val tags: kotlin.collections.List<kotlin.String> = listOf(),
+    val tags: kotlin.collections.List<kotlin.String> = emptyList(),
 
     @field:JsonProperty("owner")
     val owner: kotlin.String? = null,

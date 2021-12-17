@@ -42,16 +42,16 @@ import com.github.pozo.KotlinBuilder
 data class DiaryNoteExportInfoDto (
 
     @field:JsonProperty("secretForeignKeys")
-    val secretForeignKeys: kotlin.collections.List<kotlin.String> = listOf(),
+    val secretForeignKeys: kotlin.collections.List<kotlin.String> = emptyList(),
 
     @field:JsonProperty("excludedIds")
-    val excludedIds: kotlin.collections.List<kotlin.String> = listOf(),
+    val excludedIds: kotlin.collections.List<kotlin.String> = emptyList(),
 
     @field:JsonProperty("tags")
-    val tags: kotlin.collections.List<kotlin.String> = listOf(),
+    val tags: kotlin.collections.List<kotlin.String> = emptyList(),
 
     @field:JsonProperty("contexts")
-    val contexts: kotlin.collections.List<kotlin.String> = listOf(),
+    val contexts: kotlin.collections.List<kotlin.String> = emptyList(),
 
     @field:JsonProperty("recipient")
     val recipient: HealthcarePartyDto? = null,

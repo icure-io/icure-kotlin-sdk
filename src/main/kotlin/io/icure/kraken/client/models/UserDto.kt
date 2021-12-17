@@ -61,27 +61,27 @@ data class UserDto (
 
     /* Extra properties for the user. Those properties are typed (see class Property) */
     @field:JsonProperty("properties")
-    val properties: kotlin.collections.List<PropertyStubDto> = listOf(),
+    val properties: kotlin.collections.List<PropertyStubDto> = emptyList(),
 
     /* If permission to modify patient data is granted or revoked */
     @field:JsonProperty("permissions")
-    val permissions: kotlin.collections.List<PermissionDto> = listOf(),
+    val permissions: kotlin.collections.List<PermissionDto> = emptyList(),
 
     /* Roles specified for the user */
     @field:JsonProperty("roles")
-    val roles: kotlin.collections.List<kotlin.String> = listOf(),
+    val roles: kotlin.collections.List<kotlin.String> = emptyList(),
 
     /* Delegations that are automatically generated client side when a new database object is created by this user */
     @field:JsonProperty("autoDelegations")
-    val autoDelegations: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<kotlin.String>> = mapOf(),
+    val autoDelegations: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<kotlin.String>> = emptyMap(),
 
     @field:JsonProperty("applicationTokens")
     @Deprecated(message = "This property is deprecated.")
-    val applicationTokens: kotlin.collections.Map<kotlin.String, kotlin.String> = mapOf(),
+    val applicationTokens: kotlin.collections.Map<kotlin.String, kotlin.String> = emptyMap(),
 
     /* Encrypted and time-limited Authentication tokens used for inter-applications authentication */
     @field:JsonProperty("authenticationTokens")
-    val authenticationTokens: kotlin.collections.Map<kotlin.String, AuthenticationTokenDto> = mapOf(),
+    val authenticationTokens: kotlin.collections.Map<kotlin.String, AuthenticationTokenDto> = emptyMap(),
 
     /* the revision of the user in the database, used for conflict management / optimistic locking. */
     @field:JsonProperty("rev")

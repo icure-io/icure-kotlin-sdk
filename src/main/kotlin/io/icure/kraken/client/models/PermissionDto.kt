@@ -34,11 +34,11 @@ data class PermissionDto (
 
     /* Granted permissions. */
     @field:JsonProperty("grants")
-    val grants: kotlin.collections.List<PermissionItemDto> = listOf(),
+    val grants: kotlin.collections.List<PermissionItemDto> = emptyList(),
 
     /* Revoked permissions. */
     @field:JsonProperty("revokes")
-    val revokes: kotlin.collections.List<PermissionItemDto> = listOf()
+    val revokes: kotlin.collections.List<PermissionItemDto> = emptyList()
 
 )
 

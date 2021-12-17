@@ -45,10 +45,10 @@ import com.github.pozo.KotlinBuilder
 data class ResultInfoDto (
 
     @field:JsonProperty("codes")
-    val codes: kotlin.collections.List<CodeStubDto> = listOf(),
+    val codes: kotlin.collections.List<CodeStubDto> = emptyList(),
 
     @field:JsonProperty("services")
-    val services: kotlin.collections.List<ServiceDto> = listOf(),
+    val services: kotlin.collections.List<ServiceDto> = emptyList(),
 
     @field:JsonProperty("ssin")
     val ssin: kotlin.String? = null,

@@ -72,45 +72,45 @@ data class ServiceDto (
     val id: kotlin.String,
 
     @field:JsonProperty("identifier")
-    val identifier: kotlin.collections.List<IdentifierDto> = listOf(),
+    val identifier: kotlin.collections.List<IdentifierDto> = emptyList(),
 
     /* The public patient key, encrypted here for separate Crypto Actors. */
     @field:JsonProperty("cryptedForeignKeys")
-    val cryptedForeignKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<DelegationDto>> = mapOf(),
+    val cryptedForeignKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<DelegationDto>> = emptyMap(),
 
     /* The delegations giving access to connected healthcare information. */
     @field:JsonProperty("delegations")
-    val delegations: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<DelegationDto>> = mapOf(),
+    val delegations: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<DelegationDto>> = emptyMap(),
 
     /* The contact secret encryption key used to encrypt the secured properties (like services for example), encrypted for separate Crypto Actors. */
     @field:JsonProperty("encryptionKeys")
-    val encryptionKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<DelegationDto>> = mapOf(),
+    val encryptionKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<DelegationDto>> = emptyMap(),
 
     @field:JsonProperty("label")
     val label: kotlin.String,
 
     /* The type of the content recorded in the documents for the service */
     @field:JsonProperty("content")
-    val content: kotlin.collections.Map<kotlin.String, ContentDto> = mapOf(),
+    val content: kotlin.collections.Map<kotlin.String, ContentDto> = emptyMap(),
 
     @field:JsonProperty("textIndexes")
-    val textIndexes: kotlin.collections.Map<kotlin.String, kotlin.String> = mapOf(),
+    val textIndexes: kotlin.collections.Map<kotlin.String, kotlin.String> = emptyMap(),
 
     /* List of invoicing codes */
     @field:JsonProperty("invoicingCodes")
-    val invoicingCodes: kotlin.collections.List<kotlin.String> = listOf(),
+    val invoicingCodes: kotlin.collections.List<kotlin.String> = emptyList(),
 
     /* Links towards related services (possibly in other contacts) */
     @field:JsonProperty("qualifiedLinks")
-    val qualifiedLinks: kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.String>> = mapOf(),
+    val qualifiedLinks: kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.String>> = emptyMap(),
 
     /* A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes */
     @field:JsonProperty("codes")
-    val codes: kotlin.collections.List<CodeStubDto> = listOf(),
+    val codes: kotlin.collections.List<CodeStubDto> = emptyList(),
 
     /* A tag is an item from a codification system that qualifies an entity as being member of a certain class, whatever the value it might have taken. If the tag qualifies the content of a field, it means that whatever the content of the field, the tag will always apply. For example, the label of a field is qualified using a tag. LOINC is a codification system typically used for tags. */
     @field:JsonProperty("tags")
-    val tags: kotlin.collections.List<CodeStubDto> = listOf(),
+    val tags: kotlin.collections.List<CodeStubDto> = emptyList(),
 
     /* Id of the contact during which the service is provided */
     @field:JsonProperty("contactId")

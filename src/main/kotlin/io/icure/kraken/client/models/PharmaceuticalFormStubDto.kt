@@ -36,7 +36,7 @@ import com.github.pozo.KotlinBuilder
 data class PharmaceuticalFormStubDto (
 
     @field:JsonProperty("standardForms")
-    val standardForms: kotlin.collections.List<CodeStubDto> = listOf(),
+    val standardForms: kotlin.collections.List<CodeStubDto> = emptyList(),
 
     @field:JsonProperty("id")
     val id: kotlin.String? = null,

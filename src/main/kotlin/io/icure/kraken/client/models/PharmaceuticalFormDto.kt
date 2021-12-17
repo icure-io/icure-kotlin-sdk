@@ -41,7 +41,7 @@ data class PharmaceuticalFormDto (
     val id: kotlin.String,
 
     @field:JsonProperty("standardForms")
-    val standardForms: kotlin.collections.List<CodeStubDto> = listOf(),
+    val standardForms: kotlin.collections.List<CodeStubDto> = emptyList(),
 
     @field:JsonProperty("rev")
     val rev: kotlin.String? = null,

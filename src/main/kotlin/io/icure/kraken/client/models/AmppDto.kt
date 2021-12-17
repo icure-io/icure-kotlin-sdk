@@ -82,10 +82,10 @@ data class AmppDto (
     val orphan: kotlin.Boolean,
 
     @field:JsonProperty("atcs")
-    val atcs: kotlin.collections.List<AtcDto> = listOf(),
+    val atcs: kotlin.collections.List<AtcDto> = emptyList(),
 
     @field:JsonProperty("dmpps")
-    val dmpps: kotlin.collections.List<DmppDto> = listOf(),
+    val dmpps: kotlin.collections.List<DmppDto> = emptyList(),
 
     @field:JsonProperty("from")
     val from: kotlin.Long? = null,

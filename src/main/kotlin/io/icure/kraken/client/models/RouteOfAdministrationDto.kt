@@ -34,7 +34,7 @@ import com.github.pozo.KotlinBuilder
 data class RouteOfAdministrationDto (
 
     @field:JsonProperty("standardRoutes")
-    val standardRoutes: kotlin.collections.List<CodeStubDto> = listOf(),
+    val standardRoutes: kotlin.collections.List<CodeStubDto> = emptyList(),
 
     @field:JsonProperty("name")
     val name: SamTextDto? = null

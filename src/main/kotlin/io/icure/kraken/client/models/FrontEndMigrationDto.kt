@@ -48,7 +48,7 @@ data class FrontEndMigrationDto (
 
     /* Extra properties for the fem. Those properties are typed (see class Property) */
     @field:JsonProperty("properties")
-    val properties: kotlin.collections.List<PropertyStubDto> = listOf(),
+    val properties: kotlin.collections.List<PropertyStubDto> = emptyList(),
 
     @field:JsonProperty("rev")
     val rev: kotlin.String? = null,

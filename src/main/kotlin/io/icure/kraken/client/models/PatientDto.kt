@@ -121,31 +121,31 @@ data class PatientDto (
     val id: kotlin.String,
 
     @field:JsonProperty("identifier")
-    val identifier: kotlin.collections.List<IdentifierDto> = listOf(),
+    val identifier: kotlin.collections.List<IdentifierDto> = emptyList(),
 
     /* A tag is an item from a codification system that qualifies an entity as being member of a certain class, whatever the value it might have taken. If the tag qualifies the content of a field, it means that whatever the content of the field, the tag will always apply. For example, the label of a field is qualified using a tag. LOINC is a codification system typically used for tags. */
     @field:JsonProperty("tags")
-    val tags: kotlin.collections.List<CodeStubDto> = listOf(),
+    val tags: kotlin.collections.List<CodeStubDto> = emptyList(),
 
     /* A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes */
     @field:JsonProperty("codes")
-    val codes: kotlin.collections.List<CodeStubDto> = listOf(),
+    val codes: kotlin.collections.List<CodeStubDto> = emptyList(),
 
     /* the list of all names of the patient, also containing the official full name information. Ordered by preference of use. First element is therefore the official name used for the patient in the application */
     @field:JsonProperty("names")
-    val names: kotlin.collections.List<PersonNameDto> = listOf(),
+    val names: kotlin.collections.List<PersonNameDto> = emptyList(),
 
     /* the list of languages spoken by the patient ordered by fluency (alpha-2 code http://www.loc.gov/standards/iso639-2/ascii_8bits.html). */
     @field:JsonProperty("languages")
-    val languages: kotlin.collections.List<kotlin.String> = listOf(),
+    val languages: kotlin.collections.List<kotlin.String> = emptyList(),
 
     /* the list of addresses (with address type). */
     @field:JsonProperty("addresses")
-    val addresses: kotlin.collections.List<AddressDto> = listOf(),
+    val addresses: kotlin.collections.List<AddressDto> = emptyList(),
 
     /* The ids of the patients that have been merged inside this patient. */
     @field:JsonProperty("mergedIds")
-    val mergedIds: kotlin.collections.List<kotlin.String> = listOf(),
+    val mergedIds: kotlin.collections.List<kotlin.String> = emptyList(),
 
     /* Is the patient active (boolean). */
     @field:JsonProperty("active")
@@ -157,75 +157,75 @@ data class PatientDto (
 
     /* List of insurance coverages (of class Insurability, see below). */
     @field:JsonProperty("insurabilities")
-    val insurabilities: kotlin.collections.List<InsurabilityDto> = listOf(),
+    val insurabilities: kotlin.collections.List<InsurabilityDto> = emptyList(),
 
     /* List of partners, or persons of contact (of class Partnership, see below). */
     @field:JsonProperty("partnerships")
-    val partnerships: kotlin.collections.List<PartnershipDto> = listOf(),
+    val partnerships: kotlin.collections.List<PartnershipDto> = emptyList(),
 
     /* Links (usually for therapeutic reasons) between this patient and healthcare parties (of class PatientHealthcareParty). */
     @field:JsonProperty("patientHealthCareParties")
-    val patientHealthCareParties: kotlin.collections.List<PatientHealthCarePartyDto> = listOf(),
+    val patientHealthCareParties: kotlin.collections.List<PatientHealthCarePartyDto> = emptyList(),
 
     /* Financial information (Bank, bank account) used to reimburse the patient. */
     @field:JsonProperty("financialInstitutionInformation")
-    val financialInstitutionInformation: kotlin.collections.List<FinancialInstitutionInformationDto> = listOf(),
+    val financialInstitutionInformation: kotlin.collections.List<FinancialInstitutionInformationDto> = emptyList(),
 
     /* Contracts between the patient and the healthcare entity. */
     @field:JsonProperty("medicalHouseContracts")
-    val medicalHouseContracts: kotlin.collections.List<MedicalHouseContractDto> = listOf(),
+    val medicalHouseContracts: kotlin.collections.List<MedicalHouseContractDto> = emptyList(),
 
     /* Codified list of professions exercised by this patient. */
     @field:JsonProperty("patientProfessions")
-    val patientProfessions: kotlin.collections.List<CodeStubDto> = listOf(),
+    val patientProfessions: kotlin.collections.List<CodeStubDto> = emptyList(),
 
     /* Extra parameters */
     @field:JsonProperty("parameters")
-    val parameters: kotlin.collections.Map<kotlin.String, kotlin.collections.List<kotlin.String>> = mapOf(),
+    val parameters: kotlin.collections.Map<kotlin.String, kotlin.collections.List<kotlin.String>> = emptyMap(),
 
     /* Extra properties */
     @field:JsonProperty("properties")
-    val properties: kotlin.collections.List<PropertyStubDto> = listOf(),
+    val properties: kotlin.collections.List<PropertyStubDto> = emptyList(),
 
     /* For each couple of HcParties (delegator and delegate), this map contains the exchange AES key. The delegator is always this hcp, the key of the map is the id of the delegate. The AES exchange key is encrypted using RSA twice : once using this hcp public key (index 0 in the Array) and once using the other hcp public key (index 1 in the Array). For a pair of HcParties. Each HcParty always has one AES exchange key for himself. */
     @field:JsonProperty("hcPartyKeys")
-    val hcPartyKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.List<kotlin.String>> = mapOf(),
+    val hcPartyKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.List<kotlin.String>> = emptyMap(),
 
     /* The privateKeyShamirPartitions are used to share this hcp's private RSA key with a series of other hcParties using Shamir's algorithm. The key of the map is the hcp Id with whom this partition has been shared. The value is \"threshold⎮partition in hex\" encrypted using the the partition's holder's public RSA key */
     @field:JsonProperty("privateKeyShamirPartitions")
-    val privateKeyShamirPartitions: kotlin.collections.Map<kotlin.String, kotlin.String> = mapOf(),
+    val privateKeyShamirPartitions: kotlin.collections.Map<kotlin.String, kotlin.String> = emptyMap(),
 
     /* The secretForeignKeys are filled at the to many end of a one to many relationship (for example inside Contact for the Patient -> Contacts relationship). Used when we want to find all contacts for a specific patient. These keys are in clear. You can have several to partition the medical document space. */
     @field:JsonProperty("secretForeignKeys")
-    val secretForeignKeys: kotlin.collections.List<kotlin.String> = listOf(),
+    val secretForeignKeys: kotlin.collections.List<kotlin.String> = emptyList(),
 
     /* The secretForeignKeys are filled at the to many end of a one to many relationship (for example inside Contact for the Patient -> Contacts relationship). Used when we want to find the patient for a specific contact. These keys are the encrypted id (using the hcParty key for the delegate) that can be found in clear inside the patient. ids encrypted using the hcParty keys. */
     @field:JsonProperty("cryptedForeignKeys")
-    val cryptedForeignKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<DelegationDto>> = mapOf(),
+    val cryptedForeignKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<DelegationDto>> = emptyMap(),
 
     /* When a document is created, the responsible generates a cryptographically random master key (never to be used for something else than referencing from other entities). He/she encrypts it using his own AES exchange key and stores it as a delegation. The responsible is thus always in the delegations as well */
     @field:JsonProperty("delegations")
-    val delegations: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<DelegationDto>> = mapOf(),
+    val delegations: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<DelegationDto>> = emptyMap(),
 
     /* When a document needs to be encrypted, the responsible generates a cryptographically random master key (different from the delegation key, never to appear in clear anywhere in the db. He/she encrypts it using his own AES exchange key and stores it as a delegation */
     @field:JsonProperty("encryptionKeys")
-    val encryptionKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<DelegationDto>> = mapOf(),
+    val encryptionKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<DelegationDto>> = emptyMap(),
 
     @field:JsonProperty("nonDuplicateIds")
     @Deprecated(message = "This property is deprecated.")
-    val nonDuplicateIds: kotlin.collections.List<kotlin.String> = listOf(),
+    val nonDuplicateIds: kotlin.collections.List<kotlin.String> = emptyList(),
 
     @field:JsonProperty("encryptedAdministrativesDocuments")
     @Deprecated(message = "This property is deprecated.")
-    val encryptedAdministrativesDocuments: kotlin.collections.List<kotlin.String> = listOf(),
+    val encryptedAdministrativesDocuments: kotlin.collections.List<kotlin.String> = emptyList(),
 
     @field:JsonProperty("schoolingInfos")
     @Deprecated(message = "This property is deprecated.")
-    val schoolingInfos: kotlin.collections.List<SchoolingInfoDto> = listOf(),
+    val schoolingInfos: kotlin.collections.List<SchoolingInfoDto> = emptyList(),
 
     @field:JsonProperty("employementInfos")
     @Deprecated(message = "This property is deprecated.")
-    val employementInfos: kotlin.collections.List<EmploymentInfoDto> = listOf(),
+    val employementInfos: kotlin.collections.List<EmploymentInfoDto> = emptyList(),
 
     /* the revision of the patient in the database, used for conflict management / optimistic locking. */
     @field:JsonProperty("rev")
@@ -365,7 +365,7 @@ data class PatientDto (
 
     /* A picture usually saved in JPEG format. */
     @field:JsonProperty("picture")
-    val picture: kotlin.ByteArray? = null,
+    val picture: io.icure.kraken.client.infrastructure.ByteArrayWrapper? = null,
 
     /* An external (from another source) id with no guarantee or requirement for unicity . */
     @field:JsonProperty("externalId")

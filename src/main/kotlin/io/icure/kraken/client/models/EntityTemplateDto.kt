@@ -43,7 +43,7 @@ data class EntityTemplateDto (
     val id: kotlin.String,
 
     @field:JsonProperty("entity")
-    val entity: kotlin.collections.List<kotlin.collections.Map<kotlin.String, kotlin.Any>> = listOf(),
+    val entity: kotlin.collections.List<kotlin.collections.Map<kotlin.String, kotlin.Any>> = emptyList(),
 
     @field:JsonProperty("rev")
     val rev: kotlin.String? = null,
