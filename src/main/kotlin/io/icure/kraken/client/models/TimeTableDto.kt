@@ -68,9 +68,6 @@ data class TimeTableDto (
     @field:JsonProperty("publicTimeTable")
     val publicTimeTable: kotlin.Boolean,
 
-    @field:JsonProperty("publicTimeTable")
-    val publicTimeTable: kotlin.Boolean,
-
     @field:JsonProperty("items")
     val items: kotlin.collections.List<TimeTableItemDto> = emptyList(),
 

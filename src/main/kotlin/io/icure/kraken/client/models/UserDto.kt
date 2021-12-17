@@ -1,9 +1,9 @@
 /**
  * iCure Data Stack API Documentation
  *
- * The iCure Data Stack Application API is the native interface to iCure. This version is obsolete, please use v2.
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -30,7 +30,7 @@ import com.github.pozo.KotlinBuilder
  * @param permissions If permission to modify patient data is granted or revoked
  * @param roles Roles specified for the user
  * @param autoDelegations Delegations that are automatically generated client side when a new database object is created by this user
- * @param applicationTokens 
+ * @param applicationTokens Long lived authentication tokens used for inter-applications authentication.
  * @param authenticationTokens Encrypted and time-limited Authentication tokens used for inter-applications authentication
  * @param rev the revision of the user in the database, used for conflict management / optimistic locking.
  * @param deletionDate hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called.
@@ -75,8 +75,8 @@ data class UserDto (
     @field:JsonProperty("autoDelegations")
     val autoDelegations: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<kotlin.String>> = emptyMap(),
 
+    /* Long lived authentication tokens used for inter-applications authentication. */
     @field:JsonProperty("applicationTokens")
-    @Deprecated(message = "This property is deprecated.")
     val applicationTokens: kotlin.collections.Map<kotlin.String, kotlin.String> = emptyMap(),
 
     /* Encrypted and time-limited Authentication tokens used for inter-applications authentication */

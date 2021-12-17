@@ -135,10 +135,6 @@ data class PatientDto (
     @field:JsonProperty("names")
     val names: kotlin.collections.List<PersonNameDto> = emptyList(),
 
-    /* the list of all names of the patient, also containing the official full name information. Ordered by preference of use. First element is therefore the official name used for the patient in the application */
-    @field:JsonProperty("names")
-    val names: kotlin.collections.List<PersonNameDto> = listOf(),
-
     /* the list of languages spoken by the patient ordered by fluency (alpha-2 code http://www.loc.gov/standards/iso639-2/ascii_8bits.html). */
     @field:JsonProperty("languages")
     val languages: kotlin.collections.List<kotlin.String> = emptyList(),

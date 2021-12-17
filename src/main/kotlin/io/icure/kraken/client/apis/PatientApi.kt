@@ -1,9 +1,9 @@
 /**
  * iCure Data Stack API Documentation
  *
- * The iCure Data Stack Application API is the native interface to iCure. This version is obsolete, please use v2.
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -14,6 +14,7 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
+import io.icure.kraken.client.infrastructure.*
 
 import io.icure.kraken.client.models.ContentDto
 import io.icure.kraken.client.models.DelegationDto
@@ -36,7 +37,12 @@ import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
+import kotlinx.coroutines.flow.flowOf
+import java.nio.ByteBuffer
+import java.util.*
 import javax.inject.Named
+import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -50,162 +56,6 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     }
 
     /**
-    * Create patients in bulk
-    * Returns the id and _rev of created patients
-    * @param patientDto  
-    * @return kotlin.collections.List<IdWithRevDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun bulkCreatePatients(patientDto: kotlin.collections.List<PatientDto>) : kotlin.collections.List<IdWithRevDto>?  {
-        val localVariableConfig = bulkCreatePatientsRequestConfig(patientDto = patientDto)
-
-        return request<kotlin.collections.List<PatientDto>, kotlin.collections.List<IdWithRevDto>>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation bulkCreatePatients
-    *
-    * @param patientDto  
-    * @return RequestConfig
-    */
-    fun bulkCreatePatientsRequestConfig(patientDto: kotlin.collections.List<PatientDto>) : RequestConfig<kotlin.collections.List<PatientDto>> {
-        val localVariableBody = patientDto
-        val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.POST,
-            path = "/rest/v1/patient/batch",
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Create patients in bulk
-    * Returns the id and _rev of created patients
-    * @param patientDto  
-    * @return kotlin.collections.List<IdWithRevDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun bulkCreatePatients1(patientDto: kotlin.collections.List<PatientDto>) : kotlin.collections.List<IdWithRevDto>?  {
-        val localVariableConfig = bulkCreatePatients1RequestConfig(patientDto = patientDto)
-
-        return request<kotlin.collections.List<PatientDto>, kotlin.collections.List<IdWithRevDto>>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation bulkCreatePatients1
-    *
-    * @param patientDto  
-    * @return RequestConfig
-    */
-    fun bulkCreatePatients1RequestConfig(patientDto: kotlin.collections.List<PatientDto>) : RequestConfig<kotlin.collections.List<PatientDto>> {
-        val localVariableBody = patientDto
-        val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.POST,
-            path = "/rest/v1/patient/bulk",
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Modify patients in bulk
-    * Returns the id and _rev of modified patients
-    * @param patientDto  
-    * @return kotlin.collections.List<IdWithRevDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun bulkUpdatePatients(patientDto: kotlin.collections.List<PatientDto>) : kotlin.collections.List<IdWithRevDto>?  {
-        val localVariableConfig = bulkUpdatePatientsRequestConfig(patientDto = patientDto)
-
-        return request<kotlin.collections.List<PatientDto>, kotlin.collections.List<IdWithRevDto>>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation bulkUpdatePatients
-    *
-    * @param patientDto  
-    * @return RequestConfig
-    */
-    fun bulkUpdatePatientsRequestConfig(patientDto: kotlin.collections.List<PatientDto>) : RequestConfig<kotlin.collections.List<PatientDto>> {
-        val localVariableBody = patientDto
-        val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.PUT,
-            path = "/rest/v1/patient/batch",
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Modify patients in bulk
-    * Returns the id and _rev of modified patients
-    * @param patientDto  
-    * @return kotlin.collections.List<IdWithRevDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun bulkUpdatePatients1(patientDto: kotlin.collections.List<PatientDto>) : kotlin.collections.List<IdWithRevDto>?  {
-        val localVariableConfig = bulkUpdatePatients1RequestConfig(patientDto = patientDto)
-
-        return request<kotlin.collections.List<PatientDto>, kotlin.collections.List<IdWithRevDto>>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation bulkUpdatePatients1
-    *
-    * @param patientDto  
-    * @return RequestConfig
-    */
-    fun bulkUpdatePatients1RequestConfig(patientDto: kotlin.collections.List<PatientDto>) : RequestConfig<kotlin.collections.List<PatientDto>> {
-        val localVariableBody = patientDto
-        val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.PUT,
-            path = "/rest/v1/patient/bulk",
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
     * Get count of patients for a specific HcParty or for the current HcParty 
     * Returns the count of patients
     * @param hcPartyId Healthcare party id 
@@ -216,14 +66,13 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun countOfPatients(hcPartyId: kotlin.String) : ContentDto?  {
+    suspend fun countOfPatients(hcPartyId: kotlin.String) : ContentDto  {
         val localVariableConfig = countOfPatientsRequestConfig(hcPartyId = hcPartyId)
 
         return request<Unit, ContentDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation countOfPatients
     *
@@ -231,17 +80,18 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun countOfPatientsRequestConfig(hcPartyId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/patient/hcParty/{hcPartyId}/count".replace("{"+"hcPartyId"+"}", "$hcPartyId"),
+            path = "/rest/v2/patient/hcParty/{hcPartyId}/count".replace("{"+"hcPartyId"+"}", "${URLEncoder.encode(hcPartyId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -255,14 +105,13 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createPatient(patientDto: PatientDto) : PatientDto?  {
+    suspend fun createPatient(patientDto: PatientDto) : PatientDto  {
         val localVariableConfig = createPatientRequestConfig(patientDto = patientDto)
 
         return request<PatientDto, PatientDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createPatient
     *
@@ -270,23 +119,63 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun createPatientRequestConfig(patientDto: PatientDto) : RequestConfig<PatientDto> {
-        val localVariableBody = patientDto
+        // val localVariableBody = patientDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = patientDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/patient",
+            path = "/rest/v2/patient",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
+    }
+
+    /**
+    * Create patients in bulk
+    * Returns the id and _rev of created patients
+    * @param patientDto  
+    * @return kotlin.collections.List<IdWithRevDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun createPatients(patientDto: kotlin.collections.List<PatientDto>) : kotlin.collections.List<IdWithRevDto>  {
+        val localVariableConfig = createPatientsRequestConfig(patientDto = patientDto)
+
+        return request<kotlin.collections.List<PatientDto>, kotlin.collections.List<IdWithRevDto>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation createPatients
+    *
+    * @param patientDto  
+    * @return RequestConfig
+    */
+    fun createPatientsRequestConfig(patientDto: kotlin.collections.List<PatientDto>) : RequestConfig<kotlin.collections.List<PatientDto>> {
+        // val localVariableBody = patientDto
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = patientDto
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v2/patient/batch",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
     }
 
     /**
     * Delete patients.
     * Response is an array containing the ID of deleted patient..
-    * @param patientIds  
+    * @param listOfIdsDto  
     * @return kotlin.collections.List<DocIdentifier>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -294,32 +183,32 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deletePatient(patientIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
-        val localVariableConfig = deletePatientRequestConfig(patientIds = patientIds)
+    suspend fun deletePatients(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocIdentifier>  {
+        val localVariableConfig = deletePatientsRequestConfig(listOfIdsDto = listOfIdsDto)
 
-        return request<Unit, kotlin.collections.List<DocIdentifier>>(
+        return request<ListOfIdsDto, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
-    * To obtain the request config of the operation deletePatient
+    * To obtain the request config of the operation deletePatients
     *
-    * @param patientIds  
+    * @param listOfIdsDto  
     * @return RequestConfig
     */
-    fun deletePatientRequestConfig(patientIds: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun deletePatientsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
-            method = RequestMethod.DELETE,
-            path = "/rest/v1/patient/{patientIds}".replace("{"+"patientIds"+"}", "$patientIds"),
+            method = RequestMethod.POST,
+            path = "/rest/v2/patient/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -339,14 +228,13 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun filterPatientsBy(filterChainPatient: FilterChainPatient, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, skip: kotlin.Int?, sort: kotlin.String?, desc: kotlin.Boolean?) : PaginatedListPatientDto?  {
+    suspend fun filterPatientsBy(filterChainPatient: FilterChainPatient, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, skip: kotlin.Int?, sort: kotlin.String?, desc: kotlin.Boolean?) : PaginatedListPatientDto  {
         val localVariableConfig = filterPatientsByRequestConfig(filterChainPatient = filterChainPatient, startKey = startKey, startDocumentId = startDocumentId, limit = limit, skip = skip, sort = sort, desc = desc)
 
         return request<FilterChainPatient, PaginatedListPatientDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation filterPatientsBy
     *
@@ -360,7 +248,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun filterPatientsByRequestConfig(filterChainPatient: FilterChainPatient, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, skip: kotlin.Int?, sort: kotlin.String?, desc: kotlin.Boolean?) : RequestConfig<FilterChainPatient> {
-        val localVariableBody = filterChainPatient
+        // val localVariableBody = filterChainPatient
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (startKey != null) {
@@ -382,563 +270,16 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("desc", listOf(desc.toString()))
                 }
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = filterChainPatient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/patient/filter",
+            path = "/rest/v2/patient/filter",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Get Paginated List of Patients sorted by Access logs descending
-    * 
-    * @param userId A User ID 
-    * @param accessType The type of access (COMPUTER or USER) (optional)
-    * @param startDate The start search epoch (optional)
-    * @param startKey The start key for pagination (optional)
-    * @param startDocumentId A patient document ID (optional)
-    * @param limit Number of rows (optional, default to 1000)
-    * @return PaginatedListPatientDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findByAccessLogUserAfterDate(userId: kotlin.String, accessType: kotlin.String?, startDate: kotlin.Long?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListPatientDto?  {
-        val localVariableConfig = findByAccessLogUserAfterDateRequestConfig(userId = userId, accessType = accessType, startDate = startDate, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
-
-        return request<Unit, PaginatedListPatientDto>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation findByAccessLogUserAfterDate
-    *
-    * @param userId A User ID 
-    * @param accessType The type of access (COMPUTER or USER) (optional)
-    * @param startDate The start search epoch (optional)
-    * @param startKey The start key for pagination (optional)
-    * @param startDocumentId A patient document ID (optional)
-    * @param limit Number of rows (optional, default to 1000)
-    * @return RequestConfig
-    */
-    fun findByAccessLogUserAfterDateRequestConfig(userId: kotlin.String, accessType: kotlin.String?, startDate: kotlin.Long?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
-            .apply {
-                if (accessType != null) {
-                    put("accessType", listOf(accessType.toString()))
-                }
-                if (startDate != null) {
-                    put("startDate", listOf(startDate.toString()))
-                }
-                if (startKey != null) {
-                    put("startKey", listOf(startKey.toString()))
-                }
-                if (startDocumentId != null) {
-                    put("startDocumentId", listOf(startDocumentId.toString()))
-                }
-                if (limit != null) {
-                    put("limit", listOf(limit.toString()))
-                }
-            }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/patient/byAccess/{userId}".replace("{"+"userId"+"}", "$userId"),
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Get the patient having the provided externalId
-    * 
-    * @param externalId A external ID 
-    * @return PatientDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findByExternalId(externalId: kotlin.String) : PatientDto?  {
-        val localVariableConfig = findByExternalIdRequestConfig(externalId = externalId)
-
-        return request<Unit, PatientDto>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation findByExternalId
-    *
-    * @param externalId A external ID 
-    * @return RequestConfig
-    */
-    fun findByExternalIdRequestConfig(externalId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/patient/byExternalId/{externalId}".replace("{"+"externalId"+"}", "$externalId"),
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Find patients for the current user (HcParty) 
-    * Returns a list of patients along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
-    * @param healthcarePartyId HealthcareParty Id. If not set, will use user&#39;s hcpId (optional)
-    * @param filterValue Optional value for filtering results (optional)
-    * @param startKey The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key&#39;s startKey (optional)
-    * @param startDocumentId A patient document ID (optional)
-    * @param limit Number of rows (optional)
-    * @param sortDirection Optional value for providing a sorting direction (&#39;asc&#39;, &#39;desc&#39;). Set to &#39;asc&#39; by default. (optional, default to "asc")
-    * @return PaginatedListPatientDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findByNameBirthSsinAuto(healthcarePartyId: kotlin.String?, filterValue: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, sortDirection: kotlin.String?) : PaginatedListPatientDto?  {
-        val localVariableConfig = findByNameBirthSsinAutoRequestConfig(healthcarePartyId = healthcarePartyId, filterValue = filterValue, startKey = startKey, startDocumentId = startDocumentId, limit = limit, sortDirection = sortDirection)
-
-        return request<Unit, PaginatedListPatientDto>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation findByNameBirthSsinAuto
-    *
-    * @param healthcarePartyId HealthcareParty Id. If not set, will use user&#39;s hcpId (optional)
-    * @param filterValue Optional value for filtering results (optional)
-    * @param startKey The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key&#39;s startKey (optional)
-    * @param startDocumentId A patient document ID (optional)
-    * @param limit Number of rows (optional)
-    * @param sortDirection Optional value for providing a sorting direction (&#39;asc&#39;, &#39;desc&#39;). Set to &#39;asc&#39; by default. (optional, default to "asc")
-    * @return RequestConfig
-    */
-    fun findByNameBirthSsinAutoRequestConfig(healthcarePartyId: kotlin.String?, filterValue: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, sortDirection: kotlin.String?) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
-            .apply {
-                if (healthcarePartyId != null) {
-                    put("healthcarePartyId", listOf(healthcarePartyId.toString()))
-                }
-                if (filterValue != null) {
-                    put("filterValue", listOf(filterValue.toString()))
-                }
-                if (startKey != null) {
-                    put("startKey", listOf(startKey.toString()))
-                }
-                if (startDocumentId != null) {
-                    put("startDocumentId", listOf(startDocumentId.toString()))
-                }
-                if (limit != null) {
-                    put("limit", listOf(limit.toString()))
-                }
-                if (sortDirection != null) {
-                    put("sortDirection", listOf(sortDirection.toString()))
-                }
-            }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/patient/byNameBirthSsinAuto",
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Provides a paginated list of patients with duplicate name for an hecparty
-    * 
-    * @param hcPartyId Healthcare party id 
-    * @param startKey The start key for pagination, depends on the filters used (optional)
-    * @param startDocumentId A patient document ID (optional)
-    * @param limit Number of rows (optional)
-    * @return PaginatedListPatientDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findDuplicatesByName(hcPartyId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListPatientDto?  {
-        val localVariableConfig = findDuplicatesByNameRequestConfig(hcPartyId = hcPartyId, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
-
-        return request<Unit, PaginatedListPatientDto>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation findDuplicatesByName
-    *
-    * @param hcPartyId Healthcare party id 
-    * @param startKey The start key for pagination, depends on the filters used (optional)
-    * @param startDocumentId A patient document ID (optional)
-    * @param limit Number of rows (optional)
-    * @return RequestConfig
-    */
-    fun findDuplicatesByNameRequestConfig(hcPartyId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
-            .apply {
-                put("hcPartyId", listOf(hcPartyId.toString()))
-                if (startKey != null) {
-                    put("startKey", listOf(startKey.toString()))
-                }
-                if (startDocumentId != null) {
-                    put("startDocumentId", listOf(startDocumentId.toString()))
-                }
-                if (limit != null) {
-                    put("limit", listOf(limit.toString()))
-                }
-            }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.POST,
-            path = "/rest/v1/patient/duplicates/name",
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Provides a paginated list of patients with duplicate ssin for an hecparty
-    * 
-    * @param hcPartyId Healthcare party id 
-    * @param startKey The start key for pagination, depends on the filters used (optional)
-    * @param startDocumentId A patient document ID (optional)
-    * @param limit Number of rows (optional)
-    * @return PaginatedListPatientDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findDuplicatesBySsin(hcPartyId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListPatientDto?  {
-        val localVariableConfig = findDuplicatesBySsinRequestConfig(hcPartyId = hcPartyId, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
-
-        return request<Unit, PaginatedListPatientDto>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation findDuplicatesBySsin
-    *
-    * @param hcPartyId Healthcare party id 
-    * @param startKey The start key for pagination, depends on the filters used (optional)
-    * @param startDocumentId A patient document ID (optional)
-    * @param limit Number of rows (optional)
-    * @return RequestConfig
-    */
-    fun findDuplicatesBySsinRequestConfig(hcPartyId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
-            .apply {
-                put("hcPartyId", listOf(hcPartyId.toString()))
-                if (startKey != null) {
-                    put("startKey", listOf(startKey.toString()))
-                }
-                if (startDocumentId != null) {
-                    put("startDocumentId", listOf(startDocumentId.toString()))
-                }
-                if (limit != null) {
-                    put("limit", listOf(limit.toString()))
-                }
-            }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.POST,
-            path = "/rest/v1/patient/duplicates/ssin",
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Filter patients for the current user (HcParty) 
-    * Returns a list of patients
-    * @param firstName The first name (optional)
-    * @param lastName The last name (optional)
-    * @param dateOfBirth The date of birth (optional)
-    * @return kotlin.collections.List<PatientDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun fuzzySearch(firstName: kotlin.String?, lastName: kotlin.String?, dateOfBirth: kotlin.Int?) : kotlin.collections.List<PatientDto>?  {
-        val localVariableConfig = fuzzySearchRequestConfig(firstName = firstName, lastName = lastName, dateOfBirth = dateOfBirth)
-
-        return request<Unit, kotlin.collections.List<PatientDto>>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation fuzzySearch
-    *
-    * @param firstName The first name (optional)
-    * @param lastName The last name (optional)
-    * @param dateOfBirth The date of birth (optional)
-    * @return RequestConfig
-    */
-    fun fuzzySearchRequestConfig(firstName: kotlin.String?, lastName: kotlin.String?, dateOfBirth: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
-            .apply {
-                if (firstName != null) {
-                    put("firstName", listOf(firstName.toString()))
-                }
-                if (lastName != null) {
-                    put("lastName", listOf(lastName.toString()))
-                }
-                if (dateOfBirth != null) {
-                    put("dateOfBirth", listOf(dateOfBirth.toString()))
-                }
-            }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/patient/fuzzy",
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Get patient
-    * It gets patient administrative data.
-    * @param patientId  
-    * @return PatientDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getPatient(patientId: kotlin.String) : PatientDto?  {
-        val localVariableConfig = getPatientRequestConfig(patientId = patientId)
-
-        return request<Unit, PatientDto>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation getPatient
-    *
-    * @param patientId  
-    * @return RequestConfig
-    */
-    fun getPatientRequestConfig(patientId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/patient/{patientId}".replace("{"+"patientId"+"}", "$patientId"),
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Get patient by identifier
-    * It gets patient administrative data based on the identifier (root &amp; extension) parameters.
-    * @param hcPartyId  
-    * @param id  
-    * @param system  (optional)
-    * @return PatientDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getPatientByHealthcarepartyAndIdentifier(hcPartyId: kotlin.String, id: kotlin.String, system: kotlin.String?) : PatientDto?  {
-        val localVariableConfig = getPatientByHealthcarepartyAndIdentifierRequestConfig(hcPartyId = hcPartyId, id = id, system = system)
-
-        return request<Unit, PatientDto>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation getPatientByHealthcarepartyAndIdentifier
-    *
-    * @param hcPartyId  
-    * @param id  
-    * @param system  (optional)
-    * @return RequestConfig
-    */
-    fun getPatientByHealthcarepartyAndIdentifierRequestConfig(hcPartyId: kotlin.String, id: kotlin.String, system: kotlin.String?) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
-            .apply {
-                if (system != null) {
-                    put("system", listOf(system.toString()))
-                }
-            }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/patient/{hcPartyId}/{id}".replace("{"+"hcPartyId"+"}", "$hcPartyId").replace("{"+"id"+"}", "$id"),
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Get the patient (identified by patientId) hcparty keys. Those keys are AES keys (encrypted) used to share information between HCPs and a patient.
-    * This endpoint is used to recover all keys that have already been created and that can be used to share information with this patient. It returns a map with the following structure: ID of the owner of the encrypted AES key -&gt; encrypted AES key. The returned encrypted AES keys will have to be decrypted using the patient&#39;s private key.
-    * @param patientId The patient Id for which information is shared 
-    * @return kotlin.String
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getPatientHcPartyKeysForDelegate(patientId: kotlin.String) : kotlin.String?  {
-        val localVariableConfig = getPatientHcPartyKeysForDelegateRequestConfig(patientId = patientId)
-
-        return request<Unit, kotlin.String>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation getPatientHcPartyKeysForDelegate
-    *
-    * @param patientId The patient Id for which information is shared 
-    * @return RequestConfig
-    */
-    fun getPatientHcPartyKeysForDelegateRequestConfig(patientId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/patient/{patientId}/keys".replace("{"+"patientId"+"}", "$patientId"),
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Get patient ids by identifiers
-    * It gets patient data based on the provided identifiers (root &amp; extension)
-    * @param hcPartyId  
-    * @param identifierDto  
-    * @return kotlin.collections.List<IndexedIdentifierDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getPatientIdsByHealthcarePartyAndIdentifiers(hcPartyId: kotlin.String, identifierDto: kotlin.collections.List<IdentifierDto>) : kotlin.collections.List<IndexedIdentifierDto>?  {
-        val localVariableConfig = getPatientIdsByHealthcarePartyAndIdentifiersRequestConfig(hcPartyId = hcPartyId, identifierDto = identifierDto)
-
-        return request<kotlin.collections.List<IdentifierDto>, kotlin.collections.List<IndexedIdentifierDto>>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation getPatientIdsByHealthcarePartyAndIdentifiers
-    *
-    * @param hcPartyId  
-    * @param identifierDto  
-    * @return RequestConfig
-    */
-    fun getPatientIdsByHealthcarePartyAndIdentifiersRequestConfig(hcPartyId: kotlin.String, identifierDto: kotlin.collections.List<IdentifierDto>) : RequestConfig<kotlin.collections.List<IdentifierDto>> {
-        val localVariableBody = identifierDto
-        val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.POST,
-            path = "/rest/v1/patient/ids/{hcPartyId}/byIdentifiers".replace("{"+"hcPartyId"+"}", "$hcPartyId"),
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Get patients by id
-    * It gets patient administrative data.
-    * @param listOfIdsDto  
-    * @return kotlin.collections.List<PatientDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getPatients(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<PatientDto>?  {
-        val localVariableConfig = getPatientsRequestConfig(listOfIdsDto = listOfIdsDto)
-
-        return request<ListOfIdsDto, kotlin.collections.List<PatientDto>>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation getPatients
-    *
-    * @param listOfIdsDto  
-    * @return RequestConfig
-    */
-    fun getPatientsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
-        val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.POST,
-            path = "/rest/v1/patient/byIds",
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -956,16 +297,15 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listDeletedPatients(startDate: kotlin.Long?, endDate: kotlin.Long?, desc: kotlin.Boolean?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListPatientDto?  {
-        val localVariableConfig = listDeletedPatientsRequestConfig(startDate = startDate, endDate = endDate, desc = desc, startDocumentId = startDocumentId, limit = limit)
+    suspend fun findDeletedPatients(startDate: kotlin.Long?, endDate: kotlin.Long?, desc: kotlin.Boolean?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListPatientDto  {
+        val localVariableConfig = findDeletedPatientsRequestConfig(startDate = startDate, endDate = endDate, desc = desc, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListPatientDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
-    * To obtain the request config of the operation listDeletedPatients
+    * To obtain the request config of the operation findDeletedPatients
     *
     * @param startDate Filter deletions after this date (unix epoch), included (optional)
     * @param endDate Filter deletions before this date (unix epoch), included (optional)
@@ -974,8 +314,8 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param limit Number of rows (optional)
     * @return RequestConfig
     */
-    fun listDeletedPatientsRequestConfig(startDate: kotlin.Long?, endDate: kotlin.Long?, desc: kotlin.Boolean?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun findDeletedPatientsRequestConfig(startDate: kotlin.Long?, endDate: kotlin.Long?, desc: kotlin.Boolean?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (startDate != null) {
@@ -995,109 +335,22 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/patient/deleted/by_date",
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Find deleted patients
-    * Returns a list of deleted patients, by name and/or firstname prefix, if any.
-    * @param firstName First name prefix (optional)
-    * @param lastName Last name prefix (optional)
-    * @return kotlin.collections.List<PatientDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listDeletedPatientsByName(firstName: kotlin.String?, lastName: kotlin.String?) : kotlin.collections.List<PatientDto>?  {
-        val localVariableConfig = listDeletedPatientsByNameRequestConfig(firstName = firstName, lastName = lastName)
-
-        return request<Unit, kotlin.collections.List<PatientDto>>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation listDeletedPatientsByName
-    *
-    * @param firstName First name prefix (optional)
-    * @param lastName Last name prefix (optional)
-    * @return RequestConfig
-    */
-    fun listDeletedPatientsByNameRequestConfig(firstName: kotlin.String?, lastName: kotlin.String?) : RequestConfig<Unit> {
+        localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
-            .apply {
-                if (firstName != null) {
-                    put("firstName", listOf(firstName.toString()))
-                }
-                if (lastName != null) {
-                    put("lastName", listOf(lastName.toString()))
-                }
-            }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/patient/deleted/by_name",
+            path = "/rest/v2/patient/deleted/byDate",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
-    * List patients that have been merged towards another patient 
-    * Returns a list of patients that have been merged after the provided date
-    * @param date  
-    * @return kotlin.collections.List<PatientDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listOfMergesAfter(date: kotlin.Long) : kotlin.collections.List<PatientDto>?  {
-        val localVariableConfig = listOfMergesAfterRequestConfig(date = date)
-
-        return request<Unit, kotlin.collections.List<PatientDto>>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation listOfMergesAfter
-    *
-    * @param date  
-    * @return RequestConfig
-    */
-    fun listOfMergesAfterRequestConfig(date: kotlin.Long) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/patient/merges/{date}".replace("{"+"date"+"}", "$date"),
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * List patients that have been modified after the provided date
-    * Returns a list of patients that have been modified after the provided date
-    * @param date  
-    * @param startKey The start key for pagination the date of the first element of the new page (optional)
+    * Provides a paginated list of patients with duplicate name for an hecparty
+    * 
+    * @param hcPartyId Healthcare party id 
+    * @param startKey The start key for pagination, depends on the filters used (optional)
     * @param startDocumentId A patient document ID (optional)
     * @param limit Number of rows (optional)
     * @return PaginatedListPatientDto
@@ -1107,27 +360,27 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listOfPatientsModifiedAfter(date: kotlin.Long, startKey: kotlin.Long?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListPatientDto?  {
-        val localVariableConfig = listOfPatientsModifiedAfterRequestConfig(date = date, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
+    suspend fun findDuplicatesByName(hcPartyId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListPatientDto  {
+        val localVariableConfig = findDuplicatesByNameRequestConfig(hcPartyId = hcPartyId, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListPatientDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
-    * To obtain the request config of the operation listOfPatientsModifiedAfter
+    * To obtain the request config of the operation findDuplicatesByName
     *
-    * @param date  
-    * @param startKey The start key for pagination the date of the first element of the new page (optional)
+    * @param hcPartyId Healthcare party id 
+    * @param startKey The start key for pagination, depends on the filters used (optional)
     * @param startDocumentId A patient document ID (optional)
     * @param limit Number of rows (optional)
     * @return RequestConfig
     */
-    fun listOfPatientsModifiedAfterRequestConfig(date: kotlin.Long, startKey: kotlin.Long?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun findDuplicatesByNameRequestConfig(hcPartyId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
+                put("hcPartyId", listOf(hcPartyId.toString()))
                 if (startKey != null) {
                     put("startKey", listOf(startKey.toString()))
                 }
@@ -1139,14 +392,138 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v2/patient/duplicates/name",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
+    * Provides a paginated list of patients with duplicate ssin for an hecparty
+    * 
+    * @param hcPartyId Healthcare party id 
+    * @param startKey The start key for pagination, depends on the filters used (optional)
+    * @param startDocumentId A patient document ID (optional)
+    * @param limit Number of rows (optional)
+    * @return PaginatedListPatientDto
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun findDuplicatesBySsin(hcPartyId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListPatientDto  {
+        val localVariableConfig = findDuplicatesBySsinRequestConfig(hcPartyId = hcPartyId, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
+
+        return request<Unit, PaginatedListPatientDto>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation findDuplicatesBySsin
+    *
+    * @param hcPartyId Healthcare party id 
+    * @param startKey The start key for pagination, depends on the filters used (optional)
+    * @param startDocumentId A patient document ID (optional)
+    * @param limit Number of rows (optional)
+    * @return RequestConfig
+    */
+    fun findDuplicatesBySsinRequestConfig(hcPartyId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                put("hcPartyId", listOf(hcPartyId.toString()))
+                if (startKey != null) {
+                    put("startKey", listOf(startKey.toString()))
+                }
+                if (startDocumentId != null) {
+                    put("startDocumentId", listOf(startDocumentId.toString()))
+                }
+                if (limit != null) {
+                    put("limit", listOf(limit.toString()))
+                }
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v2/patient/duplicates/ssin",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
+    * Get Paginated List of Patients sorted by Access logs descending
+    * 
+    * @param userId A User ID 
+    * @param accessType The type of access (COMPUTER or USER) (optional)
+    * @param startDate The start search epoch (optional)
+    * @param startKey The start key for pagination (optional)
+    * @param startDocumentId A patient document ID (optional)
+    * @param limit Number of rows (optional, default to 1000)
+    * @return PaginatedListPatientDto
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun findPatientsByAccessLogUserAfterDate(userId: kotlin.String, accessType: kotlin.String?, startDate: kotlin.Long?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListPatientDto  {
+        val localVariableConfig = findPatientsByAccessLogUserAfterDateRequestConfig(userId = userId, accessType = accessType, startDate = startDate, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
+
+        return request<Unit, PaginatedListPatientDto>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation findPatientsByAccessLogUserAfterDate
+    *
+    * @param userId A User ID 
+    * @param accessType The type of access (COMPUTER or USER) (optional)
+    * @param startDate The start search epoch (optional)
+    * @param startKey The start key for pagination (optional)
+    * @param startDocumentId A patient document ID (optional)
+    * @param limit Number of rows (optional, default to 1000)
+    * @return RequestConfig
+    */
+    fun findPatientsByAccessLogUserAfterDateRequestConfig(userId: kotlin.String, accessType: kotlin.String?, startDate: kotlin.Long?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                if (accessType != null) {
+                    put("accessType", listOf(accessType.toString()))
+                }
+                if (startDate != null) {
+                    put("startDate", listOf(startDate.toString()))
+                }
+                if (startKey != null) {
+                    put("startKey", listOf(startKey.toString()))
+                }
+                if (startDocumentId != null) {
+                    put("startDocumentId", listOf(startDocumentId.toString()))
+                }
+                if (limit != null) {
+                    put("limit", listOf(limit.toString()))
+                }
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/patient/modifiedAfter/{date}".replace("{"+"date"+"}", "$date"),
+            path = "/rest/v2/patient/byAccess/{userId}".replace("{"+"userId"+"}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1165,16 +542,15 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listPatients(hcPartyId: kotlin.String?, sortField: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, sortDirection: kotlin.String?) : PaginatedListPatientDto?  {
-        val localVariableConfig = listPatientsRequestConfig(hcPartyId = hcPartyId, sortField = sortField, startKey = startKey, startDocumentId = startDocumentId, limit = limit, sortDirection = sortDirection)
+    suspend fun findPatientsByHealthcareParty(hcPartyId: kotlin.String?, sortField: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, sortDirection: kotlin.String?) : PaginatedListPatientDto  {
+        val localVariableConfig = findPatientsByHealthcarePartyRequestConfig(hcPartyId = hcPartyId, sortField = sortField, startKey = startKey, startDocumentId = startDocumentId, limit = limit, sortDirection = sortDirection)
 
         return request<Unit, PaginatedListPatientDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
-    * To obtain the request config of the operation listPatients
+    * To obtain the request config of the operation findPatientsByHealthcareParty
     *
     * @param hcPartyId Healthcare party id (optional)
     * @param sortField Optional value for sorting results by a given field (&#39;name&#39;, &#39;ssin&#39;, &#39;dateOfBirth&#39;). Specifying this deactivates filtering (optional)
@@ -1184,8 +560,8 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param sortDirection Optional value for providing a sorting direction (&#39;asc&#39;, &#39;desc&#39;). Set to &#39;asc&#39; by default. (optional, default to "asc")
     * @return RequestConfig
     */
-    fun listPatientsRequestConfig(hcPartyId: kotlin.String?, sortField: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, sortDirection: kotlin.String?) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun findPatientsByHealthcarePartyRequestConfig(hcPartyId: kotlin.String?, sortField: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, sortDirection: kotlin.String?) : RequestConfig<Unit> {
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (hcPartyId != null) {
@@ -1208,25 +584,26 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/patient",
+            path = "/rest/v2/patient",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
-    * List patients for a specific HcParty or for the current HcParty 
+    * Find patients for the current user (HcParty) 
     * Returns a list of patients along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
-    * @param hcPartyId  
-    * @param sortField Optional value for sorting results by a given field (&#39;name&#39;, &#39;ssin&#39;, &#39;dateOfBirth&#39;). Specifying this deactivates filtering (optional)
+    * @param healthcarePartyId HealthcareParty Id, if unset will user user&#39;s hcpId (optional)
+    * @param filterValue Optional value for filtering results (optional)
     * @param startKey The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key&#39;s startKey (optional)
     * @param startDocumentId A patient document ID (optional)
     * @param limit Number of rows (optional)
-    * @param sortDirection Optional value for providing a sorting direction (&#39;asc&#39;, &#39;desc&#39;). Set to &#39;asc&#39; by default. (optional)
+    * @param sortDirection Optional value for providing a sorting direction (&#39;asc&#39;, &#39;desc&#39;). Set to &#39;asc&#39; by default. (optional, default to "asc")
     * @return PaginatedListPatientDto
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -1234,31 +611,33 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listPatientsByHcParty(hcPartyId: kotlin.String, sortField: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, sortDirection: kotlin.String?) : PaginatedListPatientDto?  {
-        val localVariableConfig = listPatientsByHcPartyRequestConfig(hcPartyId = hcPartyId, sortField = sortField, startKey = startKey, startDocumentId = startDocumentId, limit = limit, sortDirection = sortDirection)
+    suspend fun findPatientsByNameBirthSsinAuto(healthcarePartyId: kotlin.String?, filterValue: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, sortDirection: kotlin.String?) : PaginatedListPatientDto  {
+        val localVariableConfig = findPatientsByNameBirthSsinAutoRequestConfig(healthcarePartyId = healthcarePartyId, filterValue = filterValue, startKey = startKey, startDocumentId = startDocumentId, limit = limit, sortDirection = sortDirection)
 
         return request<Unit, PaginatedListPatientDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
-    * To obtain the request config of the operation listPatientsByHcParty
+    * To obtain the request config of the operation findPatientsByNameBirthSsinAuto
     *
-    * @param hcPartyId  
-    * @param sortField Optional value for sorting results by a given field (&#39;name&#39;, &#39;ssin&#39;, &#39;dateOfBirth&#39;). Specifying this deactivates filtering (optional)
+    * @param healthcarePartyId HealthcareParty Id, if unset will user user&#39;s hcpId (optional)
+    * @param filterValue Optional value for filtering results (optional)
     * @param startKey The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key&#39;s startKey (optional)
     * @param startDocumentId A patient document ID (optional)
     * @param limit Number of rows (optional)
-    * @param sortDirection Optional value for providing a sorting direction (&#39;asc&#39;, &#39;desc&#39;). Set to &#39;asc&#39; by default. (optional)
+    * @param sortDirection Optional value for providing a sorting direction (&#39;asc&#39;, &#39;desc&#39;). Set to &#39;asc&#39; by default. (optional, default to "asc")
     * @return RequestConfig
     */
-    fun listPatientsByHcPartyRequestConfig(hcPartyId: kotlin.String, sortField: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, sortDirection: kotlin.String?) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun findPatientsByNameBirthSsinAutoRequestConfig(healthcarePartyId: kotlin.String?, filterValue: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, sortDirection: kotlin.String?) : RequestConfig<Unit> {
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
-                if (sortField != null) {
-                    put("sortField", listOf(sortField.toString()))
+                if (healthcarePartyId != null) {
+                    put("healthcarePartyId", listOf(healthcarePartyId.toString()))
+                }
+                if (filterValue != null) {
+                    put("filterValue", listOf(filterValue.toString()))
                 }
                 if (startKey != null) {
                     put("startKey", listOf(startKey.toString()))
@@ -1274,14 +653,15 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/patient/hcParty/{hcPartyId}".replace("{"+"hcPartyId"+"}", "$hcPartyId"),
+            path = "/rest/v2/patient/byNameBirthSsinAuto",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1298,16 +678,15 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listPatientsIds(hcPartyId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListString?  {
-        val localVariableConfig = listPatientsIdsRequestConfig(hcPartyId = hcPartyId, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
+    suspend fun findPatientsIdsByHealthcareParty(hcPartyId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListString  {
+        val localVariableConfig = findPatientsIdsByHealthcarePartyRequestConfig(hcPartyId = hcPartyId, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListString>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
-    * To obtain the request config of the operation listPatientsIds
+    * To obtain the request config of the operation findPatientsIdsByHealthcareParty
     *
     * @param hcPartyId Healthcare party id 
     * @param startKey The page first id (optional)
@@ -1315,8 +694,8 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param limit Page size (optional)
     * @return RequestConfig
     */
-    fun listPatientsIdsRequestConfig(hcPartyId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun findPatientsIdsByHealthcarePartyRequestConfig(hcPartyId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("hcPartyId", listOf(hcPartyId.toString()))
@@ -1331,25 +710,24 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/patient/idsPages",
+            path = "/rest/v2/patient/byHcPartyId",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
-    * List patients of a specific HcParty or of the current HcParty 
-    * Returns a list of patients along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
-    * @param hcPartyId  
-    * @param sortField Optional value for sorting results by a given field (&#39;name&#39;, &#39;ssin&#39;, &#39;dateOfBirth&#39;). Specifying this deactivates filtering (optional)
-    * @param startKey The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key&#39;s startKey (optional)
+    * List patients that have been modified after the provided date
+    * Returns a list of patients that have been modified after the provided date
+    * @param date  
+    * @param startKey The start key for pagination the date of the first element of the new page (optional)
     * @param startDocumentId A patient document ID (optional)
     * @param limit Number of rows (optional)
-    * @param sortDirection Optional value for providing a sorting direction (&#39;asc&#39;, &#39;desc&#39;). Set to &#39;asc&#39; by default. (optional, default to "asc")
     * @return PaginatedListPatientDto
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -1357,32 +735,26 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listPatientsOfHcParty(hcPartyId: kotlin.String, sortField: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, sortDirection: kotlin.String?) : PaginatedListPatientDto?  {
-        val localVariableConfig = listPatientsOfHcPartyRequestConfig(hcPartyId = hcPartyId, sortField = sortField, startKey = startKey, startDocumentId = startDocumentId, limit = limit, sortDirection = sortDirection)
+    suspend fun findPatientsModifiedAfter(date: kotlin.Long, startKey: kotlin.Long?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListPatientDto  {
+        val localVariableConfig = findPatientsModifiedAfterRequestConfig(date = date, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListPatientDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
-    * To obtain the request config of the operation listPatientsOfHcParty
+    * To obtain the request config of the operation findPatientsModifiedAfter
     *
-    * @param hcPartyId  
-    * @param sortField Optional value for sorting results by a given field (&#39;name&#39;, &#39;ssin&#39;, &#39;dateOfBirth&#39;). Specifying this deactivates filtering (optional)
-    * @param startKey The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key&#39;s startKey (optional)
+    * @param date  
+    * @param startKey The start key for pagination the date of the first element of the new page (optional)
     * @param startDocumentId A patient document ID (optional)
     * @param limit Number of rows (optional)
-    * @param sortDirection Optional value for providing a sorting direction (&#39;asc&#39;, &#39;desc&#39;). Set to &#39;asc&#39; by default. (optional, default to "asc")
     * @return RequestConfig
     */
-    fun listPatientsOfHcPartyRequestConfig(hcPartyId: kotlin.String, sortField: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, sortDirection: kotlin.String?) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun findPatientsModifiedAfterRequestConfig(date: kotlin.Long, startKey: kotlin.Long?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
-                if (sortField != null) {
-                    put("sortField", listOf(sortField.toString()))
-                }
                 if (startKey != null) {
                     put("startKey", listOf(startKey.toString()))
                 }
@@ -1392,19 +764,404 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 if (limit != null) {
                     put("limit", listOf(limit.toString()))
                 }
-                if (sortDirection != null) {
-                    put("sortDirection", listOf(sortDirection.toString()))
-                }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/patient/ofHcParty/{hcPartyId}".replace("{"+"hcPartyId"+"}", "$hcPartyId"),
+            path = "/rest/v2/patient/modifiedAfter/{date}".replace("{"+"date"+"}", "${URLEncoder.encode(date.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
+    }
+
+    /**
+    * Filter patients for the current user (HcParty) 
+    * Returns a list of patients
+    * @param firstName The first name (optional)
+    * @param lastName The last name (optional)
+    * @param dateOfBirth The date of birth (optional)
+    * @return kotlin.collections.List<PatientDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun fuzzySearch(firstName: kotlin.String?, lastName: kotlin.String?, dateOfBirth: kotlin.Int?) : kotlin.collections.List<PatientDto>  {
+        val localVariableConfig = fuzzySearchRequestConfig(firstName = firstName, lastName = lastName, dateOfBirth = dateOfBirth)
+
+        return request<Unit, kotlin.collections.List<PatientDto>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation fuzzySearch
+    *
+    * @param firstName The first name (optional)
+    * @param lastName The last name (optional)
+    * @param dateOfBirth The date of birth (optional)
+    * @return RequestConfig
+    */
+    fun fuzzySearchRequestConfig(firstName: kotlin.String?, lastName: kotlin.String?, dateOfBirth: kotlin.Int?) : RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                if (firstName != null) {
+                    put("firstName", listOf(firstName.toString()))
+                }
+                if (lastName != null) {
+                    put("lastName", listOf(lastName.toString()))
+                }
+                if (dateOfBirth != null) {
+                    put("dateOfBirth", listOf(dateOfBirth.toString()))
+                }
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v2/patient/fuzzy",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
+    * Get patient
+    * It gets patient administrative data.
+    * @param patientId  
+    * @return PatientDto
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun getPatient(patientId: kotlin.String) : PatientDto  {
+        val localVariableConfig = getPatientRequestConfig(patientId = patientId)
+
+        return request<Unit, PatientDto>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation getPatient
+    *
+    * @param patientId  
+    * @return RequestConfig
+    */
+    fun getPatientRequestConfig(patientId: kotlin.String) : RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v2/patient/{patientId}".replace("{"+"patientId"+"}", "${URLEncoder.encode(patientId.toString(), Charsets.UTF_8)}"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
+    * Get the patient having the provided externalId
+    * 
+    * @param externalId A external ID 
+    * @return PatientDto
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun getPatientByExternalId(externalId: kotlin.String) : PatientDto  {
+        val localVariableConfig = getPatientByExternalIdRequestConfig(externalId = externalId)
+
+        return request<Unit, PatientDto>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation getPatientByExternalId
+    *
+    * @param externalId A external ID 
+    * @return RequestConfig
+    */
+    fun getPatientByExternalIdRequestConfig(externalId: kotlin.String) : RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v2/patient/byExternalId/{externalId}".replace("{"+"externalId"+"}", "${URLEncoder.encode(externalId.toString(), Charsets.UTF_8)}"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
+    * Get patient by identifier
+    * It gets patient administrative data based on the identifier (root &amp; extension) parameters.
+    * @param hcPartyId  
+    * @param id  
+    * @param system  (optional)
+    * @return PatientDto
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun getPatientByHealthcarepartyAndIdentifier(hcPartyId: kotlin.String, id: kotlin.String, system: kotlin.String?) : PatientDto  {
+        val localVariableConfig = getPatientByHealthcarepartyAndIdentifierRequestConfig(hcPartyId = hcPartyId, id = id, system = system)
+
+        return request<Unit, PatientDto>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation getPatientByHealthcarepartyAndIdentifier
+    *
+    * @param hcPartyId  
+    * @param id  
+    * @param system  (optional)
+    * @return RequestConfig
+    */
+    fun getPatientByHealthcarepartyAndIdentifierRequestConfig(hcPartyId: kotlin.String, id: kotlin.String, system: kotlin.String?) : RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                if (system != null) {
+                    put("system", listOf(system.toString()))
+                }
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v2/patient/{hcPartyId}/{id}".replace("{"+"hcPartyId"+"}", "${URLEncoder.encode(hcPartyId.toString(), Charsets.UTF_8)}").replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
+    * Get the patient (identified by patientId) hcparty keys. Those keys are AES keys (encrypted) used to share information between HCPs and a patient.
+    * This endpoint is used to recover all keys that have already been created and that can be used to share information with this patient. It returns a map with the following structure: ID of the owner of the encrypted AES key -&gt; encrypted AES key. The returned encrypted AES keys will have to be decrypted using the patient&#39;s private key.
+    * @param patientId The patient Id for which information is shared 
+    * @return kotlin.String
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun getPatientHcPartyKeysForDelegate(patientId: kotlin.String) : kotlin.String  {
+        val localVariableConfig = getPatientHcPartyKeysForDelegateRequestConfig(patientId = patientId)
+
+        return request<Unit, kotlin.String>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation getPatientHcPartyKeysForDelegate
+    *
+    * @param patientId The patient Id for which information is shared 
+    * @return RequestConfig
+    */
+    fun getPatientHcPartyKeysForDelegateRequestConfig(patientId: kotlin.String) : RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v2/patient/{patientId}/keys".replace("{"+"patientId"+"}", "${URLEncoder.encode(patientId.toString(), Charsets.UTF_8)}"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
+    * Get patient ids by identifiers
+    * It gets patient data based on the provided identifiers (root &amp; extension)
+    * @param hcPartyId  
+    * @param identifierDto  
+    * @return kotlin.collections.List<IndexedIdentifierDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun getPatientIdsByHealthcarePartyAndIdentifiers(hcPartyId: kotlin.String, identifierDto: kotlin.collections.List<IdentifierDto>) : kotlin.collections.List<IndexedIdentifierDto>  {
+        val localVariableConfig = getPatientIdsByHealthcarePartyAndIdentifiersRequestConfig(hcPartyId = hcPartyId, identifierDto = identifierDto)
+
+        return request<kotlin.collections.List<IdentifierDto>, kotlin.collections.List<IndexedIdentifierDto>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation getPatientIdsByHealthcarePartyAndIdentifiers
+    *
+    * @param hcPartyId  
+    * @param identifierDto  
+    * @return RequestConfig
+    */
+    fun getPatientIdsByHealthcarePartyAndIdentifiersRequestConfig(hcPartyId: kotlin.String, identifierDto: kotlin.collections.List<IdentifierDto>) : RequestConfig<kotlin.collections.List<IdentifierDto>> {
+        // val localVariableBody = identifierDto
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = identifierDto
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v2/patient/ids/{hcPartyId}/byIdentifiers".replace("{"+"hcPartyId"+"}", "${URLEncoder.encode(hcPartyId.toString(), Charsets.UTF_8)}"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
+    * Get patients by id
+    * It gets patient administrative data.
+    * @param listOfIdsDto  
+    * @return kotlin.collections.List<PatientDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun getPatients(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<PatientDto>  {
+        val localVariableConfig = getPatientsRequestConfig(listOfIdsDto = listOfIdsDto)
+
+        return request<ListOfIdsDto, kotlin.collections.List<PatientDto>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation getPatients
+    *
+    * @param listOfIdsDto  
+    * @return RequestConfig
+    */
+    fun getPatientsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+        // val localVariableBody = listOfIdsDto
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = listOfIdsDto
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v2/patient/byIds",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
+    * Find deleted patients
+    * Returns a list of deleted patients, by name and/or firstname prefix, if any.
+    * @param firstName First name prefix (optional)
+    * @param lastName Last name prefix (optional)
+    * @return kotlin.collections.List<PatientDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun listDeletedPatientsByName(firstName: kotlin.String?, lastName: kotlin.String?) : kotlin.collections.List<PatientDto>  {
+        val localVariableConfig = listDeletedPatientsByNameRequestConfig(firstName = firstName, lastName = lastName)
+
+        return request<Unit, kotlin.collections.List<PatientDto>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation listDeletedPatientsByName
+    *
+    * @param firstName First name prefix (optional)
+    * @param lastName Last name prefix (optional)
+    * @return RequestConfig
+    */
+    fun listDeletedPatientsByNameRequestConfig(firstName: kotlin.String?, lastName: kotlin.String?) : RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                if (firstName != null) {
+                    put("firstName", listOf(firstName.toString()))
+                }
+                if (lastName != null) {
+                    put("lastName", listOf(lastName.toString()))
+                }
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v2/patient/deleted/by_name",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
+    * List patients that have been merged towards another patient 
+    * Returns a list of patients that have been merged after the provided date
+    * @param date  
+    * @return kotlin.collections.List<PatientDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun listOfMergesAfter(date: kotlin.Long) : kotlin.collections.List<PatientDto>  {
+        val localVariableConfig = listOfMergesAfterRequestConfig(date = date)
+
+        return request<Unit, kotlin.collections.List<PatientDto>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation listOfMergesAfter
+    *
+    * @param date  
+    * @return RequestConfig
+    */
+    fun listOfMergesAfterRequestConfig(date: kotlin.Long) : RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v2/patient/merges/{date}".replace("{"+"date"+"}", "${URLEncoder.encode(date.toString(), Charsets.UTF_8)}"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
     }
 
     /**
@@ -1418,14 +1175,13 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun matchPatientsBy(abstractFilterDtoPatient: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.PatientDto>) : kotlin.collections.List<kotlin.String>?  {
+    suspend fun matchPatientsBy(abstractFilterDtoPatient: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.PatientDto>) : kotlin.collections.List<kotlin.String>  {
         val localVariableConfig = matchPatientsByRequestConfig(abstractFilterDtoPatient = abstractFilterDtoPatient)
 
         return request<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.PatientDto>, kotlin.collections.List<kotlin.String>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation matchPatientsBy
     *
@@ -1433,17 +1189,18 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun matchPatientsByRequestConfig(abstractFilterDtoPatient: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.PatientDto>) : RequestConfig<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.PatientDto>> {
-        val localVariableBody = abstractFilterDtoPatient
+        // val localVariableBody = abstractFilterDtoPatient
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = abstractFilterDtoPatient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/patient/match",
+            path = "/rest/v2/patient/match",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1458,14 +1215,13 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun mergeInto(toId: kotlin.String, fromIds: kotlin.String) : PatientDto?  {
+    suspend fun mergeInto(toId: kotlin.String, fromIds: kotlin.String) : PatientDto  {
         val localVariableConfig = mergeIntoRequestConfig(toId = toId, fromIds = fromIds)
 
         return request<Unit, PatientDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation mergeInto
     *
@@ -1474,17 +1230,18 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun mergeIntoRequestConfig(toId: kotlin.String, fromIds: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/patient/mergeInto/{toId}/from/{fromIds}".replace("{"+"toId"+"}", "$toId").replace("{"+"fromIds"+"}", "$fromIds"),
+            path = "/rest/v2/patient/mergeInto/{toId}/from/{fromIds}".replace("{"+"toId"+"}", "${URLEncoder.encode(toId.toString(), Charsets.UTF_8)}").replace("{"+"fromIds"+"}", "${URLEncoder.encode(fromIds.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1498,14 +1255,13 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyPatient(patientDto: PatientDto) : PatientDto?  {
+    suspend fun modifyPatient(patientDto: PatientDto) : PatientDto  {
         val localVariableConfig = modifyPatientRequestConfig(patientDto = patientDto)
 
         return request<PatientDto, PatientDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyPatient
     *
@@ -1513,17 +1269,18 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun modifyPatientRequestConfig(patientDto: PatientDto) : RequestConfig<PatientDto> {
-        val localVariableBody = patientDto
+        // val localVariableBody = patientDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = patientDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/patient",
+            path = "/rest/v2/patient",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1540,14 +1297,13 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyPatientReferral(patientId: kotlin.String, referralId: kotlin.String, start: kotlin.Long?, end: kotlin.Long?) : PatientDto?  {
+    suspend fun modifyPatientReferral(patientId: kotlin.String, referralId: kotlin.String, start: kotlin.Long?, end: kotlin.Long?) : PatientDto  {
         val localVariableConfig = modifyPatientReferralRequestConfig(patientId = patientId, referralId = referralId, start = start, end = end)
 
         return request<Unit, PatientDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyPatientReferral
     *
@@ -1558,7 +1314,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun modifyPatientReferralRequestConfig(patientId: kotlin.String, referralId: kotlin.String, start: kotlin.Long?, end: kotlin.Long?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (start != null) {
@@ -1569,14 +1325,54 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/patient/{patientId}/referral/{referralId}".replace("{"+"patientId"+"}", "$patientId").replace("{"+"referralId"+"}", "$referralId"),
+            path = "/rest/v2/patient/{patientId}/referral/{referralId}".replace("{"+"patientId"+"}", "${URLEncoder.encode(patientId.toString(), Charsets.UTF_8)}").replace("{"+"referralId"+"}", "${URLEncoder.encode(referralId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
+    }
+
+    /**
+    * Modify patients in bulk
+    * Returns the id and _rev of modified patients
+    * @param patientDto  
+    * @return kotlin.collections.List<IdWithRevDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun modifyPatients(patientDto: kotlin.collections.List<PatientDto>) : kotlin.collections.List<IdWithRevDto>  {
+        val localVariableConfig = modifyPatientsRequestConfig(patientDto = patientDto)
+
+        return request<kotlin.collections.List<PatientDto>, kotlin.collections.List<IdWithRevDto>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation modifyPatients
+    *
+    * @param patientDto  
+    * @return RequestConfig
+    */
+    fun modifyPatientsRequestConfig(patientDto: kotlin.collections.List<PatientDto>) : RequestConfig<kotlin.collections.List<PatientDto>> {
+        // val localVariableBody = patientDto
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = patientDto
+
+        return RequestConfig(
+            method = RequestMethod.PUT,
+            path = "/rest/v2/patient/batch",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
     }
 
     /**
@@ -1591,14 +1387,13 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun newPatientDelegations(patientId: kotlin.String, delegationDto: kotlin.collections.List<DelegationDto>) : PatientDto?  {
+    suspend fun newPatientDelegations(patientId: kotlin.String, delegationDto: kotlin.collections.List<DelegationDto>) : PatientDto  {
         val localVariableConfig = newPatientDelegationsRequestConfig(patientId = patientId, delegationDto = delegationDto)
 
         return request<kotlin.collections.List<DelegationDto>, PatientDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation newPatientDelegations
     *
@@ -1607,17 +1402,18 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun newPatientDelegationsRequestConfig(patientId: kotlin.String, delegationDto: kotlin.collections.List<DelegationDto>) : RequestConfig<kotlin.collections.List<DelegationDto>> {
-        val localVariableBody = delegationDto
+        // val localVariableBody = delegationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = delegationDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/patient/{patientId}/delegate".replace("{"+"patientId"+"}", "$patientId"),
+            path = "/rest/v2/patient/{patientId}/delegate".replace("{"+"patientId"+"}", "${URLEncoder.encode(patientId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1626,7 +1422,6 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param hcPartyId  
     * @param groupId  
     * @param patientDto  
-    * @param useShortToken  (optional)
     * @return PatientRegistrationSuccessDto
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -1634,40 +1429,34 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun registerPatient(hcPartyId: kotlin.String, groupId: kotlin.String, patientDto: PatientDto, useShortToken: kotlin.Boolean?) : PatientRegistrationSuccessDto?  {
-        val localVariableConfig = registerPatientRequestConfig(hcPartyId = hcPartyId, groupId = groupId, patientDto = patientDto, useShortToken = useShortToken)
+    suspend fun registerPatient(hcPartyId: kotlin.String, groupId: kotlin.String, patientDto: PatientDto) : PatientRegistrationSuccessDto  {
+        val localVariableConfig = registerPatientRequestConfig(hcPartyId = hcPartyId, groupId = groupId, patientDto = patientDto)
 
         return request<PatientDto, PatientRegistrationSuccessDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation registerPatient
     *
     * @param hcPartyId  
     * @param groupId  
     * @param patientDto  
-    * @param useShortToken  (optional)
     * @return RequestConfig
     */
-    fun registerPatientRequestConfig(hcPartyId: kotlin.String, groupId: kotlin.String, patientDto: PatientDto, useShortToken: kotlin.Boolean?) : RequestConfig<PatientDto> {
+    fun registerPatientRequestConfig(hcPartyId: kotlin.String, groupId: kotlin.String, patientDto: PatientDto) : RequestConfig<PatientDto> {
+        // val localVariableBody = patientDto
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = patientDto
-        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
-            .apply {
-                if (useShortToken != null) {
-                    put("useShortToken", listOf(useShortToken.toString()))
-                }
-            }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/patient/register/forHcp/{hcPartyId}/inGroup/{groupId}".replace("{"+"hcPartyId"+"}", "$hcPartyId").replace("{"+"groupId"+"}", "$groupId"),
+            path = "/rest/v2/patient/register/forHcp/{hcPartyId}/inGroup/{groupId}".replace("{"+"hcPartyId"+"}", "${URLEncoder.encode(hcPartyId.toString(), Charsets.UTF_8)}").replace("{"+"groupId"+"}", "${URLEncoder.encode(groupId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1681,14 +1470,13 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun undeletePatient(patientIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
+    suspend fun undeletePatient(patientIds: kotlin.String) : kotlin.collections.List<DocIdentifier>  {
         val localVariableConfig = undeletePatientRequestConfig(patientIds = patientIds)
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation undeletePatient
     *
@@ -1696,17 +1484,18 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun undeletePatientRequestConfig(patientIds: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/patient/undelete/{patientIds}".replace("{"+"patientIds"+"}", "$patientIds"),
+            path = "/rest/v2/patient/undelete/{patientIds}".replace("{"+"patientIds"+"}", "${URLEncoder.encode(patientIds.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
 }

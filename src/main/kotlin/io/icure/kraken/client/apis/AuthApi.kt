@@ -1,9 +1,9 @@
 /**
  * iCure Data Stack API Documentation
  *
- * The iCure Data Stack Application API is the native interface to iCure. This version is obsolete, please use v2.
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -14,6 +14,7 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
+import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.models.AuthenticationResponse
 import io.icure.kraken.client.models.LoginCredentials
 
@@ -25,7 +26,12 @@ import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
+import kotlinx.coroutines.flow.flowOf
+import java.nio.ByteBuffer
+import java.util.*
 import javax.inject.Named
+import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -49,14 +55,13 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun login(loginCredentials: LoginCredentials) : AuthenticationResponse?  {
+    suspend fun login(loginCredentials: LoginCredentials) : AuthenticationResponse  {
         val localVariableConfig = loginRequestConfig(loginCredentials = loginCredentials)
 
         return request<LoginCredentials, AuthenticationResponse>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation login
     *
@@ -64,17 +69,18 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     * @return RequestConfig
     */
     fun loginRequestConfig(loginCredentials: LoginCredentials) : RequestConfig<LoginCredentials> {
-        val localVariableBody = loginCredentials
+        // val localVariableBody = loginCredentials
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = loginCredentials
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/auth/login",
+            path = "/rest/v2/auth/login",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -87,31 +93,31 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun logout() : AuthenticationResponse?  {
+    suspend fun logout() : AuthenticationResponse  {
         val localVariableConfig = logoutRequestConfig()
 
         return request<Unit, AuthenticationResponse>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation logout
     *
     * @return RequestConfig
     */
     fun logoutRequestConfig() : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/auth/logout",
+            path = "/rest/v2/auth/logout",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -124,31 +130,31 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun logoutPost() : AuthenticationResponse?  {
+    suspend fun logoutPost() : AuthenticationResponse  {
         val localVariableConfig = logoutPostRequestConfig()
 
         return request<Unit, AuthenticationResponse>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation logoutPost
     *
     * @return RequestConfig
     */
     fun logoutPostRequestConfig() : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/auth/logout",
+            path = "/rest/v2/auth/logout",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -163,14 +169,13 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun token(method: kotlin.String, path: kotlin.String) : kotlin.String?  {
+    suspend fun token(method: kotlin.String, path: kotlin.String) : kotlin.String  {
         val localVariableConfig = tokenRequestConfig(method = method, path = path)
 
         return request<Unit, kotlin.String>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation token
     *
@@ -179,17 +184,18 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     * @return RequestConfig
     */
     fun tokenRequestConfig(method: kotlin.String, path: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/auth/token/{method}/{path}".replace("{"+"method"+"}", "$method").replace("{"+"path"+"}", "$path"),
+            path = "/rest/v2/auth/token/{method}/{path}".replace("{"+"method"+"}", "${URLEncoder.encode(method.toString(), Charsets.UTF_8)}").replace("{"+"path"+"}", "${URLEncoder.encode(path.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
 }

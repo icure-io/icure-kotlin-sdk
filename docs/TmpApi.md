@@ -4,77 +4,74 @@ All URIs are relative to *https://kraken.icure.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createTmpClassification**](TmpApi.md#createTmpClassification) | **POST** /rest/v1/tmp/classification | Create a classification with the current user
-[**createTmpClassifications**](TmpApi.md#createTmpClassifications) | **POST** /rest/v1/tmp/classification/batch | Create a classification with the current user
-[**createTmpContact**](TmpApi.md#createTmpContact) | **POST** /rest/v1/tmp/contact | Create a contact with the current user
-[**createTmpContacts**](TmpApi.md#createTmpContacts) | **POST** /rest/v1/tmp/contact/batch | Create a contact with the current user
-[**createTmpDatabase**](TmpApi.md#createTmpDatabase) | **POST** /rest/v1/tmp | Create tmp database for current user
-[**createTmpDocument**](TmpApi.md#createTmpDocument) | **POST** /rest/v1/tmp/document | Create a document with the current user
-[**createTmpDocuments**](TmpApi.md#createTmpDocuments) | **POST** /rest/v1/tmp/document/batch | Create a document with the current user
-[**createTmpEntityTemplate**](TmpApi.md#createTmpEntityTemplate) | **POST** /rest/v1/tmp/entityTemplate | Create a entityTemplate with the current user
-[**createTmpEntityTemplates**](TmpApi.md#createTmpEntityTemplates) | **POST** /rest/v1/tmp/entityTemplate/batch | Create a entityTemplate with the current user
-[**createTmpForm**](TmpApi.md#createTmpForm) | **POST** /rest/v1/tmp/form | Create a form with the current user
-[**createTmpForms**](TmpApi.md#createTmpForms) | **POST** /rest/v1/tmp/form/batch | Create a form with the current user
-[**createTmpHealthElement**](TmpApi.md#createTmpHealthElement) | **POST** /rest/v1/tmp/healthElement | Create a healthElement with the current user
-[**createTmpHealthElements**](TmpApi.md#createTmpHealthElements) | **POST** /rest/v1/tmp/healthElement/batch | Create a healthElement with the current user
-[**createTmpInvoice**](TmpApi.md#createTmpInvoice) | **POST** /rest/v1/tmp/invoice | Create a invoice with the current user
-[**createTmpInvoices**](TmpApi.md#createTmpInvoices) | **POST** /rest/v1/tmp/invoice/batch | Create a invoice with the current user
-[**createTmpMessage**](TmpApi.md#createTmpMessage) | **POST** /rest/v1/tmp/message | Create a message with the current user
-[**createTmpMessages**](TmpApi.md#createTmpMessages) | **POST** /rest/v1/tmp/message/batch | Create a message with the current user
-[**createTmpPatient**](TmpApi.md#createTmpPatient) | **POST** /rest/v1/tmp/patient | Create a patient with the current user
-[**createTmpPatients**](TmpApi.md#createTmpPatients) | **POST** /rest/v1/tmp/patient/batch | Create a patient with the current user
-[**deleteTmpDocumentAttachment**](TmpApi.md#deleteTmpDocumentAttachment) | **DELETE** /rest/v1/tmp/document/{documentId}/attachment | Delete a document&#39;s attachment
-[**deleteTmpItems**](TmpApi.md#deleteTmpItems) | **POST** /rest/v1/tmp/batch/delete | Soft delete items.
-[**destroyTmpDatabase**](TmpApi.md#destroyTmpDatabase) | **DELETE** /rest/v1/tmp | Destroy tmp database for current user
-[**getTmpClassification**](TmpApi.md#getTmpClassification) | **GET** /rest/v1/tmp/classification/byId/{id} | Get a classification by id
-[**getTmpClassifications**](TmpApi.md#getTmpClassifications) | **POST** /rest/v1/tmp/classification/get | Get classifications by ids with the current user
-[**getTmpContact**](TmpApi.md#getTmpContact) | **GET** /rest/v1/tmp/contact/byId/{id} | Get a contact by id
-[**getTmpContacts**](TmpApi.md#getTmpContacts) | **POST** /rest/v1/tmp/contact/get | Get contacts by ids with the current user
-[**getTmpDocument**](TmpApi.md#getTmpDocument) | **GET** /rest/v1/tmp/document/byId/{id} | Get a document by id
-[**getTmpDocumentAttachment**](TmpApi.md#getTmpDocumentAttachment) | **GET** /rest/v1/tmp/document/{documentId}/attachment/{attachmentId} | 
-[**getTmpDocuments**](TmpApi.md#getTmpDocuments) | **POST** /rest/v1/tmp/document/get | Get documents by ids with the current user
-[**getTmpEntityTemplate**](TmpApi.md#getTmpEntityTemplate) | **GET** /rest/v1/tmp/entityTemplate/byId/{id} | Get a entityTemplate by id
-[**getTmpEntityTemplates**](TmpApi.md#getTmpEntityTemplates) | **POST** /rest/v1/tmp/entityTemplate/get | Get entityTemplates by ids with the current user
-[**getTmpForm**](TmpApi.md#getTmpForm) | **GET** /rest/v1/tmp/form/byId/{id} | Get a form by id
-[**getTmpForms**](TmpApi.md#getTmpForms) | **POST** /rest/v1/tmp/form/get | Get forms by ids with the current user
-[**getTmpHealthElement**](TmpApi.md#getTmpHealthElement) | **GET** /rest/v1/tmp/healthElement/byId/{id} | Get a healthElement by id
-[**getTmpHealthElements**](TmpApi.md#getTmpHealthElements) | **POST** /rest/v1/tmp/healthElement/get | Get healthElements by ids with the current user
-[**getTmpInvoice**](TmpApi.md#getTmpInvoice) | **GET** /rest/v1/tmp/invoice/byId/{id} | Get a invoice by id
-[**getTmpInvoices**](TmpApi.md#getTmpInvoices) | **POST** /rest/v1/tmp/invoice/get | Get invoices by ids with the current user
-[**getTmpMessage**](TmpApi.md#getTmpMessage) | **GET** /rest/v1/tmp/message/byId/{id} | Get a message by id
-[**getTmpMessages**](TmpApi.md#getTmpMessages) | **POST** /rest/v1/tmp/message/get | Get messages by ids with the current user
-[**getTmpPatient**](TmpApi.md#getTmpPatient) | **GET** /rest/v1/tmp/patient/byId/{id} | Get a patient by id
-[**getTmpPatients**](TmpApi.md#getTmpPatients) | **POST** /rest/v1/tmp/patient/get | Get patients by ids with the current user
-[**listTmpClassifications**](TmpApi.md#listTmpClassifications) | **GET** /rest/v1/tmp/classification/list | List classifications with the current user
-[**listTmpContacts**](TmpApi.md#listTmpContacts) | **GET** /rest/v1/tmp/contact/list | List contacts with the current user
-[**listTmpDocuments**](TmpApi.md#listTmpDocuments) | **GET** /rest/v1/tmp/document/list | List documents with the current user
-[**listTmpEntityTemplates**](TmpApi.md#listTmpEntityTemplates) | **GET** /rest/v1/tmp/entityTemplate/list | List entityTemplates with the current user
-[**listTmpForms**](TmpApi.md#listTmpForms) | **GET** /rest/v1/tmp/form/list | List forms with the current user
-[**listTmpHealthElements**](TmpApi.md#listTmpHealthElements) | **GET** /rest/v1/tmp/healthElement/list | List healthElements with the current user
-[**listTmpInvoices**](TmpApi.md#listTmpInvoices) | **GET** /rest/v1/tmp/invoice/list | List invoices with the current user
-[**listTmpMessages**](TmpApi.md#listTmpMessages) | **GET** /rest/v1/tmp/message/list | List messages with the current user
-[**listTmpPatients**](TmpApi.md#listTmpPatients) | **GET** /rest/v1/tmp/patient/list | List patients with the current user
-[**modifyTmpClassification**](TmpApi.md#modifyTmpClassification) | **PUT** /rest/v1/tmp/classification | Modify a classification
-[**modifyTmpClassifications**](TmpApi.md#modifyTmpClassifications) | **PUT** /rest/v1/tmp/classification/batch | Modify a batch of healthcare elements
-[**modifyTmpContact**](TmpApi.md#modifyTmpContact) | **PUT** /rest/v1/tmp/contact | Modify a contact
-[**modifyTmpContacts**](TmpApi.md#modifyTmpContacts) | **PUT** /rest/v1/tmp/contact/batch | Modify a batch of healthcare elements
-[**modifyTmpDocument**](TmpApi.md#modifyTmpDocument) | **PUT** /rest/v1/tmp/document | Modify a document
-[**modifyTmpDocuments**](TmpApi.md#modifyTmpDocuments) | **PUT** /rest/v1/tmp/document/batch | Modify a batch of healthcare elements
-[**modifyTmpEntityTemplate**](TmpApi.md#modifyTmpEntityTemplate) | **PUT** /rest/v1/tmp/entityTemplate | Modify a entityTemplate
-[**modifyTmpEntityTemplates**](TmpApi.md#modifyTmpEntityTemplates) | **PUT** /rest/v1/tmp/entityTemplate/batch | Modify a batch of healthcare elements
-[**modifyTmpForm**](TmpApi.md#modifyTmpForm) | **PUT** /rest/v1/tmp/form | Modify a form
-[**modifyTmpForms**](TmpApi.md#modifyTmpForms) | **PUT** /rest/v1/tmp/form/batch | Modify a batch of healthcare elements
-[**modifyTmpHealthElement**](TmpApi.md#modifyTmpHealthElement) | **PUT** /rest/v1/tmp/healthElement | Modify a healthElement
-[**modifyTmpHealthElements**](TmpApi.md#modifyTmpHealthElements) | **PUT** /rest/v1/tmp/healthElement/batch | Modify a batch of healthcare elements
-[**modifyTmpInvoice**](TmpApi.md#modifyTmpInvoice) | **PUT** /rest/v1/tmp/invoice | Modify a invoice
-[**modifyTmpInvoices**](TmpApi.md#modifyTmpInvoices) | **PUT** /rest/v1/tmp/invoice/batch | Modify a batch of healthcare elements
-[**modifyTmpMessage**](TmpApi.md#modifyTmpMessage) | **PUT** /rest/v1/tmp/message | Modify a message
-[**modifyTmpMessages**](TmpApi.md#modifyTmpMessages) | **PUT** /rest/v1/tmp/message/batch | Modify a batch of healthcare elements
-[**modifyTmpPatient**](TmpApi.md#modifyTmpPatient) | **PUT** /rest/v1/tmp/patient | Modify a patient
-[**modifyTmpPatients**](TmpApi.md#modifyTmpPatients) | **PUT** /rest/v1/tmp/patient/batch | Modify a batch of healthcare elements
-[**purgeTmpItems**](TmpApi.md#purgeTmpItems) | **POST** /rest/v1/tmp/batch/purge | Hard delete items.
-[**replicateToTmpDatabase**](TmpApi.md#replicateToTmpDatabase) | **POST** /rest/v1/tmp/replicate/from/{from} | 
-[**setTmpDocumentAttachment**](TmpApi.md#setTmpDocumentAttachment) | **PUT** /rest/v1/tmp/document/{documentId}/attachment | Create a document&#39;s attachment
+[**createTmpClassification**](TmpApi.md#createTmpClassification) | **POST** /rest/v2/tmp/classification | Create a classification with the current user
+[**createTmpClassifications**](TmpApi.md#createTmpClassifications) | **POST** /rest/v2/tmp/classification/batch | Create a classification with the current user
+[**createTmpContact**](TmpApi.md#createTmpContact) | **POST** /rest/v2/tmp/contact | Create a contact with the current user
+[**createTmpContacts**](TmpApi.md#createTmpContacts) | **POST** /rest/v2/tmp/contact/batch | Create a contact with the current user
+[**createTmpDatabase**](TmpApi.md#createTmpDatabase) | **POST** /rest/v2/tmp | Create tmp database for current user
+[**createTmpDocument**](TmpApi.md#createTmpDocument) | **POST** /rest/v2/tmp/document | Create a document with the current user
+[**createTmpDocuments**](TmpApi.md#createTmpDocuments) | **POST** /rest/v2/tmp/document/batch | Create a document with the current user
+[**createTmpEntityTemplate**](TmpApi.md#createTmpEntityTemplate) | **POST** /rest/v2/tmp/entityTemplate | Create a entityTemplate with the current user
+[**createTmpEntityTemplates**](TmpApi.md#createTmpEntityTemplates) | **POST** /rest/v2/tmp/entityTemplate/batch | Create a entityTemplate with the current user
+[**createTmpForm**](TmpApi.md#createTmpForm) | **POST** /rest/v2/tmp/form | Create a form with the current user
+[**createTmpForms**](TmpApi.md#createTmpForms) | **POST** /rest/v2/tmp/form/batch | Create a form with the current user
+[**createTmpHealthElement**](TmpApi.md#createTmpHealthElement) | **POST** /rest/v2/tmp/healthElement | Create a healthElement with the current user
+[**createTmpHealthElements**](TmpApi.md#createTmpHealthElements) | **POST** /rest/v2/tmp/healthElement/batch | Create a healthElement with the current user
+[**createTmpInvoice**](TmpApi.md#createTmpInvoice) | **POST** /rest/v2/tmp/invoice | Create a invoice with the current user
+[**createTmpInvoices**](TmpApi.md#createTmpInvoices) | **POST** /rest/v2/tmp/invoice/batch | Create a invoice with the current user
+[**createTmpMessage**](TmpApi.md#createTmpMessage) | **POST** /rest/v2/tmp/message | Create a message with the current user
+[**createTmpMessages**](TmpApi.md#createTmpMessages) | **POST** /rest/v2/tmp/message/batch | Create a message with the current user
+[**createTmpPatient**](TmpApi.md#createTmpPatient) | **POST** /rest/v2/tmp/patient | Create a patient with the current user
+[**createTmpPatients**](TmpApi.md#createTmpPatients) | **POST** /rest/v2/tmp/patient/batch | Create a patient with the current user
+[**deleteTmpItems**](TmpApi.md#deleteTmpItems) | **POST** /rest/v2/tmp/batch/delete | Soft delete items.
+[**destroyTmpDatabase**](TmpApi.md#destroyTmpDatabase) | **DELETE** /rest/v2/tmp | Destroy tmp database for current user
+[**getTmpClassification**](TmpApi.md#getTmpClassification) | **GET** /rest/v2/tmp/classification/byId/{id} | Get a classification by id
+[**getTmpClassifications**](TmpApi.md#getTmpClassifications) | **POST** /rest/v2/tmp/classification/get | Get classifications by ids with the current user
+[**getTmpContact**](TmpApi.md#getTmpContact) | **GET** /rest/v2/tmp/contact/byId/{id} | Get a contact by id
+[**getTmpContacts**](TmpApi.md#getTmpContacts) | **POST** /rest/v2/tmp/contact/get | Get contacts by ids with the current user
+[**getTmpDocument**](TmpApi.md#getTmpDocument) | **GET** /rest/v2/tmp/document/byId/{id} | Get a document by id
+[**getTmpDocuments**](TmpApi.md#getTmpDocuments) | **POST** /rest/v2/tmp/document/get | Get documents by ids with the current user
+[**getTmpEntityTemplate**](TmpApi.md#getTmpEntityTemplate) | **GET** /rest/v2/tmp/entityTemplate/byId/{id} | Get a entityTemplate by id
+[**getTmpEntityTemplates**](TmpApi.md#getTmpEntityTemplates) | **POST** /rest/v2/tmp/entityTemplate/get | Get entityTemplates by ids with the current user
+[**getTmpForm**](TmpApi.md#getTmpForm) | **GET** /rest/v2/tmp/form/byId/{id} | Get a form by id
+[**getTmpForms**](TmpApi.md#getTmpForms) | **POST** /rest/v2/tmp/form/get | Get forms by ids with the current user
+[**getTmpHealthElement**](TmpApi.md#getTmpHealthElement) | **GET** /rest/v2/tmp/healthElement/byId/{id} | Get a healthElement by id
+[**getTmpHealthElements**](TmpApi.md#getTmpHealthElements) | **POST** /rest/v2/tmp/healthElement/get | Get healthElements by ids with the current user
+[**getTmpInvoice**](TmpApi.md#getTmpInvoice) | **GET** /rest/v2/tmp/invoice/byId/{id} | Get a invoice by id
+[**getTmpInvoices**](TmpApi.md#getTmpInvoices) | **POST** /rest/v2/tmp/invoice/get | Get invoices by ids with the current user
+[**getTmpMessage**](TmpApi.md#getTmpMessage) | **GET** /rest/v2/tmp/message/byId/{id} | Get a message by id
+[**getTmpMessages**](TmpApi.md#getTmpMessages) | **POST** /rest/v2/tmp/message/get | Get messages by ids with the current user
+[**getTmpPatient**](TmpApi.md#getTmpPatient) | **GET** /rest/v2/tmp/patient/byId/{id} | Get a patient by id
+[**getTmpPatients**](TmpApi.md#getTmpPatients) | **POST** /rest/v2/tmp/patient/get | Get patients by ids with the current user
+[**listTmpClassifications**](TmpApi.md#listTmpClassifications) | **GET** /rest/v2/tmp/classification/list | List classifications with the current user
+[**listTmpContacts**](TmpApi.md#listTmpContacts) | **GET** /rest/v2/tmp/contact/list | List contacts with the current user
+[**listTmpDocuments**](TmpApi.md#listTmpDocuments) | **GET** /rest/v2/tmp/document/list | List documents with the current user
+[**listTmpEntityTemplates**](TmpApi.md#listTmpEntityTemplates) | **GET** /rest/v2/tmp/entityTemplate/list | List entityTemplates with the current user
+[**listTmpForms**](TmpApi.md#listTmpForms) | **GET** /rest/v2/tmp/form/list | List forms with the current user
+[**listTmpHealthElements**](TmpApi.md#listTmpHealthElements) | **GET** /rest/v2/tmp/healthElement/list | List healthElements with the current user
+[**listTmpInvoices**](TmpApi.md#listTmpInvoices) | **GET** /rest/v2/tmp/invoice/list | List invoices with the current user
+[**listTmpMessages**](TmpApi.md#listTmpMessages) | **GET** /rest/v2/tmp/message/list | List messages with the current user
+[**listTmpPatients**](TmpApi.md#listTmpPatients) | **GET** /rest/v2/tmp/patient/list | List patients with the current user
+[**modifyTmpClassification**](TmpApi.md#modifyTmpClassification) | **PUT** /rest/v2/tmp/classification | Modify a classification
+[**modifyTmpClassifications**](TmpApi.md#modifyTmpClassifications) | **PUT** /rest/v2/tmp/classification/batch | Modify a batch of healthcare elements
+[**modifyTmpContact**](TmpApi.md#modifyTmpContact) | **PUT** /rest/v2/tmp/contact | Modify a contact
+[**modifyTmpContacts**](TmpApi.md#modifyTmpContacts) | **PUT** /rest/v2/tmp/contact/batch | Modify a batch of healthcare elements
+[**modifyTmpDocument**](TmpApi.md#modifyTmpDocument) | **PUT** /rest/v2/tmp/document | Modify a document
+[**modifyTmpDocuments**](TmpApi.md#modifyTmpDocuments) | **PUT** /rest/v2/tmp/document/batch | Modify a batch of healthcare elements
+[**modifyTmpEntityTemplate**](TmpApi.md#modifyTmpEntityTemplate) | **PUT** /rest/v2/tmp/entityTemplate | Modify a entityTemplate
+[**modifyTmpEntityTemplates**](TmpApi.md#modifyTmpEntityTemplates) | **PUT** /rest/v2/tmp/entityTemplate/batch | Modify a batch of healthcare elements
+[**modifyTmpForm**](TmpApi.md#modifyTmpForm) | **PUT** /rest/v2/tmp/form | Modify a form
+[**modifyTmpForms**](TmpApi.md#modifyTmpForms) | **PUT** /rest/v2/tmp/form/batch | Modify a batch of healthcare elements
+[**modifyTmpHealthElement**](TmpApi.md#modifyTmpHealthElement) | **PUT** /rest/v2/tmp/healthElement | Modify a healthElement
+[**modifyTmpHealthElements**](TmpApi.md#modifyTmpHealthElements) | **PUT** /rest/v2/tmp/healthElement/batch | Modify a batch of healthcare elements
+[**modifyTmpInvoice**](TmpApi.md#modifyTmpInvoice) | **PUT** /rest/v2/tmp/invoice | Modify a invoice
+[**modifyTmpInvoices**](TmpApi.md#modifyTmpInvoices) | **PUT** /rest/v2/tmp/invoice/batch | Modify a batch of healthcare elements
+[**modifyTmpMessage**](TmpApi.md#modifyTmpMessage) | **PUT** /rest/v2/tmp/message | Modify a message
+[**modifyTmpMessages**](TmpApi.md#modifyTmpMessages) | **PUT** /rest/v2/tmp/message/batch | Modify a batch of healthcare elements
+[**modifyTmpPatient**](TmpApi.md#modifyTmpPatient) | **PUT** /rest/v2/tmp/patient | Modify a patient
+[**modifyTmpPatients**](TmpApi.md#modifyTmpPatients) | **PUT** /rest/v2/tmp/patient/batch | Modify a batch of healthcare elements
+[**purgeTmpItems**](TmpApi.md#purgeTmpItems) | **POST** /rest/v2/tmp/batch/purge | Hard delete items.
+[**replicateToTmpDatabase**](TmpApi.md#replicateToTmpDatabase) | **POST** /rest/v2/tmp/replicate/from/{from} | 
 
 
 <a name="createTmpClassification"></a>
@@ -966,53 +963,6 @@ No authorization required
  - **Content-Type**: application/json
  - **Accept**: */*
 
-<a name="deleteTmpDocumentAttachment"></a>
-# **deleteTmpDocumentAttachment**
-> DocumentDto deleteTmpDocumentAttachment(documentId)
-
-Delete a document&#39;s attachment
-
-Deletes a document&#39;s attachment and returns the modified document instance afterward
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = TmpApi()
-val documentId : kotlin.String = documentId_example // kotlin.String | 
-try {
-    val result : DocumentDto = apiInstance.deleteTmpDocumentAttachment(documentId)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling TmpApi#deleteTmpDocumentAttachment")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling TmpApi#deleteTmpDocumentAttachment")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **documentId** | **kotlin.String**|  |
-
-### Return type
-
-[**DocumentDto**](DocumentDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
 <a name="deleteTmpItems"></a>
 # **deleteTmpItems**
 > kotlin.collections.List&lt;DocIdentifier&gt; deleteTmpItems(requestBody)
@@ -1337,56 +1287,6 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: */*
-
-<a name="getTmpDocumentAttachment"></a>
-# **getTmpDocumentAttachment**
-> getTmpDocumentAttachment(documentId, attachmentId, enckeys, fileName)
-
-
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = TmpApi()
-val documentId : kotlin.String = documentId_example // kotlin.String | 
-val attachmentId : kotlin.String = attachmentId_example // kotlin.String | 
-val enckeys : kotlin.String = enckeys_example // kotlin.String | 
-val fileName : kotlin.String = fileName_example // kotlin.String | 
-try {
-    apiInstance.getTmpDocumentAttachment(documentId, attachmentId, enckeys, fileName)
-} catch (e: ClientException) {
-    println("4xx response calling TmpApi#getTmpDocumentAttachment")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling TmpApi#getTmpDocumentAttachment")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **documentId** | **kotlin.String**|  |
- **attachmentId** | **kotlin.String**|  |
- **enckeys** | **kotlin.String**|  | [optional]
- **fileName** | **kotlin.String**|  | [optional]
-
-### Return type
-
-null (empty response body)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: Not defined
 
 <a name="getTmpDocuments"></a>
 # **getTmpDocuments**
@@ -3378,56 +3278,5 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: */*
-
-<a name="setTmpDocumentAttachment"></a>
-# **setTmpDocumentAttachment**
-> DocumentDto setTmpDocumentAttachment(documentId, body, enckeys)
-
-Create a document&#39;s attachment
-
-Creates a document&#39;s attachment and returns the modified document instance afterward
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = TmpApi()
-val documentId : kotlin.String = documentId_example // kotlin.String | 
-val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
-val enckeys : kotlin.String = enckeys_example // kotlin.String | 
-try {
-    val result : DocumentDto = apiInstance.setTmpDocumentAttachment(documentId, body, enckeys)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling TmpApi#setTmpDocumentAttachment")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling TmpApi#setTmpDocumentAttachment")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **documentId** | **kotlin.String**|  |
- **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
- **enckeys** | **kotlin.String**|  | [optional]
-
-### Return type
-
-[**DocumentDto**](DocumentDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/octet-stream
  - **Accept**: */*
 

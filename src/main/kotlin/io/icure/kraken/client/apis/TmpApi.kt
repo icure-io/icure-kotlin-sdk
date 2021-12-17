@@ -1,9 +1,9 @@
 /**
  * iCure Data Stack API Documentation
  *
- * The iCure Data Stack Application API is the native interface to iCure. This version is obsolete, please use v2.
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -14,6 +14,7 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
+import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.models.ClassificationDto
 import io.icure.kraken.client.models.ContactDto
 import io.icure.kraken.client.models.DocIdentifier
@@ -41,7 +42,12 @@ import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
+import kotlinx.coroutines.flow.flowOf
+import java.nio.ByteBuffer
+import java.util.*
 import javax.inject.Named
+import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -65,14 +71,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpClassification(classificationDto: ClassificationDto) : ClassificationDto?  {
+    suspend fun createTmpClassification(classificationDto: ClassificationDto) : ClassificationDto  {
         val localVariableConfig = createTmpClassificationRequestConfig(classificationDto = classificationDto)
 
         return request<ClassificationDto, ClassificationDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpClassification
     *
@@ -80,17 +85,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun createTmpClassificationRequestConfig(classificationDto: ClassificationDto) : RequestConfig<ClassificationDto> {
-        val localVariableBody = classificationDto
+        // val localVariableBody = classificationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = classificationDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/tmp/classification",
+            path = "/rest/v2/tmp/classification",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -104,14 +110,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpClassifications(classificationDto: kotlin.collections.List<ClassificationDto>) : kotlin.collections.List<ClassificationDto>?  {
+    suspend fun createTmpClassifications(classificationDto: kotlin.collections.List<ClassificationDto>) : kotlin.collections.List<ClassificationDto>  {
         val localVariableConfig = createTmpClassificationsRequestConfig(classificationDto = classificationDto)
 
         return request<kotlin.collections.List<ClassificationDto>, kotlin.collections.List<ClassificationDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpClassifications
     *
@@ -119,17 +124,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun createTmpClassificationsRequestConfig(classificationDto: kotlin.collections.List<ClassificationDto>) : RequestConfig<kotlin.collections.List<ClassificationDto>> {
-        val localVariableBody = classificationDto
+        // val localVariableBody = classificationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = classificationDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/tmp/classification/batch",
+            path = "/rest/v2/tmp/classification/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -143,14 +149,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpContact(contactDto: ContactDto) : ContactDto?  {
+    suspend fun createTmpContact(contactDto: ContactDto) : ContactDto  {
         val localVariableConfig = createTmpContactRequestConfig(contactDto = contactDto)
 
         return request<ContactDto, ContactDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpContact
     *
@@ -158,17 +163,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun createTmpContactRequestConfig(contactDto: ContactDto) : RequestConfig<ContactDto> {
-        val localVariableBody = contactDto
+        // val localVariableBody = contactDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = contactDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/tmp/contact",
+            path = "/rest/v2/tmp/contact",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -182,14 +188,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpContacts(contactDto: kotlin.collections.List<ContactDto>) : kotlin.collections.List<ContactDto>?  {
+    suspend fun createTmpContacts(contactDto: kotlin.collections.List<ContactDto>) : kotlin.collections.List<ContactDto>  {
         val localVariableConfig = createTmpContactsRequestConfig(contactDto = contactDto)
 
         return request<kotlin.collections.List<ContactDto>, kotlin.collections.List<ContactDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpContacts
     *
@@ -197,17 +202,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun createTmpContactsRequestConfig(contactDto: kotlin.collections.List<ContactDto>) : RequestConfig<kotlin.collections.List<ContactDto>> {
-        val localVariableBody = contactDto
+        // val localVariableBody = contactDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = contactDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/tmp/contact/batch",
+            path = "/rest/v2/tmp/contact/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -220,31 +226,31 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpDatabase() : kotlin.Any?  {
+    suspend fun createTmpDatabase() : kotlin.Any  {
         val localVariableConfig = createTmpDatabaseRequestConfig()
 
         return request<Unit, kotlin.Any>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpDatabase
     *
     * @return RequestConfig
     */
     fun createTmpDatabaseRequestConfig() : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/tmp",
+            path = "/rest/v2/tmp",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -258,14 +264,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpDocument(documentDto: DocumentDto) : DocumentDto?  {
+    suspend fun createTmpDocument(documentDto: DocumentDto) : DocumentDto  {
         val localVariableConfig = createTmpDocumentRequestConfig(documentDto = documentDto)
 
         return request<DocumentDto, DocumentDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpDocument
     *
@@ -273,17 +278,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun createTmpDocumentRequestConfig(documentDto: DocumentDto) : RequestConfig<DocumentDto> {
-        val localVariableBody = documentDto
+        // val localVariableBody = documentDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = documentDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/tmp/document",
+            path = "/rest/v2/tmp/document",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -297,14 +303,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpDocuments(documentDto: kotlin.collections.List<DocumentDto>) : kotlin.collections.List<DocumentDto>?  {
+    suspend fun createTmpDocuments(documentDto: kotlin.collections.List<DocumentDto>) : kotlin.collections.List<DocumentDto>  {
         val localVariableConfig = createTmpDocumentsRequestConfig(documentDto = documentDto)
 
         return request<kotlin.collections.List<DocumentDto>, kotlin.collections.List<DocumentDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpDocuments
     *
@@ -312,17 +317,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun createTmpDocumentsRequestConfig(documentDto: kotlin.collections.List<DocumentDto>) : RequestConfig<kotlin.collections.List<DocumentDto>> {
-        val localVariableBody = documentDto
+        // val localVariableBody = documentDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = documentDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/tmp/document/batch",
+            path = "/rest/v2/tmp/document/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -336,14 +342,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpEntityTemplate(entityTemplateDto: EntityTemplateDto) : EntityTemplateDto?  {
+    suspend fun createTmpEntityTemplate(entityTemplateDto: EntityTemplateDto) : EntityTemplateDto  {
         val localVariableConfig = createTmpEntityTemplateRequestConfig(entityTemplateDto = entityTemplateDto)
 
         return request<EntityTemplateDto, EntityTemplateDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpEntityTemplate
     *
@@ -351,17 +356,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun createTmpEntityTemplateRequestConfig(entityTemplateDto: EntityTemplateDto) : RequestConfig<EntityTemplateDto> {
-        val localVariableBody = entityTemplateDto
+        // val localVariableBody = entityTemplateDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = entityTemplateDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/tmp/entityTemplate",
+            path = "/rest/v2/tmp/entityTemplate",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -375,14 +381,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpEntityTemplates(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>) : kotlin.collections.List<EntityTemplateDto>?  {
+    suspend fun createTmpEntityTemplates(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>) : kotlin.collections.List<EntityTemplateDto>  {
         val localVariableConfig = createTmpEntityTemplatesRequestConfig(entityTemplateDto = entityTemplateDto)
 
         return request<kotlin.collections.List<EntityTemplateDto>, kotlin.collections.List<EntityTemplateDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpEntityTemplates
     *
@@ -390,17 +395,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun createTmpEntityTemplatesRequestConfig(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>) : RequestConfig<kotlin.collections.List<EntityTemplateDto>> {
-        val localVariableBody = entityTemplateDto
+        // val localVariableBody = entityTemplateDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = entityTemplateDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/tmp/entityTemplate/batch",
+            path = "/rest/v2/tmp/entityTemplate/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -414,14 +420,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpForm(formDto: FormDto) : FormDto?  {
+    suspend fun createTmpForm(formDto: FormDto) : FormDto  {
         val localVariableConfig = createTmpFormRequestConfig(formDto = formDto)
 
         return request<FormDto, FormDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpForm
     *
@@ -429,17 +434,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun createTmpFormRequestConfig(formDto: FormDto) : RequestConfig<FormDto> {
-        val localVariableBody = formDto
+        // val localVariableBody = formDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = formDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/tmp/form",
+            path = "/rest/v2/tmp/form",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -453,14 +459,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpForms(formDto: kotlin.collections.List<FormDto>) : kotlin.collections.List<FormDto>?  {
+    suspend fun createTmpForms(formDto: kotlin.collections.List<FormDto>) : kotlin.collections.List<FormDto>  {
         val localVariableConfig = createTmpFormsRequestConfig(formDto = formDto)
 
         return request<kotlin.collections.List<FormDto>, kotlin.collections.List<FormDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpForms
     *
@@ -468,17 +473,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun createTmpFormsRequestConfig(formDto: kotlin.collections.List<FormDto>) : RequestConfig<kotlin.collections.List<FormDto>> {
-        val localVariableBody = formDto
+        // val localVariableBody = formDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = formDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/tmp/form/batch",
+            path = "/rest/v2/tmp/form/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -492,14 +498,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpHealthElement(healthElementDto: HealthElementDto) : HealthElementDto?  {
+    suspend fun createTmpHealthElement(healthElementDto: HealthElementDto) : HealthElementDto  {
         val localVariableConfig = createTmpHealthElementRequestConfig(healthElementDto = healthElementDto)
 
         return request<HealthElementDto, HealthElementDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpHealthElement
     *
@@ -507,17 +512,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun createTmpHealthElementRequestConfig(healthElementDto: HealthElementDto) : RequestConfig<HealthElementDto> {
-        val localVariableBody = healthElementDto
+        // val localVariableBody = healthElementDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = healthElementDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/tmp/healthElement",
+            path = "/rest/v2/tmp/healthElement",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -531,14 +537,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpHealthElements(healthElementDto: kotlin.collections.List<HealthElementDto>) : kotlin.collections.List<HealthElementDto>?  {
+    suspend fun createTmpHealthElements(healthElementDto: kotlin.collections.List<HealthElementDto>) : kotlin.collections.List<HealthElementDto>  {
         val localVariableConfig = createTmpHealthElementsRequestConfig(healthElementDto = healthElementDto)
 
         return request<kotlin.collections.List<HealthElementDto>, kotlin.collections.List<HealthElementDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpHealthElements
     *
@@ -546,17 +551,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun createTmpHealthElementsRequestConfig(healthElementDto: kotlin.collections.List<HealthElementDto>) : RequestConfig<kotlin.collections.List<HealthElementDto>> {
-        val localVariableBody = healthElementDto
+        // val localVariableBody = healthElementDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = healthElementDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/tmp/healthElement/batch",
+            path = "/rest/v2/tmp/healthElement/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -570,14 +576,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpInvoice(invoiceDto: InvoiceDto) : InvoiceDto?  {
+    suspend fun createTmpInvoice(invoiceDto: InvoiceDto) : InvoiceDto  {
         val localVariableConfig = createTmpInvoiceRequestConfig(invoiceDto = invoiceDto)
 
         return request<InvoiceDto, InvoiceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpInvoice
     *
@@ -585,17 +590,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun createTmpInvoiceRequestConfig(invoiceDto: InvoiceDto) : RequestConfig<InvoiceDto> {
-        val localVariableBody = invoiceDto
+        // val localVariableBody = invoiceDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = invoiceDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/tmp/invoice",
+            path = "/rest/v2/tmp/invoice",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -609,14 +615,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpInvoices(invoiceDto: kotlin.collections.List<InvoiceDto>) : kotlin.collections.List<InvoiceDto>?  {
+    suspend fun createTmpInvoices(invoiceDto: kotlin.collections.List<InvoiceDto>) : kotlin.collections.List<InvoiceDto>  {
         val localVariableConfig = createTmpInvoicesRequestConfig(invoiceDto = invoiceDto)
 
         return request<kotlin.collections.List<InvoiceDto>, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpInvoices
     *
@@ -624,17 +629,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun createTmpInvoicesRequestConfig(invoiceDto: kotlin.collections.List<InvoiceDto>) : RequestConfig<kotlin.collections.List<InvoiceDto>> {
-        val localVariableBody = invoiceDto
+        // val localVariableBody = invoiceDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = invoiceDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/tmp/invoice/batch",
+            path = "/rest/v2/tmp/invoice/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -648,14 +654,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpMessage(messageDto: MessageDto) : MessageDto?  {
+    suspend fun createTmpMessage(messageDto: MessageDto) : MessageDto  {
         val localVariableConfig = createTmpMessageRequestConfig(messageDto = messageDto)
 
         return request<MessageDto, MessageDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpMessage
     *
@@ -663,17 +668,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun createTmpMessageRequestConfig(messageDto: MessageDto) : RequestConfig<MessageDto> {
-        val localVariableBody = messageDto
+        // val localVariableBody = messageDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = messageDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/tmp/message",
+            path = "/rest/v2/tmp/message",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -687,14 +693,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpMessages(messageDto: kotlin.collections.List<MessageDto>) : kotlin.collections.List<MessageDto>?  {
+    suspend fun createTmpMessages(messageDto: kotlin.collections.List<MessageDto>) : kotlin.collections.List<MessageDto>  {
         val localVariableConfig = createTmpMessagesRequestConfig(messageDto = messageDto)
 
         return request<kotlin.collections.List<MessageDto>, kotlin.collections.List<MessageDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpMessages
     *
@@ -702,17 +707,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun createTmpMessagesRequestConfig(messageDto: kotlin.collections.List<MessageDto>) : RequestConfig<kotlin.collections.List<MessageDto>> {
-        val localVariableBody = messageDto
+        // val localVariableBody = messageDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = messageDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/tmp/message/batch",
+            path = "/rest/v2/tmp/message/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -726,14 +732,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpPatient(patientDto: PatientDto) : PatientDto?  {
+    suspend fun createTmpPatient(patientDto: PatientDto) : PatientDto  {
         val localVariableConfig = createTmpPatientRequestConfig(patientDto = patientDto)
 
         return request<PatientDto, PatientDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpPatient
     *
@@ -741,17 +746,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun createTmpPatientRequestConfig(patientDto: PatientDto) : RequestConfig<PatientDto> {
-        val localVariableBody = patientDto
+        // val localVariableBody = patientDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = patientDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/tmp/patient",
+            path = "/rest/v2/tmp/patient",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -765,14 +771,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpPatients(patientDto: kotlin.collections.List<PatientDto>) : kotlin.collections.List<PatientDto>?  {
+    suspend fun createTmpPatients(patientDto: kotlin.collections.List<PatientDto>) : kotlin.collections.List<PatientDto>  {
         val localVariableConfig = createTmpPatientsRequestConfig(patientDto = patientDto)
 
         return request<kotlin.collections.List<PatientDto>, kotlin.collections.List<PatientDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTmpPatients
     *
@@ -780,56 +785,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun createTmpPatientsRequestConfig(patientDto: kotlin.collections.List<PatientDto>) : RequestConfig<kotlin.collections.List<PatientDto>> {
-        val localVariableBody = patientDto
+        // val localVariableBody = patientDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = patientDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/tmp/patient/batch",
+            path = "/rest/v2/tmp/patient/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Delete a document&#39;s attachment
-    * Deletes a document&#39;s attachment and returns the modified document instance afterward
-    * @param documentId  
-    * @return DocumentDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteTmpDocumentAttachment(documentId: kotlin.String) : DocumentDto?  {
-        val localVariableConfig = deleteTmpDocumentAttachmentRequestConfig(documentId = documentId)
-
-        return request<Unit, DocumentDto>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation deleteTmpDocumentAttachment
-    *
-    * @param documentId  
-    * @return RequestConfig
-    */
-    fun deleteTmpDocumentAttachmentRequestConfig(documentId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.DELETE,
-            path = "/rest/v1/tmp/document/{documentId}/attachment".replace("{"+"documentId"+"}", "$documentId"),
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -843,14 +810,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteTmpItems(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<DocIdentifier>?  {
+    suspend fun deleteTmpItems(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<DocIdentifier>  {
         val localVariableConfig = deleteTmpItemsRequestConfig(requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteTmpItems
     *
@@ -858,17 +824,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun deleteTmpItemsRequestConfig(requestBody: kotlin.collections.List<kotlin.String>) : RequestConfig<kotlin.collections.List<kotlin.String>> {
-        val localVariableBody = requestBody
+        // val localVariableBody = requestBody
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = requestBody
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/tmp/batch/delete",
+            path = "/rest/v2/tmp/batch/delete",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -881,31 +848,31 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun destroyTmpDatabase() : kotlin.Any?  {
+    suspend fun destroyTmpDatabase() : kotlin.Any  {
         val localVariableConfig = destroyTmpDatabaseRequestConfig()
 
         return request<Unit, kotlin.Any>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation destroyTmpDatabase
     *
     * @return RequestConfig
     */
     fun destroyTmpDatabaseRequestConfig() : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.DELETE,
-            path = "/rest/v1/tmp",
+            path = "/rest/v2/tmp",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -919,14 +886,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpClassification(id: kotlin.String) : ClassificationDto?  {
+    suspend fun getTmpClassification(id: kotlin.String) : ClassificationDto  {
         val localVariableConfig = getTmpClassificationRequestConfig(id = id)
 
         return request<Unit, ClassificationDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTmpClassification
     *
@@ -934,17 +900,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun getTmpClassificationRequestConfig(id: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/tmp/classification/byId/{id}".replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/tmp/classification/byId/{id}".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -958,14 +925,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpClassifications(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<ClassificationDto>?  {
+    suspend fun getTmpClassifications(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<ClassificationDto>  {
         val localVariableConfig = getTmpClassificationsRequestConfig(requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<ClassificationDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTmpClassifications
     *
@@ -973,17 +939,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun getTmpClassificationsRequestConfig(requestBody: kotlin.collections.List<kotlin.String>) : RequestConfig<kotlin.collections.List<kotlin.String>> {
-        val localVariableBody = requestBody
+        // val localVariableBody = requestBody
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = requestBody
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/tmp/classification/get",
+            path = "/rest/v2/tmp/classification/get",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -997,14 +964,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpContact(id: kotlin.String) : ContactDto?  {
+    suspend fun getTmpContact(id: kotlin.String) : ContactDto  {
         val localVariableConfig = getTmpContactRequestConfig(id = id)
 
         return request<Unit, ContactDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTmpContact
     *
@@ -1012,17 +978,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun getTmpContactRequestConfig(id: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/tmp/contact/byId/{id}".replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/tmp/contact/byId/{id}".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1036,14 +1003,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpContacts(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<ContactDto>?  {
+    suspend fun getTmpContacts(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<ContactDto>  {
         val localVariableConfig = getTmpContactsRequestConfig(requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<ContactDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTmpContacts
     *
@@ -1051,17 +1017,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun getTmpContactsRequestConfig(requestBody: kotlin.collections.List<kotlin.String>) : RequestConfig<kotlin.collections.List<kotlin.String>> {
-        val localVariableBody = requestBody
+        // val localVariableBody = requestBody
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = requestBody
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/tmp/contact/get",
+            path = "/rest/v2/tmp/contact/get",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1075,14 +1042,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpDocument(id: kotlin.String) : DocumentDto?  {
+    suspend fun getTmpDocument(id: kotlin.String) : DocumentDto  {
         val localVariableConfig = getTmpDocumentRequestConfig(id = id)
 
         return request<Unit, DocumentDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTmpDocument
     *
@@ -1090,69 +1056,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun getTmpDocumentRequestConfig(id: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/tmp/document/byId/{id}".replace("{"+"id"+"}", "$id"),
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * 
-    * 
-    * @param documentId  
-    * @param attachmentId  
-    * @param enckeys  (optional)
-    * @param fileName  (optional)
-    * @return void
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpDocumentAttachment(documentId: kotlin.String, attachmentId: kotlin.String, enckeys: kotlin.String?, fileName: kotlin.String?) : Unit?  {
-        val localVariableConfig = getTmpDocumentAttachmentRequestConfig(documentId = documentId, attachmentId = attachmentId, enckeys = enckeys, fileName = fileName)
-
-        return request<Unit, Unit>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation getTmpDocumentAttachment
-    *
-    * @param documentId  
-    * @param attachmentId  
-    * @param enckeys  (optional)
-    * @param fileName  (optional)
-    * @return RequestConfig
-    */
-    fun getTmpDocumentAttachmentRequestConfig(documentId: kotlin.String, attachmentId: kotlin.String, enckeys: kotlin.String?, fileName: kotlin.String?) : RequestConfig<Unit> {
+        localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
-            .apply {
-                if (enckeys != null) {
-                    put("enckeys", listOf(enckeys.toString()))
-                }
-                if (fileName != null) {
-                    put("fileName", listOf(fileName.toString()))
-                }
-            }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/tmp/document/{documentId}/attachment/{attachmentId}".replace("{"+"documentId"+"}", "$documentId").replace("{"+"attachmentId"+"}", "$attachmentId"),
+            path = "/rest/v2/tmp/document/byId/{id}".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1166,14 +1081,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpDocuments(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<DocumentDto>?  {
+    suspend fun getTmpDocuments(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<DocumentDto>  {
         val localVariableConfig = getTmpDocumentsRequestConfig(requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<DocumentDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTmpDocuments
     *
@@ -1181,17 +1095,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun getTmpDocumentsRequestConfig(requestBody: kotlin.collections.List<kotlin.String>) : RequestConfig<kotlin.collections.List<kotlin.String>> {
-        val localVariableBody = requestBody
+        // val localVariableBody = requestBody
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = requestBody
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/tmp/document/get",
+            path = "/rest/v2/tmp/document/get",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1205,14 +1120,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpEntityTemplate(id: kotlin.String) : EntityTemplateDto?  {
+    suspend fun getTmpEntityTemplate(id: kotlin.String) : EntityTemplateDto  {
         val localVariableConfig = getTmpEntityTemplateRequestConfig(id = id)
 
         return request<Unit, EntityTemplateDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTmpEntityTemplate
     *
@@ -1220,17 +1134,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun getTmpEntityTemplateRequestConfig(id: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/tmp/entityTemplate/byId/{id}".replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/tmp/entityTemplate/byId/{id}".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1244,14 +1159,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpEntityTemplates(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<EntityTemplateDto>?  {
+    suspend fun getTmpEntityTemplates(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<EntityTemplateDto>  {
         val localVariableConfig = getTmpEntityTemplatesRequestConfig(requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<EntityTemplateDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTmpEntityTemplates
     *
@@ -1259,17 +1173,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun getTmpEntityTemplatesRequestConfig(requestBody: kotlin.collections.List<kotlin.String>) : RequestConfig<kotlin.collections.List<kotlin.String>> {
-        val localVariableBody = requestBody
+        // val localVariableBody = requestBody
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = requestBody
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/tmp/entityTemplate/get",
+            path = "/rest/v2/tmp/entityTemplate/get",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1283,14 +1198,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpForm(id: kotlin.String) : FormDto?  {
+    suspend fun getTmpForm(id: kotlin.String) : FormDto  {
         val localVariableConfig = getTmpFormRequestConfig(id = id)
 
         return request<Unit, FormDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTmpForm
     *
@@ -1298,17 +1212,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun getTmpFormRequestConfig(id: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/tmp/form/byId/{id}".replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/tmp/form/byId/{id}".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1322,14 +1237,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpForms(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<FormDto>?  {
+    suspend fun getTmpForms(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<FormDto>  {
         val localVariableConfig = getTmpFormsRequestConfig(requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<FormDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTmpForms
     *
@@ -1337,17 +1251,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun getTmpFormsRequestConfig(requestBody: kotlin.collections.List<kotlin.String>) : RequestConfig<kotlin.collections.List<kotlin.String>> {
-        val localVariableBody = requestBody
+        // val localVariableBody = requestBody
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = requestBody
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/tmp/form/get",
+            path = "/rest/v2/tmp/form/get",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1361,14 +1276,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpHealthElement(id: kotlin.String) : HealthElementDto?  {
+    suspend fun getTmpHealthElement(id: kotlin.String) : HealthElementDto  {
         val localVariableConfig = getTmpHealthElementRequestConfig(id = id)
 
         return request<Unit, HealthElementDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTmpHealthElement
     *
@@ -1376,17 +1290,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun getTmpHealthElementRequestConfig(id: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/tmp/healthElement/byId/{id}".replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/tmp/healthElement/byId/{id}".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1400,14 +1315,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpHealthElements(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<HealthElementDto>?  {
+    suspend fun getTmpHealthElements(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<HealthElementDto>  {
         val localVariableConfig = getTmpHealthElementsRequestConfig(requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<HealthElementDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTmpHealthElements
     *
@@ -1415,17 +1329,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun getTmpHealthElementsRequestConfig(requestBody: kotlin.collections.List<kotlin.String>) : RequestConfig<kotlin.collections.List<kotlin.String>> {
-        val localVariableBody = requestBody
+        // val localVariableBody = requestBody
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = requestBody
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/tmp/healthElement/get",
+            path = "/rest/v2/tmp/healthElement/get",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1439,14 +1354,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpInvoice(id: kotlin.String) : InvoiceDto?  {
+    suspend fun getTmpInvoice(id: kotlin.String) : InvoiceDto  {
         val localVariableConfig = getTmpInvoiceRequestConfig(id = id)
 
         return request<Unit, InvoiceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTmpInvoice
     *
@@ -1454,17 +1368,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun getTmpInvoiceRequestConfig(id: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/tmp/invoice/byId/{id}".replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/tmp/invoice/byId/{id}".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1478,14 +1393,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpInvoices(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<InvoiceDto>?  {
+    suspend fun getTmpInvoices(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<InvoiceDto>  {
         val localVariableConfig = getTmpInvoicesRequestConfig(requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTmpInvoices
     *
@@ -1493,17 +1407,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun getTmpInvoicesRequestConfig(requestBody: kotlin.collections.List<kotlin.String>) : RequestConfig<kotlin.collections.List<kotlin.String>> {
-        val localVariableBody = requestBody
+        // val localVariableBody = requestBody
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = requestBody
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/tmp/invoice/get",
+            path = "/rest/v2/tmp/invoice/get",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1517,14 +1432,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpMessage(id: kotlin.String) : MessageDto?  {
+    suspend fun getTmpMessage(id: kotlin.String) : MessageDto  {
         val localVariableConfig = getTmpMessageRequestConfig(id = id)
 
         return request<Unit, MessageDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTmpMessage
     *
@@ -1532,17 +1446,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun getTmpMessageRequestConfig(id: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/tmp/message/byId/{id}".replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/tmp/message/byId/{id}".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1556,14 +1471,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpMessages(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<MessageDto>?  {
+    suspend fun getTmpMessages(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<MessageDto>  {
         val localVariableConfig = getTmpMessagesRequestConfig(requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<MessageDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTmpMessages
     *
@@ -1571,17 +1485,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun getTmpMessagesRequestConfig(requestBody: kotlin.collections.List<kotlin.String>) : RequestConfig<kotlin.collections.List<kotlin.String>> {
-        val localVariableBody = requestBody
+        // val localVariableBody = requestBody
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = requestBody
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/tmp/message/get",
+            path = "/rest/v2/tmp/message/get",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1595,14 +1510,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpPatient(id: kotlin.String) : PatientDto?  {
+    suspend fun getTmpPatient(id: kotlin.String) : PatientDto  {
         val localVariableConfig = getTmpPatientRequestConfig(id = id)
 
         return request<Unit, PatientDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTmpPatient
     *
@@ -1610,17 +1524,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun getTmpPatientRequestConfig(id: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/tmp/patient/byId/{id}".replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/tmp/patient/byId/{id}".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1634,14 +1549,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpPatients(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<PatientDto>?  {
+    suspend fun getTmpPatients(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<PatientDto>  {
         val localVariableConfig = getTmpPatientsRequestConfig(requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<PatientDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTmpPatients
     *
@@ -1649,17 +1563,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun getTmpPatientsRequestConfig(requestBody: kotlin.collections.List<kotlin.String>) : RequestConfig<kotlin.collections.List<kotlin.String>> {
-        val localVariableBody = requestBody
+        // val localVariableBody = requestBody
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = requestBody
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/tmp/patient/get",
+            path = "/rest/v2/tmp/patient/get",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1674,14 +1589,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listTmpClassifications(firstClassificationId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListClassificationDto?  {
+    suspend fun listTmpClassifications(firstClassificationId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListClassificationDto  {
         val localVariableConfig = listTmpClassificationsRequestConfig(firstClassificationId = firstClassificationId, pageSize = pageSize)
 
         return request<Unit, PaginatedListClassificationDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listTmpClassifications
     *
@@ -1690,7 +1604,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun listTmpClassificationsRequestConfig(firstClassificationId: kotlin.String?, pageSize: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (firstClassificationId != null) {
@@ -1701,14 +1615,15 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/tmp/classification/list",
+            path = "/rest/v2/tmp/classification/list",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1723,14 +1638,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listTmpContacts(firstContactId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListInvoiceDto?  {
+    suspend fun listTmpContacts(firstContactId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListInvoiceDto  {
         val localVariableConfig = listTmpContactsRequestConfig(firstContactId = firstContactId, pageSize = pageSize)
 
         return request<Unit, PaginatedListInvoiceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listTmpContacts
     *
@@ -1739,7 +1653,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun listTmpContactsRequestConfig(firstContactId: kotlin.String?, pageSize: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (firstContactId != null) {
@@ -1750,14 +1664,15 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/tmp/contact/list",
+            path = "/rest/v2/tmp/contact/list",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1772,14 +1687,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listTmpDocuments(firstDocumentId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListDocumentDto?  {
+    suspend fun listTmpDocuments(firstDocumentId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListDocumentDto  {
         val localVariableConfig = listTmpDocumentsRequestConfig(firstDocumentId = firstDocumentId, pageSize = pageSize)
 
         return request<Unit, PaginatedListDocumentDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listTmpDocuments
     *
@@ -1788,7 +1702,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun listTmpDocumentsRequestConfig(firstDocumentId: kotlin.String?, pageSize: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (firstDocumentId != null) {
@@ -1799,14 +1713,15 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/tmp/document/list",
+            path = "/rest/v2/tmp/document/list",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1821,14 +1736,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listTmpEntityTemplates(firstEntityTemplateId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListEntityTemplateDto?  {
+    suspend fun listTmpEntityTemplates(firstEntityTemplateId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListEntityTemplateDto  {
         val localVariableConfig = listTmpEntityTemplatesRequestConfig(firstEntityTemplateId = firstEntityTemplateId, pageSize = pageSize)
 
         return request<Unit, PaginatedListEntityTemplateDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listTmpEntityTemplates
     *
@@ -1837,7 +1751,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun listTmpEntityTemplatesRequestConfig(firstEntityTemplateId: kotlin.String?, pageSize: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (firstEntityTemplateId != null) {
@@ -1848,14 +1762,15 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/tmp/entityTemplate/list",
+            path = "/rest/v2/tmp/entityTemplate/list",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1870,14 +1785,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listTmpForms(firstFormId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListFormDto?  {
+    suspend fun listTmpForms(firstFormId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListFormDto  {
         val localVariableConfig = listTmpFormsRequestConfig(firstFormId = firstFormId, pageSize = pageSize)
 
         return request<Unit, PaginatedListFormDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listTmpForms
     *
@@ -1886,7 +1800,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun listTmpFormsRequestConfig(firstFormId: kotlin.String?, pageSize: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (firstFormId != null) {
@@ -1897,14 +1811,15 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/tmp/form/list",
+            path = "/rest/v2/tmp/form/list",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1919,14 +1834,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listTmpHealthElements(firstHealthElementId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListHealthElementDto?  {
+    suspend fun listTmpHealthElements(firstHealthElementId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListHealthElementDto  {
         val localVariableConfig = listTmpHealthElementsRequestConfig(firstHealthElementId = firstHealthElementId, pageSize = pageSize)
 
         return request<Unit, PaginatedListHealthElementDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listTmpHealthElements
     *
@@ -1935,7 +1849,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun listTmpHealthElementsRequestConfig(firstHealthElementId: kotlin.String?, pageSize: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (firstHealthElementId != null) {
@@ -1946,14 +1860,15 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/tmp/healthElement/list",
+            path = "/rest/v2/tmp/healthElement/list",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1968,14 +1883,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listTmpInvoices(firstInvoiceId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListInvoiceDto?  {
+    suspend fun listTmpInvoices(firstInvoiceId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListInvoiceDto  {
         val localVariableConfig = listTmpInvoicesRequestConfig(firstInvoiceId = firstInvoiceId, pageSize = pageSize)
 
         return request<Unit, PaginatedListInvoiceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listTmpInvoices
     *
@@ -1984,7 +1898,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun listTmpInvoicesRequestConfig(firstInvoiceId: kotlin.String?, pageSize: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (firstInvoiceId != null) {
@@ -1995,14 +1909,15 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/tmp/invoice/list",
+            path = "/rest/v2/tmp/invoice/list",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -2017,14 +1932,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listTmpMessages(firstMessageId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListInvoiceDto?  {
+    suspend fun listTmpMessages(firstMessageId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListInvoiceDto  {
         val localVariableConfig = listTmpMessagesRequestConfig(firstMessageId = firstMessageId, pageSize = pageSize)
 
         return request<Unit, PaginatedListInvoiceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listTmpMessages
     *
@@ -2033,7 +1947,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun listTmpMessagesRequestConfig(firstMessageId: kotlin.String?, pageSize: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (firstMessageId != null) {
@@ -2044,14 +1958,15 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/tmp/message/list",
+            path = "/rest/v2/tmp/message/list",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -2066,14 +1981,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listTmpPatients(firstPatientId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListPatientDto?  {
+    suspend fun listTmpPatients(firstPatientId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListPatientDto  {
         val localVariableConfig = listTmpPatientsRequestConfig(firstPatientId = firstPatientId, pageSize = pageSize)
 
         return request<Unit, PaginatedListPatientDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listTmpPatients
     *
@@ -2082,7 +1996,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun listTmpPatientsRequestConfig(firstPatientId: kotlin.String?, pageSize: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (firstPatientId != null) {
@@ -2093,14 +2007,15 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/tmp/patient/list",
+            path = "/rest/v2/tmp/patient/list",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -2114,14 +2029,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTmpClassification(classificationDto: ClassificationDto) : ClassificationDto?  {
+    suspend fun modifyTmpClassification(classificationDto: ClassificationDto) : ClassificationDto  {
         val localVariableConfig = modifyTmpClassificationRequestConfig(classificationDto = classificationDto)
 
         return request<ClassificationDto, ClassificationDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTmpClassification
     *
@@ -2129,17 +2043,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun modifyTmpClassificationRequestConfig(classificationDto: ClassificationDto) : RequestConfig<ClassificationDto> {
-        val localVariableBody = classificationDto
+        // val localVariableBody = classificationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = classificationDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/tmp/classification",
+            path = "/rest/v2/tmp/classification",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -2153,14 +2068,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTmpClassifications(classificationDto: kotlin.collections.List<ClassificationDto>) : kotlin.collections.List<ClassificationDto>?  {
+    suspend fun modifyTmpClassifications(classificationDto: kotlin.collections.List<ClassificationDto>) : kotlin.collections.List<ClassificationDto>  {
         val localVariableConfig = modifyTmpClassificationsRequestConfig(classificationDto = classificationDto)
 
         return request<kotlin.collections.List<ClassificationDto>, kotlin.collections.List<ClassificationDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTmpClassifications
     *
@@ -2168,17 +2082,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun modifyTmpClassificationsRequestConfig(classificationDto: kotlin.collections.List<ClassificationDto>) : RequestConfig<kotlin.collections.List<ClassificationDto>> {
-        val localVariableBody = classificationDto
+        // val localVariableBody = classificationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = classificationDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/tmp/classification/batch",
+            path = "/rest/v2/tmp/classification/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -2192,14 +2107,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTmpContact(contactDto: ContactDto) : ContactDto?  {
+    suspend fun modifyTmpContact(contactDto: ContactDto) : ContactDto  {
         val localVariableConfig = modifyTmpContactRequestConfig(contactDto = contactDto)
 
         return request<ContactDto, ContactDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTmpContact
     *
@@ -2207,17 +2121,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun modifyTmpContactRequestConfig(contactDto: ContactDto) : RequestConfig<ContactDto> {
-        val localVariableBody = contactDto
+        // val localVariableBody = contactDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = contactDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/tmp/contact",
+            path = "/rest/v2/tmp/contact",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -2231,14 +2146,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTmpContacts(contactDto: kotlin.collections.List<ContactDto>) : kotlin.collections.List<ContactDto>?  {
+    suspend fun modifyTmpContacts(contactDto: kotlin.collections.List<ContactDto>) : kotlin.collections.List<ContactDto>  {
         val localVariableConfig = modifyTmpContactsRequestConfig(contactDto = contactDto)
 
         return request<kotlin.collections.List<ContactDto>, kotlin.collections.List<ContactDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTmpContacts
     *
@@ -2246,17 +2160,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun modifyTmpContactsRequestConfig(contactDto: kotlin.collections.List<ContactDto>) : RequestConfig<kotlin.collections.List<ContactDto>> {
-        val localVariableBody = contactDto
+        // val localVariableBody = contactDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = contactDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/tmp/contact/batch",
+            path = "/rest/v2/tmp/contact/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -2270,14 +2185,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTmpDocument(documentDto: DocumentDto) : DocumentDto?  {
+    suspend fun modifyTmpDocument(documentDto: DocumentDto) : DocumentDto  {
         val localVariableConfig = modifyTmpDocumentRequestConfig(documentDto = documentDto)
 
         return request<DocumentDto, DocumentDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTmpDocument
     *
@@ -2285,17 +2199,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun modifyTmpDocumentRequestConfig(documentDto: DocumentDto) : RequestConfig<DocumentDto> {
-        val localVariableBody = documentDto
+        // val localVariableBody = documentDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = documentDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/tmp/document",
+            path = "/rest/v2/tmp/document",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -2309,14 +2224,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTmpDocuments(documentDto: kotlin.collections.List<DocumentDto>) : kotlin.collections.List<DocumentDto>?  {
+    suspend fun modifyTmpDocuments(documentDto: kotlin.collections.List<DocumentDto>) : kotlin.collections.List<DocumentDto>  {
         val localVariableConfig = modifyTmpDocumentsRequestConfig(documentDto = documentDto)
 
         return request<kotlin.collections.List<DocumentDto>, kotlin.collections.List<DocumentDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTmpDocuments
     *
@@ -2324,17 +2238,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun modifyTmpDocumentsRequestConfig(documentDto: kotlin.collections.List<DocumentDto>) : RequestConfig<kotlin.collections.List<DocumentDto>> {
-        val localVariableBody = documentDto
+        // val localVariableBody = documentDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = documentDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/tmp/document/batch",
+            path = "/rest/v2/tmp/document/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -2348,14 +2263,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTmpEntityTemplate(entityTemplateDto: EntityTemplateDto) : EntityTemplateDto?  {
+    suspend fun modifyTmpEntityTemplate(entityTemplateDto: EntityTemplateDto) : EntityTemplateDto  {
         val localVariableConfig = modifyTmpEntityTemplateRequestConfig(entityTemplateDto = entityTemplateDto)
 
         return request<EntityTemplateDto, EntityTemplateDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTmpEntityTemplate
     *
@@ -2363,17 +2277,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun modifyTmpEntityTemplateRequestConfig(entityTemplateDto: EntityTemplateDto) : RequestConfig<EntityTemplateDto> {
-        val localVariableBody = entityTemplateDto
+        // val localVariableBody = entityTemplateDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = entityTemplateDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/tmp/entityTemplate",
+            path = "/rest/v2/tmp/entityTemplate",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -2387,14 +2302,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTmpEntityTemplates(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>) : kotlin.collections.List<EntityTemplateDto>?  {
+    suspend fun modifyTmpEntityTemplates(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>) : kotlin.collections.List<EntityTemplateDto>  {
         val localVariableConfig = modifyTmpEntityTemplatesRequestConfig(entityTemplateDto = entityTemplateDto)
 
         return request<kotlin.collections.List<EntityTemplateDto>, kotlin.collections.List<EntityTemplateDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTmpEntityTemplates
     *
@@ -2402,17 +2316,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun modifyTmpEntityTemplatesRequestConfig(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>) : RequestConfig<kotlin.collections.List<EntityTemplateDto>> {
-        val localVariableBody = entityTemplateDto
+        // val localVariableBody = entityTemplateDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = entityTemplateDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/tmp/entityTemplate/batch",
+            path = "/rest/v2/tmp/entityTemplate/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -2426,14 +2341,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTmpForm(formDto: FormDto) : FormDto?  {
+    suspend fun modifyTmpForm(formDto: FormDto) : FormDto  {
         val localVariableConfig = modifyTmpFormRequestConfig(formDto = formDto)
 
         return request<FormDto, FormDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTmpForm
     *
@@ -2441,17 +2355,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun modifyTmpFormRequestConfig(formDto: FormDto) : RequestConfig<FormDto> {
-        val localVariableBody = formDto
+        // val localVariableBody = formDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = formDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/tmp/form",
+            path = "/rest/v2/tmp/form",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -2465,14 +2380,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTmpForms(formDto: kotlin.collections.List<FormDto>) : kotlin.collections.List<FormDto>?  {
+    suspend fun modifyTmpForms(formDto: kotlin.collections.List<FormDto>) : kotlin.collections.List<FormDto>  {
         val localVariableConfig = modifyTmpFormsRequestConfig(formDto = formDto)
 
         return request<kotlin.collections.List<FormDto>, kotlin.collections.List<FormDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTmpForms
     *
@@ -2480,17 +2394,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun modifyTmpFormsRequestConfig(formDto: kotlin.collections.List<FormDto>) : RequestConfig<kotlin.collections.List<FormDto>> {
-        val localVariableBody = formDto
+        // val localVariableBody = formDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = formDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/tmp/form/batch",
+            path = "/rest/v2/tmp/form/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -2504,14 +2419,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTmpHealthElement(healthElementDto: HealthElementDto) : HealthElementDto?  {
+    suspend fun modifyTmpHealthElement(healthElementDto: HealthElementDto) : HealthElementDto  {
         val localVariableConfig = modifyTmpHealthElementRequestConfig(healthElementDto = healthElementDto)
 
         return request<HealthElementDto, HealthElementDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTmpHealthElement
     *
@@ -2519,17 +2433,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun modifyTmpHealthElementRequestConfig(healthElementDto: HealthElementDto) : RequestConfig<HealthElementDto> {
-        val localVariableBody = healthElementDto
+        // val localVariableBody = healthElementDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = healthElementDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/tmp/healthElement",
+            path = "/rest/v2/tmp/healthElement",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -2543,14 +2458,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTmpHealthElements(healthElementDto: kotlin.collections.List<HealthElementDto>) : kotlin.collections.List<HealthElementDto>?  {
+    suspend fun modifyTmpHealthElements(healthElementDto: kotlin.collections.List<HealthElementDto>) : kotlin.collections.List<HealthElementDto>  {
         val localVariableConfig = modifyTmpHealthElementsRequestConfig(healthElementDto = healthElementDto)
 
         return request<kotlin.collections.List<HealthElementDto>, kotlin.collections.List<HealthElementDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTmpHealthElements
     *
@@ -2558,17 +2472,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun modifyTmpHealthElementsRequestConfig(healthElementDto: kotlin.collections.List<HealthElementDto>) : RequestConfig<kotlin.collections.List<HealthElementDto>> {
-        val localVariableBody = healthElementDto
+        // val localVariableBody = healthElementDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = healthElementDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/tmp/healthElement/batch",
+            path = "/rest/v2/tmp/healthElement/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -2582,14 +2497,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTmpInvoice(invoiceDto: InvoiceDto) : InvoiceDto?  {
+    suspend fun modifyTmpInvoice(invoiceDto: InvoiceDto) : InvoiceDto  {
         val localVariableConfig = modifyTmpInvoiceRequestConfig(invoiceDto = invoiceDto)
 
         return request<InvoiceDto, InvoiceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTmpInvoice
     *
@@ -2597,17 +2511,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun modifyTmpInvoiceRequestConfig(invoiceDto: InvoiceDto) : RequestConfig<InvoiceDto> {
-        val localVariableBody = invoiceDto
+        // val localVariableBody = invoiceDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = invoiceDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/tmp/invoice",
+            path = "/rest/v2/tmp/invoice",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -2621,14 +2536,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTmpInvoices(invoiceDto: kotlin.collections.List<InvoiceDto>) : kotlin.collections.List<InvoiceDto>?  {
+    suspend fun modifyTmpInvoices(invoiceDto: kotlin.collections.List<InvoiceDto>) : kotlin.collections.List<InvoiceDto>  {
         val localVariableConfig = modifyTmpInvoicesRequestConfig(invoiceDto = invoiceDto)
 
         return request<kotlin.collections.List<InvoiceDto>, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTmpInvoices
     *
@@ -2636,17 +2550,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun modifyTmpInvoicesRequestConfig(invoiceDto: kotlin.collections.List<InvoiceDto>) : RequestConfig<kotlin.collections.List<InvoiceDto>> {
-        val localVariableBody = invoiceDto
+        // val localVariableBody = invoiceDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = invoiceDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/tmp/invoice/batch",
+            path = "/rest/v2/tmp/invoice/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -2660,14 +2575,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTmpMessage(messageDto: MessageDto) : MessageDto?  {
+    suspend fun modifyTmpMessage(messageDto: MessageDto) : MessageDto  {
         val localVariableConfig = modifyTmpMessageRequestConfig(messageDto = messageDto)
 
         return request<MessageDto, MessageDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTmpMessage
     *
@@ -2675,17 +2589,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun modifyTmpMessageRequestConfig(messageDto: MessageDto) : RequestConfig<MessageDto> {
-        val localVariableBody = messageDto
+        // val localVariableBody = messageDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = messageDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/tmp/message",
+            path = "/rest/v2/tmp/message",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -2699,14 +2614,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTmpMessages(messageDto: kotlin.collections.List<MessageDto>) : kotlin.collections.List<MessageDto>?  {
+    suspend fun modifyTmpMessages(messageDto: kotlin.collections.List<MessageDto>) : kotlin.collections.List<MessageDto>  {
         val localVariableConfig = modifyTmpMessagesRequestConfig(messageDto = messageDto)
 
         return request<kotlin.collections.List<MessageDto>, kotlin.collections.List<MessageDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTmpMessages
     *
@@ -2714,17 +2628,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun modifyTmpMessagesRequestConfig(messageDto: kotlin.collections.List<MessageDto>) : RequestConfig<kotlin.collections.List<MessageDto>> {
-        val localVariableBody = messageDto
+        // val localVariableBody = messageDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = messageDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/tmp/message/batch",
+            path = "/rest/v2/tmp/message/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -2738,14 +2653,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTmpPatient(patientDto: PatientDto) : PatientDto?  {
+    suspend fun modifyTmpPatient(patientDto: PatientDto) : PatientDto  {
         val localVariableConfig = modifyTmpPatientRequestConfig(patientDto = patientDto)
 
         return request<PatientDto, PatientDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTmpPatient
     *
@@ -2753,17 +2667,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun modifyTmpPatientRequestConfig(patientDto: PatientDto) : RequestConfig<PatientDto> {
-        val localVariableBody = patientDto
+        // val localVariableBody = patientDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = patientDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/tmp/patient",
+            path = "/rest/v2/tmp/patient",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -2777,14 +2692,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTmpPatients(patientDto: kotlin.collections.List<PatientDto>) : kotlin.collections.List<PatientDto>?  {
+    suspend fun modifyTmpPatients(patientDto: kotlin.collections.List<PatientDto>) : kotlin.collections.List<PatientDto>  {
         val localVariableConfig = modifyTmpPatientsRequestConfig(patientDto = patientDto)
 
         return request<kotlin.collections.List<PatientDto>, kotlin.collections.List<PatientDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTmpPatients
     *
@@ -2792,17 +2706,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun modifyTmpPatientsRequestConfig(patientDto: kotlin.collections.List<PatientDto>) : RequestConfig<kotlin.collections.List<PatientDto>> {
-        val localVariableBody = patientDto
+        // val localVariableBody = patientDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = patientDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/tmp/patient/batch",
+            path = "/rest/v2/tmp/patient/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -2816,14 +2731,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun purgeTmpItems(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<DocIdentifier>?  {
+    suspend fun purgeTmpItems(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<DocIdentifier>  {
         val localVariableConfig = purgeTmpItemsRequestConfig(requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation purgeTmpItems
     *
@@ -2831,17 +2745,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun purgeTmpItemsRequestConfig(requestBody: kotlin.collections.List<kotlin.String>) : RequestConfig<kotlin.collections.List<kotlin.String>> {
-        val localVariableBody = requestBody
+        // val localVariableBody = requestBody
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = requestBody
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/tmp/batch/purge",
+            path = "/rest/v2/tmp/batch/purge",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -2856,14 +2771,13 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun replicateToTmpDatabase(from: kotlin.String, requestBody: kotlin.collections.List<kotlin.String>) : ReplicatorDocumentDto?  {
+    suspend fun replicateToTmpDatabase(from: kotlin.String, requestBody: kotlin.collections.List<kotlin.String>) : ReplicatorDocumentDto  {
         val localVariableConfig = replicateToTmpDatabaseRequestConfig(from = from, requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, ReplicatorDocumentDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation replicateToTmpDatabase
     *
@@ -2872,65 +2786,18 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     * @return RequestConfig
     */
     fun replicateToTmpDatabaseRequestConfig(from: kotlin.String, requestBody: kotlin.collections.List<kotlin.String>) : RequestConfig<kotlin.collections.List<kotlin.String>> {
-        val localVariableBody = requestBody
+        // val localVariableBody = requestBody
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = requestBody
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/tmp/replicate/from/{from}".replace("{"+"from"+"}", "$from"),
+            path = "/rest/v2/tmp/replicate/from/{from}".replace("{"+"from"+"}", "${URLEncoder.encode(from.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Create a document&#39;s attachment
-    * Creates a document&#39;s attachment and returns the modified document instance afterward
-    * @param documentId  
-    * @param body  
-    * @param enckeys  (optional)
-    * @return DocumentDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setTmpDocumentAttachment(documentId: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, enckeys: kotlin.String?) : DocumentDto?  {
-        val localVariableConfig = setTmpDocumentAttachmentRequestConfig(documentId = documentId, body = body, enckeys = enckeys)
-
-        return request<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, DocumentDto>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation setTmpDocumentAttachment
-    *
-    * @param documentId  
-    * @param body  
-    * @param enckeys  (optional)
-    * @return RequestConfig
-    */
-    fun setTmpDocumentAttachmentRequestConfig(documentId: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, enckeys: kotlin.String?) : RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
-        val localVariableBody = body
-        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
-            .apply {
-                if (enckeys != null) {
-                    put("enckeys", listOf(enckeys.toString()))
-                }
-            }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.PUT,
-            path = "/rest/v1/tmp/document/{documentId}/attachment".replace("{"+"documentId"+"}", "$documentId"),
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
 }

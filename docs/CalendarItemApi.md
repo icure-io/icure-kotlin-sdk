@@ -4,18 +4,18 @@ All URIs are relative to *https://kraken.icure.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createCalendarItem**](CalendarItemApi.md#createCalendarItem) | **POST** /rest/v1/calendarItem | Creates a calendarItem
-[**deleteCalendarItem**](CalendarItemApi.md#deleteCalendarItem) | **DELETE** /rest/v1/calendarItem/{calendarItemIds} | Deletes an calendarItem
-[**deleteCalendarItems**](CalendarItemApi.md#deleteCalendarItems) | **POST** /rest/v1/calendarItem/delete/byIds | Deletes calendarItems
-[**findCalendarItemsByHCPartyPatientForeignKeys**](CalendarItemApi.md#findCalendarItemsByHCPartyPatientForeignKeys) | **GET** /rest/v1/calendarItem/byHcPartySecretForeignKeys | Find CalendarItems by hcparty and patient
-[**findCalendarItemsByRecurrenceId**](CalendarItemApi.md#findCalendarItemsByRecurrenceId) | **GET** /rest/v1/calendarItem/byRecurrenceId | Find CalendarItems by recurrenceId
-[**getCalendarItem**](CalendarItemApi.md#getCalendarItem) | **GET** /rest/v1/calendarItem/{calendarItemId} | Gets an calendarItem
-[**getCalendarItems**](CalendarItemApi.md#getCalendarItems) | **GET** /rest/v1/calendarItem | Gets all calendarItems
-[**getCalendarItemsByPeriodAndHcPartyId**](CalendarItemApi.md#getCalendarItemsByPeriodAndHcPartyId) | **POST** /rest/v1/calendarItem/byPeriodAndHcPartyId | Get CalendarItems by Period and HcPartyId
-[**getCalendarItemsWithIds**](CalendarItemApi.md#getCalendarItemsWithIds) | **POST** /rest/v1/calendarItem/byIds | Get calendarItems by id
-[**getCalendarsByPeriodAndAgendaId**](CalendarItemApi.md#getCalendarsByPeriodAndAgendaId) | **POST** /rest/v1/calendarItem/byPeriodAndAgendaId | Get CalendarItems by Period and AgendaId
-[**modifyCalendarItem**](CalendarItemApi.md#modifyCalendarItem) | **PUT** /rest/v1/calendarItem | Modifies an calendarItem
-[**setCalendarItemsDelegations**](CalendarItemApi.md#setCalendarItemsDelegations) | **POST** /rest/v1/calendarItem/delegations | Update delegations in calendarItems
+[**createCalendarItem**](CalendarItemApi.md#createCalendarItem) | **POST** /rest/v2/calendarItem | Creates a calendarItem
+[**deleteCalendarItem**](CalendarItemApi.md#deleteCalendarItem) | **POST** /rest/v2/calendarItem/{calendarItemIds} | Deletes an calendarItem
+[**deleteCalendarItems**](CalendarItemApi.md#deleteCalendarItems) | **POST** /rest/v2/calendarItem/delete/batch | Deletes calendarItems
+[**findCalendarItemsByHCPartyPatientForeignKeys**](CalendarItemApi.md#findCalendarItemsByHCPartyPatientForeignKeys) | **GET** /rest/v2/calendarItem/byHcPartySecretForeignKeys | Find CalendarItems by hcparty and patient
+[**findCalendarItemsByRecurrenceId**](CalendarItemApi.md#findCalendarItemsByRecurrenceId) | **GET** /rest/v2/calendarItem/byRecurrenceId | Find CalendarItems by recurrenceId
+[**getCalendarItem**](CalendarItemApi.md#getCalendarItem) | **GET** /rest/v2/calendarItem/{calendarItemId} | Gets an calendarItem
+[**getCalendarItems**](CalendarItemApi.md#getCalendarItems) | **GET** /rest/v2/calendarItem | Gets all calendarItems
+[**getCalendarItemsByPeriodAndHcPartyId**](CalendarItemApi.md#getCalendarItemsByPeriodAndHcPartyId) | **POST** /rest/v2/calendarItem/byPeriodAndHcPartyId | Get CalendarItems by Period and HcPartyId
+[**getCalendarItemsWithIds**](CalendarItemApi.md#getCalendarItemsWithIds) | **POST** /rest/v2/calendarItem/byIds | Get calendarItems by ids
+[**getCalendarsByPeriodAndAgendaId**](CalendarItemApi.md#getCalendarsByPeriodAndAgendaId) | **POST** /rest/v2/calendarItem/byPeriodAndAgendaId | Get CalendarItems by Period and AgendaId
+[**modifyCalendarItem**](CalendarItemApi.md#modifyCalendarItem) | **PUT** /rest/v2/calendarItem | Modifies an calendarItem
+[**setCalendarItemsDelegations**](CalendarItemApi.md#setCalendarItemsDelegations) | **POST** /rest/v2/calendarItem/delegations | Update delegations in calendarItems
 
 
 <a name="createCalendarItem"></a>
@@ -384,7 +384,7 @@ No authorization required
 # **getCalendarItemsWithIds**
 > kotlin.collections.List&lt;CalendarItemDto&gt; getCalendarItemsWithIds(listOfIdsDto)
 
-Get calendarItems by id
+Get calendarItems by ids
 
 ### Example
 ```kotlin

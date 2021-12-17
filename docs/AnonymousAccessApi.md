@@ -4,9 +4,9 @@ All URIs are relative to *https://kraken.icure.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getAvailabilitiesByPeriodAndCalendarItemTypeId**](AnonymousAccessApi.md#getAvailabilitiesByPeriodAndCalendarItemTypeId) | **GET** /rest/v1/aa/available/inGroup/{groupId}/forUser/{userId}/type/{getCalendarItemTypeId} | Get Availabilities for HCP and appointmentType
-[**listAppointmentTypesForUser**](AnonymousAccessApi.md#listAppointmentTypesForUser) | **GET** /rest/v1/aa/appointmentType/inGroup/{groupId}/forUser/{userId} | List Calendar Item types for a provided group id and user id
-[**listHealthcarePartiesInGroup**](AnonymousAccessApi.md#listHealthcarePartiesInGroup) | **GET** /rest/v1/aa/hcparty/inGroup/{groupId} | List healthcare parties for a provided group id
+[**getAvailabilitiesByPeriodAndCalendarItemTypeId**](AnonymousAccessApi.md#getAvailabilitiesByPeriodAndCalendarItemTypeId) | **GET** /rest/v2/aa/available/inGroup/{groupId}/forUser/{userId}/type/{getCalendarItemTypeId} | Get Availabilities for HCP and appointmentType
+[**listAppointmentTypesForUser**](AnonymousAccessApi.md#listAppointmentTypesForUser) | **GET** /rest/v2/aa/appointmentType/inGroup/{groupId}/forUser/{userId} | List Calendar Item types for a provided group id and user id
+[**listHealthcarePartiesInGroup**](AnonymousAccessApi.md#listHealthcarePartiesInGroup) | **GET** /rest/v2/aa/hcparty/inGroup/{groupId} | List healthcare parties for a provided group id
 
 
 <a name="getAvailabilitiesByPeriodAndCalendarItemTypeId"></a>
@@ -14,6 +14,8 @@ Method | HTTP request | Description
 > kotlin.collections.List&lt;kotlin.Long&gt; getAvailabilitiesByPeriodAndCalendarItemTypeId(groupId, userId, getCalendarItemTypeId, startDate, endDate, hcpId, limit)
 
 Get Availabilities for HCP and appointmentType
+
+The start of the slot is returned in YYYYDDMMHHmmss format and only slots belonging to public time tables are returned.
 
 ### Example
 ```kotlin
@@ -72,7 +74,7 @@ No authorization required
 
 List Calendar Item types for a provided group id and user id
 
-Returns a list of Calendar Item types
+Returns a list of Calendar Item types. In order to be returned, the Calendar Item Type must be linked to a time table enclosed in an Agenda for which an anonymous right has been set (a Right with read permission and null user)
 
 ### Example
 ```kotlin
@@ -125,7 +127,7 @@ No authorization required
 
 List healthcare parties for a provided group id
 
-Returns a list of healthcare parties contained in the group owning the providing id
+Returns a list of Users/healthcare parties contained in the group owning the providing id. In order to be returned, a healthcare party needs to be linked to a user an this user must have a property &#39;org.taktik.icure.public&#39; set to a boolean true.
 
 ### Example
 ```kotlin

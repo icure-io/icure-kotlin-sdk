@@ -1,9 +1,9 @@
 /**
  * iCure Data Stack API Documentation
  *
- * The iCure Data Stack Application API is the native interface to iCure. This version is obsolete, please use v2.
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -14,6 +14,7 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
+import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.models.CalendarItemDto
 import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.IcureStubDto
@@ -27,7 +28,12 @@ import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
+import kotlinx.coroutines.flow.flowOf
+import java.nio.ByteBuffer
+import java.util.*
 import javax.inject.Named
+import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -51,14 +57,13 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createCalendarItem(calendarItemDto: CalendarItemDto) : CalendarItemDto?  {
+    suspend fun createCalendarItem(calendarItemDto: CalendarItemDto) : CalendarItemDto  {
         val localVariableConfig = createCalendarItemRequestConfig(calendarItemDto = calendarItemDto)
 
         return request<CalendarItemDto, CalendarItemDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createCalendarItem
     *
@@ -66,17 +71,18 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @return RequestConfig
     */
     fun createCalendarItemRequestConfig(calendarItemDto: CalendarItemDto) : RequestConfig<CalendarItemDto> {
-        val localVariableBody = calendarItemDto
+        // val localVariableBody = calendarItemDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = calendarItemDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/calendarItem",
+            path = "/rest/v2/calendarItem",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -91,15 +97,14 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
     @Deprecated(message = "This operation is deprecated.")
-    suspend fun deleteCalendarItem(calendarItemIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
+    suspend fun deleteCalendarItem(calendarItemIds: kotlin.String) : kotlin.collections.List<DocIdentifier>  {
         @Suppress("DEPRECATION")
         val localVariableConfig = deleteCalendarItemRequestConfig(calendarItemIds = calendarItemIds)
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteCalendarItem
     *
@@ -108,17 +113,18 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Deprecated(message = "This operation is deprecated.")
     fun deleteCalendarItemRequestConfig(calendarItemIds: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
-            method = RequestMethod.DELETE,
-            path = "/rest/v1/calendarItem/{calendarItemIds}".replace("{"+"calendarItemIds"+"}", "$calendarItemIds"),
+            method = RequestMethod.POST,
+            path = "/rest/v2/calendarItem/{calendarItemIds}".replace("{"+"calendarItemIds"+"}", "${URLEncoder.encode(calendarItemIds.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -132,14 +138,13 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteCalendarItems(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocIdentifier>?  {
+    suspend fun deleteCalendarItems(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocIdentifier>  {
         val localVariableConfig = deleteCalendarItemsRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteCalendarItems
     *
@@ -147,17 +152,18 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @return RequestConfig
     */
     fun deleteCalendarItemsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/calendarItem/delete/byIds",
+            path = "/rest/v2/calendarItem/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -172,14 +178,13 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findCalendarItemsByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<CalendarItemDto>?  {
+    suspend fun findCalendarItemsByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<CalendarItemDto>  {
         val localVariableConfig = findCalendarItemsByHCPartyPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
 
         return request<Unit, kotlin.collections.List<CalendarItemDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findCalendarItemsByHCPartyPatientForeignKeys
     *
@@ -188,21 +193,22 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @return RequestConfig
     */
     fun findCalendarItemsByHCPartyPatientForeignKeysRequestConfig(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("hcPartyId", listOf(hcPartyId.toString()))
                 put("secretFKeys", listOf(secretFKeys.toString()))
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/calendarItem/byHcPartySecretForeignKeys",
+            path = "/rest/v2/calendarItem/byHcPartySecretForeignKeys",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -216,14 +222,13 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findCalendarItemsByRecurrenceId(recurrenceId: kotlin.String) : kotlin.collections.List<CalendarItemDto>?  {
+    suspend fun findCalendarItemsByRecurrenceId(recurrenceId: kotlin.String) : kotlin.collections.List<CalendarItemDto>  {
         val localVariableConfig = findCalendarItemsByRecurrenceIdRequestConfig(recurrenceId = recurrenceId)
 
         return request<Unit, kotlin.collections.List<CalendarItemDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findCalendarItemsByRecurrenceId
     *
@@ -231,20 +236,21 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @return RequestConfig
     */
     fun findCalendarItemsByRecurrenceIdRequestConfig(recurrenceId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("recurrenceId", listOf(recurrenceId.toString()))
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/calendarItem/byRecurrenceId",
+            path = "/rest/v2/calendarItem/byRecurrenceId",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -258,14 +264,13 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getCalendarItem(calendarItemId: kotlin.String) : CalendarItemDto?  {
+    suspend fun getCalendarItem(calendarItemId: kotlin.String) : CalendarItemDto  {
         val localVariableConfig = getCalendarItemRequestConfig(calendarItemId = calendarItemId)
 
         return request<Unit, CalendarItemDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getCalendarItem
     *
@@ -273,17 +278,18 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @return RequestConfig
     */
     fun getCalendarItemRequestConfig(calendarItemId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/calendarItem/{calendarItemId}".replace("{"+"calendarItemId"+"}", "$calendarItemId"),
+            path = "/rest/v2/calendarItem/{calendarItemId}".replace("{"+"calendarItemId"+"}", "${URLEncoder.encode(calendarItemId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -296,31 +302,31 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getCalendarItems() : kotlin.collections.List<CalendarItemDto>?  {
+    suspend fun getCalendarItems() : kotlin.collections.List<CalendarItemDto>  {
         val localVariableConfig = getCalendarItemsRequestConfig()
 
         return request<Unit, kotlin.collections.List<CalendarItemDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getCalendarItems
     *
     * @return RequestConfig
     */
     fun getCalendarItemsRequestConfig() : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/calendarItem",
+            path = "/rest/v2/calendarItem",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -336,14 +342,13 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getCalendarItemsByPeriodAndHcPartyId(startDate: kotlin.Long, endDate: kotlin.Long, hcPartyId: kotlin.String) : kotlin.collections.List<CalendarItemDto>?  {
+    suspend fun getCalendarItemsByPeriodAndHcPartyId(startDate: kotlin.Long, endDate: kotlin.Long, hcPartyId: kotlin.String) : kotlin.collections.List<CalendarItemDto>  {
         val localVariableConfig = getCalendarItemsByPeriodAndHcPartyIdRequestConfig(startDate = startDate, endDate = endDate, hcPartyId = hcPartyId)
 
         return request<Unit, kotlin.collections.List<CalendarItemDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getCalendarItemsByPeriodAndHcPartyId
     *
@@ -353,7 +358,7 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @return RequestConfig
     */
     fun getCalendarItemsByPeriodAndHcPartyIdRequestConfig(startDate: kotlin.Long, endDate: kotlin.Long, hcPartyId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("startDate", listOf(startDate.toString()))
@@ -361,18 +366,19 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
                 put("hcPartyId", listOf(hcPartyId.toString()))
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/calendarItem/byPeriodAndHcPartyId",
+            path = "/rest/v2/calendarItem/byPeriodAndHcPartyId",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
-    * Get calendarItems by id
+    * Get calendarItems by ids
     * 
     * @param listOfIdsDto  (optional)
     * @return kotlin.collections.List<CalendarItemDto>
@@ -382,14 +388,13 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getCalendarItemsWithIds(listOfIdsDto: ListOfIdsDto?) : kotlin.collections.List<CalendarItemDto>?  {
+    suspend fun getCalendarItemsWithIds(listOfIdsDto: ListOfIdsDto?) : kotlin.collections.List<CalendarItemDto>  {
         val localVariableConfig = getCalendarItemsWithIdsRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<CalendarItemDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getCalendarItemsWithIds
     *
@@ -397,17 +402,18 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @return RequestConfig
     */
     fun getCalendarItemsWithIdsRequestConfig(listOfIdsDto: ListOfIdsDto?) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/calendarItem/byIds",
+            path = "/rest/v2/calendarItem/byIds",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -423,14 +429,13 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getCalendarsByPeriodAndAgendaId(startDate: kotlin.Long, endDate: kotlin.Long, agendaId: kotlin.String) : kotlin.collections.List<CalendarItemDto>?  {
+    suspend fun getCalendarsByPeriodAndAgendaId(startDate: kotlin.Long, endDate: kotlin.Long, agendaId: kotlin.String) : kotlin.collections.List<CalendarItemDto>  {
         val localVariableConfig = getCalendarsByPeriodAndAgendaIdRequestConfig(startDate = startDate, endDate = endDate, agendaId = agendaId)
 
         return request<Unit, kotlin.collections.List<CalendarItemDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getCalendarsByPeriodAndAgendaId
     *
@@ -440,7 +445,7 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @return RequestConfig
     */
     fun getCalendarsByPeriodAndAgendaIdRequestConfig(startDate: kotlin.Long, endDate: kotlin.Long, agendaId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("startDate", listOf(startDate.toString()))
@@ -448,14 +453,15 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
                 put("agendaId", listOf(agendaId.toString()))
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/calendarItem/byPeriodAndAgendaId",
+            path = "/rest/v2/calendarItem/byPeriodAndAgendaId",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -469,14 +475,13 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyCalendarItem(calendarItemDto: CalendarItemDto) : CalendarItemDto?  {
+    suspend fun modifyCalendarItem(calendarItemDto: CalendarItemDto) : CalendarItemDto  {
         val localVariableConfig = modifyCalendarItemRequestConfig(calendarItemDto = calendarItemDto)
 
         return request<CalendarItemDto, CalendarItemDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyCalendarItem
     *
@@ -484,17 +489,18 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @return RequestConfig
     */
     fun modifyCalendarItemRequestConfig(calendarItemDto: CalendarItemDto) : RequestConfig<CalendarItemDto> {
-        val localVariableBody = calendarItemDto
+        // val localVariableBody = calendarItemDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = calendarItemDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/calendarItem",
+            path = "/rest/v2/calendarItem",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -508,14 +514,13 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setCalendarItemsDelegations(icureStubDto: kotlin.collections.List<IcureStubDto>) : kotlin.collections.List<CalendarItemDto>?  {
+    suspend fun setCalendarItemsDelegations(icureStubDto: kotlin.collections.List<IcureStubDto>) : kotlin.collections.List<CalendarItemDto>  {
         val localVariableConfig = setCalendarItemsDelegationsRequestConfig(icureStubDto = icureStubDto)
 
         return request<kotlin.collections.List<IcureStubDto>, kotlin.collections.List<CalendarItemDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation setCalendarItemsDelegations
     *
@@ -523,17 +528,18 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @return RequestConfig
     */
     fun setCalendarItemsDelegationsRequestConfig(icureStubDto: kotlin.collections.List<IcureStubDto>) : RequestConfig<kotlin.collections.List<IcureStubDto>> {
-        val localVariableBody = icureStubDto
+        // val localVariableBody = icureStubDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = icureStubDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/calendarItem/delegations",
+            path = "/rest/v2/calendarItem/delegations",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
 }

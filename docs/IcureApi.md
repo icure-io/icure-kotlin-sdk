@@ -4,21 +4,20 @@ All URIs are relative to *https://kraken.icure.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getIndexingInfo**](IcureApi.md#getIndexingInfo) | **GET** /rest/v1/icure/i | Get index info
-[**getProcessInfo**](IcureApi.md#getProcessInfo) | **GET** /rest/v1/icure/p | Get process info
-[**getReplicationInfo**](IcureApi.md#getReplicationInfo) | **GET** /rest/v1/icure/r | Get replication info
-[**getReplicatorInfo**](IcureApi.md#getReplicatorInfo) | **GET** /rest/v1/icure/r/{id} | Get replication info
-[**getVersion**](IcureApi.md#getVersion) | **GET** /rest/v1/icure/v | Get version
-[**isReady**](IcureApi.md#isReady) | **GET** /rest/v1/icure/ok | Check if a user exists
-[**loglevel**](IcureApi.md#loglevel) | **POST** /rest/v1/icure/loglevel/{loglevel} | 
-[**resolveContactsConflicts**](IcureApi.md#resolveContactsConflicts) | **POST** /rest/v1/icure/conflicts/contact | Resolve contacts conflicts
-[**resolveDocumentsConflicts**](IcureApi.md#resolveDocumentsConflicts) | **POST** /rest/v1/icure/conflicts/document | resolve documents conflicts
-[**resolveFormsConflicts**](IcureApi.md#resolveFormsConflicts) | **POST** /rest/v1/icure/conflicts/form | resolve forms conflicts
-[**resolveHealthElementsConflicts**](IcureApi.md#resolveHealthElementsConflicts) | **POST** /rest/v1/icure/conflicts/healthelement | resolve healthcare elements conflicts
-[**resolveInvoicesConflicts**](IcureApi.md#resolveInvoicesConflicts) | **POST** /rest/v1/icure/conflicts/invoice | resolve invoices conflicts
-[**resolveMessagesConflicts**](IcureApi.md#resolveMessagesConflicts) | **POST** /rest/v1/icure/conflicts/message | resolve messages conflicts
-[**resolvePatientsConflicts**](IcureApi.md#resolvePatientsConflicts) | **POST** /rest/v1/icure/conflicts/patient | Resolve patients conflicts
-[**updateDesignDoc**](IcureApi.md#updateDesignDoc) | **POST** /rest/v1/icure/dd/{entityName} | Force update design doc
+[**getIndexingInfo**](IcureApi.md#getIndexingInfo) | **GET** /rest/v2/icure/i | Get index info
+[**getProcessInfo**](IcureApi.md#getProcessInfo) | **GET** /rest/v2/icure/p | Get process info
+[**getReplicationInfo**](IcureApi.md#getReplicationInfo) | **GET** /rest/v2/icure/r | Get replication info
+[**getReplicatorInfo**](IcureApi.md#getReplicatorInfo) | **GET** /rest/v2/icure/r/{id} | Get replication info
+[**getVersion**](IcureApi.md#getVersion) | **GET** /rest/v2/icure/v | Get version
+[**isReady**](IcureApi.md#isReady) | **GET** /rest/v2/icure/ok | Check if a user exists
+[**resolveContactsConflicts**](IcureApi.md#resolveContactsConflicts) | **POST** /rest/v2/icure/conflicts/contact | Resolve contacts conflicts
+[**resolveDocumentsConflicts**](IcureApi.md#resolveDocumentsConflicts) | **POST** /rest/v2/icure/conflicts/document | resolve documents conflicts
+[**resolveFormsConflicts**](IcureApi.md#resolveFormsConflicts) | **POST** /rest/v2/icure/conflicts/form | resolve forms conflicts
+[**resolveHealthElementsConflicts**](IcureApi.md#resolveHealthElementsConflicts) | **POST** /rest/v2/icure/conflicts/healthelement | resolve healthcare elements conflicts
+[**resolveInvoicesConflicts**](IcureApi.md#resolveInvoicesConflicts) | **POST** /rest/v2/icure/conflicts/invoice | resolve invoices conflicts
+[**resolveMessagesConflicts**](IcureApi.md#resolveMessagesConflicts) | **POST** /rest/v2/icure/conflicts/message | resolve messages conflicts
+[**resolvePatientsConflicts**](IcureApi.md#resolvePatientsConflicts) | **POST** /rest/v2/icure/conflicts/patient | Resolve patients conflicts
+[**updateDesignDoc**](IcureApi.md#updateDesignDoc) | **POST** /rest/v2/icure/dd/{entityName} | Force update design doc
 
 
 <a name="getIndexingInfo"></a>
@@ -257,53 +256,6 @@ try {
 
 ### Parameters
 This endpoint does not need any parameter.
-
-### Return type
-
-**kotlin.String**
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: text/plain
-
-<a name="loglevel"></a>
-# **loglevel**
-> kotlin.String loglevel(loglevel, `package`)
-
-
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = IcureApi()
-val loglevel : kotlin.String = loglevel_example // kotlin.String | 
-val `package` : kotlin.String = `package`_example // kotlin.String | 
-try {
-    val result : kotlin.String = apiInstance.loglevel(loglevel, `package`)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling IcureApi#loglevel")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling IcureApi#loglevel")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **loglevel** | **kotlin.String**|  |
- **&#x60;package&#x60;** | **kotlin.String**|  |
 
 ### Return type
 

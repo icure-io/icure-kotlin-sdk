@@ -4,34 +4,35 @@ All URIs are relative to *https://kraken.icure.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**closeForHCPartyPatientForeignKeys**](ContactApi.md#closeForHCPartyPatientForeignKeys) | **PUT** /rest/v1/contact/byHcPartySecretForeignKeys/close | Close contacts for Healthcare Party and secret foreign keys.
-[**createContact**](ContactApi.md#createContact) | **POST** /rest/v1/contact | Create a contact with the current user
-[**createContacts**](ContactApi.md#createContacts) | **POST** /rest/v1/contact/batch | Create a batch of contacts
-[**deleteContacts**](ContactApi.md#deleteContacts) | **DELETE** /rest/v1/contact/{contactIds} | Delete contacts.
-[**filterContactsBy**](ContactApi.md#filterContactsBy) | **POST** /rest/v1/contact/filter | List contacts for the current user (HcParty) or the given hcparty in the filter 
-[**filterServicesBy**](ContactApi.md#filterServicesBy) | **POST** /rest/v1/contact/service/filter | List services for the current user (HcParty) or the given hcparty in the filter 
-[**findByHCPartyFormId**](ContactApi.md#findByHCPartyFormId) | **GET** /rest/v1/contact/byHcPartyFormId | Get a list of contacts found by Healthcare Party and form&#39;s id.
-[**findByHCPartyFormIds**](ContactApi.md#findByHCPartyFormIds) | **POST** /rest/v1/contact/byHcPartyFormIds | Get a list of contacts found by Healthcare Party and form&#39;s ids.
-[**findByHCPartyPatientSecretFKeys**](ContactApi.md#findByHCPartyPatientSecretFKeys) | **GET** /rest/v1/contact/byHcPartySecretForeignKeys | Get a list of contacts found by Healthcare Party and secret foreign keys.
-[**findByHCPartyServiceId**](ContactApi.md#findByHCPartyServiceId) | **GET** /rest/v1/contact/byHcPartyServiceId | List contacts found By Healthcare Party and service Id.
-[**findContactsByExternalId**](ContactApi.md#findContactsByExternalId) | **POST** /rest/v1/contact/byExternalId | List contacts found By externalId.
-[**findContactsByHCPartyPatientForeignKeys**](ContactApi.md#findContactsByHCPartyPatientForeignKeys) | **POST** /rest/v1/contact/byHcPartyPatientForeignKeys | Get a list of contacts found by Healthcare Party and Patient foreign keys.
-[**findContactsDelegationsStubsByHCPartyPatientForeignKeys**](ContactApi.md#findContactsDelegationsStubsByHCPartyPatientForeignKeys) | **GET** /rest/v1/contact/byHcPartySecretForeignKeys/delegations | List contacts found By Healthcare Party and secret foreign keys.
-[**getContact**](ContactApi.md#getContact) | **GET** /rest/v1/contact/{contactId} | Get a contact
-[**getContacts**](ContactApi.md#getContacts) | **POST** /rest/v1/contact/byIds | Get contacts by batch
-[**getEmptyContent**](ContactApi.md#getEmptyContent) | **GET** /rest/v1/contact/service/content/empty | Get an empty content
-[**getServiceByHealthcarepartyAndIdentifier**](ContactApi.md#getServiceByHealthcarepartyAndIdentifier) | **GET** /rest/v1/contact/{hcPartyId}/{value} | Get service by identifier
-[**getServiceCodesOccurences**](ContactApi.md#getServiceCodesOccurences) | **GET** /rest/v1/contact/service/codes/{codeType}/{minOccurences} | Get the list of all used codes frequencies in services
-[**getServicesIdsByHealthcarePartyAndIdentifiers**](ContactApi.md#getServicesIdsByHealthcarePartyAndIdentifiers) | **POST** /rest/v1/contact/services/ids/{hcPartyId}/byIdentifiers | Get services ids by identifiers
-[**listContactsByOpeningDate**](ContactApi.md#listContactsByOpeningDate) | **GET** /rest/v1/contact/byOpeningDate | List contacts bu opening date parties with(out) pagination
-[**listServices**](ContactApi.md#listServices) | **POST** /rest/v1/contact/service/byIds | List services with provided ids 
-[**listServicesByAssociationId**](ContactApi.md#listServicesByAssociationId) | **GET** /rest/v1/contact/service/associationId | List services by related association id
-[**listServicesLinkedTo**](ContactApi.md#listServicesLinkedTo) | **POST** /rest/v1/contact/service/linkedTo | List services linked to provided ids 
-[**matchContactsBy**](ContactApi.md#matchContactsBy) | **POST** /rest/v1/contact/match | Get ids of contacts matching the provided filter for the current user (HcParty) 
-[**modifyContact**](ContactApi.md#modifyContact) | **PUT** /rest/v1/contact | Modify a contact
-[**modifyContacts**](ContactApi.md#modifyContacts) | **PUT** /rest/v1/contact/batch | Modify a batch of contacts
-[**newContactDelegations**](ContactApi.md#newContactDelegations) | **POST** /rest/v1/contact/{contactId}/delegate | Delegates a contact to a healthcare party
-[**setContactsDelegations**](ContactApi.md#setContactsDelegations) | **POST** /rest/v1/contact/delegations | Update delegations in healthElements.
+[**closeForHCPartyPatientForeignKeys**](ContactApi.md#closeForHCPartyPatientForeignKeys) | **PUT** /rest/v2/contact/byHcPartySecretForeignKeys/close | Close contacts for Healthcare Party and secret foreign keys.
+[**createContact**](ContactApi.md#createContact) | **POST** /rest/v2/contact | Create a contact with the current user
+[**createContacts**](ContactApi.md#createContacts) | **POST** /rest/v2/contact/batch | Create a batch of contacts
+[**deleteContacts**](ContactApi.md#deleteContacts) | **POST** /rest/v2/contact/delete/batch | Delete contacts.
+[**filterContactsBy**](ContactApi.md#filterContactsBy) | **POST** /rest/v2/contact/filter | List contacts for the current user (HcParty) or the given hcparty in the filter 
+[**filterServicesBy**](ContactApi.md#filterServicesBy) | **POST** /rest/v2/contact/service/filter | List services for the current user (HcParty) or the given hcparty in the filter 
+[**findContactsByOpeningDate**](ContactApi.md#findContactsByOpeningDate) | **GET** /rest/v2/contact/byOpeningDate | List contacts by opening date parties with(out) pagination
+[**getContact**](ContactApi.md#getContact) | **GET** /rest/v2/contact/{contactId} | Get a contact
+[**getContacts**](ContactApi.md#getContacts) | **POST** /rest/v2/contact/byIds | Get contacts
+[**getEmptyContent**](ContactApi.md#getEmptyContent) | **GET** /rest/v2/contact/service/content/empty | Get an empty content
+[**getServiceByHealthcarepartyAndIdentifier**](ContactApi.md#getServiceByHealthcarepartyAndIdentifier) | **GET** /rest/v2/contact/service/{hcPartyId}/{value} | Get service by identifier
+[**getServiceCodesOccurences**](ContactApi.md#getServiceCodesOccurences) | **GET** /rest/v2/contact/service/codes/{codeType}/{minOccurences} | Get the list of all used codes frequencies in services
+[**getServices**](ContactApi.md#getServices) | **POST** /rest/v2/contact/service | List services with provided ids 
+[**getServicesIdsByHealthcarePartyAndIdentifiers**](ContactApi.md#getServicesIdsByHealthcarePartyAndIdentifiers) | **GET** /rest/v2/contact/services/ids/{hcPartyId}/byIdentifiers | Get services ids by identifiers
+[**getServicesLinkedTo**](ContactApi.md#getServicesLinkedTo) | **POST** /rest/v2/contact/service/linkedTo | List services linked to provided ids 
+[**listContactByHCPartyServiceId**](ContactApi.md#listContactByHCPartyServiceId) | **GET** /rest/v2/contact/byHcPartyServiceId | List contacts found By Healthcare Party and service Id.
+[**listContactsByExternalId**](ContactApi.md#listContactsByExternalId) | **POST** /rest/v2/contact/byExternalId | List contacts found By externalId.
+[**listContactsByHCPartyAndFormId**](ContactApi.md#listContactsByHCPartyAndFormId) | **GET** /rest/v2/contact/byHcPartyFormId | List contacts found By Healthcare Party and form Id.
+[**listContactsByHCPartyAndFormIds**](ContactApi.md#listContactsByHCPartyAndFormIds) | **POST** /rest/v2/contact/byHcPartyFormIds | List contacts found By Healthcare Party and form Id.
+[**listContactsByHCPartyAndPatientForeignKeys**](ContactApi.md#listContactsByHCPartyAndPatientForeignKeys) | **POST** /rest/v2/contact/byHcPartyPatientForeignKeys | List contacts found By Healthcare Party and Patient foreign keys.
+[**listContactsByHCPartyAndPatientSecretFKeys**](ContactApi.md#listContactsByHCPartyAndPatientSecretFKeys) | **GET** /rest/v2/contact/byHcPartySecretForeignKeys | List contacts found By Healthcare Party and secret foreign keys.
+[**listContactsDelegationsStubsByHCPartyAndPatientForeignKeys**](ContactApi.md#listContactsDelegationsStubsByHCPartyAndPatientForeignKeys) | **GET** /rest/v2/contact/byHcPartySecretForeignKeys/delegations | List contacts found By Healthcare Party and secret foreign keys.
+[**listServicesByAssociationId**](ContactApi.md#listServicesByAssociationId) | **GET** /rest/v2/contact/service/associationId | List services by related association id
+[**matchContactsBy**](ContactApi.md#matchContactsBy) | **POST** /rest/v2/contact/match | Get ids of contacts matching the provided filter for the current user (HcParty) 
+[**modifyContact**](ContactApi.md#modifyContact) | **PUT** /rest/v2/contact | Modify a contact
+[**modifyContacts**](ContactApi.md#modifyContacts) | **PUT** /rest/v2/contact/batch | Modify a batch of contacts
+[**modifyContactsDelegations**](ContactApi.md#modifyContactsDelegations) | **PUT** /rest/v2/contact/delegations | Update delegations in healthElements.
+[**newContactDelegations**](ContactApi.md#newContactDelegations) | **POST** /rest/v2/contact/{contactId}/delegate | Delegates a contact to a healthcare party
+[**setContactsDelegations**](ContactApi.md#setContactsDelegations) | **POST** /rest/v2/contact/delegations | Update delegations in healthElements.
 
 
 <a name="closeForHCPartyPatientForeignKeys"></a>
@@ -89,7 +90,7 @@ No authorization required
 
 Create a contact with the current user
 
-Creates a contact with the current user and returns an instance of created contact afterward.
+Returns an instance of created contact.
 
 ### Example
 ```kotlin
@@ -179,7 +180,7 @@ No authorization required
 
 <a name="deleteContacts"></a>
 # **deleteContacts**
-> kotlin.collections.List&lt;DocIdentifier&gt; deleteContacts(contactIds)
+> kotlin.collections.List&lt;DocIdentifier&gt; deleteContacts(listOfIdsDto)
 
 Delete contacts.
 
@@ -192,9 +193,9 @@ Response is a set containing the ID&#39;s of deleted contacts.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ContactApi()
-val contactIds : kotlin.String = contactIds_example // kotlin.String | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
 try {
-    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteContacts(contactIds)
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteContacts(listOfIdsDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling ContactApi#deleteContacts")
@@ -209,7 +210,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **contactIds** | **kotlin.String**|  |
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
 
 ### Return type
 
@@ -221,7 +222,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: */*
 
 <a name="filterContactsBy"></a>
@@ -326,58 +327,13 @@ No authorization required
  - **Content-Type**: application/json
  - **Accept**: */*
 
-<a name="findByHCPartyFormId"></a>
-# **findByHCPartyFormId**
-> kotlin.collections.List&lt;ContactDto&gt; findByHCPartyFormId(hcPartyId, formId)
+<a name="findContactsByOpeningDate"></a>
+# **findContactsByOpeningDate**
+> PaginatedListContactDto findContactsByOpeningDate(startKey, endKey, hcpartyid, startDocumentId, limit)
 
-Get a list of contacts found by Healthcare Party and form&#39;s id.
+List contacts by opening date parties with(out) pagination
 
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = ContactApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val formId : kotlin.String = formId_example // kotlin.String | 
-try {
-    val result : kotlin.collections.List<ContactDto> = apiInstance.findByHCPartyFormId(hcPartyId, formId)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling ContactApi#findByHCPartyFormId")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling ContactApi#findByHCPartyFormId")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **hcPartyId** | **kotlin.String**|  |
- **formId** | **kotlin.String**|  |
-
-### Return type
-
-[**kotlin.collections.List&lt;ContactDto&gt;**](ContactDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="findByHCPartyFormIds"></a>
-# **findByHCPartyFormIds**
-> kotlin.collections.List&lt;ContactDto&gt; findByHCPartyFormIds(hcPartyId, listOfIdsDto)
-
-Get a list of contacts found by Healthcare Party and form&#39;s ids.
+Returns a list of contacts.
 
 ### Example
 ```kotlin
@@ -386,16 +342,19 @@ Get a list of contacts found by Healthcare Party and form&#39;s ids.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ContactApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val startKey : kotlin.Long = 789 // kotlin.Long | The contact openingDate
+val endKey : kotlin.Long = 789 // kotlin.Long | The contact max openingDate
+val hcpartyid : kotlin.String = hcpartyid_example // kotlin.String | hcpartyid
+val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A contact party document ID
+val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
 try {
-    val result : kotlin.collections.List<ContactDto> = apiInstance.findByHCPartyFormIds(hcPartyId, listOfIdsDto)
+    val result : PaginatedListContactDto = apiInstance.findContactsByOpeningDate(startKey, endKey, hcpartyid, startDocumentId, limit)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling ContactApi#findByHCPartyFormIds")
+    println("4xx response calling ContactApi#findContactsByOpeningDate")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling ContactApi#findByHCPartyFormIds")
+    println("5xx response calling ContactApi#findContactsByOpeningDate")
     e.printStackTrace()
 }
 ```
@@ -404,253 +363,15 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **hcPartyId** | **kotlin.String**|  |
- **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
+ **startKey** | **kotlin.Long**| The contact openingDate |
+ **endKey** | **kotlin.Long**| The contact max openingDate |
+ **hcpartyid** | **kotlin.String**| hcpartyid |
+ **startDocumentId** | **kotlin.String**| A contact party document ID | [optional]
+ **limit** | **kotlin.Int**| Number of rows | [optional]
 
 ### Return type
 
-[**kotlin.collections.List&lt;ContactDto&gt;**](ContactDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: */*
-
-<a name="findByHCPartyPatientSecretFKeys"></a>
-# **findByHCPartyPatientSecretFKeys**
-> kotlin.collections.List&lt;ContactDto&gt; findByHCPartyPatientSecretFKeys(hcPartyId, secretFKeys, planOfActionsIds, skipClosedContacts)
-
-Get a list of contacts found by Healthcare Party and secret foreign keys.
-
-Keys must be delimited by coma
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = ContactApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
-val planOfActionsIds : kotlin.String = planOfActionsIds_example // kotlin.String | 
-val skipClosedContacts : kotlin.Boolean = true // kotlin.Boolean | 
-try {
-    val result : kotlin.collections.List<ContactDto> = apiInstance.findByHCPartyPatientSecretFKeys(hcPartyId, secretFKeys, planOfActionsIds, skipClosedContacts)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling ContactApi#findByHCPartyPatientSecretFKeys")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling ContactApi#findByHCPartyPatientSecretFKeys")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **hcPartyId** | **kotlin.String**|  |
- **secretFKeys** | **kotlin.String**|  |
- **planOfActionsIds** | **kotlin.String**|  | [optional]
- **skipClosedContacts** | **kotlin.Boolean**|  | [optional]
-
-### Return type
-
-[**kotlin.collections.List&lt;ContactDto&gt;**](ContactDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="findByHCPartyServiceId"></a>
-# **findByHCPartyServiceId**
-> kotlin.collections.List&lt;ContactDto&gt; findByHCPartyServiceId(hcPartyId, serviceId)
-
-List contacts found By Healthcare Party and service Id.
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = ContactApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val serviceId : kotlin.String = serviceId_example // kotlin.String | 
-try {
-    val result : kotlin.collections.List<ContactDto> = apiInstance.findByHCPartyServiceId(hcPartyId, serviceId)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling ContactApi#findByHCPartyServiceId")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling ContactApi#findByHCPartyServiceId")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **hcPartyId** | **kotlin.String**|  |
- **serviceId** | **kotlin.String**|  |
-
-### Return type
-
-[**kotlin.collections.List&lt;ContactDto&gt;**](ContactDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="findContactsByExternalId"></a>
-# **findContactsByExternalId**
-> kotlin.collections.List&lt;ContactDto&gt; findContactsByExternalId(externalId)
-
-List contacts found By externalId.
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = ContactApi()
-val externalId : kotlin.String = externalId_example // kotlin.String | 
-try {
-    val result : kotlin.collections.List<ContactDto> = apiInstance.findContactsByExternalId(externalId)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling ContactApi#findContactsByExternalId")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling ContactApi#findContactsByExternalId")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **externalId** | **kotlin.String**|  |
-
-### Return type
-
-[**kotlin.collections.List&lt;ContactDto&gt;**](ContactDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="findContactsByHCPartyPatientForeignKeys"></a>
-# **findContactsByHCPartyPatientForeignKeys**
-> kotlin.collections.List&lt;ContactDto&gt; findContactsByHCPartyPatientForeignKeys(hcPartyId, listOfIdsDto)
-
-Get a list of contacts found by Healthcare Party and Patient foreign keys.
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = ContactApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
-try {
-    val result : kotlin.collections.List<ContactDto> = apiInstance.findContactsByHCPartyPatientForeignKeys(hcPartyId, listOfIdsDto)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling ContactApi#findContactsByHCPartyPatientForeignKeys")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling ContactApi#findContactsByHCPartyPatientForeignKeys")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **hcPartyId** | **kotlin.String**|  |
- **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
-
-### Return type
-
-[**kotlin.collections.List&lt;ContactDto&gt;**](ContactDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: */*
-
-<a name="findContactsDelegationsStubsByHCPartyPatientForeignKeys"></a>
-# **findContactsDelegationsStubsByHCPartyPatientForeignKeys**
-> kotlin.collections.List&lt;IcureStubDto&gt; findContactsDelegationsStubsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
-
-List contacts found By Healthcare Party and secret foreign keys.
-
-Keys must be delimited by coma
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = ContactApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
-try {
-    val result : kotlin.collections.List<IcureStubDto> = apiInstance.findContactsDelegationsStubsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling ContactApi#findContactsDelegationsStubsByHCPartyPatientForeignKeys")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling ContactApi#findContactsDelegationsStubsByHCPartyPatientForeignKeys")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **hcPartyId** | **kotlin.String**|  |
- **secretFKeys** | **kotlin.String**|  |
-
-### Return type
-
-[**kotlin.collections.List&lt;IcureStubDto&gt;**](IcureStubDto.md)
+[**PaginatedListContactDto**](PaginatedListContactDto.md)
 
 ### Authorization
 
@@ -666,8 +387,6 @@ No authorization required
 > ContactDto getContact(contactId)
 
 Get a contact
-
-Gets a contact based on its id
 
 ### Example
 ```kotlin
@@ -712,9 +431,7 @@ No authorization required
 # **getContacts**
 > kotlin.collections.List&lt;ContactDto&gt; getContacts(listOfIdsDto)
 
-Get contacts by batch
-
-Get a list of contact by ids/keys.
+Get contacts
 
 ### Example
 ```kotlin
@@ -894,113 +611,9 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: */*
 
-<a name="getServicesIdsByHealthcarePartyAndIdentifiers"></a>
-# **getServicesIdsByHealthcarePartyAndIdentifiers**
-> kotlin.collections.List&lt;IndexedIdentifierDto&gt; getServicesIdsByHealthcarePartyAndIdentifiers(hcPartyId, identifierDto)
-
-Get services ids by identifiers
-
-It gets service data based on the provided identifiers (root &amp; extension)
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = ContactApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val identifierDto : kotlin.collections.List<IdentifierDto> =  // kotlin.collections.List<IdentifierDto> | 
-try {
-    val result : kotlin.collections.List<IndexedIdentifierDto> = apiInstance.getServicesIdsByHealthcarePartyAndIdentifiers(hcPartyId, identifierDto)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling ContactApi#getServicesIdsByHealthcarePartyAndIdentifiers")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling ContactApi#getServicesIdsByHealthcarePartyAndIdentifiers")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **hcPartyId** | **kotlin.String**|  |
- **identifierDto** | [**kotlin.collections.List&lt;IdentifierDto&gt;**](IdentifierDto.md)|  |
-
-### Return type
-
-[**kotlin.collections.List&lt;IndexedIdentifierDto&gt;**](IndexedIdentifierDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: */*
-
-<a name="listContactsByOpeningDate"></a>
-# **listContactsByOpeningDate**
-> PaginatedListContactDto listContactsByOpeningDate(startKey, endKey, hcpartyid, startDocumentId, limit)
-
-List contacts bu opening date parties with(out) pagination
-
-Returns a list of contacts.
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = ContactApi()
-val startKey : kotlin.Long = 789 // kotlin.Long | The contact openingDate
-val endKey : kotlin.Long = 789 // kotlin.Long | The contact max openingDate
-val hcpartyid : kotlin.String = hcpartyid_example // kotlin.String | hcpartyid
-val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A contact party document ID
-val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
-try {
-    val result : PaginatedListContactDto = apiInstance.listContactsByOpeningDate(startKey, endKey, hcpartyid, startDocumentId, limit)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling ContactApi#listContactsByOpeningDate")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling ContactApi#listContactsByOpeningDate")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **startKey** | **kotlin.Long**| The contact openingDate |
- **endKey** | **kotlin.Long**| The contact max openingDate |
- **hcpartyid** | **kotlin.String**| hcpartyid |
- **startDocumentId** | **kotlin.String**| A contact party document ID | [optional]
- **limit** | **kotlin.Int**| Number of rows | [optional]
-
-### Return type
-
-[**PaginatedListContactDto**](PaginatedListContactDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="listServices"></a>
-# **listServices**
-> kotlin.collections.List&lt;ServiceDto&gt; listServices(listOfIdsDto)
+<a name="getServices"></a>
+# **getServices**
+> kotlin.collections.List&lt;ServiceDto&gt; getServices(listOfIdsDto)
 
 List services with provided ids 
 
@@ -1015,13 +628,13 @@ Returns a list of services
 val apiInstance = ContactApi()
 val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
 try {
-    val result : kotlin.collections.List<ServiceDto> = apiInstance.listServices(listOfIdsDto)
+    val result : kotlin.collections.List<ServiceDto> = apiInstance.getServices(listOfIdsDto)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling ContactApi#listServices")
+    println("4xx response calling ContactApi#getServices")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling ContactApi#listServices")
+    println("5xx response calling ContactApi#getServices")
     e.printStackTrace()
 }
 ```
@@ -1043,6 +656,439 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="getServicesIdsByHealthcarePartyAndIdentifiers"></a>
+# **getServicesIdsByHealthcarePartyAndIdentifiers**
+> kotlin.collections.List&lt;IndexedIdentifierDto&gt; getServicesIdsByHealthcarePartyAndIdentifiers(hcPartyId, identifiers)
+
+Get services ids by identifiers
+
+For each provided identifier, links corresponding iCure service id
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = ContactApi()
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
+val identifiers : kotlin.collections.List<IdentifierDto> =  // kotlin.collections.List<IdentifierDto> | 
+try {
+    val result : kotlin.collections.List<IndexedIdentifierDto> = apiInstance.getServicesIdsByHealthcarePartyAndIdentifiers(hcPartyId, identifiers)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling ContactApi#getServicesIdsByHealthcarePartyAndIdentifiers")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling ContactApi#getServicesIdsByHealthcarePartyAndIdentifiers")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **hcPartyId** | **kotlin.String**|  |
+ **identifiers** | [**kotlin.collections.List&lt;IdentifierDto&gt;**](IdentifierDto.md)|  | [default to emptyList()]
+
+### Return type
+
+[**kotlin.collections.List&lt;IndexedIdentifierDto&gt;**](IndexedIdentifierDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="getServicesLinkedTo"></a>
+# **getServicesLinkedTo**
+> kotlin.collections.List&lt;ServiceDto&gt; getServicesLinkedTo(listOfIdsDto, linkType)
+
+List services linked to provided ids 
+
+Returns a list of services
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = ContactApi()
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val linkType : kotlin.String = linkType_example // kotlin.String | The type of the link
+try {
+    val result : kotlin.collections.List<ServiceDto> = apiInstance.getServicesLinkedTo(listOfIdsDto, linkType)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling ContactApi#getServicesLinkedTo")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling ContactApi#getServicesLinkedTo")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
+ **linkType** | **kotlin.String**| The type of the link | [optional]
+
+### Return type
+
+[**kotlin.collections.List&lt;ServiceDto&gt;**](ServiceDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="listContactByHCPartyServiceId"></a>
+# **listContactByHCPartyServiceId**
+> kotlin.collections.List&lt;ContactDto&gt; listContactByHCPartyServiceId(hcPartyId, serviceId)
+
+List contacts found By Healthcare Party and service Id.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = ContactApi()
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
+val serviceId : kotlin.String = serviceId_example // kotlin.String | 
+try {
+    val result : kotlin.collections.List<ContactDto> = apiInstance.listContactByHCPartyServiceId(hcPartyId, serviceId)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling ContactApi#listContactByHCPartyServiceId")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling ContactApi#listContactByHCPartyServiceId")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **hcPartyId** | **kotlin.String**|  |
+ **serviceId** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;ContactDto&gt;**](ContactDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="listContactsByExternalId"></a>
+# **listContactsByExternalId**
+> kotlin.collections.List&lt;ContactDto&gt; listContactsByExternalId(externalId)
+
+List contacts found By externalId.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = ContactApi()
+val externalId : kotlin.String = externalId_example // kotlin.String | 
+try {
+    val result : kotlin.collections.List<ContactDto> = apiInstance.listContactsByExternalId(externalId)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling ContactApi#listContactsByExternalId")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling ContactApi#listContactsByExternalId")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **externalId** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;ContactDto&gt;**](ContactDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="listContactsByHCPartyAndFormId"></a>
+# **listContactsByHCPartyAndFormId**
+> kotlin.collections.List&lt;ContactDto&gt; listContactsByHCPartyAndFormId(hcPartyId, formId)
+
+List contacts found By Healthcare Party and form Id.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = ContactApi()
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
+val formId : kotlin.String = formId_example // kotlin.String | 
+try {
+    val result : kotlin.collections.List<ContactDto> = apiInstance.listContactsByHCPartyAndFormId(hcPartyId, formId)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling ContactApi#listContactsByHCPartyAndFormId")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling ContactApi#listContactsByHCPartyAndFormId")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **hcPartyId** | **kotlin.String**|  |
+ **formId** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;ContactDto&gt;**](ContactDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="listContactsByHCPartyAndFormIds"></a>
+# **listContactsByHCPartyAndFormIds**
+> kotlin.collections.List&lt;ContactDto&gt; listContactsByHCPartyAndFormIds(hcPartyId, listOfIdsDto)
+
+List contacts found By Healthcare Party and form Id.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = ContactApi()
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+try {
+    val result : kotlin.collections.List<ContactDto> = apiInstance.listContactsByHCPartyAndFormIds(hcPartyId, listOfIdsDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling ContactApi#listContactsByHCPartyAndFormIds")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling ContactApi#listContactsByHCPartyAndFormIds")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **hcPartyId** | **kotlin.String**|  |
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;ContactDto&gt;**](ContactDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="listContactsByHCPartyAndPatientForeignKeys"></a>
+# **listContactsByHCPartyAndPatientForeignKeys**
+> kotlin.collections.List&lt;ContactDto&gt; listContactsByHCPartyAndPatientForeignKeys(hcPartyId, listOfIdsDto)
+
+List contacts found By Healthcare Party and Patient foreign keys.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = ContactApi()
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+try {
+    val result : kotlin.collections.List<ContactDto> = apiInstance.listContactsByHCPartyAndPatientForeignKeys(hcPartyId, listOfIdsDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling ContactApi#listContactsByHCPartyAndPatientForeignKeys")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling ContactApi#listContactsByHCPartyAndPatientForeignKeys")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **hcPartyId** | **kotlin.String**|  |
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;ContactDto&gt;**](ContactDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="listContactsByHCPartyAndPatientSecretFKeys"></a>
+# **listContactsByHCPartyAndPatientSecretFKeys**
+> kotlin.collections.List&lt;ContactDto&gt; listContactsByHCPartyAndPatientSecretFKeys(hcPartyId, secretFKeys, planOfActionsIds, skipClosedContacts)
+
+List contacts found By Healthcare Party and secret foreign keys.
+
+Keys must be delimited by coma
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = ContactApi()
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
+val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
+val planOfActionsIds : kotlin.String = planOfActionsIds_example // kotlin.String | 
+val skipClosedContacts : kotlin.Boolean = true // kotlin.Boolean | 
+try {
+    val result : kotlin.collections.List<ContactDto> = apiInstance.listContactsByHCPartyAndPatientSecretFKeys(hcPartyId, secretFKeys, planOfActionsIds, skipClosedContacts)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling ContactApi#listContactsByHCPartyAndPatientSecretFKeys")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling ContactApi#listContactsByHCPartyAndPatientSecretFKeys")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **hcPartyId** | **kotlin.String**|  |
+ **secretFKeys** | **kotlin.String**|  |
+ **planOfActionsIds** | **kotlin.String**|  | [optional]
+ **skipClosedContacts** | **kotlin.Boolean**|  | [optional]
+
+### Return type
+
+[**kotlin.collections.List&lt;ContactDto&gt;**](ContactDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="listContactsDelegationsStubsByHCPartyAndPatientForeignKeys"></a>
+# **listContactsDelegationsStubsByHCPartyAndPatientForeignKeys**
+> kotlin.collections.List&lt;IcureStubDto&gt; listContactsDelegationsStubsByHCPartyAndPatientForeignKeys(hcPartyId, secretFKeys)
+
+List contacts found By Healthcare Party and secret foreign keys.
+
+Keys must be delimited by coma
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = ContactApi()
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
+val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
+try {
+    val result : kotlin.collections.List<IcureStubDto> = apiInstance.listContactsDelegationsStubsByHCPartyAndPatientForeignKeys(hcPartyId, secretFKeys)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling ContactApi#listContactsDelegationsStubsByHCPartyAndPatientForeignKeys")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling ContactApi#listContactsDelegationsStubsByHCPartyAndPatientForeignKeys")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **hcPartyId** | **kotlin.String**|  |
+ **secretFKeys** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;IcureStubDto&gt;**](IcureStubDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
  - **Accept**: */*
 
 <a name="listServicesByAssociationId"></a>
@@ -1090,55 +1136,6 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="listServicesLinkedTo"></a>
-# **listServicesLinkedTo**
-> kotlin.collections.List&lt;ServiceDto&gt; listServicesLinkedTo(listOfIdsDto, linkType)
-
-List services linked to provided ids 
-
-Returns a list of services
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = ContactApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
-val linkType : kotlin.String = linkType_example // kotlin.String | The type of the link
-try {
-    val result : kotlin.collections.List<ServiceDto> = apiInstance.listServicesLinkedTo(listOfIdsDto, linkType)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling ContactApi#listServicesLinkedTo")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling ContactApi#listServicesLinkedTo")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
- **linkType** | **kotlin.String**| The type of the link | [optional]
-
-### Return type
-
-[**kotlin.collections.List&lt;ServiceDto&gt;**](ServiceDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
  - **Accept**: */*
 
 <a name="matchContactsBy"></a>
@@ -1266,6 +1263,53 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **contactDto** | [**kotlin.collections.List&lt;ContactDto&gt;**](ContactDto.md)|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;ContactDto&gt;**](ContactDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="modifyContactsDelegations"></a>
+# **modifyContactsDelegations**
+> kotlin.collections.List&lt;ContactDto&gt; modifyContactsDelegations(icureStubDto)
+
+Update delegations in healthElements.
+
+Keys must be delimited by coma
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = ContactApi()
+val icureStubDto : kotlin.collections.List<IcureStubDto> =  // kotlin.collections.List<IcureStubDto> | 
+try {
+    val result : kotlin.collections.List<ContactDto> = apiInstance.modifyContactsDelegations(icureStubDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling ContactApi#modifyContactsDelegations")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling ContactApi#modifyContactsDelegations")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **icureStubDto** | [**kotlin.collections.List&lt;IcureStubDto&gt;**](IcureStubDto.md)|  |
 
 ### Return type
 

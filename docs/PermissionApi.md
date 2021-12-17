@@ -4,7 +4,7 @@ All URIs are relative to *https://kraken.icure.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**modifyUserPermissions**](PermissionApi.md#modifyUserPermissions) | **PUT** /rest/v1/permissions/{userId} | Add / Revoke permissions to user
+[**modifyUserPermissions**](PermissionApi.md#modifyUserPermissions) | **PUT** /rest/v2/permissions/{userId} | Add / Revoke permissions to user
 
 
 <a name="modifyUserPermissions"></a>

@@ -1,9 +1,9 @@
 /**
  * iCure Data Stack API Documentation
  *
- * The iCure Data Stack Application API is the native interface to iCure. This version is obsolete, please use v2.
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -14,6 +14,7 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
+import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.models.PermissionDto
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -24,7 +25,12 @@ import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
+import kotlinx.coroutines.flow.flowOf
+import java.nio.ByteBuffer
+import java.util.*
 import javax.inject.Named
+import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -49,14 +55,13 @@ class PermissionApi(basePath: kotlin.String = defaultBasePath, webClient: WebCli
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyUserPermissions(userId: kotlin.String, permissionDto: PermissionDto) : kotlin.collections.List<PermissionDto>?  {
+    suspend fun modifyUserPermissions(userId: kotlin.String, permissionDto: PermissionDto) : kotlin.collections.List<PermissionDto>  {
         val localVariableConfig = modifyUserPermissionsRequestConfig(userId = userId, permissionDto = permissionDto)
 
         return request<PermissionDto, kotlin.collections.List<PermissionDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyUserPermissions
     *
@@ -65,17 +70,18 @@ class PermissionApi(basePath: kotlin.String = defaultBasePath, webClient: WebCli
     * @return RequestConfig
     */
     fun modifyUserPermissionsRequestConfig(userId: kotlin.String, permissionDto: PermissionDto) : RequestConfig<PermissionDto> {
-        val localVariableBody = permissionDto
+        // val localVariableBody = permissionDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = permissionDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/permissions/{userId}".replace("{"+"userId"+"}", "$userId"),
+            path = "/rest/v2/permissions/{userId}".replace("{"+"userId"+"}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
 }
