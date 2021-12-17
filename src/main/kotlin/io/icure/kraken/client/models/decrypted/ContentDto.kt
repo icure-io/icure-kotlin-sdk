@@ -60,7 +60,7 @@ data class ContentDto (
     val fuzzyDateValue: kotlin.Long? = null,
 
     @field:JsonProperty("binaryValue")
-    val binaryValue: kotlin.ByteArray? = null,
+    val binaryValue: io.icure.kraken.client.infrastructure.ByteArrayWrapper? = null,
 
     /* Id of the document in which the content is being filled. */
     @field:JsonProperty("documentId")

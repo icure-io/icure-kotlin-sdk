@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.github.pozo.KotlinBuilder
+import io.icure.kraken.client.infrastructure.ByteArrayWrapper
 import io.icure.kraken.client.models.AddressDto
 import io.icure.kraken.client.models.CodeStubDto
 import io.icure.kraken.client.models.DelegationDto
@@ -363,7 +364,7 @@ data class PatientDto (
 
     /* A picture usually saved in JPEG format. */
     @field:JsonProperty("picture")
-    val picture: ByteArray? = null,
+    val picture: ByteArrayWrapper? = null,
 
     /* An external (from another source) id with no guarantee or requirement for unicity . */
     @field:JsonProperty("externalId")
