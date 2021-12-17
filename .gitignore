@@ -24,3 +24,6 @@ build/
 .openapi-generator/
 api/
 icure-openapi-spec.json
+/.credentialsCouchDB
+/.credentialsReadOnly
+/.credentialsReadWrite
