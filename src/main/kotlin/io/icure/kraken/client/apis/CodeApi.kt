@@ -1,9 +1,9 @@
 /**
  * iCure Data Stack API Documentation
  *
- * The iCure Data Stack Application API is the native interface to iCure. This version is obsolete, please use v2.
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -14,8 +14,10 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
+import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.models.CodeDto
 import io.icure.kraken.client.models.FilterChainCode
+import io.icure.kraken.client.models.ListOfIdsDto
 import io.icure.kraken.client.models.PaginatedListCodeDto
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -26,7 +28,12 @@ import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
+import kotlinx.coroutines.flow.flowOf
+import java.nio.ByteBuffer
+import java.util.*
 import javax.inject.Named
+import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -40,8 +47,8 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     }
 
     /**
-    * Create a code
-    * Create a code entity. Fields Type, Code and Version are required.
+    * Create a Code
+    * Type, Code and Version are required.
     * @param codeDto  
     * @return CodeDto
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
@@ -50,14 +57,13 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createCode(codeDto: CodeDto) : CodeDto?  {
+    suspend fun createCode(codeDto: CodeDto) : CodeDto  {
         val localVariableConfig = createCodeRequestConfig(codeDto = codeDto)
 
         return request<CodeDto, CodeDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createCode
     *
@@ -65,21 +71,22 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     * @return RequestConfig
     */
     fun createCodeRequestConfig(codeDto: CodeDto) : RequestConfig<CodeDto> {
-        val localVariableBody = codeDto
+        // val localVariableBody = codeDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = codeDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/code",
+            path = "/rest/v2/code",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
-    * Filter codes
+    * Filter codes 
     * Returns a list of codes along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
     * @param startKey The start key for pagination, depends on the filters used (optional)
     * @param startDocumentId A patient document ID (optional)
@@ -95,14 +102,13 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun filterCodesBy(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, skip: kotlin.Int?, sort: kotlin.String?, desc: kotlin.Boolean?, filterChainCode: FilterChainCode?) : PaginatedListCodeDto?  {
+    suspend fun filterCodesBy(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, skip: kotlin.Int?, sort: kotlin.String?, desc: kotlin.Boolean?, filterChainCode: FilterChainCode?) : PaginatedListCodeDto  {
         val localVariableConfig = filterCodesByRequestConfig(startKey = startKey, startDocumentId = startDocumentId, limit = limit, skip = skip, sort = sort, desc = desc, filterChainCode = filterChainCode)
 
         return request<FilterChainCode, PaginatedListCodeDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation filterCodesBy
     *
@@ -116,7 +122,7 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     * @return RequestConfig
     */
     fun filterCodesByRequestConfig(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, skip: kotlin.Int?, sort: kotlin.String?, desc: kotlin.Boolean?, filterChainCode: FilterChainCode?) : RequestConfig<FilterChainCode> {
-        val localVariableBody = filterChainCode
+        // val localVariableBody = filterChainCode
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (startKey != null) {
@@ -138,201 +144,20 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
                     put("desc", listOf(desc.toString()))
                 }
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = filterChainCode
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/code/filter",
+            path = "/rest/v2/code/filter",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
-    * Get list of code types by region and type.
-    * Returns a list of code types matched with given input.
-    * @param region Code region (optional)
-    * @param type Code type (optional)
-    * @return kotlin.collections.List<kotlin.String>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findCodeTypes(region: kotlin.String?, type: kotlin.String?) : kotlin.collections.List<kotlin.String>?  {
-        val localVariableConfig = findCodeTypesRequestConfig(region = region, type = type)
-
-        return request<Unit, kotlin.collections.List<kotlin.String>>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation findCodeTypes
-    *
-    * @param region Code region (optional)
-    * @param type Code type (optional)
-    * @return RequestConfig
-    */
-    fun findCodeTypesRequestConfig(region: kotlin.String?, type: kotlin.String?) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
-            .apply {
-                if (region != null) {
-                    put("region", listOf(region.toString()))
-                }
-                if (type != null) {
-                    put("type", listOf(type.toString()))
-                }
-            }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/code/codetype/byRegionType",
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Gets list of codes by code, type and version
-    * Returns a list of codes matched with given input.
-    * @param region Code region (optional)
-    * @param type Code type (optional)
-    * @param code Code code (optional)
-    * @param version Code version (optional)
-    * @return kotlin.collections.List<CodeDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findCodes(region: kotlin.String?, type: kotlin.String?, code: kotlin.String?, version: kotlin.String?) : kotlin.collections.List<CodeDto>?  {
-        val localVariableConfig = findCodesRequestConfig(region = region, type = type, code = code, version = version)
-
-        return request<Unit, kotlin.collections.List<CodeDto>>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation findCodes
-    *
-    * @param region Code region (optional)
-    * @param type Code type (optional)
-    * @param code Code code (optional)
-    * @param version Code version (optional)
-    * @return RequestConfig
-    */
-    fun findCodesRequestConfig(region: kotlin.String?, type: kotlin.String?, code: kotlin.String?, version: kotlin.String?) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
-            .apply {
-                if (region != null) {
-                    put("region", listOf(region.toString()))
-                }
-                if (type != null) {
-                    put("type", listOf(type.toString()))
-                }
-                if (code != null) {
-                    put("code", listOf(code.toString()))
-                }
-                if (version != null) {
-                    put("version", listOf(version.toString()))
-                }
-            }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/code/byRegionTypeCode",
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Gets paginated list of codes by code, type and version.
-    * Returns a list of codes matched with given input.
-    * @param region  (optional)
-    * @param type  (optional)
-    * @param code  (optional)
-    * @param version  (optional)
-    * @param startKey The start key for pagination (optional)
-    * @param startDocumentId A code document ID (optional)
-    * @param limit Number of rows (optional)
-    * @return PaginatedListCodeDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findPaginatedCodes(region: kotlin.String?, type: kotlin.String?, code: kotlin.String?, version: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListCodeDto?  {
-        val localVariableConfig = findPaginatedCodesRequestConfig(region = region, type = type, code = code, version = version, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
-
-        return request<Unit, PaginatedListCodeDto>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation findPaginatedCodes
-    *
-    * @param region  (optional)
-    * @param type  (optional)
-    * @param code  (optional)
-    * @param version  (optional)
-    * @param startKey The start key for pagination (optional)
-    * @param startDocumentId A code document ID (optional)
-    * @param limit Number of rows (optional)
-    * @return RequestConfig
-    */
-    fun findPaginatedCodesRequestConfig(region: kotlin.String?, type: kotlin.String?, code: kotlin.String?, version: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
-            .apply {
-                if (region != null) {
-                    put("region", listOf(region.toString()))
-                }
-                if (type != null) {
-                    put("type", listOf(type.toString()))
-                }
-                if (code != null) {
-                    put("code", listOf(code.toString()))
-                }
-                if (version != null) {
-                    put("version", listOf(version.toString()))
-                }
-                if (startKey != null) {
-                    put("startKey", listOf(startKey.toString()))
-                }
-                if (startDocumentId != null) {
-                    put("startDocumentId", listOf(startDocumentId.toString()))
-                }
-                if (limit != null) {
-                    put("limit", listOf(limit.toString()))
-                }
-            }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/code",
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Get paginated list of codes by code, type and version.
+    * Finding codes by code, type and version with pagination.
     * Returns a list of codes matched with given input. If several types are provided, pagination is not supported
     * @param region  (optional)
     * @param types  (optional)
@@ -348,16 +173,15 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findPaginatedCodesByLabel(region: kotlin.String?, types: kotlin.String?, language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListCodeDto?  {
-        val localVariableConfig = findPaginatedCodesByLabelRequestConfig(region = region, types = types, language = language, label = label, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
+    suspend fun findCodesByLabel(region: kotlin.String?, types: kotlin.String?, language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListCodeDto  {
+        val localVariableConfig = findCodesByLabelRequestConfig(region = region, types = types, language = language, label = label, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListCodeDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
-    * To obtain the request config of the operation findPaginatedCodesByLabel
+    * To obtain the request config of the operation findCodesByLabel
     *
     * @param region  (optional)
     * @param types  (optional)
@@ -368,8 +192,8 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     * @param limit Number of rows (optional)
     * @return RequestConfig
     */
-    fun findPaginatedCodesByLabelRequestConfig(region: kotlin.String?, types: kotlin.String?, language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun findCodesByLabelRequestConfig(region: kotlin.String?, types: kotlin.String?, language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (region != null) {
@@ -395,18 +219,19 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/code/byLabel",
+            path = "/rest/v2/code/byLabel",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
-    * Gets paginated list of codes by link and link type.
+    * Finding codes by code, type and version with pagination.
     * Returns a list of codes matched with given input.
     * @param linkType  
     * @param linkedId  (optional)
@@ -420,16 +245,15 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findPaginatedCodesWithLink(linkType: kotlin.String, linkedId: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListCodeDto?  {
-        val localVariableConfig = findPaginatedCodesWithLinkRequestConfig(linkType = linkType, linkedId = linkedId, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
+    suspend fun findCodesByLink(linkType: kotlin.String, linkedId: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListCodeDto  {
+        val localVariableConfig = findCodesByLinkRequestConfig(linkType = linkType, linkedId = linkedId, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListCodeDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
-    * To obtain the request config of the operation findPaginatedCodesWithLink
+    * To obtain the request config of the operation findCodesByLink
     *
     * @param linkType  
     * @param linkedId  (optional)
@@ -438,8 +262,8 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     * @param limit Number of rows (optional)
     * @return RequestConfig
     */
-    fun findPaginatedCodesWithLinkRequestConfig(linkType: kotlin.String, linkedId: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun findCodesByLinkRequestConfig(linkType: kotlin.String, linkedId: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (linkedId != null) {
@@ -456,19 +280,254 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/code/link/{linkType}".replace("{"+"linkType"+"}", "$linkType"),
+            path = "/rest/v2/code/byLink/{linkType}".replace("{"+"linkType"+"}", "${URLEncoder.encode(linkType.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
-    * Gets list of tag types by region and type.
-    * Returns a list of tag types matched with given input.
+    * Finding codes by code, type and version with pagination.
+    * Returns a list of codes matched with given input.
+    * @param region  (optional)
+    * @param type  (optional)
+    * @param code  (optional)
+    * @param version  (optional)
+    * @param startKey The start key for pagination (optional)
+    * @param startDocumentId A code document ID (optional)
+    * @param limit Number of rows (optional)
+    * @return PaginatedListCodeDto
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun findCodesByType(region: kotlin.String?, type: kotlin.String?, code: kotlin.String?, version: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListCodeDto  {
+        val localVariableConfig = findCodesByTypeRequestConfig(region = region, type = type, code = code, version = version, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
+
+        return request<Unit, PaginatedListCodeDto>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation findCodesByType
+    *
+    * @param region  (optional)
+    * @param type  (optional)
+    * @param code  (optional)
+    * @param version  (optional)
+    * @param startKey The start key for pagination (optional)
+    * @param startDocumentId A code document ID (optional)
+    * @param limit Number of rows (optional)
+    * @return RequestConfig
+    */
+    fun findCodesByTypeRequestConfig(region: kotlin.String?, type: kotlin.String?, code: kotlin.String?, version: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                if (region != null) {
+                    put("region", listOf(region.toString()))
+                }
+                if (type != null) {
+                    put("type", listOf(type.toString()))
+                }
+                if (code != null) {
+                    put("code", listOf(code.toString()))
+                }
+                if (version != null) {
+                    put("version", listOf(version.toString()))
+                }
+                if (startKey != null) {
+                    put("startKey", listOf(startKey.toString()))
+                }
+                if (startDocumentId != null) {
+                    put("startDocumentId", listOf(startDocumentId.toString()))
+                }
+                if (limit != null) {
+                    put("limit", listOf(limit.toString()))
+                }
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v2/code",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
+    * Get a code
+    * Get a code based on ID or (code,type,version) as query strings. (code,type,version) is unique.
+    * @param codeId Code id 
+    * @return CodeDto
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun getCode(codeId: kotlin.String) : CodeDto  {
+        val localVariableConfig = getCodeRequestConfig(codeId = codeId)
+
+        return request<Unit, CodeDto>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation getCode
+    *
+    * @param codeId Code id 
+    * @return RequestConfig
+    */
+    fun getCodeRequestConfig(codeId: kotlin.String) : RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v2/code/{codeId}".replace("{"+"codeId"+"}", "${URLEncoder.encode(codeId.toString(), Charsets.UTF_8)}"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
+    * Get a code
+    * Get a code based on ID or (code,type,version) as query strings. (code,type,version) is unique.
+    * @param type Code type 
+    * @param code Code code 
+    * @param version Code version 
+    * @return CodeDto
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun getCodeWithParts(type: kotlin.String, code: kotlin.String, version: kotlin.String) : CodeDto  {
+        val localVariableConfig = getCodeWithPartsRequestConfig(type = type, code = code, version = version)
+
+        return request<Unit, CodeDto>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation getCodeWithParts
+    *
+    * @param type Code type 
+    * @param code Code code 
+    * @param version Code version 
+    * @return RequestConfig
+    */
+    fun getCodeWithPartsRequestConfig(type: kotlin.String, code: kotlin.String, version: kotlin.String) : RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v2/code/{type}/{code}/{version}".replace("{"+"type"+"}", "${URLEncoder.encode(type.toString(), Charsets.UTF_8)}").replace("{"+"code"+"}", "${URLEncoder.encode(code.toString(), Charsets.UTF_8)}").replace("{"+"version"+"}", "${URLEncoder.encode(version.toString(), Charsets.UTF_8)}"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
+    * Get a list of codes by ids
+    * Keys must be delimited by coma
+    * @param listOfIdsDto  
+    * @return kotlin.collections.List<CodeDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun getCodes(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<CodeDto>  {
+        val localVariableConfig = getCodesRequestConfig(listOfIdsDto = listOfIdsDto)
+
+        return request<ListOfIdsDto, kotlin.collections.List<CodeDto>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation getCodes
+    *
+    * @param listOfIdsDto  
+    * @return RequestConfig
+    */
+    fun getCodesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+        // val localVariableBody = listOfIdsDto
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = listOfIdsDto
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v2/code/byIds",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
+    * Import codes
+    * Import codes from the resources XML file depending on the passed pathVariable
+    * @param codeType  
+    * @return kotlin.Any
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun importCodes(codeType: kotlin.String) : kotlin.Any  {
+        val localVariableConfig = importCodesRequestConfig(codeType = codeType)
+
+        return request<Unit, kotlin.Any>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation importCodes
+    *
+    * @param codeType  
+    * @return RequestConfig
+    */
+    fun importCodesRequestConfig(codeType: kotlin.String) : RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v2/code/{codeType}".replace("{"+"codeType"+"}", "${URLEncoder.encode(codeType.toString(), Charsets.UTF_8)}"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
+    * Finding code types.
+    * Returns a list of code types matched with given input.
     * @param region Code region (optional)
     * @param type Code type (optional)
     * @return kotlin.collections.List<kotlin.String>
@@ -478,23 +537,22 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findTagTypes(region: kotlin.String?, type: kotlin.String?) : kotlin.collections.List<kotlin.String>?  {
-        val localVariableConfig = findTagTypesRequestConfig(region = region, type = type)
+    suspend fun listCodeTypesBy(region: kotlin.String?, type: kotlin.String?) : kotlin.collections.List<kotlin.String>  {
+        val localVariableConfig = listCodeTypesByRequestConfig(region = region, type = type)
 
         return request<Unit, kotlin.collections.List<kotlin.String>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
-    * To obtain the request config of the operation findTagTypes
+    * To obtain the request config of the operation listCodeTypesBy
     *
     * @param region Code region (optional)
     * @param type Code type (optional)
     * @return RequestConfig
     */
-    fun findTagTypesRequestConfig(region: kotlin.String?, type: kotlin.String?) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun listCodeTypesByRequestConfig(region: kotlin.String?, type: kotlin.String?) : RequestConfig<Unit> {
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (region != null) {
@@ -505,102 +563,24 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/code/tagtype/byRegionType",
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Get a code by id
-    * Get a code based on its id
-    * @param codeId Code id 
-    * @return CodeDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getCode(codeId: kotlin.String) : CodeDto?  {
-        val localVariableConfig = getCodeRequestConfig(codeId = codeId)
-
-        return request<Unit, CodeDto>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation getCode
-    *
-    * @param codeId Code id 
-    * @return RequestConfig
-    */
-    fun getCodeRequestConfig(codeId: kotlin.String) : RequestConfig<Unit> {
+        localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/code/{codeId}".replace("{"+"codeId"+"}", "$codeId"),
+            path = "/rest/v2/code/codetype/byRegionType",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
-    * Get a code
-    * Get a code based on (type, code, version) as query strings. (type, code, version) is unique.
-    * @param type Code type 
-    * @param code Code code 
-    * @param version Code version 
-    * @return CodeDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getCodeWithParts(type: kotlin.String, code: kotlin.String, version: kotlin.String) : CodeDto?  {
-        val localVariableConfig = getCodeWithPartsRequestConfig(type = type, code = code, version = version)
-
-        return request<Unit, CodeDto>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation getCodeWithParts
-    *
-    * @param type Code type 
-    * @param code Code code 
-    * @param version Code version 
-    * @return RequestConfig
-    */
-    fun getCodeWithPartsRequestConfig(type: kotlin.String, code: kotlin.String, version: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/code/{type}/{code}/{version}".replace("{"+"type"+"}", "$type").replace("{"+"code"+"}", "$code").replace("{"+"version"+"}", "$version"),
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Gets a list of codes by ids
-    * Get a list of codes by ids/keys. Keys must be delimited by coma
-    * @param codeIds  
+    * Finding codes by code, type and version
+    * Returns a list of codes matched with given input.
+    * @param region Code region (optional)
+    * @param type Code type (optional)
+    * @param code Code code (optional)
+    * @param version Code version (optional)
     * @return kotlin.collections.List<CodeDto>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -608,32 +588,98 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getCodes(codeIds: kotlin.String) : kotlin.collections.List<CodeDto>?  {
-        val localVariableConfig = getCodesRequestConfig(codeIds = codeIds)
+    suspend fun listCodesByRegionTypeCodeVersion(region: kotlin.String?, type: kotlin.String?, code: kotlin.String?, version: kotlin.String?) : kotlin.collections.List<CodeDto>  {
+        val localVariableConfig = listCodesByRegionTypeCodeVersionRequestConfig(region = region, type = type, code = code, version = version)
 
         return request<Unit, kotlin.collections.List<CodeDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
-    * To obtain the request config of the operation getCodes
+    * To obtain the request config of the operation listCodesByRegionTypeCodeVersion
     *
-    * @param codeIds  
+    * @param region Code region (optional)
+    * @param type Code type (optional)
+    * @param code Code code (optional)
+    * @param version Code version (optional)
     * @return RequestConfig
     */
-    fun getCodesRequestConfig(codeIds: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf()
+    fun listCodesByRegionTypeCodeVersionRequestConfig(region: kotlin.String?, type: kotlin.String?, code: kotlin.String?, version: kotlin.String?) : RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                if (region != null) {
+                    put("region", listOf(region.toString()))
+                }
+                if (type != null) {
+                    put("type", listOf(type.toString()))
+                }
+                if (code != null) {
+                    put("code", listOf(code.toString()))
+                }
+                if (version != null) {
+                    put("version", listOf(version.toString()))
+                }
+            }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/code/byIds/{codeIds}".replace("{"+"codeIds"+"}", "$codeIds"),
+            path = "/rest/v2/code/byRegionTypeCode",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
+    }
+
+    /**
+    * Finding tag types.
+    * Returns a list of tag types matched with given input.
+    * @param region Code region (optional)
+    * @param type Code type (optional)
+    * @return kotlin.collections.List<kotlin.String>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun listTagTypesBy(region: kotlin.String?, type: kotlin.String?) : kotlin.collections.List<kotlin.String>  {
+        val localVariableConfig = listTagTypesByRequestConfig(region = region, type = type)
+
+        return request<Unit, kotlin.collections.List<kotlin.String>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation listTagTypesBy
+    *
+    * @param region Code region (optional)
+    * @param type Code type (optional)
+    * @return RequestConfig
+    */
+    fun listTagTypesByRequestConfig(region: kotlin.String?, type: kotlin.String?) : RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                if (region != null) {
+                    put("region", listOf(region.toString()))
+                }
+                if (type != null) {
+                    put("type", listOf(type.toString()))
+                }
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v2/code/tagtype/byRegionType",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
     }
 
     /**
@@ -686,14 +732,13 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyCode(codeDto: CodeDto) : CodeDto?  {
+    suspend fun modifyCode(codeDto: CodeDto) : CodeDto  {
         val localVariableConfig = modifyCodeRequestConfig(codeDto = codeDto)
 
         return request<CodeDto, CodeDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyCode
     *
@@ -701,17 +746,18 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     * @return RequestConfig
     */
     fun modifyCodeRequestConfig(codeDto: CodeDto) : RequestConfig<CodeDto> {
-        val localVariableBody = codeDto
+        // val localVariableBody = codeDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = codeDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/code",
+            path = "/rest/v2/code",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
 }

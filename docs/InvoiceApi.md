@@ -4,37 +4,37 @@ All URIs are relative to *https://kraken.icure.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**appendCodes**](InvoiceApi.md#appendCodes) | **POST** /rest/v1/invoice/byauthor/{userId}/append/{type}/{sentMediumType} | Gets all invoices for author at date
-[**createInvoice**](InvoiceApi.md#createInvoice) | **POST** /rest/v1/invoice | Creates an invoice
-[**createInvoices**](InvoiceApi.md#createInvoices) | **POST** /rest/v1/invoice/batch | Create a batch of invoices
-[**deleteInvoice**](InvoiceApi.md#deleteInvoice) | **DELETE** /rest/v1/invoice/{invoiceId} | Deletes an invoice
-[**filterInvoicesBy**](InvoiceApi.md#filterInvoicesBy) | **POST** /rest/v1/invoice/filter | Filter invoices for the current user (HcParty)
-[**findByAuthor**](InvoiceApi.md#findByAuthor) | **GET** /rest/v1/invoice/byauthor/{hcPartyId} | Gets all invoices for author at date
-[**findInvoicesByHCPartyPatientForeignKeys**](InvoiceApi.md#findInvoicesByHCPartyPatientForeignKeys) | **GET** /rest/v1/invoice/byHcPartySecretForeignKeys | List invoices found By Healthcare Party and secret foreign patient keys.
-[**findInvoicesDelegationsStubsByHCPartyPatientForeignKeys**](InvoiceApi.md#findInvoicesDelegationsStubsByHCPartyPatientForeignKeys) | **GET** /rest/v1/invoice/byHcPartySecretForeignKeys/delegations | List helement stubs found By Healthcare Party and secret foreign keys.
-[**getInvoice**](InvoiceApi.md#getInvoice) | **GET** /rest/v1/invoice/{invoiceId} | Gets an invoice
-[**getInvoices**](InvoiceApi.md#getInvoices) | **POST** /rest/v1/invoice/byIds | Gets an invoice
-[**getTarificationsCodesOccurences**](InvoiceApi.md#getTarificationsCodesOccurences) | **GET** /rest/v1/invoice/codes/{minOccurences} | Get the list of all used tarifications frequencies in invoices
-[**listAllHcpsByStatus**](InvoiceApi.md#listAllHcpsByStatus) | **POST** /rest/v1/invoice/allHcpsByStatus/{status} | Gets all invoices per status
-[**listByContactIds**](InvoiceApi.md#listByContactIds) | **POST** /rest/v1/invoice/byCtcts | Gets all invoices for author at date
-[**listByHcPartyGroupId**](InvoiceApi.md#listByHcPartyGroupId) | **GET** /rest/v1/invoice/byHcPartyGroupId/{hcPartyId}/{groupId} | List invoices by groupId
-[**listByHcPartySentMediumTypeInvoiceTypeSentDate**](InvoiceApi.md#listByHcPartySentMediumTypeInvoiceTypeSentDate) | **GET** /rest/v1/invoice/byHcParty/{hcPartyId}/mediumType/{sentMediumType}/invoiceType/{invoiceType}/sent/{sent} | List invoices by type, sent or unsent
-[**listByHcpartySendingModeStatusDate**](InvoiceApi.md#listByHcpartySendingModeStatusDate) | **GET** /rest/v1/invoice/byHcpartySendingModeStatusDate/{hcPartyId} | Get all invoices by author, by sending mode, by status and by date
-[**listByIds**](InvoiceApi.md#listByIds) | **GET** /rest/v1/invoice/byIds/{invoiceIds} | Gets all invoices for author at date
-[**listByRecipientsIds**](InvoiceApi.md#listByRecipientsIds) | **GET** /rest/v1/invoice/to/{recipientIds} | Gets all invoices for author at date
-[**listByServiceIds**](InvoiceApi.md#listByServiceIds) | **GET** /rest/v1/invoice/byServiceIds/{serviceIds} | Gets all invoices for author at date
-[**listToInsurances**](InvoiceApi.md#listToInsurances) | **GET** /rest/v1/invoice/toInsurances | Gets all invoices for author at date
-[**listToInsurancesUnsent**](InvoiceApi.md#listToInsurancesUnsent) | **GET** /rest/v1/invoice/toInsurances/unsent | Gets all invoices for author at date
-[**listToPatients**](InvoiceApi.md#listToPatients) | **GET** /rest/v1/invoice/toPatients | Gets all invoices for author at date
-[**listToPatientsUnsent**](InvoiceApi.md#listToPatientsUnsent) | **GET** /rest/v1/invoice/toPatients/unsent | Gets all invoices for author at date
-[**mergeTo**](InvoiceApi.md#mergeTo) | **POST** /rest/v1/invoice/mergeTo/{invoiceId} | Gets all invoices for author at date
-[**modifyInvoice**](InvoiceApi.md#modifyInvoice) | **PUT** /rest/v1/invoice | Modifies an invoice
-[**modifyInvoices**](InvoiceApi.md#modifyInvoices) | **PUT** /rest/v1/invoice/batch | Modify a batch of invoices
-[**newInvoiceDelegations**](InvoiceApi.md#newInvoiceDelegations) | **PUT** /rest/v1/invoice/{invoiceId}/delegate | Adds a delegation to a invoice
-[**reassignInvoice**](InvoiceApi.md#reassignInvoice) | **POST** /rest/v1/invoice/reassign | Modifies an invoice
-[**removeCodes**](InvoiceApi.md#removeCodes) | **POST** /rest/v1/invoice/byauthor/{userId}/service/{serviceId} | Gets all invoices for author at date
-[**setInvoicesDelegations**](InvoiceApi.md#setInvoicesDelegations) | **POST** /rest/v1/invoice/delegations | Update delegations in healthElements.
-[**validate**](InvoiceApi.md#validate) | **POST** /rest/v1/invoice/validate/{invoiceId} | Gets all invoices for author at date
+[**appendCodes**](InvoiceApi.md#appendCodes) | **POST** /rest/v2/invoice/byauthor/{userId}/append/{type}/{sentMediumType} | Gets all invoices for author at date
+[**createInvoice**](InvoiceApi.md#createInvoice) | **POST** /rest/v2/invoice | Creates an invoice
+[**createInvoices**](InvoiceApi.md#createInvoices) | **POST** /rest/v2/invoice/batch | Create a batch of invoices
+[**deleteInvoice**](InvoiceApi.md#deleteInvoice) | **DELETE** /rest/v2/invoice/{invoiceId} | Deletes an invoice
+[**filterInvoicesBy**](InvoiceApi.md#filterInvoicesBy) | **POST** /rest/v2/invoice/filter | Filter invoices for the current user (HcParty)
+[**findInvoicesByAuthor**](InvoiceApi.md#findInvoicesByAuthor) | **GET** /rest/v2/invoice/byauthor/{hcPartyId} | Gets all invoices for author at date
+[**getInvoice**](InvoiceApi.md#getInvoice) | **GET** /rest/v2/invoice/{invoiceId} | Gets an invoice
+[**getInvoices**](InvoiceApi.md#getInvoices) | **POST** /rest/v2/invoice/byIds | Gets an invoice
+[**getTarificationsCodesOccurences**](InvoiceApi.md#getTarificationsCodesOccurences) | **GET** /rest/v2/invoice/codes/{minOccurences} | Get the list of all used tarifications frequencies in invoices
+[**listAllHcpsByStatus**](InvoiceApi.md#listAllHcpsByStatus) | **POST** /rest/v2/invoice/allHcpsByStatus/{status} | Gets all invoices per status
+[**listInvoicesByContactIds**](InvoiceApi.md#listInvoicesByContactIds) | **POST** /rest/v2/invoice/byContacts | Gets all invoices for author at date
+[**listInvoicesByHCPartyAndPatientForeignKeys**](InvoiceApi.md#listInvoicesByHCPartyAndPatientForeignKeys) | **GET** /rest/v2/invoice/byHcPartySecretForeignKeys | List invoices found By Healthcare Party and secret foreign patient keys.
+[**listInvoicesByHcPartyAndGroupId**](InvoiceApi.md#listInvoicesByHcPartyAndGroupId) | **GET** /rest/v2/invoice/byHcPartyGroupId/{hcPartyId}/{groupId} | List invoices by groupId
+[**listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate**](InvoiceApi.md#listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate) | **GET** /rest/v2/invoice/byHcParty/{hcPartyId}/mediumType/{sentMediumType}/invoiceType/{invoiceType}/sent/{sent} | List invoices by type, sent or unsent
+[**listInvoicesByHcpartySendingModeStatusDate**](InvoiceApi.md#listInvoicesByHcpartySendingModeStatusDate) | **GET** /rest/v2/invoice/byHcpartySendingModeStatusDate/{hcPartyId} | Get all invoices by author, by sending mode, by status and by date
+[**listInvoicesByIds**](InvoiceApi.md#listInvoicesByIds) | **GET** /rest/v2/invoice/byIds/{invoiceIds} | Gets all invoices for author at date
+[**listInvoicesByRecipientsIds**](InvoiceApi.md#listInvoicesByRecipientsIds) | **GET** /rest/v2/invoice/to/{recipientIds} | Gets all invoices for author at date
+[**listInvoicesByServiceIds**](InvoiceApi.md#listInvoicesByServiceIds) | **GET** /rest/v2/invoice/byServiceIds/{serviceIds} | Gets all invoices for author at date
+[**listInvoicesDelegationsStubsByHCPartyAndPatientForeignKeys**](InvoiceApi.md#listInvoicesDelegationsStubsByHCPartyAndPatientForeignKeys) | **GET** /rest/v2/invoice/byHcPartySecretForeignKeys/delegations | List helement stubs found By Healthcare Party and secret foreign keys.
+[**listToInsurances**](InvoiceApi.md#listToInsurances) | **GET** /rest/v2/invoice/toInsurances | Gets all invoices for author at date
+[**listToInsurancesUnsent**](InvoiceApi.md#listToInsurancesUnsent) | **GET** /rest/v2/invoice/toInsurances/unsent | Gets all invoices for author at date
+[**listToPatients**](InvoiceApi.md#listToPatients) | **GET** /rest/v2/invoice/toPatients | Gets all invoices for author at date
+[**listToPatientsUnsent**](InvoiceApi.md#listToPatientsUnsent) | **GET** /rest/v2/invoice/toPatients/unsent | Gets all invoices for author at date
+[**mergeTo**](InvoiceApi.md#mergeTo) | **POST** /rest/v2/invoice/mergeTo/{invoiceId} | Gets all invoices for author at date
+[**modifyInvoice**](InvoiceApi.md#modifyInvoice) | **PUT** /rest/v2/invoice | Modifies an invoice
+[**modifyInvoices**](InvoiceApi.md#modifyInvoices) | **PUT** /rest/v2/invoice/batch | Modify a batch of invoices
+[**newInvoiceDelegations**](InvoiceApi.md#newInvoiceDelegations) | **PUT** /rest/v2/invoice/{invoiceId}/delegate | Adds a delegation to a invoice
+[**reassignInvoice**](InvoiceApi.md#reassignInvoice) | **POST** /rest/v2/invoice/reassign | Modifies an invoice
+[**removeCodes**](InvoiceApi.md#removeCodes) | **POST** /rest/v2/invoice/byauthor/{userId}/service/{serviceId} | Remove an invoice of an user
+[**setInvoicesDelegations**](InvoiceApi.md#setInvoicesDelegations) | **POST** /rest/v2/invoice/delegations | Update delegations in healthElements.
+[**validate**](InvoiceApi.md#validate) | **POST** /rest/v2/invoice/validate/{invoiceId} | Gets all invoices for author at date
 
 
 <a name="appendCodes"></a>
@@ -280,9 +280,9 @@ No authorization required
  - **Content-Type**: application/json
  - **Accept**: */*
 
-<a name="findByAuthor"></a>
-# **findByAuthor**
-> PaginatedListInvoiceDto findByAuthor(hcPartyId, fromDate, toDate, startKey, startDocumentId, limit)
+<a name="findInvoicesByAuthor"></a>
+# **findInvoicesByAuthor**
+> PaginatedListInvoiceDto findInvoicesByAuthor(hcPartyId, fromDate, toDate, startKey, startDocumentId, limit)
 
 Gets all invoices for author at date
 
@@ -300,13 +300,13 @@ val startKey : kotlin.String = startKey_example // kotlin.String | The start key
 val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A patient document ID
 val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
 try {
-    val result : PaginatedListInvoiceDto = apiInstance.findByAuthor(hcPartyId, fromDate, toDate, startKey, startDocumentId, limit)
+    val result : PaginatedListInvoiceDto = apiInstance.findInvoicesByAuthor(hcPartyId, fromDate, toDate, startKey, startDocumentId, limit)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling InvoiceApi#findByAuthor")
+    println("4xx response calling InvoiceApi#findInvoicesByAuthor")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling InvoiceApi#findByAuthor")
+    println("5xx response calling InvoiceApi#findInvoicesByAuthor")
     e.printStackTrace()
 }
 ```
@@ -325,104 +325,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**PaginatedListInvoiceDto**](PaginatedListInvoiceDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="findInvoicesByHCPartyPatientForeignKeys"></a>
-# **findInvoicesByHCPartyPatientForeignKeys**
-> kotlin.collections.List&lt;InvoiceDto&gt; findInvoicesByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
-
-List invoices found By Healthcare Party and secret foreign patient keys.
-
-Keys have to delimited by coma
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = InvoiceApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
-try {
-    val result : kotlin.collections.List<InvoiceDto> = apiInstance.findInvoicesByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling InvoiceApi#findInvoicesByHCPartyPatientForeignKeys")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling InvoiceApi#findInvoicesByHCPartyPatientForeignKeys")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **hcPartyId** | **kotlin.String**|  |
- **secretFKeys** | **kotlin.String**|  |
-
-### Return type
-
-[**kotlin.collections.List&lt;InvoiceDto&gt;**](InvoiceDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="findInvoicesDelegationsStubsByHCPartyPatientForeignKeys"></a>
-# **findInvoicesDelegationsStubsByHCPartyPatientForeignKeys**
-> kotlin.collections.List&lt;IcureStubDto&gt; findInvoicesDelegationsStubsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
-
-List helement stubs found By Healthcare Party and secret foreign keys.
-
-Keys must be delimited by coma
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = InvoiceApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
-try {
-    val result : kotlin.collections.List<IcureStubDto> = apiInstance.findInvoicesDelegationsStubsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling InvoiceApi#findInvoicesDelegationsStubsByHCPartyPatientForeignKeys")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling InvoiceApi#findInvoicesDelegationsStubsByHCPartyPatientForeignKeys")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **hcPartyId** | **kotlin.String**|  |
- **secretFKeys** | **kotlin.String**|  |
-
-### Return type
-
-[**kotlin.collections.List&lt;IcureStubDto&gt;**](IcureStubDto.md)
 
 ### Authorization
 
@@ -619,9 +521,9 @@ No authorization required
  - **Content-Type**: application/json
  - **Accept**: */*
 
-<a name="listByContactIds"></a>
-# **listByContactIds**
-> kotlin.collections.List&lt;InvoiceDto&gt; listByContactIds(listOfIdsDto)
+<a name="listInvoicesByContactIds"></a>
+# **listInvoicesByContactIds**
+> kotlin.collections.List&lt;InvoiceDto&gt; listInvoicesByContactIds(listOfIdsDto)
 
 Gets all invoices for author at date
 
@@ -634,13 +536,13 @@ Gets all invoices for author at date
 val apiInstance = InvoiceApi()
 val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
 try {
-    val result : kotlin.collections.List<InvoiceDto> = apiInstance.listByContactIds(listOfIdsDto)
+    val result : kotlin.collections.List<InvoiceDto> = apiInstance.listInvoicesByContactIds(listOfIdsDto)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling InvoiceApi#listByContactIds")
+    println("4xx response calling InvoiceApi#listInvoicesByContactIds")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling InvoiceApi#listByContactIds")
+    println("5xx response calling InvoiceApi#listInvoicesByContactIds")
     e.printStackTrace()
 }
 ```
@@ -664,9 +566,58 @@ No authorization required
  - **Content-Type**: application/json
  - **Accept**: */*
 
-<a name="listByHcPartyGroupId"></a>
-# **listByHcPartyGroupId**
-> kotlin.collections.List&lt;InvoiceDto&gt; listByHcPartyGroupId(hcPartyId, groupId)
+<a name="listInvoicesByHCPartyAndPatientForeignKeys"></a>
+# **listInvoicesByHCPartyAndPatientForeignKeys**
+> kotlin.collections.List&lt;InvoiceDto&gt; listInvoicesByHCPartyAndPatientForeignKeys(hcPartyId, secretFKeys)
+
+List invoices found By Healthcare Party and secret foreign patient keys.
+
+Keys have to delimited by coma
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = InvoiceApi()
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
+val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
+try {
+    val result : kotlin.collections.List<InvoiceDto> = apiInstance.listInvoicesByHCPartyAndPatientForeignKeys(hcPartyId, secretFKeys)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling InvoiceApi#listInvoicesByHCPartyAndPatientForeignKeys")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling InvoiceApi#listInvoicesByHCPartyAndPatientForeignKeys")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **hcPartyId** | **kotlin.String**|  |
+ **secretFKeys** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;InvoiceDto&gt;**](InvoiceDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="listInvoicesByHcPartyAndGroupId"></a>
+# **listInvoicesByHcPartyAndGroupId**
+> kotlin.collections.List&lt;InvoiceDto&gt; listInvoicesByHcPartyAndGroupId(hcPartyId, groupId)
 
 List invoices by groupId
 
@@ -682,13 +633,13 @@ val apiInstance = InvoiceApi()
 val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
 val groupId : kotlin.String = groupId_example // kotlin.String | 
 try {
-    val result : kotlin.collections.List<InvoiceDto> = apiInstance.listByHcPartyGroupId(hcPartyId, groupId)
+    val result : kotlin.collections.List<InvoiceDto> = apiInstance.listInvoicesByHcPartyAndGroupId(hcPartyId, groupId)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling InvoiceApi#listByHcPartyGroupId")
+    println("4xx response calling InvoiceApi#listInvoicesByHcPartyAndGroupId")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling InvoiceApi#listByHcPartyGroupId")
+    println("5xx response calling InvoiceApi#listInvoicesByHcPartyAndGroupId")
     e.printStackTrace()
 }
 ```
@@ -713,9 +664,9 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: */*
 
-<a name="listByHcPartySentMediumTypeInvoiceTypeSentDate"></a>
-# **listByHcPartySentMediumTypeInvoiceTypeSentDate**
-> kotlin.collections.List&lt;InvoiceDto&gt; listByHcPartySentMediumTypeInvoiceTypeSentDate(hcPartyId, sentMediumType, invoiceType, sent, from, to)
+<a name="listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate"></a>
+# **listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate**
+> kotlin.collections.List&lt;InvoiceDto&gt; listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate(hcPartyId, sentMediumType, invoiceType, sent, from, to)
 
 List invoices by type, sent or unsent
 
@@ -735,13 +686,13 @@ val sent : kotlin.Boolean = true // kotlin.Boolean |
 val from : kotlin.Long = 789 // kotlin.Long | 
 val to : kotlin.Long = 789 // kotlin.Long | 
 try {
-    val result : kotlin.collections.List<InvoiceDto> = apiInstance.listByHcPartySentMediumTypeInvoiceTypeSentDate(hcPartyId, sentMediumType, invoiceType, sent, from, to)
+    val result : kotlin.collections.List<InvoiceDto> = apiInstance.listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate(hcPartyId, sentMediumType, invoiceType, sent, from, to)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling InvoiceApi#listByHcPartySentMediumTypeInvoiceTypeSentDate")
+    println("4xx response calling InvoiceApi#listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling InvoiceApi#listByHcPartySentMediumTypeInvoiceTypeSentDate")
+    println("5xx response calling InvoiceApi#listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate")
     e.printStackTrace()
 }
 ```
@@ -770,9 +721,9 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: */*
 
-<a name="listByHcpartySendingModeStatusDate"></a>
-# **listByHcpartySendingModeStatusDate**
-> kotlin.collections.List&lt;InvoiceDto&gt; listByHcpartySendingModeStatusDate(hcPartyId, sendingMode, status, from, to)
+<a name="listInvoicesByHcpartySendingModeStatusDate"></a>
+# **listInvoicesByHcpartySendingModeStatusDate**
+> kotlin.collections.List&lt;InvoiceDto&gt; listInvoicesByHcpartySendingModeStatusDate(hcPartyId, sendingMode, status, from, to)
 
 Get all invoices by author, by sending mode, by status and by date
 
@@ -789,13 +740,13 @@ val status : kotlin.String = status_example // kotlin.String |
 val from : kotlin.Long = 789 // kotlin.Long | 
 val to : kotlin.Long = 789 // kotlin.Long | 
 try {
-    val result : kotlin.collections.List<InvoiceDto> = apiInstance.listByHcpartySendingModeStatusDate(hcPartyId, sendingMode, status, from, to)
+    val result : kotlin.collections.List<InvoiceDto> = apiInstance.listInvoicesByHcpartySendingModeStatusDate(hcPartyId, sendingMode, status, from, to)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling InvoiceApi#listByHcpartySendingModeStatusDate")
+    println("4xx response calling InvoiceApi#listInvoicesByHcpartySendingModeStatusDate")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling InvoiceApi#listByHcpartySendingModeStatusDate")
+    println("5xx response calling InvoiceApi#listInvoicesByHcpartySendingModeStatusDate")
     e.printStackTrace()
 }
 ```
@@ -823,9 +774,9 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: */*
 
-<a name="listByIds"></a>
-# **listByIds**
-> kotlin.collections.List&lt;InvoiceDto&gt; listByIds(invoiceIds)
+<a name="listInvoicesByIds"></a>
+# **listInvoicesByIds**
+> kotlin.collections.List&lt;InvoiceDto&gt; listInvoicesByIds(invoiceIds)
 
 Gets all invoices for author at date
 
@@ -838,13 +789,13 @@ Gets all invoices for author at date
 val apiInstance = InvoiceApi()
 val invoiceIds : kotlin.String = invoiceIds_example // kotlin.String | 
 try {
-    val result : kotlin.collections.List<InvoiceDto> = apiInstance.listByIds(invoiceIds)
+    val result : kotlin.collections.List<InvoiceDto> = apiInstance.listInvoicesByIds(invoiceIds)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling InvoiceApi#listByIds")
+    println("4xx response calling InvoiceApi#listInvoicesByIds")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling InvoiceApi#listByIds")
+    println("5xx response calling InvoiceApi#listInvoicesByIds")
     e.printStackTrace()
 }
 ```
@@ -868,9 +819,9 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: */*
 
-<a name="listByRecipientsIds"></a>
-# **listByRecipientsIds**
-> kotlin.collections.List&lt;InvoiceDto&gt; listByRecipientsIds(recipientIds)
+<a name="listInvoicesByRecipientsIds"></a>
+# **listInvoicesByRecipientsIds**
+> kotlin.collections.List&lt;InvoiceDto&gt; listInvoicesByRecipientsIds(recipientIds)
 
 Gets all invoices for author at date
 
@@ -883,13 +834,13 @@ Gets all invoices for author at date
 val apiInstance = InvoiceApi()
 val recipientIds : kotlin.String = recipientIds_example // kotlin.String | 
 try {
-    val result : kotlin.collections.List<InvoiceDto> = apiInstance.listByRecipientsIds(recipientIds)
+    val result : kotlin.collections.List<InvoiceDto> = apiInstance.listInvoicesByRecipientsIds(recipientIds)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling InvoiceApi#listByRecipientsIds")
+    println("4xx response calling InvoiceApi#listInvoicesByRecipientsIds")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling InvoiceApi#listByRecipientsIds")
+    println("5xx response calling InvoiceApi#listInvoicesByRecipientsIds")
     e.printStackTrace()
 }
 ```
@@ -913,9 +864,9 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: */*
 
-<a name="listByServiceIds"></a>
-# **listByServiceIds**
-> kotlin.collections.List&lt;InvoiceDto&gt; listByServiceIds(serviceIds)
+<a name="listInvoicesByServiceIds"></a>
+# **listInvoicesByServiceIds**
+> kotlin.collections.List&lt;InvoiceDto&gt; listInvoicesByServiceIds(serviceIds)
 
 Gets all invoices for author at date
 
@@ -928,13 +879,13 @@ Gets all invoices for author at date
 val apiInstance = InvoiceApi()
 val serviceIds : kotlin.String = serviceIds_example // kotlin.String | 
 try {
-    val result : kotlin.collections.List<InvoiceDto> = apiInstance.listByServiceIds(serviceIds)
+    val result : kotlin.collections.List<InvoiceDto> = apiInstance.listInvoicesByServiceIds(serviceIds)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling InvoiceApi#listByServiceIds")
+    println("4xx response calling InvoiceApi#listInvoicesByServiceIds")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling InvoiceApi#listByServiceIds")
+    println("5xx response calling InvoiceApi#listInvoicesByServiceIds")
     e.printStackTrace()
 }
 ```
@@ -948,6 +899,55 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**kotlin.collections.List&lt;InvoiceDto&gt;**](InvoiceDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="listInvoicesDelegationsStubsByHCPartyAndPatientForeignKeys"></a>
+# **listInvoicesDelegationsStubsByHCPartyAndPatientForeignKeys**
+> kotlin.collections.List&lt;IcureStubDto&gt; listInvoicesDelegationsStubsByHCPartyAndPatientForeignKeys(hcPartyId, secretFKeys)
+
+List helement stubs found By Healthcare Party and secret foreign keys.
+
+Keys must be delimited by coma
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = InvoiceApi()
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
+val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
+try {
+    val result : kotlin.collections.List<IcureStubDto> = apiInstance.listInvoicesDelegationsStubsByHCPartyAndPatientForeignKeys(hcPartyId, secretFKeys)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling InvoiceApi#listInvoicesDelegationsStubsByHCPartyAndPatientForeignKeys")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling InvoiceApi#listInvoicesDelegationsStubsByHCPartyAndPatientForeignKeys")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **hcPartyId** | **kotlin.String**|  |
+ **secretFKeys** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;IcureStubDto&gt;**](IcureStubDto.md)
 
 ### Authorization
 
@@ -1373,7 +1373,7 @@ No authorization required
 # **removeCodes**
 > kotlin.collections.List&lt;InvoiceDto&gt; removeCodes(userId, serviceId, secretFKeys, requestBody)
 
-Gets all invoices for author at date
+Remove an invoice of an user
 
 ### Example
 ```kotlin

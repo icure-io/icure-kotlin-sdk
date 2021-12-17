@@ -4,7 +4,7 @@ All URIs are relative to *https://kraken.icure.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createBatchAndMessage**](BeefactApi.md#createBatchAndMessage) | **POST** /rest/v1/be_efact/{insuranceId}/{newMessageId}/{numericalRef} | create batch and message
+[**createBatchAndMessage**](BeefactApi.md#createBatchAndMessage) | **POST** /rest/v2/be_efact/{insuranceId}/{newMessageId}/{numericalRef} | create batch and message
 
 
 <a name="createBatchAndMessage"></a>

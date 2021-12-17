@@ -1,9 +1,9 @@
 /**
  * iCure Data Stack API Documentation
  *
- * The iCure Data Stack Application API is the native interface to iCure. This version is obsolete, please use v2.
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -14,8 +14,10 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
+import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.models.ArticleDto
 import io.icure.kraken.client.models.DocIdentifier
+import io.icure.kraken.client.models.ListOfIdsDto
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -25,7 +27,12 @@ import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
+import kotlinx.coroutines.flow.flowOf
+import java.nio.ByteBuffer
+import java.util.*
 import javax.inject.Named
+import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -49,14 +56,13 @@ class ArticleApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createArticle(articleDto: ArticleDto) : ArticleDto?  {
+    suspend fun createArticle(articleDto: ArticleDto) : ArticleDto  {
         val localVariableConfig = createArticleRequestConfig(articleDto = articleDto)
 
         return request<ArticleDto, ArticleDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createArticle
     *
@@ -64,23 +70,24 @@ class ArticleApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun createArticleRequestConfig(articleDto: ArticleDto) : RequestConfig<ArticleDto> {
-        val localVariableBody = articleDto
+        // val localVariableBody = articleDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = articleDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/article",
+            path = "/rest/v2/article",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
-    * Deletes an article
+    * Deletes articles
     * 
-    * @param articleIds  
+    * @param listOfIdsDto  
     * @return kotlin.collections.List<DocIdentifier>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -88,32 +95,32 @@ class ArticleApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteArticle(articleIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
-        val localVariableConfig = deleteArticleRequestConfig(articleIds = articleIds)
+    suspend fun deleteArticles(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocIdentifier>  {
+        val localVariableConfig = deleteArticlesRequestConfig(listOfIdsDto = listOfIdsDto)
 
-        return request<Unit, kotlin.collections.List<DocIdentifier>>(
+        return request<ListOfIdsDto, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
-    * To obtain the request config of the operation deleteArticle
+    * To obtain the request config of the operation deleteArticles
     *
-    * @param articleIds  
+    * @param listOfIdsDto  
     * @return RequestConfig
     */
-    fun deleteArticleRequestConfig(articleIds: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun deleteArticlesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
-            method = RequestMethod.DELETE,
-            path = "/rest/v1/article/{articleIds}".replace("{"+"articleIds"+"}", "$articleIds"),
+            method = RequestMethod.POST,
+            path = "/rest/v2/article/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -127,14 +134,13 @@ class ArticleApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getArticle(articleId: kotlin.String) : ArticleDto?  {
+    suspend fun getArticle(articleId: kotlin.String) : ArticleDto  {
         val localVariableConfig = getArticleRequestConfig(articleId = articleId)
 
         return request<Unit, ArticleDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getArticle
     *
@@ -142,17 +148,18 @@ class ArticleApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun getArticleRequestConfig(articleId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/article/{articleId}".replace("{"+"articleId"+"}", "$articleId"),
+            path = "/rest/v2/article/{articleId}".replace("{"+"articleId"+"}", "${URLEncoder.encode(articleId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -165,31 +172,31 @@ class ArticleApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getArticles() : kotlin.collections.List<ArticleDto>?  {
+    suspend fun getArticles() : kotlin.collections.List<ArticleDto>  {
         val localVariableConfig = getArticlesRequestConfig()
 
         return request<Unit, kotlin.collections.List<ArticleDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getArticles
     *
     * @return RequestConfig
     */
     fun getArticlesRequestConfig() : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/article",
+            path = "/rest/v2/article",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -203,14 +210,13 @@ class ArticleApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyArticle(articleDto: ArticleDto) : ArticleDto?  {
+    suspend fun modifyArticle(articleDto: ArticleDto) : ArticleDto  {
         val localVariableConfig = modifyArticleRequestConfig(articleDto = articleDto)
 
         return request<ArticleDto, ArticleDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyArticle
     *
@@ -218,17 +224,18 @@ class ArticleApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun modifyArticleRequestConfig(articleDto: ArticleDto) : RequestConfig<ArticleDto> {
-        val localVariableBody = articleDto
+        // val localVariableBody = articleDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = articleDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/article",
+            path = "/rest/v2/article",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
 }

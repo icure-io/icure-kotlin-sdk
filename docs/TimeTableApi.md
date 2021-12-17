@@ -4,12 +4,12 @@ All URIs are relative to *https://kraken.icure.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createTimeTable**](TimeTableApi.md#createTimeTable) | **POST** /rest/v1/timeTable | Creates a timeTable
-[**deleteTimeTable**](TimeTableApi.md#deleteTimeTable) | **DELETE** /rest/v1/timeTable/{timeTableIds} | Deletes an timeTable
-[**getTimeTable**](TimeTableApi.md#getTimeTable) | **GET** /rest/v1/timeTable/{timeTableId} | Gets a timeTable
-[**getTimeTablesByAgendaId**](TimeTableApi.md#getTimeTablesByAgendaId) | **POST** /rest/v1/timeTable/byAgendaId | Get TimeTables by AgendaId
-[**getTimeTablesByPeriodAndAgendaId**](TimeTableApi.md#getTimeTablesByPeriodAndAgendaId) | **POST** /rest/v1/timeTable/byPeriodAndAgendaId | Get TimeTables by Period and AgendaId
-[**modifyTimeTable**](TimeTableApi.md#modifyTimeTable) | **PUT** /rest/v1/timeTable | Modifies an timeTable
+[**createTimeTable**](TimeTableApi.md#createTimeTable) | **POST** /rest/v2/timeTable | Creates a timeTable
+[**deleteTimeTable**](TimeTableApi.md#deleteTimeTable) | **POST** /rest/v2/timeTable/delete/batch | Deletes an timeTable
+[**getTimeTable**](TimeTableApi.md#getTimeTable) | **GET** /rest/v2/timeTable/{timeTableId} | Gets a timeTable
+[**getTimeTablesByAgendaId**](TimeTableApi.md#getTimeTablesByAgendaId) | **POST** /rest/v2/timeTable/byAgendaId | Get TimeTables by AgendaId
+[**getTimeTablesByPeriodAndAgendaId**](TimeTableApi.md#getTimeTablesByPeriodAndAgendaId) | **POST** /rest/v2/timeTable/byPeriodAndAgendaId | Get TimeTables by Period and AgendaId
+[**modifyTimeTable**](TimeTableApi.md#modifyTimeTable) | **PUT** /rest/v2/timeTable | Modifies an timeTable
 
 
 <a name="createTimeTable"></a>
@@ -59,7 +59,7 @@ No authorization required
 
 <a name="deleteTimeTable"></a>
 # **deleteTimeTable**
-> kotlin.collections.List&lt;DocIdentifier&gt; deleteTimeTable(timeTableIds)
+> kotlin.collections.List&lt;DocIdentifier&gt; deleteTimeTable(listOfIdsDto)
 
 Deletes an timeTable
 
@@ -70,9 +70,9 @@ Deletes an timeTable
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TimeTableApi()
-val timeTableIds : kotlin.String = timeTableIds_example // kotlin.String | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
 try {
-    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteTimeTable(timeTableIds)
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteTimeTable(listOfIdsDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling TimeTableApi#deleteTimeTable")
@@ -87,7 +87,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **timeTableIds** | **kotlin.String**|  |
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
 
 ### Return type
 
@@ -99,7 +99,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: */*
 
 <a name="getTimeTable"></a>

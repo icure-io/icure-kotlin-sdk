@@ -1,9 +1,9 @@
 /**
  * iCure Data Stack API Documentation
  *
- * The iCure Data Stack Application API is the native interface to iCure. This version is obsolete, please use v2.
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -25,8 +25,8 @@ import com.github.pozo.KotlinBuilder
  *
  * @param seconds 
  * @param units 
- * @param zero 
  * @param negative 
+ * @param zero 
  * @param nano 
  */
 
@@ -41,11 +41,11 @@ data class WebSessionMaxIdleTime (
     @field:JsonProperty("units")
     val units: kotlin.collections.List<WebSessionMaxIdleTimeUnits>? = null,
 
-    @field:JsonProperty("zero")
-    val zero: kotlin.Boolean? = null,
-
     @field:JsonProperty("negative")
     val negative: kotlin.Boolean? = null,
+
+    @field:JsonProperty("zero")
+    val zero: kotlin.Boolean? = null,
 
     @field:JsonProperty("nano")
     val nano: kotlin.Int? = null

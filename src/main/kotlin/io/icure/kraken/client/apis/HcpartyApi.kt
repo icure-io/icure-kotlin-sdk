@@ -1,9 +1,9 @@
 /**
  * iCure Data Stack API Documentation
  *
- * The iCure Data Stack Application API is the native interface to iCure. This version is obsolete, please use v2.
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -52,14 +52,13 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createHealthcareParty(healthcarePartyDto: HealthcarePartyDto) : HealthcarePartyDto?  {
+    suspend fun createHealthcareParty(healthcarePartyDto: HealthcarePartyDto) : HealthcarePartyDto  {
         val localVariableConfig = createHealthcarePartyRequestConfig(healthcarePartyDto = healthcarePartyDto)
 
         return request<HealthcarePartyDto, HealthcarePartyDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createHealthcareParty
     *
@@ -73,7 +72,7 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/hcparty",
+            path = "/rest/v2/hcparty",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -92,14 +91,13 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createHealthcarePartyInGroup(groupId: kotlin.String, healthcarePartyDto: HealthcarePartyDto) : HealthcarePartyDto?  {
+    suspend fun createHealthcarePartyInGroup(groupId: kotlin.String, healthcarePartyDto: HealthcarePartyDto) : HealthcarePartyDto  {
         val localVariableConfig = createHealthcarePartyInGroupRequestConfig(groupId = groupId, healthcarePartyDto = healthcarePartyDto)
 
         return request<HealthcarePartyDto, HealthcarePartyDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createHealthcarePartyInGroup
     *
@@ -114,7 +112,7 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/hcparty/inGroup/{groupId}".replace("{"+"groupId"+"}", "$groupId"),
+            path = "/rest/v2/hcparty/inGroup/{groupId}".replace("{"+"groupId"+"}", "$groupId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -122,9 +120,9 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     }
 
     /**
-    * Delete a healthcare party
-    * Deleting a healthcareParty. Response is an array containing the id of deleted healthcare party.
-    * @param healthcarePartyIds  
+    * Delete healthcare parties
+    * Deleting healthcareParties. Response is an array containing the id of deleted healthcare parties.
+    * @param listOfIdsDto  
     * @return kotlin.collections.List<DocIdentifier>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -132,28 +130,27 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteHealthcareParties(healthcarePartyIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
-        val localVariableConfig = deleteHealthcarePartiesRequestConfig(healthcarePartyIds = healthcarePartyIds)
+    suspend fun deleteHealthcareParties(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocIdentifier>  {
+        val localVariableConfig = deleteHealthcarePartiesRequestConfig(listOfIdsDto = listOfIdsDto)
 
-        return request<Unit, kotlin.collections.List<DocIdentifier>>(
+        return request<ListOfIdsDto, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteHealthcareParties
     *
-    * @param healthcarePartyIds  
+    * @param listOfIdsDto  
     * @return RequestConfig
     */
-    fun deleteHealthcarePartiesRequestConfig(healthcarePartyIds: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun deleteHealthcarePartiesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+        val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(
-            method = RequestMethod.DELETE,
-            path = "/rest/v1/hcparty/{healthcarePartyIds}".replace("{"+"healthcarePartyIds"+"}", "$healthcarePartyIds"),
+            method = RequestMethod.POST,
+            path = "/rest/v2/hcparty/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -164,7 +161,7 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * Delete a healthcare party
     * Deleting a healthcareParty. Response is an array containing the id of deleted healthcare party.
     * @param groupId  
-    * @param healthcarePartyIds  
+    * @param listOfIdsDto  
     * @return kotlin.collections.List<DocIdentifier>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -172,29 +169,86 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteHealthcarePartiesInGroup(groupId: kotlin.String, healthcarePartyIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
-        val localVariableConfig = deleteHealthcarePartiesInGroupRequestConfig(groupId = groupId, healthcarePartyIds = healthcarePartyIds)
+    suspend fun deleteHealthcarePartiesInGroup(groupId: kotlin.String, listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocIdentifier>  {
+        val localVariableConfig = deleteHealthcarePartiesInGroupRequestConfig(groupId = groupId, listOfIdsDto = listOfIdsDto)
 
-        return request<Unit, kotlin.collections.List<DocIdentifier>>(
+        return request<ListOfIdsDto, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteHealthcarePartiesInGroup
     *
     * @param groupId  
-    * @param healthcarePartyIds  
+    * @param listOfIdsDto  
     * @return RequestConfig
     */
-    fun deleteHealthcarePartiesInGroupRequestConfig(groupId: kotlin.String, healthcarePartyIds: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun deleteHealthcarePartiesInGroupRequestConfig(groupId: kotlin.String, listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+        val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(
-            method = RequestMethod.DELETE,
-            path = "/rest/v1/hcparty/inGroup/{groupId}/{healthcarePartyIds}".replace("{"+"groupId"+"}", "$groupId").replace("{"+"healthcarePartyIds"+"}", "$healthcarePartyIds"),
+            method = RequestMethod.POST,
+            path = "/rest/v2/hcparty/delete/batch/inGroup/{groupId}".replace("{"+"groupId"+"}", "$groupId"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
+    * List healthcare parties with(out) pagination
+    * Returns a list of healthcare parties.
+    * @param startKey A healthcare party Last name (optional)
+    * @param startDocumentId A healthcare party document ID (optional)
+    * @param limit Number of rows (optional)
+    * @param desc Descending (optional)
+    * @return PaginatedListHealthcarePartyDto
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun findHealthcarePartiesBy(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, desc: kotlin.Boolean?) : PaginatedListHealthcarePartyDto  {
+        val localVariableConfig = findHealthcarePartiesByRequestConfig(startKey = startKey, startDocumentId = startDocumentId, limit = limit, desc = desc)
+
+        return request<Unit, PaginatedListHealthcarePartyDto>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation findHealthcarePartiesBy
+    *
+    * @param startKey A healthcare party Last name (optional)
+    * @param startDocumentId A healthcare party document ID (optional)
+    * @param limit Number of rows (optional)
+    * @param desc Descending (optional)
+    * @return RequestConfig
+    */
+    fun findHealthcarePartiesByRequestConfig(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, desc: kotlin.Boolean?) : RequestConfig<Unit> {
+        val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                if (startKey != null) {
+                    put("startKey", listOf(startKey.toString()))
+                }
+                if (startDocumentId != null) {
+                    put("startDocumentId", listOf(startDocumentId.toString()))
+                }
+                if (limit != null) {
+                    put("limit", listOf(limit.toString()))
+                }
+                if (desc != null) {
+                    put("desc", listOf(desc.toString()))
+                }
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v2/hcparty",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -216,16 +270,15 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findByName(name: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, desc: kotlin.Boolean?) : PaginatedListHealthcarePartyDto?  {
-        val localVariableConfig = findByNameRequestConfig(name = name, startKey = startKey, startDocumentId = startDocumentId, limit = limit, desc = desc)
+    suspend fun findHealthcarePartiesByName(name: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, desc: kotlin.Boolean?) : PaginatedListHealthcarePartyDto  {
+        val localVariableConfig = findHealthcarePartiesByNameRequestConfig(name = name, startKey = startKey, startDocumentId = startDocumentId, limit = limit, desc = desc)
 
         return request<Unit, PaginatedListHealthcarePartyDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
-    * To obtain the request config of the operation findByName
+    * To obtain the request config of the operation findHealthcarePartiesByName
     *
     * @param name The Last name search value (optional)
     * @param startKey A healthcare party Last name (optional)
@@ -234,7 +287,7 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param desc Descending (optional)
     * @return RequestConfig
     */
-    fun findByNameRequestConfig(name: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, desc: kotlin.Boolean?) : RequestConfig<Unit> {
+    fun findHealthcarePartiesByNameRequestConfig(name: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, desc: kotlin.Boolean?) : RequestConfig<Unit> {
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -258,7 +311,7 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/hcparty/byName",
+            path = "/rest/v2/hcparty/byName",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -280,16 +333,15 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findBySpecialityAndPostCode(type: kotlin.String, spec: kotlin.String, firstCode: kotlin.String, lastCode: kotlin.String, limit: kotlin.Int?) : PaginatedListHealthcarePartyDto?  {
-        val localVariableConfig = findBySpecialityAndPostCodeRequestConfig(type = type, spec = spec, firstCode = firstCode, lastCode = lastCode, limit = limit)
+    suspend fun findHealthcarePartiesBySpecialityAndPostCode(type: kotlin.String, spec: kotlin.String, firstCode: kotlin.String, lastCode: kotlin.String, limit: kotlin.Int?) : PaginatedListHealthcarePartyDto  {
+        val localVariableConfig = findHealthcarePartiesBySpecialityAndPostCodeRequestConfig(type = type, spec = spec, firstCode = firstCode, lastCode = lastCode, limit = limit)
 
         return request<Unit, PaginatedListHealthcarePartyDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
-    * To obtain the request config of the operation findBySpecialityAndPostCode
+    * To obtain the request config of the operation findHealthcarePartiesBySpecialityAndPostCode
     *
     * @param type The type of the HCP (persphysician) 
     * @param spec The speciality of the HCP 
@@ -298,7 +350,7 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param limit Number of rows (optional)
     * @return RequestConfig
     */
-    fun findBySpecialityAndPostCodeRequestConfig(type: kotlin.String, spec: kotlin.String, firstCode: kotlin.String, lastCode: kotlin.String, limit: kotlin.Int?) : RequestConfig<Unit> {
+    fun findHealthcarePartiesBySpecialityAndPostCodeRequestConfig(type: kotlin.String, spec: kotlin.String, firstCode: kotlin.String, lastCode: kotlin.String, limit: kotlin.Int?) : RequestConfig<Unit> {
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -310,7 +362,7 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/hcparty/bySpecialityAndPostCode/{type}/{spec}/{firstCode}/to/{lastCode}".replace("{"+"type"+"}", "$type").replace("{"+"spec"+"}", "$spec").replace("{"+"firstCode"+"}", "$firstCode").replace("{"+"lastCode"+"}", "$lastCode"),
+            path = "/rest/v2/hcparty/bySpecialityAndPostCode/{type}/{spec}/{firstCode}/to/{lastCode}".replace("{"+"type"+"}", "$type").replace("{"+"spec"+"}", "$spec").replace("{"+"firstCode"+"}", "$firstCode").replace("{"+"lastCode"+"}", "$lastCode"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -332,16 +384,15 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findBySsinOrNihii(searchValue: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, desc: kotlin.Boolean?) : PaginatedListHealthcarePartyDto?  {
-        val localVariableConfig = findBySsinOrNihiiRequestConfig(searchValue = searchValue, startKey = startKey, startDocumentId = startDocumentId, limit = limit, desc = desc)
+    suspend fun findHealthcarePartiesBySsinOrNihii(searchValue: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, desc: kotlin.Boolean?) : PaginatedListHealthcarePartyDto  {
+        val localVariableConfig = findHealthcarePartiesBySsinOrNihiiRequestConfig(searchValue = searchValue, startKey = startKey, startDocumentId = startDocumentId, limit = limit, desc = desc)
 
         return request<Unit, PaginatedListHealthcarePartyDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
-    * To obtain the request config of the operation findBySsinOrNihii
+    * To obtain the request config of the operation findHealthcarePartiesBySsinOrNihii
     *
     * @param searchValue  
     * @param startKey A healthcare party Last name (optional)
@@ -350,7 +401,7 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param desc Descending (optional)
     * @return RequestConfig
     */
-    fun findBySsinOrNihiiRequestConfig(searchValue: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, desc: kotlin.Boolean?) : RequestConfig<Unit> {
+    fun findHealthcarePartiesBySsinOrNihiiRequestConfig(searchValue: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, desc: kotlin.Boolean?) : RequestConfig<Unit> {
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -371,7 +422,7 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/hcparty/byNihiiOrSsin/{searchValue}".replace("{"+"searchValue"+"}", "$searchValue"),
+            path = "/rest/v2/hcparty/byNihiiOrSsin/{searchValue}".replace("{"+"searchValue"+"}", "$searchValue"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -388,14 +439,13 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getCurrentHealthcareParty() : HealthcarePartyDto?  {
+    suspend fun getCurrentHealthcareParty() : HealthcarePartyDto  {
         val localVariableConfig = getCurrentHealthcarePartyRequestConfig()
 
         return request<Unit, HealthcarePartyDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getCurrentHealthcareParty
     *
@@ -408,7 +458,7 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/hcparty/current",
+            path = "/rest/v2/hcparty/current",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -426,14 +476,13 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getHcPartyKeysForDelegate(healthcarePartyId: kotlin.String) : kotlin.collections.Map<kotlin.String, kotlin.String>?  {
+    suspend fun getHcPartyKeysForDelegate(healthcarePartyId: kotlin.String) : kotlin.collections.Map<kotlin.String, kotlin.String>  {
         val localVariableConfig = getHcPartyKeysForDelegateRequestConfig(healthcarePartyId = healthcarePartyId)
 
         return request<Unit, kotlin.collections.Map<kotlin.String, kotlin.String>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getHcPartyKeysForDelegate
     *
@@ -447,7 +496,7 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/hcparty/{healthcarePartyId}/keys".replace("{"+"healthcarePartyId"+"}", "$healthcarePartyId"),
+            path = "/rest/v2/hcparty/byKeys/{healthcarePartyId}".replace("{"+"healthcarePartyId"+"}", "$healthcarePartyId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -457,7 +506,7 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     /**
     * Get healthcareParties by their IDs
     * General information about the healthcare Party
-    * @param healthcarePartyIds  
+    * @param listOfIdsDto  
     * @return kotlin.collections.List<HealthcarePartyDto>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -465,108 +514,27 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getHealthcareParties(healthcarePartyIds: kotlin.String) : kotlin.collections.List<HealthcarePartyDto>?  {
-        val localVariableConfig = getHealthcarePartiesRequestConfig(healthcarePartyIds = healthcarePartyIds)
-
-        return request<Unit, kotlin.collections.List<HealthcarePartyDto>>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation getHealthcareParties
-    *
-    * @param healthcarePartyIds  
-    * @return RequestConfig
-    */
-    fun getHealthcarePartiesRequestConfig(healthcarePartyIds: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/hcparty/byIds/{healthcarePartyIds}".replace("{"+"healthcarePartyIds"+"}", "$healthcarePartyIds"),
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Find children of an healthcare parties
-    * Return a list of children hcp.
-    * @param parentId  
-    * @return kotlin.collections.List<HealthcarePartyDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getHealthcarePartiesByParentId(parentId: kotlin.String) : kotlin.collections.List<HealthcarePartyDto>?  {
-        val localVariableConfig = getHealthcarePartiesByParentIdRequestConfig(parentId = parentId)
-
-        return request<Unit, kotlin.collections.List<HealthcarePartyDto>>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation getHealthcarePartiesByParentId
-    *
-    * @param parentId  
-    * @return RequestConfig
-    */
-    fun getHealthcarePartiesByParentIdRequestConfig(parentId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/hcparty/{parentId}/children".replace("{"+"parentId"+"}", "$parentId"),
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Get healthcareParties by their IDs
-    * General information about the healthcare Party
-    * @param groupId  
-    * @param listOfIdsDto  (optional)
-    * @return kotlin.collections.List<HealthcarePartyDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getHealthcarePartiesInGroup(groupId: kotlin.String, listOfIdsDto: ListOfIdsDto?) : kotlin.collections.List<HealthcarePartyDto>?  {
-        val localVariableConfig = getHealthcarePartiesInGroupRequestConfig(groupId = groupId, listOfIdsDto = listOfIdsDto)
+    suspend fun getHealthcareParties(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<HealthcarePartyDto>  {
+        val localVariableConfig = getHealthcarePartiesRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<HealthcarePartyDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
-    * To obtain the request config of the operation getHealthcarePartiesInGroup
+    * To obtain the request config of the operation getHealthcareParties
     *
-    * @param groupId  
-    * @param listOfIdsDto  (optional)
+    * @param listOfIdsDto  
     * @return RequestConfig
     */
-    fun getHealthcarePartiesInGroupRequestConfig(groupId: kotlin.String, listOfIdsDto: ListOfIdsDto?) : RequestConfig<ListOfIdsDto> {
+    fun getHealthcarePartiesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
         val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/hcparty/inGroup/{groupId}/byIds".replace("{"+"groupId"+"}", "$groupId"),
+            path = "/rest/v2/hcparty/byIds",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -584,14 +552,13 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getHealthcareParty(healthcarePartyId: kotlin.String) : HealthcarePartyDto?  {
+    suspend fun getHealthcareParty(healthcarePartyId: kotlin.String) : HealthcarePartyDto  {
         val localVariableConfig = getHealthcarePartyRequestConfig(healthcarePartyId = healthcarePartyId)
 
         return request<Unit, HealthcarePartyDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getHealthcareParty
     *
@@ -605,7 +572,7 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/hcparty/{healthcarePartyId}".replace("{"+"healthcarePartyId"+"}", "$healthcarePartyId"),
+            path = "/rest/v2/hcparty/{healthcarePartyId}".replace("{"+"healthcarePartyId"+"}", "$healthcarePartyId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -623,14 +590,13 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getPublicKey(healthcarePartyId: kotlin.String) : PublicKeyDto?  {
+    suspend fun getPublicKey(healthcarePartyId: kotlin.String) : PublicKeyDto  {
         val localVariableConfig = getPublicKeyRequestConfig(healthcarePartyId = healthcarePartyId)
 
         return request<Unit, PublicKeyDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getPublicKey
     *
@@ -644,7 +610,7 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/hcparty/{healthcarePartyId}/publicKey".replace("{"+"healthcarePartyId"+"}", "$healthcarePartyId"),
+            path = "/rest/v2/hcparty/{healthcarePartyId}/publicKey".replace("{"+"healthcarePartyId"+"}", "$healthcarePartyId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -662,28 +628,27 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listByName(name: kotlin.String) : kotlin.collections.List<HealthcarePartyDto>?  {
-        val localVariableConfig = listByNameRequestConfig(name = name)
+    suspend fun listHealthcarePartiesByName(name: kotlin.String) : kotlin.collections.List<HealthcarePartyDto>  {
+        val localVariableConfig = listHealthcarePartiesByNameRequestConfig(name = name)
 
         return request<Unit, kotlin.collections.List<HealthcarePartyDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
-    * To obtain the request config of the operation listByName
+    * To obtain the request config of the operation listHealthcarePartiesByName
     *
     * @param name The Last name search value 
     * @return RequestConfig
     */
-    fun listByNameRequestConfig(name: kotlin.String) : RequestConfig<Unit> {
+    fun listHealthcarePartiesByNameRequestConfig(name: kotlin.String) : RequestConfig<Unit> {
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/hcparty/byNameStrict/{name}".replace("{"+"name"+"}", "$name"),
+            path = "/rest/v2/hcparty/byNameStrict/{name}".replace("{"+"name"+"}", "$name"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -691,58 +656,37 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     }
 
     /**
-    * List healthcare parties with(out) pagination
-    * Returns a list of healthcare parties.
-    * @param startKey A healthcare party Last name (optional)
-    * @param startDocumentId A healthcare party document ID (optional)
-    * @param limit Number of rows (optional)
-    * @param desc Descending (optional)
-    * @return PaginatedListHealthcarePartyDto
+    * Find children of an healthcare parties
+    * Return a list of children hcp.
+    * @param parentId  
+    * @return kotlin.collections.List<HealthcarePartyDto>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listHealthcareParties(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, desc: kotlin.Boolean?) : PaginatedListHealthcarePartyDto?  {
-        val localVariableConfig = listHealthcarePartiesRequestConfig(startKey = startKey, startDocumentId = startDocumentId, limit = limit, desc = desc)
+    suspend fun listHealthcarePartiesByParentId(parentId: kotlin.String) : kotlin.collections.List<HealthcarePartyDto>  {
+        val localVariableConfig = listHealthcarePartiesByParentIdRequestConfig(parentId = parentId)
 
-        return request<Unit, PaginatedListHealthcarePartyDto>(
+        return request<Unit, kotlin.collections.List<HealthcarePartyDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
-    * To obtain the request config of the operation listHealthcareParties
+    * To obtain the request config of the operation listHealthcarePartiesByParentId
     *
-    * @param startKey A healthcare party Last name (optional)
-    * @param startDocumentId A healthcare party document ID (optional)
-    * @param limit Number of rows (optional)
-    * @param desc Descending (optional)
+    * @param parentId  
     * @return RequestConfig
     */
-    fun listHealthcarePartiesRequestConfig(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, desc: kotlin.Boolean?) : RequestConfig<Unit> {
+    fun listHealthcarePartiesByParentIdRequestConfig(parentId: kotlin.String) : RequestConfig<Unit> {
         val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
-            .apply {
-                if (startKey != null) {
-                    put("startKey", listOf(startKey.toString()))
-                }
-                if (startDocumentId != null) {
-                    put("startDocumentId", listOf(startDocumentId.toString()))
-                }
-                if (limit != null) {
-                    put("limit", listOf(limit.toString()))
-                }
-                if (desc != null) {
-                    put("desc", listOf(desc.toString()))
-                }
-            }
+        val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/hcparty",
+            path = "/rest/v2/hcparty/{parentId}/children".replace("{"+"parentId"+"}", "$parentId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -760,14 +704,13 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyHealthcareParty(healthcarePartyDto: HealthcarePartyDto) : HealthcarePartyDto?  {
+    suspend fun modifyHealthcareParty(healthcarePartyDto: HealthcarePartyDto) : HealthcarePartyDto  {
         val localVariableConfig = modifyHealthcarePartyRequestConfig(healthcarePartyDto = healthcarePartyDto)
 
         return request<HealthcarePartyDto, HealthcarePartyDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyHealthcareParty
     *
@@ -781,7 +724,7 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/hcparty",
+            path = "/rest/v2/hcparty",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -800,14 +743,13 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyHealthcarePartyInGroup(groupId: kotlin.String, healthcarePartyDto: HealthcarePartyDto) : HealthcarePartyDto?  {
+    suspend fun modifyHealthcarePartyInGroup(groupId: kotlin.String, healthcarePartyDto: HealthcarePartyDto) : HealthcarePartyDto  {
         val localVariableConfig = modifyHealthcarePartyInGroupRequestConfig(groupId = groupId, healthcarePartyDto = healthcarePartyDto)
 
         return request<HealthcarePartyDto, HealthcarePartyDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyHealthcarePartyInGroup
     *
@@ -822,7 +764,7 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/hcparty/inGroup/{groupId}".replace("{"+"groupId"+"}", "$groupId"),
+            path = "/rest/v2/hcparty/inGroup/{groupId}".replace("{"+"groupId"+"}", "$groupId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody

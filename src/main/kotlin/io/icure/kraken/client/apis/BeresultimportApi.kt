@@ -1,9 +1,9 @@
 /**
  * iCure Data Stack API Documentation
  *
- * The iCure Data Stack Application API is the native interface to iCure. This version is obsolete, please use v2.
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -14,6 +14,7 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
+import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.models.ContactDto
 import io.icure.kraken.client.models.ResultInfoDto
 
@@ -25,7 +26,12 @@ import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
+import kotlinx.coroutines.flow.flowOf
+import java.nio.ByteBuffer
+import java.util.*
 import javax.inject.Named
+import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -50,14 +56,13 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: We
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun canHandle(id: kotlin.String, enckeys: kotlin.String) : kotlin.Boolean?  {
+    suspend fun canHandle(id: kotlin.String, enckeys: kotlin.String) : kotlin.Boolean  {
         val localVariableConfig = canHandleRequestConfig(id = id, enckeys = enckeys)
 
         return request<Unit, kotlin.Boolean>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation canHandle
     *
@@ -66,20 +71,21 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: We
     * @return RequestConfig
     */
     fun canHandleRequestConfig(id: kotlin.String, enckeys: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("enckeys", listOf(enckeys.toString()))
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/be_result_import/canhandle/{id}".replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/be_result_import/canhandle/{id}".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -100,14 +106,13 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: We
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun doImport(documentId: kotlin.String, hcpId: kotlin.String, language: kotlin.String, protocolIds: kotlin.String, formIds: kotlin.String, planOfActionId: kotlin.String, enckeys: kotlin.String, ctc: ContactDto) : ContactDto?  {
+    suspend fun doImport(documentId: kotlin.String, hcpId: kotlin.String, language: kotlin.String, protocolIds: kotlin.String, formIds: kotlin.String, planOfActionId: kotlin.String, enckeys: kotlin.String, ctc: ContactDto) : ContactDto  {
         val localVariableConfig = doImportRequestConfig(documentId = documentId, hcpId = hcpId, language = language, protocolIds = protocolIds, formIds = formIds, planOfActionId = planOfActionId, enckeys = enckeys, ctc = ctc)
 
         return request<Unit, ContactDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation doImport
     *
@@ -122,7 +127,7 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: We
     * @return RequestConfig
     */
     fun doImportRequestConfig(documentId: kotlin.String, hcpId: kotlin.String, language: kotlin.String, protocolIds: kotlin.String, formIds: kotlin.String, planOfActionId: kotlin.String, enckeys: kotlin.String, ctc: ContactDto) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("protocolIds", listOf(protocolIds.toString()))
@@ -132,14 +137,15 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: We
                 put("ctc", listOf(ctc.toString()))
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/be_result_import/import/{documentId}/{hcpId}/{language}".replace("{"+"documentId"+"}", "$documentId").replace("{"+"hcpId"+"}", "$hcpId").replace("{"+"language"+"}", "$language"),
+            path = "/rest/v2/be_result_import/import/{documentId}/{hcpId}/{language}".replace("{"+"documentId"+"}", "${URLEncoder.encode(documentId.toString(), Charsets.UTF_8)}").replace("{"+"hcpId"+"}", "${URLEncoder.encode(hcpId.toString(), Charsets.UTF_8)}").replace("{"+"language"+"}", "${URLEncoder.encode(language.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -156,14 +162,13 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: We
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getInfos(id: kotlin.String, language: kotlin.String, enckeys: kotlin.String, full: kotlin.Boolean?) : kotlin.collections.List<ResultInfoDto>?  {
+    suspend fun getInfos(id: kotlin.String, language: kotlin.String, enckeys: kotlin.String, full: kotlin.Boolean?) : kotlin.collections.List<ResultInfoDto>  {
         val localVariableConfig = getInfosRequestConfig(id = id, language = language, enckeys = enckeys, full = full)
 
         return request<Unit, kotlin.collections.List<ResultInfoDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getInfos
     *
@@ -174,7 +179,7 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: We
     * @return RequestConfig
     */
     fun getInfosRequestConfig(id: kotlin.String, language: kotlin.String, enckeys: kotlin.String, full: kotlin.Boolean?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("language", listOf(language.toString()))
@@ -184,14 +189,15 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: We
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/be_result_import/infos/{id}".replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/be_result_import/infos/{id}".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
 }

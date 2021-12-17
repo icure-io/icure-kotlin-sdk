@@ -4,12 +4,12 @@ All URIs are relative to *https://kraken.icure.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createCalendarItemType**](CalendarItemTypeApi.md#createCalendarItemType) | **POST** /rest/v1/calendarItemType | Creates a calendarItemType
-[**deleteCalendarItemType**](CalendarItemTypeApi.md#deleteCalendarItemType) | **DELETE** /rest/v1/calendarItemType/{calendarItemTypeIds} | Deletes an calendarItemType
-[**getCalendarItemType**](CalendarItemTypeApi.md#getCalendarItemType) | **GET** /rest/v1/calendarItemType/{calendarItemTypeId} | Gets an calendarItemType
-[**getCalendarItemTypes**](CalendarItemTypeApi.md#getCalendarItemTypes) | **GET** /rest/v1/calendarItemType | Gets all calendarItemTypes
-[**getCalendarItemTypesIncludeDeleted**](CalendarItemTypeApi.md#getCalendarItemTypesIncludeDeleted) | **GET** /rest/v1/calendarItemType/includeDeleted | Gets all calendarItemTypes include deleted
-[**modifyCalendarItemType**](CalendarItemTypeApi.md#modifyCalendarItemType) | **PUT** /rest/v1/calendarItemType | Modifies an calendarItemType
+[**createCalendarItemType**](CalendarItemTypeApi.md#createCalendarItemType) | **POST** /rest/v2/calendarItemType | Creates a calendarItemType
+[**deleteCalendarItemTypes**](CalendarItemTypeApi.md#deleteCalendarItemTypes) | **POST** /rest/v2/calendarItemType/delete/batch | Deletes calendarItemTypes
+[**getCalendarItemType**](CalendarItemTypeApi.md#getCalendarItemType) | **GET** /rest/v2/calendarItemType/{calendarItemTypeId} | Gets a calendarItemType
+[**getCalendarItemTypes**](CalendarItemTypeApi.md#getCalendarItemTypes) | **GET** /rest/v2/calendarItemType | Gets all calendarItemTypes
+[**getCalendarItemTypesIncludeDeleted**](CalendarItemTypeApi.md#getCalendarItemTypesIncludeDeleted) | **GET** /rest/v2/calendarItemType/includeDeleted | Gets all calendarItemTypes include deleted
+[**modifyCalendarItemType**](CalendarItemTypeApi.md#modifyCalendarItemType) | **PUT** /rest/v2/calendarItemType | Modifies an calendarItemType
 
 
 <a name="createCalendarItemType"></a>
@@ -57,11 +57,11 @@ No authorization required
  - **Content-Type**: application/json
  - **Accept**: */*
 
-<a name="deleteCalendarItemType"></a>
-# **deleteCalendarItemType**
-> kotlin.collections.List&lt;DocIdentifier&gt; deleteCalendarItemType(calendarItemTypeIds)
+<a name="deleteCalendarItemTypes"></a>
+# **deleteCalendarItemTypes**
+> kotlin.collections.List&lt;DocIdentifier&gt; deleteCalendarItemTypes(listOfIdsDto)
 
-Deletes an calendarItemType
+Deletes calendarItemTypes
 
 ### Example
 ```kotlin
@@ -70,15 +70,15 @@ Deletes an calendarItemType
 //import io.icure.kraken.client.models.*
 
 val apiInstance = CalendarItemTypeApi()
-val calendarItemTypeIds : kotlin.String = calendarItemTypeIds_example // kotlin.String | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
 try {
-    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteCalendarItemType(calendarItemTypeIds)
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteCalendarItemTypes(listOfIdsDto)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling CalendarItemTypeApi#deleteCalendarItemType")
+    println("4xx response calling CalendarItemTypeApi#deleteCalendarItemTypes")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling CalendarItemTypeApi#deleteCalendarItemType")
+    println("5xx response calling CalendarItemTypeApi#deleteCalendarItemTypes")
     e.printStackTrace()
 }
 ```
@@ -87,7 +87,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **calendarItemTypeIds** | **kotlin.String**|  |
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
 
 ### Return type
 
@@ -99,14 +99,14 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: */*
 
 <a name="getCalendarItemType"></a>
 # **getCalendarItemType**
 > CalendarItemTypeDto getCalendarItemType(calendarItemTypeId)
 
-Gets an calendarItemType
+Gets a calendarItemType
 
 ### Example
 ```kotlin

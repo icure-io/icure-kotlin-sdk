@@ -1,10 +1,10 @@
-val kotlinVersion = "1.4.21"
-val kotlinCoroutinesVersion = "1.4.2"
-val jacksonVersion = "2.12.4"
+val kotlinVersion = "1.4.32"
+val kotlinCoroutinesVersion = "1.4.3"
+val jacksonVersion = "2.12.5"
 
 plugins {
-    kotlin("jvm") version "1.4.21"
-    kotlin("kapt") version "1.4.21"
+    kotlin("jvm") version "1.4.32"
+    kotlin("kapt") version "1.4.32"
 }
 
 buildscript {
@@ -54,22 +54,39 @@ dependencies {
     implementation(group = "com.fasterxml.jackson.core", name = "jackson-databind", version = jacksonVersion)
     implementation(group = "com.fasterxml.jackson.module", name = "jackson-module-kotlin", version = jacksonVersion)
     implementation(group = "com.fasterxml.jackson.datatype", name = "jackson-datatype-jsr310", version = jacksonVersion)
-    implementation(group = "io.icure", name = "async-jackson-http-client", version = "0.1.4-6cab16ec6e")
+    implementation(group = "io.icure", name = "async-jackson-http-client", version = "0.1.13-f8f31a9805")
     implementation(group = "javax.inject", name = "javax.inject", version = "1")
     implementation(group = "org.mapstruct", name = "mapstruct", version = "1.3.1.Final")
     implementation(group = "com.github.ben-manes.caffeine", name = "caffeine", version = "3.0.3")
 
+    implementation(group = "ch.qos.logback", name = "logback-classic", version = "1.2.3")
+    implementation(group = "ch.qos.logback", name = "logback-access", version = "1.2.3")
+    implementation(group = "org.slf4j", name = "slf4j-api", version = "1.7.12")
+    implementation(group = "org.slf4j", name = "jul-to-slf4j", version = "1.7.12")
+    implementation(group = "org.slf4j", name = "jcl-over-slf4j", version = "1.7.12")
+    implementation(group = "org.slf4j", name = "log4j-over-slf4j", version = "1.7.12")
+
+    implementation(group = "io.projectreactor.netty", name = "reactor-netty", version = "1.0.11")
     // Bouncy Castle
     implementation(group = "org.bouncycastle", name = "bcprov-jdk15on", version = "1.69")
     implementation(group = "org.bouncycastle", name = "bcmail-jdk15on", version = "1.69")
 
     testImplementation(group = "io.kotlintest", name = "kotlintest", version = "2.0.7")
     testImplementation(group = "org.junit.jupiter", name = "junit-jupiter", version = "5.7.0")
+    testImplementation(group = "com.willowtreeapps.assertk", name = "assertk-jvm", version = "0.24")
 }
+
 
 java {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        freeCompilerArgs = listOf("-Xjsr305=strict")
+        jvmTarget = "11"
+    }
 }
 
 tasks.getByName("publish") {
@@ -77,6 +94,9 @@ tasks.getByName("publish") {
 }
 
 tasks.register("apiGenerate", Jar::class) {
+    inputs.files(fileTree("openApiTemplates"))
+        .withPropertyName("sourceFiles")
+        .withPathSensitivity(PathSensitivity.RELATIVE)
     doLast {
         javaexec {
             main = "-jar"
@@ -98,13 +118,14 @@ tasks.register("apiGenerate", Jar::class) {
         }
     }
     dependsOn.add("download-openapi-spec") // required due to https://github.com/OpenAPITools/openapi-generator/issues/8255
-    finalizedBy("apply-custom-fixes", "delete-unused-filter-files")
+
+    finalizedBy("apply-custom-fixes", "delete-unused-filter-files", "delete-unused-tests-files")
 }
 
 tasks.register("download-openapi-spec") {
     doLast {
         val destFile = File("${rootDir}/icure-openapi-spec.json")
-        val url = "https://kraken.icure.dev/v3/api-docs/v1"
+        val url = "${System.getProperty("API_URL")}/v3/api-docs/v2"
         ant.invokeMethod("get", mapOf("src" to url, "dest" to destFile))
     }
 }
@@ -162,4 +183,21 @@ tasks.create<Delete>("delete-unused-filter-files") {
     delete(File("$rootDir/src/main/kotlin/io/icure/kraken/client/models/AbstractFilterDtoHealthElement.kt"))
     delete(File("$rootDir/src/main/kotlin/io/icure/kraken/client/models/AbstractFilterDtoContact.kt"))
     delete(File("$rootDir/src/main/kotlin/io/icure/kraken/client/models/AbstractFilterDtoCode.kt"))
+}
+
+
+tasks.create<Delete>("delete-unused-tests-files") {
+    delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/AnonymousAccessApiTest.kt"))
+    delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/ApplicationsettingsApiTest.kt"))
+    delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/AuthApiTest.kt"))
+    delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/BeefactApiTest.kt"))
+    delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/BekmehrApiTest.kt"))
+    delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/BeresultexportApiTest.kt"))
+    delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/BeresultimportApiTest.kt"))
+    delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/Besamv2ApiTest.kt"))
+    delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/EntityrefApiTest.kt"))
+    delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/TmpApiTest.kt"))
+    delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/IcureApiTest.kt"))
+    delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/MedexApiTest.kt"))
+    delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/PermissionApiTest.kt"))
 }

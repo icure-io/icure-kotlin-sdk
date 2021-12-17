@@ -4,9 +4,9 @@ All URIs are relative to *https://kraken.icure.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**canHandle**](BeresultimportApi.md#canHandle) | **GET** /rest/v1/be_result_import/canhandle/{id} | Can we handle this document
-[**doImport**](BeresultimportApi.md#doImport) | **GET** /rest/v1/be_result_import/import/{documentId}/{hcpId}/{language} | import document
-[**getInfos**](BeresultimportApi.md#getInfos) | **GET** /rest/v1/be_result_import/infos/{id} | Extract general infos from document
+[**canHandle**](BeresultimportApi.md#canHandle) | **GET** /rest/v2/be_result_import/canhandle/{id} | Can we handle this document
+[**doImport**](BeresultimportApi.md#doImport) | **GET** /rest/v2/be_result_import/import/{documentId}/{hcpId}/{language} | import document
+[**getInfos**](BeresultimportApi.md#getInfos) | **GET** /rest/v2/be_result_import/infos/{id} | Extract general infos from document
 
 
 <a name="canHandle"></a>

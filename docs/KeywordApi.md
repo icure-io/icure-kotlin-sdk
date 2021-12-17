@@ -4,12 +4,12 @@ All URIs are relative to *https://kraken.icure.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createKeyword**](KeywordApi.md#createKeyword) | **POST** /rest/v1/keyword | Create a keyword with the current user
-[**deleteKeywords**](KeywordApi.md#deleteKeywords) | **DELETE** /rest/v1/keyword/{keywordIds} | Delete keywords.
-[**getKeyword**](KeywordApi.md#getKeyword) | **GET** /rest/v1/keyword/{keywordId} | Get a keyword
-[**getKeywords**](KeywordApi.md#getKeywords) | **GET** /rest/v1/keyword | Gets all keywords
-[**getKeywordsByUser**](KeywordApi.md#getKeywordsByUser) | **GET** /rest/v1/keyword/byUser/{userId} | Get keywords by user
-[**modifyKeyword**](KeywordApi.md#modifyKeyword) | **PUT** /rest/v1/keyword | Modify a keyword
+[**createKeyword**](KeywordApi.md#createKeyword) | **POST** /rest/v2/keyword | Create a keyword with the current user
+[**deleteKeywords**](KeywordApi.md#deleteKeywords) | **POST** /rest/v2/keyword/delete/batch | Delete keywords.
+[**getKeyword**](KeywordApi.md#getKeyword) | **GET** /rest/v2/keyword/{keywordId} | Get a keyword
+[**getKeywords**](KeywordApi.md#getKeywords) | **GET** /rest/v2/keyword | Gets all keywords
+[**getKeywordsByUser**](KeywordApi.md#getKeywordsByUser) | **GET** /rest/v2/keyword/byUser/{userId} | Get keywords by user
+[**modifyKeyword**](KeywordApi.md#modifyKeyword) | **PUT** /rest/v2/keyword | Modify a keyword
 
 
 <a name="createKeyword"></a>
@@ -61,7 +61,7 @@ No authorization required
 
 <a name="deleteKeywords"></a>
 # **deleteKeywords**
-> kotlin.collections.List&lt;DocIdentifier&gt; deleteKeywords(keywordIds)
+> kotlin.collections.List&lt;DocIdentifier&gt; deleteKeywords(listOfIdsDto)
 
 Delete keywords.
 
@@ -74,9 +74,9 @@ Response is a set containing the ID&#39;s of deleted keywords.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KeywordApi()
-val keywordIds : kotlin.String = keywordIds_example // kotlin.String | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
 try {
-    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteKeywords(keywordIds)
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteKeywords(listOfIdsDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling KeywordApi#deleteKeywords")
@@ -91,7 +91,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **keywordIds** | **kotlin.String**|  |
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
 
 ### Return type
 
@@ -103,7 +103,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: */*
 
 <a name="getKeyword"></a>

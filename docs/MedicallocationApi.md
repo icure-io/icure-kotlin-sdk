@@ -1,14 +1,14 @@
-# MedicallocationApi
+# MedicalLocationApi
 
 All URIs are relative to *https://kraken.icure.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createMedicalLocation**](MedicallocationApi.md#createMedicalLocation) | **POST** /rest/v1/medicallocation | Creates a medical location
-[**deleteMedicalLocation**](MedicallocationApi.md#deleteMedicalLocation) | **DELETE** /rest/v1/medicallocation/{locationIds} | Deletes a medical location
-[**getMedicalLocation**](MedicallocationApi.md#getMedicalLocation) | **GET** /rest/v1/medicallocation/{locationId} | Gets a medical location
-[**getMedicalLocations**](MedicallocationApi.md#getMedicalLocations) | **GET** /rest/v1/medicallocation | Gets all medical locations
-[**modifyMedicalLocation**](MedicallocationApi.md#modifyMedicalLocation) | **PUT** /rest/v1/medicallocation | Modifies a medical location
+[**createMedicalLocation**](MedicalLocationApi.md#createMedicalLocation) | **POST** /rest/v2/medicallocation | Creates a medical location
+[**deleteMedicalLocations**](MedicalLocationApi.md#deleteMedicalLocations) | **POST** /rest/v2/medicallocation/delete/batch | Deletes medical locations
+[**getMedicalLocation**](MedicalLocationApi.md#getMedicalLocation) | **GET** /rest/v2/medicallocation/{locationId} | Gets a medical location
+[**getMedicalLocations**](MedicalLocationApi.md#getMedicalLocations) | **GET** /rest/v2/medicallocation | Gets all medical locations
+[**modifyMedicalLocation**](MedicalLocationApi.md#modifyMedicalLocation) | **PUT** /rest/v2/medicallocation | Modifies a medical location
 
 
 <a name="createMedicalLocation"></a>
@@ -23,16 +23,16 @@ Creates a medical location
 //import io.icure.kraken.client.infrastructure.*
 //import io.icure.kraken.client.models.*
 
-val apiInstance = MedicallocationApi()
+val apiInstance = MedicalLocationApi()
 val medicalLocationDto : MedicalLocationDto =  // MedicalLocationDto | 
 try {
     val result : MedicalLocationDto = apiInstance.createMedicalLocation(medicalLocationDto)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling MedicallocationApi#createMedicalLocation")
+    println("4xx response calling MedicalLocationApi#createMedicalLocation")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling MedicallocationApi#createMedicalLocation")
+    println("5xx response calling MedicalLocationApi#createMedicalLocation")
     e.printStackTrace()
 }
 ```
@@ -56,11 +56,11 @@ No authorization required
  - **Content-Type**: application/json
  - **Accept**: */*
 
-<a name="deleteMedicalLocation"></a>
-# **deleteMedicalLocation**
-> kotlin.collections.List&lt;DocIdentifier&gt; deleteMedicalLocation(locationIds)
+<a name="deleteMedicalLocations"></a>
+# **deleteMedicalLocations**
+> kotlin.collections.List&lt;DocIdentifier&gt; deleteMedicalLocations(listOfIdsDto)
 
-Deletes a medical location
+Deletes medical locations
 
 ### Example
 ```kotlin
@@ -68,16 +68,16 @@ Deletes a medical location
 //import io.icure.kraken.client.infrastructure.*
 //import io.icure.kraken.client.models.*
 
-val apiInstance = MedicallocationApi()
-val locationIds : kotlin.String = locationIds_example // kotlin.String | 
+val apiInstance = MedicalLocationApi()
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
 try {
-    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteMedicalLocation(locationIds)
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteMedicalLocations(listOfIdsDto)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling MedicallocationApi#deleteMedicalLocation")
+    println("4xx response calling MedicalLocationApi#deleteMedicalLocations")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling MedicallocationApi#deleteMedicalLocation")
+    println("5xx response calling MedicalLocationApi#deleteMedicalLocations")
     e.printStackTrace()
 }
 ```
@@ -86,7 +86,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **locationIds** | **kotlin.String**|  |
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
 
 ### Return type
 
@@ -98,7 +98,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: */*
 
 <a name="getMedicalLocation"></a>
@@ -113,16 +113,16 @@ Gets a medical location
 //import io.icure.kraken.client.infrastructure.*
 //import io.icure.kraken.client.models.*
 
-val apiInstance = MedicallocationApi()
+val apiInstance = MedicalLocationApi()
 val locationId : kotlin.String = locationId_example // kotlin.String | 
 try {
     val result : MedicalLocationDto = apiInstance.getMedicalLocation(locationId)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling MedicallocationApi#getMedicalLocation")
+    println("4xx response calling MedicalLocationApi#getMedicalLocation")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling MedicallocationApi#getMedicalLocation")
+    println("5xx response calling MedicalLocationApi#getMedicalLocation")
     e.printStackTrace()
 }
 ```
@@ -158,15 +158,15 @@ Gets all medical locations
 //import io.icure.kraken.client.infrastructure.*
 //import io.icure.kraken.client.models.*
 
-val apiInstance = MedicallocationApi()
+val apiInstance = MedicalLocationApi()
 try {
     val result : kotlin.collections.List<MedicalLocationDto> = apiInstance.getMedicalLocations()
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling MedicallocationApi#getMedicalLocations")
+    println("4xx response calling MedicalLocationApi#getMedicalLocations")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling MedicallocationApi#getMedicalLocations")
+    println("5xx response calling MedicalLocationApi#getMedicalLocations")
     e.printStackTrace()
 }
 ```
@@ -199,16 +199,16 @@ Modifies a medical location
 //import io.icure.kraken.client.infrastructure.*
 //import io.icure.kraken.client.models.*
 
-val apiInstance = MedicallocationApi()
+val apiInstance = MedicalLocationApi()
 val medicalLocationDto : MedicalLocationDto =  // MedicalLocationDto | 
 try {
     val result : MedicalLocationDto = apiInstance.modifyMedicalLocation(medicalLocationDto)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling MedicallocationApi#modifyMedicalLocation")
+    println("4xx response calling MedicalLocationApi#modifyMedicalLocation")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling MedicallocationApi#modifyMedicalLocation")
+    println("5xx response calling MedicalLocationApi#modifyMedicalLocation")
     e.printStackTrace()
 }
 ```

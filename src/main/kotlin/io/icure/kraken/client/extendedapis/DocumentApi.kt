@@ -59,22 +59,22 @@ suspend fun DocumentApi.findDocumentsByHCPartyPatient(user: UserDto, hcPartyId: 
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun DocumentApi.findByTypeHCPartyMessage(user: UserDto, documentTypeCode: String, hcPartyId: String, message: MessageDto, config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>) : List<DocumentDto>? {
+suspend fun DocumentApi.listDocumentByTypeHCPartyMessage(user: UserDto, documentTypeCode: String, hcPartyId: String, message: MessageDto, config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>) : List<DocumentDto>? {
     val key = config.crypto.decryptEncryptionKeys(user.healthcarePartyId!!, message.delegations).firstOrNull()
         ?: throw IllegalArgumentException("No delegation for user")
-    return this.findByTypeHCPartyMessageSecretFKeys(documentTypeCode, hcPartyId, key)?.map { config.decryptDocument(user.healthcarePartyId!!, it) }
+    return this.listDocumentByTypeHCPartyMessageSecretFKeys(documentTypeCode, hcPartyId, key)?.map { config.decryptDocument(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun DocumentApi.findDocumentsByHCPartyPatientForeignKeys(user: UserDto, hcPartyId: String, secretFKeys: String, config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>) : List<DocumentDto>? {
-    return this.findDocumentsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)?.map { config.decryptDocument(user.healthcarePartyId!!, it) }
+    return this.listDocumentsByHCPartyAndPatientForeignKeys(hcPartyId, secretFKeys)?.map { config.decryptDocument(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun DocumentApi.findByTypeHCPartyMessageSecretFKeys(user: UserDto, documentTypeCode: String, hcPartyId: String, secretFKeys: String, config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>) : List<DocumentDto>? {
-    return this.findByTypeHCPartyMessageSecretFKeys(documentTypeCode, hcPartyId, secretFKeys)?.map { config.decryptDocument(user.healthcarePartyId!!, it) }
+suspend fun DocumentApi.listDocumentByTypeHCPartyMessageSecretFKeys(user: UserDto, documentTypeCode: String, hcPartyId: String, secretFKeys: String, config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>) : List<DocumentDto>? {
+    return this.listDocumentByTypeHCPartyMessageSecretFKeys(documentTypeCode, hcPartyId, secretFKeys)?.map { config.decryptDocument(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi

@@ -1,9 +1,9 @@
 /**
  * iCure Data Stack API Documentation
  *
- * The iCure Data Stack Application API is the native interface to iCure. This version is obsolete, please use v2.
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -14,6 +14,7 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
+import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.models.AmpDto
 import io.icure.kraken.client.models.ListOfIdsDto
 import io.icure.kraken.client.models.NmpDto
@@ -35,7 +36,12 @@ import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
+import kotlinx.coroutines.flow.flowOf
+import java.nio.ByteBuffer
+import java.util.*
 import javax.inject.Named
+import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -59,14 +65,13 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findAmpsByDmppCode(dmppCode: kotlin.String) : kotlin.collections.List<AmpDto>?  {
+    suspend fun findAmpsByDmppCode(dmppCode: kotlin.String) : kotlin.collections.List<AmpDto>  {
         val localVariableConfig = findAmpsByDmppCodeRequestConfig(dmppCode = dmppCode)
 
         return request<Unit, kotlin.collections.List<AmpDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findAmpsByDmppCode
     *
@@ -74,17 +79,18 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun findAmpsByDmppCodeRequestConfig(dmppCode: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/be_samv2/amp/byDmppCode/{dmppCode}".replace("{"+"dmppCode"+"}", "$dmppCode"),
+            path = "/rest/v2/be_samv2/amp/byDmppCode/{dmppCode}".replace("{"+"dmppCode"+"}", "${URLEncoder.encode(dmppCode.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -101,14 +107,13 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findPaginatedAmpsByAtc(atcCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListAmpDto?  {
+    suspend fun findPaginatedAmpsByAtc(atcCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListAmpDto  {
         val localVariableConfig = findPaginatedAmpsByAtcRequestConfig(atcCode = atcCode, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListAmpDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findPaginatedAmpsByAtc
     *
@@ -119,7 +124,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun findPaginatedAmpsByAtcRequestConfig(atcCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (startKey != null) {
@@ -133,14 +138,15 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/be_samv2/vmp/byAtc/{atcCode}".replace("{"+"atcCode"+"}", "$atcCode"),
+            path = "/rest/v2/be_samv2/vmp/byAtc/{atcCode}".replace("{"+"atcCode"+"}", "${URLEncoder.encode(atcCode.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -157,14 +163,13 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findPaginatedAmpsByGroupCode(vmpgCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListAmpDto?  {
+    suspend fun findPaginatedAmpsByGroupCode(vmpgCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListAmpDto  {
         val localVariableConfig = findPaginatedAmpsByGroupCodeRequestConfig(vmpgCode = vmpgCode, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListAmpDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findPaginatedAmpsByGroupCode
     *
@@ -175,7 +180,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun findPaginatedAmpsByGroupCodeRequestConfig(vmpgCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (startKey != null) {
@@ -189,14 +194,15 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/be_samv2/amp/byGroupCode/{vmpgCode}".replace("{"+"vmpgCode"+"}", "$vmpgCode"),
+            path = "/rest/v2/be_samv2/amp/byGroupCode/{vmpgCode}".replace("{"+"vmpgCode"+"}", "${URLEncoder.encode(vmpgCode.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -213,14 +219,13 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findPaginatedAmpsByGroupId(vmpgId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListAmpDto?  {
+    suspend fun findPaginatedAmpsByGroupId(vmpgId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListAmpDto  {
         val localVariableConfig = findPaginatedAmpsByGroupIdRequestConfig(vmpgId = vmpgId, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListAmpDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findPaginatedAmpsByGroupId
     *
@@ -231,7 +236,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun findPaginatedAmpsByGroupIdRequestConfig(vmpgId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (startKey != null) {
@@ -245,14 +250,15 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/be_samv2/amp/byGroupId/{vmpgId}".replace("{"+"vmpgId"+"}", "$vmpgId"),
+            path = "/rest/v2/be_samv2/amp/byGroupId/{vmpgId}".replace("{"+"vmpgId"+"}", "${URLEncoder.encode(vmpgId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -270,14 +276,13 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findPaginatedAmpsByLabel(language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListAmpDto?  {
+    suspend fun findPaginatedAmpsByLabel(language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListAmpDto  {
         val localVariableConfig = findPaginatedAmpsByLabelRequestConfig(language = language, label = label, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListAmpDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findPaginatedAmpsByLabel
     *
@@ -289,7 +294,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun findPaginatedAmpsByLabelRequestConfig(language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (language != null) {
@@ -309,14 +314,15 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/be_samv2/amp",
+            path = "/rest/v2/be_samv2/amp",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -333,14 +339,13 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findPaginatedAmpsByVmpCode(vmpCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListAmpDto?  {
+    suspend fun findPaginatedAmpsByVmpCode(vmpCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListAmpDto  {
         val localVariableConfig = findPaginatedAmpsByVmpCodeRequestConfig(vmpCode = vmpCode, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListAmpDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findPaginatedAmpsByVmpCode
     *
@@ -351,7 +356,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun findPaginatedAmpsByVmpCodeRequestConfig(vmpCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (startKey != null) {
@@ -365,14 +370,15 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/be_samv2/amp/byVmpCode/{vmpCode}".replace("{"+"vmpCode"+"}", "$vmpCode"),
+            path = "/rest/v2/be_samv2/amp/byVmpCode/{vmpCode}".replace("{"+"vmpCode"+"}", "${URLEncoder.encode(vmpCode.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -389,14 +395,13 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findPaginatedAmpsByVmpId(vmpId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListAmpDto?  {
+    suspend fun findPaginatedAmpsByVmpId(vmpId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListAmpDto  {
         val localVariableConfig = findPaginatedAmpsByVmpIdRequestConfig(vmpId = vmpId, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListAmpDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findPaginatedAmpsByVmpId
     *
@@ -407,7 +412,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun findPaginatedAmpsByVmpIdRequestConfig(vmpId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (startKey != null) {
@@ -421,14 +426,15 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/be_samv2/amp/byVmpId/{vmpId}".replace("{"+"vmpId"+"}", "$vmpId"),
+            path = "/rest/v2/be_samv2/amp/byVmpId/{vmpId}".replace("{"+"vmpId"+"}", "${URLEncoder.encode(vmpId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -446,14 +452,13 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findPaginatedNmpsByLabel(language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListNmpDto?  {
+    suspend fun findPaginatedNmpsByLabel(language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListNmpDto  {
         val localVariableConfig = findPaginatedNmpsByLabelRequestConfig(language = language, label = label, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListNmpDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findPaginatedNmpsByLabel
     *
@@ -465,7 +470,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun findPaginatedNmpsByLabelRequestConfig(language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (language != null) {
@@ -485,14 +490,15 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/be_samv2/nmp",
+            path = "/rest/v2/be_samv2/nmp",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -510,14 +516,13 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findPaginatedVmpGroupsByLabel(language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListVmpGroupDto?  {
+    suspend fun findPaginatedVmpGroupsByLabel(language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListVmpGroupDto  {
         val localVariableConfig = findPaginatedVmpGroupsByLabelRequestConfig(language = language, label = label, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListVmpGroupDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findPaginatedVmpGroupsByLabel
     *
@@ -529,7 +534,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun findPaginatedVmpGroupsByLabelRequestConfig(language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (language != null) {
@@ -549,14 +554,15 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/be_samv2/vmpgroup",
+            path = "/rest/v2/be_samv2/vmpgroup",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -573,14 +579,13 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findPaginatedVmpGroupsByVmpGroupCode(vmpgCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListVmpGroupDto?  {
+    suspend fun findPaginatedVmpGroupsByVmpGroupCode(vmpgCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListVmpGroupDto  {
         val localVariableConfig = findPaginatedVmpGroupsByVmpGroupCodeRequestConfig(vmpgCode = vmpgCode, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListVmpGroupDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findPaginatedVmpGroupsByVmpGroupCode
     *
@@ -591,7 +596,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun findPaginatedVmpGroupsByVmpGroupCodeRequestConfig(vmpgCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (startKey != null) {
@@ -605,14 +610,15 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/be_samv2/vmpgroup/byGroupCode/{vmpgCode}".replace("{"+"vmpgCode"+"}", "$vmpgCode"),
+            path = "/rest/v2/be_samv2/vmpgroup/byGroupCode/{vmpgCode}".replace("{"+"vmpgCode"+"}", "${URLEncoder.encode(vmpgCode.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -629,14 +635,13 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findPaginatedVmpsByGroupCode(vmpgCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListVmpDto?  {
+    suspend fun findPaginatedVmpsByGroupCode(vmpgCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListVmpDto  {
         val localVariableConfig = findPaginatedVmpsByGroupCodeRequestConfig(vmpgCode = vmpgCode, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListVmpDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findPaginatedVmpsByGroupCode
     *
@@ -647,7 +652,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun findPaginatedVmpsByGroupCodeRequestConfig(vmpgCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (startKey != null) {
@@ -661,14 +666,15 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/be_samv2/vmp/byGroupCode/{vmpgCode}".replace("{"+"vmpgCode"+"}", "$vmpgCode"),
+            path = "/rest/v2/be_samv2/vmp/byGroupCode/{vmpgCode}".replace("{"+"vmpgCode"+"}", "${URLEncoder.encode(vmpgCode.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -685,14 +691,13 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findPaginatedVmpsByGroupId(vmpgId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListVmpDto?  {
+    suspend fun findPaginatedVmpsByGroupId(vmpgId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListVmpDto  {
         val localVariableConfig = findPaginatedVmpsByGroupIdRequestConfig(vmpgId = vmpgId, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListVmpDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findPaginatedVmpsByGroupId
     *
@@ -703,7 +708,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun findPaginatedVmpsByGroupIdRequestConfig(vmpgId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (startKey != null) {
@@ -717,14 +722,15 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/be_samv2/vmp/byGroupId/{vmpgId}".replace("{"+"vmpgId"+"}", "$vmpgId"),
+            path = "/rest/v2/be_samv2/vmp/byGroupId/{vmpgId}".replace("{"+"vmpgId"+"}", "${URLEncoder.encode(vmpgId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -742,14 +748,13 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findPaginatedVmpsByLabel(language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListVmpDto?  {
+    suspend fun findPaginatedVmpsByLabel(language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListVmpDto  {
         val localVariableConfig = findPaginatedVmpsByLabelRequestConfig(language = language, label = label, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListVmpDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findPaginatedVmpsByLabel
     *
@@ -761,7 +766,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun findPaginatedVmpsByLabelRequestConfig(language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (language != null) {
@@ -781,14 +786,15 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/be_samv2/vmp",
+            path = "/rest/v2/be_samv2/vmp",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -805,14 +811,13 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findPaginatedVmpsByVmpCode(vmpCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListVmpDto?  {
+    suspend fun findPaginatedVmpsByVmpCode(vmpCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListVmpDto  {
         val localVariableConfig = findPaginatedVmpsByVmpCodeRequestConfig(vmpCode = vmpCode, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListVmpDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation findPaginatedVmpsByVmpCode
     *
@@ -823,7 +828,7 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun findPaginatedVmpsByVmpCodeRequestConfig(vmpCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (startKey != null) {
@@ -837,14 +842,15 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/be_samv2/vmp/byVmpCode/{vmpCode}".replace("{"+"vmpCode"+"}", "$vmpCode"),
+            path = "/rest/v2/be_samv2/vmp/byVmpCode/{vmpCode}".replace("{"+"vmpCode"+"}", "${URLEncoder.encode(vmpCode.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -857,31 +863,31 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getSamVersion() : SamVersionDto?  {
+    suspend fun getSamVersion() : SamVersionDto  {
         val localVariableConfig = getSamVersionRequestConfig()
 
         return request<Unit, SamVersionDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getSamVersion
     *
     * @return RequestConfig
     */
     fun getSamVersionRequestConfig() : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/be_samv2/v",
+            path = "/rest/v2/be_samv2/v",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -895,14 +901,13 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listAmpsByDmppCodes(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<AmpDto>?  {
+    suspend fun listAmpsByDmppCodes(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<AmpDto>  {
         val localVariableConfig = listAmpsByDmppCodesRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<AmpDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listAmpsByDmppCodes
     *
@@ -910,17 +915,18 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun listAmpsByDmppCodesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/be_samv2/amp/byDmppCodes",
+            path = "/rest/v2/be_samv2/amp/byDmppCodes",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -934,14 +940,13 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listAmpsByGroupCodes(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<AmpDto>?  {
+    suspend fun listAmpsByGroupCodes(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<AmpDto>  {
         val localVariableConfig = listAmpsByGroupCodesRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<AmpDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listAmpsByGroupCodes
     *
@@ -949,17 +954,18 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun listAmpsByGroupCodesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/be_samv2/amp/byGroupCodes",
+            path = "/rest/v2/be_samv2/amp/byGroupCodes",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -973,14 +979,13 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listAmpsByGroupIds(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<AmpDto>?  {
+    suspend fun listAmpsByGroupIds(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<AmpDto>  {
         val localVariableConfig = listAmpsByGroupIdsRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<AmpDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listAmpsByGroupIds
     *
@@ -988,17 +993,18 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun listAmpsByGroupIdsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/be_samv2/amp/byGroupIds",
+            path = "/rest/v2/be_samv2/amp/byGroupIds",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1012,14 +1018,13 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listAmpsByVmpCodes(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<AmpDto>?  {
+    suspend fun listAmpsByVmpCodes(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<AmpDto>  {
         val localVariableConfig = listAmpsByVmpCodesRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<AmpDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listAmpsByVmpCodes
     *
@@ -1027,17 +1032,18 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun listAmpsByVmpCodesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/be_samv2/amp/byVmpCodes",
+            path = "/rest/v2/be_samv2/amp/byVmpCodes",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1051,14 +1057,13 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listAmpsByVmpIds(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<AmpDto>?  {
+    suspend fun listAmpsByVmpIds(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<AmpDto>  {
         val localVariableConfig = listAmpsByVmpIdsRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<AmpDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listAmpsByVmpIds
     *
@@ -1066,17 +1071,18 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun listAmpsByVmpIdsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/be_samv2/amp/byVmpIds",
+            path = "/rest/v2/be_samv2/amp/byVmpIds",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1090,14 +1096,13 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listNmpsByCnks(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<NmpDto>?  {
+    suspend fun listNmpsByCnks(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<NmpDto>  {
         val localVariableConfig = listNmpsByCnksRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<NmpDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listNmpsByCnks
     *
@@ -1105,17 +1110,18 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun listNmpsByCnksRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/be_samv2/nmp/byCnks",
+            path = "/rest/v2/be_samv2/nmp/byCnks",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1128,31 +1134,31 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listPharmaceuticalForms() : kotlin.collections.List<PharmaceuticalFormDto>?  {
+    suspend fun listPharmaceuticalForms() : kotlin.collections.List<PharmaceuticalFormDto>  {
         val localVariableConfig = listPharmaceuticalFormsRequestConfig()
 
         return request<Unit, kotlin.collections.List<PharmaceuticalFormDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listPharmaceuticalForms
     *
     * @return RequestConfig
     */
     fun listPharmaceuticalFormsRequestConfig() : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/be_samv2/pharmaform",
+            path = "/rest/v2/be_samv2/pharmaform",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1165,31 +1171,31 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listSubstances() : kotlin.collections.List<SubstanceDto>?  {
+    suspend fun listSubstances() : kotlin.collections.List<SubstanceDto>  {
         val localVariableConfig = listSubstancesRequestConfig()
 
         return request<Unit, kotlin.collections.List<SubstanceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listSubstances
     *
     * @return RequestConfig
     */
     fun listSubstancesRequestConfig() : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/be_samv2/substance",
+            path = "/rest/v2/be_samv2/substance",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1203,14 +1209,13 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listVmpGroupsByVmpGroupCodes(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<VmpGroupDto>?  {
+    suspend fun listVmpGroupsByVmpGroupCodes(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<VmpGroupDto>  {
         val localVariableConfig = listVmpGroupsByVmpGroupCodesRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<VmpGroupDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listVmpGroupsByVmpGroupCodes
     *
@@ -1218,17 +1223,18 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun listVmpGroupsByVmpGroupCodesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/be_samv2/vmpgroup/byGroupCodes",
+            path = "/rest/v2/be_samv2/vmpgroup/byGroupCodes",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1242,14 +1248,13 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listVmpsByGroupIds(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<VmpDto>?  {
+    suspend fun listVmpsByGroupIds(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<VmpDto>  {
         val localVariableConfig = listVmpsByGroupIdsRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<VmpDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listVmpsByGroupIds
     *
@@ -1257,17 +1262,18 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun listVmpsByGroupIdsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/be_samv2/vmp/byGroupIds",
+            path = "/rest/v2/be_samv2/vmp/byGroupIds",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1281,14 +1287,13 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listVmpsByVmpCodes(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<VmpDto>?  {
+    suspend fun listVmpsByVmpCodes(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<VmpDto>  {
         val localVariableConfig = listVmpsByVmpCodesRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<VmpDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listVmpsByVmpCodes
     *
@@ -1296,17 +1301,18 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun listVmpsByVmpCodesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/be_samv2/vmp/byVmpCodes",
+            path = "/rest/v2/be_samv2/vmp/byVmpCodes",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
 }

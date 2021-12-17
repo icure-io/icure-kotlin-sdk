@@ -4,11 +4,11 @@ All URIs are relative to *https://kraken.icure.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createPlace**](PlaceApi.md#createPlace) | **POST** /rest/v1/place | Creates a place
-[**deletePlace**](PlaceApi.md#deletePlace) | **DELETE** /rest/v1/place/{placeIds} | Deletes an place
-[**getPlace**](PlaceApi.md#getPlace) | **GET** /rest/v1/place/{placeId} | Gets an place
-[**getPlaces**](PlaceApi.md#getPlaces) | **GET** /rest/v1/place | Gets all places
-[**modifyPlace**](PlaceApi.md#modifyPlace) | **PUT** /rest/v1/place | Modifies an place
+[**createPlace**](PlaceApi.md#createPlace) | **POST** /rest/v2/place | Creates a place
+[**deletePlaces**](PlaceApi.md#deletePlaces) | **POST** /rest/v2/place/delete/batch | Deletes places
+[**getPlace**](PlaceApi.md#getPlace) | **GET** /rest/v2/place/{placeId} | Gets an place
+[**getPlaces**](PlaceApi.md#getPlaces) | **GET** /rest/v2/place | Gets all places
+[**modifyPlace**](PlaceApi.md#modifyPlace) | **PUT** /rest/v2/place | Modifies an place
 
 
 <a name="createPlace"></a>
@@ -56,11 +56,11 @@ No authorization required
  - **Content-Type**: application/json
  - **Accept**: */*
 
-<a name="deletePlace"></a>
-# **deletePlace**
-> kotlin.collections.List&lt;DocIdentifier&gt; deletePlace(placeIds)
+<a name="deletePlaces"></a>
+# **deletePlaces**
+> kotlin.collections.List&lt;DocIdentifier&gt; deletePlaces(listOfIdsDto)
 
-Deletes an place
+Deletes places
 
 ### Example
 ```kotlin
@@ -69,15 +69,15 @@ Deletes an place
 //import io.icure.kraken.client.models.*
 
 val apiInstance = PlaceApi()
-val placeIds : kotlin.String = placeIds_example // kotlin.String | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
 try {
-    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deletePlace(placeIds)
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deletePlaces(listOfIdsDto)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling PlaceApi#deletePlace")
+    println("4xx response calling PlaceApi#deletePlaces")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling PlaceApi#deletePlace")
+    println("5xx response calling PlaceApi#deletePlaces")
     e.printStackTrace()
 }
 ```
@@ -86,7 +86,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **placeIds** | **kotlin.String**|  |
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
 
 ### Return type
 
@@ -98,7 +98,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: */*
 
 <a name="getPlace"></a>

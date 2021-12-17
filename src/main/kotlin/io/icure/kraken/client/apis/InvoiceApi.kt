@@ -1,9 +1,9 @@
 /**
  * iCure Data Stack API Documentation
  *
- * The iCure Data Stack Application API is the native interface to iCure. This version is obsolete, please use v2.
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -14,6 +14,7 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
+import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.models.DelegationDto
 import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.FilterChainInvoice
@@ -32,7 +33,12 @@ import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
+import kotlinx.coroutines.flow.flowOf
+import java.nio.ByteBuffer
+import java.util.*
 import javax.inject.Named
+import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -63,14 +69,13 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun appendCodes(userId: kotlin.String, type: kotlin.String, sentMediumType: kotlin.String, secretFKeys: kotlin.String, invoicingCodeDto: kotlin.collections.List<InvoicingCodeDto>, insuranceId: kotlin.String?, invoiceId: kotlin.String?, gracePeriod: kotlin.Int?) : kotlin.collections.List<InvoiceDto>?  {
+    suspend fun appendCodes(userId: kotlin.String, type: kotlin.String, sentMediumType: kotlin.String, secretFKeys: kotlin.String, invoicingCodeDto: kotlin.collections.List<InvoicingCodeDto>, insuranceId: kotlin.String?, invoiceId: kotlin.String?, gracePeriod: kotlin.Int?) : kotlin.collections.List<InvoiceDto>  {
         val localVariableConfig = appendCodesRequestConfig(userId = userId, type = type, sentMediumType = sentMediumType, secretFKeys = secretFKeys, invoicingCodeDto = invoicingCodeDto, insuranceId = insuranceId, invoiceId = invoiceId, gracePeriod = gracePeriod)
 
         return request<kotlin.collections.List<InvoicingCodeDto>, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation appendCodes
     *
@@ -85,7 +90,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun appendCodesRequestConfig(userId: kotlin.String, type: kotlin.String, sentMediumType: kotlin.String, secretFKeys: kotlin.String, invoicingCodeDto: kotlin.collections.List<InvoicingCodeDto>, insuranceId: kotlin.String?, invoiceId: kotlin.String?, gracePeriod: kotlin.Int?) : RequestConfig<kotlin.collections.List<InvoicingCodeDto>> {
-        val localVariableBody = invoicingCodeDto
+        // val localVariableBody = invoicingCodeDto
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("secretFKeys", listOf(secretFKeys.toString()))
@@ -99,15 +104,16 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("gracePeriod", listOf(gracePeriod.toString()))
                 }
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = invoicingCodeDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/invoice/byauthor/{userId}/append/{type}/{sentMediumType}".replace("{"+"userId"+"}", "$userId").replace("{"+"type"+"}", "$type").replace("{"+"sentMediumType"+"}", "$sentMediumType"),
+            path = "/rest/v2/invoice/byauthor/{userId}/append/{type}/{sentMediumType}".replace("{"+"userId"+"}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}").replace("{"+"type"+"}", "${URLEncoder.encode(type.toString(), Charsets.UTF_8)}").replace("{"+"sentMediumType"+"}", "${URLEncoder.encode(sentMediumType.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -121,14 +127,13 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createInvoice(invoiceDto: InvoiceDto) : InvoiceDto?  {
+    suspend fun createInvoice(invoiceDto: InvoiceDto) : InvoiceDto  {
         val localVariableConfig = createInvoiceRequestConfig(invoiceDto = invoiceDto)
 
         return request<InvoiceDto, InvoiceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createInvoice
     *
@@ -136,17 +141,18 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun createInvoiceRequestConfig(invoiceDto: InvoiceDto) : RequestConfig<InvoiceDto> {
-        val localVariableBody = invoiceDto
+        // val localVariableBody = invoiceDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = invoiceDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/invoice",
+            path = "/rest/v2/invoice",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -160,14 +166,13 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createInvoices(invoiceDto: kotlin.collections.List<InvoiceDto>) : kotlin.collections.List<InvoiceDto>?  {
+    suspend fun createInvoices(invoiceDto: kotlin.collections.List<InvoiceDto>) : kotlin.collections.List<InvoiceDto>  {
         val localVariableConfig = createInvoicesRequestConfig(invoiceDto = invoiceDto)
 
         return request<kotlin.collections.List<InvoiceDto>, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createInvoices
     *
@@ -175,17 +180,18 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun createInvoicesRequestConfig(invoiceDto: kotlin.collections.List<InvoiceDto>) : RequestConfig<kotlin.collections.List<InvoiceDto>> {
-        val localVariableBody = invoiceDto
+        // val localVariableBody = invoiceDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = invoiceDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/invoice/batch",
+            path = "/rest/v2/invoice/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -199,14 +205,13 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteInvoice(invoiceId: kotlin.String) : DocIdentifier?  {
+    suspend fun deleteInvoice(invoiceId: kotlin.String) : DocIdentifier  {
         val localVariableConfig = deleteInvoiceRequestConfig(invoiceId = invoiceId)
 
         return request<Unit, DocIdentifier>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteInvoice
     *
@@ -214,17 +219,18 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun deleteInvoiceRequestConfig(invoiceId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.DELETE,
-            path = "/rest/v1/invoice/{invoiceId}".replace("{"+"invoiceId"+"}", "$invoiceId"),
+            path = "/rest/v2/invoice/{invoiceId}".replace("{"+"invoiceId"+"}", "${URLEncoder.encode(invoiceId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -238,14 +244,13 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun filterInvoicesBy(filterChainInvoice: FilterChainInvoice) : kotlin.collections.List<InvoiceDto>?  {
+    suspend fun filterInvoicesBy(filterChainInvoice: FilterChainInvoice) : kotlin.collections.List<InvoiceDto>  {
         val localVariableConfig = filterInvoicesByRequestConfig(filterChainInvoice = filterChainInvoice)
 
         return request<FilterChainInvoice, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation filterInvoicesBy
     *
@@ -253,17 +258,18 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun filterInvoicesByRequestConfig(filterChainInvoice: FilterChainInvoice) : RequestConfig<FilterChainInvoice> {
-        val localVariableBody = filterChainInvoice
+        // val localVariableBody = filterChainInvoice
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = filterChainInvoice
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/invoice/filter",
+            path = "/rest/v2/invoice/filter",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -282,16 +288,15 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findByAuthor(hcPartyId: kotlin.String, fromDate: kotlin.Long?, toDate: kotlin.Long?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListInvoiceDto?  {
-        val localVariableConfig = findByAuthorRequestConfig(hcPartyId = hcPartyId, fromDate = fromDate, toDate = toDate, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
+    suspend fun findInvoicesByAuthor(hcPartyId: kotlin.String, fromDate: kotlin.Long?, toDate: kotlin.Long?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListInvoiceDto  {
+        val localVariableConfig = findInvoicesByAuthorRequestConfig(hcPartyId = hcPartyId, fromDate = fromDate, toDate = toDate, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListInvoiceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
-    * To obtain the request config of the operation findByAuthor
+    * To obtain the request config of the operation findInvoicesByAuthor
     *
     * @param hcPartyId  
     * @param fromDate  (optional)
@@ -301,8 +306,8 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param limit Number of rows (optional)
     * @return RequestConfig
     */
-    fun findByAuthorRequestConfig(hcPartyId: kotlin.String, fromDate: kotlin.Long?, toDate: kotlin.Long?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun findInvoicesByAuthorRequestConfig(hcPartyId: kotlin.String, fromDate: kotlin.Long?, toDate: kotlin.Long?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (fromDate != null) {
@@ -322,104 +327,15 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/invoice/byauthor/{hcPartyId}".replace("{"+"hcPartyId"+"}", "$hcPartyId"),
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * List invoices found By Healthcare Party and secret foreign patient keys.
-    * Keys have to delimited by coma
-    * @param hcPartyId  
-    * @param secretFKeys  
-    * @return kotlin.collections.List<InvoiceDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findInvoicesByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<InvoiceDto>?  {
-        val localVariableConfig = findInvoicesByHCPartyPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
-
-        return request<Unit, kotlin.collections.List<InvoiceDto>>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation findInvoicesByHCPartyPatientForeignKeys
-    *
-    * @param hcPartyId  
-    * @param secretFKeys  
-    * @return RequestConfig
-    */
-    fun findInvoicesByHCPartyPatientForeignKeysRequestConfig(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : RequestConfig<Unit> {
+        localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
-            .apply {
-                put("hcPartyId", listOf(hcPartyId.toString()))
-                put("secretFKeys", listOf(secretFKeys.toString()))
-            }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/invoice/byHcPartySecretForeignKeys",
+            path = "/rest/v2/invoice/byauthor/{hcPartyId}".replace("{"+"hcPartyId"+"}", "${URLEncoder.encode(hcPartyId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * List helement stubs found By Healthcare Party and secret foreign keys.
-    * Keys must be delimited by coma
-    * @param hcPartyId  
-    * @param secretFKeys  
-    * @return kotlin.collections.List<IcureStubDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findInvoicesDelegationsStubsByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<IcureStubDto>?  {
-        val localVariableConfig = findInvoicesDelegationsStubsByHCPartyPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
-
-        return request<Unit, kotlin.collections.List<IcureStubDto>>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation findInvoicesDelegationsStubsByHCPartyPatientForeignKeys
-    *
-    * @param hcPartyId  
-    * @param secretFKeys  
-    * @return RequestConfig
-    */
-    fun findInvoicesDelegationsStubsByHCPartyPatientForeignKeysRequestConfig(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
-            .apply {
-                put("hcPartyId", listOf(hcPartyId.toString()))
-                put("secretFKeys", listOf(secretFKeys.toString()))
-            }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/invoice/byHcPartySecretForeignKeys/delegations",
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -433,14 +349,13 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getInvoice(invoiceId: kotlin.String) : InvoiceDto?  {
+    suspend fun getInvoice(invoiceId: kotlin.String) : InvoiceDto  {
         val localVariableConfig = getInvoiceRequestConfig(invoiceId = invoiceId)
 
         return request<Unit, InvoiceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getInvoice
     *
@@ -448,17 +363,18 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun getInvoiceRequestConfig(invoiceId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/invoice/{invoiceId}".replace("{"+"invoiceId"+"}", "$invoiceId"),
+            path = "/rest/v2/invoice/{invoiceId}".replace("{"+"invoiceId"+"}", "${URLEncoder.encode(invoiceId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -472,14 +388,13 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getInvoices(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<InvoiceDto>?  {
+    suspend fun getInvoices(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<InvoiceDto>  {
         val localVariableConfig = getInvoicesRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getInvoices
     *
@@ -487,17 +402,18 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun getInvoicesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/invoice/byIds",
+            path = "/rest/v2/invoice/byIds",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -511,14 +427,13 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTarificationsCodesOccurences(minOccurences: kotlin.Long) : kotlin.collections.List<LabelledOccurenceDto>?  {
+    suspend fun getTarificationsCodesOccurences(minOccurences: kotlin.Long) : kotlin.collections.List<LabelledOccurenceDto>  {
         val localVariableConfig = getTarificationsCodesOccurencesRequestConfig(minOccurences = minOccurences)
 
         return request<Unit, kotlin.collections.List<LabelledOccurenceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTarificationsCodesOccurences
     *
@@ -526,17 +441,18 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun getTarificationsCodesOccurencesRequestConfig(minOccurences: kotlin.Long) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/invoice/codes/{minOccurences}".replace("{"+"minOccurences"+"}", "$minOccurences"),
+            path = "/rest/v2/invoice/codes/{minOccurences}".replace("{"+"minOccurences"+"}", "${URLEncoder.encode(minOccurences.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -553,14 +469,13 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listAllHcpsByStatus(status: kotlin.String, listOfIdsDto: ListOfIdsDto, from: kotlin.Long?, to: kotlin.Long?) : kotlin.collections.List<InvoiceDto>?  {
+    suspend fun listAllHcpsByStatus(status: kotlin.String, listOfIdsDto: ListOfIdsDto, from: kotlin.Long?, to: kotlin.Long?) : kotlin.collections.List<InvoiceDto>  {
         val localVariableConfig = listAllHcpsByStatusRequestConfig(status = status, listOfIdsDto = listOfIdsDto, from = from, to = to)
 
         return request<ListOfIdsDto, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listAllHcpsByStatus
     *
@@ -571,7 +486,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun listAllHcpsByStatusRequestConfig(status: kotlin.String, listOfIdsDto: ListOfIdsDto, from: kotlin.Long?, to: kotlin.Long?) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (from != null) {
@@ -581,15 +496,16 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                     put("to", listOf(to.toString()))
                 }
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/invoice/allHcpsByStatus/{status}".replace("{"+"status"+"}", "$status"),
+            path = "/rest/v2/invoice/allHcpsByStatus/{status}".replace("{"+"status"+"}", "${URLEncoder.encode(status.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -603,32 +519,77 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listByContactIds(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<InvoiceDto>?  {
-        val localVariableConfig = listByContactIdsRequestConfig(listOfIdsDto = listOfIdsDto)
+    suspend fun listInvoicesByContactIds(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<InvoiceDto>  {
+        val localVariableConfig = listInvoicesByContactIdsRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
-    * To obtain the request config of the operation listByContactIds
+    * To obtain the request config of the operation listInvoicesByContactIds
     *
     * @param listOfIdsDto  
     * @return RequestConfig
     */
-    fun listByContactIdsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+    fun listInvoicesByContactIdsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/invoice/byCtcts",
+            path = "/rest/v2/invoice/byContacts",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
+    }
+
+    /**
+    * List invoices found By Healthcare Party and secret foreign patient keys.
+    * Keys have to delimited by coma
+    * @param hcPartyId  
+    * @param secretFKeys  
+    * @return kotlin.collections.List<InvoiceDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun listInvoicesByHCPartyAndPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<InvoiceDto>  {
+        val localVariableConfig = listInvoicesByHCPartyAndPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
+
+        return request<Unit, kotlin.collections.List<InvoiceDto>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation listInvoicesByHCPartyAndPatientForeignKeys
+    *
+    * @param hcPartyId  
+    * @param secretFKeys  
+    * @return RequestConfig
+    */
+    fun listInvoicesByHCPartyAndPatientForeignKeysRequestConfig(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                put("hcPartyId", listOf(hcPartyId.toString()))
+                put("secretFKeys", listOf(secretFKeys.toString()))
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v2/invoice/byHcPartySecretForeignKeys",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
     }
 
     /**
@@ -643,33 +604,33 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listByHcPartyGroupId(hcPartyId: kotlin.String, groupId: kotlin.String) : kotlin.collections.List<InvoiceDto>?  {
-        val localVariableConfig = listByHcPartyGroupIdRequestConfig(hcPartyId = hcPartyId, groupId = groupId)
+    suspend fun listInvoicesByHcPartyAndGroupId(hcPartyId: kotlin.String, groupId: kotlin.String) : kotlin.collections.List<InvoiceDto>  {
+        val localVariableConfig = listInvoicesByHcPartyAndGroupIdRequestConfig(hcPartyId = hcPartyId, groupId = groupId)
 
         return request<Unit, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
-    * To obtain the request config of the operation listByHcPartyGroupId
+    * To obtain the request config of the operation listInvoicesByHcPartyAndGroupId
     *
     * @param hcPartyId  
     * @param groupId  
     * @return RequestConfig
     */
-    fun listByHcPartyGroupIdRequestConfig(hcPartyId: kotlin.String, groupId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun listInvoicesByHcPartyAndGroupIdRequestConfig(hcPartyId: kotlin.String, groupId: kotlin.String) : RequestConfig<Unit> {
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/invoice/byHcPartyGroupId/{hcPartyId}/{groupId}".replace("{"+"hcPartyId"+"}", "$hcPartyId").replace("{"+"groupId"+"}", "$groupId"),
+            path = "/rest/v2/invoice/byHcPartyGroupId/{hcPartyId}/{groupId}".replace("{"+"hcPartyId"+"}", "${URLEncoder.encode(hcPartyId.toString(), Charsets.UTF_8)}").replace("{"+"groupId"+"}", "${URLEncoder.encode(groupId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -688,16 +649,15 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listByHcPartySentMediumTypeInvoiceTypeSentDate(hcPartyId: kotlin.String, sentMediumType: kotlin.String, invoiceType: kotlin.String, sent: kotlin.Boolean, from: kotlin.Long?, to: kotlin.Long?) : kotlin.collections.List<InvoiceDto>?  {
-        val localVariableConfig = listByHcPartySentMediumTypeInvoiceTypeSentDateRequestConfig(hcPartyId = hcPartyId, sentMediumType = sentMediumType, invoiceType = invoiceType, sent = sent, from = from, to = to)
+    suspend fun listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate(hcPartyId: kotlin.String, sentMediumType: kotlin.String, invoiceType: kotlin.String, sent: kotlin.Boolean, from: kotlin.Long?, to: kotlin.Long?) : kotlin.collections.List<InvoiceDto>  {
+        val localVariableConfig = listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDateRequestConfig(hcPartyId = hcPartyId, sentMediumType = sentMediumType, invoiceType = invoiceType, sent = sent, from = from, to = to)
 
         return request<Unit, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
-    * To obtain the request config of the operation listByHcPartySentMediumTypeInvoiceTypeSentDate
+    * To obtain the request config of the operation listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate
     *
     * @param hcPartyId  
     * @param sentMediumType  
@@ -707,8 +667,8 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param to  (optional)
     * @return RequestConfig
     */
-    fun listByHcPartySentMediumTypeInvoiceTypeSentDateRequestConfig(hcPartyId: kotlin.String, sentMediumType: kotlin.String, invoiceType: kotlin.String, sent: kotlin.Boolean, from: kotlin.Long?, to: kotlin.Long?) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDateRequestConfig(hcPartyId: kotlin.String, sentMediumType: kotlin.String, invoiceType: kotlin.String, sent: kotlin.Boolean, from: kotlin.Long?, to: kotlin.Long?) : RequestConfig<Unit> {
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (from != null) {
@@ -719,14 +679,15 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/invoice/byHcParty/{hcPartyId}/mediumType/{sentMediumType}/invoiceType/{invoiceType}/sent/{sent}".replace("{"+"hcPartyId"+"}", "$hcPartyId").replace("{"+"sentMediumType"+"}", "$sentMediumType").replace("{"+"invoiceType"+"}", "$invoiceType").replace("{"+"sent"+"}", "$sent"),
+            path = "/rest/v2/invoice/byHcParty/{hcPartyId}/mediumType/{sentMediumType}/invoiceType/{invoiceType}/sent/{sent}".replace("{"+"hcPartyId"+"}", "${URLEncoder.encode(hcPartyId.toString(), Charsets.UTF_8)}").replace("{"+"sentMediumType"+"}", "${URLEncoder.encode(sentMediumType.toString(), Charsets.UTF_8)}").replace("{"+"invoiceType"+"}", "${URLEncoder.encode(invoiceType.toString(), Charsets.UTF_8)}").replace("{"+"sent"+"}", "${URLEncoder.encode(sent.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -744,16 +705,15 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listByHcpartySendingModeStatusDate(hcPartyId: kotlin.String, sendingMode: kotlin.String?, status: kotlin.String?, from: kotlin.Long?, to: kotlin.Long?) : kotlin.collections.List<InvoiceDto>?  {
-        val localVariableConfig = listByHcpartySendingModeStatusDateRequestConfig(hcPartyId = hcPartyId, sendingMode = sendingMode, status = status, from = from, to = to)
+    suspend fun listInvoicesByHcpartySendingModeStatusDate(hcPartyId: kotlin.String, sendingMode: kotlin.String?, status: kotlin.String?, from: kotlin.Long?, to: kotlin.Long?) : kotlin.collections.List<InvoiceDto>  {
+        val localVariableConfig = listInvoicesByHcpartySendingModeStatusDateRequestConfig(hcPartyId = hcPartyId, sendingMode = sendingMode, status = status, from = from, to = to)
 
         return request<Unit, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
-    * To obtain the request config of the operation listByHcpartySendingModeStatusDate
+    * To obtain the request config of the operation listInvoicesByHcpartySendingModeStatusDate
     *
     * @param hcPartyId  
     * @param sendingMode  (optional)
@@ -762,8 +722,8 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param to  (optional)
     * @return RequestConfig
     */
-    fun listByHcpartySendingModeStatusDateRequestConfig(hcPartyId: kotlin.String, sendingMode: kotlin.String?, status: kotlin.String?, from: kotlin.Long?, to: kotlin.Long?) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun listInvoicesByHcpartySendingModeStatusDateRequestConfig(hcPartyId: kotlin.String, sendingMode: kotlin.String?, status: kotlin.String?, from: kotlin.Long?, to: kotlin.Long?) : RequestConfig<Unit> {
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (sendingMode != null) {
@@ -780,14 +740,15 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/invoice/byHcpartySendingModeStatusDate/{hcPartyId}".replace("{"+"hcPartyId"+"}", "$hcPartyId"),
+            path = "/rest/v2/invoice/byHcpartySendingModeStatusDate/{hcPartyId}".replace("{"+"hcPartyId"+"}", "${URLEncoder.encode(hcPartyId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -801,32 +762,32 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listByIds(invoiceIds: kotlin.String) : kotlin.collections.List<InvoiceDto>?  {
-        val localVariableConfig = listByIdsRequestConfig(invoiceIds = invoiceIds)
+    suspend fun listInvoicesByIds(invoiceIds: kotlin.String) : kotlin.collections.List<InvoiceDto>  {
+        val localVariableConfig = listInvoicesByIdsRequestConfig(invoiceIds = invoiceIds)
 
         return request<Unit, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
-    * To obtain the request config of the operation listByIds
+    * To obtain the request config of the operation listInvoicesByIds
     *
     * @param invoiceIds  
     * @return RequestConfig
     */
-    fun listByIdsRequestConfig(invoiceIds: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun listInvoicesByIdsRequestConfig(invoiceIds: kotlin.String) : RequestConfig<Unit> {
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/invoice/byIds/{invoiceIds}".replace("{"+"invoiceIds"+"}", "$invoiceIds"),
+            path = "/rest/v2/invoice/byIds/{invoiceIds}".replace("{"+"invoiceIds"+"}", "${URLEncoder.encode(invoiceIds.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -840,32 +801,32 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listByRecipientsIds(recipientIds: kotlin.String) : kotlin.collections.List<InvoiceDto>?  {
-        val localVariableConfig = listByRecipientsIdsRequestConfig(recipientIds = recipientIds)
+    suspend fun listInvoicesByRecipientsIds(recipientIds: kotlin.String) : kotlin.collections.List<InvoiceDto>  {
+        val localVariableConfig = listInvoicesByRecipientsIdsRequestConfig(recipientIds = recipientIds)
 
         return request<Unit, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
-    * To obtain the request config of the operation listByRecipientsIds
+    * To obtain the request config of the operation listInvoicesByRecipientsIds
     *
     * @param recipientIds  
     * @return RequestConfig
     */
-    fun listByRecipientsIdsRequestConfig(recipientIds: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun listInvoicesByRecipientsIdsRequestConfig(recipientIds: kotlin.String) : RequestConfig<Unit> {
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/invoice/to/{recipientIds}".replace("{"+"recipientIds"+"}", "$recipientIds"),
+            path = "/rest/v2/invoice/to/{recipientIds}".replace("{"+"recipientIds"+"}", "${URLEncoder.encode(recipientIds.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -879,32 +840,77 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listByServiceIds(serviceIds: kotlin.String) : kotlin.collections.List<InvoiceDto>?  {
-        val localVariableConfig = listByServiceIdsRequestConfig(serviceIds = serviceIds)
+    suspend fun listInvoicesByServiceIds(serviceIds: kotlin.String) : kotlin.collections.List<InvoiceDto>  {
+        val localVariableConfig = listInvoicesByServiceIdsRequestConfig(serviceIds = serviceIds)
 
         return request<Unit, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
-    * To obtain the request config of the operation listByServiceIds
+    * To obtain the request config of the operation listInvoicesByServiceIds
     *
     * @param serviceIds  
     * @return RequestConfig
     */
-    fun listByServiceIdsRequestConfig(serviceIds: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun listInvoicesByServiceIdsRequestConfig(serviceIds: kotlin.String) : RequestConfig<Unit> {
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/invoice/byServiceIds/{serviceIds}".replace("{"+"serviceIds"+"}", "$serviceIds"),
+            path = "/rest/v2/invoice/byServiceIds/{serviceIds}".replace("{"+"serviceIds"+"}", "${URLEncoder.encode(serviceIds.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
+    }
+
+    /**
+    * List helement stubs found By Healthcare Party and secret foreign keys.
+    * Keys must be delimited by coma
+    * @param hcPartyId  
+    * @param secretFKeys  
+    * @return kotlin.collections.List<IcureStubDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun listInvoicesDelegationsStubsByHCPartyAndPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<IcureStubDto>  {
+        val localVariableConfig = listInvoicesDelegationsStubsByHCPartyAndPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
+
+        return request<Unit, kotlin.collections.List<IcureStubDto>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation listInvoicesDelegationsStubsByHCPartyAndPatientForeignKeys
+    *
+    * @param hcPartyId  
+    * @param secretFKeys  
+    * @return RequestConfig
+    */
+    fun listInvoicesDelegationsStubsByHCPartyAndPatientForeignKeysRequestConfig(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                put("hcPartyId", listOf(hcPartyId.toString()))
+                put("secretFKeys", listOf(secretFKeys.toString()))
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v2/invoice/byHcPartySecretForeignKeys/delegations",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
     }
 
     /**
@@ -918,14 +924,13 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listToInsurances(userIds: kotlin.String?) : kotlin.collections.List<InvoiceDto>?  {
+    suspend fun listToInsurances(userIds: kotlin.String?) : kotlin.collections.List<InvoiceDto>  {
         val localVariableConfig = listToInsurancesRequestConfig(userIds = userIds)
 
         return request<Unit, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listToInsurances
     *
@@ -933,7 +938,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun listToInsurancesRequestConfig(userIds: kotlin.String?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (userIds != null) {
@@ -941,14 +946,15 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/invoice/toInsurances",
+            path = "/rest/v2/invoice/toInsurances",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -962,14 +968,13 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listToInsurancesUnsent(userIds: kotlin.String?) : kotlin.collections.List<InvoiceDto>?  {
+    suspend fun listToInsurancesUnsent(userIds: kotlin.String?) : kotlin.collections.List<InvoiceDto>  {
         val localVariableConfig = listToInsurancesUnsentRequestConfig(userIds = userIds)
 
         return request<Unit, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listToInsurancesUnsent
     *
@@ -977,7 +982,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun listToInsurancesUnsentRequestConfig(userIds: kotlin.String?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (userIds != null) {
@@ -985,14 +990,15 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/invoice/toInsurances/unsent",
+            path = "/rest/v2/invoice/toInsurances/unsent",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1006,14 +1012,13 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listToPatients(hcPartyId: kotlin.String?) : kotlin.collections.List<InvoiceDto>?  {
+    suspend fun listToPatients(hcPartyId: kotlin.String?) : kotlin.collections.List<InvoiceDto>  {
         val localVariableConfig = listToPatientsRequestConfig(hcPartyId = hcPartyId)
 
         return request<Unit, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listToPatients
     *
@@ -1021,7 +1026,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun listToPatientsRequestConfig(hcPartyId: kotlin.String?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (hcPartyId != null) {
@@ -1029,14 +1034,15 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/invoice/toPatients",
+            path = "/rest/v2/invoice/toPatients",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1050,14 +1056,13 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listToPatientsUnsent(hcPartyId: kotlin.String?) : kotlin.collections.List<InvoiceDto>?  {
+    suspend fun listToPatientsUnsent(hcPartyId: kotlin.String?) : kotlin.collections.List<InvoiceDto>  {
         val localVariableConfig = listToPatientsUnsentRequestConfig(hcPartyId = hcPartyId)
 
         return request<Unit, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listToPatientsUnsent
     *
@@ -1065,7 +1070,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun listToPatientsUnsentRequestConfig(hcPartyId: kotlin.String?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (hcPartyId != null) {
@@ -1073,14 +1078,15 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/invoice/toPatients/unsent",
+            path = "/rest/v2/invoice/toPatients/unsent",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1095,14 +1101,13 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun mergeTo(invoiceId: kotlin.String, listOfIdsDto: ListOfIdsDto) : InvoiceDto?  {
+    suspend fun mergeTo(invoiceId: kotlin.String, listOfIdsDto: ListOfIdsDto) : InvoiceDto  {
         val localVariableConfig = mergeToRequestConfig(invoiceId = invoiceId, listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, InvoiceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation mergeTo
     *
@@ -1111,17 +1116,18 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun mergeToRequestConfig(invoiceId: kotlin.String, listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/invoice/mergeTo/{invoiceId}".replace("{"+"invoiceId"+"}", "$invoiceId"),
+            path = "/rest/v2/invoice/mergeTo/{invoiceId}".replace("{"+"invoiceId"+"}", "${URLEncoder.encode(invoiceId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1135,14 +1141,13 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyInvoice(invoiceDto: InvoiceDto) : InvoiceDto?  {
+    suspend fun modifyInvoice(invoiceDto: InvoiceDto) : InvoiceDto  {
         val localVariableConfig = modifyInvoiceRequestConfig(invoiceDto = invoiceDto)
 
         return request<InvoiceDto, InvoiceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyInvoice
     *
@@ -1150,17 +1155,18 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun modifyInvoiceRequestConfig(invoiceDto: InvoiceDto) : RequestConfig<InvoiceDto> {
-        val localVariableBody = invoiceDto
+        // val localVariableBody = invoiceDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = invoiceDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/invoice",
+            path = "/rest/v2/invoice",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1174,14 +1180,13 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyInvoices(invoiceDto: kotlin.collections.List<InvoiceDto>) : kotlin.collections.List<InvoiceDto>?  {
+    suspend fun modifyInvoices(invoiceDto: kotlin.collections.List<InvoiceDto>) : kotlin.collections.List<InvoiceDto>  {
         val localVariableConfig = modifyInvoicesRequestConfig(invoiceDto = invoiceDto)
 
         return request<kotlin.collections.List<InvoiceDto>, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyInvoices
     *
@@ -1189,17 +1194,18 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun modifyInvoicesRequestConfig(invoiceDto: kotlin.collections.List<InvoiceDto>) : RequestConfig<kotlin.collections.List<InvoiceDto>> {
-        val localVariableBody = invoiceDto
+        // val localVariableBody = invoiceDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = invoiceDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/invoice/batch",
+            path = "/rest/v2/invoice/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1214,14 +1220,13 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun newInvoiceDelegations(invoiceId: kotlin.String, delegationDto: kotlin.collections.List<DelegationDto>) : InvoiceDto?  {
+    suspend fun newInvoiceDelegations(invoiceId: kotlin.String, delegationDto: kotlin.collections.List<DelegationDto>) : InvoiceDto  {
         val localVariableConfig = newInvoiceDelegationsRequestConfig(invoiceId = invoiceId, delegationDto = delegationDto)
 
         return request<kotlin.collections.List<DelegationDto>, InvoiceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation newInvoiceDelegations
     *
@@ -1230,17 +1235,18 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun newInvoiceDelegationsRequestConfig(invoiceId: kotlin.String, delegationDto: kotlin.collections.List<DelegationDto>) : RequestConfig<kotlin.collections.List<DelegationDto>> {
-        val localVariableBody = delegationDto
+        // val localVariableBody = delegationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = delegationDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/invoice/{invoiceId}/delegate".replace("{"+"invoiceId"+"}", "$invoiceId"),
+            path = "/rest/v2/invoice/{invoiceId}/delegate".replace("{"+"invoiceId"+"}", "${URLEncoder.encode(invoiceId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1254,14 +1260,13 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun reassignInvoice(invoiceDto: InvoiceDto) : InvoiceDto?  {
+    suspend fun reassignInvoice(invoiceDto: InvoiceDto) : InvoiceDto  {
         val localVariableConfig = reassignInvoiceRequestConfig(invoiceDto = invoiceDto)
 
         return request<InvoiceDto, InvoiceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation reassignInvoice
     *
@@ -1269,21 +1274,22 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun reassignInvoiceRequestConfig(invoiceDto: InvoiceDto) : RequestConfig<InvoiceDto> {
-        val localVariableBody = invoiceDto
+        // val localVariableBody = invoiceDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = invoiceDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/invoice/reassign",
+            path = "/rest/v2/invoice/reassign",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
-    * Gets all invoices for author at date
+    * Remove an invoice of an user
     * 
     * @param userId  
     * @param serviceId  
@@ -1296,14 +1302,13 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun removeCodes(userId: kotlin.String, serviceId: kotlin.String, secretFKeys: kotlin.String, requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<InvoiceDto>?  {
+    suspend fun removeCodes(userId: kotlin.String, serviceId: kotlin.String, secretFKeys: kotlin.String, requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<InvoiceDto>  {
         val localVariableConfig = removeCodesRequestConfig(userId = userId, serviceId = serviceId, secretFKeys = secretFKeys, requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation removeCodes
     *
@@ -1314,20 +1319,21 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun removeCodesRequestConfig(userId: kotlin.String, serviceId: kotlin.String, secretFKeys: kotlin.String, requestBody: kotlin.collections.List<kotlin.String>) : RequestConfig<kotlin.collections.List<kotlin.String>> {
-        val localVariableBody = requestBody
+        // val localVariableBody = requestBody
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("secretFKeys", listOf(secretFKeys.toString()))
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = requestBody
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/invoice/byauthor/{userId}/service/{serviceId}".replace("{"+"userId"+"}", "$userId").replace("{"+"serviceId"+"}", "$serviceId"),
+            path = "/rest/v2/invoice/byauthor/{userId}/service/{serviceId}".replace("{"+"userId"+"}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}").replace("{"+"serviceId"+"}", "${URLEncoder.encode(serviceId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1341,14 +1347,13 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setInvoicesDelegations(icureStubDto: kotlin.collections.List<IcureStubDto>) : kotlin.collections.List<IcureStubDto>?  {
+    suspend fun setInvoicesDelegations(icureStubDto: kotlin.collections.List<IcureStubDto>) : kotlin.collections.List<IcureStubDto>  {
         val localVariableConfig = setInvoicesDelegationsRequestConfig(icureStubDto = icureStubDto)
 
         return request<kotlin.collections.List<IcureStubDto>, kotlin.collections.List<IcureStubDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation setInvoicesDelegations
     *
@@ -1356,17 +1361,18 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun setInvoicesDelegationsRequestConfig(icureStubDto: kotlin.collections.List<IcureStubDto>) : RequestConfig<kotlin.collections.List<IcureStubDto>> {
-        val localVariableBody = icureStubDto
+        // val localVariableBody = icureStubDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = icureStubDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/invoice/delegations",
+            path = "/rest/v2/invoice/delegations",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -1382,14 +1388,13 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun validate(invoiceId: kotlin.String, scheme: kotlin.String, forcedValue: kotlin.String) : InvoiceDto?  {
+    suspend fun validate(invoiceId: kotlin.String, scheme: kotlin.String, forcedValue: kotlin.String) : InvoiceDto  {
         val localVariableConfig = validateRequestConfig(invoiceId = invoiceId, scheme = scheme, forcedValue = forcedValue)
 
         return request<Unit, InvoiceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation validate
     *
@@ -1399,21 +1404,22 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @return RequestConfig
     */
     fun validateRequestConfig(invoiceId: kotlin.String, scheme: kotlin.String, forcedValue: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("scheme", listOf(scheme.toString()))
                 put("forcedValue", listOf(forcedValue.toString()))
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/invoice/validate/{invoiceId}".replace("{"+"invoiceId"+"}", "$invoiceId"),
+            path = "/rest/v2/invoice/validate/{invoiceId}".replace("{"+"invoiceId"+"}", "${URLEncoder.encode(invoiceId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
 }

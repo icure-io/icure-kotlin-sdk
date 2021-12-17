@@ -1,9 +1,9 @@
 /**
  * iCure Data Stack API Documentation
  *
- * The iCure Data Stack Application API is the native interface to iCure. This version is obsolete, please use v2.
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -14,7 +14,9 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
+import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.models.DocIdentifier
+import io.icure.kraken.client.models.ListOfIdsDto
 import io.icure.kraken.client.models.MedicalLocationDto
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -25,12 +27,17 @@ import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
+import kotlinx.coroutines.flow.flowOf
+import java.nio.ByteBuffer
+import java.util.*
 import javax.inject.Named
+import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
 @ExperimentalCoroutinesApi
-class MedicallocationApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = NettyWebClient(), authHeader: String? = null) : ApiClient(basePath, webClient, authHeader) {
+class MedicalLocationApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = NettyWebClient(), authHeader: String? = null) : ApiClient(basePath, webClient, authHeader) {
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
@@ -49,14 +56,13 @@ class MedicallocationApi(basePath: kotlin.String = defaultBasePath, webClient: W
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createMedicalLocation(medicalLocationDto: MedicalLocationDto) : MedicalLocationDto?  {
+    suspend fun createMedicalLocation(medicalLocationDto: MedicalLocationDto) : MedicalLocationDto  {
         val localVariableConfig = createMedicalLocationRequestConfig(medicalLocationDto = medicalLocationDto)
 
         return request<MedicalLocationDto, MedicalLocationDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createMedicalLocation
     *
@@ -64,23 +70,24 @@ class MedicallocationApi(basePath: kotlin.String = defaultBasePath, webClient: W
     * @return RequestConfig
     */
     fun createMedicalLocationRequestConfig(medicalLocationDto: MedicalLocationDto) : RequestConfig<MedicalLocationDto> {
-        val localVariableBody = medicalLocationDto
+        // val localVariableBody = medicalLocationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = medicalLocationDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/medicallocation",
+            path = "/rest/v2/medicallocation",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
-    * Deletes a medical location
+    * Deletes medical locations
     * 
-    * @param locationIds  
+    * @param listOfIdsDto  
     * @return kotlin.collections.List<DocIdentifier>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -88,32 +95,32 @@ class MedicallocationApi(basePath: kotlin.String = defaultBasePath, webClient: W
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteMedicalLocation(locationIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
-        val localVariableConfig = deleteMedicalLocationRequestConfig(locationIds = locationIds)
+    suspend fun deleteMedicalLocations(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocIdentifier>  {
+        val localVariableConfig = deleteMedicalLocationsRequestConfig(listOfIdsDto = listOfIdsDto)
 
-        return request<Unit, kotlin.collections.List<DocIdentifier>>(
+        return request<ListOfIdsDto, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
-    * To obtain the request config of the operation deleteMedicalLocation
+    * To obtain the request config of the operation deleteMedicalLocations
     *
-    * @param locationIds  
+    * @param listOfIdsDto  
     * @return RequestConfig
     */
-    fun deleteMedicalLocationRequestConfig(locationIds: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun deleteMedicalLocationsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
-            method = RequestMethod.DELETE,
-            path = "/rest/v1/medicallocation/{locationIds}".replace("{"+"locationIds"+"}", "$locationIds"),
+            method = RequestMethod.POST,
+            path = "/rest/v2/medicallocation/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -127,14 +134,13 @@ class MedicallocationApi(basePath: kotlin.String = defaultBasePath, webClient: W
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getMedicalLocation(locationId: kotlin.String) : MedicalLocationDto?  {
+    suspend fun getMedicalLocation(locationId: kotlin.String) : MedicalLocationDto  {
         val localVariableConfig = getMedicalLocationRequestConfig(locationId = locationId)
 
         return request<Unit, MedicalLocationDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getMedicalLocation
     *
@@ -142,17 +148,18 @@ class MedicallocationApi(basePath: kotlin.String = defaultBasePath, webClient: W
     * @return RequestConfig
     */
     fun getMedicalLocationRequestConfig(locationId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/medicallocation/{locationId}".replace("{"+"locationId"+"}", "$locationId"),
+            path = "/rest/v2/medicallocation/{locationId}".replace("{"+"locationId"+"}", "${URLEncoder.encode(locationId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -165,31 +172,31 @@ class MedicallocationApi(basePath: kotlin.String = defaultBasePath, webClient: W
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getMedicalLocations() : kotlin.collections.List<MedicalLocationDto>?  {
+    suspend fun getMedicalLocations() : kotlin.collections.List<MedicalLocationDto>  {
         val localVariableConfig = getMedicalLocationsRequestConfig()
 
         return request<Unit, kotlin.collections.List<MedicalLocationDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getMedicalLocations
     *
     * @return RequestConfig
     */
     fun getMedicalLocationsRequestConfig() : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/medicallocation",
+            path = "/rest/v2/medicallocation",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -203,14 +210,13 @@ class MedicallocationApi(basePath: kotlin.String = defaultBasePath, webClient: W
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyMedicalLocation(medicalLocationDto: MedicalLocationDto) : MedicalLocationDto?  {
+    suspend fun modifyMedicalLocation(medicalLocationDto: MedicalLocationDto) : MedicalLocationDto  {
         val localVariableConfig = modifyMedicalLocationRequestConfig(medicalLocationDto = medicalLocationDto)
 
         return request<MedicalLocationDto, MedicalLocationDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyMedicalLocation
     *
@@ -218,17 +224,18 @@ class MedicallocationApi(basePath: kotlin.String = defaultBasePath, webClient: W
     * @return RequestConfig
     */
     fun modifyMedicalLocationRequestConfig(medicalLocationDto: MedicalLocationDto) : RequestConfig<MedicalLocationDto> {
-        val localVariableBody = medicalLocationDto
+        // val localVariableBody = medicalLocationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = medicalLocationDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/medicallocation",
+            path = "/rest/v2/medicallocation",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
 }

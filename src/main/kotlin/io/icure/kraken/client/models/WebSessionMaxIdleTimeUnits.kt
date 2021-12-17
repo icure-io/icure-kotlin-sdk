@@ -1,9 +1,9 @@
 /**
  * iCure Data Stack API Documentation
  *
- * The iCure Data Stack Application API is the native interface to iCure. This version is obsolete, please use v2.
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -22,9 +22,9 @@ import com.github.pozo.KotlinBuilder
 /**
  * 
  *
- * @param durationEstimated 
  * @param dateBased 
  * @param timeBased 
+ * @param durationEstimated 
  */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -32,14 +32,14 @@ import com.github.pozo.KotlinBuilder
 @KotlinBuilder
 data class WebSessionMaxIdleTimeUnits (
 
-    @field:JsonProperty("durationEstimated")
-    val durationEstimated: kotlin.Boolean? = null,
-
     @field:JsonProperty("dateBased")
     val dateBased: kotlin.Boolean? = null,
 
     @field:JsonProperty("timeBased")
-    val timeBased: kotlin.Boolean? = null
+    val timeBased: kotlin.Boolean? = null,
+
+    @field:JsonProperty("durationEstimated")
+    val durationEstimated: kotlin.Boolean? = null
 
 )
 

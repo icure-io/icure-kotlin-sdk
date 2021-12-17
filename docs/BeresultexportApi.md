@@ -4,14 +4,14 @@ All URIs are relative to *https://kraken.icure.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**exportHealthOne**](BeresultexportApi.md#exportHealthOne) | **POST** /rest/v1/be_result_export/hl1/{fromHcpId}/{toHcpId}/{patId}/{date}/{ref} | Export data
-[**exportKmehrReport**](BeresultexportApi.md#exportKmehrReport) | **POST** /rest/v1/be_result_export/kmehrreport/{fromHcpId}/{toHcpId}/{patId}/{date}/{ref} | Export data
-[**exportMedidoc**](BeresultexportApi.md#exportMedidoc) | **POST** /rest/v1/be_result_export/medidoc/{fromHcpId}/{toHcpId}/{patId}/{date}/{ref} | Export data
+[**exportHealthOne**](BeresultexportApi.md#exportHealthOne) | **POST** /rest/v2/be_result_export/hl1/{fromHcpId}/{toHcpId}/{patId}/{date}/{ref} | Export data
+[**exportKmehrReport**](BeresultexportApi.md#exportKmehrReport) | **POST** /rest/v2/be_result_export/kmehrreport/{fromHcpId}/{toHcpId}/{patId}/{date}/{ref} | Export data
+[**exportMedidoc**](BeresultexportApi.md#exportMedidoc) | **POST** /rest/v2/be_result_export/medidoc/{fromHcpId}/{toHcpId}/{patId}/{date}/{ref} | Export data
 
 
 <a name="exportHealthOne"></a>
 # **exportHealthOne**
-> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; exportHealthOne(fromHcpId, toHcpId, patId, date, ref, body)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; exportHealthOne(fromHcpId, toHcpId, patId, date, ref, ioIcureKrakenClientInfrastructureByteArrayWrapper)
 
 Export data
 
@@ -27,9 +27,9 @@ val toHcpId : kotlin.String = toHcpId_example // kotlin.String |
 val patId : kotlin.String = patId_example // kotlin.String | 
 val date : kotlin.Long = 789 // kotlin.Long | 
 val ref : kotlin.String = ref_example // kotlin.String | 
-val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
+val ioIcureKrakenClientInfrastructureByteArrayWrapper : kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> =  // kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> | 
 try {
-    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.exportHealthOne(fromHcpId, toHcpId, patId, date, ref, body)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.exportHealthOne(fromHcpId, toHcpId, patId, date, ref, ioIcureKrakenClientInfrastructureByteArrayWrapper)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BeresultexportApi#exportHealthOne")
@@ -49,7 +49,7 @@ Name | Type | Description  | Notes
  **patId** | **kotlin.String**|  |
  **date** | **kotlin.Long**|  |
  **ref** | **kotlin.String**|  |
- **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
+ **ioIcureKrakenClientInfrastructureByteArrayWrapper** | [**kotlin.collections.List&lt;io.icure.kraken.client.infrastructure.ByteArrayWrapper&gt;**](io.icure.kraken.client.infrastructure.ByteArrayWrapper.md)|  |
 
 ### Return type
 
@@ -66,7 +66,7 @@ No authorization required
 
 <a name="exportKmehrReport"></a>
 # **exportKmehrReport**
-> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; exportKmehrReport(fromHcpId, toHcpId, patId, date, ref, body, mimeType)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; exportKmehrReport(fromHcpId, toHcpId, patId, date, ref, ioIcureKrakenClientInfrastructureByteArrayWrapper, mimeType)
 
 Export data
 
@@ -82,10 +82,10 @@ val toHcpId : kotlin.String = toHcpId_example // kotlin.String |
 val patId : kotlin.String = patId_example // kotlin.String | 
 val date : kotlin.Long = 789 // kotlin.Long | 
 val ref : kotlin.String = ref_example // kotlin.String | 
-val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
+val ioIcureKrakenClientInfrastructureByteArrayWrapper : kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> =  // kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> | 
 val mimeType : kotlin.Boolean = true // kotlin.Boolean | 
 try {
-    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.exportKmehrReport(fromHcpId, toHcpId, patId, date, ref, body, mimeType)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.exportKmehrReport(fromHcpId, toHcpId, patId, date, ref, ioIcureKrakenClientInfrastructureByteArrayWrapper, mimeType)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BeresultexportApi#exportKmehrReport")
@@ -105,7 +105,7 @@ Name | Type | Description  | Notes
  **patId** | **kotlin.String**|  |
  **date** | **kotlin.Long**|  |
  **ref** | **kotlin.String**|  |
- **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
+ **ioIcureKrakenClientInfrastructureByteArrayWrapper** | [**kotlin.collections.List&lt;io.icure.kraken.client.infrastructure.ByteArrayWrapper&gt;**](io.icure.kraken.client.infrastructure.ByteArrayWrapper.md)|  |
  **mimeType** | **kotlin.Boolean**|  | [optional]
 
 ### Return type
@@ -123,7 +123,7 @@ No authorization required
 
 <a name="exportMedidoc"></a>
 # **exportMedidoc**
-> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; exportMedidoc(fromHcpId, toHcpId, patId, date, ref, body)
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; exportMedidoc(fromHcpId, toHcpId, patId, date, ref, ioIcureKrakenClientInfrastructureByteArrayWrapper)
 
 Export data
 
@@ -139,9 +139,9 @@ val toHcpId : kotlin.String = toHcpId_example // kotlin.String |
 val patId : kotlin.String = patId_example // kotlin.String | 
 val date : kotlin.Long = 789 // kotlin.Long | 
 val ref : kotlin.String = ref_example // kotlin.String | 
-val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
+val ioIcureKrakenClientInfrastructureByteArrayWrapper : kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> =  // kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> | 
 try {
-    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.exportMedidoc(fromHcpId, toHcpId, patId, date, ref, body)
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.exportMedidoc(fromHcpId, toHcpId, patId, date, ref, ioIcureKrakenClientInfrastructureByteArrayWrapper)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BeresultexportApi#exportMedidoc")
@@ -161,7 +161,7 @@ Name | Type | Description  | Notes
  **patId** | **kotlin.String**|  |
  **date** | **kotlin.Long**|  |
  **ref** | **kotlin.String**|  |
- **body** | **kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**|  |
+ **ioIcureKrakenClientInfrastructureByteArrayWrapper** | [**kotlin.collections.List&lt;io.icure.kraken.client.infrastructure.ByteArrayWrapper&gt;**](io.icure.kraken.client.infrastructure.ByteArrayWrapper.md)|  |
 
 ### Return type
 

@@ -1,9 +1,9 @@
 /**
  * iCure Data Stack API Documentation
  *
- * The iCure Data Stack Application API is the native interface to iCure. This version is obsolete, please use v2.
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -14,6 +14,7 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
+import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.InsuranceDto
 import io.icure.kraken.client.models.ListOfIdsDto
@@ -26,7 +27,12 @@ import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
+import kotlinx.coroutines.flow.flowOf
+import java.nio.ByteBuffer
+import java.util.*
 import javax.inject.Named
+import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -50,14 +56,13 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createInsurance(insuranceDto: InsuranceDto) : InsuranceDto?  {
+    suspend fun createInsurance(insuranceDto: InsuranceDto) : InsuranceDto  {
         val localVariableConfig = createInsuranceRequestConfig(insuranceDto = insuranceDto)
 
         return request<InsuranceDto, InsuranceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createInsurance
     *
@@ -65,17 +70,18 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     * @return RequestConfig
     */
     fun createInsuranceRequestConfig(insuranceDto: InsuranceDto) : RequestConfig<InsuranceDto> {
-        val localVariableBody = insuranceDto
+        // val localVariableBody = insuranceDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = insuranceDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/insurance",
+            path = "/rest/v2/insurance",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -89,14 +95,13 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteInsurance(insuranceId: kotlin.String) : DocIdentifier?  {
+    suspend fun deleteInsurance(insuranceId: kotlin.String) : DocIdentifier  {
         val localVariableConfig = deleteInsuranceRequestConfig(insuranceId = insuranceId)
 
         return request<Unit, DocIdentifier>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteInsurance
     *
@@ -104,17 +109,18 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     * @return RequestConfig
     */
     fun deleteInsuranceRequestConfig(insuranceId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.DELETE,
-            path = "/rest/v1/insurance/{insuranceId}".replace("{"+"insuranceId"+"}", "$insuranceId"),
+            path = "/rest/v2/insurance/{insuranceId}".replace("{"+"insuranceId"+"}", "${URLEncoder.encode(insuranceId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -128,14 +134,13 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getInsurance(insuranceId: kotlin.String) : InsuranceDto?  {
+    suspend fun getInsurance(insuranceId: kotlin.String) : InsuranceDto  {
         val localVariableConfig = getInsuranceRequestConfig(insuranceId = insuranceId)
 
         return request<Unit, InsuranceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getInsurance
     *
@@ -143,17 +148,18 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     * @return RequestConfig
     */
     fun getInsuranceRequestConfig(insuranceId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/insurance/{insuranceId}".replace("{"+"insuranceId"+"}", "$insuranceId"),
+            path = "/rest/v2/insurance/{insuranceId}".replace("{"+"insuranceId"+"}", "${URLEncoder.encode(insuranceId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -167,14 +173,13 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getInsurances(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<InsuranceDto>?  {
+    suspend fun getInsurances(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<InsuranceDto>  {
         val localVariableConfig = getInsurancesRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<InsuranceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getInsurances
     *
@@ -182,17 +187,18 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     * @return RequestConfig
     */
     fun getInsurancesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/insurance/byIds",
+            path = "/rest/v2/insurance/byIds",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -206,14 +212,13 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listInsurancesByCode(insuranceCode: kotlin.String) : kotlin.collections.List<InsuranceDto>?  {
+    suspend fun listInsurancesByCode(insuranceCode: kotlin.String) : kotlin.collections.List<InsuranceDto>  {
         val localVariableConfig = listInsurancesByCodeRequestConfig(insuranceCode = insuranceCode)
 
         return request<Unit, kotlin.collections.List<InsuranceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listInsurancesByCode
     *
@@ -221,17 +226,18 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     * @return RequestConfig
     */
     fun listInsurancesByCodeRequestConfig(insuranceCode: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/insurance/byCode/{insuranceCode}".replace("{"+"insuranceCode"+"}", "$insuranceCode"),
+            path = "/rest/v2/insurance/byCode/{insuranceCode}".replace("{"+"insuranceCode"+"}", "${URLEncoder.encode(insuranceCode.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -245,14 +251,13 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listInsurancesByName(insuranceName: kotlin.String) : kotlin.collections.List<InsuranceDto>?  {
+    suspend fun listInsurancesByName(insuranceName: kotlin.String) : kotlin.collections.List<InsuranceDto>  {
         val localVariableConfig = listInsurancesByNameRequestConfig(insuranceName = insuranceName)
 
         return request<Unit, kotlin.collections.List<InsuranceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listInsurancesByName
     *
@@ -260,17 +265,18 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     * @return RequestConfig
     */
     fun listInsurancesByNameRequestConfig(insuranceName: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/insurance/byName/{insuranceName}".replace("{"+"insuranceName"+"}", "$insuranceName"),
+            path = "/rest/v2/insurance/byName/{insuranceName}".replace("{"+"insuranceName"+"}", "${URLEncoder.encode(insuranceName.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -284,14 +290,13 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyInsurance(insuranceDto: InsuranceDto) : InsuranceDto?  {
+    suspend fun modifyInsurance(insuranceDto: InsuranceDto) : InsuranceDto  {
         val localVariableConfig = modifyInsuranceRequestConfig(insuranceDto = insuranceDto)
 
         return request<InsuranceDto, InsuranceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyInsurance
     *
@@ -299,17 +304,18 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     * @return RequestConfig
     */
     fun modifyInsuranceRequestConfig(insuranceDto: InsuranceDto) : RequestConfig<InsuranceDto> {
-        val localVariableBody = insuranceDto
+        // val localVariableBody = insuranceDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = insuranceDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/insurance",
+            path = "/rest/v2/insurance",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
 }

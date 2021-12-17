@@ -30,7 +30,6 @@ Name | Type | Description | Notes
 **consultationCode** | **kotlin.Boolean** |  |  [optional]
 **hasRelatedCode** | **kotlin.Boolean** |  |  [optional]
 **needsPrescriber** | **kotlin.Boolean** |  |  [optional]
-**nGroup** | **kotlin.String** |  |  [optional]
 **ngroup** | **kotlin.String** |  |  [optional]
 
 

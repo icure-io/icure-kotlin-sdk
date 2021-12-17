@@ -1,9 +1,9 @@
 /**
  * iCure Data Stack API Documentation
  *
- * The iCure Data Stack Application API is the native interface to iCure. This version is obsolete, please use v2.
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -14,7 +14,9 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
+import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.models.DocIdentifier
+import io.icure.kraken.client.models.ListOfIdsDto
 import io.icure.kraken.client.models.TimeTableDto
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -25,7 +27,12 @@ import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
+import kotlinx.coroutines.flow.flowOf
+import java.nio.ByteBuffer
+import java.util.*
 import javax.inject.Named
+import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -49,14 +56,13 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTimeTable(timeTableDto: TimeTableDto) : TimeTableDto?  {
+    suspend fun createTimeTable(timeTableDto: TimeTableDto) : TimeTableDto  {
         val localVariableConfig = createTimeTableRequestConfig(timeTableDto = timeTableDto)
 
         return request<TimeTableDto, TimeTableDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createTimeTable
     *
@@ -64,23 +70,24 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     * @return RequestConfig
     */
     fun createTimeTableRequestConfig(timeTableDto: TimeTableDto) : RequestConfig<TimeTableDto> {
-        val localVariableBody = timeTableDto
+        // val localVariableBody = timeTableDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = timeTableDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/timeTable",
+            path = "/rest/v2/timeTable",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
     * Deletes an timeTable
     * 
-    * @param timeTableIds  
+    * @param listOfIdsDto  
     * @return kotlin.collections.List<DocIdentifier>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -88,32 +95,32 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteTimeTable(timeTableIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
-        val localVariableConfig = deleteTimeTableRequestConfig(timeTableIds = timeTableIds)
+    suspend fun deleteTimeTable(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocIdentifier>  {
+        val localVariableConfig = deleteTimeTableRequestConfig(listOfIdsDto = listOfIdsDto)
 
-        return request<Unit, kotlin.collections.List<DocIdentifier>>(
+        return request<ListOfIdsDto, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteTimeTable
     *
-    * @param timeTableIds  
+    * @param listOfIdsDto  
     * @return RequestConfig
     */
-    fun deleteTimeTableRequestConfig(timeTableIds: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun deleteTimeTableRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
-            method = RequestMethod.DELETE,
-            path = "/rest/v1/timeTable/{timeTableIds}".replace("{"+"timeTableIds"+"}", "$timeTableIds"),
+            method = RequestMethod.POST,
+            path = "/rest/v2/timeTable/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -127,14 +134,13 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTimeTable(timeTableId: kotlin.String) : TimeTableDto?  {
+    suspend fun getTimeTable(timeTableId: kotlin.String) : TimeTableDto  {
         val localVariableConfig = getTimeTableRequestConfig(timeTableId = timeTableId)
 
         return request<Unit, TimeTableDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTimeTable
     *
@@ -142,17 +148,18 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     * @return RequestConfig
     */
     fun getTimeTableRequestConfig(timeTableId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/timeTable/{timeTableId}".replace("{"+"timeTableId"+"}", "$timeTableId"),
+            path = "/rest/v2/timeTable/{timeTableId}".replace("{"+"timeTableId"+"}", "${URLEncoder.encode(timeTableId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -166,14 +173,13 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTimeTablesByAgendaId(agendaId: kotlin.String) : kotlin.collections.List<TimeTableDto>?  {
+    suspend fun getTimeTablesByAgendaId(agendaId: kotlin.String) : kotlin.collections.List<TimeTableDto>  {
         val localVariableConfig = getTimeTablesByAgendaIdRequestConfig(agendaId = agendaId)
 
         return request<Unit, kotlin.collections.List<TimeTableDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTimeTablesByAgendaId
     *
@@ -181,20 +187,21 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     * @return RequestConfig
     */
     fun getTimeTablesByAgendaIdRequestConfig(agendaId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("agendaId", listOf(agendaId.toString()))
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/timeTable/byAgendaId",
+            path = "/rest/v2/timeTable/byAgendaId",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -210,14 +217,13 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTimeTablesByPeriodAndAgendaId(startDate: kotlin.Long, endDate: kotlin.Long, agendaId: kotlin.String) : kotlin.collections.List<TimeTableDto>?  {
+    suspend fun getTimeTablesByPeriodAndAgendaId(startDate: kotlin.Long, endDate: kotlin.Long, agendaId: kotlin.String) : kotlin.collections.List<TimeTableDto>  {
         val localVariableConfig = getTimeTablesByPeriodAndAgendaIdRequestConfig(startDate = startDate, endDate = endDate, agendaId = agendaId)
 
         return request<Unit, kotlin.collections.List<TimeTableDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getTimeTablesByPeriodAndAgendaId
     *
@@ -227,7 +233,7 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     * @return RequestConfig
     */
     fun getTimeTablesByPeriodAndAgendaIdRequestConfig(startDate: kotlin.Long, endDate: kotlin.Long, agendaId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("startDate", listOf(startDate.toString()))
@@ -235,14 +241,15 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
                 put("agendaId", listOf(agendaId.toString()))
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/timeTable/byPeriodAndAgendaId",
+            path = "/rest/v2/timeTable/byPeriodAndAgendaId",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -256,14 +263,13 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTimeTable(timeTableDto: TimeTableDto) : TimeTableDto?  {
+    suspend fun modifyTimeTable(timeTableDto: TimeTableDto) : TimeTableDto  {
         val localVariableConfig = modifyTimeTableRequestConfig(timeTableDto = timeTableDto)
 
         return request<TimeTableDto, TimeTableDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyTimeTable
     *
@@ -271,17 +277,18 @@ class TimeTableApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     * @return RequestConfig
     */
     fun modifyTimeTableRequestConfig(timeTableDto: TimeTableDto) : RequestConfig<TimeTableDto> {
-        val localVariableBody = timeTableDto
+        // val localVariableBody = timeTableDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = timeTableDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/timeTable",
+            path = "/rest/v2/timeTable",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
 }

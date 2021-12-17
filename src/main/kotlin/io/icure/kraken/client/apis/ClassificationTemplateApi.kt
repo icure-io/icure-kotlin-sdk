@@ -1,9 +1,9 @@
 /**
  * iCure Data Stack API Documentation
  *
- * The iCure Data Stack Application API is the native interface to iCure. This version is obsolete, please use v2.
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -14,9 +14,11 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
+import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.models.ClassificationTemplateDto
 import io.icure.kraken.client.models.DelegationDto
 import io.icure.kraken.client.models.DocIdentifier
+import io.icure.kraken.client.models.ListOfIdsDto
 import io.icure.kraken.client.models.PaginatedListClassificationTemplateDto
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -27,7 +29,12 @@ import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
+import kotlinx.coroutines.flow.flowOf
+import java.nio.ByteBuffer
+import java.util.*
 import javax.inject.Named
+import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -51,14 +58,13 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createClassificationTemplate(classificationTemplateDto: ClassificationTemplateDto) : ClassificationTemplateDto?  {
+    suspend fun createClassificationTemplate(classificationTemplateDto: ClassificationTemplateDto) : ClassificationTemplateDto  {
         val localVariableConfig = createClassificationTemplateRequestConfig(classificationTemplateDto = classificationTemplateDto)
 
         return request<ClassificationTemplateDto, ClassificationTemplateDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createClassificationTemplate
     *
@@ -66,23 +72,24 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     * @return RequestConfig
     */
     fun createClassificationTemplateRequestConfig(classificationTemplateDto: ClassificationTemplateDto) : RequestConfig<ClassificationTemplateDto> {
-        val localVariableBody = classificationTemplateDto
+        // val localVariableBody = classificationTemplateDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = classificationTemplateDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/classificationTemplate",
+            path = "/rest/v2/classificationTemplate",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
     * Delete classification Templates.
     * Response is a set containing the ID&#39;s of deleted classification Templates.
-    * @param classificationTemplateIds  
+    * @param listOfIdsDto  
     * @return kotlin.collections.List<DocIdentifier>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -90,155 +97,32 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteClassificationTemplates(classificationTemplateIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
-        val localVariableConfig = deleteClassificationTemplatesRequestConfig(classificationTemplateIds = classificationTemplateIds)
+    suspend fun deleteClassificationTemplates(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocIdentifier>  {
+        val localVariableConfig = deleteClassificationTemplatesRequestConfig(listOfIdsDto = listOfIdsDto)
 
-        return request<Unit, kotlin.collections.List<DocIdentifier>>(
+        return request<ListOfIdsDto, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation deleteClassificationTemplates
     *
-    * @param classificationTemplateIds  
+    * @param listOfIdsDto  
     * @return RequestConfig
     */
-    fun deleteClassificationTemplatesRequestConfig(classificationTemplateIds: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun deleteClassificationTemplatesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
-            method = RequestMethod.DELETE,
-            path = "/rest/v1/classificationTemplate/{classificationTemplateIds}".replace("{"+"classificationTemplateIds"+"}", "$classificationTemplateIds"),
+            method = RequestMethod.POST,
+            path = "/rest/v2/classificationTemplate/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * List classification Templates found By Healthcare Party and secret foreign keyelementIds.
-    * Keys hast to delimited by coma
-    * @param hcPartyId  
-    * @param secretFKeys  
-    * @return kotlin.collections.List<ClassificationTemplateDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findClassificationTemplatesByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<ClassificationTemplateDto>?  {
-        val localVariableConfig = findClassificationTemplatesByHCPartyPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
-
-        return request<Unit, kotlin.collections.List<ClassificationTemplateDto>>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation findClassificationTemplatesByHCPartyPatientForeignKeys
-    *
-    * @param hcPartyId  
-    * @param secretFKeys  
-    * @return RequestConfig
-    */
-    fun findClassificationTemplatesByHCPartyPatientForeignKeysRequestConfig(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
-            .apply {
-                put("hcPartyId", listOf(hcPartyId.toString()))
-                put("secretFKeys", listOf(secretFKeys.toString()))
-            }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/classificationTemplate/byHcPartySecretForeignKeys",
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Get a classification Template
-    * 
-    * @param classificationTemplateId  
-    * @return ClassificationTemplateDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getClassificationTemplate(classificationTemplateId: kotlin.String) : ClassificationTemplateDto?  {
-        val localVariableConfig = getClassificationTemplateRequestConfig(classificationTemplateId = classificationTemplateId)
-
-        return request<Unit, ClassificationTemplateDto>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation getClassificationTemplate
-    *
-    * @param classificationTemplateId  
-    * @return RequestConfig
-    */
-    fun getClassificationTemplateRequestConfig(classificationTemplateId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/classificationTemplate/{classificationTemplateId}".replace("{"+"classificationTemplateId"+"}", "$classificationTemplateId"),
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Get a list of classifications Templates
-    * Ids are seperated by a coma
-    * @param ids  
-    * @return kotlin.collections.List<ClassificationTemplateDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getClassificationTemplateByIds(ids: kotlin.String) : kotlin.collections.List<ClassificationTemplateDto>?  {
-        val localVariableConfig = getClassificationTemplateByIdsRequestConfig(ids = ids)
-
-        return request<Unit, kotlin.collections.List<ClassificationTemplateDto>>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation getClassificationTemplateByIds
-    *
-    * @param ids  
-    * @return RequestConfig
-    */
-    fun getClassificationTemplateByIdsRequestConfig(ids: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/classificationTemplate/byIds/{ids}".replace("{"+"ids"+"}", "$ids"),
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -254,24 +138,23 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listClassificationTemplates(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListClassificationTemplateDto?  {
-        val localVariableConfig = listClassificationTemplatesRequestConfig(startKey = startKey, startDocumentId = startDocumentId, limit = limit)
+    suspend fun findClassificationTemplatesBy(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListClassificationTemplateDto  {
+        val localVariableConfig = findClassificationTemplatesByRequestConfig(startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListClassificationTemplateDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
-    * To obtain the request config of the operation listClassificationTemplates
+    * To obtain the request config of the operation findClassificationTemplatesBy
     *
     * @param startKey A label (optional)
     * @param startDocumentId An classification template document ID (optional)
     * @param limit Number of rows (optional)
     * @return RequestConfig
     */
-    fun listClassificationTemplatesRequestConfig(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun findClassificationTemplatesByRequestConfig(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (startKey != null) {
@@ -285,14 +168,138 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/classificationTemplate",
+            path = "/rest/v2/classificationTemplate",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
+    }
+
+    /**
+    * Get a classification Template
+    * 
+    * @param classificationTemplateId  
+    * @return ClassificationTemplateDto
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun getClassificationTemplate(classificationTemplateId: kotlin.String) : ClassificationTemplateDto  {
+        val localVariableConfig = getClassificationTemplateRequestConfig(classificationTemplateId = classificationTemplateId)
+
+        return request<Unit, ClassificationTemplateDto>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation getClassificationTemplate
+    *
+    * @param classificationTemplateId  
+    * @return RequestConfig
+    */
+    fun getClassificationTemplateRequestConfig(classificationTemplateId: kotlin.String) : RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v2/classificationTemplate/{classificationTemplateId}".replace("{"+"classificationTemplateId"+"}", "${URLEncoder.encode(classificationTemplateId.toString(), Charsets.UTF_8)}"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
+    * Get a list of classifications Templates
+    * Ids are seperated by a coma
+    * @param ids  
+    * @return kotlin.collections.List<ClassificationTemplateDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun getClassificationTemplateByIds(ids: kotlin.String) : kotlin.collections.List<ClassificationTemplateDto>  {
+        val localVariableConfig = getClassificationTemplateByIdsRequestConfig(ids = ids)
+
+        return request<Unit, kotlin.collections.List<ClassificationTemplateDto>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation getClassificationTemplateByIds
+    *
+    * @param ids  
+    * @return RequestConfig
+    */
+    fun getClassificationTemplateByIdsRequestConfig(ids: kotlin.String) : RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v2/classificationTemplate/byIds/{ids}".replace("{"+"ids"+"}", "${URLEncoder.encode(ids.toString(), Charsets.UTF_8)}"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
+    * List classification Templates found By Healthcare Party and secret foreign keyelementIds.
+    * Keys hast to delimited by coma
+    * @param hcPartyId  
+    * @param secretFKeys  
+    * @return kotlin.collections.List<ClassificationTemplateDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun listClassificationTemplatesByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<ClassificationTemplateDto>  {
+        val localVariableConfig = listClassificationTemplatesByHCPartyPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
+
+        return request<Unit, kotlin.collections.List<ClassificationTemplateDto>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation listClassificationTemplatesByHCPartyPatientForeignKeys
+    *
+    * @param hcPartyId  
+    * @param secretFKeys  
+    * @return RequestConfig
+    */
+    fun listClassificationTemplatesByHCPartyPatientForeignKeysRequestConfig(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                put("hcPartyId", listOf(hcPartyId.toString()))
+                put("secretFKeys", listOf(secretFKeys.toString()))
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v2/classificationTemplate/byHcPartySecretForeignKeys",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
     }
 
     /**
@@ -306,14 +313,13 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyClassificationTemplate(classificationTemplateDto: ClassificationTemplateDto) : ClassificationTemplateDto?  {
+    suspend fun modifyClassificationTemplate(classificationTemplateDto: ClassificationTemplateDto) : ClassificationTemplateDto  {
         val localVariableConfig = modifyClassificationTemplateRequestConfig(classificationTemplateDto = classificationTemplateDto)
 
         return request<ClassificationTemplateDto, ClassificationTemplateDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyClassificationTemplate
     *
@@ -321,17 +327,18 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     * @return RequestConfig
     */
     fun modifyClassificationTemplateRequestConfig(classificationTemplateDto: ClassificationTemplateDto) : RequestConfig<ClassificationTemplateDto> {
-        val localVariableBody = classificationTemplateDto
+        // val localVariableBody = classificationTemplateDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = classificationTemplateDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/classificationTemplate",
+            path = "/rest/v2/classificationTemplate",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -346,14 +353,13 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun newClassificationTemplateDelegations(classificationTemplateId: kotlin.String, delegationDto: kotlin.collections.List<DelegationDto>) : ClassificationTemplateDto?  {
+    suspend fun newClassificationTemplateDelegations(classificationTemplateId: kotlin.String, delegationDto: kotlin.collections.List<DelegationDto>) : ClassificationTemplateDto  {
         val localVariableConfig = newClassificationTemplateDelegationsRequestConfig(classificationTemplateId = classificationTemplateId, delegationDto = delegationDto)
 
         return request<kotlin.collections.List<DelegationDto>, ClassificationTemplateDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation newClassificationTemplateDelegations
     *
@@ -362,17 +368,18 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     * @return RequestConfig
     */
     fun newClassificationTemplateDelegationsRequestConfig(classificationTemplateId: kotlin.String, delegationDto: kotlin.collections.List<DelegationDto>) : RequestConfig<kotlin.collections.List<DelegationDto>> {
-        val localVariableBody = delegationDto
+        // val localVariableBody = delegationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = delegationDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/classificationTemplate/{classificationTemplateId}/delegate".replace("{"+"classificationTemplateId"+"}", "$classificationTemplateId"),
+            path = "/rest/v2/classificationTemplate/{classificationTemplateId}/delegate".replace("{"+"classificationTemplateId"+"}", "${URLEncoder.encode(classificationTemplateId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
 }

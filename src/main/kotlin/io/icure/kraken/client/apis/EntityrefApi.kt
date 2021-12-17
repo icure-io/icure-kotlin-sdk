@@ -1,9 +1,9 @@
 /**
  * iCure Data Stack API Documentation
  *
- * The iCure Data Stack Application API is the native interface to iCure. This version is obsolete, please use v2.
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -14,6 +14,7 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
+import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.models.EntityReferenceDto
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -24,7 +25,12 @@ import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
+import kotlinx.coroutines.flow.flowOf
+import java.nio.ByteBuffer
+import java.util.*
 import javax.inject.Named
+import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -48,14 +54,13 @@ class EntityrefApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createEntityReference(entityReferenceDto: EntityReferenceDto) : EntityReferenceDto?  {
+    suspend fun createEntityReference(entityReferenceDto: EntityReferenceDto) : EntityReferenceDto  {
         val localVariableConfig = createEntityReferenceRequestConfig(entityReferenceDto = entityReferenceDto)
 
         return request<EntityReferenceDto, EntityReferenceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createEntityReference
     *
@@ -63,17 +68,18 @@ class EntityrefApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     * @return RequestConfig
     */
     fun createEntityReferenceRequestConfig(entityReferenceDto: EntityReferenceDto) : RequestConfig<EntityReferenceDto> {
-        val localVariableBody = entityReferenceDto
+        // val localVariableBody = entityReferenceDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = entityReferenceDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/entityref",
+            path = "/rest/v2/entityref",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -87,14 +93,13 @@ class EntityrefApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getLatest(prefix: kotlin.String) : EntityReferenceDto?  {
+    suspend fun getLatest(prefix: kotlin.String) : EntityReferenceDto  {
         val localVariableConfig = getLatestRequestConfig(prefix = prefix)
 
         return request<Unit, EntityReferenceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getLatest
     *
@@ -102,17 +107,18 @@ class EntityrefApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     * @return RequestConfig
     */
     fun getLatestRequestConfig(prefix: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/entityref/latest/{prefix}".replace("{"+"prefix"+"}", "$prefix"),
+            path = "/rest/v2/entityref/latest/{prefix}".replace("{"+"prefix"+"}", "${URLEncoder.encode(prefix.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
 }

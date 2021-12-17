@@ -4,8 +4,8 @@ All URIs are relative to *https://kraken.icure.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createEntityReference**](EntityrefApi.md#createEntityReference) | **POST** /rest/v1/entityref | Create an entity reference
-[**getLatest**](EntityrefApi.md#getLatest) | **GET** /rest/v1/entityref/latest/{prefix} | Find latest reference for a prefix 
+[**createEntityReference**](EntityrefApi.md#createEntityReference) | **POST** /rest/v2/entityref | Create an entity reference
+[**getLatest**](EntityrefApi.md#getLatest) | **GET** /rest/v2/entityref/latest/{prefix} | Find latest reference for a prefix 
 
 
 <a name="createEntityReference"></a>

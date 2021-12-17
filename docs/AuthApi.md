@@ -4,10 +4,10 @@ All URIs are relative to *https://kraken.icure.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**login**](AuthApi.md#login) | **POST** /rest/v1/auth/login | login
-[**logout**](AuthApi.md#logout) | **GET** /rest/v1/auth/logout | logout
-[**logoutPost**](AuthApi.md#logoutPost) | **POST** /rest/v1/auth/logout | logout
-[**token**](AuthApi.md#token) | **GET** /rest/v1/auth/token/{method}/{path} | token
+[**login**](AuthApi.md#login) | **POST** /rest/v2/auth/login | login
+[**logout**](AuthApi.md#logout) | **GET** /rest/v2/auth/logout | logout
+[**logoutPost**](AuthApi.md#logoutPost) | **POST** /rest/v2/auth/logout | logout
+[**token**](AuthApi.md#token) | **GET** /rest/v2/auth/token/{method}/{path} | token
 
 
 <a name="login"></a>

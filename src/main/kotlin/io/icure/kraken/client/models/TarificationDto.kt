@@ -1,9 +1,9 @@
 /**
  * iCure Data Stack API Documentation
  *
- * The iCure Data Stack Application API is the native interface to iCure. This version is obsolete, please use v2.
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -51,7 +51,6 @@ import com.github.pozo.KotlinBuilder
  * @param consultationCode 
  * @param hasRelatedCode 
  * @param needsPrescriber 
- * @param nGroup 
  * @param ngroup 
  */
 
@@ -138,9 +137,6 @@ data class TarificationDto (
 
     @field:JsonProperty("needsPrescriber")
     val needsPrescriber: kotlin.Boolean? = null,
-
-    @field:JsonProperty("nGroup")
-    val nGroup: kotlin.String? = null,
 
     @field:JsonProperty("ngroup")
     val ngroup: kotlin.String? = null

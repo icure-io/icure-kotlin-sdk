@@ -1,9 +1,9 @@
 /**
  * iCure Data Stack API Documentation
  *
- * The iCure Data Stack Application API is the native interface to iCure. This version is obsolete, please use v2.
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -22,7 +22,7 @@ import com.github.pozo.KotlinBuilder
 
 
 /**
- * Extra properties
+ * Extra properties for the user. Those properties are typed (see class Property)
  *
  * @param id 
  * @param type 

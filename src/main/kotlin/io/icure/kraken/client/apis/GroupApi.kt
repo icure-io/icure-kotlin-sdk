@@ -1,9 +1,9 @@
 /**
  * iCure Data Stack API Documentation
  *
- * The iCure Data Stack Application API is the native interface to iCure. This version is obsolete, please use v2.
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -14,6 +14,7 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
+import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.models.DatabaseInitialisationDto
 import io.icure.kraken.client.models.GroupDto
 import io.icure.kraken.client.models.IdWithRevDto
@@ -31,7 +32,12 @@ import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
+import kotlinx.coroutines.flow.flowOf
+import java.nio.ByteBuffer
+import java.util.*
 import javax.inject.Named
+import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -61,14 +67,13 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createGroup(id: kotlin.String, name: kotlin.String, password: kotlin.String, databaseInitialisationDto: DatabaseInitialisationDto, server: kotlin.String?, q: kotlin.Int?, n: kotlin.Int?) : GroupDto?  {
+    suspend fun createGroup(id: kotlin.String, name: kotlin.String, password: kotlin.String, databaseInitialisationDto: DatabaseInitialisationDto, server: kotlin.String?, q: kotlin.Int?, n: kotlin.Int?) : GroupDto  {
         val localVariableConfig = createGroupRequestConfig(id = id, name = name, password = password, databaseInitialisationDto = databaseInitialisationDto, server = server, q = q, n = n)
 
         return request<DatabaseInitialisationDto, GroupDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createGroup
     *
@@ -82,7 +87,7 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     * @return RequestConfig
     */
     fun createGroupRequestConfig(id: kotlin.String, name: kotlin.String, password: kotlin.String, databaseInitialisationDto: DatabaseInitialisationDto, server: kotlin.String?, q: kotlin.Int?, n: kotlin.Int?) : RequestConfig<DatabaseInitialisationDto> {
-        val localVariableBody = databaseInitialisationDto
+        // val localVariableBody = databaseInitialisationDto
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("name", listOf(name.toString()))
@@ -96,16 +101,17 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
                     put("n", listOf(n.toString()))
                 }
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = databaseInitialisationDto
         password.apply { localVariableHeaders["password"] = this.toString() }
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/group/{id}".replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/group/{id}".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -119,14 +125,13 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getGroup(id: kotlin.String) : GroupDto?  {
+    suspend fun getGroup(id: kotlin.String) : GroupDto  {
         val localVariableConfig = getGroupRequestConfig(id = id)
 
         return request<Unit, GroupDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getGroup
     *
@@ -134,17 +139,18 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     * @return RequestConfig
     */
     fun getGroupRequestConfig(id: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/group/{id}".replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/group/{id}".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -158,14 +164,13 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getReplicationInfo1(id: kotlin.String) : ReplicationInfoDto?  {
+    suspend fun getReplicationInfo1(id: kotlin.String) : ReplicationInfoDto  {
         val localVariableConfig = getReplicationInfo1RequestConfig(id = id)
 
         return request<Unit, ReplicationInfoDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getReplicationInfo1
     *
@@ -173,17 +178,18 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     * @return RequestConfig
     */
     fun getReplicationInfo1RequestConfig(id: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/group/{id}/r".replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/group/{id}/r".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -199,14 +205,13 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun initDesignDocs(id: kotlin.String, clazz: kotlin.String?, warmup: kotlin.Boolean?) : kotlin.Any?  {
+    suspend fun initDesignDocs(id: kotlin.String, clazz: kotlin.String?, warmup: kotlin.Boolean?) : kotlin.Any  {
         val localVariableConfig = initDesignDocsRequestConfig(id = id, clazz = clazz, warmup = warmup)
 
         return request<Unit, kotlin.Any>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation initDesignDocs
     *
@@ -216,7 +221,7 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     * @return RequestConfig
     */
     fun initDesignDocsRequestConfig(id: kotlin.String, clazz: kotlin.String?, warmup: kotlin.Boolean?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (clazz != null) {
@@ -227,14 +232,15 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/group/{id}/dd".replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/group/{id}/dd".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -247,31 +253,31 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listGroups() : kotlin.collections.List<GroupDto>?  {
+    suspend fun listGroups() : kotlin.collections.List<GroupDto>  {
         val localVariableConfig = listGroupsRequestConfig()
 
         return request<Unit, kotlin.collections.List<GroupDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation listGroups
     *
     * @return RequestConfig
     */
     fun listGroupsRequestConfig() : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/group",
+            path = "/rest/v2/group",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -286,14 +292,13 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyGroupName(id: kotlin.String, name: kotlin.String) : GroupDto?  {
+    suspend fun modifyGroupName(id: kotlin.String, name: kotlin.String) : GroupDto  {
         val localVariableConfig = modifyGroupNameRequestConfig(id = id, name = name)
 
         return request<Unit, GroupDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyGroupName
     *
@@ -302,17 +307,18 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     * @return RequestConfig
     */
     fun modifyGroupNameRequestConfig(id: kotlin.String, name: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/group/{id}/name/{name}".replace("{"+"id"+"}", "$id").replace("{"+"name"+"}", "$name"),
+            path = "/rest/v2/group/{id}/name/{name}".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}").replace("{"+"name"+"}", "${URLEncoder.encode(name.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -327,14 +333,13 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyGroupProperties(id: kotlin.String, listOfPropertiesDto: ListOfPropertiesDto) : GroupDto?  {
+    suspend fun modifyGroupProperties(id: kotlin.String, listOfPropertiesDto: ListOfPropertiesDto) : GroupDto  {
         val localVariableConfig = modifyGroupPropertiesRequestConfig(id = id, listOfPropertiesDto = listOfPropertiesDto)
 
         return request<ListOfPropertiesDto, GroupDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyGroupProperties
     *
@@ -343,17 +348,18 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     * @return RequestConfig
     */
     fun modifyGroupPropertiesRequestConfig(id: kotlin.String, listOfPropertiesDto: ListOfPropertiesDto) : RequestConfig<ListOfPropertiesDto> {
-        val localVariableBody = listOfPropertiesDto
+        // val localVariableBody = listOfPropertiesDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = listOfPropertiesDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/group/{id}/properties".replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/group/{id}/properties".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -367,14 +373,13 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun registerNewGroupAdministrator(registrationInformationDto: RegistrationInformationDto) : RegistrationSuccessDto?  {
+    suspend fun registerNewGroupAdministrator(registrationInformationDto: RegistrationInformationDto) : RegistrationSuccessDto  {
         val localVariableConfig = registerNewGroupAdministratorRequestConfig(registrationInformationDto = registrationInformationDto)
 
         return request<RegistrationInformationDto, RegistrationSuccessDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation registerNewGroupAdministrator
     *
@@ -382,17 +387,18 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     * @return RequestConfig
     */
     fun registerNewGroupAdministratorRequestConfig(registrationInformationDto: RegistrationInformationDto) : RequestConfig<RegistrationInformationDto> {
-        val localVariableBody = registrationInformationDto
+        // val localVariableBody = registrationInformationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = registrationInformationDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/group/register/trial",
+            path = "/rest/v2/group/register/trial",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -409,14 +415,13 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun resetStorage(id: kotlin.String, listOfIdsDto: ListOfIdsDto, q: kotlin.Int?, n: kotlin.Int?) : kotlin.Any?  {
+    suspend fun resetStorage(id: kotlin.String, listOfIdsDto: ListOfIdsDto, q: kotlin.Int?, n: kotlin.Int?) : kotlin.Any  {
         val localVariableConfig = resetStorageRequestConfig(id = id, listOfIdsDto = listOfIdsDto, q = q, n = n)
 
         return request<ListOfIdsDto, kotlin.Any>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation resetStorage
     *
@@ -427,7 +432,7 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     * @return RequestConfig
     */
     fun resetStorageRequestConfig(id: kotlin.String, listOfIdsDto: ListOfIdsDto, q: kotlin.Int?, n: kotlin.Int?) : RequestConfig<ListOfIdsDto> {
-        val localVariableBody = listOfIdsDto
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (q != null) {
@@ -437,15 +442,16 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
                     put("n", listOf(n.toString()))
                 }
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/group/{id}/reset/storage".replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/group/{id}/reset/storage".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -460,14 +466,13 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setGroupPassword(id: kotlin.String, password: kotlin.String) : GroupDto?  {
+    suspend fun setGroupPassword(id: kotlin.String, password: kotlin.String) : GroupDto  {
         val localVariableConfig = setGroupPasswordRequestConfig(id = id, password = password)
 
         return request<Unit, GroupDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation setGroupPassword
     *
@@ -476,18 +481,19 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     * @return RequestConfig
     */
     fun setGroupPasswordRequestConfig(id: kotlin.String, password: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
         password.apply { localVariableHeaders["password"] = this.toString() }
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/group/{id}/password".replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/group/{id}/password".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -503,14 +509,13 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun solveConflicts(id: kotlin.String, limit: kotlin.Int?, warmup: kotlin.Boolean?) : kotlin.collections.List<IdWithRevDto>?  {
+    suspend fun solveConflicts(id: kotlin.String, limit: kotlin.Int?, warmup: kotlin.Boolean?) : kotlin.collections.List<IdWithRevDto>  {
         val localVariableConfig = solveConflictsRequestConfig(id = id, limit = limit, warmup = warmup)
 
         return request<Unit, kotlin.collections.List<IdWithRevDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation solveConflicts
     *
@@ -520,7 +525,7 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     * @return RequestConfig
     */
     fun solveConflictsRequestConfig(id: kotlin.String, limit: kotlin.Int?, warmup: kotlin.Boolean?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (limit != null) {
@@ -531,14 +536,15 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/group/{id}/conflicts".replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/group/{id}/conflicts".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
 }

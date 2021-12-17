@@ -1,15 +1,15 @@
-# FrontendmigrationApi
+# FrontEndMigrationApi
 
 All URIs are relative to *https://kraken.icure.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createFrontEndMigration**](FrontendmigrationApi.md#createFrontEndMigration) | **POST** /rest/v1/frontendmigration | Creates a front end migration
-[**deleteFrontEndMigration**](FrontendmigrationApi.md#deleteFrontEndMigration) | **DELETE** /rest/v1/frontendmigration/{frontEndMigrationId} | Deletes a front end migration
-[**getFrontEndMigration**](FrontendmigrationApi.md#getFrontEndMigration) | **GET** /rest/v1/frontendmigration/{frontEndMigrationId} | Gets a front end migration
-[**getFrontEndMigrationByName**](FrontendmigrationApi.md#getFrontEndMigrationByName) | **GET** /rest/v1/frontendmigration/byName/{frontEndMigrationName} | Gets an front end migration
-[**getFrontEndMigrations**](FrontendmigrationApi.md#getFrontEndMigrations) | **GET** /rest/v1/frontendmigration | Gets a front end migration
-[**modifyFrontEndMigration**](FrontendmigrationApi.md#modifyFrontEndMigration) | **PUT** /rest/v1/frontendmigration | Modifies a front end migration
+[**createFrontEndMigration**](FrontEndMigrationApi.md#createFrontEndMigration) | **POST** /rest/v2/frontendmigration | Creates a front end migration
+[**deleteFrontEndMigration**](FrontEndMigrationApi.md#deleteFrontEndMigration) | **DELETE** /rest/v2/frontendmigration/{frontEndMigrationId} | Deletes a front end migration
+[**getFrontEndMigration**](FrontEndMigrationApi.md#getFrontEndMigration) | **GET** /rest/v2/frontendmigration/{frontEndMigrationId} | Gets a front end migration
+[**getFrontEndMigrationByName**](FrontEndMigrationApi.md#getFrontEndMigrationByName) | **GET** /rest/v2/frontendmigration/byName/{frontEndMigrationName} | Gets an front end migration
+[**getFrontEndMigrations**](FrontEndMigrationApi.md#getFrontEndMigrations) | **GET** /rest/v2/frontendmigration | Gets a front end migration
+[**modifyFrontEndMigration**](FrontEndMigrationApi.md#modifyFrontEndMigration) | **PUT** /rest/v2/frontendmigration | Modifies a front end migration
 
 
 <a name="createFrontEndMigration"></a>
@@ -24,16 +24,16 @@ Creates a front end migration
 //import io.icure.kraken.client.infrastructure.*
 //import io.icure.kraken.client.models.*
 
-val apiInstance = FrontendmigrationApi()
+val apiInstance = FrontEndMigrationApi()
 val frontEndMigrationDto : FrontEndMigrationDto =  // FrontEndMigrationDto | 
 try {
     val result : FrontEndMigrationDto = apiInstance.createFrontEndMigration(frontEndMigrationDto)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling FrontendmigrationApi#createFrontEndMigration")
+    println("4xx response calling FrontEndMigrationApi#createFrontEndMigration")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling FrontendmigrationApi#createFrontEndMigration")
+    println("5xx response calling FrontEndMigrationApi#createFrontEndMigration")
     e.printStackTrace()
 }
 ```
@@ -69,16 +69,16 @@ Deletes a front end migration
 //import io.icure.kraken.client.infrastructure.*
 //import io.icure.kraken.client.models.*
 
-val apiInstance = FrontendmigrationApi()
+val apiInstance = FrontEndMigrationApi()
 val frontEndMigrationId : kotlin.String = frontEndMigrationId_example // kotlin.String | 
 try {
     val result : DocIdentifier = apiInstance.deleteFrontEndMigration(frontEndMigrationId)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling FrontendmigrationApi#deleteFrontEndMigration")
+    println("4xx response calling FrontEndMigrationApi#deleteFrontEndMigration")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling FrontendmigrationApi#deleteFrontEndMigration")
+    println("5xx response calling FrontEndMigrationApi#deleteFrontEndMigration")
     e.printStackTrace()
 }
 ```
@@ -114,16 +114,16 @@ Gets a front end migration
 //import io.icure.kraken.client.infrastructure.*
 //import io.icure.kraken.client.models.*
 
-val apiInstance = FrontendmigrationApi()
+val apiInstance = FrontEndMigrationApi()
 val frontEndMigrationId : kotlin.String = frontEndMigrationId_example // kotlin.String | 
 try {
     val result : FrontEndMigrationDto = apiInstance.getFrontEndMigration(frontEndMigrationId)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling FrontendmigrationApi#getFrontEndMigration")
+    println("4xx response calling FrontEndMigrationApi#getFrontEndMigration")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling FrontendmigrationApi#getFrontEndMigration")
+    println("5xx response calling FrontEndMigrationApi#getFrontEndMigration")
     e.printStackTrace()
 }
 ```
@@ -159,16 +159,16 @@ Gets an front end migration
 //import io.icure.kraken.client.infrastructure.*
 //import io.icure.kraken.client.models.*
 
-val apiInstance = FrontendmigrationApi()
+val apiInstance = FrontEndMigrationApi()
 val frontEndMigrationName : kotlin.String = frontEndMigrationName_example // kotlin.String | 
 try {
     val result : kotlin.collections.List<FrontEndMigrationDto> = apiInstance.getFrontEndMigrationByName(frontEndMigrationName)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling FrontendmigrationApi#getFrontEndMigrationByName")
+    println("4xx response calling FrontEndMigrationApi#getFrontEndMigrationByName")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling FrontendmigrationApi#getFrontEndMigrationByName")
+    println("5xx response calling FrontEndMigrationApi#getFrontEndMigrationByName")
     e.printStackTrace()
 }
 ```
@@ -204,15 +204,15 @@ Gets a front end migration
 //import io.icure.kraken.client.infrastructure.*
 //import io.icure.kraken.client.models.*
 
-val apiInstance = FrontendmigrationApi()
+val apiInstance = FrontEndMigrationApi()
 try {
     val result : kotlin.collections.List<FrontEndMigrationDto> = apiInstance.getFrontEndMigrations()
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling FrontendmigrationApi#getFrontEndMigrations")
+    println("4xx response calling FrontEndMigrationApi#getFrontEndMigrations")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling FrontendmigrationApi#getFrontEndMigrations")
+    println("5xx response calling FrontEndMigrationApi#getFrontEndMigrations")
     e.printStackTrace()
 }
 ```
@@ -245,16 +245,16 @@ Modifies a front end migration
 //import io.icure.kraken.client.infrastructure.*
 //import io.icure.kraken.client.models.*
 
-val apiInstance = FrontendmigrationApi()
+val apiInstance = FrontEndMigrationApi()
 val frontEndMigrationDto : FrontEndMigrationDto =  // FrontEndMigrationDto | 
 try {
     val result : FrontEndMigrationDto = apiInstance.modifyFrontEndMigration(frontEndMigrationDto)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling FrontendmigrationApi#modifyFrontEndMigration")
+    println("4xx response calling FrontEndMigrationApi#modifyFrontEndMigration")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling FrontendmigrationApi#modifyFrontEndMigration")
+    println("5xx response calling FrontEndMigrationApi#modifyFrontEndMigration")
     e.printStackTrace()
 }
 ```

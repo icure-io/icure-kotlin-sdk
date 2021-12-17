@@ -1,9 +1,9 @@
 /**
  * iCure Data Stack API Documentation
  *
- * The iCure Data Stack Application API is the native interface to iCure. This version is obsolete, please use v2.
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -14,8 +14,10 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
+import io.icure.kraken.client.models.ByteArrayDto
 import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.DocumentTemplateDto
+import io.icure.kraken.client.models.ListOfIdsDto
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -30,7 +32,7 @@ import javax.inject.Named
 @Named
 @ExperimentalStdlibApi
 @ExperimentalCoroutinesApi
-class DoctemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = NettyWebClient(), authHeader: String? = null) : ApiClient(basePath, webClient, authHeader) {
+class DocTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = NettyWebClient(), authHeader: String? = null) : ApiClient(basePath, webClient, authHeader) {
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
@@ -49,14 +51,13 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebCl
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createDocumentTemplate(documentTemplateDto: DocumentTemplateDto) : DocumentTemplateDto?  {
+    suspend fun createDocumentTemplate(documentTemplateDto: DocumentTemplateDto) : DocumentTemplateDto  {
         val localVariableConfig = createDocumentTemplateRequestConfig(documentTemplateDto = documentTemplateDto)
 
         return request<DocumentTemplateDto, DocumentTemplateDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createDocumentTemplate
     *
@@ -70,7 +71,7 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebCl
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/doctemplate",
+            path = "/rest/v2/doctemplate",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -78,9 +79,9 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebCl
     }
 
     /**
-    * Deletes a document template
+    * Deletes document templates
     * 
-    * @param documentTemplateIds  
+    * @param listOfIdsDto  
     * @return kotlin.collections.List<DocIdentifier>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -88,219 +89,27 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebCl
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteDocumentTemplate(documentTemplateIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
-        val localVariableConfig = deleteDocumentTemplateRequestConfig(documentTemplateIds = documentTemplateIds)
+    suspend fun deleteDocumentTemplates(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocIdentifier>  {
+        val localVariableConfig = deleteDocumentTemplatesRequestConfig(listOfIdsDto = listOfIdsDto)
 
-        return request<Unit, kotlin.collections.List<DocIdentifier>>(
+        return request<ListOfIdsDto, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
-    * To obtain the request config of the operation deleteDocumentTemplate
+    * To obtain the request config of the operation deleteDocumentTemplates
     *
-    * @param documentTemplateIds  
+    * @param listOfIdsDto  
     * @return RequestConfig
     */
-    fun deleteDocumentTemplateRequestConfig(documentTemplateIds: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun deleteDocumentTemplatesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+        val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(
-            method = RequestMethod.DELETE,
-            path = "/rest/v1/doctemplate/{documentTemplateIds}".replace("{"+"documentTemplateIds"+"}", "$documentTemplateIds"),
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Gets all document templates for all users
-    * 
-    * @return kotlin.collections.List<DocumentTemplateDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findAllDocumentTemplates() : kotlin.collections.List<DocumentTemplateDto>?  {
-        val localVariableConfig = findAllDocumentTemplatesRequestConfig()
-
-        return request<Unit, kotlin.collections.List<DocumentTemplateDto>>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation findAllDocumentTemplates
-    *
-    * @return RequestConfig
-    */
-    fun findAllDocumentTemplatesRequestConfig() : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/doctemplate/find/all",
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Gets all document templates for current user
-    * 
-    * @return kotlin.collections.List<DocumentTemplateDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findDocumentTemplates() : kotlin.collections.List<DocumentTemplateDto>?  {
-        val localVariableConfig = findDocumentTemplatesRequestConfig()
-
-        return request<Unit, kotlin.collections.List<DocumentTemplateDto>>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation findDocumentTemplates
-    *
-    * @return RequestConfig
-    */
-    fun findDocumentTemplatesRequestConfig() : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/doctemplate",
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Gets all document templates by Type
-    * 
-    * @param documentTypeCode  
-    * @return kotlin.collections.List<DocumentTemplateDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findDocumentTemplatesByDocumentType(documentTypeCode: kotlin.String) : kotlin.collections.List<DocumentTemplateDto>?  {
-        val localVariableConfig = findDocumentTemplatesByDocumentTypeRequestConfig(documentTypeCode = documentTypeCode)
-
-        return request<Unit, kotlin.collections.List<DocumentTemplateDto>>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation findDocumentTemplatesByDocumentType
-    *
-    * @param documentTypeCode  
-    * @return RequestConfig
-    */
-    fun findDocumentTemplatesByDocumentTypeRequestConfig(documentTypeCode: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/doctemplate/byDocumentType/{documentTypeCode}".replace("{"+"documentTypeCode"+"}", "$documentTypeCode"),
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Gets all document templates by Type For currentUser
-    * 
-    * @param documentTypeCode  
-    * @return kotlin.collections.List<DocumentTemplateDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findDocumentTemplatesByDocumentTypeForCurrentUser(documentTypeCode: kotlin.String) : kotlin.collections.List<DocumentTemplateDto>?  {
-        val localVariableConfig = findDocumentTemplatesByDocumentTypeForCurrentUserRequestConfig(documentTypeCode = documentTypeCode)
-
-        return request<Unit, kotlin.collections.List<DocumentTemplateDto>>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation findDocumentTemplatesByDocumentTypeForCurrentUser
-    *
-    * @param documentTypeCode  
-    * @return RequestConfig
-    */
-    fun findDocumentTemplatesByDocumentTypeForCurrentUserRequestConfig(documentTypeCode: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/doctemplate/byDocumentTypeForCurrentUser/{documentTypeCode}".replace("{"+"documentTypeCode"+"}", "$documentTypeCode"),
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody
-        )
-    }
-
-    /**
-    * Gets all document templates
-    * 
-    * @param specialityCode  
-    * @return kotlin.collections.List<DocumentTemplateDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findDocumentTemplatesBySpeciality(specialityCode: kotlin.String) : kotlin.collections.List<DocumentTemplateDto>?  {
-        val localVariableConfig = findDocumentTemplatesBySpecialityRequestConfig(specialityCode = specialityCode)
-
-        return request<Unit, kotlin.collections.List<DocumentTemplateDto>>(
-            localVariableConfig
-        )
-    }
-
-    /**
-    * To obtain the request config of the operation findDocumentTemplatesBySpeciality
-    *
-    * @param specialityCode  
-    * @return RequestConfig
-    */
-    fun findDocumentTemplatesBySpecialityRequestConfig(specialityCode: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/doctemplate/bySpecialty/{specialityCode}".replace("{"+"specialityCode"+"}", "$specialityCode"),
+            method = RequestMethod.POST,
+            path = "/rest/v2/doctemplate/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -319,14 +128,13 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebCl
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getAttachmentText(documentTemplateId: kotlin.String, attachmentId: kotlin.String) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>?  {
+    suspend fun getAttachmentText(documentTemplateId: kotlin.String, attachmentId: kotlin.String) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>  {
         val localVariableConfig = getAttachmentTextRequestConfig(documentTemplateId = documentTemplateId, attachmentId = attachmentId)
 
         return request<Unit, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getAttachmentText
     *
@@ -341,7 +149,7 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebCl
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/doctemplate/{documentTemplateId}/attachmentText/{attachmentId}".replace("{"+"documentTemplateId"+"}", "$documentTemplateId").replace("{"+"attachmentId"+"}", "$attachmentId"),
+            path = "/rest/v2/doctemplate/{documentTemplateId}/attachmentText/{attachmentId}".replace("{"+"documentTemplateId"+"}", "$documentTemplateId").replace("{"+"attachmentId"+"}", "$attachmentId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -359,14 +167,13 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebCl
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getDocumentTemplate(documentTemplateId: kotlin.String) : DocumentTemplateDto?  {
+    suspend fun getDocumentTemplate(documentTemplateId: kotlin.String) : DocumentTemplateDto  {
         val localVariableConfig = getDocumentTemplateRequestConfig(documentTemplateId = documentTemplateId)
 
         return request<Unit, DocumentTemplateDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getDocumentTemplate
     *
@@ -380,7 +187,7 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebCl
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/doctemplate/{documentTemplateId}".replace("{"+"documentTemplateId"+"}", "$documentTemplateId"),
+            path = "/rest/v2/doctemplate/{documentTemplateId}".replace("{"+"documentTemplateId"+"}", "$documentTemplateId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -399,14 +206,13 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebCl
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getDocumentTemplateAttachment(documentTemplateId: kotlin.String, attachmentId: kotlin.String) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>?  {
+    suspend fun getDocumentTemplateAttachment(documentTemplateId: kotlin.String, attachmentId: kotlin.String) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>  {
         val localVariableConfig = getDocumentTemplateAttachmentRequestConfig(documentTemplateId = documentTemplateId, attachmentId = attachmentId)
 
         return request<Unit, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getDocumentTemplateAttachment
     *
@@ -421,7 +227,7 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebCl
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/doctemplate/{documentTemplateId}/attachment/{attachmentId}".replace("{"+"documentTemplateId"+"}", "$documentTemplateId").replace("{"+"attachmentId"+"}", "$attachmentId"),
+            path = "/rest/v2/doctemplate/{documentTemplateId}/attachment/{attachmentId}".replace("{"+"documentTemplateId"+"}", "$documentTemplateId").replace("{"+"attachmentId"+"}", "$attachmentId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -429,40 +235,35 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebCl
     }
 
     /**
-    * Creates a document&#39;s attachment
+    * Gets all document templates for all users
     * 
-    * @param documentTemplateId  
-    * @param body  
-    * @return DocumentTemplateDto
+    * @return kotlin.collections.List<DocumentTemplateDto>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setDocumentTemplateAttachment(documentTemplateId: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : DocumentTemplateDto?  {
-        val localVariableConfig = setDocumentTemplateAttachmentRequestConfig(documentTemplateId = documentTemplateId, body = body)
+    suspend fun listAllDocumentTemplates() : kotlin.collections.List<DocumentTemplateDto>  {
+        val localVariableConfig = listAllDocumentTemplatesRequestConfig()
 
-        return request<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, DocumentTemplateDto>(
+        return request<Unit, kotlin.collections.List<DocumentTemplateDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
-    * To obtain the request config of the operation setDocumentTemplateAttachment
+    * To obtain the request config of the operation listAllDocumentTemplates
     *
-    * @param documentTemplateId  
-    * @param body  
     * @return RequestConfig
     */
-    fun setDocumentTemplateAttachmentRequestConfig(documentTemplateId: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
-        val localVariableBody = body
+    fun listAllDocumentTemplatesRequestConfig() : RequestConfig<Unit> {
+        val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(
-            method = RequestMethod.PUT,
-            path = "/rest/v1/doctemplate/{documentTemplateId}/attachment".replace("{"+"documentTemplateId"+"}", "$documentTemplateId"),
+            method = RequestMethod.GET,
+            path = "/rest/v2/doctemplate/find/all",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -470,40 +271,149 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebCl
     }
 
     /**
-    * Creates a document&#39;s attachment
+    * Gets all document templates for current user
     * 
-    * @param documentTemplateId  
-    * @param body  
-    * @return DocumentTemplateDto
+    * @return kotlin.collections.List<DocumentTemplateDto>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setDocumentTemplateAttachmentJson(documentTemplateId: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : DocumentTemplateDto?  {
-        val localVariableConfig = setDocumentTemplateAttachmentJsonRequestConfig(documentTemplateId = documentTemplateId, body = body)
+    suspend fun listDocumentTemplates() : kotlin.collections.List<DocumentTemplateDto>  {
+        val localVariableConfig = listDocumentTemplatesRequestConfig()
 
-        return request<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, DocumentTemplateDto>(
+        return request<Unit, kotlin.collections.List<DocumentTemplateDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
-    * To obtain the request config of the operation setDocumentTemplateAttachmentJson
+    * To obtain the request config of the operation listDocumentTemplates
     *
-    * @param documentTemplateId  
-    * @param body  
     * @return RequestConfig
     */
-    fun setDocumentTemplateAttachmentJsonRequestConfig(documentTemplateId: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>) : RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
-        val localVariableBody = body
+    fun listDocumentTemplatesRequestConfig() : RequestConfig<Unit> {
+        val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(
-            method = RequestMethod.PUT,
-            path = "/rest/v1/doctemplate/{documentTemplateId}/attachmentJson".replace("{"+"documentTemplateId"+"}", "$documentTemplateId"),
+            method = RequestMethod.GET,
+            path = "/rest/v2/doctemplate",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
+    * Gets all document templates by Type
+    * 
+    * @param documentTypeCode  
+    * @return kotlin.collections.List<DocumentTemplateDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun listDocumentTemplatesByDocumentType(documentTypeCode: kotlin.String) : kotlin.collections.List<DocumentTemplateDto>  {
+        val localVariableConfig = listDocumentTemplatesByDocumentTypeRequestConfig(documentTypeCode = documentTypeCode)
+
+        return request<Unit, kotlin.collections.List<DocumentTemplateDto>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation listDocumentTemplatesByDocumentType
+    *
+    * @param documentTypeCode  
+    * @return RequestConfig
+    */
+    fun listDocumentTemplatesByDocumentTypeRequestConfig(documentTypeCode: kotlin.String) : RequestConfig<Unit> {
+        val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v2/doctemplate/byDocumentType/{documentTypeCode}".replace("{"+"documentTypeCode"+"}", "$documentTypeCode"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
+    * Gets all document templates by Type For currentUser
+    * 
+    * @param documentTypeCode  
+    * @return kotlin.collections.List<DocumentTemplateDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun listDocumentTemplatesByDocumentTypeForCurrentUser(documentTypeCode: kotlin.String) : kotlin.collections.List<DocumentTemplateDto>  {
+        val localVariableConfig = listDocumentTemplatesByDocumentTypeForCurrentUserRequestConfig(documentTypeCode = documentTypeCode)
+
+        return request<Unit, kotlin.collections.List<DocumentTemplateDto>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation listDocumentTemplatesByDocumentTypeForCurrentUser
+    *
+    * @param documentTypeCode  
+    * @return RequestConfig
+    */
+    fun listDocumentTemplatesByDocumentTypeForCurrentUserRequestConfig(documentTypeCode: kotlin.String) : RequestConfig<Unit> {
+        val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v2/doctemplate/byDocumentTypeForCurrentUser/{documentTypeCode}".replace("{"+"documentTypeCode"+"}", "$documentTypeCode"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
+    * Gets all document templates
+    * 
+    * @param specialityCode  
+    * @return kotlin.collections.List<DocumentTemplateDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun listDocumentTemplatesBySpeciality(specialityCode: kotlin.String) : kotlin.collections.List<DocumentTemplateDto>  {
+        val localVariableConfig = listDocumentTemplatesBySpecialityRequestConfig(specialityCode = specialityCode)
+
+        return request<Unit, kotlin.collections.List<DocumentTemplateDto>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation listDocumentTemplatesBySpeciality
+    *
+    * @param specialityCode  
+    * @return RequestConfig
+    */
+    fun listDocumentTemplatesBySpecialityRequestConfig(specialityCode: kotlin.String) : RequestConfig<Unit> {
+        val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v2/doctemplate/bySpecialty/{specialityCode}".replace("{"+"specialityCode"+"}", "$specialityCode"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody
@@ -522,29 +432,108 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebCl
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun updateDocumentTemplate(documentTemplateId: kotlin.String, documentTemplateDto: DocumentTemplateDto) : DocumentTemplateDto?  {
-        val localVariableConfig = updateDocumentTemplateRequestConfig(documentTemplateId = documentTemplateId, documentTemplateDto = documentTemplateDto)
+    suspend fun modifyDocumentTemplate(documentTemplateId: kotlin.String, documentTemplateDto: DocumentTemplateDto) : DocumentTemplateDto  {
+        val localVariableConfig = modifyDocumentTemplateRequestConfig(documentTemplateId = documentTemplateId, documentTemplateDto = documentTemplateDto)
 
         return request<DocumentTemplateDto, DocumentTemplateDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
-    * To obtain the request config of the operation updateDocumentTemplate
+    * To obtain the request config of the operation modifyDocumentTemplate
     *
     * @param documentTemplateId  
     * @param documentTemplateDto  
     * @return RequestConfig
     */
-    fun updateDocumentTemplateRequestConfig(documentTemplateId: kotlin.String, documentTemplateDto: DocumentTemplateDto) : RequestConfig<DocumentTemplateDto> {
+    fun modifyDocumentTemplateRequestConfig(documentTemplateId: kotlin.String, documentTemplateDto: DocumentTemplateDto) : RequestConfig<DocumentTemplateDto> {
         val localVariableBody = documentTemplateDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/doctemplate/{documentTemplateId}".replace("{"+"documentTemplateId"+"}", "$documentTemplateId"),
+            path = "/rest/v2/doctemplate/{documentTemplateId}".replace("{"+"documentTemplateId"+"}", "$documentTemplateId"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
+    * Creates a document&#39;s attachment
+    * 
+    * @param documentTemplateId  
+    * @param ioIcureKrakenClientInfrastructureByteArrayWrapper  
+    * @return DocumentTemplateDto
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun setDocumentTemplateAttachment(documentTemplateId: kotlin.String, ioIcureKrakenClientInfrastructureByteArrayWrapper: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>) : DocumentTemplateDto  {
+        val localVariableConfig = setDocumentTemplateAttachmentRequestConfig(documentTemplateId = documentTemplateId, ioIcureKrakenClientInfrastructureByteArrayWrapper = ioIcureKrakenClientInfrastructureByteArrayWrapper)
+
+        return request<kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>, DocumentTemplateDto>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation setDocumentTemplateAttachment
+    *
+    * @param documentTemplateId  
+    * @param ioIcureKrakenClientInfrastructureByteArrayWrapper  
+    * @return RequestConfig
+    */
+    fun setDocumentTemplateAttachmentRequestConfig(documentTemplateId: kotlin.String, ioIcureKrakenClientInfrastructureByteArrayWrapper: kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>) : RequestConfig<kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper>> {
+        val localVariableBody = ioIcureKrakenClientInfrastructureByteArrayWrapper
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.PUT,
+            path = "/rest/v2/doctemplate/{documentTemplateId}/attachment".replace("{"+"documentTemplateId"+"}", "$documentTemplateId"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
+    * Creates a document&#39;s attachment
+    * 
+    * @param documentTemplateId  
+    * @param byteArrayDto  
+    * @return DocumentTemplateDto
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun setDocumentTemplateAttachmentJson(documentTemplateId: kotlin.String, byteArrayDto: ByteArrayDto) : DocumentTemplateDto  {
+        val localVariableConfig = setDocumentTemplateAttachmentJsonRequestConfig(documentTemplateId = documentTemplateId, byteArrayDto = byteArrayDto)
+
+        return request<ByteArrayDto, DocumentTemplateDto>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation setDocumentTemplateAttachmentJson
+    *
+    * @param documentTemplateId  
+    * @param byteArrayDto  
+    * @return RequestConfig
+    */
+    fun setDocumentTemplateAttachmentJsonRequestConfig(documentTemplateId: kotlin.String, byteArrayDto: ByteArrayDto) : RequestConfig<ByteArrayDto> {
+        val localVariableBody = byteArrayDto
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.PUT,
+            path = "/rest/v2/doctemplate/{documentTemplateId}/attachmentJson".replace("{"+"documentTemplateId"+"}", "$documentTemplateId"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody

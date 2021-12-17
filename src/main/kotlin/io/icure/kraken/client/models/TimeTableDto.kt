@@ -1,9 +1,9 @@
 /**
  * iCure Data Stack API Documentation
  *
- * The iCure Data Stack Application API is the native interface to iCure. This version is obsolete, please use v2.
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -64,6 +64,9 @@ data class TimeTableDto (
     /* A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes */
     @field:JsonProperty("codes")
     val codes: kotlin.collections.List<CodeStubDto> = emptyList(),
+
+    @field:JsonProperty("publicTimeTable")
+    val publicTimeTable: kotlin.Boolean,
 
     @field:JsonProperty("publicTimeTable")
     val publicTimeTable: kotlin.Boolean,

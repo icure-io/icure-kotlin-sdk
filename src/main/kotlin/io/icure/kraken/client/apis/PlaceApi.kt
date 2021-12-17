@@ -1,9 +1,9 @@
 /**
  * iCure Data Stack API Documentation
  *
- * The iCure Data Stack Application API is the native interface to iCure. This version is obsolete, please use v2.
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -14,7 +14,9 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
+import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.models.DocIdentifier
+import io.icure.kraken.client.models.ListOfIdsDto
 import io.icure.kraken.client.models.PlaceDto
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -25,7 +27,12 @@ import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
+import kotlinx.coroutines.flow.flowOf
+import java.nio.ByteBuffer
+import java.util.*
 import javax.inject.Named
+import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -49,14 +56,13 @@ class PlaceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createPlace(placeDto: PlaceDto) : PlaceDto?  {
+    suspend fun createPlace(placeDto: PlaceDto) : PlaceDto  {
         val localVariableConfig = createPlaceRequestConfig(placeDto = placeDto)
 
         return request<PlaceDto, PlaceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation createPlace
     *
@@ -64,23 +70,24 @@ class PlaceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     * @return RequestConfig
     */
     fun createPlaceRequestConfig(placeDto: PlaceDto) : RequestConfig<PlaceDto> {
-        val localVariableBody = placeDto
+        // val localVariableBody = placeDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = placeDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/place",
+            path = "/rest/v2/place",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
-    * Deletes an place
+    * Deletes places
     * 
-    * @param placeIds  
+    * @param listOfIdsDto  
     * @return kotlin.collections.List<DocIdentifier>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -88,32 +95,32 @@ class PlaceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deletePlace(placeIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
-        val localVariableConfig = deletePlaceRequestConfig(placeIds = placeIds)
+    suspend fun deletePlaces(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocIdentifier>  {
+        val localVariableConfig = deletePlacesRequestConfig(listOfIdsDto = listOfIdsDto)
 
-        return request<Unit, kotlin.collections.List<DocIdentifier>>(
+        return request<ListOfIdsDto, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
-    * To obtain the request config of the operation deletePlace
+    * To obtain the request config of the operation deletePlaces
     *
-    * @param placeIds  
+    * @param listOfIdsDto  
     * @return RequestConfig
     */
-    fun deletePlaceRequestConfig(placeIds: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun deletePlacesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+        // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = listOfIdsDto
 
         return RequestConfig(
-            method = RequestMethod.DELETE,
-            path = "/rest/v1/place/{placeIds}".replace("{"+"placeIds"+"}", "$placeIds"),
+            method = RequestMethod.POST,
+            path = "/rest/v2/place/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -127,14 +134,13 @@ class PlaceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getPlace(placeId: kotlin.String) : PlaceDto?  {
+    suspend fun getPlace(placeId: kotlin.String) : PlaceDto  {
         val localVariableConfig = getPlaceRequestConfig(placeId = placeId)
 
         return request<Unit, PlaceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getPlace
     *
@@ -142,17 +148,18 @@ class PlaceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     * @return RequestConfig
     */
     fun getPlaceRequestConfig(placeId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/place/{placeId}".replace("{"+"placeId"+"}", "$placeId"),
+            path = "/rest/v2/place/{placeId}".replace("{"+"placeId"+"}", "${URLEncoder.encode(placeId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -165,31 +172,31 @@ class PlaceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getPlaces() : kotlin.collections.List<PlaceDto>?  {
+    suspend fun getPlaces() : kotlin.collections.List<PlaceDto>  {
         val localVariableConfig = getPlacesRequestConfig()
 
         return request<Unit, kotlin.collections.List<PlaceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getPlaces
     *
     * @return RequestConfig
     */
     fun getPlacesRequestConfig() : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/place",
+            path = "/rest/v2/place",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -203,14 +210,13 @@ class PlaceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyPlace(placeDto: PlaceDto) : PlaceDto?  {
+    suspend fun modifyPlace(placeDto: PlaceDto) : PlaceDto  {
         val localVariableConfig = modifyPlaceRequestConfig(placeDto = placeDto)
 
         return request<PlaceDto, PlaceDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation modifyPlace
     *
@@ -218,17 +224,18 @@ class PlaceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     * @return RequestConfig
     */
     fun modifyPlaceRequestConfig(placeDto: PlaceDto) : RequestConfig<PlaceDto> {
-        val localVariableBody = placeDto
+        // val localVariableBody = placeDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = placeDto
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v1/place",
+            path = "/rest/v2/place",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
 }

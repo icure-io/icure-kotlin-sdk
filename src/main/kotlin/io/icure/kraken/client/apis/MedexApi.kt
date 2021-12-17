@@ -1,9 +1,9 @@
 /**
  * iCure Data Stack API Documentation
  *
- * The iCure Data Stack Application API is the native interface to iCure. This version is obsolete, please use v2.
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -14,6 +14,7 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
+import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.models.MedexInfoDto
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -24,7 +25,12 @@ import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
+import kotlinx.coroutines.flow.flowOf
+import java.nio.ByteBuffer
+import java.util.*
 import javax.inject.Named
+import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -48,14 +54,13 @@ class MedexApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun generateMedex(medexInfoDto: MedexInfoDto) : kotlin.String?  {
+    suspend fun generateMedex(medexInfoDto: MedexInfoDto) : kotlin.String  {
         val localVariableConfig = generateMedexRequestConfig(medexInfoDto = medexInfoDto)
 
         return request<MedexInfoDto, kotlin.String>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation generateMedex
     *
@@ -63,17 +68,18 @@ class MedexApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     * @return RequestConfig
     */
     fun generateMedexRequestConfig(medexInfoDto: MedexInfoDto) : RequestConfig<MedexInfoDto> {
-        val localVariableBody = medexInfoDto
+        // val localVariableBody = medexInfoDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "application/xml"
+        val localVariableBody = medexInfoDto
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/medex/generate",
+            path = "/rest/v2/medex/generate",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
 }

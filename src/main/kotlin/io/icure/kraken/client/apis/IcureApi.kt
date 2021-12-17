@@ -1,9 +1,9 @@
 /**
  * iCure Data Stack API Documentation
  *
- * The iCure Data Stack Application API is the native interface to iCure. This version is obsolete, please use v2.
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -14,6 +14,7 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
+import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.models.ContactDto
 import io.icure.kraken.client.models.DocumentDto
 import io.icure.kraken.client.models.FormDto
@@ -33,7 +34,12 @@ import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
+import kotlinx.coroutines.flow.flowOf
+import java.nio.ByteBuffer
+import java.util.*
 import javax.inject.Named
+import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 
 @Named
 @ExperimentalStdlibApi
@@ -56,31 +62,31 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getIndexingInfo() : IndexingInfoDto?  {
+    suspend fun getIndexingInfo() : IndexingInfoDto  {
         val localVariableConfig = getIndexingInfoRequestConfig()
 
         return request<Unit, IndexingInfoDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getIndexingInfo
     *
     * @return RequestConfig
     */
     fun getIndexingInfoRequestConfig() : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/icure/i",
+            path = "/rest/v2/icure/i",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -93,31 +99,31 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getProcessInfo() : kotlin.String?  {
+    suspend fun getProcessInfo() : kotlin.String  {
         val localVariableConfig = getProcessInfoRequestConfig()
 
         return request<Unit, kotlin.String>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getProcessInfo
     *
     * @return RequestConfig
     */
     fun getProcessInfoRequestConfig() : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "text/plain"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/icure/p",
+            path = "/rest/v2/icure/p",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -130,31 +136,31 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getReplicationInfo() : ReplicationInfoDto?  {
+    suspend fun getReplicationInfo() : ReplicationInfoDto  {
         val localVariableConfig = getReplicationInfoRequestConfig()
 
         return request<Unit, ReplicationInfoDto>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getReplicationInfo
     *
     * @return RequestConfig
     */
     fun getReplicationInfoRequestConfig() : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/icure/r",
+            path = "/rest/v2/icure/r",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -168,14 +174,13 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getReplicatorInfo(id: kotlin.String) : ReplicatorDocument?  {
+    suspend fun getReplicatorInfo(id: kotlin.String) : ReplicatorDocument  {
         val localVariableConfig = getReplicatorInfoRequestConfig(id = id)
 
         return request<Unit, ReplicatorDocument>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getReplicatorInfo
     *
@@ -183,17 +188,18 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     * @return RequestConfig
     */
     fun getReplicatorInfoRequestConfig(id: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/icure/r/{id}".replace("{"+"id"+"}", "$id"),
+            path = "/rest/v2/icure/r/{id}".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -206,31 +212,31 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getVersion() : kotlin.String?  {
+    suspend fun getVersion() : kotlin.String  {
         val localVariableConfig = getVersionRequestConfig()
 
         return request<Unit, kotlin.String>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation getVersion
     *
     * @return RequestConfig
     */
     fun getVersionRequestConfig() : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "text/plain"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/icure/v",
+            path = "/rest/v2/icure/v",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -243,31 +249,31 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun isReady() : kotlin.String?  {
+    suspend fun isReady() : kotlin.String  {
         val localVariableConfig = isReadyRequestConfig()
 
         return request<Unit, kotlin.String>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation isReady
     *
     * @return RequestConfig
     */
     fun isReadyRequestConfig() : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "text/plain"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v1/icure/ok",
+            path = "/rest/v2/icure/ok",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -325,14 +331,13 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun resolveContactsConflicts(limit: kotlin.Int?) : kotlin.collections.List<ContactDto>?  {
+    suspend fun resolveContactsConflicts(limit: kotlin.Int?) : kotlin.collections.List<ContactDto>  {
         val localVariableConfig = resolveContactsConflictsRequestConfig(limit = limit)
 
         return request<Unit, kotlin.collections.List<ContactDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation resolveContactsConflicts
     *
@@ -340,7 +345,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     * @return RequestConfig
     */
     fun resolveContactsConflictsRequestConfig(limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (limit != null) {
@@ -348,14 +353,15 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/icure/conflicts/contact",
+            path = "/rest/v2/icure/conflicts/contact",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -370,14 +376,13 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun resolveDocumentsConflicts(ids: kotlin.String?, limit: kotlin.Int?) : kotlin.collections.List<DocumentDto>?  {
+    suspend fun resolveDocumentsConflicts(ids: kotlin.String?, limit: kotlin.Int?) : kotlin.collections.List<DocumentDto>  {
         val localVariableConfig = resolveDocumentsConflictsRequestConfig(ids = ids, limit = limit)
 
         return request<Unit, kotlin.collections.List<DocumentDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation resolveDocumentsConflicts
     *
@@ -386,7 +391,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     * @return RequestConfig
     */
     fun resolveDocumentsConflictsRequestConfig(ids: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (ids != null) {
@@ -397,14 +402,15 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/icure/conflicts/document",
+            path = "/rest/v2/icure/conflicts/document",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -418,14 +424,13 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun resolveFormsConflicts(limit: kotlin.Int?) : kotlin.collections.List<FormDto>?  {
+    suspend fun resolveFormsConflicts(limit: kotlin.Int?) : kotlin.collections.List<FormDto>  {
         val localVariableConfig = resolveFormsConflictsRequestConfig(limit = limit)
 
         return request<Unit, kotlin.collections.List<FormDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation resolveFormsConflicts
     *
@@ -433,7 +438,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     * @return RequestConfig
     */
     fun resolveFormsConflictsRequestConfig(limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (limit != null) {
@@ -441,14 +446,15 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/icure/conflicts/form",
+            path = "/rest/v2/icure/conflicts/form",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -462,14 +468,13 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun resolveHealthElementsConflicts(limit: kotlin.Int?) : kotlin.collections.List<HealthElementDto>?  {
+    suspend fun resolveHealthElementsConflicts(limit: kotlin.Int?) : kotlin.collections.List<HealthElementDto>  {
         val localVariableConfig = resolveHealthElementsConflictsRequestConfig(limit = limit)
 
         return request<Unit, kotlin.collections.List<HealthElementDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation resolveHealthElementsConflicts
     *
@@ -477,7 +482,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     * @return RequestConfig
     */
     fun resolveHealthElementsConflictsRequestConfig(limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (limit != null) {
@@ -485,14 +490,15 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/icure/conflicts/healthelement",
+            path = "/rest/v2/icure/conflicts/healthelement",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -506,14 +512,13 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun resolveInvoicesConflicts(limit: kotlin.Int?) : kotlin.collections.List<InvoiceDto>?  {
+    suspend fun resolveInvoicesConflicts(limit: kotlin.Int?) : kotlin.collections.List<InvoiceDto>  {
         val localVariableConfig = resolveInvoicesConflictsRequestConfig(limit = limit)
 
         return request<Unit, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation resolveInvoicesConflicts
     *
@@ -521,7 +526,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     * @return RequestConfig
     */
     fun resolveInvoicesConflictsRequestConfig(limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (limit != null) {
@@ -529,14 +534,15 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/icure/conflicts/invoice",
+            path = "/rest/v2/icure/conflicts/invoice",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -550,14 +556,13 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun resolveMessagesConflicts(limit: kotlin.Int?) : kotlin.collections.List<MessageDto>?  {
+    suspend fun resolveMessagesConflicts(limit: kotlin.Int?) : kotlin.collections.List<MessageDto>  {
         val localVariableConfig = resolveMessagesConflictsRequestConfig(limit = limit)
 
         return request<Unit, kotlin.collections.List<MessageDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation resolveMessagesConflicts
     *
@@ -565,7 +570,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     * @return RequestConfig
     */
     fun resolveMessagesConflictsRequestConfig(limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (limit != null) {
@@ -573,14 +578,15 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/icure/conflicts/message",
+            path = "/rest/v2/icure/conflicts/message",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -594,14 +600,13 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun resolvePatientsConflicts(limit: kotlin.Int?) : kotlin.collections.List<PatientDto>?  {
+    suspend fun resolvePatientsConflicts(limit: kotlin.Int?) : kotlin.collections.List<PatientDto>  {
         val localVariableConfig = resolvePatientsConflictsRequestConfig(limit = limit)
 
         return request<Unit, kotlin.collections.List<PatientDto>>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation resolvePatientsConflicts
     *
@@ -609,7 +614,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     * @return RequestConfig
     */
     fun resolvePatientsConflictsRequestConfig(limit: kotlin.Int?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (limit != null) {
@@ -617,14 +622,15 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/icure/conflicts/patient",
+            path = "/rest/v2/icure/conflicts/patient",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
@@ -639,14 +645,13 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun updateDesignDoc(entityName: kotlin.String, warmup: kotlin.Boolean?) : kotlin.Boolean?  {
+    suspend fun updateDesignDoc(entityName: kotlin.String, warmup: kotlin.Boolean?) : kotlin.Boolean  {
         val localVariableConfig = updateDesignDocRequestConfig(entityName = entityName, warmup = warmup)
 
         return request<Unit, kotlin.Boolean>(
             localVariableConfig
-        )
+        )!!
     }
-
     /**
     * To obtain the request config of the operation updateDesignDoc
     *
@@ -655,7 +660,7 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     * @return RequestConfig
     */
     fun updateDesignDocRequestConfig(entityName: kotlin.String, warmup: kotlin.Boolean?) : RequestConfig<Unit> {
-        val localVariableBody = null
+        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 if (warmup != null) {
@@ -663,14 +668,15 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v1/icure/dd/{entityName}".replace("{"+"entityName"+"}", "$entityName"),
+            path = "/rest/v2/icure/dd/{entityName}".replace("{"+"entityName"+"}", "${URLEncoder.encode(entityName.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
 }

@@ -1,9 +1,9 @@
 /**
  * iCure Data Stack API Documentation
  *
- * The iCure Data Stack Application API is the native interface to iCure. This version is obsolete, please use v2.
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v1
+ * The version of the OpenAPI document: v2
  * 
  *
  * Please note:
@@ -25,10 +25,10 @@ import com.github.pozo.KotlinBuilder
  *
  * @param id 
  * @param attributes 
+ * @param lastAccessTime 
+ * @param creationTime 
  * @param started 
  * @param expired 
- * @param creationTime 
- * @param lastAccessTime 
  * @param maxIdleTime 
  */
 
@@ -43,17 +43,17 @@ data class WebSession (
     @field:JsonProperty("attributes")
     val attributes: kotlin.collections.Map<kotlin.String, kotlin.Any>? = null,
 
+    @field:JsonProperty("lastAccessTime")
+    val lastAccessTime: java.time.OffsetDateTime? = null,
+
+    @field:JsonProperty("creationTime")
+    val creationTime: java.time.OffsetDateTime? = null,
+
     @field:JsonProperty("started")
     val started: kotlin.Boolean? = null,
 
     @field:JsonProperty("expired")
     val expired: kotlin.Boolean? = null,
-
-    @field:JsonProperty("creationTime")
-    val creationTime: java.time.OffsetDateTime? = null,
-
-    @field:JsonProperty("lastAccessTime")
-    val lastAccessTime: java.time.OffsetDateTime? = null,
 
     @field:JsonProperty("maxIdleTime")
     val maxIdleTime: WebSessionMaxIdleTime? = null

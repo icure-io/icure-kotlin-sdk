@@ -4,25 +4,24 @@ All URIs are relative to *https://kraken.icure.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createMessage**](MessageApi.md#createMessage) | **POST** /rest/v1/message | Creates a message
-[**deleteDelegation**](MessageApi.md#deleteDelegation) | **DELETE** /rest/v1/message/{messageId}/delegate/{delegateId} | Deletes a message delegation
-[**deleteMessages**](MessageApi.md#deleteMessages) | **DELETE** /rest/v1/message/{messageIds} | Deletes multiple messages
-[**deleteMessagesBatch**](MessageApi.md#deleteMessagesBatch) | **POST** /rest/v1/message/delete/byIds | Deletes multiple messages
-[**findMessages**](MessageApi.md#findMessages) | **GET** /rest/v1/message | Get all messages (paginated) for current HC Party
-[**findMessagesByFromAddress**](MessageApi.md#findMessagesByFromAddress) | **GET** /rest/v1/message/byFromAddress | Get all messages (paginated) for current HC Party and provided from address
-[**findMessagesByHCPartyPatientForeignKeys**](MessageApi.md#findMessagesByHCPartyPatientForeignKeys) | **GET** /rest/v1/message/byHcPartySecretForeignKeys | List messages found By Healthcare Party and secret foreign keys.
-[**findMessagesByToAddress**](MessageApi.md#findMessagesByToAddress) | **GET** /rest/v1/message/byToAddress | Get all messages (paginated) for current HC Party and provided to address
-[**findMessagesByTransportGuid**](MessageApi.md#findMessagesByTransportGuid) | **GET** /rest/v1/message/byTransportGuid | Get all messages (paginated) for current HC Party and provided transportGuid
-[**findMessagesByTransportGuidSentDate**](MessageApi.md#findMessagesByTransportGuidSentDate) | **GET** /rest/v1/message/byTransportGuidSentDate | Get all messages starting by a prefix between two date
-[**getChildrenMessages**](MessageApi.md#getChildrenMessages) | **GET** /rest/v1/message/{messageId}/children | Get children messages of provided message
-[**getChildrenMessagesOfList**](MessageApi.md#getChildrenMessagesOfList) | **POST** /rest/v1/message/children/batch | Get children messages of provided message
-[**getMessage**](MessageApi.md#getMessage) | **GET** /rest/v1/message/{messageId} | Gets a message
-[**listMessagesByInvoiceIds**](MessageApi.md#listMessagesByInvoiceIds) | **POST** /rest/v1/message/byInvoiceId | Get children messages of provided message
-[**listMessagesByTransportGuids**](MessageApi.md#listMessagesByTransportGuids) | **POST** /rest/v1/message/byTransportGuid/list | Get all messages for current HC Party and provided transportGuids
-[**modifyMessage**](MessageApi.md#modifyMessage) | **PUT** /rest/v1/message | Updates a message
-[**newMessageDelegations**](MessageApi.md#newMessageDelegations) | **PUT** /rest/v1/message/{messageId}/delegate | Adds a delegation to a message
-[**setMessagesReadStatus**](MessageApi.md#setMessagesReadStatus) | **PUT** /rest/v1/message/readstatus | Set read status for given list of messages
-[**setMessagesStatusBits**](MessageApi.md#setMessagesStatusBits) | **PUT** /rest/v1/message/status/{status} | Set status bits for given list of messages
+[**createMessage**](MessageApi.md#createMessage) | **POST** /rest/v2/message | Creates a message
+[**deleteDelegation**](MessageApi.md#deleteDelegation) | **DELETE** /rest/v2/message/{messageId}/delegate/{delegateId} | Deletes a message delegation
+[**deleteMessages**](MessageApi.md#deleteMessages) | **POST** /rest/v2/message/delete/batch | Deletes multiple messages
+[**findMessages**](MessageApi.md#findMessages) | **GET** /rest/v2/message | Get all messages (paginated) for current HC Party
+[**findMessagesByFromAddress**](MessageApi.md#findMessagesByFromAddress) | **GET** /rest/v2/message/byFromAddress | Get all messages (paginated) for current HC Party and provided from address
+[**findMessagesByHCPartyPatientForeignKeys**](MessageApi.md#findMessagesByHCPartyPatientForeignKeys) | **GET** /rest/v2/message/byHcPartySecretForeignKeys | List messages found By Healthcare Party and secret foreign keys.
+[**findMessagesByToAddress**](MessageApi.md#findMessagesByToAddress) | **GET** /rest/v2/message/byToAddress | Get all messages (paginated) for current HC Party and provided to address
+[**findMessagesByTransportGuid**](MessageApi.md#findMessagesByTransportGuid) | **GET** /rest/v2/message/byTransportGuid | Get all messages (paginated) for current HC Party and provided transportGuid
+[**findMessagesByTransportGuidSentDate**](MessageApi.md#findMessagesByTransportGuidSentDate) | **GET** /rest/v2/message/byTransportGuidSentDate | Get all messages starting by a prefix between two date
+[**getChildrenMessages**](MessageApi.md#getChildrenMessages) | **GET** /rest/v2/message/{messageId}/children | Get children messages of provided message
+[**getMessage**](MessageApi.md#getMessage) | **GET** /rest/v2/message/{messageId} | Gets a message
+[**getMessagesChildren**](MessageApi.md#getMessagesChildren) | **POST** /rest/v2/message/children/batch | Get children messages of provided message
+[**listMessagesByInvoices**](MessageApi.md#listMessagesByInvoices) | **POST** /rest/v2/message/byInvoice | Get children messages of provided message
+[**listMessagesByTransportGuids**](MessageApi.md#listMessagesByTransportGuids) | **POST** /rest/v2/message/byTransportGuid/list | Get all messages for current HC Party and provided transportGuids
+[**modifyMessage**](MessageApi.md#modifyMessage) | **PUT** /rest/v2/message | Updates a message
+[**newMessageDelegations**](MessageApi.md#newMessageDelegations) | **PUT** /rest/v2/message/{messageId}/delegate | Adds a delegation to a message
+[**setMessagesReadStatus**](MessageApi.md#setMessagesReadStatus) | **PUT** /rest/v2/message/readstatus | Set read status for given list of messages
+[**setMessagesStatusBits**](MessageApi.md#setMessagesStatusBits) | **PUT** /rest/v2/message/status/{status} | Set status bits for given list of messages
 
 
 <a name="createMessage"></a>
@@ -119,52 +118,7 @@ No authorization required
 
 <a name="deleteMessages"></a>
 # **deleteMessages**
-> kotlin.collections.List&lt;DocIdentifier&gt; deleteMessages(messageIds)
-
-Deletes multiple messages
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = MessageApi()
-val messageIds : kotlin.String = messageIds_example // kotlin.String | 
-try {
-    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteMessages(messageIds)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling MessageApi#deleteMessages")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling MessageApi#deleteMessages")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **messageIds** | **kotlin.String**|  |
-
-### Return type
-
-[**kotlin.collections.List&lt;DocIdentifier&gt;**](DocIdentifier.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="deleteMessagesBatch"></a>
-# **deleteMessagesBatch**
-> kotlin.collections.List&lt;DocIdentifier&gt; deleteMessagesBatch(listOfIdsDto)
+> kotlin.collections.List&lt;DocIdentifier&gt; deleteMessages(listOfIdsDto)
 
 Deletes multiple messages
 
@@ -177,13 +131,13 @@ Deletes multiple messages
 val apiInstance = MessageApi()
 val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
 try {
-    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteMessagesBatch(listOfIdsDto)
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteMessages(listOfIdsDto)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling MessageApi#deleteMessagesBatch")
+    println("4xx response calling MessageApi#deleteMessages")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling MessageApi#deleteMessagesBatch")
+    println("5xx response calling MessageApi#deleteMessages")
     e.printStackTrace()
 }
 ```
@@ -568,51 +522,6 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: */*
 
-<a name="getChildrenMessagesOfList"></a>
-# **getChildrenMessagesOfList**
-> kotlin.collections.List&lt;MessageDto&gt; getChildrenMessagesOfList(listOfIdsDto)
-
-Get children messages of provided message
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = MessageApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
-try {
-    val result : kotlin.collections.List<MessageDto> = apiInstance.getChildrenMessagesOfList(listOfIdsDto)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling MessageApi#getChildrenMessagesOfList")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling MessageApi#getChildrenMessagesOfList")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
-
-### Return type
-
-[**kotlin.collections.List&lt;MessageDto&gt;**](MessageDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: */*
-
 <a name="getMessage"></a>
 # **getMessage**
 > MessageDto getMessage(messageId)
@@ -658,9 +567,9 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: */*
 
-<a name="listMessagesByInvoiceIds"></a>
-# **listMessagesByInvoiceIds**
-> kotlin.collections.List&lt;MessageDto&gt; listMessagesByInvoiceIds(listOfIdsDto)
+<a name="getMessagesChildren"></a>
+# **getMessagesChildren**
+> kotlin.collections.List&lt;MessageDto&gt; getMessagesChildren(listOfIdsDto)
 
 Get children messages of provided message
 
@@ -673,13 +582,58 @@ Get children messages of provided message
 val apiInstance = MessageApi()
 val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
 try {
-    val result : kotlin.collections.List<MessageDto> = apiInstance.listMessagesByInvoiceIds(listOfIdsDto)
+    val result : kotlin.collections.List<MessageDto> = apiInstance.getMessagesChildren(listOfIdsDto)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling MessageApi#listMessagesByInvoiceIds")
+    println("4xx response calling MessageApi#getMessagesChildren")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling MessageApi#listMessagesByInvoiceIds")
+    println("5xx response calling MessageApi#getMessagesChildren")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;MessageDto&gt;**](MessageDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="listMessagesByInvoices"></a>
+# **listMessagesByInvoices**
+> kotlin.collections.List&lt;MessageDto&gt; listMessagesByInvoices(listOfIdsDto)
+
+Get children messages of provided message
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = MessageApi()
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+try {
+    val result : kotlin.collections.List<MessageDto> = apiInstance.listMessagesByInvoices(listOfIdsDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling MessageApi#listMessagesByInvoices")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling MessageApi#listMessagesByInvoices")
     e.printStackTrace()
 }
 ```
