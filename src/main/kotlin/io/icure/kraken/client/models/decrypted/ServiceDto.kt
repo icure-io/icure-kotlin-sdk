@@ -100,7 +100,7 @@ data class ServiceDto (
 
     /* Links towards related services (possibly in other contacts) */
     @field:JsonProperty("qualifiedLinks")
-    val qualifiedLinks: kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.String>> = mapOf(),
+    val qualifiedLinks: kotlin.collections.Map<LinkQualification, kotlin.collections.Map<kotlin.String, kotlin.String>> = mapOf(),
 
     /* A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes */
     @field:JsonProperty("codes")
