@@ -100,7 +100,7 @@ suspend fun PatientApi.modifyPatient(user: UserDto, patient: PatientDto, config:
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun PatientApi.bulkCreatePatients(user: UserDto, patientDto: List<PatientDto>, config: CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>) : List<IdWithRevDto>? {
-    return this.bulkCreatePatients(patientDto.map { config.encryptPatient(
+    return this.createPatients(patientDto.map { config.encryptPatient(
         user.healthcarePartyId!!,
         (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
         it.initPatient().initDelegations(user, config)
@@ -109,7 +109,7 @@ suspend fun PatientApi.bulkCreatePatients(user: UserDto, patientDto: List<Patien
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun PatientApi.bulkUpdatePatients(user: UserDto, patientDto: List<PatientDto>, config: CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>) : List<IdWithRevDto>? {
-    return this.bulkUpdatePatients(patientDto.map { config.encryptPatient(
+    return this.modifyPatients(patientDto.map { config.encryptPatient(
         user.healthcarePartyId!!,
         (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
         it.initPatient()
@@ -127,7 +127,7 @@ suspend fun PatientApi.filterPatientsBy(user: UserDto, filterChainPatient: Filte
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun PatientApi.findByAccessLogUserAfterDate(user: UserDto, userId: String, accessType: String?, startDate: Long?, startKey: String?, startDocumentId: String?, limit: Int?, config: CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>) : PaginatedListPatientDto? {
-    return this.findByAccessLogUserAfterDate(userId, accessType, startDate, startKey, startDocumentId, limit)?.let {
+    return this.findPatientsByAccessLogUserAfterDate(userId, accessType, startDate, startKey, startDocumentId, limit)?.let {
         PaginatedListPatientDto(rows = it.rows.map { config.decryptPatient(user.healthcarePartyId!!, it) }, pageSize = it.pageSize, totalSize = it.totalSize, nextKeyPair = it.nextKeyPair)
     }
 }
@@ -135,13 +135,13 @@ suspend fun PatientApi.findByAccessLogUserAfterDate(user: UserDto, userId: Strin
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun PatientApi.findByExternalId(user: UserDto, externalId: String, config: CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>) : PatientDto? {
-    return this.findByExternalId(externalId)?.let { config.decryptPatient(user.healthcarePartyId!!, it) }
+    return this.getPatientByExternalId(externalId)?.let { config.decryptPatient(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun PatientApi.findByNameBirthSsinAuto(user: UserDto, healthcarePartyId: String?, filterValue: String?, startKey: String?, startDocumentId: String?, limit: Int?, sortDirection: String?, config: CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>) : PaginatedListPatientDto? {
-    return this.findByNameBirthSsinAuto(healthcarePartyId, filterValue, startKey, startDocumentId, limit, sortDirection)?.let {
+    return this.findPatientsByNameBirthSsinAuto(healthcarePartyId, filterValue, startKey, startDocumentId, limit, sortDirection)?.let {
         PaginatedListPatientDto(rows = it.rows.map { config.decryptPatient(user.healthcarePartyId!!, it) }, pageSize = it.pageSize, totalSize = it.totalSize, nextKeyPair = it.nextKeyPair)
     }
 }
@@ -172,7 +172,7 @@ suspend fun PatientApi.getPatients(user: UserDto, listOfIdsDto: ListOfIdsDto, co
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun PatientApi.listDeletedPatients(user: UserDto, startDate: Long?, endDate: Long?, desc: Boolean?, startDocumentId: String?, limit: Int?, config: CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>) : PaginatedListPatientDto? {
-    return this.listDeletedPatients(startDate, endDate, desc, startDocumentId, limit)?.let {
+    return this.findDeletedPatients(startDate, endDate, desc, startDocumentId, limit)?.let {
         PaginatedListPatientDto(rows = it.rows.map { config.decryptPatient(user.healthcarePartyId!!, it) }, pageSize = it.pageSize, totalSize = it.totalSize, nextKeyPair = it.nextKeyPair)
     }
 }
@@ -189,7 +189,7 @@ suspend fun PatientApi.listOfMergesAfter(user: UserDto, date: Long, config: Cryp
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun PatientApi.listOfPatientsModifiedAfter(user: UserDto, date: Long, startKey: Long?, startDocumentId: String?, limit: Int?, config: CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>) : PaginatedListPatientDto? {
-    return this.listOfPatientsModifiedAfter(date, startKey, startDocumentId, limit)?.let {
+    return this.findPatientsModifiedAfter(date, startKey, startDocumentId, limit)?.let {
         PaginatedListPatientDto(rows = it.rows.map { config.decryptPatient(user.healthcarePartyId!!, it) }, pageSize = it.pageSize, totalSize = it.totalSize, nextKeyPair = it.nextKeyPair)
     }
 }
@@ -197,7 +197,7 @@ suspend fun PatientApi.listOfPatientsModifiedAfter(user: UserDto, date: Long, st
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun PatientApi.listPatients(user: UserDto, hcPartyId: String?, sortField: String?, startKey: String?, startDocumentId: String?, limit: Int?, sortDirection: String?, config: CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>) : PaginatedListPatientDto? {
-    return this.listPatients(hcPartyId, sortField, startKey, startDocumentId, limit, sortDirection)?.let {
+    return this.findPatientsByHealthcareParty(hcPartyId, sortField, startKey, startDocumentId, limit, sortDirection)?.let {
         PaginatedListPatientDto(rows = it.rows.map { config.decryptPatient(user.healthcarePartyId!!, it) }, pageSize = it.pageSize, totalSize = it.totalSize, nextKeyPair = it.nextKeyPair)
     }
 }
@@ -205,18 +205,18 @@ suspend fun PatientApi.listPatients(user: UserDto, hcPartyId: String?, sortField
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun PatientApi.listPatientsByHcParty(user: UserDto, hcPartyId: String, sortField: String?, startKey: String?, startDocumentId: String?, limit: Int?, sortDirection: String?, config: CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>) : PaginatedListPatientDto? {
-    return this.listPatientsByHcParty(hcPartyId, sortField, startKey, startDocumentId, limit, sortDirection)?.let {
+    return this.findPatientsByHealthcareParty(hcPartyId, sortField, startKey, startDocumentId, limit, sortDirection)?.let {
         PaginatedListPatientDto(rows = it.rows.map { config.decryptPatient(user.healthcarePartyId!!, it) }, pageSize = it.pageSize, totalSize = it.totalSize, nextKeyPair = it.nextKeyPair)
     }
 }
 
-@ExperimentalCoroutinesApi
+/*@ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun PatientApi.listPatientsOfHcParty(user: UserDto, hcPartyId: String, sortField: String?, startKey: String?, startDocumentId: String?, limit: Int?, sortDirection: String?, config: CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>) : PaginatedListPatientDto? {
     return this.listPatientsOfHcParty(hcPartyId, sortField, startKey, startDocumentId, limit, sortDirection)?.let {
         PaginatedListPatientDto(rows = it.rows.map { config.decryptPatient(user.healthcarePartyId!!, it) }, pageSize = it.pageSize, totalSize = it.totalSize, nextKeyPair = it.nextKeyPair)
     }
-}
+}*/
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
