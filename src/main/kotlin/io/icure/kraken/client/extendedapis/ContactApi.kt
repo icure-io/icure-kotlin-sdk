@@ -115,6 +115,13 @@ suspend fun ContactApi.modifyContacts(user: UserDto, contactDto: List<ContactDto
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
+suspend fun ContactApi.deleteServices(user: UserDto, patient: PatientDto, services: List<ServiceDto>, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>): ContactDto? {
+    val currentTime = System.currentTimeMillis()
+    return this.createContact(user, patient, ContactDto(id= UUID.randomUUID().toString(), services = services.map { ServiceDto(id = it.id, created = it.created, modified = currentTime, endOfLife = currentTime) }), config)
+}
+
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
 suspend fun ContactApi.filterContactsBy(user: UserDto, filterChainContact: FilterChainContact, startKey: String?, startDocumentId: String?, limit: Int?, skip: Int?, sort: String?, desc: Boolean?, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>) : PaginatedListContactDto? {
     return this.filterContactsBy(filterChainContact, startDocumentId, limit)?.let {
         PaginatedListContactDto(rows = it.rows?.map { config.decryptContact(user.healthcarePartyId!!, it) }, pageSize = it.pageSize, totalSize = it.totalSize, nextKeyPair = it.nextKeyPair)
