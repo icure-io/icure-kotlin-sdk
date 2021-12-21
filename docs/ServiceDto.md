@@ -9,7 +9,6 @@ Name | Type | Description | Notes
 **cryptedForeignKeys** | **kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Set&lt;DelegationDto&gt;&gt;** | The public patient key, encrypted here for separate Crypto Actors. | 
 **delegations** | **kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Set&lt;DelegationDto&gt;&gt;** | The delegations giving access to connected healthcare information. | 
 **encryptionKeys** | **kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Set&lt;DelegationDto&gt;&gt;** | The contact secret encryption key used to encrypt the secured properties (like services for example), encrypted for separate Crypto Actors. | 
-**label** | **kotlin.String** |  | 
 **content** | [**kotlin.collections.Map&lt;kotlin.String, ContentDto&gt;**](ContentDto.md) | The type of the content recorded in the documents for the service | 
 **textIndexes** | **kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;** |  | 
 **invoicingCodes** | **kotlin.collections.Set&lt;kotlin.String&gt;** | List of invoicing codes | 
@@ -22,6 +21,7 @@ Name | Type | Description | Notes
 **healthElementsIds** | **kotlin.collections.Set&lt;kotlin.String&gt;** | List of IDs of all healthcare elements for which the service is provided. Only used when the Service is emitted outside of its contact |  [optional]
 **formIds** | **kotlin.collections.Set&lt;kotlin.String&gt;** | List of Ids of all forms linked to the Service. Only used when the Service is emitted outside of its contact. |  [optional]
 **secretForeignKeys** | **kotlin.collections.Set&lt;kotlin.String&gt;** | The secret patient key, encrypted in the patient document, in clear here. |  [optional]
+**label** | **kotlin.String** |  |  [optional]
 **dataClassName** | **kotlin.String** |  |  [optional]
 **index** | **kotlin.Long** |  |  [optional]
 **encryptedContent** | **kotlin.String** |  |  [optional]

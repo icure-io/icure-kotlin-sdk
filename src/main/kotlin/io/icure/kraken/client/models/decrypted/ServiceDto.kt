@@ -85,7 +85,7 @@ data class ServiceDto (
     val encryptionKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<DelegationDto>> = mapOf(),
 
     @field:JsonProperty("label")
-    val label: kotlin.String?,
+    val label: kotlin.String? = null,
 
     /* The type of the content recorded in the documents for the service */
     @field:JsonProperty("content")
