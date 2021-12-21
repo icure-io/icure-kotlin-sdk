@@ -7,7 +7,13 @@ import io.icure.kraken.client.crypto.CryptoConfig
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
 import io.icure.kraken.client.crypto.keyFromHexString
-import io.icure.kraken.client.models.*
+import io.icure.kraken.client.models.ContentDto
+import io.icure.kraken.client.models.DelegationDto
+import io.icure.kraken.client.models.FilterChainContact
+import io.icure.kraken.client.models.FilterChainService
+import io.icure.kraken.client.models.IcureStubDto
+import io.icure.kraken.client.models.ListOfIdsDto
+import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.decrypted.ContactDto
 import io.icure.kraken.client.models.decrypted.PaginatedListContactDto
 import io.icure.kraken.client.models.decrypted.PatientDto
@@ -115,7 +121,7 @@ suspend fun ContactApi.modifyContacts(user: UserDto, contactDto: List<ContactDto
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.deleteServices(user: UserDto, patient: PatientDto, services: List<ServiceDto>, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>): ContactDto? {
+suspend fun ContactApi.deleteServices(user: UserDto, patient: PatientDto, services: List<io.icure.kraken.client.models.ServiceDto>, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>): ContactDto? {
     val currentTime = System.currentTimeMillis()
     return this.createContact(user, patient, ContactDto(id= UUID.randomUUID().toString(), services = services.map { ServiceDto(id = it.id, created = it.created, modified = currentTime, endOfLife = currentTime) }), config)
 }
