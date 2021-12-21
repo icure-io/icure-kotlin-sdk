@@ -9,6 +9,7 @@ Method | HTTP request | Description
 [**deleteHealthElements**](HealthElementApi.md#deleteHealthElements) | **POST** /rest/v2/helement/delete/batch | Delete health elements.
 [**filterHealthElementsBy**](HealthElementApi.md#filterHealthElementsBy) | **POST** /rest/v2/helement/filter | Filter health elements for the current user (HcParty)
 [**getHealthElement**](HealthElementApi.md#getHealthElement) | **GET** /rest/v2/helement/{healthElementId} | Get a health element
+[**getHealthElements**](HealthElementApi.md#getHealthElements) | **POST** /rest/v2/helement/byIds | Get healthElements by batch
 [**listHealthElementsByHCPartyAndPatientForeignKeys**](HealthElementApi.md#listHealthElementsByHCPartyAndPatientForeignKeys) | **GET** /rest/v2/helement/byHcPartySecretForeignKeys | List health elements found By Healthcare Party and secret foreign keyelementIds.
 [**listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys**](HealthElementApi.md#listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys) | **GET** /rest/v2/helement/byHcPartySecretForeignKeys/delegations | List helement stubs found By Healthcare Party and secret foreign keys.
 [**modifyHealthElement**](HealthElementApi.md#modifyHealthElement) | **PUT** /rest/v2/helement | Modify a health element
@@ -248,6 +249,53 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="getHealthElements"></a>
+# **getHealthElements**
+> kotlin.collections.List&lt;HealthElementDto&gt; getHealthElements(listOfIdsDto)
+
+Get healthElements by batch
+
+Get a list of healthElement by ids/keys.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = HealthElementApi()
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+try {
+    val result : kotlin.collections.List<HealthElementDto> = apiInstance.getHealthElements(listOfIdsDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling HealthElementApi#getHealthElements")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling HealthElementApi#getHealthElements")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;HealthElementDto&gt;**](HealthElementDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: */*
 
 <a name="listHealthElementsByHCPartyAndPatientForeignKeys"></a>

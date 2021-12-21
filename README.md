@@ -286,6 +286,7 @@ Class | Method | HTTP request | Description
 *HealthElementApi* | [**deleteHealthElements**](docs/HealthElementApi.md#deletehealthelements) | **POST** /rest/v2/helement/delete/batch | Delete health elements.
 *HealthElementApi* | [**filterHealthElementsBy**](docs/HealthElementApi.md#filterhealthelementsby) | **POST** /rest/v2/helement/filter | Filter health elements for the current user (HcParty)
 *HealthElementApi* | [**getHealthElement**](docs/HealthElementApi.md#gethealthelement) | **GET** /rest/v2/helement/{healthElementId} | Get a health element
+*HealthElementApi* | [**getHealthElements**](docs/HealthElementApi.md#gethealthelements) | **POST** /rest/v2/helement/byIds | Get healthElements by batch
 *HealthElementApi* | [**listHealthElementsByHCPartyAndPatientForeignKeys**](docs/HealthElementApi.md#listhealthelementsbyhcpartyandpatientforeignkeys) | **GET** /rest/v2/helement/byHcPartySecretForeignKeys | List health elements found By Healthcare Party and secret foreign keyelementIds.
 *HealthElementApi* | [**listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys**](docs/HealthElementApi.md#listhealthelementsdelegationsstubsbyhcpartyandpatientforeignkeys) | **GET** /rest/v2/helement/byHcPartySecretForeignKeys/delegations | List helement stubs found By Healthcare Party and secret foreign keys.
 *HealthElementApi* | [**modifyHealthElement**](docs/HealthElementApi.md#modifyhealthelement) | **PUT** /rest/v2/helement | Modify a health element

@@ -244,6 +244,45 @@ class HealthElementApi(basePath: kotlin.String = defaultBasePath, webClient: Web
     }
 
     /**
+    * Get healthElements by batch
+    * Get a list of healthElement by ids/keys.
+    * @param listOfIdsDto  
+    * @return kotlin.collections.List<HealthElementDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun getHealthElements(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<HealthElementDto>  {
+        val localVariableConfig = getHealthElementsRequestConfig(listOfIdsDto = listOfIdsDto)
+
+        return request<ListOfIdsDto, kotlin.collections.List<HealthElementDto>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation getHealthElements
+    *
+    * @param listOfIdsDto  
+    * @return RequestConfig
+    */
+    fun getHealthElementsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+        // val localVariableBody = listOfIdsDto
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = listOfIdsDto
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v2/helement/byIds",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
     * List health elements found By Healthcare Party and secret foreign keyelementIds.
     * Keys hast to delimited by coma
     * @param hcPartyId  
