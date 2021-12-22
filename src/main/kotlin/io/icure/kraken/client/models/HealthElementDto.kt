@@ -12,16 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.CareTeamMemberDto
-import io.icure.kraken.client.models.CodeStubDto
-import io.icure.kraken.client.models.DelegationDto
-import io.icure.kraken.client.models.EpisodeDto
-import io.icure.kraken.client.models.IdentifierDto
-import io.icure.kraken.client.models.PlanOfActionDto
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.annotation.JsonProperty
 import com.github.pozo.KotlinBuilder
 
 
@@ -29,7 +22,7 @@ import com.github.pozo.KotlinBuilder
  * This entity is a root level object. It represents a healthcare element. It is serialized in JSON and saved in the underlying CouchDB database.
  *
  * @param id The Id of the healthcare element. We encourage using either a v4 UUID or a HL7 Id.
- * @param identifier 
+ * @param identifiers 
  * @param tags A tag is an item from a codification system that qualifies an entity as being member of a certain class, whatever the value it might have taken. If the tag qualifies the content of a field, it means that whatever the content of the field, the tag will always apply. For example, the label of a field is qualified using a tag. LOINC is a codification system typically used for tags.
  * @param codes A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes
  * @param relevant If the healthcare element is relevant or not (Set relevant by default).
@@ -71,8 +64,8 @@ data class HealthElementDto (
     @field:JsonProperty("id")
     val id: kotlin.String,
 
-    @field:JsonProperty("identifier")
-    val identifier: kotlin.collections.List<IdentifierDto> = emptyList(),
+    @field:JsonProperty("identifiers")
+    val identifiers: kotlin.collections.List<IdentifierDto> = emptyList(),
 
     /* A tag is an item from a codification system that qualifies an entity as being member of a certain class, whatever the value it might have taken. If the tag qualifies the content of a field, it means that whatever the content of the field, the tag will always apply. For example, the label of a field is qualified using a tag. LOINC is a codification system typically used for tags. */
     @field:JsonProperty("tags")

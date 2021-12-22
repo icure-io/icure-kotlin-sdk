@@ -14,8 +14,12 @@ package io.icure.kraken.client.apis
 
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
-import io.icure.kraken.client.infrastructure.*
-
+import io.icure.kraken.client.infrastructure.ApiClient
+import io.icure.kraken.client.infrastructure.ClientException
+import io.icure.kraken.client.infrastructure.MultiValueMap
+import io.icure.kraken.client.infrastructure.RequestConfig
+import io.icure.kraken.client.infrastructure.RequestMethod
+import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.models.ContactDto
 import io.icure.kraken.client.models.ContentDto
 import io.icure.kraken.client.models.DelegationDto
@@ -23,28 +27,14 @@ import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.FilterChainContact
 import io.icure.kraken.client.models.FilterChainService
 import io.icure.kraken.client.models.IcureStubDto
-import io.icure.kraken.client.models.IdentifierDto
-import io.icure.kraken.client.models.IndexedIdentifierDto
 import io.icure.kraken.client.models.LabelledOccurenceDto
 import io.icure.kraken.client.models.ListOfIdsDto
 import io.icure.kraken.client.models.PaginatedListContactDto
 import io.icure.kraken.client.models.PaginatedListServiceDto
 import io.icure.kraken.client.models.ServiceDto
-
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-
-import io.icure.kraken.client.infrastructure.ApiClient
-import io.icure.kraken.client.infrastructure.ClientException
-import io.icure.kraken.client.infrastructure.ServerException
-import io.icure.kraken.client.infrastructure.MultiValueMap
-import io.icure.kraken.client.infrastructure.RequestConfig
-import io.icure.kraken.client.infrastructure.RequestMethod
-import kotlinx.coroutines.flow.flowOf
-import java.nio.ByteBuffer
-import java.util.*
-import javax.inject.Named
-import kotlinx.coroutines.flow.Flow
 import java.net.URLEncoder
+import javax.inject.Named
 
 @Named
 @ExperimentalStdlibApi
@@ -495,54 +485,6 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     }
 
     /**
-    * Get service by identifier
-    * It gets service data based on the identifier (root &amp; extension) parameters.
-    * @param hcPartyId  
-    * @param `value`  
-    * @param system  (optional)
-    * @return ServiceDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getServiceByHealthcarepartyAndIdentifier(hcPartyId: kotlin.String, `value`: kotlin.String, system: kotlin.String?) : ServiceDto  {
-        val localVariableConfig = getServiceByHealthcarepartyAndIdentifierRequestConfig(hcPartyId = hcPartyId, `value` = `value`, system = system)
-
-        return request<Unit, ServiceDto>(
-            localVariableConfig
-        )!!
-    }
-    /**
-    * To obtain the request config of the operation getServiceByHealthcarepartyAndIdentifier
-    *
-    * @param hcPartyId  
-    * @param `value`  
-    * @param system  (optional)
-    * @return RequestConfig
-    */
-    fun getServiceByHealthcarepartyAndIdentifierRequestConfig(hcPartyId: kotlin.String, `value`: kotlin.String, system: kotlin.String?) : RequestConfig<Unit> {
-        // val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
-            .apply {
-                if (system != null) {
-                    put("system", listOf(system.toString()))
-                }
-            }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-        localVariableHeaders["Accept"] = "*/*"
-        val localVariableBody = null
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v2/contact/service/{hcPartyId}/{value}".replace("{"+"hcPartyId"+"}", "${URLEncoder.encode(hcPartyId.toString(), Charsets.UTF_8)}").replace("{"+"value"+"}", "${URLEncoder.encode(`value`.toString(), Charsets.UTF_8)}"),
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody        )
-    }
-
-    /**
     * Get the list of all used codes frequencies in services
     * 
     * @param codeType  
@@ -617,50 +559,6 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/contact/service",
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody        )
-    }
-
-    /**
-    * Get services ids by identifiers
-    * For each provided identifier, links corresponding iCure service id
-    * @param hcPartyId  
-    * @param identifiers  
-    * @return kotlin.collections.List<IndexedIdentifierDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getServicesIdsByHealthcarePartyAndIdentifiers(hcPartyId: kotlin.String, identifiers: kotlin.collections.List<IdentifierDto>) : kotlin.collections.List<IndexedIdentifierDto>  {
-        val localVariableConfig = getServicesIdsByHealthcarePartyAndIdentifiersRequestConfig(hcPartyId = hcPartyId, identifiers = identifiers)
-
-        return request<Unit, kotlin.collections.List<IndexedIdentifierDto>>(
-            localVariableConfig
-        )!!
-    }
-    /**
-    * To obtain the request config of the operation getServicesIdsByHealthcarePartyAndIdentifiers
-    *
-    * @param hcPartyId  
-    * @param identifiers  
-    * @return RequestConfig
-    */
-    fun getServicesIdsByHealthcarePartyAndIdentifiersRequestConfig(hcPartyId: kotlin.String, identifiers: kotlin.collections.List<IdentifierDto>) : RequestConfig<Unit> {
-        // val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
-            .apply {
-                put("identifiers", toMultiValue(identifiers.toList(), "multi"))
-            }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-        localVariableHeaders["Accept"] = "*/*"
-        val localVariableBody = null
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v2/contact/services/ids/{hcPartyId}/byIdentifiers".replace("{"+"hcPartyId"+"}", "${URLEncoder.encode(hcPartyId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

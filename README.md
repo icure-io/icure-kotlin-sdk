@@ -178,10 +178,8 @@ Class | Method | HTTP request | Description
 *ContactApi* | [**getContact**](docs/ContactApi.md#getcontact) | **GET** /rest/v2/contact/{contactId} | Get a contact
 *ContactApi* | [**getContacts**](docs/ContactApi.md#getcontacts) | **POST** /rest/v2/contact/byIds | Get contacts
 *ContactApi* | [**getEmptyContent**](docs/ContactApi.md#getemptycontent) | **GET** /rest/v2/contact/service/content/empty | Get an empty content
-*ContactApi* | [**getServiceByHealthcarepartyAndIdentifier**](docs/ContactApi.md#getservicebyhealthcarepartyandidentifier) | **GET** /rest/v2/contact/service/{hcPartyId}/{value} | Get service by identifier
 *ContactApi* | [**getServiceCodesOccurences**](docs/ContactApi.md#getservicecodesoccurences) | **GET** /rest/v2/contact/service/codes/{codeType}/{minOccurences} | Get the list of all used codes frequencies in services
 *ContactApi* | [**getServices**](docs/ContactApi.md#getservices) | **POST** /rest/v2/contact/service | List services with provided ids 
-*ContactApi* | [**getServicesIdsByHealthcarePartyAndIdentifiers**](docs/ContactApi.md#getservicesidsbyhealthcarepartyandidentifiers) | **GET** /rest/v2/contact/services/ids/{hcPartyId}/byIdentifiers | Get services ids by identifiers
 *ContactApi* | [**getServicesLinkedTo**](docs/ContactApi.md#getserviceslinkedto) | **POST** /rest/v2/contact/service/linkedTo | List services linked to provided ids 
 *ContactApi* | [**listContactByHCPartyServiceId**](docs/ContactApi.md#listcontactbyhcpartyserviceid) | **GET** /rest/v2/contact/byHcPartyServiceId | List contacts found By Healthcare Party and service Id.
 *ContactApi* | [**listContactsByExternalId**](docs/ContactApi.md#listcontactsbyexternalid) | **POST** /rest/v2/contact/byExternalId | List contacts found By externalId.
@@ -410,7 +408,6 @@ Class | Method | HTTP request | Description
 *PatientApi* | [**getPatientByExternalId**](docs/PatientApi.md#getpatientbyexternalid) | **GET** /rest/v2/patient/byExternalId/{externalId} | Get the patient having the provided externalId
 *PatientApi* | [**getPatientByHealthcarepartyAndIdentifier**](docs/PatientApi.md#getpatientbyhealthcarepartyandidentifier) | **GET** /rest/v2/patient/{hcPartyId}/{id} | Get patient by identifier
 *PatientApi* | [**getPatientHcPartyKeysForDelegate**](docs/PatientApi.md#getpatienthcpartykeysfordelegate) | **GET** /rest/v2/patient/{patientId}/keys | Get the patient (identified by patientId) hcparty keys. Those keys are AES keys (encrypted) used to share information between HCPs and a patient.
-*PatientApi* | [**getPatientIdsByHealthcarePartyAndIdentifiers**](docs/PatientApi.md#getpatientidsbyhealthcarepartyandidentifiers) | **POST** /rest/v2/patient/ids/{hcPartyId}/byIdentifiers | Get patient ids by identifiers
 *PatientApi* | [**getPatients**](docs/PatientApi.md#getpatients) | **POST** /rest/v2/patient/byIds | Get patients by id
 *PatientApi* | [**listDeletedPatientsByName**](docs/PatientApi.md#listdeletedpatientsbyname) | **GET** /rest/v2/patient/deleted/by_name | Find deleted patients
 *PatientApi* | [**listOfMergesAfter**](docs/PatientApi.md#listofmergesafter) | **GET** /rest/v2/patient/merges/{date} | List patients that have been merged towards another patient 
@@ -636,7 +633,6 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.IdentityDocumentReaderDto](docs/IdentityDocumentReaderDto.md)
  - [io.icure.kraken.client.models.ImportMapping](docs/ImportMapping.md)
  - [io.icure.kraken.client.models.ImportResultDto](docs/ImportResultDto.md)
- - [io.icure.kraken.client.models.IndexedIdentifierDto](docs/IndexedIdentifierDto.md)
  - [io.icure.kraken.client.models.IndexingInfoDto](docs/IndexingInfoDto.md)
  - [io.icure.kraken.client.models.IngredientDto](docs/IngredientDto.md)
  - [io.icure.kraken.client.models.InsurabilityDto](docs/InsurabilityDto.md)
