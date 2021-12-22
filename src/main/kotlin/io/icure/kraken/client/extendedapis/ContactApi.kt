@@ -221,12 +221,6 @@ suspend fun ContactApi.listServicesLinkedTo(user: UserDto, listOfIdsDto: ListOfI
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.getServiceByHealthcarepartyAndIdentifier(user: UserDto, hcPartyId: String, value: String, system: String?, crypto: Crypto) : ServiceDto? {
-    return this.getServiceByHealthcarepartyAndIdentifier(hcPartyId, value, system)?.let { crypto.decryptServices(user.healthcarePartyId!!, null, listOf(it)).first() }
-}
-
-@ExperimentalCoroutinesApi
-@ExperimentalStdlibApi
 suspend fun ContactApi.newContactDelegations(user: UserDto, contactId: String, delegationDto: DelegationDto, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>) : ContactDto? {
     return this.newContactDelegations(contactId, delegationDto)?.let { config.decryptContact(user.healthcarePartyId!!, it) }
 }

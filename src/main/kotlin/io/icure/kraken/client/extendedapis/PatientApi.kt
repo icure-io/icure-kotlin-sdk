@@ -6,7 +6,12 @@ import io.icure.kraken.client.crypto.CryptoConfig
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
 import io.icure.kraken.client.crypto.keyFromHexString
-import io.icure.kraken.client.models.*
+import io.icure.kraken.client.models.DelegationDto
+import io.icure.kraken.client.models.FilterChainPatient
+import io.icure.kraken.client.models.IdWithRevDto
+import io.icure.kraken.client.models.ListOfIdsDto
+import io.icure.kraken.client.models.PersonNameDto
+import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.decrypted.PaginatedListPatientDto
 import io.icure.kraken.client.models.decrypted.PatientDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -150,12 +155,6 @@ suspend fun PatientApi.findByNameBirthSsinAuto(user: UserDto, healthcarePartyId:
 @ExperimentalStdlibApi
 suspend fun PatientApi.fuzzySearch(user: UserDto, firstName: String?, lastName: String?, dateOfBirth: Int?, config: CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>) : List<PatientDto>? {
     return this.fuzzySearch(firstName, lastName, dateOfBirth)?.map { config.decryptPatient(user.healthcarePartyId!!, it) }
-}
-
-@ExperimentalCoroutinesApi
-@ExperimentalStdlibApi
-suspend fun PatientApi.getPatientByHealthcarepartyAndIdentifier(user: UserDto, hcPartyId: kotlin.String, system: kotlin.String, id: kotlin.String, config: CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>) : PatientDto? {
-    return this.getPatientByHealthcarepartyAndIdentifier(hcPartyId = hcPartyId, system = system, id = id)?.let { config.decryptPatient(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
