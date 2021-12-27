@@ -71,15 +71,15 @@ data class HealthElementDto (
     val id: kotlin.String,
 
     @field:JsonProperty("identifier")
-    val identifier: kotlin.collections.List<IdentifierDto> = listOf(),
+    val identifier: kotlin.collections.List<IdentifierDto> = emptyList(),
 
     /* A tag is an item from a codification system that qualifies an entity as being member of a certain class, whatever the value it might have taken. If the tag qualifies the content of a field, it means that whatever the content of the field, the tag will always apply. For example, the label of a field is qualified using a tag. LOINC is a codification system typically used for tags. */
     @field:JsonProperty("tags")
-    val tags: kotlin.collections.List<CodeStubDto> = listOf(),
+    val tags: kotlin.collections.List<CodeStubDto> = emptyList(),
 
     /* A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes */
     @field:JsonProperty("codes")
-    val codes: kotlin.collections.List<CodeStubDto> = listOf(),
+    val codes: kotlin.collections.List<CodeStubDto> = emptyList(),
 
     /* If the healthcare element is relevant or not (Set relevant by default). */
     @field:JsonProperty("relevant")
@@ -91,19 +91,19 @@ data class HealthElementDto (
 
     /* List of healthcare approaches. */
     @field:JsonProperty("plansOfAction")
-    val plansOfAction: kotlin.collections.List<PlanOfActionDto> = listOf(),
+    val plansOfAction: kotlin.collections.List<PlanOfActionDto> = emptyList(),
 
     /* List of episodes of occurrences of the healthcare element. */
     @field:JsonProperty("episodes")
-    val episodes: kotlin.collections.List<EpisodeDto> = listOf(),
+    val episodes: kotlin.collections.List<EpisodeDto> = emptyList(),
 
     /* List of care team members assigned for the healthcare element. */
     @field:JsonProperty("careTeam")
-    val careTeam: kotlin.collections.List<CareTeamMemberDto> = listOf(),
+    val careTeam: kotlin.collections.List<CareTeamMemberDto> = emptyList(),
 
     /* The secretForeignKeys are filled at the to many end of a one to many relationship (for example inside Contact for the Patient -> Contacts relationship). Used when we want to find all contacts for a specific patient. These keys are in clear. You can have several to partition the medical document space. */
     @field:JsonProperty("secretForeignKeys")
-    val secretForeignKeys: kotlin.collections.List<kotlin.String> = listOf(),
+    val secretForeignKeys: kotlin.collections.List<kotlin.String> = emptyList(),
 
     /* The secretForeignKeys are filled at the to many end of a one to many relationship (for example inside Contact for the Patient -> Contacts relationship). Used when we want to find the patient for a specific contact. These keys are the encrypted id (using the hcParty key for the delegate) that can be found in clear inside the patient. ids encrypted using the hcParty keys. */
     @field:JsonProperty("cryptedForeignKeys")

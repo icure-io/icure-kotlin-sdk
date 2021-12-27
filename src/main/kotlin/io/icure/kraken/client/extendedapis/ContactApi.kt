@@ -35,14 +35,14 @@ suspend fun ContactDto.initDelegations(user: UserDto, config: CryptoConfig<Conta
         delegations = (delegations + user.healthcarePartyId!!).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    listOf(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, sfk),
+                    emptyList(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, sfk),
                 ),
             ))
         },
         encryptionKeys = (delegations + user.healthcarePartyId!!).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    listOf(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, ek),
+                    emptyList(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, ek),
                 ),
             ))
         },
@@ -76,7 +76,7 @@ suspend fun ContactApi.createContact(user: UserDto, patient:PatientDto, contact:
                 cryptedForeignKeys = (delegations + user.healthcarePartyId!!).fold(ec.cryptedForeignKeys) { m, d ->
                     m + (d to setOf(
                         DelegationDto(
-                            listOf(),
+                            emptyList(),
                             user.healthcarePartyId,
                             d,
                             config.crypto.encryptValueForHcp(user.healthcarePartyId, d, ec.id, patient.id),
@@ -237,7 +237,7 @@ suspend fun CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>.e
     } else {
         val secret = UUID.randomUUID().toString()
         contact.copy(encryptionKeys = (delegations + myId).fold(contact.encryptionKeys) { m, d ->
-            m + (d to setOf(DelegationDto(listOf(), myId, d, this.crypto.encryptAESKeyForHcp(myId, d, contact.id, secret))))
+            m + (d to setOf(DelegationDto(emptyList(), myId, d, this.crypto.encryptAESKeyForHcp(myId, d, contact.id, secret))))
         })
     }.let { p ->
         val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.let { aesKey ->

@@ -5,7 +5,9 @@ import io.icure.kraken.client.crypto.CryptoConfig
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
 import io.icure.kraken.client.crypto.keyFromHexString
-import io.icure.kraken.client.models.*
+import io.icure.kraken.client.models.DelegationDto
+import io.icure.kraken.client.models.ListOfIdsDto
+import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.decrypted.FormDto
 import io.icure.kraken.client.models.decrypted.PatientDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -23,7 +25,7 @@ suspend fun FormDto.initDelegations(user: UserDto, config: CryptoConfig<FormDto,
         delegations = (delegations + user.healthcarePartyId!!).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    listOf(),
+                    emptyList(),
                     user.healthcarePartyId,
                     d,
                     config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, sfk),
@@ -33,7 +35,7 @@ suspend fun FormDto.initDelegations(user: UserDto, config: CryptoConfig<FormDto,
         encryptionKeys = (delegations + user.healthcarePartyId!!).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    listOf(),
+                    emptyList(),
                     user.healthcarePartyId,
                     d,
                     config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, ek),
@@ -206,7 +208,7 @@ suspend fun CryptoConfig<FormDto, io.icure.kraken.client.models.FormDto>.encrypt
     } else {
         val secret = UUID.randomUUID().toString()
         form.copy(encryptionKeys = (delegations + myId).fold(form.encryptionKeys) { m, d ->
-            m + (d to setOf(DelegationDto(listOf(), myId, d, this.crypto.encryptAESKeyForHcp(myId, d, form.id, secret))))
+            m + (d to setOf(DelegationDto(emptyList(), myId, d, this.crypto.encryptAESKeyForHcp(myId, d, form.id, secret))))
         })
     }.let { p ->
         val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.let { aesKey ->

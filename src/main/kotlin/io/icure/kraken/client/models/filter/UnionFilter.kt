@@ -11,5 +11,5 @@ import com.fasterxml.jackson.annotation.JsonInclude
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class UnionFilter<O>(
         override val desc: String? = null,
-        val filters: List<AbstractFilterDto<O>> = listOf()
+        val filters: List<AbstractFilterDto<O>> = emptyList()
 ) : AbstractFilterDto<O>

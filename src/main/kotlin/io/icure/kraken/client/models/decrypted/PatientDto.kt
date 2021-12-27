@@ -120,31 +120,31 @@ data class PatientDto (
     val id: String,
 
     @field:JsonProperty("identifier")
-    val identifier: List<IdentifierDto> = listOf(),
+    val identifier: List<IdentifierDto> = emptyList(),
 
     /* A tag is an item from a codification system that qualifies an entity as being member of a certain class, whatever the value it might have taken. If the tag qualifies the content of a field, it means that whatever the content of the field, the tag will always apply. For example, the label of a field is qualified using a tag. LOINC is a codification system typically used for tags. */
     @field:JsonProperty("tags")
-    val tags: List<CodeStubDto> = listOf(),
+    val tags: List<CodeStubDto> = emptyList(),
 
     /* A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes */
     @field:JsonProperty("codes")
-    val codes: List<CodeStubDto> = listOf(),
+    val codes: List<CodeStubDto> = emptyList(),
 
     /* the list of all names of the patient, also containing the official full name information. Ordered by preference of use. First element is therefore the official name used for the patient in the application */
     @field:JsonProperty("names")
-    val names: List<PersonNameDto> = listOf(),
+    val names: List<PersonNameDto> = emptyList(),
 
     /* the list of languages spoken by the patient ordered by fluency (alpha-2 code http://www.loc.gov/standards/iso639-2/ascii_8bits.html). */
     @field:JsonProperty("languages")
-    val languages: List<String> = listOf(),
+    val languages: List<String> = emptyList(),
 
     /* the list of addresses (with address type). */
     @field:JsonProperty("addresses")
-    val addresses: List<AddressDto> = listOf(),
+    val addresses: List<AddressDto> = emptyList(),
 
     /* The ids of the patients that have been merged inside this patient. */
     @field:JsonProperty("mergedIds")
-    val mergedIds: List<String> = listOf(),
+    val mergedIds: List<String> = emptyList(),
 
     /* Is the patient active (boolean). */
     @field:JsonProperty("active")
@@ -156,27 +156,27 @@ data class PatientDto (
 
     /* List of insurance coverages (of class Insurability, see below). */
     @field:JsonProperty("insurabilities")
-    val insurabilities: List<InsurabilityDto> = listOf(),
+    val insurabilities: List<InsurabilityDto> = emptyList(),
 
     /* List of partners, or persons of contact (of class Partnership, see below). */
     @field:JsonProperty("partnerships")
-    val partnerships: List<PartnershipDto> = listOf(),
+    val partnerships: List<PartnershipDto> = emptyList(),
 
     /* Links (usually for therapeutic reasons) between this patient and healthcare parties (of class PatientHealthcareParty). */
     @field:JsonProperty("patientHealthCareParties")
-    val patientHealthCareParties: List<PatientHealthCarePartyDto> = listOf(),
+    val patientHealthCareParties: List<PatientHealthCarePartyDto> = emptyList(),
 
     /* Financial information (Bank, bank account) used to reimburse the patient. */
     @field:JsonProperty("financialInstitutionInformation")
-    val financialInstitutionInformation: List<FinancialInstitutionInformationDto> = listOf(),
+    val financialInstitutionInformation: List<FinancialInstitutionInformationDto> = emptyList(),
 
     /* Contracts between the patient and the healthcare entity. */
     @field:JsonProperty("medicalHouseContracts")
-    val medicalHouseContracts: List<MedicalHouseContractDto> = listOf(),
+    val medicalHouseContracts: List<MedicalHouseContractDto> = emptyList(),
 
     /* Codified list of professions exercised by this patient. */
     @field:JsonProperty("patientProfessions")
-    val patientProfessions: List<CodeStubDto> = listOf(),
+    val patientProfessions: List<CodeStubDto> = emptyList(),
 
     /* Extra parameters */
     @field:JsonProperty("parameters")
@@ -184,7 +184,7 @@ data class PatientDto (
 
     /* Extra properties */
     @field:JsonProperty("properties")
-    val properties: List<PropertyStubDto> = listOf(),
+    val properties: List<PropertyStubDto> = emptyList(),
 
     /* For each couple of HcParties (delegator and delegate), this map contains the exchange AES key. The delegator is always this hcp, the key of the map is the id of the delegate. The AES exchange key is encrypted using RSA twice : once using this hcp public key (index 0 in the Array) and once using the other hcp public key (index 1 in the Array). For a pair of HcParties. Each HcParty always has one AES exchange key for himself. */
     @field:JsonProperty("hcPartyKeys")
@@ -196,7 +196,7 @@ data class PatientDto (
 
     /* The secretForeignKeys are filled at the to many end of a one to many relationship (for example inside Contact for the Patient -> Contacts relationship). Used when we want to find all contacts for a specific patient. These keys are in clear. You can have several to partition the medical document space. */
     @field:JsonProperty("secretForeignKeys")
-    val secretForeignKeys: List<String> = listOf(),
+    val secretForeignKeys: List<String> = emptyList(),
 
     /* The secretForeignKeys are filled at the to many end of a one to many relationship (for example inside Contact for the Patient -> Contacts relationship). Used when we want to find the patient for a specific contact. These keys are the encrypted id (using the hcParty key for the delegate) that can be found in clear inside the patient. ids encrypted using the hcParty keys. */
     @field:JsonProperty("cryptedForeignKeys")
@@ -212,19 +212,19 @@ data class PatientDto (
 
     @field:JsonProperty("nonDuplicateIds")
     @Deprecated(message = "This property is deprecated.")
-    val nonDuplicateIds: List<String> = listOf(),
+    val nonDuplicateIds: List<String> = emptyList(),
 
     @field:JsonProperty("encryptedAdministrativesDocuments")
     @Deprecated(message = "This property is deprecated.")
-    val encryptedAdministrativesDocuments: List<String> = listOf(),
+    val encryptedAdministrativesDocuments: List<String> = emptyList(),
 
     @field:JsonProperty("schoolingInfos")
     @Deprecated(message = "This property is deprecated.")
-    val schoolingInfos: List<SchoolingInfoDto> = listOf(),
+    val schoolingInfos: List<SchoolingInfoDto> = emptyList(),
 
     @field:JsonProperty("employementInfos")
     @Deprecated(message = "This property is deprecated.")
-    val employementInfos: List<EmploymentInfoDto> = listOf(),
+    val employementInfos: List<EmploymentInfoDto> = emptyList(),
 
     /* the revision of the patient in the database, used for conflict management / optimistic locking. */
     @field:JsonProperty("rev")

@@ -66,14 +66,14 @@ suspend fun PatientDto.initDelegations(user: UserDto, config: CryptoConfig<Patie
         delegations = (delegations + user.healthcarePartyId!!).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    listOf(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, sfk),
+                    emptyList(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, sfk),
                 ),
             ))
         },
         encryptionKeys = (delegations + user.healthcarePartyId).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    listOf(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, ek),
+                    emptyList(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, ek),
                 ),
             ))
         },
@@ -241,7 +241,7 @@ suspend fun CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>.e
     } else {
         val secret = UUID.randomUUID().toString()
         patient.copy(encryptionKeys = (delegations + myId).fold(patient.encryptionKeys) { m, d ->
-            m + (d to setOf(DelegationDto(listOf(), myId, d, this.crypto.encryptAESKeyForHcp(myId, d, patient.id, secret))))
+            m + (d to setOf(DelegationDto(emptyList(), myId, d, this.crypto.encryptAESKeyForHcp(myId, d, patient.id, secret))))
         })
     }.let { p ->
         val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.keyFromHexString()
