@@ -14,10 +14,8 @@ Method | HTTP request | Description
 [**getContact**](ContactApi.md#getContact) | **GET** /rest/v2/contact/{contactId} | Get a contact
 [**getContacts**](ContactApi.md#getContacts) | **POST** /rest/v2/contact/byIds | Get contacts
 [**getEmptyContent**](ContactApi.md#getEmptyContent) | **GET** /rest/v2/contact/service/content/empty | Get an empty content
-[**getServiceByHealthcarepartyAndIdentifier**](ContactApi.md#getServiceByHealthcarepartyAndIdentifier) | **GET** /rest/v2/contact/service/{hcPartyId}/{value} | Get service by identifier
 [**getServiceCodesOccurences**](ContactApi.md#getServiceCodesOccurences) | **GET** /rest/v2/contact/service/codes/{codeType}/{minOccurences} | Get the list of all used codes frequencies in services
 [**getServices**](ContactApi.md#getServices) | **POST** /rest/v2/contact/service | List services with provided ids 
-[**getServicesIdsByHealthcarePartyAndIdentifiers**](ContactApi.md#getServicesIdsByHealthcarePartyAndIdentifiers) | **GET** /rest/v2/contact/services/ids/{hcPartyId}/byIdentifiers | Get services ids by identifiers
 [**getServicesLinkedTo**](ContactApi.md#getServicesLinkedTo) | **POST** /rest/v2/contact/service/linkedTo | List services linked to provided ids 
 [**listContactByHCPartyServiceId**](ContactApi.md#listContactByHCPartyServiceId) | **GET** /rest/v2/contact/byHcPartyServiceId | List contacts found By Healthcare Party and service Id.
 [**listContactsByExternalId**](ContactApi.md#listContactsByExternalId) | **POST** /rest/v2/contact/byExternalId | List contacts found By externalId.
@@ -513,57 +511,6 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: */*
 
-<a name="getServiceByHealthcarepartyAndIdentifier"></a>
-# **getServiceByHealthcarepartyAndIdentifier**
-> ServiceDto getServiceByHealthcarepartyAndIdentifier(hcPartyId, `value`, system)
-
-Get service by identifier
-
-It gets service data based on the identifier (root &amp; extension) parameters.
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = ContactApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val `value` : kotlin.String = `value`_example // kotlin.String | 
-val system : kotlin.String = system_example // kotlin.String | 
-try {
-    val result : ServiceDto = apiInstance.getServiceByHealthcarepartyAndIdentifier(hcPartyId, `value`, system)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling ContactApi#getServiceByHealthcarepartyAndIdentifier")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling ContactApi#getServiceByHealthcarepartyAndIdentifier")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **hcPartyId** | **kotlin.String**|  |
- **&#x60;value&#x60;** | **kotlin.String**|  |
- **system** | **kotlin.String**|  | [optional]
-
-### Return type
-
-[**ServiceDto**](ServiceDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
 <a name="getServiceCodesOccurences"></a>
 # **getServiceCodesOccurences**
 > kotlin.collections.List&lt;LabelledOccurenceDto&gt; getServiceCodesOccurences(codeType, minOccurences)
@@ -656,55 +603,6 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: */*
-
-<a name="getServicesIdsByHealthcarePartyAndIdentifiers"></a>
-# **getServicesIdsByHealthcarePartyAndIdentifiers**
-> kotlin.collections.List&lt;IndexedIdentifierDto&gt; getServicesIdsByHealthcarePartyAndIdentifiers(hcPartyId, identifiers)
-
-Get services ids by identifiers
-
-For each provided identifier, links corresponding iCure service id
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = ContactApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val identifiers : kotlin.collections.List<IdentifierDto> =  // kotlin.collections.List<IdentifierDto> | 
-try {
-    val result : kotlin.collections.List<IndexedIdentifierDto> = apiInstance.getServicesIdsByHealthcarePartyAndIdentifiers(hcPartyId, identifiers)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling ContactApi#getServicesIdsByHealthcarePartyAndIdentifiers")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling ContactApi#getServicesIdsByHealthcarePartyAndIdentifiers")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **hcPartyId** | **kotlin.String**|  |
- **identifiers** | [**kotlin.collections.List&lt;IdentifierDto&gt;**](IdentifierDto.md)|  | [default to emptyList()]
-
-### Return type
-
-[**kotlin.collections.List&lt;IndexedIdentifierDto&gt;**](IndexedIdentifierDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
  - **Accept**: */*
 
 <a name="getServicesLinkedTo"></a>

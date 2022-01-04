@@ -7,7 +7,13 @@ import io.icure.kraken.client.crypto.CryptoConfig
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
 import io.icure.kraken.client.crypto.keyFromHexString
-import io.icure.kraken.client.models.*
+import io.icure.kraken.client.models.ContentDto
+import io.icure.kraken.client.models.DelegationDto
+import io.icure.kraken.client.models.FilterChainContact
+import io.icure.kraken.client.models.FilterChainService
+import io.icure.kraken.client.models.IcureStubDto
+import io.icure.kraken.client.models.ListOfIdsDto
+import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.decrypted.ContactDto
 import io.icure.kraken.client.models.decrypted.PaginatedListContactDto
 import io.icure.kraken.client.models.decrypted.PatientDto
@@ -29,14 +35,14 @@ suspend fun ContactDto.initDelegations(user: UserDto, config: CryptoConfig<Conta
         delegations = (delegations + user.healthcarePartyId!!).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    listOf(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, sfk),
+                    emptyList(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, sfk),
                 ),
             ))
         },
         encryptionKeys = (delegations + user.healthcarePartyId!!).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    listOf(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, ek),
+                    emptyList(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, ek),
                 ),
             ))
         },
@@ -70,7 +76,7 @@ suspend fun ContactApi.createContact(user: UserDto, patient:PatientDto, contact:
                 cryptedForeignKeys = (delegations + user.healthcarePartyId!!).fold(ec.cryptedForeignKeys) { m, d ->
                     m + (d to setOf(
                         DelegationDto(
-                            listOf(),
+                            emptyList(),
                             user.healthcarePartyId,
                             d,
                             config.crypto.encryptValueForHcp(user.healthcarePartyId, d, ec.id, patient.id),
@@ -111,6 +117,13 @@ suspend fun ContactApi.modifyContacts(user: UserDto, contactDto: List<ContactDto
         (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
         it
     ) })?.map { config.decryptContact(user.healthcarePartyId!!, it) }
+}
+
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
+suspend fun ContactApi.deleteServices(user: UserDto, patient: PatientDto, services: List<io.icure.kraken.client.models.ServiceDto>, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>): ContactDto? {
+    val currentTime = System.currentTimeMillis()
+    return this.createContact(user, patient, ContactDto(id= UUID.randomUUID().toString(), services = services.map { ServiceDto(id = it.id, created = it.created, modified = currentTime, endOfLife = currentTime) }), config)
 }
 
 @ExperimentalCoroutinesApi
@@ -208,12 +221,6 @@ suspend fun ContactApi.listServicesLinkedTo(user: UserDto, listOfIdsDto: ListOfI
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.getServiceByHealthcarepartyAndIdentifier(user: UserDto, hcPartyId: String, value: String, system: String?, crypto: Crypto) : ServiceDto? {
-    return this.getServiceByHealthcarepartyAndIdentifier(hcPartyId, value, system)?.let { crypto.decryptServices(user.healthcarePartyId!!, null, listOf(it)).first() }
-}
-
-@ExperimentalCoroutinesApi
-@ExperimentalStdlibApi
 suspend fun ContactApi.newContactDelegations(user: UserDto, contactId: String, delegationDto: DelegationDto, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>) : ContactDto? {
     return this.newContactDelegations(contactId, delegationDto)?.let { config.decryptContact(user.healthcarePartyId!!, it) }
 }
@@ -230,7 +237,7 @@ suspend fun CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>.e
     } else {
         val secret = UUID.randomUUID().toString()
         contact.copy(encryptionKeys = (delegations + myId).fold(contact.encryptionKeys) { m, d ->
-            m + (d to setOf(DelegationDto(listOf(), myId, d, this.crypto.encryptAESKeyForHcp(myId, d, contact.id, secret))))
+            m + (d to setOf(DelegationDto(emptyList(), myId, d, this.crypto.encryptAESKeyForHcp(myId, d, contact.id, secret))))
         })
     }.let { p ->
         val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.let { aesKey ->

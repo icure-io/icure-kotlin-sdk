@@ -6,7 +6,12 @@ import io.icure.kraken.client.crypto.CryptoConfig
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
 import io.icure.kraken.client.crypto.keyFromHexString
-import io.icure.kraken.client.models.*
+import io.icure.kraken.client.models.DelegationDto
+import io.icure.kraken.client.models.FilterChainPatient
+import io.icure.kraken.client.models.IdWithRevDto
+import io.icure.kraken.client.models.ListOfIdsDto
+import io.icure.kraken.client.models.PersonNameDto
+import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.decrypted.PaginatedListPatientDto
 import io.icure.kraken.client.models.decrypted.PatientDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -61,14 +66,14 @@ suspend fun PatientDto.initDelegations(user: UserDto, config: CryptoConfig<Patie
         delegations = (delegations + user.healthcarePartyId!!).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    listOf(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, sfk),
+                    emptyList(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, sfk),
                 ),
             ))
         },
         encryptionKeys = (delegations + user.healthcarePartyId).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    listOf(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, ek),
+                    emptyList(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, ek),
                 ),
             ))
         },
@@ -96,6 +101,15 @@ suspend fun PatientApi.modifyPatient(user: UserDto, patient: PatientDto, config:
             patient.initPatient()
         )
     )?.let { config.decryptPatient(user.healthcarePartyId, it) }
+
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
+suspend fun PatientApi.bulkDeletePatients(user: UserDto, patients: List<PatientDto>, config: CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>) : List<IdWithRevDto>? {
+    val currentTime = System.currentTimeMillis()
+    val updatedPatients = patients.map { it.copy(endOfLife = currentTime) }
+
+    return bulkUpdatePatients(user, updatedPatients, config)
+}
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
@@ -150,12 +164,6 @@ suspend fun PatientApi.findByNameBirthSsinAuto(user: UserDto, healthcarePartyId:
 @ExperimentalStdlibApi
 suspend fun PatientApi.fuzzySearch(user: UserDto, firstName: String?, lastName: String?, dateOfBirth: Int?, config: CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>) : List<PatientDto>? {
     return this.fuzzySearch(firstName, lastName, dateOfBirth)?.map { config.decryptPatient(user.healthcarePartyId!!, it) }
-}
-
-@ExperimentalCoroutinesApi
-@ExperimentalStdlibApi
-suspend fun PatientApi.getPatientByHealthcarepartyAndIdentifier(user: UserDto, hcPartyId: kotlin.String, system: kotlin.String, id: kotlin.String, config: CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>) : PatientDto? {
-    return this.getPatientByHealthcarepartyAndIdentifier(hcPartyId = hcPartyId, system = system, id = id)?.let { config.decryptPatient(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
@@ -242,7 +250,7 @@ suspend fun CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>.e
     } else {
         val secret = UUID.randomUUID().toString()
         patient.copy(encryptionKeys = (delegations + myId).fold(patient.encryptionKeys) { m, d ->
-            m + (d to setOf(DelegationDto(listOf(), myId, d, this.crypto.encryptAESKeyForHcp(myId, d, patient.id, secret))))
+            m + (d to setOf(DelegationDto(emptyList(), myId, d, this.crypto.encryptAESKeyForHcp(myId, d, patient.id, secret))))
         })
     }.let { p ->
         val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.keyFromHexString()

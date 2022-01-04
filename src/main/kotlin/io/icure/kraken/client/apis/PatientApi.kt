@@ -21,8 +21,6 @@ import io.icure.kraken.client.models.DelegationDto
 import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.FilterChainPatient
 import io.icure.kraken.client.models.IdWithRevDto
-import io.icure.kraken.client.models.IdentifierDto
-import io.icure.kraken.client.models.IndexedIdentifierDto
 import io.icure.kraken.client.models.ListOfIdsDto
 import io.icure.kraken.client.models.PaginatedListPatientDto
 import io.icure.kraken.client.models.PaginatedListString
@@ -991,47 +989,6 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/patient/{patientId}/keys".replace("{"+"patientId"+"}", "${URLEncoder.encode(patientId.toString(), Charsets.UTF_8)}"),
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody        )
-    }
-
-    /**
-    * Get patient ids by identifiers
-    * It gets patient data based on the provided identifiers (root &amp; extension)
-    * @param hcPartyId  
-    * @param identifierDto  
-    * @return kotlin.collections.List<IndexedIdentifierDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getPatientIdsByHealthcarePartyAndIdentifiers(hcPartyId: kotlin.String, identifierDto: kotlin.collections.List<IdentifierDto>) : kotlin.collections.List<IndexedIdentifierDto>  {
-        val localVariableConfig = getPatientIdsByHealthcarePartyAndIdentifiersRequestConfig(hcPartyId = hcPartyId, identifierDto = identifierDto)
-
-        return request<kotlin.collections.List<IdentifierDto>, kotlin.collections.List<IndexedIdentifierDto>>(
-            localVariableConfig
-        )!!
-    }
-    /**
-    * To obtain the request config of the operation getPatientIdsByHealthcarePartyAndIdentifiers
-    *
-    * @param hcPartyId  
-    * @param identifierDto  
-    * @return RequestConfig
-    */
-    fun getPatientIdsByHealthcarePartyAndIdentifiersRequestConfig(hcPartyId: kotlin.String, identifierDto: kotlin.collections.List<IdentifierDto>) : RequestConfig<kotlin.collections.List<IdentifierDto>> {
-        // val localVariableBody = identifierDto
-        val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
-        localVariableHeaders["Accept"] = "*/*"
-        val localVariableBody = identifierDto
-
-        return RequestConfig(
-            method = RequestMethod.POST,
-            path = "/rest/v2/patient/ids/{hcPartyId}/byIdentifiers".replace("{"+"hcPartyId"+"}", "${URLEncoder.encode(hcPartyId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

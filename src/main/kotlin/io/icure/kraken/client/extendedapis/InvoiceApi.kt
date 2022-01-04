@@ -22,7 +22,7 @@ suspend fun InvoiceDto.initDelegations(user: UserDto, config: CryptoConfig<Invoi
         delegations = (delegations + user.healthcarePartyId!!).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    listOf(),
+                    emptyList(),
                     user.healthcarePartyId,
                     d,
                     config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, sfk),
@@ -32,7 +32,7 @@ suspend fun InvoiceDto.initDelegations(user: UserDto, config: CryptoConfig<Invoi
         encryptionKeys = (delegations + user.healthcarePartyId!!).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    listOf(),
+                    emptyList(),
                     user.healthcarePartyId,
                     d,
                     config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, ek),
@@ -401,7 +401,7 @@ suspend fun CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>.e
         invoice.copy(encryptionKeys = (delegations + myId).fold(invoice.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    listOf(),
+                    emptyList(),
                     myId,
                     d,
                     this.crypto.encryptAESKeyForHcp(myId, d, invoice.id, secret)

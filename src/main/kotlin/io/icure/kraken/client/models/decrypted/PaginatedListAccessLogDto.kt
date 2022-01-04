@@ -41,7 +41,7 @@ data class PaginatedListAccessLogDto (
     val totalSize: kotlin.Int,
 
     @field:JsonProperty("rows")
-    val rows: kotlin.collections.List<AccessLogDto> = listOf(),
+    val rows: kotlin.collections.List<AccessLogDto> = emptyList(),
 
     @field:JsonProperty("nextKeyPair")
     val nextKeyPair: PaginatedDocumentKeyIdPairObject? = null
