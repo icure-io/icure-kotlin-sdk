@@ -19,14 +19,14 @@ suspend fun HealthElementDto.initDelegations(user: UserDto, config: CryptoConfig
     return this.copy(
         responsible = user.healthcarePartyId!!,
         author = user.id,
-        delegations = (delegations + user.healthcarePartyId!!).fold(this.encryptionKeys) { m, d ->
+        delegations = (delegations + user.healthcarePartyId).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
                     emptyList(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, sfk),
                 ),
             ))
         },
-        encryptionKeys = (delegations + user.healthcarePartyId!!).fold(this.encryptionKeys) { m, d ->
+        encryptionKeys = (delegations + user.healthcarePartyId).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
                     emptyList(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, ek),
@@ -45,20 +45,36 @@ suspend fun HealthElementApi.createHealthElement(user: UserDto, healthElement: H
             (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
             healthElement
         )
-    )?.let { config.decryptHealthElement(user.healthcarePartyId!!, it) }
+    ).let { config.decryptHealthElement(user.healthcarePartyId, it) }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun HealthElementApi.createHealthElements(user: UserDto, healthElements: List<HealthElementDto>, config: CryptoConfig<HealthElementDto, io.icure.kraken.client.models.HealthElementDto>) : List<HealthElementDto>?  {
+suspend fun HealthElementApi.createHealthElements(user: UserDto, patient: io.icure.kraken.client.models.decrypted.PatientDto, healthElements: List<HealthElementDto>, config: CryptoConfig<HealthElementDto, io.icure.kraken.client.models.HealthElementDto>) : List<HealthElementDto>?  {
+    val key = config.crypto.decryptEncryptionKeys(user.healthcarePartyId!!, patient.delegations).firstOrNull() ?: throw IllegalArgumentException("No delegation for user")
+    val delegations =  (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf())
     return this.createHealthElements(
         healthElements.map {
             config.encryptHealthElement(
-                user.healthcarePartyId!!,
+                user.healthcarePartyId,
                 (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
                 it
-            )
+            ).let { ec ->
+                ec.copy(
+                    secretForeignKeys = listOf(key),
+                    cryptedForeignKeys = (delegations + user.healthcarePartyId).fold(ec.cryptedForeignKeys) { m, d ->
+                        m + (d to setOf(
+                            DelegationDto(
+                                emptyList(),
+                                user.healthcarePartyId,
+                                d,
+                                config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, ec.id, patient.id),
+                            ),
+                        ))
+                    },
+                )
+            }
         }
-    )?.map { config.decryptHealthElement(user.healthcarePartyId!!, it) }
+    ).map { config.decryptHealthElement(user.healthcarePartyId, it) }
 }
 
 @ExperimentalCoroutinesApi
@@ -74,7 +90,7 @@ suspend fun HealthElementApi.createHealthElement(user: UserDto, patient: io.icur
         ).let { ec ->
             ec.copy(
                 secretForeignKeys = listOf(key),
-                cryptedForeignKeys = (delegations + user.healthcarePartyId!!).fold(ec.cryptedForeignKeys) { m, d ->
+                cryptedForeignKeys = (delegations + user.healthcarePartyId).fold(ec.cryptedForeignKeys) { m, d ->
                     m + (d to setOf(
                         DelegationDto(
                             emptyList(),
@@ -86,13 +102,13 @@ suspend fun HealthElementApi.createHealthElement(user: UserDto, patient: io.icur
                 },
             )
         }
-    )?.let { config.decryptHealthElement(user.healthcarePartyId, it) }
+    ).let { config.decryptHealthElement(user.healthcarePartyId, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun HealthElementApi.newHealthElementDelegations(user: UserDto, healthElementId: String, delegationDto: List<DelegationDto>, config: CryptoConfig<HealthElementDto, io.icure.kraken.client.models.HealthElementDto>) : HealthElementDto? {
-    return this.newHealthElementDelegations(healthElementId, delegationDto)?.let { config.decryptHealthElement(user.healthcarePartyId!!, it) }
+    return this.newHealthElementDelegations(healthElementId, delegationDto).let { config.decryptHealthElement(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
@@ -106,13 +122,13 @@ suspend fun HealthElementApi.listHealthElementsByHCPartyAndPatient(user: UserDto
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun HealthElementApi.listHealthElementsByHCPartyAndPatientForeignKeys(user: UserDto, hcPartyId: String, secretFKeys: String, config: CryptoConfig<HealthElementDto, io.icure.kraken.client.models.HealthElementDto>) : List<HealthElementDto>? {
-    return this.listHealthElementsByHCPartyAndPatientForeignKeys(hcPartyId, secretFKeys)?.map { config.decryptHealthElement(user.healthcarePartyId!!, it) }
+    return this.listHealthElementsByHCPartyAndPatientForeignKeys(hcPartyId, secretFKeys).map { config.decryptHealthElement(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun HealthElementApi.getHealthElement(user: UserDto, healthElementId: String, config: CryptoConfig<HealthElementDto, io.icure.kraken.client.models.HealthElementDto>): HealthElementDto?  {
-    return this.getHealthElement(healthElementId)?.let { config.decryptHealthElement(user.healthcarePartyId!!, it) }
+    return this.getHealthElement(healthElementId).let { config.decryptHealthElement(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
@@ -130,7 +146,7 @@ suspend fun HealthElementApi.modifyHealthElement(user: UserDto, healthElement: H
             (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
             healthElement
         )
-    )?.let { config.decryptHealthElement(user.healthcarePartyId!!, it) }
+    )?.let { config.decryptHealthElement(user.healthcarePartyId, it) }
 }
 
 @ExperimentalCoroutinesApi
@@ -150,13 +166,13 @@ suspend fun HealthElementApi.modifyHealthElements(user: UserDto, healthElements:
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun HealthElementApi.filterHealthElementsBy(user: UserDto, filterChainHealthElement: FilterChainHealthElement, config: CryptoConfig<HealthElementDto, io.icure.kraken.client.models.HealthElementDto>) : List<HealthElementDto>? {
-    return this.filterHealthElementsBy(filterChainHealthElement)?.map { config.decryptHealthElement(user.healthcarePartyId!!, it) }
+    return this.filterHealthElementsBy(filterChainHealthElement).map { config.decryptHealthElement(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun HealthElementApi.setHealthElementsDelegations(user: UserDto, icureStubDtos: List<IcureStubDto>, config: CryptoConfig<HealthElementDto, io.icure.kraken.client.models.HealthElementDto>) : List<HealthElementDto>? {
-    return this.setHealthElementsDelegations(icureStubDtos)?.map { config.decryptHealthElement(user.healthcarePartyId!!, it) }
+    return this.setHealthElementsDelegations(icureStubDtos).map { config.decryptHealthElement(user.healthcarePartyId!!, it) }
 }
 
 
