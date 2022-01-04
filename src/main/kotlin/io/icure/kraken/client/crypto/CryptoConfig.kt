@@ -1,4 +1,19 @@
 package io.icure.kraken.client.crypto
+
+import io.icure.kraken.client.extendedapis.ContactMapperFactory
+import io.icure.kraken.client.extendedapis.DocumentMapperFactory
+import io.icure.kraken.client.extendedapis.HealthElementMapperFactory
+import io.icure.kraken.client.extendedapis.PatientMapperFactory
+import io.icure.kraken.client.extendedapis.decryptServices
+import io.icure.kraken.client.extendedapis.encryptServices
+import io.icure.kraken.client.infrastructure.ApiClient
+import io.icure.kraken.client.models.UserDto
+import io.icure.kraken.client.models.decrypted.ContactDto
+import io.icure.kraken.client.models.decrypted.DocumentDto
+import io.icure.kraken.client.models.decrypted.HealthElementDto
+import io.icure.kraken.client.models.decrypted.PatientDto
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+
 /*
 D is the decrypted class, K is the crypted class
  */
@@ -12,4 +27,83 @@ open class CryptoConfig<D,K>(
     + it is responsible for deserializing the ByteArray and to reinject the sensitive fields inside the decrypted instance
      */
     val unmarshaller: suspend (K, ByteArray) -> D
+)
+
+
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
+fun patientCryptoConfig(crypto: LocalCrypto) =
+    CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>(
+        crypto = crypto,
+        marshaller = { p ->
+            PatientMapperFactory.instance.map(p)
+                .copy(note = null) to ApiClient.objectMapper.writeValueAsBytes(mapOf("note" to p.note))
+        },
+        unmarshaller = { p, c ->
+            PatientMapperFactory.instance.map(
+                p.copy(
+                    note = ApiClient.objectMapper.readTree(c).get("note")?.textValue()
+                )
+            )
+        }
+    )
+
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
+fun contactCryptoConfig(
+    crypto: LocalCrypto,
+    user: UserDto
+) = CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>(
+    crypto = crypto,
+    marshaller = { c ->
+        val decryptedKey =
+            crypto.decryptEncryptionKeys(user.healthcarePartyId!!, c.encryptionKeys).firstOrNull()
+        ContactMapperFactory.instance.map(c).copy(
+            services = crypto.encryptServices(
+                user.id,
+                (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"]
+                    ?: setOf()),
+                decryptedKey?.toByteArray(),
+                c.services
+            )
+        ) to byteArrayOf()
+    },
+    unmarshaller = { c, b ->
+        ContactMapperFactory.instance.map(c).copy(
+            services = crypto.decryptServices(
+                user.id,
+                crypto.decryptEncryptionKeys(user.healthcarePartyId!!, c.encryptionKeys).firstOrNull()
+                    ?.toByteArray(),
+                c.services
+            )
+        )
+    }
+)
+
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
+fun healthElementCryptoConfig(
+    crypto: LocalCrypto
+) = CryptoConfig<HealthElementDto, io.icure.kraken.client.models.HealthElementDto>(
+    crypto = crypto,
+    marshaller = { c ->
+        HealthElementMapperFactory.instance.map(c) to byteArrayOf()
+    },
+    unmarshaller = { c, b ->
+        HealthElementMapperFactory.instance.map(c)
+    }
+)
+
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
+fun documentCryptoConfig(
+    crypto: LocalCrypto
+) = CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>(
+    crypto = crypto,
+    marshaller = { c ->
+        DocumentMapperFactory.instance.map(c) to byteArrayOf()
+    },
+    unmarshaller = { c, b ->
+        DocumentMapperFactory.instance.map(c)
+    }
 )
