@@ -104,6 +104,15 @@ suspend fun PatientApi.modifyPatient(user: UserDto, patient: PatientDto, config:
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
+suspend fun PatientApi.bulkDeletePatients(user: UserDto, patients: List<PatientDto>, config: CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>) : List<IdWithRevDto>? {
+    val currentTime = System.currentTimeMillis()
+    val updatedPatients = patients.map { it.copy(endOfLife = currentTime) }
+
+    return bulkUpdatePatients(user, updatedPatients, config)
+}
+
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
 suspend fun PatientApi.bulkCreatePatients(user: UserDto, patientDto: List<PatientDto>, config: CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>) : List<IdWithRevDto>? {
     return this.createPatients(patientDto.map { config.encryptPatient(
         user.healthcarePartyId!!,
