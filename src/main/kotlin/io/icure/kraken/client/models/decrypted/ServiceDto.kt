@@ -41,7 +41,7 @@ import io.icure.kraken.client.models.IdentifierDto
  * @param plansOfActionIds List of IDs of all plans of actions (healthcare approaches) as a part of which the Service is provided. Only used when the Service is emitted outside of its contact
  * @param healthElementsIds List of IDs of all healthcare elements for which the service is provided. Only used when the Service is emitted outside of its contact
  * @param formIds List of Ids of all forms linked to the Service. Only used when the Service is emitted outside of its contact.
- * @param secretForeignKeys The secret patient key, encrypted in the patient document, in clear here.
+  * @param secretForeignKeys The secret patient key, encrypted in the patient document.
  * @param dataClassName
  * @param index
  * @param encryptedContent

@@ -24,8 +24,8 @@ internal class PatientApiKtTest {
 
     @org.junit.jupiter.api.Test
     fun createPatient() = runBlocking {
-        val user = userApi.getCurrentUser()!!
-        val hcp = hcpartyApi.getCurrentHealthcareParty()!!
+        val user = userApi.getCurrentUser()
+        val hcp = hcpartyApi.getCurrentHealthcareParty()
         val keyPath = "keys/${hcp.id}-icc-priv.2048.key"
         val keyFile = PatientApiKtTest::class.java.getResource(keyPath)!!
         val cc = CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>(
