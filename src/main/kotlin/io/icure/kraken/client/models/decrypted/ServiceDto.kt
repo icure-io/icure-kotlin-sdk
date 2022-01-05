@@ -139,9 +139,6 @@ data class ServiceDto (
     @field:JsonProperty("secretForeignKeys")
     val secretForeignKeys: kotlin.collections.Set<kotlin.String>? = null,
 
-    @field:JsonProperty("dataClassName")
-    val dataClassName: kotlin.String? = null,
-
     @field:JsonProperty("index")
     val index: kotlin.Long? = null,
 
