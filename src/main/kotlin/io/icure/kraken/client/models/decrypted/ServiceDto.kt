@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.github.pozo.KotlinBuilder
+import io.icure.kraken.client.models.AnnotationDto
 import io.icure.kraken.client.models.IdentifierDto
 
 
@@ -97,6 +98,10 @@ data class ServiceDto (
     /* List of invoicing codes */
     @field:JsonProperty("invoicingCodes")
     val invoicingCodes: kotlin.collections.List<kotlin.String> = emptyList(),
+
+    /* Comments - Notes recorded by a HCP about this service */
+    @field:JsonProperty("notes")
+    val notes: kotlin.collections.List<AnnotationDto> = emptyList(),
 
     /* Links towards related services (possibly in other contacts) */
     @field:JsonProperty("qualifiedLinks")

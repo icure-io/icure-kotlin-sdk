@@ -555,6 +555,7 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.AmpDto](docs/AmpDto.md)
  - [io.icure.kraken.client.models.AmppComponentDto](docs/AmppComponentDto.md)
  - [io.icure.kraken.client.models.AmppDto](docs/AmppDto.md)
+ - [io.icure.kraken.client.models.AnnotationDto](docs/AnnotationDto.md)
  - [io.icure.kraken.client.models.ApplicationSettingsDto](docs/ApplicationSettingsDto.md)
  - [io.icure.kraken.client.models.ArticleDto](docs/ArticleDto.md)
  - [io.icure.kraken.client.models.AtcDto](docs/AtcDto.md)
