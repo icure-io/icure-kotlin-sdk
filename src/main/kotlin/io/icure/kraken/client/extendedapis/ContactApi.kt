@@ -18,6 +18,7 @@ import io.icure.kraken.client.models.decrypted.ContactDto
 import io.icure.kraken.client.models.decrypted.PaginatedListContactDto
 import io.icure.kraken.client.models.decrypted.PatientDto
 import io.icure.kraken.client.models.decrypted.ServiceDto
+import io.icure.kraken.client.models.filter.contact.ContactByServiceIdsFilter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.mapstruct.Mapper
 import org.mapstruct.Mapping
@@ -124,6 +125,28 @@ suspend fun ContactApi.modifyContacts(user: UserDto, contactDto: List<ContactDto
 suspend fun ContactApi.deleteServices(user: UserDto, patient: PatientDto, services: List<io.icure.kraken.client.models.ServiceDto>, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>): ContactDto? {
     val currentTime = System.currentTimeMillis()
     return this.createContact(user, patient, ContactDto(id= UUID.randomUUID().toString(), services = services.map { ServiceDto(id = it.id, created = it.created, modified = currentTime, endOfLife = currentTime) }), config)
+}
+
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
+suspend fun ContactApi.updateServices(user: UserDto, patient: PatientDto, services: List<ServiceDto>, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>): List<ContactDto>? {
+    val serviceIds = services.map { it.id }
+    val contactIds = this.matchContactsBy(ContactByServiceIdsFilter(ids = serviceIds))
+
+    return this.getContacts(user, ListOfIdsDto(contactIds), config)?.map { contactDto ->
+        val contactServiceIds = contactDto.services.map { service -> service.id }.intersect(serviceIds)
+        val contactServices = services.filter { service -> service.id in contactServiceIds }
+        val subContacts = contactDto.subContacts.filter { subContact -> subContact.services.any{ serviceLink -> serviceLink.serviceId in contactServiceIds } }
+
+        contactDto.copy(
+            id = UUID.randomUUID().toString(),
+            subContacts = subContacts,
+            services = contactServices,
+            modified = System.currentTimeMillis()
+        )
+    }?.mapNotNull { updatedContact ->
+        this.createContact(user, patient, updatedContact, config)
+    }
 }
 
 @ExperimentalCoroutinesApi
