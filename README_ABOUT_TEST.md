@@ -1,31 +1,64 @@
 # Informations about tests
 
-This paper is made to keep track of differents advancement about tests and explain how to use test in the future.
+This paper is made to keep track of different advancement about tests and explain how to use tests in the future.
 
-Last update : 15/10/2021
+Last update : 04/01/2022
 
 ## How to generate tests ?
+To generate tests, you have to execute the `apiGenerate` gradle task. 
 
-To generate tests, you have to execute the `apiGenerate` gradle task 
+This command will execute the `icure-openapi-generator-cli.jar`, which will generate : 
+- The API classes;
+- The DTO classes;  
+- The test classes (not the extended APIs ones !);
+
+This jar is able to do those generation based on the iCure API Specification file () and using the
+Mustache OpenAPITemplates in folder **openApiTemplates**. 
+
+If you would like to edit test files, you then need to edit the corresponding mustache template.
 
 ## How to setup test generation ?
-
 1. Make sure to have the latest version of `openapi-generator-cli.jar` from [icure-openapi-generator](https://bitbucket.taktik.be/projects/ICURE/repos/icure-openapi-generator)
 2. VM Options must include an `API_URL` flag, like : `-DAPI_URL=https://kraken.icure.dev`
-3. Make sure to provide credentials in thoses files : `.credentialsReadWrite`, `.credentialsReadOnly` and `.credentialsCouchDB`
+3. Make sure to provide credentials in those files : `.credentialsReadWrite`, `.credentialsReadOnly` and `.credentialsCouchDB`
 
-## How to run tests ?
+## How to run tests on your local machine ?
+### Limitations
+For now, tests can only be run under certain conditions which are : 
+- With user `abdemotst2` corresponding to hcp `782f1bcd-9f3f-408a-af1b-cd9f3f908a98`, as this is the 
+key used to encrypt saved data;
+- In the svcacc environment;  
 
+### First-Time Procedure
+Here is the procedure to follow the first time you're starting tests. 
+Following the environment you would like to query, the following parameters could change a bit. Be careful about the content of it. 
+
+- Start icure-backend on locale machine, pointing on ACCEPTANCE DB.
+- At icure-java-client project root, add files `.credentialsReadWrite` and `.credentialsReadOnly` containing credentials of 
+  iCure user `abdemotst2`. The content of the file should look like this :
+```
+{
+"username": "abdemotst2",
+"password": "USER-PASSWORD"
+}
+```
+
+- Add file `.credentialsCouchDb` containing credentials of your CouchDB user. This one must be able 
+to access the DB `icure-test-2-tz-dev-team`. 
+  If you don't have any dedicated user in CouchDB, ask a colleague to explain you how to get one. It can differ 
+  following the environment you would like to use, the security to consider, ... 
+
+- When launching your tests, add VM parameter `-ea -DAPI_URL=http://127.0.0.1:16043`
+
+### Validation files
 Make sure to have validation files in the proper folder. (eg. `/tmp/icureTests/`) editable by editing the `workingFolder` test class property.
 
 By default, if no validation file are found, the run will generate those validation files.
 
 ## Known issues
-
-Due to some limitations and issues, certains tests weren't supported by the first batch generated tests.
+Due to some limitations and issues, some tests weren't supported by the first batch generated tests.
 
 ### Non-supported tests
-
 Some tests classes are deleted just after the generation.
 
 * `ApplicationsettingsApiTest`
@@ -42,7 +75,6 @@ Some tests classes are deleted just after the generation.
 To avoid/change the deletion of thoses files, you can edit the dedicated gradle task `delete-unused-tests-files`
 
 ### Skipped tests
-
 Below, the list of skipped tests and the reason.
 
 | Class                         | Endpoint                                          | Reason                                                       |
@@ -95,8 +127,7 @@ Below, the list of skipped tests and the reason.
 | UserApiTest                   | *                                                 | TODO<br />Need a custom implementation, the user originally used cannot create users for test purpose. |
 
 ## Misc.
-
-Tests are automatically generated along side with infrastructure files :
+Tests are automatically generated alongside with infrastructure files :
 
 * `TestUtils.kt`
 * `DiffUtils.kt`

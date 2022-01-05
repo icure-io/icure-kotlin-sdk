@@ -3,6 +3,7 @@ package io.icure.kraken.client.infrastructure
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.core.json.JsonReadFeature
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import io.icure.asyncjacksonhttpclient.net.params
@@ -42,10 +43,19 @@ open class ApiClient(val baseUrl: String, val httpClient: WebClient, val authHea
         var accessToken: String? = null
         var timeoutDuration: Duration? = null
 
-        val objectMapper = ObjectMapper().registerModule(KotlinModule()).registerModule(JavaTimeModule()).apply {
-            setSerializationInclusion(JsonInclude.Include.NON_NULL)
-            configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
-        }
+        val objectMapper = ObjectMapper()
+            .registerModule(KotlinModule())
+            .registerModule(object: SimpleModule() {
+                override fun setupModule(context: SetupContext?) {
+                    addDeserializer(ByteArrayWrapper::class.java, ByteArrayWrapperDeserializer())
+                    addSerializer(ByteArrayWrapper::class.java, ByteArrayWrapperSerializer())
+                    super.setupModule(context)
+                }
+            })
+            .registerModule(JavaTimeModule()).apply {
+                setSerializationInclusion(JsonInclude.Include.NON_NULL)
+                configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
+            }
 
     }
 
