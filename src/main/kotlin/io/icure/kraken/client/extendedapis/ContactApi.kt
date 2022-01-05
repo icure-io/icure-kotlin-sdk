@@ -278,12 +278,11 @@ suspend fun CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>.d
     myId: String,
     contact: io.icure.kraken.client.models.ContactDto
 ): ContactDto {
-    val key = this.crypto.decryptEncryptionKeys(myId, contact.encryptionKeys).firstOrNull()?.let { aesKey ->
-        aesKey.replace(
+    val key = this.crypto.decryptEncryptionKeys(myId, contact.encryptionKeys)
+        .firstOrNull()?.replace(
             "-",
             ""
-        ).keyFromHexString()
-    } ?: throw IllegalArgumentException("No encryption key for user")
+        )?.keyFromHexString() ?: throw IllegalArgumentException("No encryption key for user")
     return this.unmarshaller(contact, decryptAES(data = Base64.getDecoder().decode(contact.encryptedSelf), key = key))
 }
 
@@ -298,9 +297,9 @@ suspend fun Crypto.encryptServices(myId: String, delegations: Set<String>, conta
             ).keyFromHexString()
         } ?: throw IllegalArgumentException("No encryption key for user")
         if (s.content.all { (_,c) ->
-            c.compoundValue != null && c.stringValue == null && c.documentId == null  && c.measureValue == null  && c.medicationValue == null  &&
-                c.booleanValue == null && c.numberValue == null && c.instantValue == null  && c.fuzzyDateValue == null  && c.binaryValue == null
-        }) {
+                c.compoundValue != null && c.stringValue == null && c.documentId == null  && c.measureValue == null  && c.medicationValue == null  &&
+                        c.booleanValue == null && c.numberValue == null && c.instantValue == null  && c.fuzzyDateValue == null  && c.binaryValue == null
+            }) {
             ServiceMapperFactory.instance.map(s).copy(content = s.content.mapValues { (_,c) -> ContentDto(compoundValue = c.compoundValue?.let { this.encryptServices(myId, delegations, contactKey, it) }) })
         } else {
             ServiceMapperFactory.instance.map(s.copy(content = mapOf(), encryptedSelf = Base64.getEncoder().encodeToString(encryptAES(data = objectMapper.writeValueAsBytes(mapOf("content" to s.content)), key = key))))
