@@ -195,7 +195,7 @@ suspend fun ContactApi.findByHCPartyFormIds(user: UserDto, hcPartyId: String, li
 @ExperimentalStdlibApi
 suspend fun ContactApi.findByHCPartyPatient(user: UserDto, hcPartyId: String, patient: PatientDto, planOfActionsIds: String?, skipClosedContacts: Boolean?, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>) : List<ContactDto> {
     val key = config.crypto.decryptEncryptionKeys(user.healthcarePartyId!!, patient.delegations).firstOrNull() ?: throw IllegalArgumentException("No delegation for user")
-    return this.listContactsByHCPartyAndPatientSecretFKeys(hcPartyId, key, planOfActionsIds, skipClosedContacts).map { config.decryptContact(user.healthcarePartyId!!, it) }
+    return this.listContactsByHCPartyAndPatientSecretFKeys(hcPartyId, key, planOfActionsIds, skipClosedContacts).map { config.decryptContact(user.healthcarePartyId, it) }
 }
 
 @ExperimentalCoroutinesApi
@@ -234,6 +234,13 @@ suspend fun ContactApi.listServices(user: UserDto, listOfIdsDto: ListOfIdsDto, c
 @ExperimentalStdlibApi
 suspend fun ContactApi.listServicesByAssociationId(user: UserDto, associationId: String, crypto: Crypto) : List<ServiceDto> {
     return this.listServicesByAssociationId(associationId).let { crypto.decryptServices(user.healthcarePartyId!!, null, it) }
+}
+
+
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
+suspend fun ContactApi.listServicesByHealthElementId(user: UserDto, healthElementId: String, crypto: Crypto) : List<ServiceDto> {
+    return this.listServicesByHealthElementId(healthElementId).let { crypto.decryptServices(user.healthcarePartyId!!, null, it) }
 }
 
 @ExperimentalCoroutinesApi
