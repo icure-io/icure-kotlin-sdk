@@ -25,14 +25,14 @@ suspend fun DocumentDto.initDelegations(user: UserDto, config: CryptoConfig<Docu
     return this.copy(
         responsible = user.healthcarePartyId!!,
         author = user.id,
-        delegations = (delegations + user.healthcarePartyId!!).fold(this.encryptionKeys) { m, d ->
+        delegations = (delegations + user.healthcarePartyId).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
                     emptyList(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, sfk),
                 ),
             ))
         },
-        encryptionKeys = (delegations + user.healthcarePartyId!!).fold(this.encryptionKeys) { m, d ->
+        encryptionKeys = (delegations + user.healthcarePartyId).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
                     emptyList(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, ek),
@@ -51,11 +51,11 @@ suspend fun DocumentApi.createDocument(user: UserDto, document: DocumentDto, con
             (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
             document
         )
-    )?.let { config.decryptDocument(user.healthcarePartyId!!, it) }
+    ).let { config.decryptDocument(user.healthcarePartyId, it) }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun DocumentApi.findDocumentsByHCPartyPatient(user: UserDto, hcPartyId: String, patient: PatientDto, config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>) : List<DocumentDto>? {
+suspend fun DocumentApi.findDocumentsByHCPartyPatient(user: UserDto, hcPartyId: String, patient: PatientDto, config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>) : List<DocumentDto> {
     val key = config.crypto.decryptEncryptionKeys(user.healthcarePartyId!!, patient.delegations).firstOrNull()
         ?: throw IllegalArgumentException("No delegation for user")
     return this.findDocumentsByHCPartyPatientForeignKeys(user, hcPartyId, key, config)
@@ -63,83 +63,84 @@ suspend fun DocumentApi.findDocumentsByHCPartyPatient(user: UserDto, hcPartyId: 
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun DocumentApi.listDocumentByTypeHCPartyMessage(user: UserDto, documentTypeCode: String, hcPartyId: String, message: MessageDto, config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>) : List<DocumentDto>? {
+suspend fun DocumentApi.listDocumentByTypeHCPartyMessage(user: UserDto, documentTypeCode: String, hcPartyId: String, message: MessageDto, config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>) : List<DocumentDto> {
     val key = config.crypto.decryptEncryptionKeys(user.healthcarePartyId!!, message.delegations).firstOrNull()
         ?: throw IllegalArgumentException("No delegation for user")
-    return this.listDocumentByTypeHCPartyMessageSecretFKeys(documentTypeCode, hcPartyId, key)?.map { config.decryptDocument(user.healthcarePartyId!!, it) }
+    return this.listDocumentByTypeHCPartyMessageSecretFKeys(documentTypeCode, hcPartyId, key).map { config.decryptDocument(
+        user.healthcarePartyId, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun DocumentApi.findDocumentsByHCPartyPatientForeignKeys(user: UserDto, hcPartyId: String, secretFKeys: String, config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>) : List<DocumentDto>? {
-    return this.listDocumentsByHCPartyAndPatientForeignKeys(hcPartyId, secretFKeys)?.map { config.decryptDocument(user.healthcarePartyId!!, it) }
+suspend fun DocumentApi.findDocumentsByHCPartyPatientForeignKeys(user: UserDto, hcPartyId: String, secretFKeys: String, config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>) : List<DocumentDto> {
+    return this.listDocumentsByHCPartyAndPatientForeignKeys(hcPartyId, secretFKeys).map { config.decryptDocument(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun DocumentApi.listDocumentByTypeHCPartyMessageSecretFKeys(user: UserDto, documentTypeCode: String, hcPartyId: String, secretFKeys: String, config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>) : List<DocumentDto>? {
-    return this.listDocumentByTypeHCPartyMessageSecretFKeys(documentTypeCode, hcPartyId, secretFKeys)?.map { config.decryptDocument(user.healthcarePartyId!!, it) }
+suspend fun DocumentApi.listDocumentByTypeHCPartyMessageSecretFKeys(user: UserDto, documentTypeCode: String, hcPartyId: String, secretFKeys: String, config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>) : List<DocumentDto> {
+    return this.listDocumentByTypeHCPartyMessageSecretFKeys(documentTypeCode, hcPartyId, secretFKeys).map { config.decryptDocument(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun DocumentApi.findWithoutDelegation(user: UserDto, limit: Int?, config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>) : List<DocumentDto>? {
-    return this.findWithoutDelegation(limit)?.map { config.decryptDocument(user.healthcarePartyId!!, it) }
+suspend fun DocumentApi.findWithoutDelegation(user: UserDto, limit: Int?, config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>) : List<DocumentDto> {
+    return this.findWithoutDelegation(limit).map { config.decryptDocument(user.healthcarePartyId!!, it) }
 }
 
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun DocumentApi.getDocument(user: UserDto, documentId: String, config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>): DocumentDto?  {
-    return this.getDocument(documentId)?.let { config.decryptDocument(user.healthcarePartyId!!, it) }
+suspend fun DocumentApi.getDocument(user: UserDto, documentId: String, config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>): DocumentDto  {
+    return this.getDocument(documentId).let { config.decryptDocument(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun DocumentApi.modifyDocument(user: UserDto, document: DocumentDto, config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>) : DocumentDto?  {
+suspend fun DocumentApi.modifyDocument(user: UserDto, document: DocumentDto, config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>) : DocumentDto  {
     return this.modifyDocument(
         config.encryptDocument(
             user.healthcarePartyId!!,
             (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
             document
         )
-    )?.let { config.decryptDocument(user.healthcarePartyId!!, it) }
+    ).let { config.decryptDocument(user.healthcarePartyId, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun DocumentApi.modifyDocuments(user: UserDto, documents: List<DocumentDto>, config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>) : List<DocumentDto>?  {
+suspend fun DocumentApi.modifyDocuments(user: UserDto, documents: List<DocumentDto>, config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>) : List<DocumentDto>  {
     return this.modifyDocuments(documents.map {
         config.encryptDocument(
             user.healthcarePartyId!!,
             (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
             it
         )
-    })?.map { config.decryptDocument(user.healthcarePartyId!!, it) }
+    }).map { config.decryptDocument(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun DocumentApi.deleteAttachment(user: UserDto, documentId: String, config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>) : DocumentDto? {
-    return this.deleteAttachment(documentId)?.let { config.decryptDocument(user.healthcarePartyId!!, it) }
+suspend fun DocumentApi.deleteAttachment(user: UserDto, documentId: String, config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>) : DocumentDto {
+    return this.deleteAttachment(documentId).let { config.decryptDocument(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun DocumentApi.setDocumentAttachment(user: UserDto, documentId: String, requestBody: Flow<ByteBuffer>, enckeys: String?, config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>) : DocumentDto? {
-    return this.setDocumentAttachment(documentId, requestBody, enckeys)?.let { config.decryptDocument(user.healthcarePartyId!!, it) }
+suspend fun DocumentApi.setDocumentAttachment(user: UserDto, documentId: String, requestBody: Flow<ByteBuffer>, enckeys: String?, config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>) : DocumentDto {
+    return this.setDocumentAttachment(documentId, requestBody, enckeys).let { config.decryptDocument(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun DocumentApi.getDocumentsByExternalUuid(user: UserDto, externalUuid: String, config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>): List<DocumentDto>?  {
-    return this.getDocumentsByExternalUuid(externalUuid)?.map { config.decryptDocument(user.healthcarePartyId!!, it) }
+suspend fun DocumentApi.getDocumentsByExternalUuid(user: UserDto, externalUuid: String, config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>): List<DocumentDto>  {
+    return this.getDocumentsByExternalUuid(externalUuid).map { config.decryptDocument(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun DocumentApi.getDocuments(user: UserDto, listOfIdsDto: ListOfIdsDto, config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>): List<DocumentDto>?  {
-    return this.getDocuments(listOfIdsDto)?.map { config.decryptDocument(user.healthcarePartyId!!, it) }
+suspend fun DocumentApi.getDocuments(user: UserDto, listOfIdsDto: ListOfIdsDto, config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>): List<DocumentDto>  {
+    return this.getDocuments(listOfIdsDto).map { config.decryptDocument(user.healthcarePartyId!!, it) }
 }
 
 suspend fun CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>.encryptDocument(myId: String, delegations: Set<String>, document: DocumentDto): io.icure.kraken.client.models.DocumentDto {
@@ -151,24 +152,20 @@ suspend fun CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>
             m + (d to setOf(DelegationDto(emptyList(), myId, d, this.crypto.encryptAESKeyForHcp(myId, d, document.id, secret))))
         })
     }.let { p ->
-        val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.let { aesKey ->
-            aesKey.replace(
-                "-",
-                ""
-            ).keyFromHexString()
-        } ?: throw IllegalArgumentException("No encryption key for user")
+        val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.replace(
+            "-",
+            ""
+        )?.keyFromHexString() ?: throw IllegalArgumentException("No encryption key for user")
         val (sanitizedDocument, marshalledData) = this.marshaller(p)
         sanitizedDocument.copy(encryptedSelf = Base64.getEncoder().encodeToString(encryptAES(data = marshalledData, key = key)))
     }
 }
 
 suspend fun CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>.decryptDocument(myId: String, document: io.icure.kraken.client.models.DocumentDto): DocumentDto {
-    val key = this.crypto.decryptEncryptionKeys(myId, document.encryptionKeys).firstOrNull()?.let { aesKey ->
-        aesKey.replace(
-            "-",
-            ""
-        ).keyFromHexString()
-    } ?: throw IllegalArgumentException("No encryption key for user")
+    val key = this.crypto.decryptEncryptionKeys(myId, document.encryptionKeys).firstOrNull()?.replace(
+        "-",
+        ""
+    )?.keyFromHexString() ?: throw IllegalArgumentException("No encryption key for user")
     return this.unmarshaller(document, decryptAES(data = Base64.getDecoder().decode(document.encryptedSelf), key = key))
 }
 

@@ -21,14 +21,14 @@ suspend fun ClassificationDto.initDelegations(user: UserDto, config: CryptoConfi
     return this.copy(
         responsible = user.healthcarePartyId!!,
         author = user.id,
-        delegations = (delegations + user.healthcarePartyId!!).fold(this.encryptionKeys) { m, d ->
+        delegations = (delegations + user.healthcarePartyId).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
                     emptyList(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, sfk),
                 ),
             ))
         },
-        encryptionKeys = (delegations + user.healthcarePartyId!!).fold(this.encryptionKeys) { m, d ->
+        encryptionKeys = (delegations + user.healthcarePartyId).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
                     emptyList(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, ek),
@@ -47,18 +47,18 @@ suspend fun ClassificationApi.createClassification(user: UserDto, classification
             (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
             classification
         )
-    )?.let { config.decryptClassification(user.healthcarePartyId!!, it) }
+    ).let { config.decryptClassification(user.healthcarePartyId, it) }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ClassificationApi.getClassificationByHcPartyId(user: UserDto, ids: String, config: CryptoConfig<ClassificationDto, io.icure.kraken.client.models.ClassificationDto>) : List<ClassificationDto>? {
-    return this.getClassificationByHcPartyId(ids)?.map { config.decryptClassification(user.healthcarePartyId!!, it) }
+suspend fun ClassificationApi.getClassificationByHcPartyId(user: UserDto, ids: String, config: CryptoConfig<ClassificationDto, io.icure.kraken.client.models.ClassificationDto>) : List<ClassificationDto> {
+    return this.getClassificationByHcPartyId(ids).map { config.decryptClassification(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ClassificationApi.newClassificationDelegations(user: UserDto, classificationId: String, delegationDto: List<DelegationDto>, config: CryptoConfig<ClassificationDto, io.icure.kraken.client.models.ClassificationDto>) : ClassificationDto? {
-    return this.newClassificationDelegations(classificationId, delegationDto)?.let { config.decryptClassification(user.healthcarePartyId!!, it) }
+suspend fun ClassificationApi.newClassificationDelegations(user: UserDto, classificationId: String, delegationDto: List<DelegationDto>, config: CryptoConfig<ClassificationDto, io.icure.kraken.client.models.ClassificationDto>) : ClassificationDto {
+    return this.newClassificationDelegations(classificationId, delegationDto).let { config.decryptClassification(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
@@ -70,26 +70,26 @@ suspend fun ClassificationApi.findByHCPartyPatient(user: UserDto, hcPartyId: Str
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ClassificationApi.findClassificationsByHCPartyPatientForeignKeys(user: UserDto, hcPartyId: String, secretFKeys: String, config: CryptoConfig<ClassificationDto, io.icure.kraken.client.models.ClassificationDto>) : List<ClassificationDto>? {
-    return this.findClassificationsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)?.map { config.decryptClassification(user.healthcarePartyId!!, it) }
+suspend fun ClassificationApi.findClassificationsByHCPartyPatientForeignKeys(user: UserDto, hcPartyId: String, secretFKeys: String, config: CryptoConfig<ClassificationDto, io.icure.kraken.client.models.ClassificationDto>) : List<ClassificationDto> {
+    return this.findClassificationsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys).map { config.decryptClassification(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ClassificationApi.getClassification(user: UserDto, classificationId: String, config: CryptoConfig<ClassificationDto, io.icure.kraken.client.models.ClassificationDto>): ClassificationDto?  {
-    return this.getClassification(classificationId)?.let { config.decryptClassification(user.healthcarePartyId!!, it) }
+suspend fun ClassificationApi.getClassification(user: UserDto, classificationId: String, config: CryptoConfig<ClassificationDto, io.icure.kraken.client.models.ClassificationDto>): ClassificationDto  {
+    return this.getClassification(classificationId).let { config.decryptClassification(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ClassificationApi.modifyClassification(user: UserDto, classification: ClassificationDto, config: CryptoConfig<ClassificationDto, io.icure.kraken.client.models.ClassificationDto>) : ClassificationDto?  {
+suspend fun ClassificationApi.modifyClassification(user: UserDto, classification: ClassificationDto, config: CryptoConfig<ClassificationDto, io.icure.kraken.client.models.ClassificationDto>) : ClassificationDto  {
     return this.modifyClassification(
         config.encryptClassification(
             user.healthcarePartyId!!,
             (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
             classification
         )
-    )?.let { config.decryptClassification(user.healthcarePartyId!!, it) }
+    ).let { config.decryptClassification(user.healthcarePartyId, it) }
 }
 
 suspend fun CryptoConfig<ClassificationDto, io.icure.kraken.client.models.ClassificationDto>.encryptClassification(myId: String, delegations: Set<String>, classification: ClassificationDto): io.icure.kraken.client.models.ClassificationDto {
@@ -101,24 +101,20 @@ suspend fun CryptoConfig<ClassificationDto, io.icure.kraken.client.models.Classi
             m + (d to setOf(DelegationDto(emptyList(), myId, d, this.crypto.encryptAESKeyForHcp(myId, d, classification.id, secret))))
         })
     }.let { p ->
-        val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.let { aesKey ->
-            aesKey.replace(
-                "-",
-                ""
-            ).keyFromHexString()
-        } ?: throw IllegalArgumentException("No encryption key for user")
+        val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.replace(
+            "-",
+            ""
+        )?.keyFromHexString() ?: throw IllegalArgumentException("No encryption key for user")
         val (sanitizedClassification, marshalledData) = this.marshaller(p)
         sanitizedClassification.copy(encryptedSelf = Base64.getEncoder().encodeToString(encryptAES(data = marshalledData, key = key)))
     }
 }
 
 suspend fun CryptoConfig<ClassificationDto, io.icure.kraken.client.models.ClassificationDto>.decryptClassification(myId: String, classification: io.icure.kraken.client.models.ClassificationDto): ClassificationDto {
-    val key = this.crypto.decryptEncryptionKeys(myId, classification.encryptionKeys).firstOrNull()?.let { aesKey ->
-        aesKey.replace(
-            "-",
-            ""
-        ).keyFromHexString()
-    } ?: throw IllegalArgumentException("No encryption key for user")
+    val key = this.crypto.decryptEncryptionKeys(myId, classification.encryptionKeys).firstOrNull()?.replace(
+        "-",
+        ""
+    )?.keyFromHexString() ?: throw IllegalArgumentException("No encryption key for user")
     return this.unmarshaller(classification, decryptAES(data = Base64.getDecoder().decode(classification.encryptedSelf), key = key))
 }
 
