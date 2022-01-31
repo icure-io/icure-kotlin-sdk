@@ -67,7 +67,7 @@ suspend fun HealthElementApi.createHealthElements(user: UserDto, patient: io.icu
                                 emptyList(),
                                 user.healthcarePartyId,
                                 d,
-                                config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, ec.id, patient.id),
+                                config.crypto.encryptValueForHcp(user.healthcarePartyId, d, ec.id, patient.id),
                             ),
                         ))
                     },
@@ -96,7 +96,7 @@ suspend fun HealthElementApi.createHealthElement(user: UserDto, patient: io.icur
                             emptyList(),
                             user.healthcarePartyId,
                             d,
-                            config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, ec.id, patient.id),
+                            config.crypto.encryptValueForHcp(user.healthcarePartyId, d, ec.id, patient.id),
                         ),
                     ))
                 },

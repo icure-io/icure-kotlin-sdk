@@ -48,14 +48,10 @@ class LocalCrypto(private val hcpartyApi: HcpartyApi, private val rsaKeyPairs: M
         if (secretKey.keyFromHexString().size * 8 !in aesValidKeySizes) {
             throw IllegalArgumentException("Illegal AES key size : Secret length should be either 128, 192 or 256")
         }
-        return encryptAES("$objectId:${formatKey(secret)}".toByteArray(Charsets.UTF_8), getOrCreateHcPartyKey(myId, delegateId)).keyToHexString()
+        return encryptAES("$objectId:$secretKey".toByteArray(Charsets.UTF_8), getOrCreateHcPartyKey(myId, delegateId)).keyToHexString()
     }
 
     override suspend fun encryptValueForHcp(myId: String, delegateId: String, objectId: String, secret: String): String {
-        val secretKey = formatKey(secret)
-        if (secretKey.keyFromHexString().size * 8 !in aesValidKeySizes) {
-            throw IllegalArgumentException("Illegal AES key size : Secret length should be either 128, 192 or 256")
-        }
         return encryptAES("$objectId:$secret".toByteArray(Charsets.UTF_8), getOrCreateHcPartyKey(myId, delegateId)).keyToHexString()
     }
 
