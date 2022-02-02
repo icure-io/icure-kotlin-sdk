@@ -47,7 +47,8 @@ import com.github.pozo.KotlinBuilder
  * @param patientId Id of the patient if the user is a patient
  * @param createdDate the timestamp (unix epoch in ms) of creation of the user, will be filled automatically if missing. Not enforced by the application server.
  * @param termsOfUseDate the timestamp (unix epoch in ms) of the latest validation of the terms of use of the application
- * @param email email address of the user.
+ * @param email email address of the user (used for token exchange or password recovery).
+ * @param mobilePhone mobile phone of the user (used for token exchange or password recovery).
  */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -142,9 +143,13 @@ data class UserDto (
     @field:JsonProperty("termsOfUseDate")
     val termsOfUseDate: java.time.OffsetDateTime? = null,
 
-    /* email address of the user. */
+    /* email address of the user (used for token exchange or password recovery). */
     @field:JsonProperty("email")
-    val email: kotlin.String? = null
+    val email: kotlin.String? = null,
+
+    /* mobile phone of the user (used for token exchange or password recovery). */
+    @field:JsonProperty("mobilePhone")
+    val mobilePhone: kotlin.String? = null
 
 ) {
 

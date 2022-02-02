@@ -528,7 +528,7 @@ Class | Method | HTTP request | Description
 *UserApi* | [**getCurrentSession**](docs/UserApi.md#getcurrentsession) | **GET** /rest/v2/user/session | Get Currently logged-in user session.
 *UserApi* | [**getCurrentUser**](docs/UserApi.md#getcurrentuser) | **GET** /rest/v2/user/current | Get presently logged-in user.
 *UserApi* | [**getMatchingUsers**](docs/UserApi.md#getmatchingusers) | **GET** /rest/v2/user/matches | Get presently logged-in user.
-*UserApi* | [**getToken**](docs/UserApi.md#gettoken) | **POST** /rest/v2/user/token/{userId}/{key} | Require a new temporary token for authentication
+*UserApi* | [**getToken**](docs/UserApi.md#gettoken) | **POST** /rest/v2/user/token/{userId}/{key} | Request a new temporary token for authentication
 *UserApi* | [**getUser**](docs/UserApi.md#getuser) | **GET** /rest/v2/user/{userId} | Get a user by his ID
 *UserApi* | [**getUserByEmail**](docs/UserApi.md#getuserbyemail) | **GET** /rest/v2/user/byEmail/{email} | Get a user by his Email/Login
 *UserApi* | [**listUsersBy**](docs/UserApi.md#listusersby) | **GET** /rest/v2/user | List users with(out) pagination
@@ -752,6 +752,7 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.Tag](docs/Tag.md)
  - [io.icure.kraken.client.models.TarificationDto](docs/TarificationDto.md)
  - [io.icure.kraken.client.models.TelecomDto](docs/TelecomDto.md)
+ - [io.icure.kraken.client.models.TimeSeriesDto](docs/TimeSeriesDto.md)
  - [io.icure.kraken.client.models.TimeTableDto](docs/TimeTableDto.md)
  - [io.icure.kraken.client.models.TimeTableHourDto](docs/TimeTableHourDto.md)
  - [io.icure.kraken.client.models.TimeTableItemDto](docs/TimeTableItemDto.md)

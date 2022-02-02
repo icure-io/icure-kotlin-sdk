@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **documentId** | **kotlin.String** | Linked document. |  [optional]
 **measureValue** | [**MeasureDto**](MeasureDto.md) |  |  [optional]
 **medicationValue** | [**MedicationDto**](MedicationDto.md) |  |  [optional]
+**timeSeries** | [**TimeSeriesDto**](TimeSeriesDto.md) |  |  [optional]
 **compoundValue** | [**kotlin.collections.List&lt;ServiceDto&gt;**](ServiceDto.md) |  |  [optional]
 **ratio** | [**kotlin.collections.List&lt;MeasureDto&gt;**](MeasureDto.md) |  |  [optional]
 **range** | [**kotlin.collections.List&lt;MeasureDto&gt;**](MeasureDto.md) |  |  [optional]

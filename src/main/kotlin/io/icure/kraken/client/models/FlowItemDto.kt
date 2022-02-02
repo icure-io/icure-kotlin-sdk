@@ -53,6 +53,8 @@ import com.github.pozo.KotlinBuilder
  * @param patientId 
  * @param patientLastName 
  * @param patientFirstName 
+ * @param description 
+ * @param interventionCode 
  */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -151,7 +153,13 @@ data class FlowItemDto (
     val patientLastName: kotlin.String? = null,
 
     @field:JsonProperty("patientFirstName")
-    val patientFirstName: kotlin.String? = null
+    val patientFirstName: kotlin.String? = null,
+
+    @field:JsonProperty("description")
+    val description: kotlin.String? = null,
+
+    @field:JsonProperty("interventionCode")
+    val interventionCode: kotlin.String? = null
 
 )
 

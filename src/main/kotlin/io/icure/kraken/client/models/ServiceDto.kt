@@ -39,6 +39,7 @@ import com.github.pozo.KotlinBuilder
  * @param qualifiedLinks Links towards related services (possibly in other contacts)
  * @param codes A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes
  * @param tags A tag is an item from a codification system that qualifies an entity as being member of a certain class, whatever the value it might have taken. If the tag qualifies the content of a field, it means that whatever the content of the field, the tag will always apply. For example, the label of a field is qualified using a tag. LOINC is a codification system typically used for tags.
+ * @param transactionId The transactionId is used when a single service had to be split into parts for technical reasons. Several services with the same non null transaction id form one single service
  * @param contactId Id of the contact during which the service is provided
  * @param subContactIds List of IDs of all sub-contacts that link the service to structural elements. Only used when the Service is emitted outside of its contact
  * @param plansOfActionIds List of IDs of all plans of actions (healthcare approaches) as a part of which the Service is provided. Only used when the Service is emitted outside of its contact
@@ -113,6 +114,10 @@ data class ServiceDto (
     /* A tag is an item from a codification system that qualifies an entity as being member of a certain class, whatever the value it might have taken. If the tag qualifies the content of a field, it means that whatever the content of the field, the tag will always apply. For example, the label of a field is qualified using a tag. LOINC is a codification system typically used for tags. */
     @field:JsonProperty("tags")
     val tags: kotlin.collections.List<CodeStubDto> = emptyList(),
+
+    /* The transactionId is used when a single service had to be split into parts for technical reasons. Several services with the same non null transaction id form one single service */
+    @field:JsonProperty("transactionId")
+    val transactionId: kotlin.String? = null,
 
     /* Id of the contact during which the service is provided */
     @field:JsonProperty("contactId")

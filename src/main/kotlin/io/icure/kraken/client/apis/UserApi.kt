@@ -561,7 +561,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     }
 
     /**
-    * Require a new temporary token for authentication
+    * Request a new temporary token for authentication
     * 
     * @param userId  
     * @param key The token key. Only one instance of a token with a defined key can exist at the same time 

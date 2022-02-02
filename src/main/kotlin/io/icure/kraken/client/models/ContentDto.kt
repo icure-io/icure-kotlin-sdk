@@ -15,6 +15,7 @@ package io.icure.kraken.client.models
 import io.icure.kraken.client.models.MeasureDto
 import io.icure.kraken.client.models.MedicationDto
 import io.icure.kraken.client.models.ServiceDto
+import io.icure.kraken.client.models.TimeSeriesDto
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
@@ -34,6 +35,7 @@ import com.github.pozo.KotlinBuilder
  * @param documentId Linked document.
  * @param measureValue 
  * @param medicationValue 
+ * @param timeSeries 
  * @param compoundValue 
  * @param ratio 
  * @param range 
@@ -72,6 +74,9 @@ data class ContentDto (
 
     @field:JsonProperty("medicationValue")
     val medicationValue: MedicationDto? = null,
+
+    @field:JsonProperty("timeSeries")
+    val timeSeries: TimeSeriesDto? = null,
 
     @field:JsonProperty("compoundValue")
     val compoundValue: kotlin.collections.List<ServiceDto>? = null,
