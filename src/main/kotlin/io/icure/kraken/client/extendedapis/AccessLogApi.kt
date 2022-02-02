@@ -60,8 +60,8 @@ suspend fun AccessLogApi.findAccessLogsByUserAfterDate(user: UserDto, userId: St
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun AccessLogApi.listAccessLogsByHCPartyAndPatient(user: UserDto, hcPartyId: String, patient: PatientDto, config: CryptoConfig<AccessLogDto, io.icure.kraken.client.models.AccessLogDto>) : List<AccessLogDto>? {
-    val key = config.crypto.decryptEncryptionKeys(user.healthcarePartyId!!, patient.delegations).firstOrNull() ?: throw IllegalArgumentException("No delegation for user")
-    return this.listAccessLogsByHCPartyAndPatientForeignKeys(hcPartyId, key)?.map { config.decryptAccessLog(user.healthcarePartyId!!, it) }
+    val keys = config.crypto.decryptEncryptionKeys(user.healthcarePartyId!!, patient.delegations).takeIf { it.isNotEmpty() } ?: throw IllegalArgumentException("No delegation for user")
+    return this.listAccessLogsByHCPartyAndPatientForeignKeys(hcPartyId, keys.joinToString(",")).map { config.decryptAccessLog(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi

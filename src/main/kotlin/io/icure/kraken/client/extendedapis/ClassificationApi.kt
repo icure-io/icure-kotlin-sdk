@@ -64,8 +64,8 @@ suspend fun ClassificationApi.newClassificationDelegations(user: UserDto, classi
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun ClassificationApi.findByHCPartyPatient(user: UserDto, hcPartyId: String, patient: PatientDto, config: CryptoConfig<ClassificationDto, io.icure.kraken.client.models.ClassificationDto>) : List<ClassificationDto>? {
-    val key = config.crypto.decryptEncryptionKeys(user.healthcarePartyId!!, patient.delegations).firstOrNull() ?: throw IllegalArgumentException("No delegation for user")
-    return this.findClassificationsByHCPartyPatientForeignKeys(user, hcPartyId, key, config)
+    val keys = config.crypto.decryptEncryptionKeys(user.healthcarePartyId!!, patient.delegations).takeIf { it.isNotEmpty() } ?: throw IllegalArgumentException("No delegation for user")
+    return this.findClassificationsByHCPartyPatientForeignKeys(user, hcPartyId, keys.joinToString(","), config)
 }
 
 @ExperimentalCoroutinesApi

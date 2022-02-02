@@ -80,9 +80,9 @@ suspend fun FormApi.listFormsByHCPartyAndPatient(
     formTemplateId: String?,
     config: CryptoConfig<FormDto, io.icure.kraken.client.models.FormDto>
 ): List<FormDto>? {
-    val key = config.crypto.decryptEncryptionKeys(user.healthcarePartyId!!, patient.delegations).firstOrNull()
+    val keys = config.crypto.decryptEncryptionKeys(user.healthcarePartyId!!, patient.delegations).takeIf { it.isNotEmpty() }
         ?: throw IllegalArgumentException("No delegation for user")
-    return this.listFormsByHCPartyAndPatientForeignKeys(user, hcPartyId, key, healthElementId, planOfActionId, formTemplateId, config)
+    return this.listFormsByHCPartyAndPatientForeignKeys(user, hcPartyId, keys.joinToString(","), healthElementId, planOfActionId, formTemplateId, config)
 }
 
 @ExperimentalCoroutinesApi

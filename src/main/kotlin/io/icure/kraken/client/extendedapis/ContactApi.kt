@@ -171,8 +171,8 @@ suspend fun ContactApi.findByHCPartyFormIds(user: UserDto, hcPartyId: String, li
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun ContactApi.findByHCPartyPatient(user: UserDto, hcPartyId: String, patient: PatientDto, planOfActionsIds: String?, skipClosedContacts: Boolean?, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>) : List<ContactDto>? {
-    val key = config.crypto.decryptEncryptionKeys(user.healthcarePartyId!!, patient.delegations).firstOrNull() ?: throw IllegalArgumentException("No delegation for user")
-    return this.listContactsByHCPartyAndPatientSecretFKeys(hcPartyId, key, planOfActionsIds, skipClosedContacts)?.map { config.decryptContact(user.healthcarePartyId!!, it) }
+    val keys = config.crypto.decryptEncryptionKeys(user.healthcarePartyId!!, patient.delegations).takeIf { it.isNotEmpty() } ?: throw IllegalArgumentException("No delegation for user")
+    return this.listContactsByHCPartyAndPatientSecretFKeys(hcPartyId, keys.joinToString(","), planOfActionsIds, skipClosedContacts).map { config.decryptContact(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi

@@ -54,19 +54,24 @@ dependencies {
     implementation(group = "com.fasterxml.jackson.core", name = "jackson-databind", version = jacksonVersion)
     implementation(group = "com.fasterxml.jackson.module", name = "jackson-module-kotlin", version = jacksonVersion)
     implementation(group = "com.fasterxml.jackson.datatype", name = "jackson-datatype-jsr310", version = jacksonVersion)
-    implementation(group = "io.icure", name = "async-jackson-http-client", version = "0.1.13-f8f31a9805")
+
+    implementation(group = "io.icure", name = "async-jackson-http-client", version = "0.1.15-9cf193799d")
+
     implementation(group = "javax.inject", name = "javax.inject", version = "1")
     implementation(group = "org.mapstruct", name = "mapstruct", version = "1.3.1.Final")
     implementation(group = "com.github.ben-manes.caffeine", name = "caffeine", version = "3.0.3")
 
     implementation(group = "ch.qos.logback", name = "logback-classic", version = "1.2.3")
     implementation(group = "ch.qos.logback", name = "logback-access", version = "1.2.3")
+
     implementation(group = "org.slf4j", name = "slf4j-api", version = "1.7.12")
     implementation(group = "org.slf4j", name = "jul-to-slf4j", version = "1.7.12")
     implementation(group = "org.slf4j", name = "jcl-over-slf4j", version = "1.7.12")
     implementation(group = "org.slf4j", name = "log4j-over-slf4j", version = "1.7.12")
 
+    implementation(group = "io.projectreactor", name = "reactor-core", version = "3.4.10")
     implementation(group = "io.projectreactor.netty", name = "reactor-netty", version = "1.0.11")
+
     // Bouncy Castle
     implementation(group = "org.bouncycastle", name = "bcprov-jdk15on", version = "1.69")
     implementation(group = "org.bouncycastle", name = "bcmail-jdk15on", version = "1.69")

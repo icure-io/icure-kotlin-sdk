@@ -114,9 +114,9 @@ suspend fun HealthElementApi.newHealthElementDelegations(user: UserDto, healthEl
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun HealthElementApi.listHealthElementsByHCPartyAndPatient(user: UserDto, hcPartyId: String, patient: PatientDto, config: CryptoConfig<HealthElementDto, io.icure.kraken.client.models.HealthElementDto>) : List<HealthElementDto>? {
-    val key = config.crypto.decryptEncryptionKeys(user.healthcarePartyId!!, patient.delegations).firstOrNull()
+    val keys = config.crypto.decryptEncryptionKeys(user.healthcarePartyId!!, patient.delegations).takeIf { it.isNotEmpty() }
         ?: throw IllegalArgumentException("No delegation for user")
-    return this.listHealthElementsByHCPartyAndPatientForeignKeys(user, hcPartyId, key, config)
+    return this.listHealthElementsByHCPartyAndPatientForeignKeys(user, hcPartyId, keys.joinToString(","), config)
 }
 
 @ExperimentalCoroutinesApi

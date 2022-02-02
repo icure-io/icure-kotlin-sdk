@@ -56,17 +56,17 @@ suspend fun DocumentApi.createDocument(user: UserDto, document: DocumentDto, con
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun DocumentApi.findDocumentsByHCPartyPatient(user: UserDto, hcPartyId: String, patient: PatientDto, config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>) : List<DocumentDto>? {
-    val key = config.crypto.decryptEncryptionKeys(user.healthcarePartyId!!, patient.delegations).firstOrNull()
+    val keys = config.crypto.decryptEncryptionKeys(user.healthcarePartyId!!, patient.delegations).takeIf { it.isNotEmpty() }
         ?: throw IllegalArgumentException("No delegation for user")
-    return this.findDocumentsByHCPartyPatientForeignKeys(user, hcPartyId, key, config)
+    return this.findDocumentsByHCPartyPatientForeignKeys(user, hcPartyId, keys.joinToString(","), config)
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun DocumentApi.listDocumentByTypeHCPartyMessage(user: UserDto, documentTypeCode: String, hcPartyId: String, message: MessageDto, config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>) : List<DocumentDto>? {
-    val key = config.crypto.decryptEncryptionKeys(user.healthcarePartyId!!, message.delegations).firstOrNull()
+    val keys = config.crypto.decryptEncryptionKeys(user.healthcarePartyId!!, message.delegations).takeIf { it.isNotEmpty() }
         ?: throw IllegalArgumentException("No delegation for user")
-    return this.listDocumentByTypeHCPartyMessageSecretFKeys(documentTypeCode, hcPartyId, key)?.map { config.decryptDocument(user.healthcarePartyId!!, it) }
+    return this.listDocumentByTypeHCPartyMessageSecretFKeys(documentTypeCode, hcPartyId, keys.joinToString(","))?.map { config.decryptDocument(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi

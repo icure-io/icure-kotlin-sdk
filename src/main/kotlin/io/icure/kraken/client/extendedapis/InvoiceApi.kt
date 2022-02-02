@@ -84,10 +84,10 @@ suspend fun InvoiceApi.listInvoicesByHCPartyAndPatient(
     patient: PatientDto,
     config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>
 ): List<InvoiceDto>? {
-    val key = config.crypto.decryptEncryptionKeys(user.healthcarePartyId!!, patient.delegations).firstOrNull()
+    val keys = config.crypto.decryptEncryptionKeys(user.healthcarePartyId!!, patient.delegations).takeIf { it.isNotEmpty() }
         ?: throw IllegalArgumentException("No delegation for user")
 
-    return this.listInvoicesByHCPartyAndPatientForeignKeys(user, hcPartyId, key, config)
+    return this.listInvoicesByHCPartyAndPatientForeignKeys(user, hcPartyId, keys.joinToString(","), config)
 }
 
 @ExperimentalCoroutinesApi

@@ -8,6 +8,7 @@ import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
 import io.icure.kraken.client.defGet
 import io.icure.kraken.client.defPut
 import io.icure.kraken.client.models.DelegationDto
+import io.icure.kraken.client.models.HealthcarePartyDto
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.security.*
@@ -22,6 +23,10 @@ import java.util.concurrent.TimeUnit
 class LocalCrypto(private val hcpartyApi: HcpartyApi, private val rsaKeyPairs: Map<String, Pair<RSAPrivateKey, RSAPublicKey>>) : Crypto {
     private val aesValidKeySizes : Set<Int> = setOf(128, 192, 256)
 
+    private val hcParties : Cache<String, Deferred<Optional<HealthcarePartyDto>>> = Caffeine.newBuilder()
+        .maximumSize(100)
+        .expireAfterWrite(5, TimeUnit.MINUTES)
+        .build()
     private val ownerHcpartyKeysCache : Cache<String, Deferred<Optional<Map<String, Pair<String, ByteArray>>>>> = Caffeine.newBuilder()
         .maximumSize(100)
         .expireAfterWrite(5, TimeUnit.MINUTES)
@@ -32,7 +37,7 @@ class LocalCrypto(private val hcpartyApi: HcpartyApi, private val rsaKeyPairs: M
         .build()
 
     override suspend fun decryptEncryptionKeys(myId: String, keys: Map<String, Set<DelegationDto>>): Set<String> {
-        return keys[myId]?.mapNotNull { d ->
+        return ((keys[myId]?.mapNotNull { d ->
             try {
                 getDelegateHcPartyKey(d.delegatedTo!!, d.owner!!)
             } catch (e: Exception) {
@@ -40,7 +45,9 @@ class LocalCrypto(private val hcpartyApi: HcpartyApi, private val rsaKeyPairs: M
             }?.let { k -> decryptAES(d.key!!.keyFromHexString(), k).toString(Charsets.UTF_8)
                 .split(":")[1]
             }
-        }?.toSet() ?: throw IllegalArgumentException("Missing key for $myId")
+        }?.toSet() ?: emptySet()) + (hcParties.defGet(myId) {
+            hcpartyApi.getHealthcareParty(it)
+        }?.parentId?.let { decryptEncryptionKeys(it, keys) } ?: emptySet())).takeIf { it.isNotEmpty() } ?: throw IllegalArgumentException("Missing key for $myId")
     }
 
     override suspend fun encryptAESKeyForHcp(myId: String, delegateId: String, objectId: String, secret: String): String {
@@ -89,7 +96,7 @@ class LocalCrypto(private val hcpartyApi: HcpartyApi, private val rsaKeyPairs: M
             val keyForMe = CryptoUtils.encryptRSA(it, myPublicKey).keyToHexString()
             val keyForDelegate = CryptoUtils.encryptRSA(
                         it,
-                        hcpartyApi.getHealthcareParty(delegateId)?.publicKey?.let { pk ->
+                        hcpartyApi.getHealthcareParty(delegateId).publicKey?.let { pk ->
                             KeyFactory.getInstance("RSA").generatePublic(X509EncodedKeySpec(pk.keyFromHexString()))
                         } ?: throw IllegalArgumentException("Unknown hcp $delegateId")
                     ).keyToHexString()
