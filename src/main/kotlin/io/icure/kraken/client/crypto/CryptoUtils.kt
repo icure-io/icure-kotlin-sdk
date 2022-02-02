@@ -22,6 +22,11 @@ object CryptoUtils {
     const val IV_BYTE_LENGTH = 16
     val random: SecureRandom = SecureRandom.getInstance("SHA1PRNG")
 
+    fun generateKeyPairRSA(): KeyPair {
+        val rsaKeyGenerator: KeyPairGenerator = KeyPairGenerator.getInstance("RSA")
+        return rsaKeyGenerator.generateKeyPair()
+    }
+
     fun encryptRSA(data: ByteArray, publicKey: Key): ByteArray {
         val cipher: Cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA1AndMGF1Padding", "BC")
         cipher.init(Cipher.ENCRYPT_MODE, publicKey)
@@ -86,13 +91,6 @@ object CryptoUtils {
         random.nextBytes(ivBytes)
         return ivBytes
     }
-
-    fun toPublicKey(publicKeyStr: String) = KeyFactory.getInstance("RSA").generatePublic(X509EncodedKeySpec(publicKeyStr.keyFromHexString())) as RSAPublicKey
-
-    fun toPrivateKey(privateKeyStr: String) = KeyFactory.getInstance("RSA").generatePrivate(
-        PKCS8EncodedKeySpec(
-            privateKeyStr.keyFromHexString()
-        )) as RSAPrivateKey
 }
 
 @ExperimentalUnsignedTypes // just to make it clear that the experimental unsigned types are used
@@ -107,3 +105,14 @@ fun String.keyFromHexString(): ByteArray {
 
     }
 }
+fun String.toPublicKey() = KeyFactory.getInstance("RSA").generatePublic(X509EncodedKeySpec(keyFromHexString())) as RSAPublicKey
+
+fun String.toPrivateKey() = KeyFactory.getInstance("RSA").generatePrivate(
+    PKCS8EncodedKeySpec(
+        keyFromHexString()
+    )) as RSAPrivateKey
+
+@ExperimentalUnsignedTypes
+fun KeyPair.publicKeyAsString() = this.public.encoded.keyToHexString()
+@ExperimentalUnsignedTypes
+fun KeyPair.privateKeyAsString() = this.private.encoded.keyToHexString()
