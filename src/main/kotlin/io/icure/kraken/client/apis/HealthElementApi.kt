@@ -15,6 +15,7 @@ package io.icure.kraken.client.apis
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.infrastructure.*
+
 import io.icure.kraken.client.models.DelegationDto
 import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.FilterChainHealthElement
@@ -367,6 +368,45 @@ class HealthElementApi(basePath: kotlin.String = defaultBasePath, webClient: Web
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/helement/byHcPartySecretForeignKeys/delegations",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
+    * Get ids of health element matching the provided filter for the current user (HcParty) 
+    * 
+    * @param abstractFilterDtoHealthElement  
+    * @return kotlin.collections.List<kotlin.String>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun matchHealthElementsBy(abstractFilterDtoHealthElement: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.HealthElementDto>) : kotlin.collections.List<kotlin.String>  {
+        val localVariableConfig = matchHealthElementsByRequestConfig(abstractFilterDtoHealthElement = abstractFilterDtoHealthElement)
+
+        return request<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.HealthElementDto>, kotlin.collections.List<kotlin.String>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation matchHealthElementsBy
+    *
+    * @param abstractFilterDtoHealthElement  
+    * @return RequestConfig
+    */
+    fun matchHealthElementsByRequestConfig(abstractFilterDtoHealthElement: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.HealthElementDto>) : RequestConfig<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.HealthElementDto>> {
+        // val localVariableBody = abstractFilterDtoHealthElement
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = abstractFilterDtoHealthElement
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v2/helement/match",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

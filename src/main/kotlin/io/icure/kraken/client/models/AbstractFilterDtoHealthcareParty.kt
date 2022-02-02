@@ -20,29 +20,18 @@ import com.github.pozo.KotlinBuilder
 
 
 /**
- * Encrypted and time-limited Authentication tokens used for inter-applications authentication
+ * 
  *
- * @param token Encrypted token
- * @param creationTime Validity starting time of the token
- * @param validity Token validity in seconds
+ * @param desc 
  */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @KotlinBuilder
-data class AuthenticationTokenDto (
+data class AbstractFilterDtoHealthcareParty (
 
-    /* Encrypted token */
-    @field:JsonProperty("token")
-    val token: kotlin.String,
-
-    /* Validity starting time of the token */
-    @field:JsonProperty("creationTime")
-    val creationTime: kotlin.Long,
-
-    /* Token validity in seconds */
-    @field:JsonProperty("validity")
-    val validity: kotlin.Long
+    @field:JsonProperty("desc")
+    val desc: kotlin.String? = null
 
 )
 

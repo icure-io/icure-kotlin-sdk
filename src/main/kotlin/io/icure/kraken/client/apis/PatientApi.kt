@@ -1379,6 +1379,8 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param hcPartyId  
     * @param groupId  
     * @param patientDto  
+    * @param token  (optional)
+    * @param useShortToken  (optional)
     * @return PatientRegistrationSuccessDto
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -1386,8 +1388,8 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun registerPatient(hcPartyId: kotlin.String, groupId: kotlin.String, patientDto: PatientDto) : PatientRegistrationSuccessDto  {
-        val localVariableConfig = registerPatientRequestConfig(hcPartyId = hcPartyId, groupId = groupId, patientDto = patientDto)
+    suspend fun registerPatient(hcPartyId: kotlin.String, groupId: kotlin.String, patientDto: PatientDto, token: kotlin.String?, useShortToken: kotlin.Boolean?) : PatientRegistrationSuccessDto  {
+        val localVariableConfig = registerPatientRequestConfig(hcPartyId = hcPartyId, groupId = groupId, patientDto = patientDto, token = token, useShortToken = useShortToken)
 
         return request<PatientDto, PatientRegistrationSuccessDto>(
             localVariableConfig
@@ -1399,11 +1401,21 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param hcPartyId  
     * @param groupId  
     * @param patientDto  
+    * @param token  (optional)
+    * @param useShortToken  (optional)
     * @return RequestConfig
     */
-    fun registerPatientRequestConfig(hcPartyId: kotlin.String, groupId: kotlin.String, patientDto: PatientDto) : RequestConfig<PatientDto> {
+    fun registerPatientRequestConfig(hcPartyId: kotlin.String, groupId: kotlin.String, patientDto: PatientDto, token: kotlin.String?, useShortToken: kotlin.Boolean?) : RequestConfig<PatientDto> {
         // val localVariableBody = patientDto
-        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                if (token != null) {
+                    put("token", listOf(token.toString()))
+                }
+                if (useShortToken != null) {
+                    put("useShortToken", listOf(useShortToken.toString()))
+                }
+            }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = patientDto

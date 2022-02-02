@@ -26,7 +26,8 @@ Name | Type | Description | Notes
 **patientId** | **kotlin.String** | Id of the patient if the user is a patient |  [optional]
 **createdDate** | [**java.time.OffsetDateTime**](java.time.OffsetDateTime.md) | the timestamp (unix epoch in ms) of creation of the user, will be filled automatically if missing. Not enforced by the application server. |  [optional]
 **termsOfUseDate** | [**java.time.OffsetDateTime**](java.time.OffsetDateTime.md) | the timestamp (unix epoch in ms) of the latest validation of the terms of use of the application |  [optional]
-**email** | **kotlin.String** | email address of the user. |  [optional]
+**email** | **kotlin.String** | email address of the user (used for token exchange or password recovery). |  [optional]
+**mobilePhone** | **kotlin.String** | mobile phone of the user (used for token exchange or password recovery). |  [optional]
 
 
 <a name="TypeEnum"></a>

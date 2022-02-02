@@ -22,7 +22,7 @@ import com.github.pozo.KotlinBuilder
 
 
 /**
- * Extra properties for the user. Those properties are typed (see class Property)
+ * 
  *
  * @param id 
  * @param type 

@@ -17,7 +17,7 @@ Method | HTTP request | Description
 [**getCurrentSession**](UserApi.md#getCurrentSession) | **GET** /rest/v2/user/session | Get Currently logged-in user session.
 [**getCurrentUser**](UserApi.md#getCurrentUser) | **GET** /rest/v2/user/current | Get presently logged-in user.
 [**getMatchingUsers**](UserApi.md#getMatchingUsers) | **GET** /rest/v2/user/matches | Get presently logged-in user.
-[**getToken**](UserApi.md#getToken) | **POST** /rest/v2/user/token/{userId}/{key} | Require a new temporary token for authentication
+[**getToken**](UserApi.md#getToken) | **POST** /rest/v2/user/token/{userId}/{key} | Request a new temporary token for authentication
 [**getUser**](UserApi.md#getUser) | **GET** /rest/v2/user/{userId} | Get a user by his ID
 [**getUserByEmail**](UserApi.md#getUserByEmail) | **GET** /rest/v2/user/byEmail/{email} | Get a user by his Email/Login
 [**listUsersBy**](UserApi.md#listUsersBy) | **GET** /rest/v2/user | List users with(out) pagination
@@ -628,7 +628,7 @@ No authorization required
 # **getToken**
 > kotlin.String getToken(userId, key, tokenValidity)
 
-Require a new temporary token for authentication
+Request a new temporary token for authentication
 
 ### Example
 ```kotlin

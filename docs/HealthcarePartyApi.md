@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**createHealthcarePartyInGroup**](HealthcarePartyApi.md#createHealthcarePartyInGroup) | **POST** /rest/v2/hcparty/inGroup/{groupId} | Create a healthcare party
 [**deleteHealthcareParties**](HealthcarePartyApi.md#deleteHealthcareParties) | **POST** /rest/v2/hcparty/delete/batch | Delete healthcare parties
 [**deleteHealthcarePartiesInGroup**](HealthcarePartyApi.md#deleteHealthcarePartiesInGroup) | **POST** /rest/v2/hcparty/delete/batch/inGroup/{groupId} | Delete a healthcare party
+[**filterHealthPartiesBy**](HealthcarePartyApi.md#filterHealthPartiesBy) | **POST** /rest/v2/hcparty/filter | Filter healthcare parties for the current user (HcParty)
 [**findHealthcarePartiesBy**](HealthcarePartyApi.md#findHealthcarePartiesBy) | **GET** /rest/v2/hcparty | List healthcare parties with(out) pagination
 [**findHealthcarePartiesByName**](HealthcarePartyApi.md#findHealthcarePartiesByName) | **GET** /rest/v2/hcparty/byName | Find healthcare parties by name with(out) pagination
 [**findHealthcarePartiesBySpecialityAndPostCode**](HealthcarePartyApi.md#findHealthcarePartiesBySpecialityAndPostCode) | **GET** /rest/v2/hcparty/bySpecialityAndPostCode/{type}/{spec}/{firstCode}/to/{lastCode} | Find healthcare parties by name with(out) pagination
@@ -19,6 +20,7 @@ Method | HTTP request | Description
 [**getPublicKey**](HealthcarePartyApi.md#getPublicKey) | **GET** /rest/v2/hcparty/{healthcarePartyId}/publicKey | Get public key of a healthcare party
 [**listHealthcarePartiesByName**](HealthcarePartyApi.md#listHealthcarePartiesByName) | **GET** /rest/v2/hcparty/byNameStrict/{name} | Find healthcare parties by name with(out) pagination
 [**listHealthcarePartiesByParentId**](HealthcarePartyApi.md#listHealthcarePartiesByParentId) | **GET** /rest/v2/hcparty/{parentId}/children | Find children of an healthcare parties
+[**matchHealthcarePartiesBy**](HealthcarePartyApi.md#matchHealthcarePartiesBy) | **POST** /rest/v2/hcparty/match | Get ids of healthcare party matching the provided filter for the current user (HcParty) 
 [**modifyHealthcareParty**](HealthcarePartyApi.md#modifyHealthcareParty) | **PUT** /rest/v2/hcparty | Modify a Healthcare Party.
 [**modifyHealthcarePartyInGroup**](HealthcarePartyApi.md#modifyHealthcarePartyInGroup) | **PUT** /rest/v2/hcparty/inGroup/{groupId} | Modify a Healthcare Party.
 
@@ -205,6 +207,57 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**kotlin.collections.List&lt;DocIdentifier&gt;**](DocIdentifier.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="filterHealthPartiesBy"></a>
+# **filterHealthPartiesBy**
+> PaginatedListHealthcarePartyDto filterHealthPartiesBy(filterChainHealthcareParty, startDocumentId, limit)
+
+Filter healthcare parties for the current user (HcParty)
+
+Returns a list of healthcare party along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = HealthcarePartyApi()
+val filterChainHealthcareParty : FilterChainHealthcareParty =  // FilterChainHealthcareParty | 
+val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A HealthcareParty document ID
+val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
+try {
+    val result : PaginatedListHealthcarePartyDto = apiInstance.filterHealthPartiesBy(filterChainHealthcareParty, startDocumentId, limit)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling HealthcarePartyApi#filterHealthPartiesBy")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling HealthcarePartyApi#filterHealthPartiesBy")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **filterChainHealthcareParty** | [**FilterChainHealthcareParty**](FilterChainHealthcareParty.md)|  |
+ **startDocumentId** | **kotlin.String**| A HealthcareParty document ID | [optional]
+ **limit** | **kotlin.Int**| Number of rows | [optional]
+
+### Return type
+
+[**PaginatedListHealthcarePartyDto**](PaginatedListHealthcarePartyDto.md)
 
 ### Authorization
 
@@ -756,6 +809,51 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="matchHealthcarePartiesBy"></a>
+# **matchHealthcarePartiesBy**
+> kotlin.collections.List&lt;kotlin.String&gt; matchHealthcarePartiesBy(abstractFilterDtoHealthcareParty)
+
+Get ids of healthcare party matching the provided filter for the current user (HcParty) 
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = HealthcarePartyApi()
+val abstractFilterDtoHealthcareParty : AbstractFilterDtoHealthcareParty =  // AbstractFilterDtoHealthcareParty | 
+try {
+    val result : kotlin.collections.List<kotlin.String> = apiInstance.matchHealthcarePartiesBy(abstractFilterDtoHealthcareParty)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling HealthcarePartyApi#matchHealthcarePartiesBy")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling HealthcarePartyApi#matchHealthcarePartiesBy")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **abstractFilterDtoHealthcareParty** | [**AbstractFilterDtoHealthcareParty**](AbstractFilterDtoHealthcareParty.md)|  |
+
+### Return type
+
+**kotlin.collections.List&lt;kotlin.String&gt;**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: */*
 
 <a name="modifyHealthcareParty"></a>

@@ -12,6 +12,7 @@
  */
 package io.icure.kraken.client.models
 
+import io.icure.kraken.client.models.AbstractFilterDtoDevice
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
@@ -20,29 +21,22 @@ import com.github.pozo.KotlinBuilder
 
 
 /**
- * Encrypted and time-limited Authentication tokens used for inter-applications authentication
+ * 
  *
- * @param token Encrypted token
- * @param creationTime Validity starting time of the token
- * @param validity Token validity in seconds
+ * @param filter 
+ * @param predicate 
  */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @KotlinBuilder
-data class AuthenticationTokenDto (
+data class FilterChainDevice (
 
-    /* Encrypted token */
-    @field:JsonProperty("token")
-    val token: kotlin.String,
+    @field:JsonProperty("filter")
+    val filter: AbstractFilterDtoDevice,
 
-    /* Validity starting time of the token */
-    @field:JsonProperty("creationTime")
-    val creationTime: kotlin.Long,
-
-    /* Token validity in seconds */
-    @field:JsonProperty("validity")
-    val validity: kotlin.Long
+    @field:JsonProperty("predicate")
+    val predicate: kotlin.Any? = null
 
 )
 

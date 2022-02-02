@@ -35,6 +35,8 @@ Name | Type | Description | Notes
 **patientId** | **kotlin.String** |  |  [optional]
 **patientLastName** | **kotlin.String** |  |  [optional]
 **patientFirstName** | **kotlin.String** |  |  [optional]
+**description** | **kotlin.String** |  |  [optional]
+**interventionCode** | **kotlin.String** |  |  [optional]
 
 
 
