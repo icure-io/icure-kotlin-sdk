@@ -19,14 +19,14 @@ suspend fun MessageDto.initDelegations(user: UserDto, config: CryptoConfig<Messa
     return this.copy(
         responsible = user.healthcarePartyId!!,
         author = user.id,
-        delegations = (delegations + user.healthcarePartyId!!).fold(this.encryptionKeys) { m, d ->
+        delegations = (delegations + user.healthcarePartyId).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
                     emptyList(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, sfk),
                 ),
             ))
         },
-        encryptionKeys = (delegations + user.healthcarePartyId!!).fold(this.encryptionKeys) { m, d ->
+        encryptionKeys = (delegations + user.healthcarePartyId).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
                     emptyList(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, ek),
@@ -45,37 +45,37 @@ suspend fun MessageApi.createMessage(user: UserDto, message: MessageDto, config:
             (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
             message
         )
-    )?.let { config.decryptMessage(user.healthcarePartyId!!, it) }
+    ).let { config.decryptMessage(user.healthcarePartyId, it) }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun MessageApi.getMessage(user: UserDto, messageId: String, config: CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>): MessageDto?  {
-    return this.getMessage(messageId)?.let { config.decryptMessage(user.healthcarePartyId!!, it) }
+suspend fun MessageApi.getMessage(user: UserDto, messageId: String, config: CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>): MessageDto  {
+    return this.getMessage(messageId).let { config.decryptMessage(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun MessageApi.modifyMessage(user: UserDto, message: MessageDto, config: CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>) : MessageDto?  {
+suspend fun MessageApi.modifyMessage(user: UserDto, message: MessageDto, config: CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>) : MessageDto  {
     return this.modifyMessage(
         config.encryptMessage(
             user.healthcarePartyId!!,
             (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
             message
         )
-    )?.let { config.decryptMessage(user.healthcarePartyId!!, it) }
+    ).let { config.decryptMessage(user.healthcarePartyId, it) }
 }
 
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun MessageApi.deleteDelegation(user: UserDto, messageId: String, delegateId: String, config: CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>) : MessageDto?  {
-    return this.deleteDelegation(messageId, delegateId)?.let { config.decryptMessage(user.healthcarePartyId!!, it) }
+suspend fun MessageApi.deleteDelegation(user: UserDto, messageId: String, delegateId: String, config: CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>) : MessageDto  {
+    return this.deleteDelegation(messageId, delegateId).let { config.decryptMessage(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun MessageApi.findMessages(user: UserDto, startKey: String?, startDocumentId: String?, limit: Int?, config: CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>) : io.icure.kraken.client.models.decrypted.PaginatedListMessageDto?  {
-    return this.findMessages(startKey, startDocumentId, limit)?.let {
+suspend fun MessageApi.findMessages(user: UserDto, startKey: String?, startDocumentId: String?, limit: Int, config: CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>) : io.icure.kraken.client.models.decrypted.PaginatedListMessageDto  {
+    return this.findMessages(startKey, startDocumentId, limit).let {
         io.icure.kraken.client.models.decrypted.PaginatedListMessageDto(
             pageSize = it.pageSize,
             totalSize = it.totalSize,
@@ -87,8 +87,8 @@ suspend fun MessageApi.findMessages(user: UserDto, startKey: String?, startDocum
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun MessageApi.findMessagesByFromAddress(user: UserDto, fromAddress: String?, startKey: String?, startDocumentId: String?, limit: Int?, hcpId: String?, config: CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>) : io.icure.kraken.client.models.decrypted.PaginatedListMessageDto?  {
-    return this.findMessagesByFromAddress(fromAddress, startKey, startDocumentId, limit, hcpId)?.let {
+suspend fun MessageApi.findMessagesByFromAddress(user: UserDto, fromAddress: String?, startKey: String?, startDocumentId: String?, limit: Int?, hcpId: String?, config: CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>) : io.icure.kraken.client.models.decrypted.PaginatedListMessageDto  {
+    return this.findMessagesByFromAddress(fromAddress, startKey, startDocumentId, limit, hcpId).let {
         io.icure.kraken.client.models.decrypted.PaginatedListMessageDto(
             pageSize = it.pageSize,
             totalSize = it.totalSize,
@@ -100,14 +100,14 @@ suspend fun MessageApi.findMessagesByFromAddress(user: UserDto, fromAddress: Str
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun MessageApi.findMessagesByHCPartyPatientForeignKeys(user: UserDto, secretFKeys: String, config: CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>) : List<MessageDto>?  {
-    return this.findMessagesByHCPartyPatientForeignKeys(secretFKeys)?.map { config.decryptMessage(user.healthcarePartyId!!, it) }
+suspend fun MessageApi.findMessagesByHCPartyPatientForeignKeys(user: UserDto, secretFKeys: String, config: CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>) : List<MessageDto>  {
+    return this.findMessagesByHCPartyPatientForeignKeys(secretFKeys).map { config.decryptMessage(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun MessageApi.findMessagesByToAddress(user: UserDto, toAddress: String?, startKey: String?, startDocumentId: String?, limit: Int?, reverse: Boolean?, hcpId: String?, config: CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>) : io.icure.kraken.client.models.decrypted.PaginatedListMessageDto?  {
-    return this.findMessagesByToAddress(toAddress, startKey, startDocumentId, limit, reverse, hcpId)?.let {
+suspend fun MessageApi.findMessagesByToAddress(user: UserDto, toAddress: String?, startKey: String?, startDocumentId: String?, limit: Int?, reverse: Boolean?, hcpId: String?, config: CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>) : io.icure.kraken.client.models.decrypted.PaginatedListMessageDto  {
+    return this.findMessagesByToAddress(toAddress, startKey, startDocumentId, limit, reverse, hcpId).let {
         io.icure.kraken.client.models.decrypted.PaginatedListMessageDto(
             pageSize = it.pageSize,
             totalSize = it.totalSize,
@@ -119,8 +119,8 @@ suspend fun MessageApi.findMessagesByToAddress(user: UserDto, toAddress: String?
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun MessageApi.findMessagesByTransportGuid(user: UserDto, transportGuid: String?, received: Boolean?, startKey: String?, startDocumentId: String?, limit: Int?, hcpId: String?, config: CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>) : io.icure.kraken.client.models.decrypted.PaginatedListMessageDto?  {
-    return this.findMessagesByTransportGuid(transportGuid, received, startKey, startDocumentId, limit, hcpId)?.let {
+suspend fun MessageApi.findMessagesByTransportGuid(user: UserDto, transportGuid: String?, received: Boolean?, startKey: String?, startDocumentId: String?, limit: Int?, hcpId: String?, config: CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>) : io.icure.kraken.client.models.decrypted.PaginatedListMessageDto  {
+    return this.findMessagesByTransportGuid(transportGuid, received, startKey, startDocumentId, limit, hcpId).let {
         io.icure.kraken.client.models.decrypted.PaginatedListMessageDto(
             pageSize = it.pageSize,
             totalSize = it.totalSize,
@@ -132,8 +132,8 @@ suspend fun MessageApi.findMessagesByTransportGuid(user: UserDto, transportGuid:
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun MessageApi.findMessagesByTransportGuidSentDate(user: UserDto, from: Long?, to: Long?, transportGuid: String?, startKey: String?, startDocumentId: String?, limit: Int?, hcpId: String?, config: CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>) : io.icure.kraken.client.models.decrypted.PaginatedListMessageDto?  {
-    return this.findMessagesByTransportGuidSentDate(transportGuid, from, to, startKey, startDocumentId, limit, hcpId)?.let {
+suspend fun MessageApi.findMessagesByTransportGuidSentDate(user: UserDto, from: Long?, to: Long?, transportGuid: String?, startKey: String?, startDocumentId: String?, limit: Int?, hcpId: String?, config: CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>) : io.icure.kraken.client.models.decrypted.PaginatedListMessageDto  {
+    return this.findMessagesByTransportGuidSentDate(transportGuid, from, to, startKey, startDocumentId, limit, hcpId).let {
         io.icure.kraken.client.models.decrypted.PaginatedListMessageDto(
             pageSize = it.pageSize,
             totalSize = it.totalSize,
@@ -145,38 +145,38 @@ suspend fun MessageApi.findMessagesByTransportGuidSentDate(user: UserDto, from: 
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun MessageApi.getChildrenMessages(user: UserDto, messageId: String, config: CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>) : List<MessageDto>?  {
-    return this.getChildrenMessages(messageId)?.map { config.decryptMessage(user.healthcarePartyId!!, it) }
+suspend fun MessageApi.getChildrenMessages(user: UserDto, messageId: String, config: CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>) : List<MessageDto>  {
+    return this.getChildrenMessages(messageId).map { config.decryptMessage(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun MessageApi.getMessagesChildren(user: UserDto, listOfIdsDto: ListOfIdsDto, config: CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>) : List<MessageDto>?  {
-    return this.getMessagesChildren(listOfIdsDto)?.map { config.decryptMessage(user.healthcarePartyId!!, it) }
+suspend fun MessageApi.getMessagesChildren(user: UserDto, listOfIdsDto: ListOfIdsDto, config: CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>) : List<MessageDto>  {
+    return this.getMessagesChildren(listOfIdsDto).map { config.decryptMessage(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun MessageApi.listMessagesByInvoices(user: UserDto, listOfIdsDto: ListOfIdsDto, config: CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>) : List<MessageDto>?  {
-    return this.listMessagesByInvoices(listOfIdsDto)?.map { config.decryptMessage(user.healthcarePartyId!!, it) }
+suspend fun MessageApi.listMessagesByInvoices(user: UserDto, listOfIdsDto: ListOfIdsDto, config: CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>) : List<MessageDto>  {
+    return this.listMessagesByInvoices(listOfIdsDto).map { config.decryptMessage(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun MessageApi.listMessagesByTransportGuids(user: UserDto, hcpId: String, listOfIdsDto: ListOfIdsDto, config: CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>) : List<MessageDto>?  {
-    return this.listMessagesByTransportGuids(hcpId, listOfIdsDto)?.map { config.decryptMessage(user.healthcarePartyId!!, it) }
+suspend fun MessageApi.listMessagesByTransportGuids(user: UserDto, hcpId: String, listOfIdsDto: ListOfIdsDto, config: CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>) : List<MessageDto>  {
+    return this.listMessagesByTransportGuids(hcpId, listOfIdsDto).map { config.decryptMessage(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun MessageApi.setMessagesReadStatus(user: UserDto, messagesReadStatusUpdate: MessagesReadStatusUpdate, config: CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>) : List<MessageDto>?  {
-    return this.setMessagesReadStatus(messagesReadStatusUpdate)?.map { config.decryptMessage(user.healthcarePartyId!!, it) }
+suspend fun MessageApi.setMessagesReadStatus(user: UserDto, messagesReadStatusUpdate: MessagesReadStatusUpdate, config: CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>) : List<MessageDto>  {
+    return this.setMessagesReadStatus(messagesReadStatusUpdate).map { config.decryptMessage(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun MessageApi.setMessagesStatusBits(user: UserDto, status: Int, listOfIdsDto: ListOfIdsDto, config: CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>) : List<MessageDto>?  {
-    return this.setMessagesStatusBits(status, listOfIdsDto)?.map { config.decryptMessage(user.healthcarePartyId!!, it) }
+suspend fun MessageApi.setMessagesStatusBits(user: UserDto, status: Int, listOfIdsDto: ListOfIdsDto, config: CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>) : List<MessageDto>  {
+    return this.setMessagesStatusBits(status, listOfIdsDto).map { config.decryptMessage(user.healthcarePartyId!!, it) }
 }
 
 
@@ -190,24 +190,20 @@ suspend fun CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>.e
             m + (d to setOf(DelegationDto(emptyList(), myId, d, this.crypto.encryptAESKeyForHcp(myId, d, message.id, secret))))
         })
     }.let { p ->
-        val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.let { aesKey ->
-            aesKey.replace(
-                "-",
-                ""
-            ).keyFromHexString()
-        } ?: throw IllegalArgumentException("No encryption key for user")
+        val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.replace(
+            "-",
+            ""
+        )?.keyFromHexString() ?: throw IllegalArgumentException("No encryption key for user")
         val (sanitizedMessage, marshalledData) = this.marshaller(p)
         sanitizedMessage.copy(encryptedSelf = Base64.getEncoder().encodeToString(encryptAES(data = marshalledData, key = key)))
     }
 }
 
 suspend fun CryptoConfig<MessageDto, io.icure.kraken.client.models.MessageDto>.decryptMessage(myId: String, message: io.icure.kraken.client.models.MessageDto): MessageDto {
-    val key = this.crypto.decryptEncryptionKeys(myId, message.encryptionKeys).firstOrNull()?.let { aesKey ->
-        aesKey.replace(
-            "-",
-            ""
-        ).keyFromHexString()
-    } ?: throw IllegalArgumentException("No encryption key for user")
+    val key = this.crypto.decryptEncryptionKeys(myId, message.encryptionKeys).firstOrNull()?.replace(
+        "-",
+        ""
+    )?.keyFromHexString() ?: throw IllegalArgumentException("No encryption key for user")
     return this.unmarshaller(message, decryptAES(data = Base64.getDecoder().decode(message.encryptedSelf), key = key))
 }
 

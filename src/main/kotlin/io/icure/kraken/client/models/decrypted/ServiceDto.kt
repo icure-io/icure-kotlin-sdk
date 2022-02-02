@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.github.pozo.KotlinBuilder
+import io.icure.kraken.client.models.AnnotationDto
 import io.icure.kraken.client.models.IdentifierDto
 
 
@@ -98,6 +99,10 @@ data class ServiceDto (
     @field:JsonProperty("invoicingCodes")
     val invoicingCodes: kotlin.collections.List<kotlin.String> = emptyList(),
 
+    /* Comments - Notes recorded by a HCP about this service */
+    @field:JsonProperty("notes")
+    val notes: kotlin.collections.List<AnnotationDto> = emptyList(),
+
     /* Links towards related services (possibly in other contacts) */
     @field:JsonProperty("qualifiedLinks")
     val qualifiedLinks: kotlin.collections.Map<LinkQualification, kotlin.collections.Map<kotlin.String, kotlin.String>> = mapOf(),
@@ -133,9 +138,6 @@ data class ServiceDto (
     /* The secret patient key, encrypted in the patient document, in clear here. */
     @field:JsonProperty("secretForeignKeys")
     val secretForeignKeys: kotlin.collections.Set<kotlin.String>? = null,
-
-    @field:JsonProperty("dataClassName")
-    val dataClassName: kotlin.String? = null,
 
     @field:JsonProperty("index")
     val index: kotlin.Long? = null,

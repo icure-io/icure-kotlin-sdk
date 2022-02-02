@@ -21,14 +21,14 @@ suspend fun ReceiptDto.initDelegations(user: UserDto, config: CryptoConfig<Recei
     return this.copy(
         responsible = user.healthcarePartyId!!,
         author = user.id,
-        delegations = (delegations + user.healthcarePartyId!!).fold(this.encryptionKeys) { m, d ->
+        delegations = (delegations + user.healthcarePartyId).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
                     emptyList(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, sfk),
                 ),
             ))
         },
-        encryptionKeys = (delegations + user.healthcarePartyId!!).fold(this.encryptionKeys) { m, d ->
+        encryptionKeys = (delegations + user.healthcarePartyId).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
                     emptyList(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, ek),
@@ -47,36 +47,36 @@ suspend fun ReceiptApi.createReceipt(user: UserDto, receipt: ReceiptDto, config:
             (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
             receipt
         )
-    )?.let { config.decryptReceipt(user.healthcarePartyId!!, it) }
+    ).let { config.decryptReceipt(user.healthcarePartyId, it) }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ReceiptApi.getReceipt(user: UserDto, receiptId: String, config: CryptoConfig<ReceiptDto, io.icure.kraken.client.models.ReceiptDto>): ReceiptDto?  {
-    return this.getReceipt(receiptId)?.let { config.decryptReceipt(user.healthcarePartyId!!, it) }
+suspend fun ReceiptApi.getReceipt(user: UserDto, receiptId: String, config: CryptoConfig<ReceiptDto, io.icure.kraken.client.models.ReceiptDto>): ReceiptDto  {
+    return this.getReceipt(receiptId).let { config.decryptReceipt(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ReceiptApi.modifyReceipt(user: UserDto, receipt: ReceiptDto, config: CryptoConfig<ReceiptDto, io.icure.kraken.client.models.ReceiptDto>) : ReceiptDto?  {
+suspend fun ReceiptApi.modifyReceipt(user: UserDto, receipt: ReceiptDto, config: CryptoConfig<ReceiptDto, io.icure.kraken.client.models.ReceiptDto>) : ReceiptDto  {
     return this.modifyReceipt(
         config.encryptReceipt(
             user.healthcarePartyId!!,
             (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
             receipt
         )
-    )?.let { config.decryptReceipt(user.healthcarePartyId!!, it) }
+    ).let { config.decryptReceipt(user.healthcarePartyId, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ReceiptApi.listByReference(user: UserDto, ref: String, config: CryptoConfig<ReceiptDto, io.icure.kraken.client.models.ReceiptDto>) : List<ReceiptDto>?  {
-    return this.listByReference(ref)?.map { config.decryptReceipt(user.healthcarePartyId!!, it) }
+suspend fun ReceiptApi.listByReference(user: UserDto, ref: String, config: CryptoConfig<ReceiptDto, io.icure.kraken.client.models.ReceiptDto>) : List<ReceiptDto>  {
+    return this.listByReference(ref).map { config.decryptReceipt(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ReceiptApi.setReceiptAttachment(user: UserDto, receiptId: String, blobType: String, requestBody: Flow<ByteBuffer>, enckeys: String?, config: CryptoConfig<ReceiptDto, io.icure.kraken.client.models.ReceiptDto>) :ReceiptDto?  {
-    return this.setReceiptAttachment(receiptId, blobType, requestBody, enckeys)?.let { config.decryptReceipt(user.healthcarePartyId!!, it) }
+suspend fun ReceiptApi.setReceiptAttachment(user: UserDto, receiptId: String, blobType: String, requestBody: Flow<ByteBuffer>, enckeys: String?, config: CryptoConfig<ReceiptDto, io.icure.kraken.client.models.ReceiptDto>) :ReceiptDto  {
+    return this.setReceiptAttachment(receiptId, blobType, requestBody, enckeys).let { config.decryptReceipt(user.healthcarePartyId!!, it) }
 }
 
 suspend fun CryptoConfig<ReceiptDto, io.icure.kraken.client.models.ReceiptDto>.encryptReceipt(myId: String, delegations: Set<String>, receipt: ReceiptDto): io.icure.kraken.client.models.ReceiptDto {
@@ -88,24 +88,20 @@ suspend fun CryptoConfig<ReceiptDto, io.icure.kraken.client.models.ReceiptDto>.e
             m + (d to setOf(DelegationDto(emptyList(), myId, d, this.crypto.encryptAESKeyForHcp(myId, d, receipt.id, secret))))
         })
     }.let { p ->
-        val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.let { aesKey ->
-            aesKey.replace(
-                "-",
-                ""
-            ).keyFromHexString()
-        } ?: throw IllegalArgumentException("No encryption key for user")
+        val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.replace(
+            "-",
+            ""
+        )?.keyFromHexString() ?: throw IllegalArgumentException("No encryption key for user")
         val (sanitizedReceipt, marshalledData) = this.marshaller(p)
         sanitizedReceipt.copy(encryptedSelf = Base64.getEncoder().encodeToString(encryptAES(data = marshalledData, key = key)))
     }
 }
 
 suspend fun CryptoConfig<ReceiptDto, io.icure.kraken.client.models.ReceiptDto>.decryptReceipt(myId: String, receipt: io.icure.kraken.client.models.ReceiptDto): ReceiptDto {
-    val key = this.crypto.decryptEncryptionKeys(myId, receipt.encryptionKeys).firstOrNull()?.let { aesKey ->
-        aesKey.replace(
-            "-",
-            ""
-        ).keyFromHexString()
-    } ?: throw IllegalArgumentException("No encryption key for user")
+    val key = this.crypto.decryptEncryptionKeys(myId, receipt.encryptionKeys).firstOrNull()?.replace(
+        "-",
+        ""
+    )?.keyFromHexString() ?: throw IllegalArgumentException("No encryption key for user")
     return this.unmarshaller(receipt, decryptAES(data = Base64.getDecoder().decode(receipt.encryptedSelf), key = key))
 }
 

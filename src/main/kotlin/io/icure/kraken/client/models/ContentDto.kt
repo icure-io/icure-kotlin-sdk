@@ -23,7 +23,7 @@ import com.github.pozo.KotlinBuilder
 
 
 /**
- * The type of the content recorded in the documents for the service
+ * Information contained in the service. Content is localized, using ISO language code as key
  *
  * @param stringValue 
  * @param numberValue 

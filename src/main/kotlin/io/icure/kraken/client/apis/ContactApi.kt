@@ -981,6 +981,45 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     }
 
     /**
+    * List services linked to a health element
+    * Returns the list of services linked to the provided health element id
+    * @param healthElementId  
+    * @return kotlin.collections.List<ServiceDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun listServicesByHealthElementId(healthElementId: kotlin.String) : kotlin.collections.List<ServiceDto>  {
+        val localVariableConfig = listServicesByHealthElementIdRequestConfig(healthElementId = healthElementId)
+
+        return request<Unit, kotlin.collections.List<ServiceDto>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation listServicesByHealthElementId
+    *
+    * @param healthElementId  
+    * @return RequestConfig
+    */
+    fun listServicesByHealthElementIdRequestConfig(healthElementId: kotlin.String) : RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v2/contact/service/healthElementId/{healthElementId}".replace("{"+"healthElementId"+"}", "${URLEncoder.encode(healthElementId.toString(), Charsets.UTF_8)}"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
     * Get ids of contacts matching the provided filter for the current user (HcParty) 
     * 
     * @param abstractFilterDtoContact  

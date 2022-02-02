@@ -12,6 +12,7 @@
  */
 package io.icure.kraken.client.models
 
+import io.icure.kraken.client.models.AnnotationDto
 import io.icure.kraken.client.models.CodeStubDto
 import io.icure.kraken.client.models.ContentDto
 import io.icure.kraken.client.models.DelegationDto
@@ -31,9 +32,10 @@ import com.github.pozo.KotlinBuilder
  * @param cryptedForeignKeys The public patient key, encrypted here for separate Crypto Actors.
  * @param delegations The delegations giving access to connected healthcare information.
  * @param encryptionKeys The contact secret encryption key used to encrypt the secured properties (like services for example), encrypted for separate Crypto Actors.
- * @param content The type of the content recorded in the documents for the service
+ * @param content Information contained in the service. Content is localized, using ISO language code as key
  * @param textIndexes 
  * @param invoicingCodes List of invoicing codes
+ * @param notes Comments - Notes recorded by a HCP about this service
  * @param qualifiedLinks Links towards related services (possibly in other contacts)
  * @param codes A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes
  * @param tags A tag is an item from a codification system that qualifies an entity as being member of a certain class, whatever the value it might have taken. If the tag qualifies the content of a field, it means that whatever the content of the field, the tag will always apply. For example, the label of a field is qualified using a tag. LOINC is a codification system typically used for tags.
@@ -43,14 +45,13 @@ import com.github.pozo.KotlinBuilder
  * @param healthElementsIds List of IDs of all healthcare elements for which the service is provided. Only used when the Service is emitted outside of its contact
  * @param formIds List of Ids of all forms linked to the Service. Only used when the Service is emitted outside of its contact.
  * @param secretForeignKeys The secret patient key, encrypted in the patient document, in clear here.
- * @param label 
- * @param dataClassName 
- * @param index 
+ * @param label Description / Unambiguous qualification (LOINC code) of the type of information contained in the service. Could be a code to qualify temperature, complaint, diagnostic, ...
+ * @param index Used for sorting services inside an upper object (A contact, a transaction, a FHIR bundle, ...)
  * @param encryptedContent 
- * @param valueDate 
- * @param openingDate 
- * @param closingDate 
- * @param formId 
+ * @param valueDate The date (YYYYMMDDhhmmss) when the Service is noted to have started and also closes on the same date
+ * @param openingDate The date (YYYYMMDDhhmmss) of the start of the Service
+ * @param closingDate The date (YYYYMMDDhhmmss) marking the end of the Service
+ * @param formId Id of the form used during the Service
  * @param created The timestamp (unix epoch in ms) of creation of this entity, will be filled automatically if missing. Not enforced by the application server.
  * @param modified The date (unix epoch in ms) of the latest modification of this entity, will be filled automatically if missing. Not enforced by the application server.
  * @param endOfLife Soft delete (unix epoch in ms) timestamp of the object.
@@ -86,7 +87,7 @@ data class ServiceDto (
     @field:JsonProperty("encryptionKeys")
     val encryptionKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<DelegationDto>> = emptyMap(),
 
-    /* The type of the content recorded in the documents for the service */
+    /* Information contained in the service. Content is localized, using ISO language code as key */
     @field:JsonProperty("content")
     val content: kotlin.collections.Map<kotlin.String, ContentDto> = emptyMap(),
 
@@ -96,6 +97,10 @@ data class ServiceDto (
     /* List of invoicing codes */
     @field:JsonProperty("invoicingCodes")
     val invoicingCodes: kotlin.collections.List<kotlin.String> = emptyList(),
+
+    /* Comments - Notes recorded by a HCP about this service */
+    @field:JsonProperty("notes")
+    val notes: kotlin.collections.List<AnnotationDto> = emptyList(),
 
     /* Links towards related services (possibly in other contacts) */
     @field:JsonProperty("qualifiedLinks")
@@ -133,12 +138,11 @@ data class ServiceDto (
     @field:JsonProperty("secretForeignKeys")
     val secretForeignKeys: kotlin.collections.Set<kotlin.String>? = null,
 
+    /* Description / Unambiguous qualification (LOINC code) of the type of information contained in the service. Could be a code to qualify temperature, complaint, diagnostic, ... */
     @field:JsonProperty("label")
     val label: kotlin.String? = null,
 
-    @field:JsonProperty("dataClassName")
-    val dataClassName: kotlin.String? = null,
-
+    /* Used for sorting services inside an upper object (A contact, a transaction, a FHIR bundle, ...) */
     @field:JsonProperty("index")
     val index: kotlin.Long? = null,
 
@@ -146,15 +150,19 @@ data class ServiceDto (
     @Deprecated(message = "This property is deprecated.")
     val encryptedContent: kotlin.String? = null,
 
+    /* The date (YYYYMMDDhhmmss) when the Service is noted to have started and also closes on the same date */
     @field:JsonProperty("valueDate")
     val valueDate: kotlin.Long? = null,
 
+    /* The date (YYYYMMDDhhmmss) of the start of the Service */
     @field:JsonProperty("openingDate")
     val openingDate: kotlin.Long? = null,
 
+    /* The date (YYYYMMDDhhmmss) marking the end of the Service */
     @field:JsonProperty("closingDate")
     val closingDate: kotlin.Long? = null,
 
+    /* Id of the form used during the Service */
     @field:JsonProperty("formId")
     val formId: kotlin.String? = null,
 

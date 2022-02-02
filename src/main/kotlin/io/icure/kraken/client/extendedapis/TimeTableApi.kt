@@ -19,14 +19,14 @@ suspend fun TimeTableDto.initDelegations(user: UserDto, config: CryptoConfig<Tim
     return this.copy(
         responsible = user.healthcarePartyId!!,
         author = user.id,
-        delegations = (delegations + user.healthcarePartyId!!).fold(this.encryptionKeys) { m, d ->
+        delegations = (delegations + user.healthcarePartyId).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
                     emptyList(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, sfk),
                 ),
             ))
         },
-        encryptionKeys = (delegations + user.healthcarePartyId!!).fold(this.encryptionKeys) { m, d ->
+        encryptionKeys = (delegations + user.healthcarePartyId).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
                     emptyList(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, ek),
@@ -45,37 +45,37 @@ suspend fun TimeTableApi.createTimeTable(user: UserDto, timeTable: TimeTableDto,
             (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
             timeTable
         )
-    )?.let { config.decryptTimeTable(user.healthcarePartyId!!, it) }
+    ).let { config.decryptTimeTable(user.healthcarePartyId, it) }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun TimeTableApi.getTimeTable(user: UserDto, timeTableId: String, config: CryptoConfig<TimeTableDto, io.icure.kraken.client.models.TimeTableDto>): TimeTableDto?  {
-    return this.getTimeTable(timeTableId)?.let { config.decryptTimeTable(user.healthcarePartyId!!, it) }
+suspend fun TimeTableApi.getTimeTable(user: UserDto, timeTableId: String, config: CryptoConfig<TimeTableDto, io.icure.kraken.client.models.TimeTableDto>): TimeTableDto  {
+    return this.getTimeTable(timeTableId).let { config.decryptTimeTable(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun TimeTableApi.modifyTimeTable(user: UserDto, timeTable: TimeTableDto, config: CryptoConfig<TimeTableDto, io.icure.kraken.client.models.TimeTableDto>) : TimeTableDto?  {
+suspend fun TimeTableApi.modifyTimeTable(user: UserDto, timeTable: TimeTableDto, config: CryptoConfig<TimeTableDto, io.icure.kraken.client.models.TimeTableDto>) : TimeTableDto  {
     return this.modifyTimeTable(
         config.encryptTimeTable(
             user.healthcarePartyId!!,
             (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
             timeTable
         )
-    )?.let { config.decryptTimeTable(user.healthcarePartyId!!, it) }
+    ).let { config.decryptTimeTable(user.healthcarePartyId, it) }
 }
 
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun TimeTableApi.getTimeTablesByAgendaId(user: UserDto, agendaId: String, config: CryptoConfig<TimeTableDto, io.icure.kraken.client.models.TimeTableDto>) : List<TimeTableDto>?  {
-    return this.getTimeTablesByAgendaId(agendaId)?.map { config.decryptTimeTable(user.healthcarePartyId!!, it) }
+suspend fun TimeTableApi.getTimeTablesByAgendaId(user: UserDto, agendaId: String, config: CryptoConfig<TimeTableDto, io.icure.kraken.client.models.TimeTableDto>) : List<TimeTableDto>  {
+    return this.getTimeTablesByAgendaId(agendaId).map { config.decryptTimeTable(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun TimeTableApi.getTimeTablesByPeriodAndAgendaId(user: UserDto, startDate: Long, endDate: Long, agendaId: String, config: CryptoConfig<TimeTableDto, io.icure.kraken.client.models.TimeTableDto>) : List<TimeTableDto>?  {
-    return this.getTimeTablesByPeriodAndAgendaId(startDate, endDate, agendaId)?.map { config.decryptTimeTable(user.healthcarePartyId!!, it) }
+suspend fun TimeTableApi.getTimeTablesByPeriodAndAgendaId(user: UserDto, startDate: Long, endDate: Long, agendaId: String, config: CryptoConfig<TimeTableDto, io.icure.kraken.client.models.TimeTableDto>) : List<TimeTableDto>  {
+    return this.getTimeTablesByPeriodAndAgendaId(startDate, endDate, agendaId).map { config.decryptTimeTable(user.healthcarePartyId!!, it) }
 }
 
 suspend fun CryptoConfig<TimeTableDto, io.icure.kraken.client.models.TimeTableDto>.encryptTimeTable(myId: String, delegations: Set<String>, timeTable: TimeTableDto): io.icure.kraken.client.models.TimeTableDto {
@@ -87,24 +87,20 @@ suspend fun CryptoConfig<TimeTableDto, io.icure.kraken.client.models.TimeTableDt
             m + (d to setOf(DelegationDto(emptyList(), myId, d, this.crypto.encryptAESKeyForHcp(myId, d, timeTable.id, secret))))
         })
     }.let { p ->
-        val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.let { aesKey ->
-            aesKey.replace(
-                "-",
-                ""
-            ).keyFromHexString()
-        } ?: throw IllegalArgumentException("No encryption key for user")
+        val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.replace(
+            "-",
+            ""
+        )?.keyFromHexString() ?: throw IllegalArgumentException("No encryption key for user")
         val (sanitizedTimeTable, marshalledData) = this.marshaller(p)
         sanitizedTimeTable.copy(encryptedSelf = Base64.getEncoder().encodeToString(encryptAES(data = marshalledData, key = key)))
     }
 }
 
 suspend fun CryptoConfig<TimeTableDto, io.icure.kraken.client.models.TimeTableDto>.decryptTimeTable(myId: String, timeTable: io.icure.kraken.client.models.TimeTableDto): TimeTableDto {
-    val key = this.crypto.decryptEncryptionKeys(myId, timeTable.encryptionKeys).firstOrNull()?.let { aesKey ->
-        aesKey.replace(
-            "-",
-            ""
-        ).keyFromHexString()
-    } ?: throw IllegalArgumentException("No encryption key for user")
+    val key = this.crypto.decryptEncryptionKeys(myId, timeTable.encryptionKeys).firstOrNull()?.replace(
+        "-",
+        ""
+    )?.keyFromHexString() ?: throw IllegalArgumentException("No encryption key for user")
     return this.unmarshaller(timeTable, decryptAES(data = Base64.getDecoder().decode(timeTable.encryptedSelf), key = key))
 }
 

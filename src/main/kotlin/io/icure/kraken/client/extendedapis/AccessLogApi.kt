@@ -22,14 +22,14 @@ suspend fun AccessLogDto.initDelegations(user: UserDto, config: CryptoConfig<Acc
     return this.copy(
         responsible = user.healthcarePartyId!!,
         author = user.id,
-        delegations = (delegations + user.healthcarePartyId!!).fold(this.encryptionKeys) { m, d ->
+        delegations = (delegations + user.healthcarePartyId).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
                     emptyList(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, sfk),
                 ),
             ))
         },
-        encryptionKeys = (delegations + user.healthcarePartyId!!).fold(this.encryptionKeys) { m, d ->
+        encryptionKeys = (delegations + user.healthcarePartyId).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
                     emptyList(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, ek),
@@ -48,13 +48,13 @@ suspend fun AccessLogApi.createAccessLog(user: UserDto, accessLog: AccessLogDto,
             (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
             accessLog
         )
-    )?.let { config.decryptAccessLog(user.healthcarePartyId!!, it) }
+    ).let { config.decryptAccessLog(user.healthcarePartyId, it) }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun AccessLogApi.findAccessLogsByUserAfterDate(user: UserDto, userId: String, accessType: String?, startDate: Long?, startKey: String?, startDocumentId: String?, limit: Int?, descending: Boolean?, config: CryptoConfig<AccessLogDto, io.icure.kraken.client.models.AccessLogDto>) : PaginatedListAccessLogDto? {
-    return this.findAccessLogsByUserAfterDate(userId, accessType, startDate, startKey, startDocumentId, limit, descending)?.let {
-        PaginatedListAccessLogDto(rows = it.rows?.map { config.decryptAccessLog(user.healthcarePartyId!!, it) }, pageSize = it.pageSize, totalSize = it.totalSize, nextKeyPair = it.nextKeyPair)
+suspend fun AccessLogApi.findAccessLogsByUserAfterDate(user: UserDto, userId: String, accessType: String?, startDate: Long?, startKey: String?, startDocumentId: String?, limit: Int?, descending: Boolean?, config: CryptoConfig<AccessLogDto, io.icure.kraken.client.models.AccessLogDto>) : PaginatedListAccessLogDto {
+    return this.findAccessLogsByUserAfterDate(userId, accessType, startDate, startKey, startDocumentId, limit, descending).let {
+        PaginatedListAccessLogDto(rows = it.rows.map { config.decryptAccessLog(user.healthcarePartyId!!, it) }, pageSize = it.pageSize, totalSize = it.totalSize, nextKeyPair = it.nextKeyPair)
     }
 }
 @ExperimentalCoroutinesApi
@@ -66,34 +66,34 @@ suspend fun AccessLogApi.listAccessLogsByHCPartyAndPatient(user: UserDto, hcPart
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun AccessLogApi.listAccessLogsByHCPartyAndPatientForeignKeys(user: UserDto, hcPartyId: String, secretFKeys: String, config: CryptoConfig<AccessLogDto, io.icure.kraken.client.models.AccessLogDto>) : List<AccessLogDto>?  {
-    return this.listAccessLogsByHCPartyAndPatientForeignKeys(hcPartyId, secretFKeys)?.map { config.decryptAccessLog(user.healthcarePartyId!!, it) }
+suspend fun AccessLogApi.listAccessLogsByHCPartyAndPatientForeignKeys(user: UserDto, hcPartyId: String, secretFKeys: String, config: CryptoConfig<AccessLogDto, io.icure.kraken.client.models.AccessLogDto>) : List<AccessLogDto>  {
+    return this.listAccessLogsByHCPartyAndPatientForeignKeys(hcPartyId, secretFKeys).map { config.decryptAccessLog(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun AccessLogApi.getAccessLog(user: UserDto, accessLogId: String, config: CryptoConfig<AccessLogDto, io.icure.kraken.client.models.AccessLogDto>): AccessLogDto?  {
-    return this.getAccessLog(accessLogId)?.let { config.decryptAccessLog(user.healthcarePartyId!!, it) }
+suspend fun AccessLogApi.getAccessLog(user: UserDto, accessLogId: String, config: CryptoConfig<AccessLogDto, io.icure.kraken.client.models.AccessLogDto>): AccessLogDto  {
+    return this.getAccessLog(accessLogId).let { config.decryptAccessLog(user.healthcarePartyId!!, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun AccessLogApi.findAccessLogsBy(user: UserDto, fromEpoch: Long?, toEpoch: Long?, startKey: Long?, startDocumentId: String?, limit: Int?, descending: Boolean?, config: CryptoConfig<AccessLogDto, io.icure.kraken.client.models.AccessLogDto>) : PaginatedListAccessLogDto?  {
+suspend fun AccessLogApi.findAccessLogsBy(user: UserDto, fromEpoch: Long?, toEpoch: Long?, startKey: Long?, startDocumentId: String?, limit: Int?, descending: Boolean?, config: CryptoConfig<AccessLogDto, io.icure.kraken.client.models.AccessLogDto>) : PaginatedListAccessLogDto  {
     return this.findAccessLogsBy(fromEpoch, toEpoch, startKey, startDocumentId, limit, descending).let { paginatedList ->
-        PaginatedListAccessLogDto(rows = paginatedList.rows?.map { config.decryptAccessLog(user.healthcarePartyId!!, it) }, pageSize = paginatedList.pageSize, totalSize = paginatedList.totalSize, nextKeyPair = paginatedList.nextKeyPair)
+        PaginatedListAccessLogDto(rows = paginatedList.rows.map { config.decryptAccessLog(user.healthcarePartyId!!, it) }, pageSize = paginatedList.pageSize, totalSize = paginatedList.totalSize, nextKeyPair = paginatedList.nextKeyPair)
     }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun AccessLogApi.modifyAccessLog(user: UserDto, accessLog: AccessLogDto, config: CryptoConfig<AccessLogDto, io.icure.kraken.client.models.AccessLogDto>) : AccessLogDto?  {
+suspend fun AccessLogApi.modifyAccessLog(user: UserDto, accessLog: AccessLogDto, config: CryptoConfig<AccessLogDto, io.icure.kraken.client.models.AccessLogDto>) : AccessLogDto  {
     return this.modifyAccessLog(
         config.encryptAccessLog(
             user.healthcarePartyId!!,
             (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
             accessLog
         )
-    )?.let { config.decryptAccessLog(user.healthcarePartyId!!, it) }
+    ).let { config.decryptAccessLog(user.healthcarePartyId, it) }
 }
 
 suspend fun CryptoConfig<AccessLogDto, io.icure.kraken.client.models.AccessLogDto>.encryptAccessLog(myId: String, delegations: Set<String>, accessLog: AccessLogDto): io.icure.kraken.client.models.AccessLogDto {
@@ -105,24 +105,20 @@ suspend fun CryptoConfig<AccessLogDto, io.icure.kraken.client.models.AccessLogDt
             m + (d to setOf(DelegationDto(emptyList(), myId, d, this.crypto.encryptAESKeyForHcp(myId, d, accessLog.id, secret))))
         })
     }.let { p ->
-        val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.let { aesKey ->
-            aesKey.replace(
-                "-",
-                ""
-            ).keyFromHexString()
-        } ?: throw IllegalArgumentException("No encryption key for user")
+        val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.replace(
+            "-",
+            ""
+        )?.keyFromHexString() ?: throw IllegalArgumentException("No encryption key for user")
         val (sanitizedAccessLog, marshalledData) = this.marshaller(p)
         sanitizedAccessLog.copy(encryptedSelf = Base64.getEncoder().encodeToString(encryptAES(data = marshalledData, key = key)))
     }
 }
 
 suspend fun CryptoConfig<AccessLogDto, io.icure.kraken.client.models.AccessLogDto>.decryptAccessLog(myId: String, accessLog: io.icure.kraken.client.models.AccessLogDto): AccessLogDto {
-    val key = this.crypto.decryptEncryptionKeys(myId, accessLog.encryptionKeys).firstOrNull()?.let { aesKey ->
-        aesKey.replace(
-            "-",
-            ""
-        ).keyFromHexString()
-    } ?: throw IllegalArgumentException("No encryption key for user")
+    val key = this.crypto.decryptEncryptionKeys(myId, accessLog.encryptionKeys).firstOrNull()?.replace(
+        "-",
+        ""
+    )?.keyFromHexString() ?: throw IllegalArgumentException("No encryption key for user")
     return this.unmarshaller(accessLog, decryptAES(data = Base64.getDecoder().decode(accessLog.encryptedSelf), key = key))
 }
 

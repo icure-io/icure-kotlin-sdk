@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.json.JsonReadFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.fasterxml.jackson.databind.module.SimpleModule
 import io.icure.asyncjacksonhttpclient.net.params
 
 import io.icure.asyncjacksonhttpclient.net.web.HttpMethod
@@ -35,17 +36,23 @@ open class ApiClient(val baseUrl: String, val httpClient: WebClient, val authHea
         protected const val FormUrlEncMediaType = "application/x-www-form-urlencoded"
         protected const val XmlMediaType = "application/xml"
 
-        val apiKey: MutableMap<String, String> = mutableMapOf()
-        val apiKeyPrefix: MutableMap<String, String> = mutableMapOf()
         var username: String? = null
         var password: String? = null
-        var accessToken: String? = null
         var timeoutDuration: Duration? = null
 
-        val objectMapper = ObjectMapper().registerModule(KotlinModule()).registerModule(JavaTimeModule()).apply {
-            setSerializationInclusion(JsonInclude.Include.NON_NULL)
-            configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
-        }
+        val objectMapper = ObjectMapper()
+                    .registerModule(KotlinModule())
+                    .registerModule(object: SimpleModule() {
+                        override fun setupModule(context: SetupContext?) {
+                            addDeserializer(ByteArrayWrapper::class.java, ByteArrayWrapperDeserializer())
+                            addSerializer(ByteArrayWrapper::class.java, ByteArrayWrapperSerializer())
+                            super.setupModule(context)
+                        }
+                    })
+                    .registerModule(JavaTimeModule()).apply {
+                    setSerializationInclusion(JsonInclude.Include.NON_NULL)
+                    configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
+                }
 
     }
 

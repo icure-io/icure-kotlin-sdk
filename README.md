@@ -189,6 +189,7 @@ Class | Method | HTTP request | Description
 *ContactApi* | [**listContactsByHCPartyAndPatientSecretFKeys**](docs/ContactApi.md#listcontactsbyhcpartyandpatientsecretfkeys) | **GET** /rest/v2/contact/byHcPartySecretForeignKeys | List contacts found By Healthcare Party and secret foreign keys.
 *ContactApi* | [**listContactsDelegationsStubsByHCPartyAndPatientForeignKeys**](docs/ContactApi.md#listcontactsdelegationsstubsbyhcpartyandpatientforeignkeys) | **GET** /rest/v2/contact/byHcPartySecretForeignKeys/delegations | List contacts found By Healthcare Party and secret foreign keys.
 *ContactApi* | [**listServicesByAssociationId**](docs/ContactApi.md#listservicesbyassociationid) | **GET** /rest/v2/contact/service/associationId | List services by related association id
+*ContactApi* | [**listServicesByHealthElementId**](docs/ContactApi.md#listservicesbyhealthelementid) | **GET** /rest/v2/contact/service/healthElementId/{healthElementId} | List services linked to a health element
 *ContactApi* | [**matchContactsBy**](docs/ContactApi.md#matchcontactsby) | **POST** /rest/v2/contact/match | Get ids of contacts matching the provided filter for the current user (HcParty) 
 *ContactApi* | [**modifyContact**](docs/ContactApi.md#modifycontact) | **PUT** /rest/v2/contact | Modify a contact
 *ContactApi* | [**modifyContacts**](docs/ContactApi.md#modifycontacts) | **PUT** /rest/v2/contact/batch | Modify a batch of contacts
@@ -555,6 +556,7 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.AmpDto](docs/AmpDto.md)
  - [io.icure.kraken.client.models.AmppComponentDto](docs/AmppComponentDto.md)
  - [io.icure.kraken.client.models.AmppDto](docs/AmppDto.md)
+ - [io.icure.kraken.client.models.AnnotationDto](docs/AnnotationDto.md)
  - [io.icure.kraken.client.models.ApplicationSettingsDto](docs/ApplicationSettingsDto.md)
  - [io.icure.kraken.client.models.ArticleDto](docs/ArticleDto.md)
  - [io.icure.kraken.client.models.AtcDto](docs/AtcDto.md)
