@@ -30,9 +30,9 @@ import java.util.*
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 internal class ContactApiKtTest {
-    private val userApi = UserApi(basePath = "http://127.0.0.1:16043", authHeader = "Basic YWJkZW1vOmtuYWxvdQ==")
-    private val hcPartyApi = HcpartyApi(basePath = "http://127.0.0.1:16043", authHeader = "Basic YWJkZW1vOmtuYWxvdQ==")
-    private val contactApi = ContactApi(basePath = "http://127.0.0.1:16043", authHeader = "Basic YWJkZW1vOmtuYWxvdQ==")
+    private val userApi = UserApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic YWJkZW1vOmtuYWxvdQ==")
+    private val hcPartyApi = HcpartyApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic YWJkZW1vOmtuYWxvdQ==")
+    private val contactApi = ContactApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic YWJkZW1vOmtuYWxvdQ==")
 
     private val child1UserApi = UserApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic ${Base64.getEncoder().encodeToString("jimmy-1643812116186:test".toByteArray(kotlin.text.Charsets.UTF_8))}")
     private val child1HcpartyApi = HcpartyApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic ${Base64.getEncoder().encodeToString("jimmy-1643812116186:test".toByteArray(kotlin.text.Charsets.UTF_8))}")

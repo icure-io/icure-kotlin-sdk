@@ -25,8 +25,8 @@ import kotlin.io.path.createFile
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 internal class HcpartyApiKtTest {
-    private val userApi = UserApi(basePath = "http://127.0.0.1:16043", authHeader = "Basic YWJkZW1vOmtuYWxvdQ==")
-    private val hcpartyApi = HcpartyApi(basePath = "http://127.0.0.1:16043", authHeader = "Basic YWJkZW1vOmtuYWxvdQ==")
+    private val userApi = UserApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic YWJkZW1vOmtuYWxvdQ==")
+    private val hcpartyApi = HcpartyApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic YWJkZW1vOmtuYWxvdQ==")
 
     @Test
     internal fun createHcPartyTest() = runBlocking {
