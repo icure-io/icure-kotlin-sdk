@@ -19,6 +19,7 @@ import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.FilterChainDevice
 import io.icure.kraken.client.models.IdWithRevDto
 import io.icure.kraken.client.models.ListOfIdsDto
+import io.icure.kraken.client.models.PaginatedListDeviceDto
 import assertk.assertThat
 import assertk.assertions.isEqualToIgnoringGivenProperties
 import java.io.*
@@ -62,6 +63,7 @@ import kotlin.reflect.full.callSuspendBy
 import kotlin.reflect.javaType
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.toList
+
 
 /**
  * API tests for DeviceApi
@@ -478,13 +480,6 @@ class DeviceApiTest() {
                     it.copy(rev = currentRev)
                     } as? FilterChainDevice ?: it
                     }
-                val startKey: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "filterDevicesBy.startKey")?.let {
-                    (it as? DeviceDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterDevicesBy") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getDevice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
-                    } as? kotlin.String ?: it
-                    }
                 val startDocumentId: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "filterDevicesBy.startDocumentId")?.let {
                     (it as? DeviceDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterDevicesBy") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
@@ -499,43 +494,22 @@ class DeviceApiTest() {
                     it.copy(rev = currentRev)
                     } as? kotlin.Int ?: it
                     }
-                val skip: kotlin.Int? = TestUtils.getParameter<kotlin.Int>(fileName, "filterDevicesBy.skip")?.let {
-                    (it as? DeviceDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterDevicesBy") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getDevice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
-                    } as? kotlin.Int ?: it
-                    }
-                val sort: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "filterDevicesBy.sort")?.let {
-                    (it as? DeviceDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterDevicesBy") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getDevice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
-                    } as? kotlin.String ?: it
-                    }
-                val desc: kotlin.Boolean? = TestUtils.getParameter<kotlin.Boolean>(fileName, "filterDevicesBy.desc")?.let {
-                    (it as? DeviceDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterDevicesBy") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getDevice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
-                    } as? kotlin.Boolean ?: it
-                    }
 
-                val response = api(credentialsFile).filterDevicesBy(filterChainDevice = filterChainDevice,startKey = startKey,startDocumentId = startDocumentId,limit = limit,skip = skip,sort = sort,desc = desc)
+                val response = api(credentialsFile).filterDevicesBy(filterChainDevice = filterChainDevice,startDocumentId = startDocumentId,limit = limit)
 
                 val testFileName = "DeviceApi.filterDevicesBy"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<kotlin.String>? != null) {
-                        if ("kotlin.String".contains("String>")) {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<PaginatedListDeviceDto>? != null) {
+                        if ("PaginatedListDeviceDto".contains("String>")) {
                             object : TypeReference<List<String>>() {}
                         } else {
-                            object : TypeReference<List<kotlin.String>>() {}
+                            object : TypeReference<List<PaginatedListDeviceDto>>() {}
                         }
                     } else if(response as? kotlin.collections.Map<String, String>? != null){
                         object : TypeReference<Map<String,String>>() {}
                     } else {
-                        object : TypeReference<kotlin.String>() {}
+                        object : TypeReference<PaginatedListDeviceDto>() {}
                     })
                     assertAreEquals("filterDevicesBy", objectFromFile, response)
                     println("Comparison successful")
@@ -965,7 +939,7 @@ class DeviceApiTest() {
                     functionName.let { name -> listOf("listContact", "modifyContacts").any { name.startsWith(it) } } -> listOf("subContacts.[created, rev, modified]", "services.[openingDate]", "groupId", "created", "modified", "rev")
                     functionName.let { name -> listOf("getServices").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "openingDate")
                     functionName.let { name -> listOf("create", "new", "get", "list", "set").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
-                    functionName.let { name -> listOf("modify", "delete", "undelete").any { name.startsWith(it) } } -> listOf("rev")
+                    functionName.let { name -> listOf("modify", "delete", "undelete", "update").any { name.startsWith(it) } } -> listOf("rev")
                     functionName.let { name -> listOf("append").any { name.startsWith(it) } } -> listOf("id", "created", "modified")
                     functionName.let { name -> listOf("find", "filter").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]", "created", "modified", "rev")
                     else -> emptyList()
@@ -1007,7 +981,7 @@ class DeviceApiTest() {
                     functionName.let { name -> listOf("modifyPatientReferral").any { name.startsWith(it) } } -> listOf("rev", "patientHealthCareParties.[referralPeriods]", "created", "modified")
                     functionName.let { name -> listOf("createContact").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "deletionDate", "groupId")
                     functionName.let { name -> listOf("newContactDelegations").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "groupId")
-                    functionName.let { name -> listOf("create", "get", "modify", "new").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "deletionDate")
+                    functionName.let { name -> listOf("create", "get", "modify", "new", "update").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "deletionDate")
                     functionName.let { name -> listOf("set", "delete", "merge").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
                     functionName.let { name -> listOf("validate").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "sentDate")
                     functionName.let { name -> listOf("reassign").any { name.startsWith(it) } } -> listOf("id", "created", "invoicingCodes.id")

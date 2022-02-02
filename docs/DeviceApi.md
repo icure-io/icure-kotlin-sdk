@@ -8,7 +8,7 @@ Method | HTTP request | Description
 [**createDevices**](DeviceApi.md#createDevices) | **POST** /rest/v2/device/batch | Create devices in bulk
 [**createDevices1**](DeviceApi.md#createDevices1) | **POST** /rest/v2/device/bulk | Create devices in bulk
 [**deleteDevice**](DeviceApi.md#deleteDevice) | **DELETE** /rest/v2/device/{deviceId} | Delete device.
-[**deleteDevices**](DeviceApi.md#deleteDevices) | **DELETE** /rest/v2/device/delete/batch | Delete devices.
+[**deleteDevices**](DeviceApi.md#deleteDevices) | **POST** /rest/v2/device/delete/batch | Delete devices.
 [**filterDevicesBy**](DeviceApi.md#filterDevicesBy) | **POST** /rest/v2/device/filter | Filter devices for the current user (HcParty) 
 [**getDevice**](DeviceApi.md#getDevice) | **GET** /rest/v2/device/{deviceId} | Get Device
 [**getDevices**](DeviceApi.md#getDevices) | **POST** /rest/v2/device/byIds | Get devices by id
@@ -255,7 +255,7 @@ No authorization required
 
 <a name="filterDevicesBy"></a>
 # **filterDevicesBy**
-> kotlin.String filterDevicesBy(filterChainDevice, startKey, startDocumentId, limit, skip, sort, desc)
+> PaginatedListDeviceDto filterDevicesBy(filterChainDevice, startDocumentId, limit)
 
 Filter devices for the current user (HcParty) 
 
@@ -269,14 +269,10 @@ Returns a list of devices along with next start keys and Document ID. If the nex
 
 val apiInstance = DeviceApi()
 val filterChainDevice : FilterChainDevice =  // FilterChainDevice | 
-val startKey : kotlin.String = startKey_example // kotlin.String | The start key for pagination, depends on the filters used
 val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A device document ID
 val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
-val skip : kotlin.Int = 56 // kotlin.Int | Skip rows
-val sort : kotlin.String = sort_example // kotlin.String | Sort key
-val desc : kotlin.Boolean = true // kotlin.Boolean | Descending
 try {
-    val result : kotlin.String = apiInstance.filterDevicesBy(filterChainDevice, startKey, startDocumentId, limit, skip, sort, desc)
+    val result : PaginatedListDeviceDto = apiInstance.filterDevicesBy(filterChainDevice, startDocumentId, limit)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling DeviceApi#filterDevicesBy")
@@ -292,16 +288,12 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **filterChainDevice** | [**FilterChainDevice**](FilterChainDevice.md)|  |
- **startKey** | **kotlin.String**| The start key for pagination, depends on the filters used | [optional]
  **startDocumentId** | **kotlin.String**| A device document ID | [optional]
  **limit** | **kotlin.Int**| Number of rows | [optional]
- **skip** | **kotlin.Int**| Skip rows | [optional]
- **sort** | **kotlin.String**| Sort key | [optional]
- **desc** | **kotlin.Boolean**| Descending | [optional]
 
 ### Return type
 
-**kotlin.String**
+[**PaginatedListDeviceDto**](PaginatedListDeviceDto.md)
 
 ### Authorization
 

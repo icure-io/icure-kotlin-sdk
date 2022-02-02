@@ -201,7 +201,7 @@ Class | Method | HTTP request | Description
 *DeviceApi* | [**createDevices**](docs/DeviceApi.md#createdevices) | **POST** /rest/v2/device/batch | Create devices in bulk
 *DeviceApi* | [**createDevices1**](docs/DeviceApi.md#createdevices1) | **POST** /rest/v2/device/bulk | Create devices in bulk
 *DeviceApi* | [**deleteDevice**](docs/DeviceApi.md#deletedevice) | **DELETE** /rest/v2/device/{deviceId} | Delete device.
-*DeviceApi* | [**deleteDevices**](docs/DeviceApi.md#deletedevices) | **DELETE** /rest/v2/device/delete/batch | Delete devices.
+*DeviceApi* | [**deleteDevices**](docs/DeviceApi.md#deletedevices) | **POST** /rest/v2/device/delete/batch | Delete devices.
 *DeviceApi* | [**filterDevicesBy**](docs/DeviceApi.md#filterdevicesby) | **POST** /rest/v2/device/filter | Filter devices for the current user (HcParty) 
 *DeviceApi* | [**getDevice**](docs/DeviceApi.md#getdevice) | **GET** /rest/v2/device/{deviceId} | Get Device
 *DeviceApi* | [**getDevices**](docs/DeviceApi.md#getdevices) | **POST** /rest/v2/device/byIds | Get devices by id
@@ -697,6 +697,7 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.PaginatedListClassificationTemplateDto](docs/PaginatedListClassificationTemplateDto.md)
  - [io.icure.kraken.client.models.PaginatedListCodeDto](docs/PaginatedListCodeDto.md)
  - [io.icure.kraken.client.models.PaginatedListContactDto](docs/PaginatedListContactDto.md)
+ - [io.icure.kraken.client.models.PaginatedListDeviceDto](docs/PaginatedListDeviceDto.md)
  - [io.icure.kraken.client.models.PaginatedListDocumentDto](docs/PaginatedListDocumentDto.md)
  - [io.icure.kraken.client.models.PaginatedListEntityTemplateDto](docs/PaginatedListEntityTemplateDto.md)
  - [io.icure.kraken.client.models.PaginatedListFormDto](docs/PaginatedListFormDto.md)

@@ -21,6 +21,7 @@ import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.FilterChainDevice
 import io.icure.kraken.client.models.IdWithRevDto
 import io.icure.kraken.client.models.ListOfIdsDto
+import io.icure.kraken.client.models.PaginatedListDeviceDto
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -236,7 +237,7 @@ class DeviceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
         val localVariableBody = listOfIdsDto
 
         return RequestConfig(
-            method = RequestMethod.DELETE,
+            method = RequestMethod.POST,
             path = "/rest/v2/device/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
@@ -247,23 +248,19 @@ class DeviceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     * Filter devices for the current user (HcParty) 
     * Returns a list of devices along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
     * @param filterChainDevice  
-    * @param startKey The start key for pagination, depends on the filters used (optional)
     * @param startDocumentId A device document ID (optional)
     * @param limit Number of rows (optional)
-    * @param skip Skip rows (optional)
-    * @param sort Sort key (optional)
-    * @param desc Descending (optional)
-    * @return kotlin.String
+    * @return PaginatedListDeviceDto
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun filterDevicesBy(filterChainDevice: FilterChainDevice, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, skip: kotlin.Int?, sort: kotlin.String?, desc: kotlin.Boolean?) : kotlin.String  {
-        val localVariableConfig = filterDevicesByRequestConfig(filterChainDevice = filterChainDevice, startKey = startKey, startDocumentId = startDocumentId, limit = limit, skip = skip, sort = sort, desc = desc)
+    suspend fun filterDevicesBy(filterChainDevice: FilterChainDevice, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListDeviceDto  {
+        val localVariableConfig = filterDevicesByRequestConfig(filterChainDevice = filterChainDevice, startDocumentId = startDocumentId, limit = limit)
 
-        return request<FilterChainDevice, kotlin.String>(
+        return request<FilterChainDevice, PaginatedListDeviceDto>(
             localVariableConfig
         )!!
     }
@@ -271,35 +268,19 @@ class DeviceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     * To obtain the request config of the operation filterDevicesBy
     *
     * @param filterChainDevice  
-    * @param startKey The start key for pagination, depends on the filters used (optional)
     * @param startDocumentId A device document ID (optional)
     * @param limit Number of rows (optional)
-    * @param skip Skip rows (optional)
-    * @param sort Sort key (optional)
-    * @param desc Descending (optional)
     * @return RequestConfig
     */
-    fun filterDevicesByRequestConfig(filterChainDevice: FilterChainDevice, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, skip: kotlin.Int?, sort: kotlin.String?, desc: kotlin.Boolean?) : RequestConfig<FilterChainDevice> {
+    fun filterDevicesByRequestConfig(filterChainDevice: FilterChainDevice, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<FilterChainDevice> {
         // val localVariableBody = filterChainDevice
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
-                if (startKey != null) {
-                    put("startKey", listOf(startKey.toString()))
-                }
                 if (startDocumentId != null) {
                     put("startDocumentId", listOf(startDocumentId.toString()))
                 }
                 if (limit != null) {
                     put("limit", listOf(limit.toString()))
-                }
-                if (skip != null) {
-                    put("skip", listOf(skip.toString()))
-                }
-                if (sort != null) {
-                    put("sort", listOf(sort.toString()))
-                }
-                if (desc != null) {
-                    put("desc", listOf(desc.toString()))
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")

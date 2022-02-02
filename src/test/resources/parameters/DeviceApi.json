@@ -1,0 +1,123 @@
+{
+  "beforeElements": {
+    "bodies": [
+      {
+        "id": "e10febe9-0cc4-43b0-9576-954a7720d183",
+        "name": "OKCardio",
+        "type": "Smartphone",
+        "brand": "iPhone",
+        "model": "13"
+      },
+      {
+        "id": "9dc5debf-ee87-442d-a6af-891387621501",
+        "name": "OKCardio",
+        "type": "Smartphone",
+        "brand": "FairPhone",
+        "model": "4"
+      },
+      {
+        "id": "c49afb77-16e7-4f9c-986c-0b3ba5f6024c",
+        "name": "OKCardio",
+        "type": "Smartphone",
+        "brand": "iPhone",
+        "model": "12 Pro"
+      }
+    ]
+  },
+  "afterElements": {
+    "family": "base",
+    "deleteIds": [
+      "e10febe9-0cc4-43b0-9576-954a7720d183",
+      "9dc5debf-ee87-442d-a6af-891387621501",
+      "c49afb77-16e7-4f9c-986c-0b3ba5f6024c",
+      "040b6971-f2e1-4a39-ab44-08baaf441c53"
+    ]
+  },
+  "createDevice": {
+    "deviceDto": {
+      "id": "040b6971-f2e1-4a39-ab44-08baaf441c53",
+      "name": "OKCardio",
+      "type": "Dumbphone",
+      "brand": "Nokia",
+      "model": "3310"
+    }
+  },
+  "createDevices": {
+    "deviceDto": [
+      {
+        "id": "040b6971-f2e1-4a39-ab44-08baaf441c53",
+        "name": "OKCardio",
+        "type": "Dumbphone",
+        "brand": "Nokia",
+        "model": "3310"
+      }
+    ]
+  },
+  "createDevices1": {
+    "skipEndpoint": true
+  },
+  "deleteDevice": {
+    "deviceId": "e10febe9-0cc4-43b0-9576-954a7720d183"
+  },
+  "deleteDevices": {
+    "listOfIdsDto": {
+      "ids": [
+        "e10febe9-0cc4-43b0-9576-954a7720d183"
+      ]
+    }
+  },
+  "filterDevicesBy": {
+    "skipEndpoint": true,
+    "filterChainDevice": {
+      "filter": {
+        "$type": "TODO",
+        "startValueDate": 12345,
+        "code": "Objective",
+        "healthcarePartyId": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98"
+      }
+    }
+  },
+  "getDevice": {
+    "deviceId": "9dc5debf-ee87-442d-a6af-891387621501"
+  },
+  "getDevices": {
+    "listOfIdsDto": {
+      "ids": [
+        "9dc5debf-ee87-442d-a6af-891387621501"
+      ]
+    }
+  },
+  "matchDevicesBy": {
+    "skipEndpoint": true,
+    "abstractFilterDtoContact": {
+      "$type": "TODO",
+      "healthcarePartyId": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98",
+      "startServiceValueDate": 12345
+    }
+  },
+  "updateDevices1": {
+    "skipEndpoint": true
+  },
+  "updateDevice": {
+    "autoRev": true,
+    "deviceDto": {
+      "id": "c49afb77-16e7-4f9c-986c-0b3ba5f6024c",
+      "name": "OKCardio",
+      "type": "Smartphone",
+      "brand": "iPhone",
+      "model": "12 Pro Max"
+    }
+  },
+  "updateDevices": {
+    "autoRev": true,
+    "deviceDto": [
+      {
+        "id": "c49afb77-16e7-4f9c-986c-0b3ba5f6024c",
+        "name": "OKCardio",
+        "type": "Smartphone",
+        "brand": "iPhone",
+        "model": "12 Pro Max"
+      }
+    ]
+  }
+}
