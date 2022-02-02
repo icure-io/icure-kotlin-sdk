@@ -46,7 +46,7 @@ class LocalCrypto(private val hcpartyApi: HcpartyApi, private val rsaKeyPairs: M
                 .split(":")[1]
             }
         }?.toSet() ?: emptySet()) + (hcParties.defGet(myId) {
-            hcpartyApi.getHealthcareParty(it)
+            try { hcpartyApi.getHealthcareParty(it) } catch(e:Exception) { null }
         }?.parentId?.let { decryptEncryptionKeys(it, keys) } ?: emptySet())).takeIf { it.isNotEmpty() } ?: throw IllegalArgumentException("Missing key for $myId")
     }
 
