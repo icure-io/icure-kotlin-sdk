@@ -104,7 +104,7 @@ data class ServiceDto (
 
     /* Links towards related services (possibly in other contacts) */
     @field:JsonProperty("qualifiedLinks")
-    val qualifiedLinks: kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.String>> = emptyMap(),
+    val qualifiedLinks: kotlin.collections.Map<LinkQualification, kotlin.collections.Map<kotlin.String, kotlin.String>> = mapOf(),
 
     /* A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes */
     @field:JsonProperty("codes")
@@ -205,5 +205,30 @@ data class ServiceDto (
     @field:JsonProperty("encryptedSelf")
     val encryptedSelf: kotlin.String? = null
 
-)
+) {
+    enum class LinkQualification(val value: String) {
+        @JsonProperty("exact") exact("exact"),
+        @JsonProperty("narrower") narrower("narrower"),
+        @JsonProperty("broader") broader("broader"),
+        @JsonProperty("approximate") approximate("approximate"),
+        @JsonProperty("sequence") sequence("sequence"),
+        @JsonProperty("parent") parent("parent"),
+        @JsonProperty("child") child("child"),
+        @JsonProperty("relatedCode") relatedCode("relatedCode"),
+        @JsonProperty("linkedPackage") linkedPackage("linkedPackage"),
+        @JsonProperty("relatedService") relatedService("relatedService"),
+        @JsonProperty("inResponseTo") inResponseTo("inResponseTo"),
+        @JsonProperty("replaces") replaces("replaces"),
+        @JsonProperty("transforms") transforms("transforms"),
+        @JsonProperty("transformsAndReplaces") transformsAndReplaces("transformsAndReplaces"),
+        @JsonProperty("appendsTo") appendsTo("appendsTo"),
+        @JsonProperty("basedOn") basedOn("basedOn"),
+        @JsonProperty("derivedFrom") derivedFrom("derivedFrom"),
+        @JsonProperty("device") device("device"),
+        @JsonProperty("focus") focus("focus"),
+        @JsonProperty("hasMember") hasMember("hasMember"),
+        @JsonProperty("performer") performer("performer"),
+        @JsonProperty("specimen") specimen("specimen");
+    }
+}
 
