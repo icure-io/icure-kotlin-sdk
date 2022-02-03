@@ -12,6 +12,8 @@
  */
 package io.icure.kraken.client.models
 
+import io.icure.kraken.client.models.DeviceDto
+import io.icure.kraken.client.models.PaginatedDocumentKeyIdPairObject
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
@@ -20,29 +22,30 @@ import com.github.pozo.KotlinBuilder
 
 
 /**
- * Encrypted and time-limited Authentication tokens used for inter-applications authentication
+ * 
  *
- * @param token Encrypted token
- * @param creationTime Validity starting time of the token
- * @param validity Token validity in seconds
+ * @param pageSize 
+ * @param totalSize 
+ * @param rows 
+ * @param nextKeyPair 
  */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @KotlinBuilder
-data class AuthenticationTokenDto (
+data class PaginatedListDeviceDto (
 
-    /* Encrypted token */
-    @field:JsonProperty("token")
-    val token: kotlin.String,
+    @field:JsonProperty("pageSize")
+    val pageSize: kotlin.Int,
 
-    /* Validity starting time of the token */
-    @field:JsonProperty("creationTime")
-    val creationTime: kotlin.Long,
+    @field:JsonProperty("totalSize")
+    val totalSize: kotlin.Int,
 
-    /* Token validity in seconds */
-    @field:JsonProperty("validity")
-    val validity: kotlin.Long
+    @field:JsonProperty("rows")
+    val rows: kotlin.collections.List<DeviceDto> = emptyList(),
+
+    @field:JsonProperty("nextKeyPair")
+    val nextKeyPair: PaginatedDocumentKeyIdPairObject? = null
 
 )
 

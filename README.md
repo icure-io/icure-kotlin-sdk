@@ -167,6 +167,7 @@ Class | Method | HTTP request | Description
 *CodeApi* | [**listCodeTypesBy**](docs/CodeApi.md#listcodetypesby) | **GET** /rest/v2/code/codetype/byRegionType | Finding code types.
 *CodeApi* | [**listCodesByRegionTypeCodeVersion**](docs/CodeApi.md#listcodesbyregiontypecodeversion) | **GET** /rest/v2/code/byRegionTypeCode | Finding codes by code, type and version
 *CodeApi* | [**listTagTypesBy**](docs/CodeApi.md#listtagtypesby) | **GET** /rest/v2/code/tagtype/byRegionType | Finding tag types.
+*CodeApi* | [**matchCodesBy**](docs/CodeApi.md#matchcodesby) | **POST** /rest/v2/code/match | Get ids of code matching the provided filter for the current user (HcParty) 
 *CodeApi* | [**modifyCode**](docs/CodeApi.md#modifycode) | **PUT** /rest/v2/code | Modify a code
 *ContactApi* | [**closeForHCPartyPatientForeignKeys**](docs/ContactApi.md#closeforhcpartypatientforeignkeys) | **PUT** /rest/v2/contact/byHcPartySecretForeignKeys/close | Close contacts for Healthcare Party and secret foreign keys.
 *ContactApi* | [**createContact**](docs/ContactApi.md#createcontact) | **POST** /rest/v2/contact | Create a contact with the current user
@@ -196,6 +197,18 @@ Class | Method | HTTP request | Description
 *ContactApi* | [**modifyContactsDelegations**](docs/ContactApi.md#modifycontactsdelegations) | **PUT** /rest/v2/contact/delegations | Update delegations in healthElements.
 *ContactApi* | [**newContactDelegations**](docs/ContactApi.md#newcontactdelegations) | **POST** /rest/v2/contact/{contactId}/delegate | Delegates a contact to a healthcare party
 *ContactApi* | [**setContactsDelegations**](docs/ContactApi.md#setcontactsdelegations) | **POST** /rest/v2/contact/delegations | Update delegations in healthElements.
+*DeviceApi* | [**createDevice**](docs/DeviceApi.md#createdevice) | **POST** /rest/v2/device | Create a device
+*DeviceApi* | [**createDevices**](docs/DeviceApi.md#createdevices) | **POST** /rest/v2/device/batch | Create devices in bulk
+*DeviceApi* | [**createDevices1**](docs/DeviceApi.md#createdevices1) | **POST** /rest/v2/device/bulk | Create devices in bulk
+*DeviceApi* | [**deleteDevice**](docs/DeviceApi.md#deletedevice) | **DELETE** /rest/v2/device/{deviceId} | Delete device.
+*DeviceApi* | [**deleteDevices**](docs/DeviceApi.md#deletedevices) | **POST** /rest/v2/device/delete/batch | Delete devices.
+*DeviceApi* | [**filterDevicesBy**](docs/DeviceApi.md#filterdevicesby) | **POST** /rest/v2/device/filter | Filter devices for the current user (HcParty) 
+*DeviceApi* | [**getDevice**](docs/DeviceApi.md#getdevice) | **GET** /rest/v2/device/{deviceId} | Get Device
+*DeviceApi* | [**getDevices**](docs/DeviceApi.md#getdevices) | **POST** /rest/v2/device/byIds | Get devices by id
+*DeviceApi* | [**matchDevicesBy**](docs/DeviceApi.md#matchdevicesby) | **POST** /rest/v2/device/match | Get ids of devices matching the provided filter for the current user (HcParty) 
+*DeviceApi* | [**updateDevice**](docs/DeviceApi.md#updatedevice) | **PUT** /rest/v2/device | Modify a device
+*DeviceApi* | [**updateDevices**](docs/DeviceApi.md#updatedevices) | **PUT** /rest/v2/device/batch | Modify devices in bulk
+*DeviceApi* | [**updateDevices1**](docs/DeviceApi.md#updatedevices1) | **PUT** /rest/v2/device/bulk | Modify devices in bulk
 *DocumentApi* | [**createDocument**](docs/DocumentApi.md#createdocument) | **POST** /rest/v2/document | Creates a document
 *DocumentApi* | [**deleteAttachment**](docs/DocumentApi.md#deleteattachment) | **DELETE** /rest/v2/document/{documentId}/attachment | Deletes a document's attachment
 *DocumentApi* | [**deleteDocument**](docs/DocumentApi.md#deletedocument) | **POST** /rest/v2/document/delete/batch | Deletes documents
@@ -288,6 +301,7 @@ Class | Method | HTTP request | Description
 *HealthElementApi* | [**getHealthElements**](docs/HealthElementApi.md#gethealthelements) | **POST** /rest/v2/helement/byIds | Get healthElements by batch
 *HealthElementApi* | [**listHealthElementsByHCPartyAndPatientForeignKeys**](docs/HealthElementApi.md#listhealthelementsbyhcpartyandpatientforeignkeys) | **GET** /rest/v2/helement/byHcPartySecretForeignKeys | List health elements found By Healthcare Party and secret foreign keyelementIds.
 *HealthElementApi* | [**listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys**](docs/HealthElementApi.md#listhealthelementsdelegationsstubsbyhcpartyandpatientforeignkeys) | **GET** /rest/v2/helement/byHcPartySecretForeignKeys/delegations | List helement stubs found By Healthcare Party and secret foreign keys.
+*HealthElementApi* | [**matchHealthElementsBy**](docs/HealthElementApi.md#matchhealthelementsby) | **POST** /rest/v2/helement/match | Get ids of health element matching the provided filter for the current user (HcParty) 
 *HealthElementApi* | [**modifyHealthElement**](docs/HealthElementApi.md#modifyhealthelement) | **PUT** /rest/v2/helement | Modify a health element
 *HealthElementApi* | [**modifyHealthElements**](docs/HealthElementApi.md#modifyhealthelements) | **PUT** /rest/v2/helement/batch | Modify a batch of health elements
 *HealthElementApi* | [**newHealthElementDelegations**](docs/HealthElementApi.md#newhealthelementdelegations) | **POST** /rest/v2/helement/{healthElementId}/delegate | Delegates a health element to a healthcare party
@@ -296,6 +310,7 @@ Class | Method | HTTP request | Description
 *HealthcarePartyApi* | [**createHealthcarePartyInGroup**](docs/HealthcarePartyApi.md#createhealthcarepartyingroup) | **POST** /rest/v2/hcparty/inGroup/{groupId} | Create a healthcare party
 *HealthcarePartyApi* | [**deleteHealthcareParties**](docs/HealthcarePartyApi.md#deletehealthcareparties) | **POST** /rest/v2/hcparty/delete/batch | Delete healthcare parties
 *HealthcarePartyApi* | [**deleteHealthcarePartiesInGroup**](docs/HealthcarePartyApi.md#deletehealthcarepartiesingroup) | **POST** /rest/v2/hcparty/delete/batch/inGroup/{groupId} | Delete a healthcare party
+*HealthcarePartyApi* | [**filterHealthPartiesBy**](docs/HealthcarePartyApi.md#filterhealthpartiesby) | **POST** /rest/v2/hcparty/filter | Filter healthcare parties for the current user (HcParty)
 *HealthcarePartyApi* | [**findHealthcarePartiesBy**](docs/HealthcarePartyApi.md#findhealthcarepartiesby) | **GET** /rest/v2/hcparty | List healthcare parties with(out) pagination
 *HealthcarePartyApi* | [**findHealthcarePartiesByName**](docs/HealthcarePartyApi.md#findhealthcarepartiesbyname) | **GET** /rest/v2/hcparty/byName | Find healthcare parties by name with(out) pagination
 *HealthcarePartyApi* | [**findHealthcarePartiesBySpecialityAndPostCode**](docs/HealthcarePartyApi.md#findhealthcarepartiesbyspecialityandpostcode) | **GET** /rest/v2/hcparty/bySpecialityAndPostCode/{type}/{spec}/{firstCode}/to/{lastCode} | Find healthcare parties by name with(out) pagination
@@ -307,6 +322,7 @@ Class | Method | HTTP request | Description
 *HealthcarePartyApi* | [**getPublicKey**](docs/HealthcarePartyApi.md#getpublickey) | **GET** /rest/v2/hcparty/{healthcarePartyId}/publicKey | Get public key of a healthcare party
 *HealthcarePartyApi* | [**listHealthcarePartiesByName**](docs/HealthcarePartyApi.md#listhealthcarepartiesbyname) | **GET** /rest/v2/hcparty/byNameStrict/{name} | Find healthcare parties by name with(out) pagination
 *HealthcarePartyApi* | [**listHealthcarePartiesByParentId**](docs/HealthcarePartyApi.md#listhealthcarepartiesbyparentid) | **GET** /rest/v2/hcparty/{parentId}/children | Find children of an healthcare parties
+*HealthcarePartyApi* | [**matchHealthcarePartiesBy**](docs/HealthcarePartyApi.md#matchhealthcarepartiesby) | **POST** /rest/v2/hcparty/match | Get ids of healthcare party matching the provided filter for the current user (HcParty) 
 *HealthcarePartyApi* | [**modifyHealthcareParty**](docs/HealthcarePartyApi.md#modifyhealthcareparty) | **PUT** /rest/v2/hcparty | Modify a Healthcare Party.
 *HealthcarePartyApi* | [**modifyHealthcarePartyInGroup**](docs/HealthcarePartyApi.md#modifyhealthcarepartyingroup) | **PUT** /rest/v2/hcparty/inGroup/{groupId} | Modify a Healthcare Party.
 *IcureApi* | [**getIndexingInfo**](docs/IcureApi.md#getindexinginfo) | **GET** /rest/v2/icure/i | Get index info
@@ -543,7 +559,9 @@ Class | Method | HTTP request | Description
 
  - [io.icure.kraken.client.models.AbstractFilterDtoCode](docs/AbstractFilterDtoCode.md)
  - [io.icure.kraken.client.models.AbstractFilterDtoContact](docs/AbstractFilterDtoContact.md)
+ - [io.icure.kraken.client.models.AbstractFilterDtoDevice](docs/AbstractFilterDtoDevice.md)
  - [io.icure.kraken.client.models.AbstractFilterDtoHealthElement](docs/AbstractFilterDtoHealthElement.md)
+ - [io.icure.kraken.client.models.AbstractFilterDtoHealthcareParty](docs/AbstractFilterDtoHealthcareParty.md)
  - [io.icure.kraken.client.models.AbstractFilterDtoInvoice](docs/AbstractFilterDtoInvoice.md)
  - [io.icure.kraken.client.models.AbstractFilterDtoPatient](docs/AbstractFilterDtoPatient.md)
  - [io.icure.kraken.client.models.AbstractFilterDtoService](docs/AbstractFilterDtoService.md)
@@ -586,6 +604,7 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.DatabaseInitialisationDto](docs/DatabaseInitialisationDto.md)
  - [io.icure.kraken.client.models.DatabaseSynchronizationDto](docs/DatabaseSynchronizationDto.md)
  - [io.icure.kraken.client.models.DelegationDto](docs/DelegationDto.md)
+ - [io.icure.kraken.client.models.DeviceDto](docs/DeviceDto.md)
  - [io.icure.kraken.client.models.DeviceTypeDto](docs/DeviceTypeDto.md)
  - [io.icure.kraken.client.models.DiaryNoteExportInfoDto](docs/DiaryNoteExportInfoDto.md)
  - [io.icure.kraken.client.models.DmppDto](docs/DmppDto.md)
@@ -605,7 +624,9 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.EpisodeDto](docs/EpisodeDto.md)
  - [io.icure.kraken.client.models.FilterChainCode](docs/FilterChainCode.md)
  - [io.icure.kraken.client.models.FilterChainContact](docs/FilterChainContact.md)
+ - [io.icure.kraken.client.models.FilterChainDevice](docs/FilterChainDevice.md)
  - [io.icure.kraken.client.models.FilterChainHealthElement](docs/FilterChainHealthElement.md)
+ - [io.icure.kraken.client.models.FilterChainHealthcareParty](docs/FilterChainHealthcareParty.md)
  - [io.icure.kraken.client.models.FilterChainInvoice](docs/FilterChainInvoice.md)
  - [io.icure.kraken.client.models.FilterChainPatient](docs/FilterChainPatient.md)
  - [io.icure.kraken.client.models.FilterChainService](docs/FilterChainService.md)
@@ -676,6 +697,7 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.PaginatedListClassificationTemplateDto](docs/PaginatedListClassificationTemplateDto.md)
  - [io.icure.kraken.client.models.PaginatedListCodeDto](docs/PaginatedListCodeDto.md)
  - [io.icure.kraken.client.models.PaginatedListContactDto](docs/PaginatedListContactDto.md)
+ - [io.icure.kraken.client.models.PaginatedListDeviceDto](docs/PaginatedListDeviceDto.md)
  - [io.icure.kraken.client.models.PaginatedListDocumentDto](docs/PaginatedListDocumentDto.md)
  - [io.icure.kraken.client.models.PaginatedListEntityTemplateDto](docs/PaginatedListEntityTemplateDto.md)
  - [io.icure.kraken.client.models.PaginatedListFormDto](docs/PaginatedListFormDto.md)

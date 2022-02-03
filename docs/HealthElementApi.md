@@ -12,6 +12,7 @@ Method | HTTP request | Description
 [**getHealthElements**](HealthElementApi.md#getHealthElements) | **POST** /rest/v2/helement/byIds | Get healthElements by batch
 [**listHealthElementsByHCPartyAndPatientForeignKeys**](HealthElementApi.md#listHealthElementsByHCPartyAndPatientForeignKeys) | **GET** /rest/v2/helement/byHcPartySecretForeignKeys | List health elements found By Healthcare Party and secret foreign keyelementIds.
 [**listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys**](HealthElementApi.md#listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys) | **GET** /rest/v2/helement/byHcPartySecretForeignKeys/delegations | List helement stubs found By Healthcare Party and secret foreign keys.
+[**matchHealthElementsBy**](HealthElementApi.md#matchHealthElementsBy) | **POST** /rest/v2/helement/match | Get ids of health element matching the provided filter for the current user (HcParty) 
 [**modifyHealthElement**](HealthElementApi.md#modifyHealthElement) | **PUT** /rest/v2/helement | Modify a health element
 [**modifyHealthElements**](HealthElementApi.md#modifyHealthElements) | **PUT** /rest/v2/helement/batch | Modify a batch of health elements
 [**newHealthElementDelegations**](HealthElementApi.md#newHealthElementDelegations) | **POST** /rest/v2/helement/{healthElementId}/delegate | Delegates a health element to a healthcare party
@@ -394,6 +395,51 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="matchHealthElementsBy"></a>
+# **matchHealthElementsBy**
+> kotlin.collections.List&lt;kotlin.String&gt; matchHealthElementsBy(abstractFilterDtoHealthElement)
+
+Get ids of health element matching the provided filter for the current user (HcParty) 
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = HealthElementApi()
+val abstractFilterDtoHealthElement : AbstractFilterDtoHealthElement =  // AbstractFilterDtoHealthElement | 
+try {
+    val result : kotlin.collections.List<kotlin.String> = apiInstance.matchHealthElementsBy(abstractFilterDtoHealthElement)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling HealthElementApi#matchHealthElementsBy")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling HealthElementApi#matchHealthElementsBy")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **abstractFilterDtoHealthElement** | [**AbstractFilterDtoHealthElement**](AbstractFilterDtoHealthElement.md)|  |
+
+### Return type
+
+**kotlin.collections.List&lt;kotlin.String&gt;**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: */*
 
 <a name="modifyHealthElement"></a>

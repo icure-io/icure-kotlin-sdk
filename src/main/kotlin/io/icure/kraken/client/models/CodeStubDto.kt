@@ -20,7 +20,7 @@ import com.github.pozo.KotlinBuilder
 
 
 /**
- * 
+ * A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes
  *
  * @param id 
  * @param context 

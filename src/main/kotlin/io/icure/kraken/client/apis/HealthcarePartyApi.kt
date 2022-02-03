@@ -15,7 +15,9 @@ package io.icure.kraken.client.apis
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.infrastructure.*
+import io.icure.kraken.client.models.AbstractFilterDtoHealthcareParty
 import io.icure.kraken.client.models.DocIdentifier
+import io.icure.kraken.client.models.FilterChainHealthcareParty
 import io.icure.kraken.client.models.HealthcarePartyDto
 import io.icure.kraken.client.models.ListOfIdsDto
 import io.icure.kraken.client.models.PaginatedListHealthcarePartyDto
@@ -202,6 +204,57 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/hcparty/delete/batch/inGroup/{groupId}".replace("{"+"groupId"+"}", "${URLEncoder.encode(groupId.toString(), Charsets.UTF_8)}"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
+    * Filter healthcare parties for the current user (HcParty)
+    * Returns a list of healthcare party along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
+    * @param filterChainHealthcareParty  
+    * @param startDocumentId A HealthcareParty document ID (optional)
+    * @param limit Number of rows (optional)
+    * @return PaginatedListHealthcarePartyDto
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun filterHealthPartiesBy(filterChainHealthcareParty: FilterChainHealthcareParty, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListHealthcarePartyDto  {
+        val localVariableConfig = filterHealthPartiesByRequestConfig(filterChainHealthcareParty = filterChainHealthcareParty, startDocumentId = startDocumentId, limit = limit)
+
+        return request<FilterChainHealthcareParty, PaginatedListHealthcarePartyDto>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation filterHealthPartiesBy
+    *
+    * @param filterChainHealthcareParty  
+    * @param startDocumentId A HealthcareParty document ID (optional)
+    * @param limit Number of rows (optional)
+    * @return RequestConfig
+    */
+    fun filterHealthPartiesByRequestConfig(filterChainHealthcareParty: FilterChainHealthcareParty, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<FilterChainHealthcareParty> {
+        // val localVariableBody = filterChainHealthcareParty
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                if (startDocumentId != null) {
+                    put("startDocumentId", listOf(startDocumentId.toString()))
+                }
+                if (limit != null) {
+                    put("limit", listOf(limit.toString()))
+                }
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = filterChainHealthcareParty
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v2/hcparty/filter",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -709,6 +762,45 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/hcparty/{parentId}/children".replace("{"+"parentId"+"}", "${URLEncoder.encode(parentId.toString(), Charsets.UTF_8)}"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
+    * Get ids of healthcare party matching the provided filter for the current user (HcParty) 
+    * 
+    * @param abstractFilterDtoHealthcareParty  
+    * @return kotlin.collections.List<kotlin.String>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun matchHealthcarePartiesBy(abstractFilterDtoHealthcareParty: AbstractFilterDtoHealthcareParty) : kotlin.collections.List<kotlin.String>  {
+        val localVariableConfig = matchHealthcarePartiesByRequestConfig(abstractFilterDtoHealthcareParty = abstractFilterDtoHealthcareParty)
+
+        return request<AbstractFilterDtoHealthcareParty, kotlin.collections.List<kotlin.String>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation matchHealthcarePartiesBy
+    *
+    * @param abstractFilterDtoHealthcareParty  
+    * @return RequestConfig
+    */
+    fun matchHealthcarePartiesByRequestConfig(abstractFilterDtoHealthcareParty: AbstractFilterDtoHealthcareParty) : RequestConfig<AbstractFilterDtoHealthcareParty> {
+        // val localVariableBody = abstractFilterDtoHealthcareParty
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = abstractFilterDtoHealthcareParty
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v2/hcparty/match",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

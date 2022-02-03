@@ -16,6 +16,7 @@ Method | HTTP request | Description
 [**listCodeTypesBy**](CodeApi.md#listCodeTypesBy) | **GET** /rest/v2/code/codetype/byRegionType | Finding code types.
 [**listCodesByRegionTypeCodeVersion**](CodeApi.md#listCodesByRegionTypeCodeVersion) | **GET** /rest/v2/code/byRegionTypeCode | Finding codes by code, type and version
 [**listTagTypesBy**](CodeApi.md#listTagTypesBy) | **GET** /rest/v2/code/tagtype/byRegionType | Finding tag types.
+[**matchCodesBy**](CodeApi.md#matchCodesBy) | **POST** /rest/v2/code/match | Get ids of code matching the provided filter for the current user (HcParty) 
 [**modifyCode**](CodeApi.md#modifyCode) | **PUT** /rest/v2/code | Modify a code
 
 
@@ -639,6 +640,51 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="matchCodesBy"></a>
+# **matchCodesBy**
+> kotlin.collections.List&lt;kotlin.String&gt; matchCodesBy(abstractFilterDtoCode)
+
+Get ids of code matching the provided filter for the current user (HcParty) 
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = CodeApi()
+val abstractFilterDtoCode : AbstractFilterDtoCode =  // AbstractFilterDtoCode | 
+try {
+    val result : kotlin.collections.List<kotlin.String> = apiInstance.matchCodesBy(abstractFilterDtoCode)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling CodeApi#matchCodesBy")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling CodeApi#matchCodesBy")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **abstractFilterDtoCode** | [**AbstractFilterDtoCode**](AbstractFilterDtoCode.md)|  |
+
+### Return type
+
+**kotlin.collections.List&lt;kotlin.String&gt;**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: */*
 
 <a name="modifyCode"></a>

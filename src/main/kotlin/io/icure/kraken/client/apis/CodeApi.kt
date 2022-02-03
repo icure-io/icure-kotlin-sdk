@@ -15,6 +15,7 @@ package io.icure.kraken.client.apis
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.infrastructure.*
+
 import io.icure.kraken.client.models.CodeDto
 import io.icure.kraken.client.models.FilterChainCode
 import io.icure.kraken.client.models.ListOfIdsDto
@@ -677,6 +678,45 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/code/tagtype/byRegionType",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
+    * Get ids of code matching the provided filter for the current user (HcParty) 
+    * 
+    * @param abstractFilterDtoCode  
+    * @return kotlin.collections.List<kotlin.String>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun matchCodesBy(abstractFilterDtoCode: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.CodeDto>) : kotlin.collections.List<kotlin.String>  {
+        val localVariableConfig = matchCodesByRequestConfig(abstractFilterDtoCode = abstractFilterDtoCode)
+
+        return request<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.CodeDto>, kotlin.collections.List<kotlin.String>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation matchCodesBy
+    *
+    * @param abstractFilterDtoCode  
+    * @return RequestConfig
+    */
+    fun matchCodesByRequestConfig(abstractFilterDtoCode: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.CodeDto>) : RequestConfig<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.CodeDto>> {
+        // val localVariableBody = abstractFilterDtoCode
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = abstractFilterDtoCode
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v2/code/match",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
