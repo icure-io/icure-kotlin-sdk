@@ -15,8 +15,10 @@ package io.icure.kraken.client.apis
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.infrastructure.*
+import io.icure.kraken.client.models.AbstractFilterDtoUser
 import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.EmailTemplateDto
+import io.icure.kraken.client.models.FilterChainUser
 import io.icure.kraken.client.models.PaginatedListUserDto
 import io.icure.kraken.client.models.PropertyStubDto
 import io.icure.kraken.client.models.UserDto
@@ -364,6 +366,57 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/user/encodePassword",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
+    * Filter users for the current user (HcParty)
+    * Returns a list of users along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
+    * @param filterChainUser  
+    * @param startDocumentId A User document ID (optional)
+    * @param limit Number of rows (optional)
+    * @return PaginatedListUserDto
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun filterUsersBy(filterChainUser: FilterChainUser, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListUserDto  {
+        val localVariableConfig = filterUsersByRequestConfig(filterChainUser = filterChainUser, startDocumentId = startDocumentId, limit = limit)
+
+        return request<FilterChainUser, PaginatedListUserDto>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation filterUsersBy
+    *
+    * @param filterChainUser  
+    * @param startDocumentId A User document ID (optional)
+    * @param limit Number of rows (optional)
+    * @return RequestConfig
+    */
+    fun filterUsersByRequestConfig(filterChainUser: FilterChainUser, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<FilterChainUser> {
+        // val localVariableBody = filterChainUser
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                if (startDocumentId != null) {
+                    put("startDocumentId", listOf(startDocumentId.toString()))
+                }
+                if (limit != null) {
+                    put("limit", listOf(limit.toString()))
+                }
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = filterChainUser
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v2/user/filter",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -791,6 +844,45 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/user/inGroup/{groupId}".replace("{"+"groupId"+"}", "${URLEncoder.encode(groupId.toString(), Charsets.UTF_8)}"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
+    * Get ids of healthcare party matching the provided filter for the current user (HcParty) 
+    * 
+    * @param abstractFilterDtoUser  
+    * @return kotlin.collections.List<kotlin.String>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun matchUsersBy(abstractFilterDtoUser: AbstractFilterDtoUser) : kotlin.collections.List<kotlin.String>  {
+        val localVariableConfig = matchUsersByRequestConfig(abstractFilterDtoUser = abstractFilterDtoUser)
+
+        return request<AbstractFilterDtoUser, kotlin.collections.List<kotlin.String>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation matchUsersBy
+    *
+    * @param abstractFilterDtoUser  
+    * @return RequestConfig
+    */
+    fun matchUsersByRequestConfig(abstractFilterDtoUser: AbstractFilterDtoUser) : RequestConfig<AbstractFilterDtoUser> {
+        // val localVariableBody = abstractFilterDtoUser
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = abstractFilterDtoUser
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v2/user/match",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

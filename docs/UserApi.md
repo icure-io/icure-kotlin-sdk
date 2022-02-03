@@ -12,6 +12,7 @@ Method | HTTP request | Description
 [**deleteUser**](UserApi.md#deleteUser) | **DELETE** /rest/v2/user/{userId} | Delete a User based on his/her ID.
 [**deleteUserInGroup**](UserApi.md#deleteUserInGroup) | **DELETE** /rest/v2/user/inGroup/{groupId}/{userId} | Delete a User based on his/her ID.
 [**encodePassword**](UserApi.md#encodePassword) | **GET** /rest/v2/user/encodePassword | 
+[**filterUsersBy**](UserApi.md#filterUsersBy) | **POST** /rest/v2/user/filter | Filter users for the current user (HcParty)
 [**findByHcpartyId**](UserApi.md#findByHcpartyId) | **GET** /rest/v2/user/byHealthcarePartyId/{id} | Get the list of users by healthcare party id
 [**forgottenPassword**](UserApi.md#forgottenPassword) | **POST** /rest/v2/user/forgottenPassword/{email} | Send a forgotten email message to an user
 [**getCurrentSession**](UserApi.md#getCurrentSession) | **GET** /rest/v2/user/session | Get Currently logged-in user session.
@@ -22,6 +23,7 @@ Method | HTTP request | Description
 [**getUserByEmail**](UserApi.md#getUserByEmail) | **GET** /rest/v2/user/byEmail/{email} | Get a user by his Email/Login
 [**listUsersBy**](UserApi.md#listUsersBy) | **GET** /rest/v2/user | List users with(out) pagination
 [**listUsersInGroup**](UserApi.md#listUsersInGroup) | **GET** /rest/v2/user/inGroup/{groupId} | List users with(out) pagination
+[**matchUsersBy**](UserApi.md#matchUsersBy) | **POST** /rest/v2/user/match | Get ids of healthcare party matching the provided filter for the current user (HcParty) 
 [**modifyProperties**](UserApi.md#modifyProperties) | **PUT** /rest/v2/user/{userId}/properties | Modify a User property
 [**modifyUser**](UserApi.md#modifyUser) | **PUT** /rest/v2/user | Modify a user.
 [**modifyUserInGroup**](UserApi.md#modifyUserInGroup) | **PUT** /rest/v2/user/inGroup/{groupId} | Modify a user.
@@ -401,6 +403,57 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="filterUsersBy"></a>
+# **filterUsersBy**
+> PaginatedListUserDto filterUsersBy(filterChainUser, startDocumentId, limit)
+
+Filter users for the current user (HcParty)
+
+Returns a list of users along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = UserApi()
+val filterChainUser : FilterChainUser =  // FilterChainUser | 
+val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A User document ID
+val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
+try {
+    val result : PaginatedListUserDto = apiInstance.filterUsersBy(filterChainUser, startDocumentId, limit)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling UserApi#filterUsersBy")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling UserApi#filterUsersBy")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **filterChainUser** | [**FilterChainUser**](FilterChainUser.md)|  |
+ **startDocumentId** | **kotlin.String**| A User document ID | [optional]
+ **limit** | **kotlin.Int**| Number of rows | [optional]
+
+### Return type
+
+[**PaginatedListUserDto**](PaginatedListUserDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: */*
 
 <a name="findByHcpartyId"></a>
@@ -869,6 +922,51 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="matchUsersBy"></a>
+# **matchUsersBy**
+> kotlin.collections.List&lt;kotlin.String&gt; matchUsersBy(abstractFilterDtoUser)
+
+Get ids of healthcare party matching the provided filter for the current user (HcParty) 
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = UserApi()
+val abstractFilterDtoUser : AbstractFilterDtoUser =  // AbstractFilterDtoUser | 
+try {
+    val result : kotlin.collections.List<kotlin.String> = apiInstance.matchUsersBy(abstractFilterDtoUser)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling UserApi#matchUsersBy")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling UserApi#matchUsersBy")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **abstractFilterDtoUser** | [**AbstractFilterDtoUser**](AbstractFilterDtoUser.md)|  |
+
+### Return type
+
+**kotlin.collections.List&lt;kotlin.String&gt;**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: */*
 
 <a name="modifyProperties"></a>

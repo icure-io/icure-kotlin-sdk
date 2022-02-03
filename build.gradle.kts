@@ -99,7 +99,7 @@ tasks.getByName("publish") {
 }
 
 tasks.register("apiGenerate", Jar::class) {
-    inputs.files(fileTree("openApiTemplates"))
+    inputs.files(fileTree("openApiTemplates"), File("${rootDir}/icure-openapi-spec.json"))
         .withPropertyName("sourceFiles")
         .withPathSensitivity(PathSensitivity.RELATIVE)
     doLast {

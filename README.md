@@ -539,6 +539,7 @@ Class | Method | HTTP request | Description
 *UserApi* | [**deleteUser**](docs/UserApi.md#deleteuser) | **DELETE** /rest/v2/user/{userId} | Delete a User based on his/her ID.
 *UserApi* | [**deleteUserInGroup**](docs/UserApi.md#deleteuseringroup) | **DELETE** /rest/v2/user/inGroup/{groupId}/{userId} | Delete a User based on his/her ID.
 *UserApi* | [**encodePassword**](docs/UserApi.md#encodepassword) | **GET** /rest/v2/user/encodePassword | 
+*UserApi* | [**filterUsersBy**](docs/UserApi.md#filterusersby) | **POST** /rest/v2/user/filter | Filter users for the current user (HcParty)
 *UserApi* | [**findByHcpartyId**](docs/UserApi.md#findbyhcpartyid) | **GET** /rest/v2/user/byHealthcarePartyId/{id} | Get the list of users by healthcare party id
 *UserApi* | [**forgottenPassword**](docs/UserApi.md#forgottenpassword) | **POST** /rest/v2/user/forgottenPassword/{email} | Send a forgotten email message to an user
 *UserApi* | [**getCurrentSession**](docs/UserApi.md#getcurrentsession) | **GET** /rest/v2/user/session | Get Currently logged-in user session.
@@ -549,6 +550,7 @@ Class | Method | HTTP request | Description
 *UserApi* | [**getUserByEmail**](docs/UserApi.md#getuserbyemail) | **GET** /rest/v2/user/byEmail/{email} | Get a user by his Email/Login
 *UserApi* | [**listUsersBy**](docs/UserApi.md#listusersby) | **GET** /rest/v2/user | List users with(out) pagination
 *UserApi* | [**listUsersInGroup**](docs/UserApi.md#listusersingroup) | **GET** /rest/v2/user/inGroup/{groupId} | List users with(out) pagination
+*UserApi* | [**matchUsersBy**](docs/UserApi.md#matchusersby) | **POST** /rest/v2/user/match | Get ids of healthcare party matching the provided filter for the current user (HcParty) 
 *UserApi* | [**modifyProperties**](docs/UserApi.md#modifyproperties) | **PUT** /rest/v2/user/{userId}/properties | Modify a User property
 *UserApi* | [**modifyUser**](docs/UserApi.md#modifyuser) | **PUT** /rest/v2/user | Modify a user.
 *UserApi* | [**modifyUserInGroup**](docs/UserApi.md#modifyuseringroup) | **PUT** /rest/v2/user/inGroup/{groupId} | Modify a user.
@@ -565,6 +567,7 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.AbstractFilterDtoInvoice](docs/AbstractFilterDtoInvoice.md)
  - [io.icure.kraken.client.models.AbstractFilterDtoPatient](docs/AbstractFilterDtoPatient.md)
  - [io.icure.kraken.client.models.AbstractFilterDtoService](docs/AbstractFilterDtoService.md)
+ - [io.icure.kraken.client.models.AbstractFilterDtoUser](docs/AbstractFilterDtoUser.md)
  - [io.icure.kraken.client.models.AccessLogDto](docs/AccessLogDto.md)
  - [io.icure.kraken.client.models.AddressDto](docs/AddressDto.md)
  - [io.icure.kraken.client.models.AdministrationQuantity](docs/AdministrationQuantity.md)
@@ -630,6 +633,7 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.FilterChainInvoice](docs/FilterChainInvoice.md)
  - [io.icure.kraken.client.models.FilterChainPatient](docs/FilterChainPatient.md)
  - [io.icure.kraken.client.models.FilterChainService](docs/FilterChainService.md)
+ - [io.icure.kraken.client.models.FilterChainUser](docs/FilterChainUser.md)
  - [io.icure.kraken.client.models.FinancialInstitutionInformationDto](docs/FinancialInstitutionInformationDto.md)
  - [io.icure.kraken.client.models.FlatRateTarificationDto](docs/FlatRateTarificationDto.md)
  - [io.icure.kraken.client.models.FlowItemDto](docs/FlowItemDto.md)
