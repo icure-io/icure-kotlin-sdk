@@ -30,7 +30,7 @@ import com.github.pozo.KotlinBuilder
  * @param permissions If permission to modify patient data is granted or revoked
  * @param roles Roles specified for the user
  * @param autoDelegations Delegations that are automatically generated client side when a new database object is created by this user
- * @param applicationTokens Long lived authentication tokens used for inter-applications authentication.
+ * @param applicationTokens 
  * @param authenticationTokens Encrypted and time-limited Authentication tokens used for inter-applications authentication
  * @param rev the revision of the user in the database, used for conflict management / optimistic locking.
  * @param deletionDate hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called.
@@ -45,6 +45,7 @@ import com.github.pozo.KotlinBuilder
  * @param groupId id of the group (practice/hospital) the user is member of
  * @param healthcarePartyId Id of the healthcare party if the user is a healthcare party.
  * @param patientId Id of the patient if the user is a patient
+ * @param deviceId Id of the device if the user is a device
  * @param createdDate the timestamp (unix epoch in ms) of creation of the user, will be filled automatically if missing. Not enforced by the application server.
  * @param termsOfUseDate the timestamp (unix epoch in ms) of the latest validation of the terms of use of the application
  * @param email email address of the user (used for token exchange or password recovery).
@@ -76,8 +77,8 @@ data class UserDto (
     @field:JsonProperty("autoDelegations")
     val autoDelegations: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<kotlin.String>> = emptyMap(),
 
-    /* Long lived authentication tokens used for inter-applications authentication. */
     @field:JsonProperty("applicationTokens")
+    @Deprecated(message = "This property is deprecated.")
     val applicationTokens: kotlin.collections.Map<kotlin.String, kotlin.String> = emptyMap(),
 
     /* Encrypted and time-limited Authentication tokens used for inter-applications authentication */
@@ -134,6 +135,10 @@ data class UserDto (
     /* Id of the patient if the user is a patient */
     @field:JsonProperty("patientId")
     val patientId: kotlin.String? = null,
+
+    /* Id of the device if the user is a device */
+    @field:JsonProperty("deviceId")
+    val deviceId: kotlin.String? = null,
 
     /* the timestamp (unix epoch in ms) of creation of the user, will be filled automatically if missing. Not enforced by the application server. */
     @field:JsonProperty("createdDate")

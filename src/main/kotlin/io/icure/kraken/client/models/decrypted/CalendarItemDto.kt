@@ -61,6 +61,7 @@ import io.icure.kraken.client.models.FlowItemDto
  * @param details
  * @param wasMigrated
  * @param agendaId
+ * @param recurrenceId
  * @param flowItem
  * @param encryptedSelf The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys.
  */
@@ -93,15 +94,15 @@ data class CalendarItemDto (
 
     /* The secretForeignKeys are filled at the to many end of a one to many relationship (for example inside Contact for the Patient -> Contacts relationship). Used when we want to find the patient for a specific contact. These keys are the encrypted id (using the hcParty key for the delegate) that can be found in clear inside the patient. ids encrypted using the hcParty keys. */
     @field:JsonProperty("cryptedForeignKeys")
-    val cryptedForeignKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<DelegationDto>> = mapOf(),
+    val cryptedForeignKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<DelegationDto>> = emptyMap(),
 
     /* When a document is created, the responsible generates a cryptographically random master key (never to be used for something else than referencing from other entities). He/she encrypts it using his own AES exchange key and stores it as a delegation. The responsible is thus always in the delegations as well */
     @field:JsonProperty("delegations")
-    val delegations: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<DelegationDto>> = mapOf(),
+    val delegations: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<DelegationDto>> = emptyMap(),
 
     /* When a document needs to be encrypted, the responsible generates a cryptographically random master key (different from the delegation key, never to appear in clear anywhere in the db. He/she encrypts it using his own AES exchange key and stores it as a delegation */
     @field:JsonProperty("encryptionKeys")
-    val encryptionKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<DelegationDto>> = mapOf(),
+    val encryptionKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<DelegationDto>> = emptyMap(),
 
     @field:JsonProperty("rev")
     val rev: kotlin.String? = null,
@@ -188,6 +189,9 @@ data class CalendarItemDto (
 
     @field:JsonProperty("agendaId")
     val agendaId: kotlin.String? = null,
+
+    @field:JsonProperty("recurrenceId")
+    val recurrenceId: kotlin.String? = null,
 
     @field:JsonProperty("flowItem")
     val flowItem: FlowItemDto? = null,

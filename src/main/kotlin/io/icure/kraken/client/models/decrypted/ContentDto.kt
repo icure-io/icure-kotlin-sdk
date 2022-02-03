@@ -1,9 +1,9 @@
 /**
- * iCure Cloud API Documentation
+ * iCure Data Stack API Documentation
  *
- * Spring shop sample application
+ * The iCure Data Stack Application API is the native interface to iCure.
  *
- * The version of the OpenAPI document: v0.0.1
+ * The version of the OpenAPI document: v2
  *
  *
  * Please note:
@@ -19,21 +19,22 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.github.pozo.KotlinBuilder
-
+import io.icure.kraken.client.models.TimeSeriesDto
 
 /**
- * The type of the content recorded in the documents for the service
+ * Information contained in the service. Content is localized, using ISO language code as key
  *
  * @param stringValue
  * @param numberValue
  * @param booleanValue
  * @param instantValue
- * @param fuzzyDateValue Known values in a date. The format could have a all three (day, month and year) or values on any of these three, whatever is known.
+ * @param fuzzyDateValue Value as date. The format could have a all three (day, month and year) or values on any of these three, whatever is known.
  * @param binaryValue
- * @param documentId Id of the document in which the content is being filled.
+ * @param documentId Linked document.
  * @param measureValue
  * @param medicationValue
- * @param compoundValue The service for which the content is being filled
+ * @param timeSeries
+ * @param compoundValue
  * @param ratio
  * @param range
  */
@@ -55,7 +56,7 @@ data class ContentDto (
     @field:JsonProperty("instantValue")
     val instantValue: java.time.OffsetDateTime? = null,
 
-    /* Known values in a date. The format could have a all three (day, month and year) or values on any of these three, whatever is known. */
+    /* Value as date. The format could have a all three (day, month and year) or values on any of these three, whatever is known. */
     @field:JsonProperty("fuzzyDateValue")
     val fuzzyDateValue: kotlin.Long? = null,
 
@@ -72,15 +73,17 @@ data class ContentDto (
     @field:JsonProperty("medicationValue")
     val medicationValue: MedicationDto? = null,
 
-    /* The service for which the content is being filled */
+    @field:JsonProperty("timeSeries")
+    val timeSeries: TimeSeriesDto? = null,
+
     @field:JsonProperty("compoundValue")
     val compoundValue: kotlin.collections.List<ServiceDto>? = null,
 
     @field:JsonProperty("ratio")
-    val ratio: List<MeasureDto>? = null,
+    val ratio: kotlin.collections.List<MeasureDto>? = null,
 
     @field:JsonProperty("range")
-    val range: List<MeasureDto>? = null
+    val range: kotlin.collections.List<MeasureDto>? = null
 
 )
 
