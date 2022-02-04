@@ -45,6 +45,8 @@ import com.github.pozo.KotlinBuilder
  * @param hcPartyKeys For each couple of HcParties (delegator and delegate), this map contains the exchange AES key. The delegator is always this hcp, the key of the map is the id of the delegate. The AES exchange key is encrypted using RSA twice : once using this hcp public key (index 0 in the Array) and once using the other hcp public key (index 1 in the Array). For a pair of HcParties. Each HcParty always has one AES exchange key for himself.
  * @param privateKeyShamirPartitions The privateKeyShamirPartitions are used to share this hcp's private RSA key with a series of other hcParties using Shamir's algorithm. The key of the map is the hcp Id with whom this partition has been shared. The value is \"threshold⎮partition in hex\" encrypted using the the partition's holder's public RSA key
  * @param rev the revision of the healthcare party in the database, used for conflict management / optimistic locking.
+ * @param created creation timestamp of the object.
+ * @param modified last modification timestamp of the object.
  * @param deletionDate hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called.
  * @param name The full name of the healthcare party, used mainly when the healthcare party is an organization
  * @param lastName the lastname (surname) of the healthcare party. This is the official lastname that should be used for official administrative purposes.
@@ -140,6 +142,14 @@ data class HealthcarePartyDto (
     /* the revision of the healthcare party in the database, used for conflict management / optimistic locking. */
     @field:JsonProperty("rev")
     val rev: kotlin.String? = null,
+
+    /* creation timestamp of the object. */
+    @field:JsonProperty("created")
+    val created: kotlin.Long? = null,
+
+    /* last modification timestamp of the object. */
+    @field:JsonProperty("modified")
+    val modified: kotlin.Long? = null,
 
     /* hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. */
     @field:JsonProperty("deletionDate")
