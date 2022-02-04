@@ -1,6 +1,6 @@
 package io.icure.kraken.client.extendedapis
 
-import io.icure.kraken.client.apis.HcpartyApi
+import io.icure.kraken.client.apis.HealthcarePartyApi
 import io.icure.kraken.client.apis.UserApi
 import io.icure.kraken.client.crypto.CryptoUtils
 import io.icure.kraken.client.crypto.privateKeyAsString
@@ -24,9 +24,9 @@ import kotlin.io.path.createFile
 @ExperimentalUnsignedTypes
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-internal class HcpartyApiKtTest {
+internal class HealthcarePartyApiKtTest {
     private val userApi = UserApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic YWJkZW1vOmtuYWxvdQ==")
-    private val hcpartyApi = HcpartyApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic YWJkZW1vOmtuYWxvdQ==")
+    private val hcpartyApi = HealthcarePartyApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic YWJkZW1vOmtuYWxvdQ==")
 
     @Test
     internal fun createHcPartyTest() = runBlocking {
