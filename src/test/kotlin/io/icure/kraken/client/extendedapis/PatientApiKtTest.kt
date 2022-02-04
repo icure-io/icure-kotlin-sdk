@@ -1,6 +1,6 @@
 package io.icure.kraken.client.extendedapis
 
-import io.icure.kraken.client.apis.HcpartyApi
+import io.icure.kraken.client.apis.HealthcarePartyApi
 import io.icure.kraken.client.apis.PatientApi
 import io.icure.kraken.client.apis.UserApi
 import io.icure.kraken.client.crypto.CryptoConfig
@@ -16,23 +16,21 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions
 import java.net.URL
-import java.security.interfaces.RSAPrivateKey
-import java.security.interfaces.RSAPublicKey
 import java.util.*
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 internal class PatientApiKtTest {
     private val userApi = UserApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic YWJkZW1vOmtuYWxvdQ==")
-    private val hcpartyApi = HcpartyApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic YWJkZW1vOmtuYWxvdQ==")
+    private val hcpartyApi = HealthcarePartyApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic YWJkZW1vOmtuYWxvdQ==")
     private val patientApi = PatientApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic YWJkZW1vOmtuYWxvdQ==")
 
     private val child1UserApi = UserApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic ${Base64.getEncoder().encodeToString("jimmy-1643812116186:test".toByteArray(kotlin.text.Charsets.UTF_8))}")
-    private val child1HcpartyApi = HcpartyApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic ${Base64.getEncoder().encodeToString("jimmy-1643812116186:test".toByteArray(kotlin.text.Charsets.UTF_8))}")
+    private val child1HealthcarePartyApi = HealthcarePartyApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic ${Base64.getEncoder().encodeToString("jimmy-1643812116186:test".toByteArray(kotlin.text.Charsets.UTF_8))}")
     private val child1PatientApi = PatientApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic ${Base64.getEncoder().encodeToString("jimmy-1643812116186:test".toByteArray(kotlin.text.Charsets.UTF_8))}")
 
     private val child2UserApi = UserApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic ${Base64.getEncoder().encodeToString("jimmy-1643812213976:test".toByteArray(kotlin.text.Charsets.UTF_8))}")
-    private val child2HcpartyApi = HcpartyApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic ${Base64.getEncoder().encodeToString("jimmy-1643812213976:test".toByteArray(kotlin.text.Charsets.UTF_8))}")
+    private val child2HealthcarePartyApi = HealthcarePartyApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic ${Base64.getEncoder().encodeToString("jimmy-1643812213976:test".toByteArray(kotlin.text.Charsets.UTF_8))}")
     private val child2PatientApi = PatientApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic ${Base64.getEncoder().encodeToString("jimmy-1643812213976:test".toByteArray(kotlin.text.Charsets.UTF_8))}")
 
     @org.junit.jupiter.api.Test
@@ -68,10 +66,10 @@ internal class PatientApiKtTest {
 
         // Before
         val user1 = child1UserApi.getCurrentUser()
-        val hcp1 = child1HcpartyApi.getCurrentHealthcareParty()
+        val hcp1 = child1HealthcarePartyApi.getCurrentHealthcareParty()
 
         val user2 = child2UserApi.getCurrentUser()
-        val hcp2 = child2HcpartyApi.getCurrentHealthcareParty()
+        val hcp2 = child2HealthcarePartyApi.getCurrentHealthcareParty()
 
         Assertions.assertNotNull(hcp1.parentId, "Hcp must have a parent for this test")
         Assertions.assertNotNull(hcp2.parentId, "Hcp must have a parent for this test")
@@ -79,7 +77,7 @@ internal class PatientApiKtTest {
         val keyPath1 = "keys/${hcp1.id}-icc-priv.2048.key"
         val keyFile1 = PatientApiKtTest::class.java.getResource(keyPath1)!!
         val cc1 = patientCryptoConfig(LocalCrypto(
-            child1HcpartyApi, mapOf(
+            child1HealthcarePartyApi, mapOf(
                 parent.healthcarePartyId!! to (keyFile.readText(Charsets.UTF_8).toPrivateKey() to parentHcp.publicKey!!.toPublicKey()),
                 user1.healthcarePartyId!! to (keyFile1.readText(Charsets.UTF_8).toPrivateKey() to hcp1.publicKey!!.toPublicKey())
             )
@@ -88,7 +86,7 @@ internal class PatientApiKtTest {
         val keyPath2 = "keys/${hcp2.id}-icc-priv.2048.key"
         val keyFile2 = PatientApiKtTest::class.java.getResource(keyPath2)!!
         val cc2 = patientCryptoConfig(LocalCrypto(
-            child2HcpartyApi, mapOf(
+            child2HealthcarePartyApi, mapOf(
                 parent.healthcarePartyId!! to (keyFile.readText(Charsets.UTF_8).toPrivateKey() to parentHcp.publicKey!!.toPublicKey()),
                 user2.healthcarePartyId!! to (keyFile2.readText(Charsets.UTF_8).toPrivateKey() to hcp2.publicKey!!.toPublicKey())
             )
