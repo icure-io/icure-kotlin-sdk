@@ -49,7 +49,7 @@ suspend fun DocumentApi.createDocument(user: UserDto, document: DocumentDto, con
         config.encryptDocument(
             user.healthcarePartyId!!,
             (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
-            document
+            document.initDelegations(user, config)
         )
     ).let { config.decryptDocument(user.healthcarePartyId, it) }
 
