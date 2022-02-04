@@ -2,7 +2,7 @@ package io.icure.kraken.client.crypto
 
 import com.github.benmanes.caffeine.cache.Cache
 import com.github.benmanes.caffeine.cache.Caffeine
-import io.icure.kraken.client.apis.HcpartyApi
+import io.icure.kraken.client.apis.HealthcarePartyApi
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
 import io.icure.kraken.client.defGet
@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-class LocalCrypto(private val hcpartyApi: HcpartyApi, private val rsaKeyPairs: Map<String, Pair<RSAPrivateKey, RSAPublicKey>>) : Crypto {
+class LocalCrypto(private val hcpartyApi: HealthcarePartyApi, private val rsaKeyPairs: Map<String, Pair<RSAPrivateKey, RSAPublicKey>>) : Crypto {
     private val aesValidKeySizes : Set<Int> = setOf(128, 192, 256)
 
     private val hcParties : Cache<String, Deferred<Optional<HealthcarePartyDto>>> = Caffeine.newBuilder()
