@@ -122,7 +122,7 @@ suspend fun ContactApi.modifyContacts(user: UserDto, contactDto: List<ContactDto
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.deleteServices(user: UserDto, patient: PatientDto, services: List<io.icure.kraken.client.models.ServiceDto>, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>): ContactDto {
+suspend fun ContactApi.deleteServices(user: UserDto, patient: PatientDto, services: List<ServiceDto>, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>): ContactDto {
     val currentTime = System.currentTimeMillis()
     return this.createContact(user, patient, ContactDto(id= UUID.randomUUID().toString(), services = services.map { ServiceDto(id = it.id, created = it.created, modified = currentTime, endOfLife = currentTime) }), config)
 }
