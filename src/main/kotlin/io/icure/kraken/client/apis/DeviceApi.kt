@@ -15,10 +15,10 @@ package io.icure.kraken.client.apis
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.infrastructure.*
-import io.icure.kraken.client.models.AbstractFilterDtoDevice
+
 import io.icure.kraken.client.models.DeviceDto
 import io.icure.kraken.client.models.DocIdentifier
-import io.icure.kraken.client.models.FilterChainDevice
+
 import io.icure.kraken.client.models.IdWithRevDto
 import io.icure.kraken.client.models.ListOfIdsDto
 import io.icure.kraken.client.models.PaginatedListDeviceDto
@@ -257,10 +257,10 @@ class DeviceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun filterDevicesBy(filterChainDevice: FilterChainDevice, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListDeviceDto  {
+    suspend fun filterDevicesBy(filterChainDevice: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.DeviceDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListDeviceDto  {
         val localVariableConfig = filterDevicesByRequestConfig(filterChainDevice = filterChainDevice, startDocumentId = startDocumentId, limit = limit)
 
-        return request<FilterChainDevice, PaginatedListDeviceDto>(
+        return request<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.DeviceDto>, PaginatedListDeviceDto>(
             localVariableConfig
         )!!
     }
@@ -272,7 +272,7 @@ class DeviceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     * @param limit Number of rows (optional)
     * @return RequestConfig
     */
-    fun filterDevicesByRequestConfig(filterChainDevice: FilterChainDevice, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<FilterChainDevice> {
+    fun filterDevicesByRequestConfig(filterChainDevice: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.DeviceDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.DeviceDto>> {
         // val localVariableBody = filterChainDevice
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -384,10 +384,10 @@ class DeviceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun matchDevicesBy(abstractFilterDtoDevice: AbstractFilterDtoDevice) : kotlin.collections.List<kotlin.String>  {
+    suspend fun matchDevicesBy(abstractFilterDtoDevice: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.DeviceDto>) : kotlin.collections.List<kotlin.String>  {
         val localVariableConfig = matchDevicesByRequestConfig(abstractFilterDtoDevice = abstractFilterDtoDevice)
 
-        return request<AbstractFilterDtoDevice, kotlin.collections.List<kotlin.String>>(
+        return request<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.DeviceDto>, kotlin.collections.List<kotlin.String>>(
             localVariableConfig
         )!!
     }
@@ -397,7 +397,7 @@ class DeviceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     * @param abstractFilterDtoDevice  
     * @return RequestConfig
     */
-    fun matchDevicesByRequestConfig(abstractFilterDtoDevice: AbstractFilterDtoDevice) : RequestConfig<AbstractFilterDtoDevice> {
+    fun matchDevicesByRequestConfig(abstractFilterDtoDevice: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.DeviceDto>) : RequestConfig<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.DeviceDto>> {
         // val localVariableBody = abstractFilterDtoDevice
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
