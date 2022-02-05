@@ -17,7 +17,6 @@ import io.icure.kraken.client.models.AbstractFilterDtoPatient
 import io.icure.kraken.client.models.ContentDto
 import io.icure.kraken.client.models.DelegationDto
 import io.icure.kraken.client.models.DocIdentifier
-import io.icure.kraken.client.models.FilterChainPatient
 import io.icure.kraken.client.models.IdWithRevDto
 import io.icure.kraken.client.models.ListOfIdsDto
 import io.icure.kraken.client.models.PaginatedListPatientDto
@@ -60,6 +59,7 @@ import kotlinx.coroutines.runBlocking
 import io.icure.kraken.client.infrastructure.TestUtils
 import io.icure.kraken.client.infrastructure.TestUtils.Companion.basicAuth
 import io.icure.kraken.client.infrastructure.differences
+import io.icure.kraken.client.models.filter.chain.FilterChain
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.fold
 import java.nio.ByteBuffer
@@ -410,12 +410,12 @@ class PatientApiTest() {
             try{
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "filterPatientsBy")
-                val filterChainPatient: FilterChainPatient = TestUtils.getParameter<FilterChainPatient>(fileName, "filterPatientsBy.filterChainPatient")!!.let {
+                val filterChainPatient: FilterChain<PatientDto> = TestUtils.getParameter<FilterChain<PatientDto>>(fileName, "filterPatientsBy.filterChainPatient")!!.let {
                     (it as? PatientDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterPatientsBy") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
                     val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     it.copy(rev = currentRev)
-                    } as? FilterChainPatient ?: it
+                    } as? FilterChain<PatientDto> ?: it
                     }
                 val startKey: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "filterPatientsBy.startKey")?.let {
                     (it as? PatientDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterPatientsBy") }?.let {
