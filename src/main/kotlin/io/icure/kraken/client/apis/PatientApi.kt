@@ -19,7 +19,7 @@ import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.models.ContentDto
 import io.icure.kraken.client.models.DelegationDto
 import io.icure.kraken.client.models.DocIdentifier
-import io.icure.kraken.client.models.FilterChainPatient
+
 import io.icure.kraken.client.models.IdWithRevDto
 import io.icure.kraken.client.models.ListOfIdsDto
 import io.icure.kraken.client.models.PaginatedListPatientDto
@@ -226,10 +226,10 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun filterPatientsBy(filterChainPatient: FilterChainPatient, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, skip: kotlin.Int?, sort: kotlin.String?, desc: kotlin.Boolean?) : PaginatedListPatientDto  {
+    suspend fun filterPatientsBy(filterChainPatient: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.PatientDto>, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, skip: kotlin.Int?, sort: kotlin.String?, desc: kotlin.Boolean?) : PaginatedListPatientDto  {
         val localVariableConfig = filterPatientsByRequestConfig(filterChainPatient = filterChainPatient, startKey = startKey, startDocumentId = startDocumentId, limit = limit, skip = skip, sort = sort, desc = desc)
 
-        return request<FilterChainPatient, PaginatedListPatientDto>(
+        return request<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.PatientDto>, PaginatedListPatientDto>(
             localVariableConfig
         )!!
     }
@@ -245,7 +245,7 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param desc Descending (optional)
     * @return RequestConfig
     */
-    fun filterPatientsByRequestConfig(filterChainPatient: FilterChainPatient, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, skip: kotlin.Int?, sort: kotlin.String?, desc: kotlin.Boolean?) : RequestConfig<FilterChainPatient> {
+    fun filterPatientsByRequestConfig(filterChainPatient: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.PatientDto>, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, skip: kotlin.Int?, sort: kotlin.String?, desc: kotlin.Boolean?) : RequestConfig<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.PatientDto>> {
         // val localVariableBody = filterChainPatient
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {

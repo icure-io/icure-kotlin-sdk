@@ -7,6 +7,7 @@ import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
 import io.icure.kraken.client.crypto.keyFromHexString
 import io.icure.kraken.client.models.*
 import io.icure.kraken.client.models.decrypted.InvoiceDto
+import io.icure.kraken.client.models.filter.chain.FilterChain
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.mapstruct.Mapper
 import org.mapstruct.factory.Mappers
@@ -166,7 +167,7 @@ suspend fun InvoiceApi.appendCodes(
 @ExperimentalStdlibApi
 suspend fun InvoiceApi.filterInvoicesBy(
     user: UserDto,
-    filterChainInvoice: FilterChainInvoice,
+    filterChainInvoice: FilterChain<io.icure.kraken.client.models.InvoiceDto>,
     config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>
 ): List<InvoiceDto> {
     return this.filterInvoicesBy(filterChainInvoice).map { config.decryptInvoice(user.healthcarePartyId!!, it) }

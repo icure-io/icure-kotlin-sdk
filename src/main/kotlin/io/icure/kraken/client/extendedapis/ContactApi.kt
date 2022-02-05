@@ -9,8 +9,6 @@ import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
 import io.icure.kraken.client.crypto.keyFromHexString
 import io.icure.kraken.client.models.ContentDto
 import io.icure.kraken.client.models.DelegationDto
-import io.icure.kraken.client.models.FilterChainContact
-import io.icure.kraken.client.models.FilterChainService
 import io.icure.kraken.client.models.IcureStubDto
 import io.icure.kraken.client.models.ListOfIdsDto
 import io.icure.kraken.client.models.UserDto
@@ -18,6 +16,7 @@ import io.icure.kraken.client.models.decrypted.ContactDto
 import io.icure.kraken.client.models.decrypted.PaginatedListContactDto
 import io.icure.kraken.client.models.decrypted.PatientDto
 import io.icure.kraken.client.models.decrypted.ServiceDto
+import io.icure.kraken.client.models.filter.chain.FilterChain
 import io.icure.kraken.client.models.filter.contact.ContactByServiceIdsFilter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.mapstruct.Mapper
@@ -151,7 +150,7 @@ suspend fun ContactApi.updateServices(user: UserDto, patient: PatientDto, servic
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.filterContactsBy(user: UserDto, filterChainContact: FilterChainContact, startKey: String?, startDocumentId: String?, limit: Int?, skip: Int?, sort: String?, desc: Boolean?, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>) : PaginatedListContactDto {
+suspend fun ContactApi.filterContactsBy(user: UserDto, filterChainContact: FilterChain<io.icure.kraken.client.models.ContactDto>, startKey: String?, startDocumentId: String?, limit: Int?, skip: Int?, sort: String?, desc: Boolean?, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>) : PaginatedListContactDto {
     return this.filterContactsBy(filterChainContact, startDocumentId, limit).let {
         PaginatedListContactDto(rows = it.rows.map { config.decryptContact(user.healthcarePartyId!!, it) }, pageSize = it.pageSize, totalSize = it.totalSize, nextKeyPair = it.nextKeyPair)
     }
@@ -171,7 +170,7 @@ suspend fun ContactApi.getContacts(user: UserDto, listOfIdsDto: ListOfIdsDto, co
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.filterServicesBy(user: UserDto, filterChainService: FilterChainService, startDocumentId: String?, limit: Int?, crypto: Crypto) : io.icure.kraken.client.models.decrypted.PaginatedListServiceDto {
+suspend fun ContactApi.filterServicesBy(user: UserDto, filterChainService: FilterChain<io.icure.kraken.client.models.ServiceDto>, startDocumentId: String?, limit: Int?, crypto: Crypto) : io.icure.kraken.client.models.decrypted.PaginatedListServiceDto {
     return this.filterServicesBy(filterChainService, startDocumentId, limit).let {
         io.icure.kraken.client.models.decrypted.PaginatedListServiceDto(rows = it.rows.let { crypto.decryptServices(user.healthcarePartyId!!, null, it) }, pageSize = it.pageSize, totalSize = it.totalSize, nextKeyPair = it.nextKeyPair)
     }

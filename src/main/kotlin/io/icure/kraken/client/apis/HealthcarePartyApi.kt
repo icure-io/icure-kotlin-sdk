@@ -15,9 +15,9 @@ package io.icure.kraken.client.apis
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.infrastructure.*
-import io.icure.kraken.client.models.AbstractFilterDtoHealthcareParty
+
 import io.icure.kraken.client.models.DocIdentifier
-import io.icure.kraken.client.models.FilterChainHealthcareParty
+
 import io.icure.kraken.client.models.HealthcarePartyDto
 import io.icure.kraken.client.models.ListOfIdsDto
 import io.icure.kraken.client.models.PaginatedListHealthcarePartyDto
@@ -222,10 +222,10 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun filterHealthPartiesBy(filterChainHealthcareParty: FilterChainHealthcareParty, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListHealthcarePartyDto  {
+    suspend fun filterHealthPartiesBy(filterChainHealthcareParty: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.HealthcarePartyDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListHealthcarePartyDto  {
         val localVariableConfig = filterHealthPartiesByRequestConfig(filterChainHealthcareParty = filterChainHealthcareParty, startDocumentId = startDocumentId, limit = limit)
 
-        return request<FilterChainHealthcareParty, PaginatedListHealthcarePartyDto>(
+        return request<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.HealthcarePartyDto>, PaginatedListHealthcarePartyDto>(
             localVariableConfig
         )!!
     }
@@ -237,7 +237,7 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
     * @param limit Number of rows (optional)
     * @return RequestConfig
     */
-    fun filterHealthPartiesByRequestConfig(filterChainHealthcareParty: FilterChainHealthcareParty, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<FilterChainHealthcareParty> {
+    fun filterHealthPartiesByRequestConfig(filterChainHealthcareParty: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.HealthcarePartyDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.HealthcarePartyDto>> {
         // val localVariableBody = filterChainHealthcareParty
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -778,10 +778,10 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun matchHealthcarePartiesBy(abstractFilterDtoHealthcareParty: AbstractFilterDtoHealthcareParty) : kotlin.collections.List<kotlin.String>  {
+    suspend fun matchHealthcarePartiesBy(abstractFilterDtoHealthcareParty: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.HealthcarePartyDto>) : kotlin.collections.List<kotlin.String>  {
         val localVariableConfig = matchHealthcarePartiesByRequestConfig(abstractFilterDtoHealthcareParty = abstractFilterDtoHealthcareParty)
 
-        return request<AbstractFilterDtoHealthcareParty, kotlin.collections.List<kotlin.String>>(
+        return request<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.HealthcarePartyDto>, kotlin.collections.List<kotlin.String>>(
             localVariableConfig
         )!!
     }
@@ -791,7 +791,7 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
     * @param abstractFilterDtoHealthcareParty  
     * @return RequestConfig
     */
-    fun matchHealthcarePartiesByRequestConfig(abstractFilterDtoHealthcareParty: AbstractFilterDtoHealthcareParty) : RequestConfig<AbstractFilterDtoHealthcareParty> {
+    fun matchHealthcarePartiesByRequestConfig(abstractFilterDtoHealthcareParty: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.HealthcarePartyDto>) : RequestConfig<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.HealthcarePartyDto>> {
         // val localVariableBody = abstractFilterDtoHealthcareParty
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")

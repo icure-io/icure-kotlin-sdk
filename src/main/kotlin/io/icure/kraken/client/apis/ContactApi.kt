@@ -20,8 +20,8 @@ import io.icure.kraken.client.models.ContactDto
 import io.icure.kraken.client.models.ContentDto
 import io.icure.kraken.client.models.DelegationDto
 import io.icure.kraken.client.models.DocIdentifier
-import io.icure.kraken.client.models.FilterChainContact
-import io.icure.kraken.client.models.FilterChainService
+
+
 import io.icure.kraken.client.models.IcureStubDto
 import io.icure.kraken.client.models.LabelledOccurenceDto
 import io.icure.kraken.client.models.ListOfIdsDto
@@ -230,10 +230,10 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun filterContactsBy(filterChainContact: FilterChainContact, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListContactDto  {
+    suspend fun filterContactsBy(filterChainContact: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.ContactDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListContactDto  {
         val localVariableConfig = filterContactsByRequestConfig(filterChainContact = filterChainContact, startDocumentId = startDocumentId, limit = limit)
 
-        return request<FilterChainContact, PaginatedListContactDto>(
+        return request<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.ContactDto>, PaginatedListContactDto>(
             localVariableConfig
         )!!
     }
@@ -245,7 +245,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param limit Number of rows (optional)
     * @return RequestConfig
     */
-    fun filterContactsByRequestConfig(filterChainContact: FilterChainContact, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<FilterChainContact> {
+    fun filterContactsByRequestConfig(filterChainContact: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.ContactDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.ContactDto>> {
         // val localVariableBody = filterChainContact
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -281,10 +281,10 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun filterServicesBy(filterChainService: FilterChainService, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListServiceDto  {
+    suspend fun filterServicesBy(filterChainService: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.ServiceDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListServiceDto  {
         val localVariableConfig = filterServicesByRequestConfig(filterChainService = filterChainService, startDocumentId = startDocumentId, limit = limit)
 
-        return request<FilterChainService, PaginatedListServiceDto>(
+        return request<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.ServiceDto>, PaginatedListServiceDto>(
             localVariableConfig
         )!!
     }
@@ -296,7 +296,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param limit Number of rows (optional)
     * @return RequestConfig
     */
-    fun filterServicesByRequestConfig(filterChainService: FilterChainService, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<FilterChainService> {
+    fun filterServicesByRequestConfig(filterChainService: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.ServiceDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.ServiceDto>> {
         // val localVariableBody = filterChainService
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {

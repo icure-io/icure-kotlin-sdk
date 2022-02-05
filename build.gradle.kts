@@ -146,13 +146,33 @@ tasks.register("apply-custom-fixes") {
             "AbstractFilterDtoHealthElement" to "io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.HealthElementDto>",
             "AbstractFilterDtoContact" to "io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ContactDto>",
             "AbstractFilterDtoCode" to "io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.CodeDto>",
+            "AbstractFilterDtoHealthcareParty" to "io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.HealthcarePartyDto>",
+            "AbstractFilterDtoUser" to "io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.UserDto>",
+            "FilterChainInvoice" to "io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.InvoiceDto>",
+            "FilterChainService" to "io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.ServiceDto>",
+            "FilterChainPatient" to "io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.PatientDto>",
+            "FilterChainHealthElement" to "io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.HealthElementDto>",
+            "FilterChainContact" to "io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.ContactDto>",
+            "FilterChainCode" to "io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.CodeDto>",
+            "FilterChainHealthcareParty" to "io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.HealthcarePartyDto>",
+            "FilterChainUser" to "io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.UserDto>",
 
             "import io.icure.kraken.client.models.AbstractFilterDtoContact" to "",
             "import io.icure.kraken.client.models.AbstractFilterDtoCode" to "",
             "import io.icure.kraken.client.models.AbstractFilterDtoHealthElement" to "",
             "import io.icure.kraken.client.models.AbstractFilterDtoPatient" to "",
             "import io.icure.kraken.client.models.AbstractFilterDtoService" to "",
-            "import io.icure.kraken.client.models.AbstractFilterDtoInvoice" to ""
+            "import io.icure.kraken.client.models.AbstractFilterDtoInvoice" to "",
+            "import io.icure.kraken.client.models.AbstractFilterDtoHealthcareParty" to "",
+            "import io.icure.kraken.client.models.AbstractFilterDtoUser" to "",
+            "import io.icure.kraken.client.models.FilterChainContact" to "",
+            "import io.icure.kraken.client.models.FilterChainCode" to "",
+            "import io.icure.kraken.client.models.FilterChainHealthElement" to "",
+            "import io.icure.kraken.client.models.FilterChainPatient" to "",
+            "import io.icure.kraken.client.models.FilterChainService" to "",
+            "import io.icure.kraken.client.models.FilterChainInvoice" to "",
+            "import io.icure.kraken.client.models.FilterChainHealthcareParty" to "",
+            "import io.icure.kraken.client.models.FilterChainUser" to ""
         )
 
         // in Folders
@@ -188,6 +208,16 @@ tasks.create<Delete>("delete-unused-filter-files") {
     delete(File("$rootDir/src/main/kotlin/io/icure/kraken/client/models/AbstractFilterDtoHealthElement.kt"))
     delete(File("$rootDir/src/main/kotlin/io/icure/kraken/client/models/AbstractFilterDtoContact.kt"))
     delete(File("$rootDir/src/main/kotlin/io/icure/kraken/client/models/AbstractFilterDtoCode.kt"))
+    delete(File("$rootDir/src/main/kotlin/io/icure/kraken/client/models/AbstractFilterDtoHealthcareParty.kt"))
+    delete(File("$rootDir/src/main/kotlin/io/icure/kraken/client/models/AbstractFilterDtoUser.kt"))
+    delete(File("$rootDir/src/main/kotlin/io/icure/kraken/client/models/FilterChainInvoice.kt"))
+    delete(File("$rootDir/src/main/kotlin/io/icure/kraken/client/models/FilterChainService.kt"))
+    delete(File("$rootDir/src/main/kotlin/io/icure/kraken/client/models/FilterChainPatient.kt"))
+    delete(File("$rootDir/src/main/kotlin/io/icure/kraken/client/models/FilterChainHealthElement.kt"))
+    delete(File("$rootDir/src/main/kotlin/io/icure/kraken/client/models/FilterChainContact.kt"))
+    delete(File("$rootDir/src/main/kotlin/io/icure/kraken/client/models/FilterChainCode.kt"))
+    delete(File("$rootDir/src/main/kotlin/io/icure/kraken/client/models/FilterChainHealthcareParty.kt"))
+    delete(File("$rootDir/src/main/kotlin/io/icure/kraken/client/models/FilterChainUser.kt"))
 }
 
 
