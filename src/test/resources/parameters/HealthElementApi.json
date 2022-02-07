@@ -23,7 +23,16 @@
     }
   },
   "filterHealthElementsBy": {
-    "filterChainHealthElement": {"filter": {"$type" : "HealthElementByHcPartyTagCodeFilter", "tagCode": "proven", "tagType": "CD-CERTAINTY", "healthCarePartyId" : "160f0d0e-430d-41f2-8f0d-0e430d21f287"}}
+    "filterChainHealthElement": {
+      "filter": {
+        "$type": "HealthElementByHcPartyTagCodeFilter",
+        "tagCode": "proven",
+        "tagType": "CD-CERTAINTY",
+        "healthCarePartyId": "160f0d0e-430d-41f2-8f0d-0e430d21f287"
+      }
+    },
+    "startDocumentId": null,
+    "limit": null
   },
   "listHealthElementsByHCPartyAndPatientForeignKeys": {
     "hcPartyId": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98",
