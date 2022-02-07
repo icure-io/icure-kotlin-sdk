@@ -26,11 +26,11 @@ import java.util.*
 @ExperimentalStdlibApi
 internal class DocumentApiKtTest {
     private val userApi =
-        UserApi(basePath = "http://localhost:16043", authHeader = "Basic YWJkZW1vOmtuYWxvdQ==")
+        UserApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic YWJkZW1vOmtuYWxvdQ==")
     private val hcpartyApi =
-        HealthcarePartyApi(basePath = "http://localhost:16043", authHeader = "Basic YWJkZW1vOmtuYWxvdQ==")
+        HealthcarePartyApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic YWJkZW1vOmtuYWxvdQ==")
     private val documentApi =
-        DocumentApi(basePath = "http://localhost:16043", authHeader = "Basic YWJkZW1vOmtuYWxvdQ==")
+        DocumentApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic YWJkZW1vOmtuYWxvdQ==")
 
     @org.junit.jupiter.api.Test
     fun setDocumentAttachment_HappyFlow() {
