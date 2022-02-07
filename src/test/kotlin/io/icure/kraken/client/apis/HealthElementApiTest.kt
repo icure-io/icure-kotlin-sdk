@@ -16,7 +16,6 @@ package io.icure.kraken.client.apis
 import io.icure.kraken.client.models.AbstractFilterDtoHealthElement
 import io.icure.kraken.client.models.DelegationDto
 import io.icure.kraken.client.models.DocIdentifier
-import io.icure.kraken.client.models.FilterChainHealthElement
 import io.icure.kraken.client.models.HealthElementDto
 import io.icure.kraken.client.models.IcureStubDto
 import io.icure.kraken.client.models.ListOfIdsDto
@@ -57,6 +56,7 @@ import kotlinx.coroutines.runBlocking
 import io.icure.kraken.client.infrastructure.TestUtils
 import io.icure.kraken.client.infrastructure.TestUtils.Companion.basicAuth
 import io.icure.kraken.client.infrastructure.differences
+import io.icure.kraken.client.models.filter.chain.FilterChain
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.fold
 import java.nio.ByteBuffer
@@ -341,8 +341,8 @@ class HealthElementApiTest() {
             try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "filterHealthElementsBy")
-                val filterChainHealthElement: FilterChainHealthElement =
-                    TestUtils.getParameter<FilterChainHealthElement>(
+                val filterChainHealthElement: FilterChain<HealthElementDto> =
+                    TestUtils.getParameter<FilterChain<HealthElementDto>>(
                         fileName,
                         "filterHealthElementsBy.filterChainHealthElement"
                     )!!.let {
@@ -351,7 +351,7 @@ class HealthElementApiTest() {
                                 val id = it::class.memberProperties.first { it.name == "id" }
                                 val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
                                 it.copy(rev = currentRev)
-                            } as? FilterChainHealthElement ?: it
+                            } as? FilterChain<HealthElementDto> ?: it
                     }
                 val startDocumentId: kotlin.String? =
                     TestUtils.getParameter<kotlin.String>(fileName, "filterHealthElementsBy.startDocumentId")?.let {
