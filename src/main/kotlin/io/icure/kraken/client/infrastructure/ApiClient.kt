@@ -119,7 +119,8 @@ open class ApiClient(val baseUrl: String, val httpClient: WebClient, val authHea
     }
 
     protected suspend inline fun <reified T> Request.addBody(body: T): Request {
-        return if (T::class is Flow<*>) {
+        val kClass = T::class
+        return if (kClass == Flow::class) {
             this.body(body as Flow<ByteBuffer>)
         } else {
             this.body(withContext(Dispatchers.IO) { objectMapper.writeValueAsString(body) })
