@@ -162,7 +162,7 @@ No authorization required
 
 <a name="filterHealthElementsBy"></a>
 # **filterHealthElementsBy**
-> kotlin.collections.List&lt;HealthElementDto&gt; filterHealthElementsBy(filterChainHealthElement)
+> PaginatedListHealthElementDto filterHealthElementsBy(filterChainHealthElement, startDocumentId, limit)
 
 Filter health elements for the current user (HcParty)
 
@@ -176,8 +176,10 @@ Returns a list of health elements along with next start keys and Document ID. If
 
 val apiInstance = HealthElementApi()
 val filterChainHealthElement : FilterChainHealthElement =  // FilterChainHealthElement | 
+val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A HealthElement document ID
+val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
 try {
-    val result : kotlin.collections.List<HealthElementDto> = apiInstance.filterHealthElementsBy(filterChainHealthElement)
+    val result : PaginatedListHealthElementDto = apiInstance.filterHealthElementsBy(filterChainHealthElement, startDocumentId, limit)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling HealthElementApi#filterHealthElementsBy")
@@ -193,10 +195,12 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **filterChainHealthElement** | [**FilterChainHealthElement**](FilterChainHealthElement.md)|  |
+ **startDocumentId** | **kotlin.String**| A HealthElement document ID | [optional]
+ **limit** | **kotlin.Int**| Number of rows | [optional]
 
 ### Return type
 
-[**kotlin.collections.List&lt;HealthElementDto&gt;**](HealthElementDto.md)
+[**PaginatedListHealthElementDto**](PaginatedListHealthElementDto.md)
 
 ### Authorization
 
