@@ -7,6 +7,7 @@ import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
 import io.icure.kraken.client.crypto.keyFromHexString
 import io.icure.kraken.client.models.*
 import io.icure.kraken.client.models.decrypted.HealthElementDto
+import io.icure.kraken.client.models.filter.chain.FilterChain
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.mapstruct.Mapper
 import org.mapstruct.factory.Mappers
@@ -165,7 +166,7 @@ suspend fun HealthElementApi.modifyHealthElements(user: UserDto, healthElements:
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun HealthElementApi.filterHealthElementsBy(user: UserDto, filterChainHealthElement: FilterChainHealthElement, config: CryptoConfig<HealthElementDto, io.icure.kraken.client.models.HealthElementDto>) : List<HealthElementDto> {
+suspend fun HealthElementApi.filterHealthElementsBy(user: UserDto, filterChainHealthElement: FilterChain<io.icure.kraken.client.models.HealthElementDto>, config: CryptoConfig<HealthElementDto, io.icure.kraken.client.models.HealthElementDto>) : List<HealthElementDto> {
     return this.filterHealthElementsBy(filterChainHealthElement).map { config.decryptHealthElement(user.healthcarePartyId!!, it) }
 }
 

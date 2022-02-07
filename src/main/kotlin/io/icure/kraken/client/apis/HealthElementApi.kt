@@ -18,7 +18,7 @@ import io.icure.kraken.client.infrastructure.*
 
 import io.icure.kraken.client.models.DelegationDto
 import io.icure.kraken.client.models.DocIdentifier
-import io.icure.kraken.client.models.FilterChainHealthElement
+
 import io.icure.kraken.client.models.HealthElementDto
 import io.icure.kraken.client.models.IcureStubDto
 import io.icure.kraken.client.models.ListOfIdsDto
@@ -177,10 +177,10 @@ class HealthElementApi(basePath: kotlin.String = defaultBasePath, webClient: Web
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun filterHealthElementsBy(filterChainHealthElement: FilterChainHealthElement) : kotlin.collections.List<HealthElementDto>  {
+    suspend fun filterHealthElementsBy(filterChainHealthElement: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.HealthElementDto>) : kotlin.collections.List<HealthElementDto>  {
         val localVariableConfig = filterHealthElementsByRequestConfig(filterChainHealthElement = filterChainHealthElement)
 
-        return request<FilterChainHealthElement, kotlin.collections.List<HealthElementDto>>(
+        return request<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.HealthElementDto>, kotlin.collections.List<HealthElementDto>>(
             localVariableConfig
         )!!
     }
@@ -190,7 +190,7 @@ class HealthElementApi(basePath: kotlin.String = defaultBasePath, webClient: Web
     * @param filterChainHealthElement  
     * @return RequestConfig
     */
-    fun filterHealthElementsByRequestConfig(filterChainHealthElement: FilterChainHealthElement) : RequestConfig<FilterChainHealthElement> {
+    fun filterHealthElementsByRequestConfig(filterChainHealthElement: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.HealthElementDto>) : RequestConfig<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.HealthElementDto>> {
         // val localVariableBody = filterChainHealthElement
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")

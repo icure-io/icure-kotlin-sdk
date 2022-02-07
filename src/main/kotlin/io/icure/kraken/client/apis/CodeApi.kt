@@ -17,7 +17,7 @@ import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.infrastructure.*
 
 import io.icure.kraken.client.models.CodeDto
-import io.icure.kraken.client.models.FilterChainCode
+
 import io.icure.kraken.client.models.ListOfIdsDto
 import io.icure.kraken.client.models.PaginatedListCodeDto
 
@@ -103,10 +103,10 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun filterCodesBy(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, skip: kotlin.Int?, sort: kotlin.String?, desc: kotlin.Boolean?, filterChainCode: FilterChainCode?) : PaginatedListCodeDto  {
+    suspend fun filterCodesBy(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, skip: kotlin.Int?, sort: kotlin.String?, desc: kotlin.Boolean?, filterChainCode: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.CodeDto>?) : PaginatedListCodeDto  {
         val localVariableConfig = filterCodesByRequestConfig(startKey = startKey, startDocumentId = startDocumentId, limit = limit, skip = skip, sort = sort, desc = desc, filterChainCode = filterChainCode)
 
-        return request<FilterChainCode, PaginatedListCodeDto>(
+        return request<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.CodeDto>, PaginatedListCodeDto>(
             localVariableConfig
         )!!
     }
@@ -122,7 +122,7 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     * @param filterChainCode  (optional)
     * @return RequestConfig
     */
-    fun filterCodesByRequestConfig(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, skip: kotlin.Int?, sort: kotlin.String?, desc: kotlin.Boolean?, filterChainCode: FilterChainCode?) : RequestConfig<FilterChainCode> {
+    fun filterCodesByRequestConfig(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, skip: kotlin.Int?, sort: kotlin.String?, desc: kotlin.Boolean?, filterChainCode: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.CodeDto>?) : RequestConfig<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.CodeDto>> {
         // val localVariableBody = filterChainCode
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {

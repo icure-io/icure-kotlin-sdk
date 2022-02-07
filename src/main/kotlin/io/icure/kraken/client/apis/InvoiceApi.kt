@@ -17,7 +17,7 @@ import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.models.DelegationDto
 import io.icure.kraken.client.models.DocIdentifier
-import io.icure.kraken.client.models.FilterChainInvoice
+
 import io.icure.kraken.client.models.IcureStubDto
 import io.icure.kraken.client.models.InvoiceDto
 import io.icure.kraken.client.models.InvoicingCodeDto
@@ -244,10 +244,10 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun filterInvoicesBy(filterChainInvoice: FilterChainInvoice) : kotlin.collections.List<InvoiceDto>  {
+    suspend fun filterInvoicesBy(filterChainInvoice: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.InvoiceDto>) : kotlin.collections.List<InvoiceDto>  {
         val localVariableConfig = filterInvoicesByRequestConfig(filterChainInvoice = filterChainInvoice)
 
-        return request<FilterChainInvoice, kotlin.collections.List<InvoiceDto>>(
+        return request<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.InvoiceDto>, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
         )!!
     }
@@ -257,7 +257,7 @@ class InvoiceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * @param filterChainInvoice  
     * @return RequestConfig
     */
-    fun filterInvoicesByRequestConfig(filterChainInvoice: FilterChainInvoice) : RequestConfig<FilterChainInvoice> {
+    fun filterInvoicesByRequestConfig(filterChainInvoice: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.InvoiceDto>) : RequestConfig<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.InvoiceDto>> {
         // val localVariableBody = filterChainInvoice
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")

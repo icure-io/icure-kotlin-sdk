@@ -7,13 +7,13 @@ import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
 import io.icure.kraken.client.crypto.keyFromHexString
 import io.icure.kraken.client.models.DelegationDto
-import io.icure.kraken.client.models.FilterChainPatient
 import io.icure.kraken.client.models.IdWithRevDto
 import io.icure.kraken.client.models.ListOfIdsDto
 import io.icure.kraken.client.models.PersonNameDto
 import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.decrypted.PaginatedListPatientDto
 import io.icure.kraken.client.models.decrypted.PatientDto
+import io.icure.kraken.client.models.filter.chain.FilterChain
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.mapstruct.Mapper
 import org.mapstruct.factory.Mappers
@@ -132,7 +132,7 @@ suspend fun PatientApi.bulkUpdatePatients(user: UserDto, patientDto: List<Patien
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun PatientApi.filterPatientsBy(user: UserDto, filterChainPatient: FilterChainPatient, startKey: String?, startDocumentId: String?, limit: Int?, skip: Int?, sort: String?, desc: Boolean?, config: CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>) : PaginatedListPatientDto {
+suspend fun PatientApi.filterPatientsBy(user: UserDto, filterChainPatient: FilterChain<io.icure.kraken.client.models.PatientDto>, startKey: String?, startDocumentId: String?, limit: Int?, skip: Int?, sort: String?, desc: Boolean?, config: CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>) : PaginatedListPatientDto {
     return this.filterPatientsBy(filterChainPatient, startKey, startDocumentId, limit, skip, sort, desc).let {
         PaginatedListPatientDto(rows = it.rows.map { config.decryptPatient(user.healthcarePartyId!!, it) }, pageSize = it.pageSize, totalSize = it.totalSize, nextKeyPair = it.nextKeyPair)
     }

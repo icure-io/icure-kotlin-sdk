@@ -15,10 +15,10 @@ package io.icure.kraken.client.apis
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.infrastructure.*
-import io.icure.kraken.client.models.AbstractFilterDtoUser
+
 import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.EmailTemplateDto
-import io.icure.kraken.client.models.FilterChainUser
+
 import io.icure.kraken.client.models.PaginatedListUserDto
 import io.icure.kraken.client.models.PropertyStubDto
 import io.icure.kraken.client.models.UserDto
@@ -384,10 +384,10 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun filterUsersBy(filterChainUser: FilterChainUser, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListUserDto  {
+    suspend fun filterUsersBy(filterChainUser: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.UserDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListUserDto  {
         val localVariableConfig = filterUsersByRequestConfig(filterChainUser = filterChainUser, startDocumentId = startDocumentId, limit = limit)
 
-        return request<FilterChainUser, PaginatedListUserDto>(
+        return request<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.UserDto>, PaginatedListUserDto>(
             localVariableConfig
         )!!
     }
@@ -399,7 +399,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     * @param limit Number of rows (optional)
     * @return RequestConfig
     */
-    fun filterUsersByRequestConfig(filterChainUser: FilterChainUser, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<FilterChainUser> {
+    fun filterUsersByRequestConfig(filterChainUser: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.UserDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.UserDto>> {
         // val localVariableBody = filterChainUser
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -860,10 +860,10 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun matchUsersBy(abstractFilterDtoUser: AbstractFilterDtoUser) : kotlin.collections.List<kotlin.String>  {
+    suspend fun matchUsersBy(abstractFilterDtoUser: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.UserDto>) : kotlin.collections.List<kotlin.String>  {
         val localVariableConfig = matchUsersByRequestConfig(abstractFilterDtoUser = abstractFilterDtoUser)
 
-        return request<AbstractFilterDtoUser, kotlin.collections.List<kotlin.String>>(
+        return request<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.UserDto>, kotlin.collections.List<kotlin.String>>(
             localVariableConfig
         )!!
     }
@@ -873,7 +873,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     * @param abstractFilterDtoUser  
     * @return RequestConfig
     */
-    fun matchUsersByRequestConfig(abstractFilterDtoUser: AbstractFilterDtoUser) : RequestConfig<AbstractFilterDtoUser> {
+    fun matchUsersByRequestConfig(abstractFilterDtoUser: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.UserDto>) : RequestConfig<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.UserDto>> {
         // val localVariableBody = abstractFilterDtoUser
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
