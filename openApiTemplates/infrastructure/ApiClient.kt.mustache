@@ -119,7 +119,7 @@ import java.time.Duration
     }
 
     protected suspend inline fun <reified T> Request.addBody(body: T): Request {
-        return if (T::class is Flow<*>) {
+        return if (T::class == Flow::class) {
             this.body(body as Flow<ByteBuffer>)
         } else {
             this.body(withContext(Dispatchers.IO) { objectMapper.writeValueAsString(body) })
