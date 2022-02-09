@@ -150,7 +150,7 @@ suspend fun ContactApi.updateServices(user: UserDto, patient: PatientDto, servic
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.filterContactsBy(user: UserDto, filterChainContact: FilterChain<io.icure.kraken.client.models.ContactDto>, startKey: String?, startDocumentId: String?, limit: Int?, skip: Int?, sort: String?, desc: Boolean?, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>) : PaginatedListContactDto {
+suspend fun ContactApi.filterContactsBy(user: UserDto, filterChainContact: FilterChain<io.icure.kraken.client.models.ContactDto>, startKey: String?, startDocumentId: String?, limit: Int?, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>) : PaginatedListContactDto {
     return this.filterContactsBy(filterChainContact, startDocumentId, limit).let {
         PaginatedListContactDto(rows = it.rows.map { config.decryptContact(user.healthcarePartyId!!, it) }, pageSize = it.pageSize, totalSize = it.totalSize, nextKeyPair = it.nextKeyPair)
     }
