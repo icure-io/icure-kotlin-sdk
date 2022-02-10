@@ -16,6 +16,7 @@ import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.infrastructure.*
 
+
 import io.icure.kraken.client.models.ContactDto
 import io.icure.kraken.client.models.ContentDto
 import io.icure.kraken.client.models.DelegationDto
@@ -1053,6 +1054,45 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/contact/match",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
+    * Get ids of services matching the provided filter for the current user
+    * 
+    * @param abstractFilterDtoService  
+    * @return kotlin.collections.List<kotlin.String>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun matchServicesBy(abstractFilterDtoService: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ServiceDto>) : kotlin.collections.List<kotlin.String>  {
+        val localVariableConfig = matchServicesByRequestConfig(abstractFilterDtoService = abstractFilterDtoService)
+
+        return request<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ServiceDto>, kotlin.collections.List<kotlin.String>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation matchServicesBy
+    *
+    * @param abstractFilterDtoService  
+    * @return RequestConfig
+    */
+    fun matchServicesByRequestConfig(abstractFilterDtoService: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ServiceDto>) : RequestConfig<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ServiceDto>> {
+        // val localVariableBody = abstractFilterDtoService
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = abstractFilterDtoService
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v2/contact/service/match",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

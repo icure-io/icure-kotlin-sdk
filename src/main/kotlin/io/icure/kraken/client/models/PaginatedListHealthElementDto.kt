@@ -20,19 +20,20 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.github.pozo.KotlinBuilder
 
+
 /**
+ * 
  *
- *
- * @param pageSize
- * @param totalSize
- * @param rows
- * @param nextKeyPair
+ * @param pageSize 
+ * @param totalSize 
+ * @param rows 
+ * @param nextKeyPair 
  */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @KotlinBuilder
-data class PaginatedListHealthElementDto(
+data class PaginatedListHealthElementDto (
 
     @field:JsonProperty("pageSize")
     val pageSize: kotlin.Int,

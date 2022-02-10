@@ -27,6 +27,7 @@ Method | HTTP request | Description
 [**listServicesByAssociationId**](ContactApi.md#listServicesByAssociationId) | **GET** /rest/v2/contact/service/associationId | List services by related association id
 [**listServicesByHealthElementId**](ContactApi.md#listServicesByHealthElementId) | **GET** /rest/v2/contact/service/healthElementId/{healthElementId} | List services linked to a health element
 [**matchContactsBy**](ContactApi.md#matchContactsBy) | **POST** /rest/v2/contact/match | Get ids of contacts matching the provided filter for the current user (HcParty) 
+[**matchServicesBy**](ContactApi.md#matchServicesBy) | **POST** /rest/v2/contact/service/match | Get ids of services matching the provided filter for the current user
 [**modifyContact**](ContactApi.md#modifyContact) | **PUT** /rest/v2/contact | Modify a contact
 [**modifyContacts**](ContactApi.md#modifyContacts) | **PUT** /rest/v2/contact/batch | Modify a batch of contacts
 [**modifyContactsDelegations**](ContactApi.md#modifyContactsDelegations) | **PUT** /rest/v2/contact/delegations | Update delegations in healthElements.
@@ -1115,6 +1116,51 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **abstractFilterDtoContact** | [**AbstractFilterDtoContact**](AbstractFilterDtoContact.md)|  |
+
+### Return type
+
+**kotlin.collections.List&lt;kotlin.String&gt;**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="matchServicesBy"></a>
+# **matchServicesBy**
+> kotlin.collections.List&lt;kotlin.String&gt; matchServicesBy(abstractFilterDtoService)
+
+Get ids of services matching the provided filter for the current user
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = ContactApi()
+val abstractFilterDtoService : AbstractFilterDtoService =  // AbstractFilterDtoService | 
+try {
+    val result : kotlin.collections.List<kotlin.String> = apiInstance.matchServicesBy(abstractFilterDtoService)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling ContactApi#matchServicesBy")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling ContactApi#matchServicesBy")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **abstractFilterDtoService** | [**AbstractFilterDtoService**](AbstractFilterDtoService.md)|  |
 
 ### Return type
 

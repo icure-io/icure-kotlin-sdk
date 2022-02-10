@@ -192,6 +192,7 @@ Class | Method | HTTP request | Description
 *ContactApi* | [**listServicesByAssociationId**](docs/ContactApi.md#listservicesbyassociationid) | **GET** /rest/v2/contact/service/associationId | List services by related association id
 *ContactApi* | [**listServicesByHealthElementId**](docs/ContactApi.md#listservicesbyhealthelementid) | **GET** /rest/v2/contact/service/healthElementId/{healthElementId} | List services linked to a health element
 *ContactApi* | [**matchContactsBy**](docs/ContactApi.md#matchcontactsby) | **POST** /rest/v2/contact/match | Get ids of contacts matching the provided filter for the current user (HcParty) 
+*ContactApi* | [**matchServicesBy**](docs/ContactApi.md#matchservicesby) | **POST** /rest/v2/contact/service/match | Get ids of services matching the provided filter for the current user
 *ContactApi* | [**modifyContact**](docs/ContactApi.md#modifycontact) | **PUT** /rest/v2/contact | Modify a contact
 *ContactApi* | [**modifyContacts**](docs/ContactApi.md#modifycontacts) | **PUT** /rest/v2/contact/batch | Modify a batch of contacts
 *ContactApi* | [**modifyContactsDelegations**](docs/ContactApi.md#modifycontactsdelegations) | **PUT** /rest/v2/contact/delegations | Update delegations in healthElements.
