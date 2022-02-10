@@ -60,7 +60,7 @@ fun contactCryptoConfig(
             crypto.decryptEncryptionKeys(user.healthcarePartyId!!, c.encryptionKeys).firstOrNull()
         ContactMapperFactory.instance.map(c).copy(
             services = crypto.encryptServices(
-                user.id,
+                user.healthcarePartyId!!,
                 (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"]
                     ?: setOf()),
                 decryptedKey?.toByteArray(),
@@ -71,7 +71,7 @@ fun contactCryptoConfig(
     unmarshaller = { c, b ->
         ContactMapperFactory.instance.map(c).copy(
             services = crypto.decryptServices(
-                user.id,
+                user.healthcarePartyId!!,
                 crypto.decryptEncryptionKeys(user.healthcarePartyId!!, c.encryptionKeys).firstOrNull()
                     ?.toByteArray(),
                 c.services
