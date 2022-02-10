@@ -63,7 +63,7 @@ suspend fun PatientDto.initDelegations(user: UserDto, config: CryptoConfig<Patie
     return this.copy(
         responsible = this.responsible ?: user.healthcarePartyId!!,
         author = user.id,
-        delegations = (delegations + user.healthcarePartyId!!).fold(this.encryptionKeys) { m, d ->
+        delegations = (delegations + user.healthcarePartyId!!).fold(this.delegations) { m, d ->
             m + (d to setOf(
                 DelegationDto(
                     emptyList(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, sfk),
