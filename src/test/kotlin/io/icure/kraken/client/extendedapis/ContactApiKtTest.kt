@@ -11,6 +11,8 @@ import io.icure.kraken.client.crypto.patientCryptoConfig
 import io.icure.kraken.client.crypto.toPrivateKey
 import io.icure.kraken.client.crypto.toPublicKey
 import io.icure.kraken.client.extendedapis.infrastructure.ExtendedTestUtils
+import io.icure.kraken.client.extendedapis.infrastructure.ExtendedTestUtils.dataOwnerWrapperFor
+import io.icure.kraken.client.extendedapis.infrastructure.ExtendedTestUtils.localCrypto
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.models.CodeStubDto
 import io.icure.kraken.client.models.HealthcarePartyDto
@@ -20,6 +22,7 @@ import io.icure.kraken.client.models.decrypted.ContentDto
 import io.icure.kraken.client.models.decrypted.PatientDto
 import io.icure.kraken.client.models.decrypted.ServiceDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
@@ -28,6 +31,7 @@ import java.util.*
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
+@FlowPreview
 internal class ContactApiKtTest {
     private val userApi = UserApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic YWJkZW1vOmtuYWxvdQ==")
     private val hcPartyApi = HealthcarePartyApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic YWJkZW1vOmtuYWxvdQ==")
@@ -55,7 +59,8 @@ internal class ContactApiKtTest {
             val hcp = hcPartyApi.getCurrentHealthcareParty()
             val keyPath = "keys/${hcp.id}-icc-priv.2048.key"
             val keyFile = ContactApiKtTest::class.java.getResource(keyPath)!!
-            val cc = contactCryptoConfig(localCrypto(keyFile, user, hcp), user)
+            val cc = contactCryptoConfig(localCrypto("https://kraken.svc.icure.cloud",
+                "Basic YWJkZW1vOmtuYWxvdQ==", keyFile, user, hcp.toDataOwner()), user)
 
             val contactToCreate = contactToCreate(contactToCreateId)
 
@@ -101,7 +106,7 @@ internal class ContactApiKtTest {
         val keyPath1 = "keys/${hcp1.id}-icc-priv.2048.key"
         val keyFile1 = PatientApiKtTest::class.java.getResource(keyPath1)!!
         val cc1 = contactCryptoConfig(LocalCrypto(
-            child1HealthcarePartyApi, mapOf(
+            dataOwnerWrapperFor("https://kraken.svc.icure.cloud", "Basic ${Base64.getEncoder().encodeToString("jimmy-1643812116186:test".toByteArray(kotlin.text.Charsets.UTF_8))}"), mapOf(
                 parent.healthcarePartyId!! to (keyFile.readText(Charsets.UTF_8).toPrivateKey() to parentHcp.publicKey!!.toPublicKey()),
                 user1.healthcarePartyId!! to (keyFile1.readText(Charsets.UTF_8).toPrivateKey() to hcp1.publicKey!!.toPublicKey())
             )
@@ -110,14 +115,14 @@ internal class ContactApiKtTest {
         val keyPath2 = "keys/${hcp2.id}-icc-priv.2048.key"
         val keyFile2 = PatientApiKtTest::class.java.getResource(keyPath2)!!
         val cc2 = contactCryptoConfig(LocalCrypto(
-            child2HealthcarePartyApi, mapOf(
+            dataOwnerWrapperFor("https://kraken.svc.icure.cloud", "Basic ${Base64.getEncoder().encodeToString("jimmy-1643812213976:test".toByteArray(kotlin.text.Charsets.UTF_8))}"), mapOf(
                 parent.healthcarePartyId!! to (keyFile.readText(Charsets.UTF_8).toPrivateKey() to parentHcp.publicKey!!.toPublicKey()),
                 user2.healthcarePartyId!! to (keyFile2.readText(Charsets.UTF_8).toPrivateKey() to hcp2.publicKey!!.toPublicKey())
             )
         ), user2)
 
         val pcc = patientCryptoConfig(LocalCrypto(
-            child1HealthcarePartyApi, mapOf(
+            dataOwnerWrapperFor("https://kraken.svc.icure.cloud", "Basic ${Base64.getEncoder().encodeToString("jimmy-1643812116186:test".toByteArray(kotlin.text.Charsets.UTF_8))}"), mapOf(
                 parent.healthcarePartyId!! to (keyFile.readText(Charsets.UTF_8).toPrivateKey() to parentHcp.publicKey!!.toPublicKey()),
                 user1.healthcarePartyId!! to (keyFile1.readText(Charsets.UTF_8).toPrivateKey() to hcp1.publicKey!!.toPublicKey())
             )
@@ -152,7 +157,8 @@ internal class ContactApiKtTest {
             val hcp = hcPartyApi.getCurrentHealthcareParty()
             val keyPath = "keys/${hcp.id}-icc-priv.2048.key"
             val keyFile = ContactApiKtTest::class.java.getResource(keyPath)!!
-            val cc = customContactCrypto(localCrypto(keyFile, user, hcp))
+            val cc = customContactCrypto(localCrypto("https://kraken.svc.icure.cloud",
+                "Basic YWJkZW1vOmtuYWxvdQ==", keyFile, user, hcp.toDataOwner()))
 
             val contactToCreate = contactToCreate(contactToCreateId)
 
@@ -207,16 +213,6 @@ internal class ContactApiKtTest {
             )
         )
     )
-
-    private fun localCrypto(keyFile: URL,
-                            user: UserDto,
-                            hcp: HealthcarePartyDto) : LocalCrypto {
-        return LocalCrypto(
-            hcPartyApi, mapOf(
-                user.healthcarePartyId!! to (keyFile.readText(Charsets.UTF_8).toPrivateKey() to hcp.publicKey!!.toPublicKey())
-            )
-        )
-    }
 
     private fun customContactCrypto(crypto: LocalCrypto) =
         CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>(

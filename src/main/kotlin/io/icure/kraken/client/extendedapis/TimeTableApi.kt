@@ -17,19 +17,19 @@ suspend fun TimeTableDto.initDelegations(user: UserDto, config: CryptoConfig<Tim
     val ek = UUID.randomUUID().toString()
     val sfk = UUID.randomUUID().toString()
     return this.copy(
-        responsible = user.healthcarePartyId!!,
+        responsible = user.dataOwnerId(),
         author = user.id,
-        delegations = (delegations + user.healthcarePartyId).fold(this.encryptionKeys) { m, d ->
+        delegations = (delegations + user.dataOwnerId()).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    emptyList(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, sfk),
+                    emptyList(), user.dataOwnerId(), d, config.crypto.encryptAESKeyForHcp(user.dataOwnerId(), d, this.id, sfk),
                 ),
             ))
         },
-        encryptionKeys = (delegations + user.healthcarePartyId).fold(this.encryptionKeys) { m, d ->
+        encryptionKeys = (delegations + user.dataOwnerId()).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    emptyList(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, ek),
+                    emptyList(), user.dataOwnerId(), d, config.crypto.encryptAESKeyForHcp(user.dataOwnerId(), d, this.id, ek),
                 ),
             ))
         },
@@ -41,16 +41,16 @@ suspend fun TimeTableDto.initDelegations(user: UserDto, config: CryptoConfig<Tim
 suspend fun TimeTableApi.createTimeTable(user: UserDto, timeTable: TimeTableDto, config: CryptoConfig<TimeTableDto, io.icure.kraken.client.models.TimeTableDto>) =
     this.createTimeTable(
         config.encryptTimeTable(
-            user.healthcarePartyId!!,
+            user.dataOwnerId(),
             (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
             timeTable
         )
-    ).let { config.decryptTimeTable(user.healthcarePartyId, it) }
+    ).let { config.decryptTimeTable(user.dataOwnerId(), it) }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun TimeTableApi.getTimeTable(user: UserDto, timeTableId: String, config: CryptoConfig<TimeTableDto, io.icure.kraken.client.models.TimeTableDto>): TimeTableDto  {
-    return this.getTimeTable(timeTableId).let { config.decryptTimeTable(user.healthcarePartyId!!, it) }
+    return this.getTimeTable(timeTableId).let { config.decryptTimeTable(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
@@ -58,24 +58,24 @@ suspend fun TimeTableApi.getTimeTable(user: UserDto, timeTableId: String, config
 suspend fun TimeTableApi.modifyTimeTable(user: UserDto, timeTable: TimeTableDto, config: CryptoConfig<TimeTableDto, io.icure.kraken.client.models.TimeTableDto>) : TimeTableDto  {
     return this.modifyTimeTable(
         config.encryptTimeTable(
-            user.healthcarePartyId!!,
+            user.dataOwnerId(),
             (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
             timeTable
         )
-    ).let { config.decryptTimeTable(user.healthcarePartyId, it) }
+    ).let { config.decryptTimeTable(user.dataOwnerId(), it) }
 }
 
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun TimeTableApi.getTimeTablesByAgendaId(user: UserDto, agendaId: String, config: CryptoConfig<TimeTableDto, io.icure.kraken.client.models.TimeTableDto>) : List<TimeTableDto>  {
-    return this.getTimeTablesByAgendaId(agendaId).map { config.decryptTimeTable(user.healthcarePartyId!!, it) }
+    return this.getTimeTablesByAgendaId(agendaId).map { config.decryptTimeTable(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun TimeTableApi.getTimeTablesByPeriodAndAgendaId(user: UserDto, startDate: Long, endDate: Long, agendaId: String, config: CryptoConfig<TimeTableDto, io.icure.kraken.client.models.TimeTableDto>) : List<TimeTableDto>  {
-    return this.getTimeTablesByPeriodAndAgendaId(startDate, endDate, agendaId).map { config.decryptTimeTable(user.healthcarePartyId!!, it) }
+    return this.getTimeTablesByPeriodAndAgendaId(startDate, endDate, agendaId).map { config.decryptTimeTable(user.dataOwnerId(), it) }
 }
 
 suspend fun CryptoConfig<TimeTableDto, io.icure.kraken.client.models.TimeTableDto>.encryptTimeTable(myId: String, delegations: Set<String>, timeTable: TimeTableDto): io.icure.kraken.client.models.TimeTableDto {

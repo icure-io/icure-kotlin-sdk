@@ -19,19 +19,19 @@ suspend fun ReceiptDto.initDelegations(user: UserDto, config: CryptoConfig<Recei
     val ek = UUID.randomUUID().toString()
     val sfk = UUID.randomUUID().toString()
     return this.copy(
-        responsible = user.healthcarePartyId!!,
+        responsible = user.dataOwnerId(),
         author = user.id,
-        delegations = (delegations + user.healthcarePartyId).fold(this.encryptionKeys) { m, d ->
+        delegations = (delegations + user.dataOwnerId()).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    emptyList(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, sfk),
+                    emptyList(), user.dataOwnerId(), d, config.crypto.encryptAESKeyForHcp(user.dataOwnerId(), d, this.id, sfk),
                 ),
             ))
         },
-        encryptionKeys = (delegations + user.healthcarePartyId).fold(this.encryptionKeys) { m, d ->
+        encryptionKeys = (delegations + user.dataOwnerId()).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    emptyList(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, ek),
+                    emptyList(), user.dataOwnerId(), d, config.crypto.encryptAESKeyForHcp(user.dataOwnerId(), d, this.id, ek),
                 ),
             ))
         },
@@ -43,16 +43,16 @@ suspend fun ReceiptDto.initDelegations(user: UserDto, config: CryptoConfig<Recei
 suspend fun ReceiptApi.createReceipt(user: UserDto, receipt: ReceiptDto, config: CryptoConfig<ReceiptDto, io.icure.kraken.client.models.ReceiptDto>) =
     this.createReceipt(
         config.encryptReceipt(
-            user.healthcarePartyId!!,
+            user.dataOwnerId(),
             (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
             receipt
         )
-    ).let { config.decryptReceipt(user.healthcarePartyId, it) }
+    ).let { config.decryptReceipt(user.dataOwnerId(), it) }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun ReceiptApi.getReceipt(user: UserDto, receiptId: String, config: CryptoConfig<ReceiptDto, io.icure.kraken.client.models.ReceiptDto>): ReceiptDto  {
-    return this.getReceipt(receiptId).let { config.decryptReceipt(user.healthcarePartyId!!, it) }
+    return this.getReceipt(receiptId).let { config.decryptReceipt(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
@@ -60,23 +60,23 @@ suspend fun ReceiptApi.getReceipt(user: UserDto, receiptId: String, config: Cryp
 suspend fun ReceiptApi.modifyReceipt(user: UserDto, receipt: ReceiptDto, config: CryptoConfig<ReceiptDto, io.icure.kraken.client.models.ReceiptDto>) : ReceiptDto  {
     return this.modifyReceipt(
         config.encryptReceipt(
-            user.healthcarePartyId!!,
+            user.dataOwnerId(),
             (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
             receipt
         )
-    ).let { config.decryptReceipt(user.healthcarePartyId, it) }
+    ).let { config.decryptReceipt(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun ReceiptApi.listByReference(user: UserDto, ref: String, config: CryptoConfig<ReceiptDto, io.icure.kraken.client.models.ReceiptDto>) : List<ReceiptDto>  {
-    return this.listByReference(ref).map { config.decryptReceipt(user.healthcarePartyId!!, it) }
+    return this.listByReference(ref).map { config.decryptReceipt(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun ReceiptApi.setReceiptAttachment(user: UserDto, receiptId: String, blobType: String, requestBody: Flow<ByteBuffer>, enckeys: String?, config: CryptoConfig<ReceiptDto, io.icure.kraken.client.models.ReceiptDto>) :ReceiptDto  {
-    return this.setReceiptAttachment(receiptId, blobType, requestBody, enckeys).let { config.decryptReceipt(user.healthcarePartyId!!, it) }
+    return this.setReceiptAttachment(receiptId, blobType, requestBody, enckeys).let { config.decryptReceipt(user.dataOwnerId(), it) }
 }
 
 suspend fun CryptoConfig<ReceiptDto, io.icure.kraken.client.models.ReceiptDto>.encryptReceipt(myId: String, delegations: Set<String>, receipt: ReceiptDto): io.icure.kraken.client.models.ReceiptDto {

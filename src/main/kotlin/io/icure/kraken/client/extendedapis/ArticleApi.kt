@@ -18,19 +18,19 @@ suspend fun ArticleDto.initDelegations(user: UserDto, config: CryptoConfig<Artic
     val ek = UUID.randomUUID().toString()
     val sfk = UUID.randomUUID().toString()
     return this.copy(
-        responsible = user.healthcarePartyId!!,
+        responsible = user.dataOwnerId(),
         author = user.id,
-        delegations = (delegations + user.healthcarePartyId).fold(this.encryptionKeys) { m, d ->
+        delegations = (delegations + user.dataOwnerId()).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    emptyList(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, sfk),
+                    emptyList(), user.dataOwnerId(), d, config.crypto.encryptAESKeyForHcp(user.dataOwnerId(), d, this.id, sfk),
                 ),
             ))
         },
-        encryptionKeys = (delegations + user.healthcarePartyId).fold(this.encryptionKeys) { m, d ->
+        encryptionKeys = (delegations + user.dataOwnerId()).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    emptyList(), user.healthcarePartyId, d, config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, ek),
+                    emptyList(), user.dataOwnerId(), d, config.crypto.encryptAESKeyForHcp(user.dataOwnerId(), d, this.id, ek),
                 ),
             ))
         },
@@ -42,22 +42,22 @@ suspend fun ArticleDto.initDelegations(user: UserDto, config: CryptoConfig<Artic
 suspend fun ArticleApi.createArticle(user: UserDto, article: ArticleDto, config: CryptoConfig<ArticleDto, io.icure.kraken.client.models.ArticleDto>) =
     this.createArticle(
         config.encryptArticle(
-            user.healthcarePartyId!!,
+            user.dataOwnerId(),
             (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
             article
         )
-    ).let { config.decryptArticle(user.healthcarePartyId, it) }
+    ).let { config.decryptArticle(user.dataOwnerId(), it) }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun ArticleApi.getArticle(user: UserDto, articleId: String, config: CryptoConfig<ArticleDto, io.icure.kraken.client.models.ArticleDto>): ArticleDto  {
-    return this.getArticle(articleId).let { config.decryptArticle(user.healthcarePartyId!!, it) }
+    return this.getArticle(articleId).let { config.decryptArticle(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun ArticleApi.getArticles(user: UserDto, config: CryptoConfig<ArticleDto, io.icure.kraken.client.models.ArticleDto>) : List<ArticleDto>  {
-    return this.getArticles().map { config.decryptArticle(user.healthcarePartyId!!, it) }
+    return this.getArticles().map { config.decryptArticle(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
@@ -65,11 +65,11 @@ suspend fun ArticleApi.getArticles(user: UserDto, config: CryptoConfig<ArticleDt
 suspend fun ArticleApi.modifyArticle(user: UserDto, article: ArticleDto, config: CryptoConfig<ArticleDto, io.icure.kraken.client.models.ArticleDto>) : ArticleDto  {
     return this.modifyArticle(
         config.encryptArticle(
-            user.healthcarePartyId!!,
+            user.dataOwnerId(),
             (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
             article
         )
-    )?.let { config.decryptArticle(user.healthcarePartyId, it) }
+    )?.let { config.decryptArticle(user.dataOwnerId(), it) }
 }
 
 suspend fun CryptoConfig<ArticleDto, io.icure.kraken.client.models.ArticleDto>.encryptArticle(myId: String, delegations: Set<String>, article: ArticleDto): io.icure.kraken.client.models.ArticleDto {

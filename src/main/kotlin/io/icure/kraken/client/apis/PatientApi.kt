@@ -966,10 +966,10 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getPatientHcPartyKeysForDelegate(patientId: kotlin.String) : kotlin.String  {
+    suspend fun getPatientHcPartyKeysForDelegate(patientId: kotlin.String) : kotlin.collections.Map<kotlin.String, kotlin.String>  {
         val localVariableConfig = getPatientHcPartyKeysForDelegateRequestConfig(patientId = patientId)
 
-        return request<Unit, kotlin.String>(
+        return request<Unit, kotlin.collections.Map<kotlin.String, kotlin.String>>(
             localVariableConfig
         )!!
     }

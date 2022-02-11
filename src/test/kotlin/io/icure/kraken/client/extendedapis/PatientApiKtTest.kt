@@ -1,5 +1,6 @@
 package io.icure.kraken.client.extendedapis
 
+import io.icure.kraken.client.apis.DeviceApi
 import io.icure.kraken.client.apis.HealthcarePartyApi
 import io.icure.kraken.client.apis.PatientApi
 import io.icure.kraken.client.apis.UserApi
@@ -8,14 +9,12 @@ import io.icure.kraken.client.crypto.LocalCrypto
 import io.icure.kraken.client.crypto.patientCryptoConfig
 import io.icure.kraken.client.crypto.toPrivateKey
 import io.icure.kraken.client.crypto.toPublicKey
+import io.icure.kraken.client.extendedapis.infrastructure.ExtendedTestUtils
 import io.icure.kraken.client.infrastructure.ApiClient
-import io.icure.kraken.client.models.HealthcarePartyDto
-import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.decrypted.PatientDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions
-import java.net.URL
 import java.util.*
 
 @ExperimentalCoroutinesApi
@@ -28,10 +27,12 @@ internal class PatientApiKtTest {
     private val child1UserApi = UserApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic ${Base64.getEncoder().encodeToString("jimmy-1643812116186:test".toByteArray(kotlin.text.Charsets.UTF_8))}")
     private val child1HealthcarePartyApi = HealthcarePartyApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic ${Base64.getEncoder().encodeToString("jimmy-1643812116186:test".toByteArray(kotlin.text.Charsets.UTF_8))}")
     private val child1PatientApi = PatientApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic ${Base64.getEncoder().encodeToString("jimmy-1643812116186:test".toByteArray(kotlin.text.Charsets.UTF_8))}")
+    private val child1DeviceApi = DeviceApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic ${Base64.getEncoder().encodeToString("jimmy-1643812116186:test".toByteArray(kotlin.text.Charsets.UTF_8))}")
 
     private val child2UserApi = UserApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic ${Base64.getEncoder().encodeToString("jimmy-1643812213976:test".toByteArray(kotlin.text.Charsets.UTF_8))}")
     private val child2HealthcarePartyApi = HealthcarePartyApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic ${Base64.getEncoder().encodeToString("jimmy-1643812213976:test".toByteArray(kotlin.text.Charsets.UTF_8))}")
     private val child2PatientApi = PatientApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic ${Base64.getEncoder().encodeToString("jimmy-1643812213976:test".toByteArray(kotlin.text.Charsets.UTF_8))}")
+    private val child2DeviceApi = DeviceApi(basePath = "https://kraken.svc.icure.cloud", authHeader = "Basic ${Base64.getEncoder().encodeToString("jimmy-1643812213976:test".toByteArray(kotlin.text.Charsets.UTF_8))}")
 
     @org.junit.jupiter.api.Test
     fun createPatientWithDefaultCryptoConfig() = runBlocking {
@@ -41,7 +42,8 @@ internal class PatientApiKtTest {
 
         val keyPath = "keys/${hcp.id}-icc-priv.2048.key"
         val keyFile = PatientApiKtTest::class.java.getResource(keyPath)!!
-        val cc = patientCryptoConfig(localCrypto(user, keyFile, hcp))
+        val cc = patientCryptoConfig(ExtendedTestUtils.localCrypto("https://kraken.svc.icure.cloud",
+            "Basic YWJkZW1vOmtuYWxvdQ==", keyFile, user, hcp.toDataOwner()))
 
         // When
         val p1 = try { patientApi.createPatient(user, PatientDto(id = UUID.randomUUID().toString(), firstName = "John", lastName = "Doe", note = "To be encrypted"), cc) } catch(e:Exception) { throw IllegalStateException(e) }
@@ -77,7 +79,7 @@ internal class PatientApiKtTest {
         val keyPath1 = "keys/${hcp1.id}-icc-priv.2048.key"
         val keyFile1 = PatientApiKtTest::class.java.getResource(keyPath1)!!
         val cc1 = patientCryptoConfig(LocalCrypto(
-            child1HealthcarePartyApi, mapOf(
+            DataOwnerResolver(child1HealthcarePartyApi, child1PatientApi, child1DeviceApi), mapOf(
                 parent.healthcarePartyId!! to (keyFile.readText(Charsets.UTF_8).toPrivateKey() to parentHcp.publicKey!!.toPublicKey()),
                 user1.healthcarePartyId!! to (keyFile1.readText(Charsets.UTF_8).toPrivateKey() to hcp1.publicKey!!.toPublicKey())
             )
@@ -86,7 +88,7 @@ internal class PatientApiKtTest {
         val keyPath2 = "keys/${hcp2.id}-icc-priv.2048.key"
         val keyFile2 = PatientApiKtTest::class.java.getResource(keyPath2)!!
         val cc2 = patientCryptoConfig(LocalCrypto(
-            child2HealthcarePartyApi, mapOf(
+            DataOwnerResolver(child2HealthcarePartyApi, child2PatientApi, child2DeviceApi), mapOf(
                 parent.healthcarePartyId!! to (keyFile.readText(Charsets.UTF_8).toPrivateKey() to parentHcp.publicKey!!.toPublicKey()),
                 user2.healthcarePartyId!! to (keyFile2.readText(Charsets.UTF_8).toPrivateKey() to hcp2.publicKey!!.toPublicKey())
             )
@@ -109,7 +111,8 @@ internal class PatientApiKtTest {
         val hcp = hcpartyApi.getCurrentHealthcareParty()
         val keyPath = "keys/${hcp.id}-icc-priv.2048.key"
         val keyFile = PatientApiKtTest::class.java.getResource(keyPath)!!
-        val cc = customPatientCryptoConfig(localCrypto(user, keyFile, hcp))
+        val cc = customPatientCryptoConfig(ExtendedTestUtils.localCrypto("https://kraken.svc.icure.cloud",
+            "Basic YWJkZW1vOmtuYWxvdQ==", keyFile, user, hcp.toDataOwner()))
 
         // When
         val p1 = try { patientApi.createPatient(user, PatientDto(id = UUID.randomUUID().toString(), firstName = "John", lastName = "Doe", note = "To be encrypted"), cc) } catch(e:Exception) { throw IllegalStateException(e) }
@@ -130,16 +133,6 @@ internal class PatientApiKtTest {
         Assertions.assertEquals(p2.firstName, "John")
         Assertions.assertEquals(p2.lastName, "Doe")
     }
-
-    private fun localCrypto(
-        user: UserDto,
-        keyFile: URL,
-        hcp: HealthcarePartyDto
-    ) = LocalCrypto(
-        hcpartyApi, mapOf(
-            user.healthcarePartyId!! to (keyFile.readText(Charsets.UTF_8).toPrivateKey() to hcp.publicKey!!.toPublicKey())
-        )
-    )
 
     private fun customPatientCryptoConfig(crypto: LocalCrypto) =
         CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>(
