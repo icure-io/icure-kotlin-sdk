@@ -6,13 +6,13 @@ import io.icure.kraken.client.apis.DeviceApi
 import io.icure.kraken.client.apis.HealthcarePartyApi
 import io.icure.kraken.client.apis.PatientApi
 import io.icure.kraken.client.defGet
+import io.icure.kraken.client.defPut
 import io.icure.kraken.client.models.DeviceDto
 import io.icure.kraken.client.models.HealthcarePartyDto
 import io.icure.kraken.client.models.PatientDto
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.firstOrNull
@@ -49,13 +49,25 @@ class DataOwnerResolver(
     suspend fun updateDataOwnerWithNewHcPartyKeys(dataOwnerType: DataOwnerType, dataOwnerId: String, newHcPartyKeys: Pair<String, List<String>>) : DataOwner {
         return when(dataOwnerType) {
             DataOwnerType.HCP -> hcParties.defGet(dataOwnerId) { hcpartyApi.getHealthcareParty(dataOwnerId) }
-                ?.let { hcpartyApi.modifyHealthcareParty(it.copy(hcPartyKeys = it.hcPartyKeys + newHcPartyKeys)) }
+                ?.let { hcp ->
+                    val updatedHcp = hcpartyApi.modifyHealthcareParty(hcp.copy(hcPartyKeys = hcp.hcPartyKeys + newHcPartyKeys))
+                    hcParties.defPut(dataOwnerId) { updatedHcp }
+                    updatedHcp
+                }
                 ?.toDataOwner()
             DataOwnerType.PATIENT -> patients.defGet(dataOwnerId) { patientApi.getPatient(dataOwnerId) }
-                ?.let { patientApi.modifyPatient(it.copy(hcPartyKeys = it.hcPartyKeys + newHcPartyKeys)) }
+                ?.let { patient ->
+                    val updatedPatient = patientApi.modifyPatient(patient.copy(hcPartyKeys = patient.hcPartyKeys + newHcPartyKeys))
+                    patients.defPut(dataOwnerId) { updatedPatient }
+                    updatedPatient
+                }
                 ?.toDataOwner()
             DataOwnerType.DEVICE -> devices.defGet(dataOwnerId) { deviceApi.getDevice(dataOwnerId) }
-                ?.let { deviceApi.updateDevice(it.copy(hcPartyKeys = it.hcPartyKeys + newHcPartyKeys)) }
+                ?.let { device ->
+                    val updatedDevice = deviceApi.updateDevice(device.copy(hcPartyKeys = device.hcPartyKeys + newHcPartyKeys))
+                    devices.defPut(dataOwnerId) { updatedDevice }
+                    updatedDevice
+                }
                 ?.toDataOwner()
         } ?: throw RuntimeException("Could not add new hcpartyKeys to data owner $dataOwnerId")
     }

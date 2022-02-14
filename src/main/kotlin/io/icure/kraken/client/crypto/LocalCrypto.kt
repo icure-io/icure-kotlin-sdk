@@ -28,10 +28,6 @@ class LocalCrypto(
 ) : Crypto {
     private val aesValidKeySizes : Set<Int> = setOf(128, 192, 256)
 
-    private val dataOwners : Cache<String, Deferred<Optional<DataOwner>>> = Caffeine.newBuilder()
-        .maximumSize(100)
-        .expireAfterWrite(5, TimeUnit.MINUTES)
-        .build()
     private val ownerHcpartyKeysCache : Cache<String, Deferred<Optional<Map<String, Pair<String, ByteArray>>>>> = Caffeine.newBuilder()
         .maximumSize(100)
         .expireAfterWrite(5, TimeUnit.MINUTES)
@@ -84,11 +80,11 @@ class LocalCrypto(
     }
 
     private suspend fun getDataOwnerPublicKey(dataOwnerId: String) : String? {
-        return dataOwners.defGet(dataOwnerId) { dataOwnerResolver.getDataOwner(dataOwnerId) }?.publicKey
+        return dataOwnerResolver.getDataOwner(dataOwnerId).publicKey
     }
 
     private suspend fun getDataOwnerHcPartyKeys(dataOwnerId: String) : Map<String, List<String>> {
-        return dataOwners.defGet(dataOwnerId) { dataOwnerResolver.getDataOwner(dataOwnerId) }?.hcPartyKeys ?: emptyMap()
+        return dataOwnerResolver.getDataOwner(dataOwnerId).hcPartyKeys
     }
 
     suspend fun getOrCreateHcPartyKey(myId: String, delegateId: String, privateKey: PrivateKey? = null, publicKey: PublicKey? = null): ByteArray {
