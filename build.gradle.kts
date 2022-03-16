@@ -194,7 +194,8 @@ tasks.register("apply-custom-fixes") {
         // in Folders
         val folders = listOf(
             "${rootDir}/src/main/kotlin/io/icure/kraken/client/apis",
-            "${rootDir}/src/main/kotlin/io/icure/kraken/client/models"
+            "${rootDir}/src/main/kotlin/io/icure/kraken/client/models",
+            "${rootDir}/src/test/kotlin/io/icure/kraken/client/apis"
         )
 
         for (folder in folders) {

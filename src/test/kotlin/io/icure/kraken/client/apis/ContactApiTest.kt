@@ -23,7 +23,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.infrastructure.TestUtils.Companion.basicAuth
-import io.icure.kraken.client.models.AbstractFilterDtoContact
+
 import io.icure.kraken.client.models.ContactDto
 import io.icure.kraken.client.models.ContentDto
 import io.icure.kraken.client.models.DelegationDto
@@ -1641,12 +1641,12 @@ class ContactApiTest() {
             try{
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "matchContactsBy")
-                val abstractFilterDtoContact: AbstractFilterDtoContact = TestUtils.getParameter<AbstractFilterDtoContact>(fileName, "matchContactsBy.abstractFilterDtoContact")!!.let {
+                val abstractFilterDtoContact: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ContactDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ContactDto>>(fileName, "matchContactsBy.abstractFilterDtoContact")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "matchContactsBy") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
                     val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
                     it.copy(rev = currentRev)
-                    } as? AbstractFilterDtoContact ?: it
+                    } as? io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ContactDto> ?: it
                     }
 
                 val response = api(credentialsFile).matchContactsBy(abstractFilterDtoContact = abstractFilterDtoContact)
