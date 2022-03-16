@@ -1,7 +1,7 @@
+
 # RestV2BeSamv2ChapChapterNameParagraphNameVerseSeqAddeddocDocSeqLanguageLocale
 
 ## Properties
-
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **language** | **kotlin.String** |  |  [optional]

@@ -1,14 +1,13 @@
+
 # VerseDto
 
 ## Properties
-
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **kotlin.String** |  |
-**addedDocuments** | [**kotlin.collections.List&lt;AddedDocumentDto&gt;**](AddedDocumentDto.md) |  |
+**id** | **kotlin.String** |  | 
+**addedDocuments** | [**kotlin.collections.List&lt;AddedDocumentDto&gt;**](AddedDocumentDto.md) |  | 
 **rev** | **kotlin.String** |  |  [optional]
-**deletionDate** | **
-kotlin.Long** | hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. |  [optional]
+**deletionDate** | **kotlin.Long** | hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. |  [optional]
 **chapterName** | **kotlin.String** |  |  [optional]
 **paragraphName** | **kotlin.String** |  |  [optional]
 **verseSeq** | **kotlin.Long** |  |  [optional]

@@ -851,47 +851,39 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/be_samv2/vmp/byVmpCode/{vmpCode}".replace(
-                "{" + "vmpCode" + "}",
-                "${URLEncoder.encode(vmpCode.toString(), Charsets.UTF_8)}"
-            ),
+            path = "/rest/v2/be_samv2/vmp/byVmpCode/{vmpCode}".replace("{"+"vmpCode"+"}", "${URLEncoder.encode(vmpCode.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
-     *
-     *
-     * @param searchString
-     * @param language
-     * @return kotlin.collections.List<ParagraphDto>
-     * @throws UnsupportedOperationException If the API returns an informational or redirection response
-     * @throws ClientException If the API returns a client error response
-     * @throws ServerException If the API returns a server error response
-     */
+    * 
+    * 
+    * @param searchString  
+    * @param language  
+    * @return kotlin.collections.List<ParagraphDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findParagraphs(
-        searchString: kotlin.String,
-        language: kotlin.String
-    ): kotlin.collections.List<ParagraphDto> {
+    suspend fun findParagraphs(searchString: kotlin.String, language: kotlin.String) : kotlin.collections.List<ParagraphDto>  {
         val localVariableConfig = findParagraphsRequestConfig(searchString = searchString, language = language)
 
         return request<Unit, kotlin.collections.List<ParagraphDto>>(
             localVariableConfig
         )!!
     }
-
     /**
-     * To obtain the request config of the operation findParagraphs
-     *
-     * @param searchString
-     * @param language
-     * @return RequestConfig
-     */
-    fun findParagraphsRequestConfig(searchString: kotlin.String, language: kotlin.String): RequestConfig<Unit> {
+    * To obtain the request config of the operation findParagraphs
+    *
+    * @param searchString  
+    * @param language  
+    * @return RequestConfig
+    */
+    fun findParagraphsRequestConfig(searchString: kotlin.String, language: kotlin.String) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -900,47 +892,39 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/be_samv2/chap/search/{searchString}/{language}".replace(
-                "{" + "searchString" + "}",
-                "${URLEncoder.encode(searchString.toString(), Charsets.UTF_8)}"
-            ).replace("{" + "language" + "}", "${URLEncoder.encode(language.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/be_samv2/chap/search/{searchString}/{language}".replace("{"+"searchString"+"}", "${URLEncoder.encode(searchString.toString(), Charsets.UTF_8)}").replace("{"+"language"+"}", "${URLEncoder.encode(language.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
-     *
-     *
-     * @param cnk
-     * @param language
-     * @return kotlin.collections.List<ParagraphDto>
-     * @throws UnsupportedOperationException If the API returns an informational or redirection response
-     * @throws ClientException If the API returns a client error response
-     * @throws ServerException If the API returns a server error response
-     */
+    * 
+    * 
+    * @param cnk  
+    * @param language  
+    * @return kotlin.collections.List<ParagraphDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findParagraphsWithCnk(
-        cnk: kotlin.Long,
-        language: kotlin.String
-    ): kotlin.collections.List<ParagraphDto> {
+    suspend fun findParagraphsWithCnk(cnk: kotlin.Long, language: kotlin.String) : kotlin.collections.List<ParagraphDto>  {
         val localVariableConfig = findParagraphsWithCnkRequestConfig(cnk = cnk, language = language)
 
         return request<Unit, kotlin.collections.List<ParagraphDto>>(
             localVariableConfig
         )!!
     }
-
     /**
-     * To obtain the request config of the operation findParagraphsWithCnk
-     *
-     * @param cnk
-     * @param language
-     * @return RequestConfig
-     */
-    fun findParagraphsWithCnkRequestConfig(cnk: kotlin.Long, language: kotlin.String): RequestConfig<Unit> {
+    * To obtain the request config of the operation findParagraphsWithCnk
+    *
+    * @param cnk  
+    * @param language  
+    * @return RequestConfig
+    */
+    fun findParagraphsWithCnkRequestConfig(cnk: kotlin.Long, language: kotlin.String) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -949,73 +933,47 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/be_samv2/chap/bycnk/{cnk}/{language}".replace(
-                "{" + "cnk" + "}",
-                "${URLEncoder.encode(cnk.toString(), Charsets.UTF_8)}"
-            ).replace("{" + "language" + "}", "${URLEncoder.encode(language.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/be_samv2/chap/bycnk/{cnk}/{language}".replace("{"+"cnk"+"}", "${URLEncoder.encode(cnk.toString(), Charsets.UTF_8)}").replace("{"+"language"+"}", "${URLEncoder.encode(language.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
-     *
-     *
-     * @param chapterName
-     * @param paragraphName
-     * @param verseSeq
-     * @param docSeq
-     * @param language
-     * @param response
-     * @return kotlin.collections.List<InlineResponse200>
-     * @throws UnsupportedOperationException If the API returns an informational or redirection response
-     * @throws ClientException If the API returns a client error response
-     * @throws ServerException If the API returns a server error response
-     */
+    * 
+    * 
+    * @param chapterName  
+    * @param paragraphName  
+    * @param verseSeq  
+    * @param docSeq  
+    * @param language  
+    * @param response  
+    * @return kotlin.collections.List<InlineResponse200>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getAddedDocument(
-        chapterName: kotlin.String,
-        paragraphName: kotlin.String,
-        verseSeq: kotlin.Long,
-        docSeq: kotlin.Long,
-        language: kotlin.String,
-        response: Response
-    ): kotlin.collections.List<InlineResponse200> {
-        val localVariableConfig = getAddedDocumentRequestConfig(
-            chapterName = chapterName,
-            paragraphName = paragraphName,
-            verseSeq = verseSeq,
-            docSeq = docSeq,
-            language = language,
-            response = response
-        )
+    suspend fun getAddedDocument(chapterName: kotlin.String, paragraphName: kotlin.String, verseSeq: kotlin.Long, docSeq: kotlin.Long, language: kotlin.String, response: Response) : kotlin.collections.List<InlineResponse200>  {
+        val localVariableConfig = getAddedDocumentRequestConfig(chapterName = chapterName, paragraphName = paragraphName, verseSeq = verseSeq, docSeq = docSeq, language = language, response = response)
 
         return request<Unit, kotlin.collections.List<InlineResponse200>>(
             localVariableConfig
         )!!
     }
-
     /**
-     * To obtain the request config of the operation getAddedDocument
-     *
-     * @param chapterName
-     * @param paragraphName
-     * @param verseSeq
-     * @param docSeq
-     * @param language
-     * @param response
-     * @return RequestConfig
-     */
-    fun getAddedDocumentRequestConfig(
-        chapterName: kotlin.String,
-        paragraphName: kotlin.String,
-        verseSeq: kotlin.Long,
-        docSeq: kotlin.Long,
-        language: kotlin.String,
-        response: Response
-    ): RequestConfig<Unit> {
+    * To obtain the request config of the operation getAddedDocument
+    *
+    * @param chapterName  
+    * @param paragraphName  
+    * @param verseSeq  
+    * @param docSeq  
+    * @param language  
+    * @param response  
+    * @return RequestConfig
+    */
+    fun getAddedDocumentRequestConfig(chapterName: kotlin.String, paragraphName: kotlin.String, verseSeq: kotlin.Long, docSeq: kotlin.Long, language: kotlin.String, response: Response) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -1027,54 +985,39 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/be_samv2/chap/{chapterName}/{paragraphName}/{verseSeq}/addeddoc/{docSeq}/{language}".replace(
-                "{" + "chapterName" + "}",
-                "${URLEncoder.encode(chapterName.toString(), Charsets.UTF_8)}"
-            ).replace("{" + "paragraphName" + "}", "${URLEncoder.encode(paragraphName.toString(), Charsets.UTF_8)}")
-                .replace("{" + "verseSeq" + "}", "${URLEncoder.encode(verseSeq.toString(), Charsets.UTF_8)}")
-                .replace("{" + "docSeq" + "}", "${URLEncoder.encode(docSeq.toString(), Charsets.UTF_8)}")
-                .replace("{" + "language" + "}", "${URLEncoder.encode(language.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/be_samv2/chap/{chapterName}/{paragraphName}/{verseSeq}/addeddoc/{docSeq}/{language}".replace("{"+"chapterName"+"}", "${URLEncoder.encode(chapterName.toString(), Charsets.UTF_8)}").replace("{"+"paragraphName"+"}", "${URLEncoder.encode(paragraphName.toString(), Charsets.UTF_8)}").replace("{"+"verseSeq"+"}", "${URLEncoder.encode(verseSeq.toString(), Charsets.UTF_8)}").replace("{"+"docSeq"+"}", "${URLEncoder.encode(docSeq.toString(), Charsets.UTF_8)}").replace("{"+"language"+"}", "${URLEncoder.encode(language.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
-     *
-     *
-     * @param chapterName
-     * @param paragraphName
-     * @return kotlin.collections.List<AmpDto>
-     * @throws UnsupportedOperationException If the API returns an informational or redirection response
-     * @throws ClientException If the API returns a client error response
-     * @throws ServerException If the API returns a server error response
-     */
+    * 
+    * 
+    * @param chapterName  
+    * @param paragraphName  
+    * @return kotlin.collections.List<AmpDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getAmpsForParagraph(
-        chapterName: kotlin.String,
-        paragraphName: kotlin.String
-    ): kotlin.collections.List<AmpDto> {
-        val localVariableConfig =
-            getAmpsForParagraphRequestConfig(chapterName = chapterName, paragraphName = paragraphName)
+    suspend fun getAmpsForParagraph(chapterName: kotlin.String, paragraphName: kotlin.String) : kotlin.collections.List<AmpDto>  {
+        val localVariableConfig = getAmpsForParagraphRequestConfig(chapterName = chapterName, paragraphName = paragraphName)
 
         return request<Unit, kotlin.collections.List<AmpDto>>(
             localVariableConfig
         )!!
     }
-
     /**
-     * To obtain the request config of the operation getAmpsForParagraph
-     *
-     * @param chapterName
-     * @param paragraphName
-     * @return RequestConfig
-     */
-    fun getAmpsForParagraphRequestConfig(
-        chapterName: kotlin.String,
-        paragraphName: kotlin.String
-    ): RequestConfig<Unit> {
+    * To obtain the request config of the operation getAmpsForParagraph
+    *
+    * @param chapterName  
+    * @param paragraphName  
+    * @return RequestConfig
+    */
+    fun getAmpsForParagraphRequestConfig(chapterName: kotlin.String, paragraphName: kotlin.String) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -1083,24 +1026,20 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/be_samv2/chap/amps/{chapterName}/{paragraphName}".replace(
-                "{" + "chapterName" + "}",
-                "${URLEncoder.encode(chapterName.toString(), Charsets.UTF_8)}"
-            ).replace("{" + "paragraphName" + "}", "${URLEncoder.encode(paragraphName.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/be_samv2/chap/amps/{chapterName}/{paragraphName}".replace("{"+"chapterName"+"}", "${URLEncoder.encode(chapterName.toString(), Charsets.UTF_8)}").replace("{"+"paragraphName"+"}", "${URLEncoder.encode(paragraphName.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
-     * Get Samv2 version.
-     * Returns a list of codes matched with given input. If several types are provided, paginantion is not supported
-     * @return SamVersionDto
-     * @throws UnsupportedOperationException If the API returns an informational or redirection response
-     * @throws ClientException If the API returns a client error response
-     * @throws ServerException If the API returns a server error response
-     */
+    * Get Samv2 version.
+    * Returns a list of codes matched with given input. If several types are provided, paginantion is not supported
+    * @return SamVersionDto
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
     suspend fun getSamVersion() : SamVersionDto  {
@@ -1127,39 +1066,36 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/be_samv2/v",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
-     *
-     *
-     * @param chapterName
-     * @param paragraphName
-     * @return VerseDto
-     * @throws UnsupportedOperationException If the API returns an informational or redirection response
-     * @throws ClientException If the API returns a client error response
-     * @throws ServerException If the API returns a server error response
-     */
+    * 
+    * 
+    * @param chapterName  
+    * @param paragraphName  
+    * @return VerseDto
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getVersesHierarchy(chapterName: kotlin.String, paragraphName: kotlin.String): VerseDto {
-        val localVariableConfig =
-            getVersesHierarchyRequestConfig(chapterName = chapterName, paragraphName = paragraphName)
+    suspend fun getVersesHierarchy(chapterName: kotlin.String, paragraphName: kotlin.String) : VerseDto  {
+        val localVariableConfig = getVersesHierarchyRequestConfig(chapterName = chapterName, paragraphName = paragraphName)
 
         return request<Unit, VerseDto>(
             localVariableConfig
         )!!
     }
-
     /**
-     * To obtain the request config of the operation getVersesHierarchy
-     *
-     * @param chapterName
-     * @param paragraphName
-     * @return RequestConfig
-     */
-    fun getVersesHierarchyRequestConfig(chapterName: kotlin.String, paragraphName: kotlin.String): RequestConfig<Unit> {
+    * To obtain the request config of the operation getVersesHierarchy
+    *
+    * @param chapterName  
+    * @param paragraphName  
+    * @return RequestConfig
+    */
+    fun getVersesHierarchyRequestConfig(chapterName: kotlin.String, paragraphName: kotlin.String) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -1168,58 +1104,41 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/be_samv2/chap/verse/{chapterName}/{paragraphName}".replace(
-                "{" + "chapterName" + "}",
-                "${URLEncoder.encode(chapterName.toString(), Charsets.UTF_8)}"
-            ).replace("{" + "paragraphName" + "}", "${URLEncoder.encode(paragraphName.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/be_samv2/chap/verse/{chapterName}/{paragraphName}".replace("{"+"chapterName"+"}", "${URLEncoder.encode(chapterName.toString(), Charsets.UTF_8)}").replace("{"+"paragraphName"+"}", "${URLEncoder.encode(paragraphName.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
-     *
-     *
-     * @param chapterName
-     * @param paragraphName
-     * @param language
-     * @return kotlin.collections.List<kotlin.String>
-     * @throws UnsupportedOperationException If the API returns an informational or redirection response
-     * @throws ClientException If the API returns a client error response
-     * @throws ServerException If the API returns a server error response
-     */
+    * 
+    * 
+    * @param chapterName  
+    * @param paragraphName  
+    * @param language  
+    * @return kotlin.collections.List<kotlin.String>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getVtmNamesForParagraph(
-        chapterName: kotlin.String,
-        paragraphName: kotlin.String,
-        language: kotlin.String
-    ): kotlin.collections.List<kotlin.String> {
-        val localVariableConfig = getVtmNamesForParagraphRequestConfig(
-            chapterName = chapterName,
-            paragraphName = paragraphName,
-            language = language
-        )
+    suspend fun getVtmNamesForParagraph(chapterName: kotlin.String, paragraphName: kotlin.String, language: kotlin.String) : kotlin.collections.List<kotlin.String>  {
+        val localVariableConfig = getVtmNamesForParagraphRequestConfig(chapterName = chapterName, paragraphName = paragraphName, language = language)
 
         return request<Unit, kotlin.collections.List<kotlin.String>>(
             localVariableConfig
         )!!
     }
-
     /**
-     * To obtain the request config of the operation getVtmNamesForParagraph
-     *
-     * @param chapterName
-     * @param paragraphName
-     * @param language
-     * @return RequestConfig
-     */
-    fun getVtmNamesForParagraphRequestConfig(
-        chapterName: kotlin.String,
-        paragraphName: kotlin.String,
-        language: kotlin.String
-    ): RequestConfig<Unit> {
+    * To obtain the request config of the operation getVtmNamesForParagraph
+    *
+    * @param chapterName  
+    * @param paragraphName  
+    * @param language  
+    * @return RequestConfig
+    */
+    fun getVtmNamesForParagraphRequestConfig(chapterName: kotlin.String, paragraphName: kotlin.String, language: kotlin.String) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -1228,26 +1147,21 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/be_samv2/chap/vtms/{chapterName}/{paragraphName}/{language}".replace(
-                "{" + "chapterName" + "}",
-                "${URLEncoder.encode(chapterName.toString(), Charsets.UTF_8)}"
-            ).replace("{" + "paragraphName" + "}", "${URLEncoder.encode(paragraphName.toString(), Charsets.UTF_8)}")
-                .replace("{" + "language" + "}", "${URLEncoder.encode(language.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/be_samv2/chap/vtms/{chapterName}/{paragraphName}/{language}".replace("{"+"chapterName"+"}", "${URLEncoder.encode(chapterName.toString(), Charsets.UTF_8)}").replace("{"+"paragraphName"+"}", "${URLEncoder.encode(paragraphName.toString(), Charsets.UTF_8)}").replace("{"+"language"+"}", "${URLEncoder.encode(language.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody
-        )
+            body = localVariableBody        )
     }
 
     /**
-     * Finding AMPs by dmpp code
-     * Returns a list of amps matched with given input. If several types are provided, paginantion is not supported
-     * @param listOfIdsDto
-     * @return kotlin.collections.List<AmpDto>
-     * @throws UnsupportedOperationException If the API returns an informational or redirection response
-     * @throws ClientException If the API returns a client error response
-     * @throws ServerException If the API returns a server error response
-     */
+    * Finding AMPs by dmpp code
+    * Returns a list of amps matched with given input. If several types are provided, paginantion is not supported
+    * @param listOfIdsDto  
+    * @return kotlin.collections.List<AmpDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
     suspend fun listAmpsByDmppCodes(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<AmpDto>  {

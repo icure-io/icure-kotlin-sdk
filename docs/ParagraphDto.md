@@ -1,13 +1,12 @@
+
 # ParagraphDto
 
 ## Properties
-
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **kotlin.String** |  |
+**id** | **kotlin.String** |  | 
 **rev** | **kotlin.String** |  |  [optional]
-**deletionDate** | **
-kotlin.Long** | hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. |  [optional]
+**deletionDate** | **kotlin.Long** | hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. |  [optional]
 **chapterName** | **kotlin.String** |  |  [optional]
 **paragraphName** | **kotlin.String** |  |  [optional]
 **startDate** | **kotlin.Long** |  |  [optional]

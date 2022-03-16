@@ -912,14 +912,9 @@ No authorization required
 # **getPatientHcPartyKeysForDelegate**
 > kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt; getPatientHcPartyKeysForDelegate(patientId)
 
-Get the patient (identified by patientId) hcparty keys. Those keys are AES keys (encrypted) used to share information
-between HCPs and a patient.
+Get the patient (identified by patientId) hcparty keys. Those keys are AES keys (encrypted) used to share information between HCPs and a patient.
 
-This endpoint is used to recover all keys that have already been created and that can be used to share information with
-this patient. It returns a map with the following structure: ID of the owner of the encrypted AES key -&gt; encrypted
-AES key. The returned encrypted AES keys will have to be decrypted using the patient&#39;s private key. { \&quot;hcparty
-1 delegator ID\&quot;: \&quot;AES hcparty key (encrypted using patient public RSA key)\&quot; \&quot;hcparty 2 delegator
-ID\&quot;: \&quot;other AES hcparty key (encrypted using patient public RSA key)\&quot; }
+This endpoint is used to recover all keys that have already been created and that can be used to share information with this patient. It returns a map with the following structure: ID of the owner of the encrypted AES key -&gt; encrypted AES key. The returned encrypted AES keys will have to be decrypted using the patient&#39;s private key.                                  {                     \&quot;hcparty 1 delegator ID\&quot;: \&quot;AES hcparty key (encrypted using patient public RSA key)\&quot;                     \&quot;hcparty 2 delegator ID\&quot;: \&quot;other AES hcparty key (encrypted using patient public RSA key)\&quot;                 }                 
 
 ### Example
 ```kotlin

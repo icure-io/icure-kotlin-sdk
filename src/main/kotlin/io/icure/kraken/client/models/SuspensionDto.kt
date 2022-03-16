@@ -20,18 +20,18 @@ import com.github.pozo.KotlinBuilder
 
 
 /**
+ * 
  *
- *
- * @param beginMoment
- * @param endMoment
- * @param suspensionReason
- * @param lifecycle
+ * @param beginMoment 
+ * @param endMoment 
+ * @param suspensionReason 
+ * @param lifecycle 
  */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @KotlinBuilder
-data class SuspensionDto(
+data class SuspensionDto (
 
     @field:JsonProperty("beginMoment")
     val beginMoment: kotlin.Long? = null,

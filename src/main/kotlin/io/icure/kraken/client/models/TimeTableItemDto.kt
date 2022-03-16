@@ -21,16 +21,16 @@ import com.github.pozo.KotlinBuilder
 
 
 /**
+ * 
  *
- *
- * @param days
- * @param hours
- * @param recurrenceTypes
- * @param homeVisit
- * @param publicTimeTableItem
- * @param acceptsNewPatient
- * @param unavailable
- * @param calendarItemTypeId
+ * @param days 
+ * @param hours 
+ * @param recurrenceTypes 
+ * @param homeVisit 
+ * @param publicTimeTableItem 
+ * @param acceptsNewPatient 
+ * @param unavailable 
+ * @param calendarItemTypeId 
  * @param placeId 
  */
 

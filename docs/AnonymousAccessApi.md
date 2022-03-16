@@ -4,17 +4,13 @@ All URIs are relative to *https://kraken.icure.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**
-getAvailabilitiesByPeriodAndCalendarItemTypeId**](AnonymousAccessApi.md#getAvailabilitiesByPeriodAndCalendarItemTypeId) | **
-GET** /rest/v2/aa/available/inGroup/{groupId}/forUser/{userId}/type/{calendarItemTypeId} | Get Availabilities for HCP and appointmentType
-[**listAppointmentTypesForUser**](AnonymousAccessApi.md#listAppointmentTypesForUser) | **
-GET** /rest/v2/aa/appointmentType/inGroup/{groupId}/forUser/{userId} | List Calendar Item types for a provided group id and user id
+[**getAvailabilitiesByPeriodAndCalendarItemTypeId**](AnonymousAccessApi.md#getAvailabilitiesByPeriodAndCalendarItemTypeId) | **GET** /rest/v2/aa/available/inGroup/{groupId}/forUser/{userId}/type/{calendarItemTypeId} | Get Availabilities for HCP and appointmentType
+[**listAppointmentTypesForUser**](AnonymousAccessApi.md#listAppointmentTypesForUser) | **GET** /rest/v2/aa/appointmentType/inGroup/{groupId}/forUser/{userId} | List Calendar Item types for a provided group id and user id
 [**listHealthcarePartiesInGroup**](AnonymousAccessApi.md#listHealthcarePartiesInGroup) | **GET** /rest/v2/aa/hcparty/inGroup/{groupId} | List healthcare parties for a provided group id
 
 
 <a name="getAvailabilitiesByPeriodAndCalendarItemTypeId"></a>
 # **getAvailabilitiesByPeriodAndCalendarItemTypeId**
-
 > kotlin.collections.List&lt;kotlin.Long&gt; getAvailabilitiesByPeriodAndCalendarItemTypeId(groupId, userId, calendarItemTypeId, isNewPatient, startDate, endDate, hcpId, placeId, limit)
 
 Get Availabilities for HCP and appointmentType
@@ -22,7 +18,6 @@ Get Availabilities for HCP and appointmentType
 The start of the slot is returned in YYYYDDMMHHmmss format and only slots belonging to public time tables are returned.
 
 ### Example
-
 ```kotlin
 // Import classes:
 //import io.icure.kraken.client.infrastructure.*
@@ -54,15 +49,15 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**groupId** | **kotlin.String**|  |
-**userId** | **kotlin.String**|  |
-**calendarItemTypeId** | **kotlin.String**|  |
-**isNewPatient** | **kotlin.Boolean**|  |
-**startDate** | **kotlin.Long**|  |
-**endDate** | **kotlin.Long**|  |
-**hcpId** | **kotlin.String**|  |
-**placeId** | **kotlin.String**|  | [optional]
-**limit** | **kotlin.Int**|  | [optional]
+ **groupId** | **kotlin.String**|  |
+ **userId** | **kotlin.String**|  |
+ **calendarItemTypeId** | **kotlin.String**|  |
+ **isNewPatient** | **kotlin.Boolean**|  |
+ **startDate** | **kotlin.Long**|  |
+ **endDate** | **kotlin.Long**|  |
+ **hcpId** | **kotlin.String**|  |
+ **placeId** | **kotlin.String**|  | [optional]
+ **limit** | **kotlin.Int**|  | [optional]
 
 ### Return type
 
@@ -79,7 +74,6 @@ No authorization required
 
 <a name="listAppointmentTypesForUser"></a>
 # **listAppointmentTypesForUser**
-
 > kotlin.collections.List&lt;AppointmentTypeAndPlaceDto&gt; listAppointmentTypesForUser(groupId, userId, startDate, endDate)
 
 List Calendar Item types for a provided group id and user id
@@ -133,7 +127,6 @@ No authorization required
 
 <a name="listHealthcarePartiesInGroup"></a>
 # **listHealthcarePartiesInGroup**
-
 > kotlin.collections.List&lt;UserAndHealthcarePartyDto&gt; listHealthcarePartiesInGroup(groupId)
 
 List healthcare parties for a provided group id

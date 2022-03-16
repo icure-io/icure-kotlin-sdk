@@ -164,28 +164,27 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     }
 
     /**
-     * Get replication info
-     *
-     * @param id
-     * @return ReplicatorDocumentDto
-     * @throws UnsupportedOperationException If the API returns an informational or redirection response
-     * @throws ClientException If the API returns a client error response
-     * @throws ServerException If the API returns a server error response
-     */
+    * Get replication info
+    * 
+    * @param id  
+    * @return ReplicatorDocumentDto
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getReplicatorInfo(id: kotlin.String): ReplicatorDocumentDto {
+    suspend fun getReplicatorInfo(id: kotlin.String) : ReplicatorDocumentDto  {
         val localVariableConfig = getReplicatorInfoRequestConfig(id = id)
 
         return request<Unit, ReplicatorDocumentDto>(
             localVariableConfig
         )!!
     }
-
     /**
-     * To obtain the request config of the operation getReplicatorInfo
-     *
-     * @param id
+    * To obtain the request config of the operation getReplicatorInfo
+    *
+    * @param id  
     * @return RequestConfig
     */
     fun getReplicatorInfoRequestConfig(id: kotlin.String) : RequestConfig<Unit> {

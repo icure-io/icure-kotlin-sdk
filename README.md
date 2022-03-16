@@ -49,11 +49,8 @@ Class | Method | HTTP request | Description
 *AgendaApi* | [**getAgendasForUser**](docs/AgendaApi.md#getagendasforuser) | **GET** /rest/v2/agenda/byUser | Gets all agendas for user
 *AgendaApi* | [**getReadableAgendasForUser**](docs/AgendaApi.md#getreadableagendasforuser) | **GET** /rest/v2/agenda/readableForUser | Gets readable agendas for user
 *AgendaApi* | [**modifyAgenda**](docs/AgendaApi.md#modifyagenda) | **PUT** /rest/v2/agenda | Modifies an agenda
-*AnonymousAccessApi* | [**
-getAvailabilitiesByPeriodAndCalendarItemTypeId**](docs/AnonymousAccessApi.md#getavailabilitiesbyperiodandcalendaritemtypeid) | **
-GET** /rest/v2/aa/available/inGroup/{groupId}/forUser/{userId}/type/{calendarItemTypeId} | Get Availabilities for HCP and appointmentType
-*AnonymousAccessApi* | [**listAppointmentTypesForUser**](docs/AnonymousAccessApi.md#listappointmenttypesforuser) | **
-GET** /rest/v2/aa/appointmentType/inGroup/{groupId}/forUser/{userId} | List Calendar Item types for a provided group id and user id
+*AnonymousAccessApi* | [**getAvailabilitiesByPeriodAndCalendarItemTypeId**](docs/AnonymousAccessApi.md#getavailabilitiesbyperiodandcalendaritemtypeid) | **GET** /rest/v2/aa/available/inGroup/{groupId}/forUser/{userId}/type/{calendarItemTypeId} | Get Availabilities for HCP and appointmentType
+*AnonymousAccessApi* | [**listAppointmentTypesForUser**](docs/AnonymousAccessApi.md#listappointmenttypesforuser) | **GET** /rest/v2/aa/appointmentType/inGroup/{groupId}/forUser/{userId} | List Calendar Item types for a provided group id and user id
 *AnonymousAccessApi* | [**listHealthcarePartiesInGroup**](docs/AnonymousAccessApi.md#listhealthcarepartiesingroup) | **GET** /rest/v2/aa/hcparty/inGroup/{groupId} | List healthcare parties for a provided group id
 *ApplicationsettingsApi* | [**getApplicationSettings**](docs/ApplicationsettingsApi.md#getapplicationsettings) | **GET** /rest/v2/appsettings | Gets all application settings
 *ArticleApi* | [**createArticle**](docs/ArticleApi.md#createarticle) | **POST** /rest/v2/article | Creates a article
@@ -102,59 +99,33 @@ GET** /rest/v2/aa/appointmentType/inGroup/{groupId}/forUser/{userId} | List Cale
 *Besamv2Api* | [**findPaginatedAmpsByAtc**](docs/Besamv2Api.md#findpaginatedampsbyatc) | **GET** /rest/v2/be_samv2/vmp/byAtc/{atcCode} | Finding AMPs by atc code with pagination.
 *Besamv2Api* | [**findPaginatedAmpsByGroupCode**](docs/Besamv2Api.md#findpaginatedampsbygroupcode) | **GET** /rest/v2/be_samv2/amp/byGroupCode/{vmpgCode} | Finding AMPs by group with pagination.
 *Besamv2Api* | [**findPaginatedAmpsByGroupId**](docs/Besamv2Api.md#findpaginatedampsbygroupid) | **GET** /rest/v2/be_samv2/amp/byGroupId/{vmpgId} | Finding AMPs by group with pagination.
-*Besamv2Api* | [**findPaginatedAmpsByLabel**](docs/Besamv2Api.md#findpaginatedampsbylabel) | **
-GET** /rest/v2/be_samv2/amp | Finding AMPs by label with pagination.
-*Besamv2Api* | [**findPaginatedAmpsByVmpCode**](docs/Besamv2Api.md#findpaginatedampsbyvmpcode) | **
-GET** /rest/v2/be_samv2/amp/byVmpCode/{vmpCode} | Finding AMPs by vmp code with pagination.
-*Besamv2Api* | [**findPaginatedAmpsByVmpId**](docs/Besamv2Api.md#findpaginatedampsbyvmpid) | **
-GET** /rest/v2/be_samv2/amp/byVmpId/{vmpId} | Finding AMPs by vmp id with pagination.
-*Besamv2Api* | [**findPaginatedNmpsByLabel**](docs/Besamv2Api.md#findpaginatednmpsbylabel) | **
-GET** /rest/v2/be_samv2/nmp | Finding NMPs by label with pagination.
-*Besamv2Api* | [**findPaginatedVmpGroupsByLabel**](docs/Besamv2Api.md#findpaginatedvmpgroupsbylabel) | **
-GET** /rest/v2/be_samv2/vmpgroup | Finding VMP groups by language label with pagination.
-*Besamv2Api* | [**findPaginatedVmpGroupsByVmpGroupCode**](docs/Besamv2Api.md#findpaginatedvmpgroupsbyvmpgroupcode) | **
-GET** /rest/v2/be_samv2/vmpgroup/byGroupCode/{vmpgCode} | Finding VMP groups by cmpgCode with pagination.
-*Besamv2Api* | [**findPaginatedVmpsByGroupCode**](docs/Besamv2Api.md#findpaginatedvmpsbygroupcode) | **
-GET** /rest/v2/be_samv2/vmp/byGroupCode/{vmpgCode} | Finding VMPs by group with pagination.
-*Besamv2Api* | [**findPaginatedVmpsByGroupId**](docs/Besamv2Api.md#findpaginatedvmpsbygroupid) | **
-GET** /rest/v2/be_samv2/vmp/byGroupId/{vmpgId} | Finding VMPs by group with pagination.
-*Besamv2Api* | [**findPaginatedVmpsByLabel**](docs/Besamv2Api.md#findpaginatedvmpsbylabel) | **
-GET** /rest/v2/be_samv2/vmp | Finding VMPs by label with pagination.
-*Besamv2Api* | [**findPaginatedVmpsByVmpCode**](docs/Besamv2Api.md#findpaginatedvmpsbyvmpcode) | **
-GET** /rest/v2/be_samv2/vmp/byVmpCode/{vmpCode} | Finding VMPs by group with pagination.
-*Besamv2Api* | [**findParagraphs**](docs/Besamv2Api.md#findparagraphs) | **
-GET** /rest/v2/be_samv2/chap/search/{searchString}/{language} |
-*Besamv2Api* | [**findParagraphsWithCnk**](docs/Besamv2Api.md#findparagraphswithcnk) | **
-GET** /rest/v2/be_samv2/chap/bycnk/{cnk}/{language} |
-*Besamv2Api* | [**getAddedDocument**](docs/Besamv2Api.md#getaddeddocument) | **
-GET** /rest/v2/be_samv2/chap/{chapterName}/{paragraphName}/{verseSeq}/addeddoc/{docSeq}/{language} |
-*Besamv2Api* | [**getAmpsForParagraph**](docs/Besamv2Api.md#getampsforparagraph) | **
-GET** /rest/v2/be_samv2/chap/amps/{chapterName}/{paragraphName} |
+*Besamv2Api* | [**findPaginatedAmpsByLabel**](docs/Besamv2Api.md#findpaginatedampsbylabel) | **GET** /rest/v2/be_samv2/amp | Finding AMPs by label with pagination.
+*Besamv2Api* | [**findPaginatedAmpsByVmpCode**](docs/Besamv2Api.md#findpaginatedampsbyvmpcode) | **GET** /rest/v2/be_samv2/amp/byVmpCode/{vmpCode} | Finding AMPs by vmp code with pagination.
+*Besamv2Api* | [**findPaginatedAmpsByVmpId**](docs/Besamv2Api.md#findpaginatedampsbyvmpid) | **GET** /rest/v2/be_samv2/amp/byVmpId/{vmpId} | Finding AMPs by vmp id with pagination.
+*Besamv2Api* | [**findPaginatedNmpsByLabel**](docs/Besamv2Api.md#findpaginatednmpsbylabel) | **GET** /rest/v2/be_samv2/nmp | Finding NMPs by label with pagination.
+*Besamv2Api* | [**findPaginatedVmpGroupsByLabel**](docs/Besamv2Api.md#findpaginatedvmpgroupsbylabel) | **GET** /rest/v2/be_samv2/vmpgroup | Finding VMP groups by language label with pagination.
+*Besamv2Api* | [**findPaginatedVmpGroupsByVmpGroupCode**](docs/Besamv2Api.md#findpaginatedvmpgroupsbyvmpgroupcode) | **GET** /rest/v2/be_samv2/vmpgroup/byGroupCode/{vmpgCode} | Finding VMP groups by cmpgCode with pagination.
+*Besamv2Api* | [**findPaginatedVmpsByGroupCode**](docs/Besamv2Api.md#findpaginatedvmpsbygroupcode) | **GET** /rest/v2/be_samv2/vmp/byGroupCode/{vmpgCode} | Finding VMPs by group with pagination.
+*Besamv2Api* | [**findPaginatedVmpsByGroupId**](docs/Besamv2Api.md#findpaginatedvmpsbygroupid) | **GET** /rest/v2/be_samv2/vmp/byGroupId/{vmpgId} | Finding VMPs by group with pagination.
+*Besamv2Api* | [**findPaginatedVmpsByLabel**](docs/Besamv2Api.md#findpaginatedvmpsbylabel) | **GET** /rest/v2/be_samv2/vmp | Finding VMPs by label with pagination.
+*Besamv2Api* | [**findPaginatedVmpsByVmpCode**](docs/Besamv2Api.md#findpaginatedvmpsbyvmpcode) | **GET** /rest/v2/be_samv2/vmp/byVmpCode/{vmpCode} | Finding VMPs by group with pagination.
+*Besamv2Api* | [**findParagraphs**](docs/Besamv2Api.md#findparagraphs) | **GET** /rest/v2/be_samv2/chap/search/{searchString}/{language} | 
+*Besamv2Api* | [**findParagraphsWithCnk**](docs/Besamv2Api.md#findparagraphswithcnk) | **GET** /rest/v2/be_samv2/chap/bycnk/{cnk}/{language} | 
+*Besamv2Api* | [**getAddedDocument**](docs/Besamv2Api.md#getaddeddocument) | **GET** /rest/v2/be_samv2/chap/{chapterName}/{paragraphName}/{verseSeq}/addeddoc/{docSeq}/{language} | 
+*Besamv2Api* | [**getAmpsForParagraph**](docs/Besamv2Api.md#getampsforparagraph) | **GET** /rest/v2/be_samv2/chap/amps/{chapterName}/{paragraphName} | 
 *Besamv2Api* | [**getSamVersion**](docs/Besamv2Api.md#getsamversion) | **GET** /rest/v2/be_samv2/v | Get Samv2 version.
-*Besamv2Api* | [**getVersesHierarchy**](docs/Besamv2Api.md#getverseshierarchy) | **
-GET** /rest/v2/be_samv2/chap/verse/{chapterName}/{paragraphName} |
-*Besamv2Api* | [**getVtmNamesForParagraph**](docs/Besamv2Api.md#getvtmnamesforparagraph) | **
-GET** /rest/v2/be_samv2/chap/vtms/{chapterName}/{paragraphName}/{language} |
-*Besamv2Api* | [**listAmpsByDmppCodes**](docs/Besamv2Api.md#listampsbydmppcodes) | **
-POST** /rest/v2/be_samv2/amp/byDmppCodes | Finding AMPs by dmpp code
-*Besamv2Api* | [**listAmpsByGroupCodes**](docs/Besamv2Api.md#listampsbygroupcodes) | **
-POST** /rest/v2/be_samv2/amp/byGroupCodes | Finding AMPs by group.
-*Besamv2Api* | [**listAmpsByGroupIds**](docs/Besamv2Api.md#listampsbygroupids) | **
-POST** /rest/v2/be_samv2/amp/byGroupIds | Finding AMPs by group.
-*Besamv2Api* | [**listAmpsByVmpCodes**](docs/Besamv2Api.md#listampsbyvmpcodes) | **
-POST** /rest/v2/be_samv2/amp/byVmpCodes | Finding AMPs by vmp code.
-*Besamv2Api* | [**listAmpsByVmpIds**](docs/Besamv2Api.md#listampsbyvmpids) | **
-POST** /rest/v2/be_samv2/amp/byVmpIds | Finding AMPs by vmp id.
-*Besamv2Api* | [**listNmpsByCnks**](docs/Besamv2Api.md#listnmpsbycnks) | **
-POST** /rest/v2/be_samv2/nmp/byCnks | Finding NMPs by cnk id.
-*Besamv2Api* | [**listPharmaceuticalForms**](docs/Besamv2Api.md#listpharmaceuticalforms) | **
-GET** /rest/v2/be_samv2/pharmaform | List all pharmaceutical forms.
-*Besamv2Api* | [**listSubstances**](docs/Besamv2Api.md#listsubstances) | **
-GET** /rest/v2/be_samv2/substance | List all substances.
-*Besamv2Api* | [**listVmpGroupsByVmpGroupCodes**](docs/Besamv2Api.md#listvmpgroupsbyvmpgroupcodes) | **
-POST** /rest/v2/be_samv2/vmpgroup/byGroupCodes | Finding AMPs by group.
-*Besamv2Api* | [**listVmpsByGroupIds**](docs/Besamv2Api.md#listvmpsbygroupids) | **
-POST** /rest/v2/be_samv2/vmp/byGroupIds | Finding VMPs by group.
+*Besamv2Api* | [**getVersesHierarchy**](docs/Besamv2Api.md#getverseshierarchy) | **GET** /rest/v2/be_samv2/chap/verse/{chapterName}/{paragraphName} | 
+*Besamv2Api* | [**getVtmNamesForParagraph**](docs/Besamv2Api.md#getvtmnamesforparagraph) | **GET** /rest/v2/be_samv2/chap/vtms/{chapterName}/{paragraphName}/{language} | 
+*Besamv2Api* | [**listAmpsByDmppCodes**](docs/Besamv2Api.md#listampsbydmppcodes) | **POST** /rest/v2/be_samv2/amp/byDmppCodes | Finding AMPs by dmpp code
+*Besamv2Api* | [**listAmpsByGroupCodes**](docs/Besamv2Api.md#listampsbygroupcodes) | **POST** /rest/v2/be_samv2/amp/byGroupCodes | Finding AMPs by group.
+*Besamv2Api* | [**listAmpsByGroupIds**](docs/Besamv2Api.md#listampsbygroupids) | **POST** /rest/v2/be_samv2/amp/byGroupIds | Finding AMPs by group.
+*Besamv2Api* | [**listAmpsByVmpCodes**](docs/Besamv2Api.md#listampsbyvmpcodes) | **POST** /rest/v2/be_samv2/amp/byVmpCodes | Finding AMPs by vmp code.
+*Besamv2Api* | [**listAmpsByVmpIds**](docs/Besamv2Api.md#listampsbyvmpids) | **POST** /rest/v2/be_samv2/amp/byVmpIds | Finding AMPs by vmp id.
+*Besamv2Api* | [**listNmpsByCnks**](docs/Besamv2Api.md#listnmpsbycnks) | **POST** /rest/v2/be_samv2/nmp/byCnks | Finding NMPs by cnk id.
+*Besamv2Api* | [**listPharmaceuticalForms**](docs/Besamv2Api.md#listpharmaceuticalforms) | **GET** /rest/v2/be_samv2/pharmaform | List all pharmaceutical forms.
+*Besamv2Api* | [**listSubstances**](docs/Besamv2Api.md#listsubstances) | **GET** /rest/v2/be_samv2/substance | List all substances.
+*Besamv2Api* | [**listVmpGroupsByVmpGroupCodes**](docs/Besamv2Api.md#listvmpgroupsbyvmpgroupcodes) | **POST** /rest/v2/be_samv2/vmpgroup/byGroupCodes | Finding AMPs by group.
+*Besamv2Api* | [**listVmpsByGroupIds**](docs/Besamv2Api.md#listvmpsbygroupids) | **POST** /rest/v2/be_samv2/vmp/byGroupIds | Finding VMPs by group.
 *Besamv2Api* | [**listVmpsByVmpCodes**](docs/Besamv2Api.md#listvmpsbyvmpcodes) | **POST** /rest/v2/be_samv2/vmp/byVmpCodes | Finding VMPs by group.
 *CalendarItemApi* | [**createCalendarItem**](docs/CalendarItemApi.md#createcalendaritem) | **POST** /rest/v2/calendarItem | Creates a calendarItem
 *CalendarItemApi* | [**deleteCalendarItem**](docs/CalendarItemApi.md#deletecalendaritem) | **POST** /rest/v2/calendarItem/{calendarItemIds} | Deletes an calendarItem

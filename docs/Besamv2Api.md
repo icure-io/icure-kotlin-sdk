@@ -8,56 +8,33 @@ Method | HTTP request | Description
 [**findPaginatedAmpsByAtc**](Besamv2Api.md#findPaginatedAmpsByAtc) | **GET** /rest/v2/be_samv2/vmp/byAtc/{atcCode} | Finding AMPs by atc code with pagination.
 [**findPaginatedAmpsByGroupCode**](Besamv2Api.md#findPaginatedAmpsByGroupCode) | **GET** /rest/v2/be_samv2/amp/byGroupCode/{vmpgCode} | Finding AMPs by group with pagination.
 [**findPaginatedAmpsByGroupId**](Besamv2Api.md#findPaginatedAmpsByGroupId) | **GET** /rest/v2/be_samv2/amp/byGroupId/{vmpgId} | Finding AMPs by group with pagination.
-[**findPaginatedAmpsByLabel**](Besamv2Api.md#findPaginatedAmpsByLabel) | **
-GET** /rest/v2/be_samv2/amp | Finding AMPs by label with pagination.
-[**findPaginatedAmpsByVmpCode**](Besamv2Api.md#findPaginatedAmpsByVmpCode) | **
-GET** /rest/v2/be_samv2/amp/byVmpCode/{vmpCode} | Finding AMPs by vmp code with pagination.
-[**findPaginatedAmpsByVmpId**](Besamv2Api.md#findPaginatedAmpsByVmpId) | **
-GET** /rest/v2/be_samv2/amp/byVmpId/{vmpId} | Finding AMPs by vmp id with pagination.
-[**findPaginatedNmpsByLabel**](Besamv2Api.md#findPaginatedNmpsByLabel) | **
-GET** /rest/v2/be_samv2/nmp | Finding NMPs by label with pagination.
-[**findPaginatedVmpGroupsByLabel**](Besamv2Api.md#findPaginatedVmpGroupsByLabel) | **
-GET** /rest/v2/be_samv2/vmpgroup | Finding VMP groups by language label with pagination.
-[**findPaginatedVmpGroupsByVmpGroupCode**](Besamv2Api.md#findPaginatedVmpGroupsByVmpGroupCode) | **
-GET** /rest/v2/be_samv2/vmpgroup/byGroupCode/{vmpgCode} | Finding VMP groups by cmpgCode with pagination.
-[**findPaginatedVmpsByGroupCode**](Besamv2Api.md#findPaginatedVmpsByGroupCode) | **
-GET** /rest/v2/be_samv2/vmp/byGroupCode/{vmpgCode} | Finding VMPs by group with pagination.
-[**findPaginatedVmpsByGroupId**](Besamv2Api.md#findPaginatedVmpsByGroupId) | **
-GET** /rest/v2/be_samv2/vmp/byGroupId/{vmpgId} | Finding VMPs by group with pagination.
-[**findPaginatedVmpsByLabel**](Besamv2Api.md#findPaginatedVmpsByLabel) | **
-GET** /rest/v2/be_samv2/vmp | Finding VMPs by label with pagination.
-[**findPaginatedVmpsByVmpCode**](Besamv2Api.md#findPaginatedVmpsByVmpCode) | **
-GET** /rest/v2/be_samv2/vmp/byVmpCode/{vmpCode} | Finding VMPs by group with pagination.
-[**findParagraphs**](Besamv2Api.md#findParagraphs) | **GET** /rest/v2/be_samv2/chap/search/{searchString}/{language} |
-[**findParagraphsWithCnk**](Besamv2Api.md#findParagraphsWithCnk) | **
-GET** /rest/v2/be_samv2/chap/bycnk/{cnk}/{language} |
-[**getAddedDocument**](Besamv2Api.md#getAddedDocument) | **
-GET** /rest/v2/be_samv2/chap/{chapterName}/{paragraphName}/{verseSeq}/addeddoc/{docSeq}/{language} |
-[**getAmpsForParagraph**](Besamv2Api.md#getAmpsForParagraph) | **
-GET** /rest/v2/be_samv2/chap/amps/{chapterName}/{paragraphName} |
+[**findPaginatedAmpsByLabel**](Besamv2Api.md#findPaginatedAmpsByLabel) | **GET** /rest/v2/be_samv2/amp | Finding AMPs by label with pagination.
+[**findPaginatedAmpsByVmpCode**](Besamv2Api.md#findPaginatedAmpsByVmpCode) | **GET** /rest/v2/be_samv2/amp/byVmpCode/{vmpCode} | Finding AMPs by vmp code with pagination.
+[**findPaginatedAmpsByVmpId**](Besamv2Api.md#findPaginatedAmpsByVmpId) | **GET** /rest/v2/be_samv2/amp/byVmpId/{vmpId} | Finding AMPs by vmp id with pagination.
+[**findPaginatedNmpsByLabel**](Besamv2Api.md#findPaginatedNmpsByLabel) | **GET** /rest/v2/be_samv2/nmp | Finding NMPs by label with pagination.
+[**findPaginatedVmpGroupsByLabel**](Besamv2Api.md#findPaginatedVmpGroupsByLabel) | **GET** /rest/v2/be_samv2/vmpgroup | Finding VMP groups by language label with pagination.
+[**findPaginatedVmpGroupsByVmpGroupCode**](Besamv2Api.md#findPaginatedVmpGroupsByVmpGroupCode) | **GET** /rest/v2/be_samv2/vmpgroup/byGroupCode/{vmpgCode} | Finding VMP groups by cmpgCode with pagination.
+[**findPaginatedVmpsByGroupCode**](Besamv2Api.md#findPaginatedVmpsByGroupCode) | **GET** /rest/v2/be_samv2/vmp/byGroupCode/{vmpgCode} | Finding VMPs by group with pagination.
+[**findPaginatedVmpsByGroupId**](Besamv2Api.md#findPaginatedVmpsByGroupId) | **GET** /rest/v2/be_samv2/vmp/byGroupId/{vmpgId} | Finding VMPs by group with pagination.
+[**findPaginatedVmpsByLabel**](Besamv2Api.md#findPaginatedVmpsByLabel) | **GET** /rest/v2/be_samv2/vmp | Finding VMPs by label with pagination.
+[**findPaginatedVmpsByVmpCode**](Besamv2Api.md#findPaginatedVmpsByVmpCode) | **GET** /rest/v2/be_samv2/vmp/byVmpCode/{vmpCode} | Finding VMPs by group with pagination.
+[**findParagraphs**](Besamv2Api.md#findParagraphs) | **GET** /rest/v2/be_samv2/chap/search/{searchString}/{language} | 
+[**findParagraphsWithCnk**](Besamv2Api.md#findParagraphsWithCnk) | **GET** /rest/v2/be_samv2/chap/bycnk/{cnk}/{language} | 
+[**getAddedDocument**](Besamv2Api.md#getAddedDocument) | **GET** /rest/v2/be_samv2/chap/{chapterName}/{paragraphName}/{verseSeq}/addeddoc/{docSeq}/{language} | 
+[**getAmpsForParagraph**](Besamv2Api.md#getAmpsForParagraph) | **GET** /rest/v2/be_samv2/chap/amps/{chapterName}/{paragraphName} | 
 [**getSamVersion**](Besamv2Api.md#getSamVersion) | **GET** /rest/v2/be_samv2/v | Get Samv2 version.
-[**getVersesHierarchy**](Besamv2Api.md#getVersesHierarchy) | **
-GET** /rest/v2/be_samv2/chap/verse/{chapterName}/{paragraphName} |
-[**getVtmNamesForParagraph**](Besamv2Api.md#getVtmNamesForParagraph) | **
-GET** /rest/v2/be_samv2/chap/vtms/{chapterName}/{paragraphName}/{language} |
-[**listAmpsByDmppCodes**](Besamv2Api.md#listAmpsByDmppCodes) | **
-POST** /rest/v2/be_samv2/amp/byDmppCodes | Finding AMPs by dmpp code
-[**listAmpsByGroupCodes**](Besamv2Api.md#listAmpsByGroupCodes) | **
-POST** /rest/v2/be_samv2/amp/byGroupCodes | Finding AMPs by group.
-[**listAmpsByGroupIds**](Besamv2Api.md#listAmpsByGroupIds) | **
-POST** /rest/v2/be_samv2/amp/byGroupIds | Finding AMPs by group.
-[**listAmpsByVmpCodes**](Besamv2Api.md#listAmpsByVmpCodes) | **
-POST** /rest/v2/be_samv2/amp/byVmpCodes | Finding AMPs by vmp code.
-[**listAmpsByVmpIds**](Besamv2Api.md#listAmpsByVmpIds) | **
-POST** /rest/v2/be_samv2/amp/byVmpIds | Finding AMPs by vmp id.
+[**getVersesHierarchy**](Besamv2Api.md#getVersesHierarchy) | **GET** /rest/v2/be_samv2/chap/verse/{chapterName}/{paragraphName} | 
+[**getVtmNamesForParagraph**](Besamv2Api.md#getVtmNamesForParagraph) | **GET** /rest/v2/be_samv2/chap/vtms/{chapterName}/{paragraphName}/{language} | 
+[**listAmpsByDmppCodes**](Besamv2Api.md#listAmpsByDmppCodes) | **POST** /rest/v2/be_samv2/amp/byDmppCodes | Finding AMPs by dmpp code
+[**listAmpsByGroupCodes**](Besamv2Api.md#listAmpsByGroupCodes) | **POST** /rest/v2/be_samv2/amp/byGroupCodes | Finding AMPs by group.
+[**listAmpsByGroupIds**](Besamv2Api.md#listAmpsByGroupIds) | **POST** /rest/v2/be_samv2/amp/byGroupIds | Finding AMPs by group.
+[**listAmpsByVmpCodes**](Besamv2Api.md#listAmpsByVmpCodes) | **POST** /rest/v2/be_samv2/amp/byVmpCodes | Finding AMPs by vmp code.
+[**listAmpsByVmpIds**](Besamv2Api.md#listAmpsByVmpIds) | **POST** /rest/v2/be_samv2/amp/byVmpIds | Finding AMPs by vmp id.
 [**listNmpsByCnks**](Besamv2Api.md#listNmpsByCnks) | **POST** /rest/v2/be_samv2/nmp/byCnks | Finding NMPs by cnk id.
-[**listPharmaceuticalForms**](Besamv2Api.md#listPharmaceuticalForms) | **
-GET** /rest/v2/be_samv2/pharmaform | List all pharmaceutical forms.
+[**listPharmaceuticalForms**](Besamv2Api.md#listPharmaceuticalForms) | **GET** /rest/v2/be_samv2/pharmaform | List all pharmaceutical forms.
 [**listSubstances**](Besamv2Api.md#listSubstances) | **GET** /rest/v2/be_samv2/substance | List all substances.
-[**listVmpGroupsByVmpGroupCodes**](Besamv2Api.md#listVmpGroupsByVmpGroupCodes) | **
-POST** /rest/v2/be_samv2/vmpgroup/byGroupCodes | Finding AMPs by group.
-[**listVmpsByGroupIds**](Besamv2Api.md#listVmpsByGroupIds) | **
-POST** /rest/v2/be_samv2/vmp/byGroupIds | Finding VMPs by group.
+[**listVmpGroupsByVmpGroupCodes**](Besamv2Api.md#listVmpGroupsByVmpGroupCodes) | **POST** /rest/v2/be_samv2/vmpgroup/byGroupCodes | Finding AMPs by group.
+[**listVmpsByGroupIds**](Besamv2Api.md#listVmpsByGroupIds) | **POST** /rest/v2/be_samv2/vmp/byGroupIds | Finding VMPs by group.
 [**listVmpsByVmpCodes**](Besamv2Api.md#listVmpsByVmpCodes) | **POST** /rest/v2/be_samv2/vmp/byVmpCodes | Finding VMPs by group.
 
 
@@ -787,11 +764,10 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**vmpCode** | **kotlin.String**| vmpCode |
-**startKey** | **
-kotlin.String**| The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key&#39;s startKey | [optional]
-**startDocumentId** | **kotlin.String**| A vmp document ID | [optional]
-**limit** | **kotlin.Int**| Number of rows | [optional]
+ **vmpCode** | **kotlin.String**| vmpCode |
+ **startKey** | **kotlin.String**| The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key&#39;s startKey | [optional]
+ **startDocumentId** | **kotlin.String**| A vmp document ID | [optional]
+ **limit** | **kotlin.Int**| Number of rows | [optional]
 
 ### Return type
 
@@ -803,17 +779,16 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: */*
+ - **Content-Type**: Not defined
+ - **Accept**: */*
 
 <a name="findParagraphs"></a>
-
 # **findParagraphs**
-
 > kotlin.collections.List&lt;ParagraphDto&gt; findParagraphs(searchString, language)
 
-### Example
 
+
+### Example
 ```kotlin
 // Import classes:
 //import io.icure.kraken.client.infrastructure.*
@@ -838,8 +813,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**searchString** | **kotlin.String**|  |
-**language** | **kotlin.String**|  |
+ **searchString** | **kotlin.String**|  |
+ **language** | **kotlin.String**|  |
 
 ### Return type
 
@@ -851,17 +826,16 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: */*
+ - **Content-Type**: Not defined
+ - **Accept**: */*
 
 <a name="findParagraphsWithCnk"></a>
-
 # **findParagraphsWithCnk**
-
 > kotlin.collections.List&lt;ParagraphDto&gt; findParagraphsWithCnk(cnk, language)
 
-### Example
 
+
+### Example
 ```kotlin
 // Import classes:
 //import io.icure.kraken.client.infrastructure.*
@@ -886,8 +860,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**cnk** | **kotlin.Long**|  |
-**language** | **kotlin.String**|  |
+ **cnk** | **kotlin.Long**|  |
+ **language** | **kotlin.String**|  |
 
 ### Return type
 
@@ -899,17 +873,16 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: */*
+ - **Content-Type**: Not defined
+ - **Accept**: */*
 
 <a name="getAddedDocument"></a>
-
 # **getAddedDocument**
-
 > kotlin.collections.List&lt;InlineResponse200&gt; getAddedDocument(chapterName, paragraphName, verseSeq, docSeq, language, response)
 
-### Example
 
+
+### Example
 ```kotlin
 // Import classes:
 //import io.icure.kraken.client.infrastructure.*
@@ -938,12 +911,12 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**chapterName** | **kotlin.String**|  |
-**paragraphName** | **kotlin.String**|  |
-**verseSeq** | **kotlin.Long**|  |
-**docSeq** | **kotlin.Long**|  |
-**language** | **kotlin.String**|  |
-**response** | [**Response**](.md)|  |
+ **chapterName** | **kotlin.String**|  |
+ **paragraphName** | **kotlin.String**|  |
+ **verseSeq** | **kotlin.Long**|  |
+ **docSeq** | **kotlin.Long**|  |
+ **language** | **kotlin.String**|  |
+ **response** | [**Response**](.md)|  |
 
 ### Return type
 
@@ -955,17 +928,16 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: application/octet-stream
+ - **Content-Type**: Not defined
+ - **Accept**: application/octet-stream
 
 <a name="getAmpsForParagraph"></a>
-
 # **getAmpsForParagraph**
-
 > kotlin.collections.List&lt;AmpDto&gt; getAmpsForParagraph(chapterName, paragraphName)
 
-### Example
 
+
+### Example
 ```kotlin
 // Import classes:
 //import io.icure.kraken.client.infrastructure.*
@@ -990,8 +962,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**chapterName** | **kotlin.String**|  |
-**paragraphName** | **kotlin.String**|  |
+ **chapterName** | **kotlin.String**|  |
+ **paragraphName** | **kotlin.String**|  |
 
 ### Return type
 
@@ -1003,8 +975,8 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: */*
+ - **Content-Type**: Not defined
+ - **Accept**: */*
 
 <a name="getSamVersion"></a>
 # **getSamVersion**
@@ -1034,7 +1006,6 @@ try {
 ```
 
 ### Parameters
-
 This endpoint does not need any parameter.
 
 ### Return type
@@ -1047,17 +1018,16 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: */*
+ - **Content-Type**: Not defined
+ - **Accept**: */*
 
 <a name="getVersesHierarchy"></a>
-
 # **getVersesHierarchy**
-
 > VerseDto getVersesHierarchy(chapterName, paragraphName)
 
-### Example
 
+
+### Example
 ```kotlin
 // Import classes:
 //import io.icure.kraken.client.infrastructure.*
@@ -1082,8 +1052,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**chapterName** | **kotlin.String**|  |
-**paragraphName** | **kotlin.String**|  |
+ **chapterName** | **kotlin.String**|  |
+ **paragraphName** | **kotlin.String**|  |
 
 ### Return type
 
@@ -1095,17 +1065,16 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: */*
+ - **Content-Type**: Not defined
+ - **Accept**: */*
 
 <a name="getVtmNamesForParagraph"></a>
-
 # **getVtmNamesForParagraph**
-
 > kotlin.collections.List&lt;kotlin.String&gt; getVtmNamesForParagraph(chapterName, paragraphName, language)
 
-### Example
 
+
+### Example
 ```kotlin
 // Import classes:
 //import io.icure.kraken.client.infrastructure.*
@@ -1131,9 +1100,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**chapterName** | **kotlin.String**|  |
-**paragraphName** | **kotlin.String**|  |
-**language** | **kotlin.String**|  |
+ **chapterName** | **kotlin.String**|  |
+ **paragraphName** | **kotlin.String**|  |
+ **language** | **kotlin.String**|  |
 
 ### Return type
 
@@ -1145,13 +1114,11 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: */*
+ - **Content-Type**: Not defined
+ - **Accept**: */*
 
 <a name="listAmpsByDmppCodes"></a>
-
 # **listAmpsByDmppCodes**
-
 > kotlin.collections.List&lt;AmpDto&gt; listAmpsByDmppCodes(listOfIdsDto)
 
 Finding AMPs by dmpp code

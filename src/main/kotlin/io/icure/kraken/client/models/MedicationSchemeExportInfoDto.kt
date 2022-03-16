@@ -22,19 +22,19 @@ import com.github.pozo.KotlinBuilder
 
 
 /**
+ * 
  *
- *
- * @param secretForeignKeys
- * @param services
- * @param serviceAuthors
- * @param recipient
+ * @param secretForeignKeys 
+ * @param services 
+ * @param serviceAuthors 
+ * @param recipient 
  * @param comment 
  */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @KotlinBuilder
-data class MedicationSchemeExportInfoDto(
+data class MedicationSchemeExportInfoDto (
 
     @field:JsonProperty("secretForeignKeys")
     val secretForeignKeys: kotlin.collections.List<kotlin.String> = emptyList(),

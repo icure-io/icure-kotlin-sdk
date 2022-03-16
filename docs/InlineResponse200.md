@@ -1,7 +1,7 @@
+
 # InlineResponse200
 
 ## Properties
-
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **direct** | **kotlin.Boolean** |  |  [optional]
