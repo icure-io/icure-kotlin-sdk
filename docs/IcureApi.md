@@ -145,7 +145,7 @@ No authorization required
 
 <a name="getReplicatorInfo"></a>
 # **getReplicatorInfo**
-> ReplicatorDocument getReplicatorInfo(id)
+> ReplicatorDocumentDto getReplicatorInfo(id)
 
 Get replication info
 
@@ -158,7 +158,7 @@ Get replication info
 val apiInstance = IcureApi()
 val id : kotlin.String = id_example // kotlin.String | 
 try {
-    val result : ReplicatorDocument = apiInstance.getReplicatorInfo(id)
+    val result : ReplicatorDocumentDto = apiInstance.getReplicatorInfo(id)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling IcureApi#getReplicatorInfo")
@@ -177,7 +177,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ReplicatorDocument**](ReplicatorDocument.md)
+[**ReplicatorDocumentDto**](ReplicatorDocumentDto.md)
 
 ### Authorization
 

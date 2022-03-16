@@ -49,8 +49,11 @@ Class | Method | HTTP request | Description
 *AgendaApi* | [**getAgendasForUser**](docs/AgendaApi.md#getagendasforuser) | **GET** /rest/v2/agenda/byUser | Gets all agendas for user
 *AgendaApi* | [**getReadableAgendasForUser**](docs/AgendaApi.md#getreadableagendasforuser) | **GET** /rest/v2/agenda/readableForUser | Gets readable agendas for user
 *AgendaApi* | [**modifyAgenda**](docs/AgendaApi.md#modifyagenda) | **PUT** /rest/v2/agenda | Modifies an agenda
-*AnonymousAccessApi* | [**getAvailabilitiesByPeriodAndCalendarItemTypeId**](docs/AnonymousAccessApi.md#getavailabilitiesbyperiodandcalendaritemtypeid) | **GET** /rest/v2/aa/available/inGroup/{groupId}/forUser/{userId}/type/{getCalendarItemTypeId} | Get Availabilities for HCP and appointmentType
-*AnonymousAccessApi* | [**listAppointmentTypesForUser**](docs/AnonymousAccessApi.md#listappointmenttypesforuser) | **GET** /rest/v2/aa/appointmentType/inGroup/{groupId}/forUser/{userId} | List Calendar Item types for a provided group id and user id
+*AnonymousAccessApi* | [**
+getAvailabilitiesByPeriodAndCalendarItemTypeId**](docs/AnonymousAccessApi.md#getavailabilitiesbyperiodandcalendaritemtypeid) | **
+GET** /rest/v2/aa/available/inGroup/{groupId}/forUser/{userId}/type/{calendarItemTypeId} | Get Availabilities for HCP and appointmentType
+*AnonymousAccessApi* | [**listAppointmentTypesForUser**](docs/AnonymousAccessApi.md#listappointmenttypesforuser) | **
+GET** /rest/v2/aa/appointmentType/inGroup/{groupId}/forUser/{userId} | List Calendar Item types for a provided group id and user id
 *AnonymousAccessApi* | [**listHealthcarePartiesInGroup**](docs/AnonymousAccessApi.md#listhealthcarepartiesingroup) | **GET** /rest/v2/aa/hcparty/inGroup/{groupId} | List healthcare parties for a provided group id
 *ApplicationsettingsApi* | [**getApplicationSettings**](docs/ApplicationsettingsApi.md#getapplicationsettings) | **GET** /rest/v2/appsettings | Gets all application settings
 *ArticleApi* | [**createArticle**](docs/ArticleApi.md#createarticle) | **POST** /rest/v2/article | Creates a article
@@ -99,27 +102,59 @@ Class | Method | HTTP request | Description
 *Besamv2Api* | [**findPaginatedAmpsByAtc**](docs/Besamv2Api.md#findpaginatedampsbyatc) | **GET** /rest/v2/be_samv2/vmp/byAtc/{atcCode} | Finding AMPs by atc code with pagination.
 *Besamv2Api* | [**findPaginatedAmpsByGroupCode**](docs/Besamv2Api.md#findpaginatedampsbygroupcode) | **GET** /rest/v2/be_samv2/amp/byGroupCode/{vmpgCode} | Finding AMPs by group with pagination.
 *Besamv2Api* | [**findPaginatedAmpsByGroupId**](docs/Besamv2Api.md#findpaginatedampsbygroupid) | **GET** /rest/v2/be_samv2/amp/byGroupId/{vmpgId} | Finding AMPs by group with pagination.
-*Besamv2Api* | [**findPaginatedAmpsByLabel**](docs/Besamv2Api.md#findpaginatedampsbylabel) | **GET** /rest/v2/be_samv2/amp | Finding AMPs by label with pagination.
-*Besamv2Api* | [**findPaginatedAmpsByVmpCode**](docs/Besamv2Api.md#findpaginatedampsbyvmpcode) | **GET** /rest/v2/be_samv2/amp/byVmpCode/{vmpCode} | Finding AMPs by vmp code with pagination.
-*Besamv2Api* | [**findPaginatedAmpsByVmpId**](docs/Besamv2Api.md#findpaginatedampsbyvmpid) | **GET** /rest/v2/be_samv2/amp/byVmpId/{vmpId} | Finding AMPs by vmp id with pagination.
-*Besamv2Api* | [**findPaginatedNmpsByLabel**](docs/Besamv2Api.md#findpaginatednmpsbylabel) | **GET** /rest/v2/be_samv2/nmp | Finding NMPs by label with pagination.
-*Besamv2Api* | [**findPaginatedVmpGroupsByLabel**](docs/Besamv2Api.md#findpaginatedvmpgroupsbylabel) | **GET** /rest/v2/be_samv2/vmpgroup | Finding VMP groups by language label with pagination.
-*Besamv2Api* | [**findPaginatedVmpGroupsByVmpGroupCode**](docs/Besamv2Api.md#findpaginatedvmpgroupsbyvmpgroupcode) | **GET** /rest/v2/be_samv2/vmpgroup/byGroupCode/{vmpgCode} | Finding VMP groups by cmpgCode with pagination.
-*Besamv2Api* | [**findPaginatedVmpsByGroupCode**](docs/Besamv2Api.md#findpaginatedvmpsbygroupcode) | **GET** /rest/v2/be_samv2/vmp/byGroupCode/{vmpgCode} | Finding VMPs by group with pagination.
-*Besamv2Api* | [**findPaginatedVmpsByGroupId**](docs/Besamv2Api.md#findpaginatedvmpsbygroupid) | **GET** /rest/v2/be_samv2/vmp/byGroupId/{vmpgId} | Finding VMPs by group with pagination.
-*Besamv2Api* | [**findPaginatedVmpsByLabel**](docs/Besamv2Api.md#findpaginatedvmpsbylabel) | **GET** /rest/v2/be_samv2/vmp | Finding VMPs by label with pagination.
-*Besamv2Api* | [**findPaginatedVmpsByVmpCode**](docs/Besamv2Api.md#findpaginatedvmpsbyvmpcode) | **GET** /rest/v2/be_samv2/vmp/byVmpCode/{vmpCode} | Finding VMPs by group with pagination.
+*Besamv2Api* | [**findPaginatedAmpsByLabel**](docs/Besamv2Api.md#findpaginatedampsbylabel) | **
+GET** /rest/v2/be_samv2/amp | Finding AMPs by label with pagination.
+*Besamv2Api* | [**findPaginatedAmpsByVmpCode**](docs/Besamv2Api.md#findpaginatedampsbyvmpcode) | **
+GET** /rest/v2/be_samv2/amp/byVmpCode/{vmpCode} | Finding AMPs by vmp code with pagination.
+*Besamv2Api* | [**findPaginatedAmpsByVmpId**](docs/Besamv2Api.md#findpaginatedampsbyvmpid) | **
+GET** /rest/v2/be_samv2/amp/byVmpId/{vmpId} | Finding AMPs by vmp id with pagination.
+*Besamv2Api* | [**findPaginatedNmpsByLabel**](docs/Besamv2Api.md#findpaginatednmpsbylabel) | **
+GET** /rest/v2/be_samv2/nmp | Finding NMPs by label with pagination.
+*Besamv2Api* | [**findPaginatedVmpGroupsByLabel**](docs/Besamv2Api.md#findpaginatedvmpgroupsbylabel) | **
+GET** /rest/v2/be_samv2/vmpgroup | Finding VMP groups by language label with pagination.
+*Besamv2Api* | [**findPaginatedVmpGroupsByVmpGroupCode**](docs/Besamv2Api.md#findpaginatedvmpgroupsbyvmpgroupcode) | **
+GET** /rest/v2/be_samv2/vmpgroup/byGroupCode/{vmpgCode} | Finding VMP groups by cmpgCode with pagination.
+*Besamv2Api* | [**findPaginatedVmpsByGroupCode**](docs/Besamv2Api.md#findpaginatedvmpsbygroupcode) | **
+GET** /rest/v2/be_samv2/vmp/byGroupCode/{vmpgCode} | Finding VMPs by group with pagination.
+*Besamv2Api* | [**findPaginatedVmpsByGroupId**](docs/Besamv2Api.md#findpaginatedvmpsbygroupid) | **
+GET** /rest/v2/be_samv2/vmp/byGroupId/{vmpgId} | Finding VMPs by group with pagination.
+*Besamv2Api* | [**findPaginatedVmpsByLabel**](docs/Besamv2Api.md#findpaginatedvmpsbylabel) | **
+GET** /rest/v2/be_samv2/vmp | Finding VMPs by label with pagination.
+*Besamv2Api* | [**findPaginatedVmpsByVmpCode**](docs/Besamv2Api.md#findpaginatedvmpsbyvmpcode) | **
+GET** /rest/v2/be_samv2/vmp/byVmpCode/{vmpCode} | Finding VMPs by group with pagination.
+*Besamv2Api* | [**findParagraphs**](docs/Besamv2Api.md#findparagraphs) | **
+GET** /rest/v2/be_samv2/chap/search/{searchString}/{language} |
+*Besamv2Api* | [**findParagraphsWithCnk**](docs/Besamv2Api.md#findparagraphswithcnk) | **
+GET** /rest/v2/be_samv2/chap/bycnk/{cnk}/{language} |
+*Besamv2Api* | [**getAddedDocument**](docs/Besamv2Api.md#getaddeddocument) | **
+GET** /rest/v2/be_samv2/chap/{chapterName}/{paragraphName}/{verseSeq}/addeddoc/{docSeq}/{language} |
+*Besamv2Api* | [**getAmpsForParagraph**](docs/Besamv2Api.md#getampsforparagraph) | **
+GET** /rest/v2/be_samv2/chap/amps/{chapterName}/{paragraphName} |
 *Besamv2Api* | [**getSamVersion**](docs/Besamv2Api.md#getsamversion) | **GET** /rest/v2/be_samv2/v | Get Samv2 version.
-*Besamv2Api* | [**listAmpsByDmppCodes**](docs/Besamv2Api.md#listampsbydmppcodes) | **POST** /rest/v2/be_samv2/amp/byDmppCodes | Finding AMPs by dmpp code
-*Besamv2Api* | [**listAmpsByGroupCodes**](docs/Besamv2Api.md#listampsbygroupcodes) | **POST** /rest/v2/be_samv2/amp/byGroupCodes | Finding AMPs by group.
-*Besamv2Api* | [**listAmpsByGroupIds**](docs/Besamv2Api.md#listampsbygroupids) | **POST** /rest/v2/be_samv2/amp/byGroupIds | Finding AMPs by group.
-*Besamv2Api* | [**listAmpsByVmpCodes**](docs/Besamv2Api.md#listampsbyvmpcodes) | **POST** /rest/v2/be_samv2/amp/byVmpCodes | Finding AMPs by vmp code.
-*Besamv2Api* | [**listAmpsByVmpIds**](docs/Besamv2Api.md#listampsbyvmpids) | **POST** /rest/v2/be_samv2/amp/byVmpIds | Finding AMPs by vmp id.
-*Besamv2Api* | [**listNmpsByCnks**](docs/Besamv2Api.md#listnmpsbycnks) | **POST** /rest/v2/be_samv2/nmp/byCnks | Finding NMPs by cnk id.
-*Besamv2Api* | [**listPharmaceuticalForms**](docs/Besamv2Api.md#listpharmaceuticalforms) | **GET** /rest/v2/be_samv2/pharmaform | List all pharmaceutical forms.
-*Besamv2Api* | [**listSubstances**](docs/Besamv2Api.md#listsubstances) | **GET** /rest/v2/be_samv2/substance | List all substances.
-*Besamv2Api* | [**listVmpGroupsByVmpGroupCodes**](docs/Besamv2Api.md#listvmpgroupsbyvmpgroupcodes) | **POST** /rest/v2/be_samv2/vmpgroup/byGroupCodes | Finding AMPs by group.
-*Besamv2Api* | [**listVmpsByGroupIds**](docs/Besamv2Api.md#listvmpsbygroupids) | **POST** /rest/v2/be_samv2/vmp/byGroupIds | Finding VMPs by group.
+*Besamv2Api* | [**getVersesHierarchy**](docs/Besamv2Api.md#getverseshierarchy) | **
+GET** /rest/v2/be_samv2/chap/verse/{chapterName}/{paragraphName} |
+*Besamv2Api* | [**getVtmNamesForParagraph**](docs/Besamv2Api.md#getvtmnamesforparagraph) | **
+GET** /rest/v2/be_samv2/chap/vtms/{chapterName}/{paragraphName}/{language} |
+*Besamv2Api* | [**listAmpsByDmppCodes**](docs/Besamv2Api.md#listampsbydmppcodes) | **
+POST** /rest/v2/be_samv2/amp/byDmppCodes | Finding AMPs by dmpp code
+*Besamv2Api* | [**listAmpsByGroupCodes**](docs/Besamv2Api.md#listampsbygroupcodes) | **
+POST** /rest/v2/be_samv2/amp/byGroupCodes | Finding AMPs by group.
+*Besamv2Api* | [**listAmpsByGroupIds**](docs/Besamv2Api.md#listampsbygroupids) | **
+POST** /rest/v2/be_samv2/amp/byGroupIds | Finding AMPs by group.
+*Besamv2Api* | [**listAmpsByVmpCodes**](docs/Besamv2Api.md#listampsbyvmpcodes) | **
+POST** /rest/v2/be_samv2/amp/byVmpCodes | Finding AMPs by vmp code.
+*Besamv2Api* | [**listAmpsByVmpIds**](docs/Besamv2Api.md#listampsbyvmpids) | **
+POST** /rest/v2/be_samv2/amp/byVmpIds | Finding AMPs by vmp id.
+*Besamv2Api* | [**listNmpsByCnks**](docs/Besamv2Api.md#listnmpsbycnks) | **
+POST** /rest/v2/be_samv2/nmp/byCnks | Finding NMPs by cnk id.
+*Besamv2Api* | [**listPharmaceuticalForms**](docs/Besamv2Api.md#listpharmaceuticalforms) | **
+GET** /rest/v2/be_samv2/pharmaform | List all pharmaceutical forms.
+*Besamv2Api* | [**listSubstances**](docs/Besamv2Api.md#listsubstances) | **
+GET** /rest/v2/be_samv2/substance | List all substances.
+*Besamv2Api* | [**listVmpGroupsByVmpGroupCodes**](docs/Besamv2Api.md#listvmpgroupsbyvmpgroupcodes) | **
+POST** /rest/v2/be_samv2/vmpgroup/byGroupCodes | Finding AMPs by group.
+*Besamv2Api* | [**listVmpsByGroupIds**](docs/Besamv2Api.md#listvmpsbygroupids) | **
+POST** /rest/v2/be_samv2/vmp/byGroupIds | Finding VMPs by group.
 *Besamv2Api* | [**listVmpsByVmpCodes**](docs/Besamv2Api.md#listvmpsbyvmpcodes) | **POST** /rest/v2/be_samv2/vmp/byVmpCodes | Finding VMPs by group.
 *CalendarItemApi* | [**createCalendarItem**](docs/CalendarItemApi.md#createcalendaritem) | **POST** /rest/v2/calendarItem | Creates a calendarItem
 *CalendarItemApi* | [**deleteCalendarItem**](docs/CalendarItemApi.md#deletecalendaritem) | **POST** /rest/v2/calendarItem/{calendarItemIds} | Deletes an calendarItem
@@ -309,9 +344,7 @@ Class | Method | HTTP request | Description
 *HealthElementApi* | [**newHealthElementDelegations**](docs/HealthElementApi.md#newhealthelementdelegations) | **POST** /rest/v2/helement/{healthElementId}/delegate | Delegates a health element to a healthcare party
 *HealthElementApi* | [**setHealthElementsDelegations**](docs/HealthElementApi.md#sethealthelementsdelegations) | **POST** /rest/v2/helement/delegations | Update delegations in healthElements.
 *HealthcarePartyApi* | [**createHealthcareParty**](docs/HealthcarePartyApi.md#createhealthcareparty) | **POST** /rest/v2/hcparty | Create a healthcare party
-*HealthcarePartyApi* | [**createHealthcarePartyInGroup**](docs/HealthcarePartyApi.md#createhealthcarepartyingroup) | **POST** /rest/v2/hcparty/inGroup/{groupId} | Create a healthcare party
 *HealthcarePartyApi* | [**deleteHealthcareParties**](docs/HealthcarePartyApi.md#deletehealthcareparties) | **POST** /rest/v2/hcparty/delete/batch | Delete healthcare parties
-*HealthcarePartyApi* | [**deleteHealthcarePartiesInGroup**](docs/HealthcarePartyApi.md#deletehealthcarepartiesingroup) | **POST** /rest/v2/hcparty/delete/batch/inGroup/{groupId} | Delete a healthcare party
 *HealthcarePartyApi* | [**filterHealthPartiesBy**](docs/HealthcarePartyApi.md#filterhealthpartiesby) | **POST** /rest/v2/hcparty/filter | Filter healthcare parties for the current user (HcParty)
 *HealthcarePartyApi* | [**findHealthcarePartiesBy**](docs/HealthcarePartyApi.md#findhealthcarepartiesby) | **GET** /rest/v2/hcparty | List healthcare parties with(out) pagination
 *HealthcarePartyApi* | [**findHealthcarePartiesByName**](docs/HealthcarePartyApi.md#findhealthcarepartiesbyname) | **GET** /rest/v2/hcparty/byName | Find healthcare parties by name with(out) pagination
@@ -326,7 +359,6 @@ Class | Method | HTTP request | Description
 *HealthcarePartyApi* | [**listHealthcarePartiesByParentId**](docs/HealthcarePartyApi.md#listhealthcarepartiesbyparentid) | **GET** /rest/v2/hcparty/{parentId}/children | Find children of an healthcare parties
 *HealthcarePartyApi* | [**matchHealthcarePartiesBy**](docs/HealthcarePartyApi.md#matchhealthcarepartiesby) | **POST** /rest/v2/hcparty/match | Get ids of healthcare party matching the provided filter for the current user (HcParty) 
 *HealthcarePartyApi* | [**modifyHealthcareParty**](docs/HealthcarePartyApi.md#modifyhealthcareparty) | **PUT** /rest/v2/hcparty | Modify a Healthcare Party.
-*HealthcarePartyApi* | [**modifyHealthcarePartyInGroup**](docs/HealthcarePartyApi.md#modifyhealthcarepartyingroup) | **PUT** /rest/v2/hcparty/inGroup/{groupId} | Modify a Healthcare Party.
 *IcureApi* | [**getIndexingInfo**](docs/IcureApi.md#getindexinginfo) | **GET** /rest/v2/icure/i | Get index info
 *IcureApi* | [**getProcessInfo**](docs/IcureApi.md#getprocessinfo) | **GET** /rest/v2/icure/p | Get process info
 *IcureApi* | [**getReplicationInfo**](docs/IcureApi.md#getreplicationinfo) | **GET** /rest/v2/icure/r | Get replication info
@@ -571,6 +603,7 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.AbstractFilterDtoService](docs/AbstractFilterDtoService.md)
  - [io.icure.kraken.client.models.AbstractFilterDtoUser](docs/AbstractFilterDtoUser.md)
  - [io.icure.kraken.client.models.AccessLogDto](docs/AccessLogDto.md)
+ - [io.icure.kraken.client.models.AddedDocumentDto](docs/AddedDocumentDto.md)
  - [io.icure.kraken.client.models.AddressDto](docs/AddressDto.md)
  - [io.icure.kraken.client.models.AdministrationQuantity](docs/AdministrationQuantity.md)
  - [io.icure.kraken.client.models.AgendaDto](docs/AgendaDto.md)
@@ -581,12 +614,11 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.AmppDto](docs/AmppDto.md)
  - [io.icure.kraken.client.models.AnnotationDto](docs/AnnotationDto.md)
  - [io.icure.kraken.client.models.ApplicationSettingsDto](docs/ApplicationSettingsDto.md)
+ - [io.icure.kraken.client.models.AppointmentTypeAndPlaceDto](docs/AppointmentTypeAndPlaceDto.md)
  - [io.icure.kraken.client.models.ArticleDto](docs/ArticleDto.md)
  - [io.icure.kraken.client.models.AtcDto](docs/AtcDto.md)
- - [io.icure.kraken.client.models.Authentication](docs/Authentication.md)
  - [io.icure.kraken.client.models.AuthenticationResponse](docs/AuthenticationResponse.md)
  - [io.icure.kraken.client.models.AuthenticationTokenDto](docs/AuthenticationTokenDto.md)
- - [io.icure.kraken.client.models.Basic](docs/Basic.md)
  - [io.icure.kraken.client.models.BasicDto](docs/BasicDto.md)
  - [io.icure.kraken.client.models.ByteArrayDto](docs/ByteArrayDto.md)
  - [io.icure.kraken.client.models.CalendarItemDto](docs/CalendarItemDto.md)
@@ -664,6 +696,7 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.ImportResultDto](docs/ImportResultDto.md)
  - [io.icure.kraken.client.models.IndexingInfoDto](docs/IndexingInfoDto.md)
  - [io.icure.kraken.client.models.IngredientDto](docs/IngredientDto.md)
+ - [io.icure.kraken.client.models.InlineResponse200](docs/InlineResponse200.md)
  - [io.icure.kraken.client.models.InsurabilityDto](docs/InsurabilityDto.md)
  - [io.icure.kraken.client.models.InsuranceDto](docs/InsuranceDto.md)
  - [io.icure.kraken.client.models.InvoiceDto](docs/InvoiceDto.md)
@@ -720,6 +753,7 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.PaginatedListVmpDto](docs/PaginatedListVmpDto.md)
  - [io.icure.kraken.client.models.PaginatedListVmpGroupDto](docs/PaginatedListVmpGroupDto.md)
  - [io.icure.kraken.client.models.ParagraphAgreementDto](docs/ParagraphAgreementDto.md)
+ - [io.icure.kraken.client.models.ParagraphDto](docs/ParagraphDto.md)
  - [io.icure.kraken.client.models.PartnershipDto](docs/PartnershipDto.md)
  - [io.icure.kraken.client.models.PatientDto](docs/PatientDto.md)
  - [io.icure.kraken.client.models.PatientHealthCarePartyDto](docs/PatientHealthCarePartyDto.md)
@@ -745,16 +779,16 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.RegistrationSuccessDto](docs/RegistrationSuccessDto.md)
  - [io.icure.kraken.client.models.ReimbursementCriterionDto](docs/ReimbursementCriterionDto.md)
  - [io.icure.kraken.client.models.ReimbursementDto](docs/ReimbursementDto.md)
- - [io.icure.kraken.client.models.Remote](docs/Remote.md)
  - [io.icure.kraken.client.models.RemoteAuthenticationDto](docs/RemoteAuthenticationDto.md)
  - [io.icure.kraken.client.models.RemoteDto](docs/RemoteDto.md)
  - [io.icure.kraken.client.models.RenewalDto](docs/RenewalDto.md)
  - [io.icure.kraken.client.models.ReplicationDto](docs/ReplicationDto.md)
  - [io.icure.kraken.client.models.ReplicationInfoDto](docs/ReplicationInfoDto.md)
- - [io.icure.kraken.client.models.ReplicationStats](docs/ReplicationStats.md)
  - [io.icure.kraken.client.models.ReplicationStatsDto](docs/ReplicationStatsDto.md)
- - [io.icure.kraken.client.models.ReplicatorDocument](docs/ReplicatorDocument.md)
  - [io.icure.kraken.client.models.ReplicatorDocumentDto](docs/ReplicatorDocumentDto.md)
+ - [io.icure.kraken.client.models.Response](docs/Response.md)
+ - [io.icure.kraken.client.models.RestV2BeSamv2ChapChapterNameParagraphNameVerseSeqAddeddocDocSeqLanguageLocale](docs/RestV2BeSamv2ChapChapterNameParagraphNameVerseSeqAddeddocDocSeqLanguageLocale.md)
+ - [io.icure.kraken.client.models.RestV2BeSamv2ChapChapterNameParagraphNameVerseSeqAddeddocDocSeqLanguageOutputStream](docs/RestV2BeSamv2ChapChapterNameParagraphNameVerseSeqAddeddocDocSeqLanguageOutputStream.md)
  - [io.icure.kraken.client.models.ResultInfoDto](docs/ResultInfoDto.md)
  - [io.icure.kraken.client.models.RightDto](docs/RightDto.md)
  - [io.icure.kraken.client.models.RouteOfAdministrationDto](docs/RouteOfAdministrationDto.md)
@@ -785,9 +819,11 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.TimeTableHourDto](docs/TimeTableHourDto.md)
  - [io.icure.kraken.client.models.TimeTableItemDto](docs/TimeTableItemDto.md)
  - [io.icure.kraken.client.models.TypedValueDtoObject](docs/TypedValueDtoObject.md)
+ - [io.icure.kraken.client.models.UserAndHealthcarePartyDto](docs/UserAndHealthcarePartyDto.md)
  - [io.icure.kraken.client.models.UserDto](docs/UserDto.md)
  - [io.icure.kraken.client.models.UserGroupDto](docs/UserGroupDto.md)
  - [io.icure.kraken.client.models.ValorisationDto](docs/ValorisationDto.md)
+ - [io.icure.kraken.client.models.VerseDto](docs/VerseDto.md)
  - [io.icure.kraken.client.models.VirtualFormDto](docs/VirtualFormDto.md)
  - [io.icure.kraken.client.models.VirtualIngredientDto](docs/VirtualIngredientDto.md)
  - [io.icure.kraken.client.models.VmpComponentDto](docs/VmpComponentDto.md)

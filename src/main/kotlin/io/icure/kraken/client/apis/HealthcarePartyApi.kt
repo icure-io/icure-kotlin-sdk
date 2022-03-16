@@ -89,47 +89,6 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
     }
 
     /**
-    * Create a healthcare party
-    * One of Name or Last name+First name, Nihii, and Public key are required.
-    * @param groupId  
-    * @param healthcarePartyDto  
-    * @return HealthcarePartyDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createHealthcarePartyInGroup(groupId: kotlin.String, healthcarePartyDto: HealthcarePartyDto) : HealthcarePartyDto  {
-        val localVariableConfig = createHealthcarePartyInGroupRequestConfig(groupId = groupId, healthcarePartyDto = healthcarePartyDto)
-
-        return request<HealthcarePartyDto, HealthcarePartyDto>(
-            localVariableConfig
-        )!!
-    }
-    /**
-    * To obtain the request config of the operation createHealthcarePartyInGroup
-    *
-    * @param groupId  
-    * @param healthcarePartyDto  
-    * @return RequestConfig
-    */
-    fun createHealthcarePartyInGroupRequestConfig(groupId: kotlin.String, healthcarePartyDto: HealthcarePartyDto) : RequestConfig<HealthcarePartyDto> {
-        // val localVariableBody = healthcarePartyDto
-        val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
-        localVariableHeaders["Accept"] = "*/*"
-        val localVariableBody = healthcarePartyDto
-
-        return RequestConfig(
-            method = RequestMethod.POST,
-            path = "/rest/v2/hcparty/inGroup/{groupId}".replace("{"+"groupId"+"}", "${URLEncoder.encode(groupId.toString(), Charsets.UTF_8)}"),
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody        )
-    }
-
-    /**
     * Delete healthcare parties
     * Deleting healthcareParties. Response is an array containing the id of deleted healthcare parties.
     * @param listOfIdsDto  
@@ -163,47 +122,6 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/hcparty/delete/batch",
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody        )
-    }
-
-    /**
-    * Delete a healthcare party
-    * Deleting a healthcareParty. Response is an array containing the id of deleted healthcare party.
-    * @param groupId  
-    * @param listOfIdsDto  
-    * @return kotlin.collections.List<DocIdentifier>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteHealthcarePartiesInGroup(groupId: kotlin.String, listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocIdentifier>  {
-        val localVariableConfig = deleteHealthcarePartiesInGroupRequestConfig(groupId = groupId, listOfIdsDto = listOfIdsDto)
-
-        return request<ListOfIdsDto, kotlin.collections.List<DocIdentifier>>(
-            localVariableConfig
-        )!!
-    }
-    /**
-    * To obtain the request config of the operation deleteHealthcarePartiesInGroup
-    *
-    * @param groupId  
-    * @param listOfIdsDto  
-    * @return RequestConfig
-    */
-    fun deleteHealthcarePartiesInGroupRequestConfig(groupId: kotlin.String, listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
-        // val localVariableBody = listOfIdsDto
-        val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
-        localVariableHeaders["Accept"] = "*/*"
-        val localVariableBody = listOfIdsDto
-
-        return RequestConfig(
-            method = RequestMethod.POST,
-            path = "/rest/v2/hcparty/delete/batch/inGroup/{groupId}".replace("{"+"groupId"+"}", "${URLEncoder.encode(groupId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -840,47 +758,6 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
         return RequestConfig(
             method = RequestMethod.PUT,
             path = "/rest/v2/hcparty",
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody        )
-    }
-
-    /**
-    * Modify a Healthcare Party.
-    * No particular return value. It&#39;s just a message.
-    * @param groupId  
-    * @param healthcarePartyDto  
-    * @return HealthcarePartyDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyHealthcarePartyInGroup(groupId: kotlin.String, healthcarePartyDto: HealthcarePartyDto) : HealthcarePartyDto  {
-        val localVariableConfig = modifyHealthcarePartyInGroupRequestConfig(groupId = groupId, healthcarePartyDto = healthcarePartyDto)
-
-        return request<HealthcarePartyDto, HealthcarePartyDto>(
-            localVariableConfig
-        )!!
-    }
-    /**
-    * To obtain the request config of the operation modifyHealthcarePartyInGroup
-    *
-    * @param groupId  
-    * @param healthcarePartyDto  
-    * @return RequestConfig
-    */
-    fun modifyHealthcarePartyInGroupRequestConfig(groupId: kotlin.String, healthcarePartyDto: HealthcarePartyDto) : RequestConfig<HealthcarePartyDto> {
-        // val localVariableBody = healthcarePartyDto
-        val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
-        localVariableHeaders["Accept"] = "*/*"
-        val localVariableBody = healthcarePartyDto
-
-        return RequestConfig(
-            method = RequestMethod.PUT,
-            path = "/rest/v2/hcparty/inGroup/{groupId}".replace("{"+"groupId"+"}", "${URLEncoder.encode(groupId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

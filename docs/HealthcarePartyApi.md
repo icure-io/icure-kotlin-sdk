@@ -5,9 +5,7 @@ All URIs are relative to *https://kraken.icure.dev*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createHealthcareParty**](HealthcarePartyApi.md#createHealthcareParty) | **POST** /rest/v2/hcparty | Create a healthcare party
-[**createHealthcarePartyInGroup**](HealthcarePartyApi.md#createHealthcarePartyInGroup) | **POST** /rest/v2/hcparty/inGroup/{groupId} | Create a healthcare party
 [**deleteHealthcareParties**](HealthcarePartyApi.md#deleteHealthcareParties) | **POST** /rest/v2/hcparty/delete/batch | Delete healthcare parties
-[**deleteHealthcarePartiesInGroup**](HealthcarePartyApi.md#deleteHealthcarePartiesInGroup) | **POST** /rest/v2/hcparty/delete/batch/inGroup/{groupId} | Delete a healthcare party
 [**filterHealthPartiesBy**](HealthcarePartyApi.md#filterHealthPartiesBy) | **POST** /rest/v2/hcparty/filter | Filter healthcare parties for the current user (HcParty)
 [**findHealthcarePartiesBy**](HealthcarePartyApi.md#findHealthcarePartiesBy) | **GET** /rest/v2/hcparty | List healthcare parties with(out) pagination
 [**findHealthcarePartiesByName**](HealthcarePartyApi.md#findHealthcarePartiesByName) | **GET** /rest/v2/hcparty/byName | Find healthcare parties by name with(out) pagination
@@ -22,7 +20,6 @@ Method | HTTP request | Description
 [**listHealthcarePartiesByParentId**](HealthcarePartyApi.md#listHealthcarePartiesByParentId) | **GET** /rest/v2/hcparty/{parentId}/children | Find children of an healthcare parties
 [**matchHealthcarePartiesBy**](HealthcarePartyApi.md#matchHealthcarePartiesBy) | **POST** /rest/v2/hcparty/match | Get ids of healthcare party matching the provided filter for the current user (HcParty) 
 [**modifyHealthcareParty**](HealthcarePartyApi.md#modifyHealthcareParty) | **PUT** /rest/v2/hcparty | Modify a Healthcare Party.
-[**modifyHealthcarePartyInGroup**](HealthcarePartyApi.md#modifyHealthcarePartyInGroup) | **PUT** /rest/v2/hcparty/inGroup/{groupId} | Modify a Healthcare Party.
 
 
 <a name="createHealthcareParty"></a>
@@ -72,55 +69,6 @@ No authorization required
  - **Content-Type**: application/json
  - **Accept**: */*
 
-<a name="createHealthcarePartyInGroup"></a>
-# **createHealthcarePartyInGroup**
-> HealthcarePartyDto createHealthcarePartyInGroup(groupId, healthcarePartyDto)
-
-Create a healthcare party
-
-One of Name or Last name+First name, Nihii, and Public key are required.
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = HealthcarePartyApi()
-val groupId : kotlin.String = groupId_example // kotlin.String | 
-val healthcarePartyDto : HealthcarePartyDto =  // HealthcarePartyDto | 
-try {
-    val result : HealthcarePartyDto = apiInstance.createHealthcarePartyInGroup(groupId, healthcarePartyDto)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling HealthcarePartyApi#createHealthcarePartyInGroup")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling HealthcarePartyApi#createHealthcarePartyInGroup")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **groupId** | **kotlin.String**|  |
- **healthcarePartyDto** | [**HealthcarePartyDto**](HealthcarePartyDto.md)|  |
-
-### Return type
-
-[**HealthcarePartyDto**](HealthcarePartyDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: */*
-
 <a name="deleteHealthcareParties"></a>
 # **deleteHealthcareParties**
 > kotlin.collections.List&lt;DocIdentifier&gt; deleteHealthcareParties(listOfIdsDto)
@@ -153,55 +101,6 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
-
-### Return type
-
-[**kotlin.collections.List&lt;DocIdentifier&gt;**](DocIdentifier.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: */*
-
-<a name="deleteHealthcarePartiesInGroup"></a>
-# **deleteHealthcarePartiesInGroup**
-> kotlin.collections.List&lt;DocIdentifier&gt; deleteHealthcarePartiesInGroup(groupId, listOfIdsDto)
-
-Delete a healthcare party
-
-Deleting a healthcareParty. Response is an array containing the id of deleted healthcare party.
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = HealthcarePartyApi()
-val groupId : kotlin.String = groupId_example // kotlin.String | 
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
-try {
-    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteHealthcarePartiesInGroup(groupId, listOfIdsDto)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling HealthcarePartyApi#deleteHealthcarePartiesInGroup")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling HealthcarePartyApi#deleteHealthcarePartiesInGroup")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **groupId** | **kotlin.String**|  |
  **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
 
 ### Return type
@@ -888,55 +787,6 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **healthcarePartyDto** | [**HealthcarePartyDto**](HealthcarePartyDto.md)|  |
-
-### Return type
-
-[**HealthcarePartyDto**](HealthcarePartyDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: */*
-
-<a name="modifyHealthcarePartyInGroup"></a>
-# **modifyHealthcarePartyInGroup**
-> HealthcarePartyDto modifyHealthcarePartyInGroup(groupId, healthcarePartyDto)
-
-Modify a Healthcare Party.
-
-No particular return value. It&#39;s just a message.
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = HealthcarePartyApi()
-val groupId : kotlin.String = groupId_example // kotlin.String | 
-val healthcarePartyDto : HealthcarePartyDto =  // HealthcarePartyDto | 
-try {
-    val result : HealthcarePartyDto = apiInstance.modifyHealthcarePartyInGroup(groupId, healthcarePartyDto)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling HealthcarePartyApi#modifyHealthcarePartyInGroup")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling HealthcarePartyApi#modifyHealthcarePartyInGroup")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **groupId** | **kotlin.String**|  |
  **healthcarePartyDto** | [**HealthcarePartyDto**](HealthcarePartyDto.md)|  |
 
 ### Return type

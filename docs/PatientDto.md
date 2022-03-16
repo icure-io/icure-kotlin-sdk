@@ -13,26 +13,46 @@ Name | Type | Description | Notes
 **addresses** | [**kotlin.collections.List&lt;AddressDto&gt;**](AddressDto.md) | the list of addresses (with address type). | 
 **mergedIds** | **kotlin.collections.Set&lt;kotlin.String&gt;** | The ids of the patients that have been merged inside this patient. | 
 **active** | **kotlin.Boolean** | Is the patient active (boolean). | 
-**deactivationReason** | [**inline**](#DeactivationReasonEnum) | When not active, the reason for deactivation. | 
-**insurabilities** | [**kotlin.collections.List&lt;InsurabilityDto&gt;**](InsurabilityDto.md) | List of insurance coverages (of class Insurability, see below). | 
-**partnerships** | [**kotlin.collections.List&lt;PartnershipDto&gt;**](PartnershipDto.md) | List of partners, or persons of contact (of class Partnership, see below). | 
-**patientHealthCareParties** | [**kotlin.collections.List&lt;PatientHealthCarePartyDto&gt;**](PatientHealthCarePartyDto.md) | Links (usually for therapeutic reasons) between this patient and healthcare parties (of class PatientHealthcareParty). | 
-**financialInstitutionInformation** | [**kotlin.collections.List&lt;FinancialInstitutionInformationDto&gt;**](FinancialInstitutionInformationDto.md) | Financial information (Bank, bank account) used to reimburse the patient. | 
-**medicalHouseContracts** | [**kotlin.collections.List&lt;MedicalHouseContractDto&gt;**](MedicalHouseContractDto.md) | Contracts between the patient and the healthcare entity. | 
-**patientProfessions** | [**kotlin.collections.List&lt;CodeStubDto&gt;**](CodeStubDto.md) | Codified list of professions exercised by this patient. | 
-**parameters** | **kotlin.collections.Map&lt;kotlin.String, kotlin.collections.List&lt;kotlin.String&gt;&gt;** | Extra parameters | 
-**properties** | [**kotlin.collections.Set&lt;PropertyStubDto&gt;**](PropertyStubDto.md) | Extra properties | 
-**hcPartyKeys** | **kotlin.collections.Map&lt;kotlin.String, kotlin.collections.List&lt;kotlin.String&gt;&gt;** | For each couple of HcParties (delegator and delegate), this map contains the exchange AES key. The delegator is always this hcp, the key of the map is the id of the delegate. The AES exchange key is encrypted using RSA twice : once using this hcp public key (index 0 in the Array) and once using the other hcp public key (index 1 in the Array). For a pair of HcParties. Each HcParty always has one AES exchange key for himself. | 
-**privateKeyShamirPartitions** | **kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;** | The privateKeyShamirPartitions are used to share this hcp&#39;s private RSA key with a series of other hcParties using Shamir&#39;s algorithm. The key of the map is the hcp Id with whom this partition has been shared. The value is \&quot;threshold⎮partition in hex\&quot; encrypted using the the partition&#39;s holder&#39;s public RSA key | 
-**secretForeignKeys** | **kotlin.collections.Set&lt;kotlin.String&gt;** | The secretForeignKeys are filled at the to many end of a one to many relationship (for example inside Contact for the Patient -&gt; Contacts relationship). Used when we want to find all contacts for a specific patient. These keys are in clear. You can have several to partition the medical document space. | 
-**cryptedForeignKeys** | **kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Set&lt;DelegationDto&gt;&gt;** | The secretForeignKeys are filled at the to many end of a one to many relationship (for example inside Contact for the Patient -&gt; Contacts relationship). Used when we want to find the patient for a specific contact. These keys are the encrypted id (using the hcParty key for the delegate) that can be found in clear inside the patient. ids encrypted using the hcParty keys. | 
-**delegations** | **kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Set&lt;DelegationDto&gt;&gt;** | When a document is created, the responsible generates a cryptographically random master key (never to be used for something else than referencing from other entities). He/she encrypts it using his own AES exchange key and stores it as a delegation. The responsible is thus always in the delegations as well | 
-**encryptionKeys** | **kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Set&lt;DelegationDto&gt;&gt;** | When a document needs to be encrypted, the responsible generates a cryptographically random master key (different from the delegation key, never to appear in clear anywhere in the db. He/she encrypts it using his own AES exchange key and stores it as a delegation | 
-**nonDuplicateIds** | **kotlin.collections.Set&lt;kotlin.String&gt;** |  | 
-**encryptedAdministrativesDocuments** | **kotlin.collections.Set&lt;kotlin.String&gt;** |  | 
-**schoolingInfos** | [**kotlin.collections.List&lt;SchoolingInfoDto&gt;**](SchoolingInfoDto.md) |  | 
-**employementInfos** | [**kotlin.collections.List&lt;EmploymentInfoDto&gt;**](EmploymentInfoDto.md) |  | 
-**rev** | **kotlin.String** | the revision of the patient in the database, used for conflict management / optimistic locking. |  [optional]
+**deactivationReason** | [**inline**](#DeactivationReasonEnum) | When not active, the reason for deactivation. |
+**insurabilities** | [**
+kotlin.collections.List&lt;InsurabilityDto&gt;**](InsurabilityDto.md) | List of insurance coverages (of class Insurability, see below). |
+**partnerships** | [**
+kotlin.collections.List&lt;PartnershipDto&gt;**](PartnershipDto.md) | List of partners, or persons of contact (of class Partnership, see below). |
+**patientHealthCareParties** | [**
+kotlin.collections.List&lt;PatientHealthCarePartyDto&gt;**](PatientHealthCarePartyDto.md) | Links (usually for therapeutic reasons) between this patient and healthcare parties (of class PatientHealthcareParty). |
+**financialInstitutionInformation** | [**
+kotlin.collections.List&lt;FinancialInstitutionInformationDto&gt;**](FinancialInstitutionInformationDto.md) | Financial information (Bank, bank account) used to reimburse the patient. |
+**medicalHouseContracts** | [**
+kotlin.collections.List&lt;MedicalHouseContractDto&gt;**](MedicalHouseContractDto.md) | Contracts between the patient and the healthcare entity. |
+**patientProfessions** | [**
+kotlin.collections.List&lt;CodeStubDto&gt;**](CodeStubDto.md) | Codified list of professions exercised by this patient. |
+**parameters** | **kotlin.collections.Map&lt;kotlin.String,
+kotlin.collections.List&lt;kotlin.String&gt;&gt;** | Extra parameters |
+**properties** | [**kotlin.collections.Set&lt;PropertyStubDto&gt;**](PropertyStubDto.md) | Extra properties |
+**hcPartyKeys** | **kotlin.collections.Map&lt;kotlin.String,
+kotlin.collections.List&lt;kotlin.String&gt;&gt;** | For each couple of HcParties (delegator and delegate), this map contains the exchange AES key. The delegator is always this hcp, the key of the map is the id of the delegate. The AES exchange key is encrypted using RSA twice : once using this hcp public key (index 0 in the Array) and once using the other hcp public key (index 1 in the Array). For a pair of HcParties. Each HcParty always has one AES exchange key for himself. |
+**aesExchangeKeys** | **kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Map&lt;kotlin.String,
+kotlin.collections.List&lt;kotlin.String&gt;&gt;&gt;** | Extra AES exchange keys, usually the ones we lost access to at some point. The structure is { publicKey: { delegateId: [aesExKey_for_this, aesExKey_for_delegate] } } |
+**transferKeys** | **kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Map&lt;kotlin.String,
+kotlin.String&gt;&gt;** | Our private keys encrypted with our public keys. The structure is { publicKey1: { publicKey2: privateKey2_encrypted_with_publicKey1, publicKey3: privateKey3_encrypted_with_publicKey1 } } |
+**lostHcPartyKeys** | **
+kotlin.collections.Set&lt;kotlin.String&gt;** | The hcparty keys (first of the pair) for which we are asking a re-encryption by the delegate using our new publicKey. |
+**privateKeyShamirPartitions** | **kotlin.collections.Map&lt;kotlin.String,
+kotlin.String&gt;** | The privateKeyShamirPartitions are used to share this hcp&#39;s private RSA key with a series of other hcParties using Shamir&#39;s algorithm. The key of the map is the hcp Id with whom this partition has been shared. The value is \&quot;threshold⎮partition in hex\&quot; encrypted using the the partition&#39;s holder&#39;s public RSA key |
+**secretForeignKeys** | **
+kotlin.collections.Set&lt;kotlin.String&gt;** | The secretForeignKeys are filled at the to many end of a one to many relationship (for example inside Contact for the Patient -&gt; Contacts relationship). Used when we want to find all contacts for a specific patient. These keys are in clear. You can have several to partition the medical document space. |
+**cryptedForeignKeys** | **kotlin.collections.Map&lt;kotlin.String,
+kotlin.collections.Set&lt;DelegationDto&gt;&gt;** | The secretForeignKeys are filled at the to many end of a one to many relationship (for example inside Contact for the Patient -&gt; Contacts relationship). Used when we want to find the patient for a specific contact. These keys are the encrypted id (using the hcParty key for the delegate) that can be found in clear inside the patient. ids encrypted using the hcParty keys. |
+**delegations** | **kotlin.collections.Map&lt;kotlin.String,
+kotlin.collections.Set&lt;DelegationDto&gt;&gt;** | When a document is created, the responsible generates a cryptographically random master key (never to be used for something else than referencing from other entities). He/she encrypts it using his own AES exchange key and stores it as a delegation. The responsible is thus always in the delegations as well |
+**encryptionKeys** | **kotlin.collections.Map&lt;kotlin.String,
+kotlin.collections.Set&lt;DelegationDto&gt;&gt;** | When a document needs to be encrypted, the responsible generates a cryptographically random master key (different from the delegation key, never to appear in clear anywhere in the db. He/she encrypts it using his own AES exchange key and stores it as a delegation |
+**nonDuplicateIds** | **kotlin.collections.Set&lt;kotlin.String&gt;** |  |
+**encryptedAdministrativesDocuments** | **kotlin.collections.Set&lt;kotlin.String&gt;** |  |
+**schoolingInfos** | [**kotlin.collections.List&lt;SchoolingInfoDto&gt;**](SchoolingInfoDto.md) |  |
+**employementInfos** | [**kotlin.collections.List&lt;EmploymentInfoDto&gt;**](EmploymentInfoDto.md) |  |
+**rev** | **
+kotlin.String** | the revision of the patient in the database, used for conflict management / optimistic locking. |  [optional]
 **created** | **kotlin.Long** | The timestamp (unix epoch in ms) of creation of this entity, will be filled automatically if missing. Not enforced by the application server. |  [optional]
 **modified** | **kotlin.Long** | The date (unix epoch in ms) of the latest modification of this entity, will be filled automatically if missing. Not enforced by the application server. |  [optional]
 **author** | **kotlin.String** | The id of the User that has created this entity, will be filled automatically if missing. Not enforced by the application server. |  [optional]

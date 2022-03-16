@@ -106,19 +106,31 @@ tasks.register("apiGenerate", Jar::class) {
         javaexec {
             main = "-jar"
             args = listOf(
-                "${rootDir}/openapi-generator-cli.jar", "generate",
-                "-i", "${rootDir}/icure-openapi-spec.json",
-                "-g", "kotlin",
-                "-o", "$rootDir",
+                "${rootDir}/openapi-generator-cli.jar",
+                "generate",
+                "-i",
+                "${rootDir}/icure-openapi-spec.json",
+                "-g",
+                "kotlin",
+                "-o",
+                "$rootDir",
 
-                "--model-package", "io.icure.kraken.client.models",
-                "--api-package", "io.icure.kraken.client.apis",
-                "--package-name", "io.icure.kraken.client",
-                "--group-id", "io.icure",
-                "--artifact-id", project.name,
-                "--artifact-version", "0.0.1-SNAPSHOT",
-                "--template-dir", "$rootDir/openApiTemplates",
-                "--additional-properties", "useCoroutines=true,serializationLibrary=jackson"
+                "--model-package",
+                "io.icure.kraken.client.models",
+                "--api-package",
+                "io.icure.kraken.client.apis",
+                "--package-name",
+                "io.icure.kraken.client",
+                "--group-id",
+                "io.icure",
+                "--artifact-id",
+                project.name,
+                "--artifact-version",
+                "0.0.1-SNAPSHOT",
+                "--template-dir",
+                "$rootDir/openApiTemplates",
+                "--additional-properties",
+                "useCoroutines=true,serializationLibrary=jackson"
             )
         }
     }

@@ -76,6 +76,9 @@
       "name": "calendarItem"
     },
     {
+      "name": "device"
+    },
+    {
       "name": "permission"
     },
     {
@@ -137,6 +140,154 @@
     }
   ],
   "paths": {
+    "/rest/v2/device/batch": {
+      "put": {
+        "tags": [
+          "device"
+        ],
+        "summary": "Modify devices in bulk",
+        "description": "Returns the id and _rev of modified devices",
+        "operationId": "updateDevices",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DeviceDto"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IdWithRevDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "device"
+        ],
+        "summary": "Create devices in bulk",
+        "description": "Returns the id and _rev of created devices",
+        "operationId": "createDevices",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DeviceDto"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IdWithRevDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest/v2/device/bulk": {
+      "put": {
+        "tags": [
+          "device"
+        ],
+        "summary": "Modify devices in bulk",
+        "description": "Returns the id and _rev of modified devices",
+        "operationId": "updateDevices_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DeviceDto"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IdWithRevDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "device"
+        ],
+        "summary": "Create devices in bulk",
+        "description": "Returns the id and _rev of created devices",
+        "operationId": "createDevices_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DeviceDto"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IdWithRevDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/rest/v2/user": {
       "get": {
         "tags": [
@@ -3367,88 +3518,6 @@
         }
       }
     },
-    "/rest/v2/hcparty/inGroup/{groupId}": {
-      "put": {
-        "tags": [
-          "healthcareParty"
-        ],
-        "summary": "Modify a Healthcare Party.",
-        "description": "No particular return value. It's just a message.",
-        "operationId": "modifyHealthcarePartyInGroup",
-        "parameters": [
-          {
-            "name": "groupId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/HealthcarePartyDto"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/HealthcarePartyDto"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "healthcareParty"
-        ],
-        "summary": "Create a healthcare party",
-        "description": "One of Name or Last name+First name, Nihii, and Public key are required.",
-        "operationId": "createHealthcarePartyInGroup",
-        "parameters": [
-          {
-            "name": "groupId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/HealthcarePartyDto"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/HealthcarePartyDto"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/rest/v2/group/{id}/properties": {
       "put": {
         "tags": [
@@ -4571,6 +4640,68 @@
         }
       }
     },
+    "/rest/v2/device": {
+      "put": {
+        "tags": [
+          "device"
+        ],
+        "summary": "Modify a device",
+        "description": "Returns the updated device",
+        "operationId": "updateDevice",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeviceDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviceDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "device"
+        ],
+        "summary": "Create a device",
+        "description": "Name, last name, date of birth, and gender are required. After creation of the device and obtaining the ID, you need to create an initial delegation.",
+        "operationId": "createDevice",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeviceDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviceDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/rest/v2/contact": {
       "put": {
         "tags": [
@@ -5653,6 +5784,40 @@
         }
       }
     },
+    "/rest/v2/user/match": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Get ids of healthcare party matching the provided filter for the current user (HcParty) ",
+        "operationId": "matchUsersBy",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AbstractFilterDtoUser"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/rest/v2/user/forgottenPassword/{email}": {
       "post": {
         "tags": [
@@ -5688,6 +5853,59 @@
               "*/*": {
                 "schema": {
                   "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest/v2/user/filter": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Filter users for the current user (HcParty)",
+        "description": "Returns a list of users along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.",
+        "operationId": "filterUsersBy",
+        "parameters": [
+          {
+            "name": "startDocumentId",
+            "in": "query",
+            "description": "A User document ID",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of rows",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FilterChainUser"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedListUserDto"
                 }
               }
             }
@@ -7944,6 +8162,40 @@
         }
       }
     },
+    "/rest/v2/helement/match": {
+      "post": {
+        "tags": [
+          "healthElement"
+        ],
+        "summary": "Get ids of health element matching the provided filter for the current user (HcParty) ",
+        "operationId": "matchHealthElementsBy",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AbstractFilterDtoHealthElement"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/rest/v2/helement/filter": {
       "post": {
         "tags": [
@@ -7952,6 +8204,27 @@
         "summary": "Filter health elements for the current user (HcParty)",
         "description": "Returns a list of health elements along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.",
         "operationId": "filterHealthElementsBy",
+        "parameters": [
+          {
+            "name": "startDocumentId",
+            "in": "query",
+            "description": "A HealthElement document ID",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of rows",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -7968,10 +8241,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/HealthElementDto"
-                  }
+                  "$ref": "#/components/schemas/PaginatedListHealthElementDto"
                 }
               }
             }
@@ -8087,19 +8357,18 @@
         }
       }
     },
-    "/rest/v2/hcparty/delete/batch": {
+    "/rest/v2/hcparty/match": {
       "post": {
         "tags": [
           "healthcareParty"
         ],
-        "summary": "Delete healthcare parties",
-        "description": "Deleting healthcareParties. Response is an array containing the id of deleted healthcare parties.",
-        "operationId": "deleteHealthcareParties",
+        "summary": "Get ids of healthcare party matching the provided filter for the current user (HcParty) ",
+        "operationId": "matchHealthcarePartiesBy",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ListOfIdsDto"
+                "$ref": "#/components/schemas/AbstractFilterDtoHealthcareParty"
               }
             }
           },
@@ -8113,7 +8382,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/DocIdentifier"
+                    "type": "string"
                   }
                 }
               }
@@ -8122,24 +8391,67 @@
         }
       }
     },
-    "/rest/v2/hcparty/delete/batch/inGroup/{groupId}": {
+    "/rest/v2/hcparty/filter": {
       "post": {
         "tags": [
           "healthcareParty"
         ],
-        "summary": "Delete a healthcare party",
-        "description": "Deleting a healthcareParty. Response is an array containing the id of deleted healthcare party.",
-        "operationId": "deleteHealthcarePartiesInGroup",
+        "summary": "Filter healthcare parties for the current user (HcParty)",
+        "description": "Returns a list of healthcare party along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.",
+        "operationId": "filterHealthPartiesBy",
         "parameters": [
           {
-            "name": "groupId",
-            "in": "path",
-            "required": true,
+            "name": "startDocumentId",
+            "in": "query",
+            "description": "A HealthcareParty document ID",
+            "required": false,
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of rows",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FilterChainHealthcareParty"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedListHealthcarePartyDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest/v2/hcparty/delete/batch": {
+      "post": {
+        "tags": [
+          "healthcareParty"
+        ],
+        "summary": "Delete healthcare parties",
+        "description": "Deleting healthcareParties. Response is an array containing the id of deleted healthcare parties.",
+        "operationId": "deleteHealthcareParties",
         "requestBody": {
           "content": {
             "application/json": {
@@ -8984,6 +9296,163 @@
         }
       }
     },
+    "/rest/v2/device/match": {
+      "post": {
+        "tags": [
+          "device"
+        ],
+        "summary": "Get ids of devices matching the provided filter for the current user (HcParty) ",
+        "operationId": "matchDevicesBy",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AbstractFilterDtoDevice"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest/v2/device/filter": {
+      "post": {
+        "tags": [
+          "device"
+        ],
+        "summary": "Filter devices for the current user (HcParty) ",
+        "description": "Returns a list of devices along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.",
+        "operationId": "filterDevicesBy",
+        "parameters": [
+          {
+            "name": "startDocumentId",
+            "in": "query",
+            "description": "A device document ID",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of rows",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FilterChainDevice"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedListDeviceDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest/v2/device/delete/batch": {
+      "post": {
+        "tags": [
+          "device"
+        ],
+        "summary": "Delete devices.",
+        "description": "Response is an array containing the id/rev of deleted devices.",
+        "operationId": "deleteDevices",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ListOfIdsDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DocIdentifier"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest/v2/device/byIds": {
+      "post": {
+        "tags": [
+          "device"
+        ],
+        "summary": "Get devices by id",
+        "description": "It gets device administrative data.",
+        "operationId": "getDevices",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ListOfIdsDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DeviceDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/rest/v2/contact/{contactId}/delegate": {
       "post": {
         "tags": [
@@ -9053,6 +9522,40 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/ServiceDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest/v2/contact/service/match": {
+      "post": {
+        "tags": [
+          "contact"
+        ],
+        "summary": "Get ids of services matching the provided filter for the current user",
+        "operationId": "matchServicesBy",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AbstractFilterDtoService"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
                   }
                 }
               }
@@ -9463,6 +9966,40 @@
               "*/*": {
                 "schema": {
                   "$ref": "#/components/schemas/Unit"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest/v2/code/match": {
+      "post": {
+        "tags": [
+          "code"
+        ],
+        "summary": "Get ids of code matching the provided filter for the current user (HcParty) ",
+        "operationId": "matchCodesBy",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AbstractFilterDtoCode"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 }
               }
             }
@@ -14087,7 +14624,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/HcPartyKeyForDelegate"
                 },
                 "example": "{\n    \"hcparty 1 delegator ID\": \"AES hcparty key (encrypted using patient public RSA key)\"\n    \"hcparty 2 delegator ID\": \"other AES hcparty key (encrypted using patient public RSA key)\"\n}"
               }
@@ -16093,7 +16630,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ReplicatorDocument"
+                  "$ref": "#/components/schemas/ReplicatorDocumentDto"
                 }
               }
             }
@@ -18003,6 +18540,104 @@
         }
       }
     },
+    "/rest/v2/device/{deviceId}": {
+      "get": {
+        "tags": [
+          "device"
+        ],
+        "summary": "Get Device",
+        "description": "It gets device administrative data.",
+        "operationId": "getDevice",
+        "parameters": [
+          {
+            "name": "deviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviceDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "device"
+        ],
+        "summary": "Delete device.",
+        "description": "Response contains the id/rev of deleted device.",
+        "operationId": "deleteDevice",
+        "parameters": [
+          {
+            "name": "deviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocIdentifier"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest/v2/device/{deviceId}/keys": {
+      "get": {
+        "tags": [
+          "device"
+        ],
+        "summary": "Get the HcParty encrypted AES keys indexed by owner",
+        "description": "(key, value) of the map is as follows: (ID of the owner of the encrypted AES key, encrypted AES key)",
+        "operationId": "getDeviceHcPartyKeysForDelegate",
+        "parameters": [
+          {
+            "name": "deviceId",
+            "in": "path",
+            "description": "The deviceId Id for which information is shared",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/rest/v2/contact/{contactId}": {
       "get": {
         "tags": [
@@ -19780,6 +20415,432 @@
         }
       }
     },
+    "/rest/v2/be_samv2/chap/{chapterName}/{paragraphName}/{verseSeq}/addeddoc/{docSeq}/{language}": {
+      "get": {
+        "tags": [
+          "besamv2"
+        ],
+        "operationId": "getAddedDocument",
+        "parameters": [
+          {
+            "name": "chapterName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "paragraphName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "verseSeq",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "docSeq",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "language",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "response",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "headerNames": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "locale": {
+                  "type": "object",
+                  "properties": {
+                    "language": {
+                      "type": "string"
+                    },
+                    "unicodeLocaleAttributes": {
+                      "uniqueItems": true,
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "unicodeLocaleKeys": {
+                      "uniqueItems": true,
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "displayLanguage": {
+                      "type": "string"
+                    },
+                    "displayScript": {
+                      "type": "string"
+                    },
+                    "displayCountry": {
+                      "type": "string"
+                    },
+                    "displayVariant": {
+                      "type": "string"
+                    },
+                    "extensionKeys": {
+                      "uniqueItems": true,
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "iso3Language": {
+                      "type": "string"
+                    },
+                    "iso3Country": {
+                      "type": "string"
+                    },
+                    "displayName": {
+                      "type": "string"
+                    },
+                    "script": {
+                      "type": "string"
+                    },
+                    "country": {
+                      "type": "string"
+                    },
+                    "variant": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "writer": {
+                  "type": "object"
+                },
+                "committed": {
+                  "type": "boolean"
+                },
+                "characterEncoding": {
+                  "type": "string"
+                },
+                "bufferSize": {
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "contentLengthLong": {
+                  "type": "integer",
+                  "format": "int64",
+                  "writeOnly": true
+                },
+                "contentType": {
+                  "type": "string"
+                },
+                "outputStream": {
+                  "type": "object",
+                  "properties": {
+                    "writeListener": {
+                      "type": "object",
+                      "writeOnly": true
+                    },
+                    "ready": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "contentLength": {
+                  "type": "integer",
+                  "format": "int32",
+                  "writeOnly": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "short": {
+                        "type": "integer",
+                        "format": "int32"
+                      },
+                      "char": {
+                        "type": "string"
+                      },
+                      "int": {
+                        "type": "integer",
+                        "format": "int32"
+                      },
+                      "long": {
+                        "type": "integer",
+                        "format": "int64"
+                      },
+                      "float": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "double": {
+                        "type": "number",
+                        "format": "double"
+                      },
+                      "direct": {
+                        "type": "boolean"
+                      },
+                      "readOnly": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest/v2/be_samv2/chap/vtms/{chapterName}/{paragraphName}/{language}": {
+      "get": {
+        "tags": [
+          "besamv2"
+        ],
+        "operationId": "getVtmNamesForParagraph",
+        "parameters": [
+          {
+            "name": "chapterName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "paragraphName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "language",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest/v2/be_samv2/chap/verse/{chapterName}/{paragraphName}": {
+      "get": {
+        "tags": [
+          "besamv2"
+        ],
+        "operationId": "getVersesHierarchy",
+        "parameters": [
+          {
+            "name": "chapterName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "paragraphName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest/v2/be_samv2/chap/search/{searchString}/{language}": {
+      "get": {
+        "tags": [
+          "besamv2"
+        ],
+        "operationId": "findParagraphs",
+        "parameters": [
+          {
+            "name": "searchString",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "language",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParagraphDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest/v2/be_samv2/chap/bycnk/{cnk}/{language}": {
+      "get": {
+        "tags": [
+          "besamv2"
+        ],
+        "operationId": "findParagraphsWithCnk",
+        "parameters": [
+          {
+            "name": "cnk",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "language",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParagraphDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest/v2/be_samv2/chap/amps/{chapterName}/{paragraphName}": {
+      "get": {
+        "tags": [
+          "besamv2"
+        ],
+        "operationId": "getAmpsForParagraph",
+        "parameters": [
+          {
+            "name": "chapterName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "paragraphName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AmpDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/rest/v2/be_samv2/amp": {
       "get": {
         "tags": [
@@ -20693,7 +21754,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/UserDto"
+                    "$ref": "#/components/schemas/UserAndHealthcarePartyDto"
                   }
                 }
               }
@@ -20702,7 +21763,7 @@
         }
       }
     },
-    "/rest/v2/aa/available/inGroup/{groupId}/forUser/{userId}/type/{getCalendarItemTypeId}": {
+    "/rest/v2/aa/available/inGroup/{groupId}/forUser/{userId}/type/{calendarItemTypeId}": {
       "get": {
         "tags": [
           "anonymousAccess"
@@ -20728,11 +21789,19 @@
             }
           },
           {
-            "name": "getCalendarItemTypeId",
+            "name": "calendarItemTypeId",
             "in": "path",
             "required": true,
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "isNewPatient",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "boolean"
             }
           },
           {
@@ -20757,6 +21826,14 @@
             "name": "hcpId",
             "in": "query",
             "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "placeId",
+            "in": "query",
+            "required": false,
             "schema": {
               "type": "string"
             }
@@ -20843,7 +21920,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/CalendarItemTypeDto"
+                    "$ref": "#/components/schemas/AppointmentTypeAndPlaceDto"
                   }
                 }
               }
@@ -20934,88 +22011,238 @@
   },
   "components": {
     "schemas": {
-      "AuthenticationTokenDto": {
-        "required": [
-          "creationTime",
-          "token",
-          "validity"
-        ],
-        "type": "object",
-        "properties": {
-          "token": {
-            "type": "string",
-            "description": "Encrypted token"
-          },
-          "creationTime": {
-            "type": "integer",
-            "description": "Validity starting time of the token",
-            "format": "int64"
-          },
-          "validity": {
-            "type": "integer",
-            "description": "Token validity in seconds",
-            "format": "int64"
-          }
-        },
-        "description": "Encrypted and time-limited Authentication tokens used for inter-applications authentication"
+      "HcPartyKeyForDelegate": {
+        "type": "<String, String>"
       },
-      "PermissionDto": {
-        "required": [
-          "grants",
-          "revokes"
-        ],
+      "CodeStubDto": {
         "type": "object",
         "properties": {
-          "grants": {
-            "uniqueItems": true,
-            "type": "array",
-            "description": "Granted permissions.",
-            "items": {
-              "$ref": "#/components/schemas/PermissionItemDto"
-            }
+          "id": {
+            "type": "string"
           },
-          "revokes": {
-            "uniqueItems": true,
-            "type": "array",
-            "description": "Revoked permissions.",
-            "items": {
-              "$ref": "#/components/schemas/PermissionItemDto"
-            }
-          }
-        },
-        "description": "If permission to modify patient data is granted or revoked"
-      },
-      "PermissionItemDto": {
-        "required": [
-          "predicate",
-          "type"
-        ],
-        "type": "object",
-        "properties": {
-          "predicate": {
-            "$ref": "#/components/schemas/Predicate"
+          "context": {
+            "type": "string"
           },
           "type": {
-            "type": "string",
-            "enum": [
-              "AUTHENTICATE",
-              "ADMIN",
-              "PATIENT_VIEW",
-              "PATIENT_CREATE",
-              "PATIENT_CHANGE_DELETE",
-              "MEDICAL_DATA_VIEW",
-              "MEDICAL_DATA_CREATE",
-              "MEDICAL_CHANGE_DELETE",
-              "FINANCIAL_DATA_VIEW",
-              "FINANCIAL_DATA_CREATE",
-              "FINANCIAL_CHANGE_DELETE"
-            ]
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "label": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
           }
         },
-        "description": "Revoked permissions."
+        "description": "A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes"
       },
-      "Predicate": {
-        "type": "object"
+      "DeviceDto": {
+        "required": [
+          "aesExchangeKeys",
+          "codes",
+          "hcPartyKeys",
+          "id",
+          "identifiers",
+          "lostHcPartyKeys",
+          "privateKeyShamirPartitions",
+          "properties",
+          "tags",
+          "transferKeys"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "rev": {
+            "type": "string"
+          },
+          "deletionDate": {
+            "type": "integer",
+            "description": "hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called.",
+            "format": "int64"
+          },
+          "identifiers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IdentifierDto"
+            }
+          },
+          "created": {
+            "type": "integer",
+            "description": "The timestamp (unix epoch in ms) of creation of this entity, will be filled automatically if missing. Not enforced by the application server.",
+            "format": "int64"
+          },
+          "modified": {
+            "type": "integer",
+            "description": "The date (unix epoch in ms) of the latest modification of this entity, will be filled automatically if missing. Not enforced by the application server.",
+            "format": "int64"
+          },
+          "author": {
+            "type": "string",
+            "description": "The id of the User that has created this entity, will be filled automatically if missing. Not enforced by the application server."
+          },
+          "responsible": {
+            "type": "string",
+            "description": "The id of the HealthcareParty that is responsible for this entity, will be filled automatically if missing. Not enforced by the application server."
+          },
+          "tags": {
+            "uniqueItems": true,
+            "type": "array",
+            "description": "A tag is an item from a codification system that qualifies an entity as being member of a certain class, whatever the value it might have taken. If the tag qualifies the content of a field, it means that whatever the content of the field, the tag will always apply. For example, the label of a field is qualified using a tag. LOINC is a codification system typically used for tags.",
+            "items": {
+              "$ref": "#/components/schemas/CodeStubDto"
+            }
+          },
+          "codes": {
+            "uniqueItems": true,
+            "type": "array",
+            "description": "A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes",
+            "items": {
+              "$ref": "#/components/schemas/CodeStubDto"
+            }
+          },
+          "endOfLife": {
+            "type": "integer",
+            "description": "Soft delete (unix epoch in ms) timestamp of the object.",
+            "format": "int64"
+          },
+          "medicalLocationId": {
+            "type": "string",
+            "description": "The id of the medical location where this entity was created."
+          },
+          "externalId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "brand": {
+            "type": "string"
+          },
+          "model": {
+            "type": "string"
+          },
+          "serialNumber": {
+            "type": "string"
+          },
+          "parentId": {
+            "type": "string"
+          },
+          "picture": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "byte"
+            }
+          },
+          "properties": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PropertyStubDto"
+            }
+          },
+          "hcPartyKeys": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "description": "For each couple of HcParties (delegator and delegate), this map contains the exchange AES key. The delegator is always this hcp, the key of the map is the id of the delegate. The AES exchange key is encrypted using RSA twice : once using this hcp public key (index 0 in the Array) and once using the other hcp public key (index 1 in the Array). For a pair of HcParties. Each HcParty always has one AES exchange key for himself.",
+              "items": {
+                "type": "string",
+                "description": "For each couple of HcParties (delegator and delegate), this map contains the exchange AES key. The delegator is always this hcp, the key of the map is the id of the delegate. The AES exchange key is encrypted using RSA twice : once using this hcp public key (index 0 in the Array) and once using the other hcp public key (index 1 in the Array). For a pair of HcParties. Each HcParty always has one AES exchange key for himself."
+              }
+            },
+            "description": "For each couple of HcParties (delegator and delegate), this map contains the exchange AES key. The delegator is always this hcp, the key of the map is the id of the delegate. The AES exchange key is encrypted using RSA twice : once using this hcp public key (index 0 in the Array) and once using the other hcp public key (index 1 in the Array). For a pair of HcParties. Each HcParty always has one AES exchange key for himself."
+          },
+          "aesExchangeKeys": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "array",
+                "description": "Extra AES exchange keys, usually the ones we lost access to at some point. The structure is { publicKey: { delegateId: [aesExKey_for_this, aesExKey_for_delegate] } }",
+                "items": {
+                  "type": "string",
+                  "description": "Extra AES exchange keys, usually the ones we lost access to at some point. The structure is { publicKey: { delegateId: [aesExKey_for_this, aesExKey_for_delegate] } }"
+                }
+              },
+              "description": "Extra AES exchange keys, usually the ones we lost access to at some point. The structure is { publicKey: { delegateId: [aesExKey_for_this, aesExKey_for_delegate] } }"
+            },
+            "description": "Extra AES exchange keys, usually the ones we lost access to at some point. The structure is { publicKey: { delegateId: [aesExKey_for_this, aesExKey_for_delegate] } }"
+          },
+          "transferKeys": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string",
+                "description": "Our private keys encrypted with our public keys. The structure is { publicKey1: { publicKey2: privateKey2_encrypted_with_publicKey1, publicKey3: privateKey3_encrypted_with_publicKey1 } }"
+              },
+              "description": "Our private keys encrypted with our public keys. The structure is { publicKey1: { publicKey2: privateKey2_encrypted_with_publicKey1, publicKey3: privateKey3_encrypted_with_publicKey1 } }"
+            },
+            "description": "Our private keys encrypted with our public keys. The structure is { publicKey1: { publicKey2: privateKey2_encrypted_with_publicKey1, publicKey3: privateKey3_encrypted_with_publicKey1 } }"
+          },
+          "lostHcPartyKeys": {
+            "uniqueItems": true,
+            "type": "array",
+            "description": "The hcparty keys (first of the pair) for which we are asking a re-encryption by the delegate using our new publicKey.",
+            "items": {
+              "type": "string",
+              "description": "The hcparty keys (first of the pair) for which we are asking a re-encryption by the delegate using our new publicKey."
+            }
+          },
+          "privateKeyShamirPartitions": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "description": "The privateKeyShamirPartitions are used to share this hcp's private RSA key with a series of other hcParties using Shamir's algorithm. The key of the map is the hcp Id with whom this partition has been shared. The value is \"threshold⎮partition in hex\" encrypted using the the partition's holder's public RSA key"
+            },
+            "description": "The privateKeyShamirPartitions are used to share this hcp's private RSA key with a series of other hcParties using Shamir's algorithm. The key of the map is the hcp Id with whom this partition has been shared. The value is \"threshold⎮partition in hex\" encrypted using the the partition's holder's public RSA key"
+          },
+          "publicKey": {
+            "type": "string",
+            "description": "The public key of this hcp"
+          }
+        },
+        "description": "This entity is a root level object. It represents a device. It is serialized in JSON and saved in the underlying icure-device CouchDB database."
+      },
+      "IdentifierDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "assigner": {
+            "type": "string"
+          },
+          "start": {
+            "type": "string"
+          },
+          "end": {
+            "type": "string"
+          },
+          "system": {
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/CodeStubDto"
+          },
+          "use": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        }
       },
       "PropertyStubDto": {
         "type": "object",
@@ -21037,8 +22264,7 @@
             "type": "string",
             "description": "The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys."
           }
-        },
-        "description": "Extra properties for the user. Those properties are typed (see class Property)"
+        }
       },
       "PropertyTypeStubDto": {
         "type": "object",
@@ -21098,6 +22324,100 @@
             "description": "The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys."
           }
         }
+      },
+      "IdWithRevDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "rev": {
+            "type": "string"
+          }
+        }
+      },
+      "AuthenticationTokenDto": {
+        "required": [
+          "creationTime",
+          "token",
+          "validity"
+        ],
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "Encrypted token"
+          },
+          "creationTime": {
+            "type": "integer",
+            "description": "Validity starting time of the token",
+            "format": "int64"
+          },
+          "validity": {
+            "type": "integer",
+            "description": "Token validity in seconds",
+            "format": "int64"
+          }
+        },
+        "description": "Encrypted and time-limited Authentication tokens used for inter-applications authentication"
+      },
+      "PermissionDto": {
+        "required": [
+          "grants",
+          "revokes"
+        ],
+        "type": "object",
+        "properties": {
+          "grants": {
+            "uniqueItems": true,
+            "type": "array",
+            "description": "Granted permissions.",
+            "items": {
+              "$ref": "#/components/schemas/PermissionItemDto"
+            }
+          },
+          "revokes": {
+            "uniqueItems": true,
+            "type": "array",
+            "description": "Revoked permissions.",
+            "items": {
+              "$ref": "#/components/schemas/PermissionItemDto"
+            }
+          }
+        },
+        "description": "If permission to modify patient data is granted or revoked"
+      },
+      "PermissionItemDto": {
+        "required": [
+          "predicate",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "AUTHENTICATE",
+              "ADMIN",
+              "PATIENT_VIEW",
+              "PATIENT_CREATE",
+              "PATIENT_CHANGE_DELETE",
+              "MEDICAL_DATA_VIEW",
+              "MEDICAL_DATA_CREATE",
+              "MEDICAL_CHANGE_DELETE",
+              "FINANCIAL_DATA_VIEW",
+              "FINANCIAL_DATA_CREATE",
+              "FINANCIAL_CHANGE_DELETE"
+            ]
+          },
+          "predicate": {
+            "$ref": "#/components/schemas/Predicate"
+          }
+        },
+        "description": "Revoked permissions."
+      },
+      "Predicate": {
+        "type": "object"
       },
       "UserDto": {
         "required": [
@@ -21203,6 +22523,10 @@
             "type": "string",
             "description": "Id of the patient if the user is a patient"
           },
+          "deviceId": {
+            "type": "string",
+            "description": "Id of the device if the user is a device"
+          },
           "autoDelegations": {
             "type": "object",
             "additionalProperties": {
@@ -21237,10 +22561,9 @@
           "applicationTokens": {
             "type": "object",
             "additionalProperties": {
-              "type": "string",
-              "description": "Long lived authentication tokens used for inter-applications authentication."
+              "type": "string"
             },
-            "description": "Long lived authentication tokens used for inter-applications authentication."
+            "deprecated": true
           },
           "authenticationTokens": {
             "type": "object",
@@ -21324,32 +22647,6 @@
           }
         },
         "description": "This entity represents an Address"
-      },
-      "CodeStubDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "context": {
-            "type": "string"
-          },
-          "type": {
-            "type": "string"
-          },
-          "code": {
-            "type": "string"
-          },
-          "version": {
-            "type": "string"
-          },
-          "label": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string"
-            }
-          }
-        }
       },
       "DelegationDto": {
         "required": [
@@ -21442,35 +22739,6 @@
           }
         },
         "description": "Financial information (Bank, bank account) used to reimburse the patient."
-      },
-      "IdentifierDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "assigner": {
-            "type": "string"
-          },
-          "start": {
-            "type": "string"
-          },
-          "end": {
-            "type": "string"
-          },
-          "system": {
-            "type": "string"
-          },
-          "type": {
-            "$ref": "#/components/schemas/CodeStubDto"
-          },
-          "use": {
-            "type": "string"
-          },
-          "value": {
-            "type": "string"
-          }
-        }
       },
       "InsurabilityDto": {
         "required": [
@@ -21764,6 +23032,7 @@
         "required": [
           "active",
           "addresses",
+          "aesExchangeKeys",
           "codes",
           "cryptedForeignKeys",
           "deactivationReason",
@@ -21777,6 +23046,7 @@
           "identifier",
           "insurabilities",
           "languages",
+          "lostHcPartyKeys",
           "medicalHouseContracts",
           "mergedIds",
           "names",
@@ -21789,7 +23059,8 @@
           "properties",
           "schoolingInfos",
           "secretForeignKeys",
-          "tags"
+          "tags",
+          "transferKeys"
         ],
         "type": "object",
         "properties": {
@@ -21940,6 +23211,7 @@
           "deactivationReason": {
             "type": "string",
             "description": "When not active, the reason for deactivation.",
+            "default": "DeactivationReason.none",
             "enum": [
               "deceased",
               "moved",
@@ -21948,8 +23220,7 @@
               "no_contact",
               "unknown",
               "none"
-            ],
-            "default": "DeactivationReason.none"
+            ]
           },
           "ssin": {
             "type": "string",
@@ -22128,6 +23399,43 @@
               }
             },
             "description": "For each couple of HcParties (delegator and delegate), this map contains the exchange AES key. The delegator is always this hcp, the key of the map is the id of the delegate. The AES exchange key is encrypted using RSA twice : once using this hcp public key (index 0 in the Array) and once using the other hcp public key (index 1 in the Array). For a pair of HcParties. Each HcParty always has one AES exchange key for himself."
+          },
+          "aesExchangeKeys": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "array",
+                "description": "Extra AES exchange keys, usually the ones we lost access to at some point. The structure is { publicKey: { delegateId: [aesExKey_for_this, aesExKey_for_delegate] } }",
+                "items": {
+                  "type": "string",
+                  "description": "Extra AES exchange keys, usually the ones we lost access to at some point. The structure is { publicKey: { delegateId: [aesExKey_for_this, aesExKey_for_delegate] } }"
+                }
+              },
+              "description": "Extra AES exchange keys, usually the ones we lost access to at some point. The structure is { publicKey: { delegateId: [aesExKey_for_this, aesExKey_for_delegate] } }"
+            },
+            "description": "Extra AES exchange keys, usually the ones we lost access to at some point. The structure is { publicKey: { delegateId: [aesExKey_for_this, aesExKey_for_delegate] } }"
+          },
+          "transferKeys": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string",
+                "description": "Our private keys encrypted with our public keys. The structure is { publicKey1: { publicKey2: privateKey2_encrypted_with_publicKey1, publicKey3: privateKey3_encrypted_with_publicKey1 } }"
+              },
+              "description": "Our private keys encrypted with our public keys. The structure is { publicKey1: { publicKey2: privateKey2_encrypted_with_publicKey1, publicKey3: privateKey3_encrypted_with_publicKey1 } }"
+            },
+            "description": "Our private keys encrypted with our public keys. The structure is { publicKey1: { publicKey2: privateKey2_encrypted_with_publicKey1, publicKey3: privateKey3_encrypted_with_publicKey1 } }"
+          },
+          "lostHcPartyKeys": {
+            "uniqueItems": true,
+            "type": "array",
+            "description": "The hcparty keys (first of the pair) for which we are asking a re-encryption by the delegate using our new publicKey.",
+            "items": {
+              "type": "string",
+              "description": "The hcparty keys (first of the pair) for which we are asking a re-encryption by the delegate using our new publicKey."
+            }
           },
           "privateKeyShamirPartitions": {
             "type": "object",
@@ -25262,6 +26570,9 @@
           },
           "suspensionReason": {
             "type": "string"
+          },
+          "lifecycle": {
+            "type": "string"
           }
         }
       },
@@ -25479,7 +26790,6 @@
           "encryptionKeys",
           "id",
           "items",
-          "publicTimeTable",
           "secretForeignKeys",
           "tags"
         ],
@@ -25544,9 +26854,6 @@
           },
           "agendaId": {
             "type": "string"
-          },
-          "publicTimeTable": {
-            "type": "boolean"
           },
           "startTime": {
             "type": "integer",
@@ -25628,9 +26935,11 @@
       },
       "TimeTableItemDto": {
         "required": [
+          "acceptsNewPatient",
           "days",
           "homeVisit",
           "hours",
+          "publicTimeTableItem",
           "recurrenceTypes",
           "unavailable"
         ],
@@ -25662,6 +26971,12 @@
           },
           "placeId": {
             "type": "string"
+          },
+          "publicTimeTableItem": {
+            "type": "boolean"
+          },
+          "acceptsNewPatient": {
+            "type": "boolean"
           },
           "unavailable": {
             "type": "boolean"
@@ -26151,17 +27466,6 @@
           }
         }
       },
-      "IdWithRevDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "rev": {
-            "type": "string"
-          }
-        }
-      },
       "IcureStubDto": {
         "required": [
           "codes",
@@ -26556,12 +27860,14 @@
       "HealthcarePartyDto": {
         "required": [
           "addresses",
+          "aesExchangeKeys",
           "financialInstitutionInformation",
           "flatRateTarifications",
           "hcPartyKeys",
           "id",
           "importedData",
           "languages",
+          "lostHcPartyKeys",
           "names",
           "options",
           "privateKeyShamirPartitions",
@@ -26569,7 +27875,8 @@
           "sendFormats",
           "specialityCodes",
           "statusHistory",
-          "statuses"
+          "statuses",
+          "transferKeys"
         ],
         "type": "object",
         "properties": {
@@ -26580,6 +27887,16 @@
           "rev": {
             "type": "string",
             "description": "the revision of the healthcare party in the database, used for conflict management / optimistic locking."
+          },
+          "created": {
+            "type": "integer",
+            "description": "creation timestamp of the object.",
+            "format": "int64"
+          },
+          "modified": {
+            "type": "integer",
+            "description": "last modification timestamp of the object.",
+            "format": "int64"
           },
           "deletionDate": {
             "type": "integer",
@@ -26799,6 +28116,43 @@
               }
             },
             "description": "For each couple of HcParties (delegator and delegate), this map contains the exchange AES key. The delegator is always this hcp, the key of the map is the id of the delegate. The AES exchange key is encrypted using RSA twice : once using this hcp public key (index 0 in the Array) and once using the other hcp public key (index 1 in the Array). For a pair of HcParties. Each HcParty always has one AES exchange key for himself."
+          },
+          "aesExchangeKeys": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "array",
+                "description": "Extra AES exchange keys, usually the ones we lost access to at some point. The structure is { publicKey: { delegateId: [aesExKey_for_this, aesExKey_for_delegate] } }",
+                "items": {
+                  "type": "string",
+                  "description": "Extra AES exchange keys, usually the ones we lost access to at some point. The structure is { publicKey: { delegateId: [aesExKey_for_this, aesExKey_for_delegate] } }"
+                }
+              },
+              "description": "Extra AES exchange keys, usually the ones we lost access to at some point. The structure is { publicKey: { delegateId: [aesExKey_for_this, aesExKey_for_delegate] } }"
+            },
+            "description": "Extra AES exchange keys, usually the ones we lost access to at some point. The structure is { publicKey: { delegateId: [aesExKey_for_this, aesExKey_for_delegate] } }"
+          },
+          "transferKeys": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string",
+                "description": "Our private keys encrypted with our public keys. The structure is { publicKey1: { publicKey2: privateKey2_encrypted_with_publicKey1, publicKey3: privateKey3_encrypted_with_publicKey1 } }"
+              },
+              "description": "Our private keys encrypted with our public keys. The structure is { publicKey1: { publicKey2: privateKey2_encrypted_with_publicKey1, publicKey3: privateKey3_encrypted_with_publicKey1 } }"
+            },
+            "description": "Our private keys encrypted with our public keys. The structure is { publicKey1: { publicKey2: privateKey2_encrypted_with_publicKey1, publicKey3: privateKey3_encrypted_with_publicKey1 } }"
+          },
+          "lostHcPartyKeys": {
+            "uniqueItems": true,
+            "type": "array",
+            "description": "The hcparty keys (first of the pair) for which we are asking a re-encryption by the delegate using our new publicKey.",
+            "items": {
+              "type": "string",
+              "description": "The hcparty keys (first of the pair) for which we are asking a re-encryption by the delegate using our new publicKey."
+            }
           },
           "privateKeyShamirPartitions": {
             "type": "object",
@@ -28688,6 +30042,14 @@
         },
         "description": "This entity represents Access Log."
       },
+      "AbstractFilterDtoUser": {
+        "type": "object",
+        "properties": {
+          "desc": {
+            "type": "string"
+          }
+        }
+      },
       "EmailTemplateDto": {
         "type": "object",
         "properties": {
@@ -28696,6 +30058,58 @@
           },
           "body": {
             "type": "string"
+          }
+        }
+      },
+      "FilterChainUser": {
+        "required": [
+          "filter"
+        ],
+        "type": "object",
+        "properties": {
+          "filter": {
+            "$ref": "#/components/schemas/AbstractFilterDtoUser"
+          },
+          "predicate": {
+            "$ref": "#/components/schemas/Predicate"
+          }
+        }
+      },
+      "PaginatedDocumentKeyIdPairObject": {
+        "type": "object",
+        "properties": {
+          "startKey": {
+            "type": "object"
+          },
+          "startKeyDocId": {
+            "type": "string"
+          }
+        }
+      },
+      "PaginatedListUserDto": {
+        "required": [
+          "pageSize",
+          "rows",
+          "totalSize"
+        ],
+        "type": "object",
+        "properties": {
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "rows": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserDto"
+            }
+          },
+          "nextKeyPair": {
+            "$ref": "#/components/schemas/PaginatedDocumentKeyIdPairObject"
           }
         }
       },
@@ -28880,17 +30294,6 @@
           }
         }
       },
-      "PaginatedDocumentKeyIdPairObject": {
-        "type": "object",
-        "properties": {
-          "startKey": {
-            "type": "object"
-          },
-          "startKeyDocId": {
-            "type": "string"
-          }
-        }
-      },
       "PaginatedListPatientDto": {
         "required": [
           "pageSize",
@@ -29018,6 +30421,82 @@
           },
           "predicate": {
             "$ref": "#/components/schemas/Predicate"
+          }
+        }
+      },
+      "PaginatedListHealthElementDto": {
+        "required": [
+          "pageSize",
+          "rows",
+          "totalSize"
+        ],
+        "type": "object",
+        "properties": {
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "rows": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HealthElementDto"
+            }
+          },
+          "nextKeyPair": {
+            "$ref": "#/components/schemas/PaginatedDocumentKeyIdPairObject"
+          }
+        }
+      },
+      "AbstractFilterDtoHealthcareParty": {
+        "type": "object",
+        "properties": {
+          "desc": {
+            "type": "string"
+          }
+        }
+      },
+      "FilterChainHealthcareParty": {
+        "required": [
+          "filter"
+        ],
+        "type": "object",
+        "properties": {
+          "filter": {
+            "$ref": "#/components/schemas/AbstractFilterDtoHealthcareParty"
+          },
+          "predicate": {
+            "$ref": "#/components/schemas/Predicate"
+          }
+        }
+      },
+      "PaginatedListHealthcarePartyDto": {
+        "required": [
+          "pageSize",
+          "rows",
+          "totalSize"
+        ],
+        "type": "object",
+        "properties": {
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "rows": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HealthcarePartyDto"
+            }
+          },
+          "nextKeyPair": {
+            "$ref": "#/components/schemas/PaginatedDocumentKeyIdPairObject"
           }
         }
       },
@@ -29156,6 +30635,55 @@
           },
           "docId": {
             "type": "string"
+          }
+        }
+      },
+      "AbstractFilterDtoDevice": {
+        "type": "object",
+        "properties": {
+          "desc": {
+            "type": "string"
+          }
+        }
+      },
+      "FilterChainDevice": {
+        "required": [
+          "filter"
+        ],
+        "type": "object",
+        "properties": {
+          "filter": {
+            "$ref": "#/components/schemas/AbstractFilterDtoDevice"
+          },
+          "predicate": {
+            "$ref": "#/components/schemas/Predicate"
+          }
+        }
+      },
+      "PaginatedListDeviceDto": {
+        "required": [
+          "pageSize",
+          "rows",
+          "totalSize"
+        ],
+        "type": "object",
+        "properties": {
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "rows": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DeviceDto"
+            }
+          },
+          "nextKeyPair": {
+            "$ref": "#/components/schemas/PaginatedDocumentKeyIdPairObject"
           }
         }
       },
@@ -30820,6 +32348,12 @@
               "$ref": "#/components/schemas/ServiceDto"
             }
           },
+          "serviceAuthors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HealthcarePartyDto"
+            }
+          },
           "recipient": {
             "$ref": "#/components/schemas/HealthcarePartyDto"
           },
@@ -31252,33 +32786,6 @@
           }
         }
       },
-      "PaginatedListUserDto": {
-        "required": [
-          "pageSize",
-          "rows",
-          "totalSize"
-        ],
-        "type": "object",
-        "properties": {
-          "pageSize": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "totalSize": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "rows": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/UserDto"
-            }
-          },
-          "nextKeyPair": {
-            "$ref": "#/components/schemas/PaginatedDocumentKeyIdPairObject"
-          }
-        }
-      },
       "UserGroupDto": {
         "type": "object",
         "properties": {
@@ -31313,33 +32820,6 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/InvoiceDto"
-            }
-          },
-          "nextKeyPair": {
-            "$ref": "#/components/schemas/PaginatedDocumentKeyIdPairObject"
-          }
-        }
-      },
-      "PaginatedListHealthElementDto": {
-        "required": [
-          "pageSize",
-          "rows",
-          "totalSize"
-        ],
-        "type": "object",
-        "properties": {
-          "pageSize": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "totalSize": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "rows": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/HealthElementDto"
             }
           },
           "nextKeyPair": {
@@ -31571,146 +33051,6 @@
           }
         }
       },
-      "Authentication": {
-        "type": "object",
-        "properties": {
-          "basic": {
-            "$ref": "#/components/schemas/Basic"
-          }
-        }
-      },
-      "Basic": {
-        "required": [
-          "password",
-          "username"
-        ],
-        "type": "object",
-        "properties": {
-          "username": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          }
-        }
-      },
-      "Remote": {
-        "required": [
-          "url"
-        ],
-        "type": "object",
-        "properties": {
-          "url": {
-            "type": "string"
-          },
-          "auth": {
-            "$ref": "#/components/schemas/Authentication"
-          }
-        }
-      },
-      "ReplicationStats": {
-        "type": "object",
-        "properties": {
-          "revisions_checked": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "missing_revisions_found": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "docs_read": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "docs_written": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "changes_pending": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "doc_write_failures": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "checkpointed_source_seq": {
-            "type": "string"
-          },
-          "start_time": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "error": {
-            "type": "string"
-          }
-        }
-      },
-      "ReplicatorDocument": {
-        "required": [
-          "_id"
-        ],
-        "type": "object",
-        "properties": {
-          "_id": {
-            "type": "string"
-          },
-          "_rev": {
-            "type": "string"
-          },
-          "source": {
-            "$ref": "#/components/schemas/Remote"
-          },
-          "target": {
-            "$ref": "#/components/schemas/Remote"
-          },
-          "owner": {
-            "type": "string"
-          },
-          "create_target": {
-            "type": "boolean"
-          },
-          "continuous": {
-            "type": "boolean"
-          },
-          "doc_ids": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "_replication_state": {
-            "type": "string"
-          },
-          "_replication_state_time": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "_replication_stats": {
-            "$ref": "#/components/schemas/ReplicationStats"
-          },
-          "error_count": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "_revs_info": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "additionalProperties": {
-                "type": "string"
-              }
-            }
-          },
-          "rev_history": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string"
-            }
-          }
-        }
-      },
       "IndexingInfoDto": {
         "type": "object",
         "properties": {
@@ -31719,33 +33059,6 @@
             "additionalProperties": {
               "type": "number"
             }
-          }
-        }
-      },
-      "PaginatedListHealthcarePartyDto": {
-        "required": [
-          "pageSize",
-          "rows",
-          "totalSize"
-        ],
-        "type": "object",
-        "properties": {
-          "pageSize": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "totalSize": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "rows": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/HealthcarePartyDto"
-            }
-          },
-          "nextKeyPair": {
-            "$ref": "#/components/schemas/PaginatedDocumentKeyIdPairObject"
           }
         }
       },
@@ -31990,6 +33303,288 @@
           }
         }
       },
+      "AddedDocumentDto": {
+        "required": [
+          "documentSeq",
+          "verseSeq"
+        ],
+        "type": "object",
+        "properties": {
+          "from": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "to": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "verseSeq": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "documentSeq": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "mimeType": {
+            "type": "string"
+          },
+          "addressUrl": {
+            "type": "string"
+          },
+          "descrNl": {
+            "type": "string"
+          },
+          "descrFr": {
+            "type": "string"
+          },
+          "localPath": {
+            "type": "string"
+          }
+        }
+      },
+      "VerseDto": {
+        "required": [
+          "addedDocuments",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "rev": {
+            "type": "string"
+          },
+          "deletionDate": {
+            "type": "integer",
+            "description": "hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called.",
+            "format": "int64"
+          },
+          "chapterName": {
+            "type": "string"
+          },
+          "paragraphName": {
+            "type": "string"
+          },
+          "verseSeq": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "startDate": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "createdTms": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "createdUserId": {
+            "type": "string"
+          },
+          "endDate": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "verseNum": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "verseSeqParent": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "verseLevel": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "verseType": {
+            "type": "string"
+          },
+          "checkBoxInd": {
+            "type": "string"
+          },
+          "minCheckNum": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "andClauseNum": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "textFr": {
+            "type": "string"
+          },
+          "textNl": {
+            "type": "string"
+          },
+          "requestType": {
+            "type": "string"
+          },
+          "agreementTerm": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "agreementTermUnit": {
+            "type": "string"
+          },
+          "maxPackageNumber": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "purchasingAdvisorQualList": {
+            "type": "string"
+          },
+          "legalReference": {
+            "type": "string"
+          },
+          "modificationDate": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "addedDocuments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AddedDocumentDto"
+            }
+          },
+          "agreementYearMax": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "agreementRenewalMax": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "sexRestricted": {
+            "type": "string"
+          },
+          "minimumAgeAuthorized": {
+            "type": "number",
+            "format": "double"
+          },
+          "maximumAgeAuthorized": {
+            "type": "number",
+            "format": "double"
+          },
+          "maximumContentQuantity": {
+            "type": "number",
+            "format": "double"
+          },
+          "maximumContentUnit": {
+            "type": "string"
+          },
+          "maximumStrengthQuantity": {
+            "type": "number",
+            "format": "double"
+          },
+          "maximumStrengthUnit": {
+            "type": "string"
+          },
+          "maximumDurationQuantity": {
+            "type": "number",
+            "format": "double"
+          },
+          "maximumDurationUnit": {
+            "type": "string"
+          },
+          "otherAddedDocumentInd": {
+            "type": "string"
+          },
+          "minimumAgeAuthorizedUnit": {
+            "type": "string"
+          },
+          "maximumAgeAuthorizedUnit": {
+            "type": "string"
+          },
+          "modificationStatus": {
+            "type": "string"
+          },
+          "children": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VerseDto"
+            }
+          }
+        }
+      },
+      "ParagraphDto": {
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "rev": {
+            "type": "string"
+          },
+          "deletionDate": {
+            "type": "integer",
+            "description": "hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called.",
+            "format": "int64"
+          },
+          "chapterName": {
+            "type": "string"
+          },
+          "paragraphName": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "createdTms": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "createdUserId": {
+            "type": "string"
+          },
+          "endDate": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "keyStringNl": {
+            "type": "string"
+          },
+          "keyStringFr": {
+            "type": "string"
+          },
+          "agreementType": {
+            "type": "string"
+          },
+          "processType": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "legalReference": {
+            "type": "string"
+          },
+          "publicationDate": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "modificationDate": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "processTypeOverrule": {
+            "type": "string"
+          },
+          "paragraphVersion": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "agreementTypePro": {
+            "type": "string"
+          },
+          "modificationStatus": {
+            "type": "string"
+          }
+        }
+      },
       "ResultInfoDto": {
         "required": [
           "codes",
@@ -32142,6 +33737,61 @@
           },
           "nextKeyPair": {
             "$ref": "#/components/schemas/PaginatedDocumentKeyIdPairObject"
+          }
+        }
+      },
+      "UserAndHealthcarePartyDto": {
+        "required": [
+          "healthcareParty",
+          "user"
+        ],
+        "type": "object",
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/UserDto"
+          },
+          "healthcareParty": {
+            "$ref": "#/components/schemas/HealthcarePartyDto"
+          }
+        },
+        "description": "This entity embeds a User and its linked Healthcare Party."
+      },
+      "AppointmentTypeAndPlaceDto": {
+        "required": [
+          "acceptsNewPatients",
+          "calendarItemTypeId",
+          "duration"
+        ],
+        "type": "object",
+        "properties": {
+          "calendarItemTypeId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "color": {
+            "type": "string"
+          },
+          "duration": {
+            "type": "integer",
+            "format": "int32",
+            "default": 0
+          },
+          "subjectByLanguage": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "placeId": {
+            "type": "string"
+          },
+          "address": {
+            "$ref": "#/components/schemas/AddressDto"
+          },
+          "acceptsNewPatients": {
+            "type": "boolean"
           }
         }
       }
