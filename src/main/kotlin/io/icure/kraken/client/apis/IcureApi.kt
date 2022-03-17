@@ -24,7 +24,7 @@ import io.icure.kraken.client.models.InvoiceDto
 import io.icure.kraken.client.models.MessageDto
 import io.icure.kraken.client.models.PatientDto
 import io.icure.kraken.client.models.ReplicationInfoDto
-import io.icure.kraken.client.models.ReplicatorDocument
+import io.icure.kraken.client.models.ReplicatorDocumentDto
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -167,17 +167,17 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     * Get replication info
     * 
     * @param id  
-    * @return ReplicatorDocument
+    * @return ReplicatorDocumentDto
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getReplicatorInfo(id: kotlin.String) : ReplicatorDocument  {
+    suspend fun getReplicatorInfo(id: kotlin.String) : ReplicatorDocumentDto  {
         val localVariableConfig = getReplicatorInfoRequestConfig(id = id)
 
-        return request<Unit, ReplicatorDocument>(
+        return request<Unit, ReplicatorDocumentDto>(
             localVariableConfig
         )!!
     }

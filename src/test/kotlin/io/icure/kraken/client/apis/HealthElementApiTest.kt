@@ -13,7 +13,7 @@
 
 package io.icure.kraken.client.apis
 
-import io.icure.kraken.client.models.AbstractFilterDtoHealthElement
+
 import io.icure.kraken.client.models.DelegationDto
 import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.HealthElementDto
@@ -716,8 +716,8 @@ class HealthElementApiTest() {
             try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "matchHealthElementsBy")
-                val abstractFilterDtoHealthElement: AbstractFilterDtoHealthElement =
-                    TestUtils.getParameter<AbstractFilterDtoHealthElement>(
+                val abstractFilterDtoHealthElement: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.HealthElementDto> =
+                    TestUtils.getParameter<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.HealthElementDto>>(
                         fileName,
                         "matchHealthElementsBy.abstractFilterDtoHealthElement"
                     )!!.let {
@@ -726,7 +726,7 @@ class HealthElementApiTest() {
                                 val id = it::class.memberProperties.first { it.name == "id" }
                                 val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
                                 it.copy(rev = currentRev)
-                            } as? AbstractFilterDtoHealthElement ?: it
+                            } as? io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.HealthElementDto> ?: it
                     }
 
                 val response =

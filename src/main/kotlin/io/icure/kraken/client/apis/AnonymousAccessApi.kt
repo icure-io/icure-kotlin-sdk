@@ -15,8 +15,8 @@ package io.icure.kraken.client.apis
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.infrastructure.*
-import io.icure.kraken.client.models.CalendarItemTypeDto
-import io.icure.kraken.client.models.UserDto
+import io.icure.kraken.client.models.AppointmentTypeAndPlaceDto
+import io.icure.kraken.client.models.UserAndHealthcarePartyDto
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -49,10 +49,12 @@ class AnonymousAccessApi(basePath: kotlin.String = defaultBasePath, webClient: W
     * The start of the slot is returned in YYYYDDMMHHmmss format and only slots belonging to public time tables are returned.
     * @param groupId  
     * @param userId  
-    * @param getCalendarItemTypeId  
+    * @param calendarItemTypeId  
+    * @param isNewPatient  
     * @param startDate  
     * @param endDate  
     * @param hcpId  
+    * @param placeId  (optional)
     * @param limit  (optional)
     * @return kotlin.collections.List<kotlin.Long>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
@@ -61,8 +63,8 @@ class AnonymousAccessApi(basePath: kotlin.String = defaultBasePath, webClient: W
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getAvailabilitiesByPeriodAndCalendarItemTypeId(groupId: kotlin.String, userId: kotlin.String, getCalendarItemTypeId: kotlin.String, startDate: kotlin.Long, endDate: kotlin.Long, hcpId: kotlin.String, limit: kotlin.Int?) : kotlin.collections.List<kotlin.Long>  {
-        val localVariableConfig = getAvailabilitiesByPeriodAndCalendarItemTypeIdRequestConfig(groupId = groupId, userId = userId, getCalendarItemTypeId = getCalendarItemTypeId, startDate = startDate, endDate = endDate, hcpId = hcpId, limit = limit)
+    suspend fun getAvailabilitiesByPeriodAndCalendarItemTypeId(groupId: kotlin.String, userId: kotlin.String, calendarItemTypeId: kotlin.String, isNewPatient: kotlin.Boolean, startDate: kotlin.Long, endDate: kotlin.Long, hcpId: kotlin.String, placeId: kotlin.String?, limit: kotlin.Int?) : kotlin.collections.List<kotlin.Long>  {
+        val localVariableConfig = getAvailabilitiesByPeriodAndCalendarItemTypeIdRequestConfig(groupId = groupId, userId = userId, calendarItemTypeId = calendarItemTypeId, isNewPatient = isNewPatient, startDate = startDate, endDate = endDate, hcpId = hcpId, placeId = placeId, limit = limit)
 
         return request<Unit, kotlin.collections.List<kotlin.Long>>(
             localVariableConfig
@@ -73,20 +75,26 @@ class AnonymousAccessApi(basePath: kotlin.String = defaultBasePath, webClient: W
     *
     * @param groupId  
     * @param userId  
-    * @param getCalendarItemTypeId  
+    * @param calendarItemTypeId  
+    * @param isNewPatient  
     * @param startDate  
     * @param endDate  
     * @param hcpId  
+    * @param placeId  (optional)
     * @param limit  (optional)
     * @return RequestConfig
     */
-    fun getAvailabilitiesByPeriodAndCalendarItemTypeIdRequestConfig(groupId: kotlin.String, userId: kotlin.String, getCalendarItemTypeId: kotlin.String, startDate: kotlin.Long, endDate: kotlin.Long, hcpId: kotlin.String, limit: kotlin.Int?) : RequestConfig<Unit> {
+    fun getAvailabilitiesByPeriodAndCalendarItemTypeIdRequestConfig(groupId: kotlin.String, userId: kotlin.String, calendarItemTypeId: kotlin.String, isNewPatient: kotlin.Boolean, startDate: kotlin.Long, endDate: kotlin.Long, hcpId: kotlin.String, placeId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
+                put("isNewPatient", listOf(isNewPatient.toString()))
                 put("startDate", listOf(startDate.toString()))
                 put("endDate", listOf(endDate.toString()))
                 put("hcpId", listOf(hcpId.toString()))
+                if (placeId != null) {
+                    put("placeId", listOf(placeId.toString()))
+                }
                 if (limit != null) {
                     put("limit", listOf(limit.toString()))
                 }
@@ -97,7 +105,7 @@ class AnonymousAccessApi(basePath: kotlin.String = defaultBasePath, webClient: W
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/aa/available/inGroup/{groupId}/forUser/{userId}/type/{getCalendarItemTypeId}".replace("{"+"groupId"+"}", "${URLEncoder.encode(groupId.toString(), Charsets.UTF_8)}").replace("{"+"userId"+"}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}").replace("{"+"getCalendarItemTypeId"+"}", "${URLEncoder.encode(getCalendarItemTypeId.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/aa/available/inGroup/{groupId}/forUser/{userId}/type/{calendarItemTypeId}".replace("{"+"groupId"+"}", "${URLEncoder.encode(groupId.toString(), Charsets.UTF_8)}").replace("{"+"userId"+"}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}").replace("{"+"calendarItemTypeId"+"}", "${URLEncoder.encode(calendarItemTypeId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -110,17 +118,17 @@ class AnonymousAccessApi(basePath: kotlin.String = defaultBasePath, webClient: W
     * @param userId Healthcare party user id 
     * @param startDate  
     * @param endDate  
-    * @return kotlin.collections.List<CalendarItemTypeDto>
+    * @return kotlin.collections.List<AppointmentTypeAndPlaceDto>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listAppointmentTypesForUser(groupId: kotlin.String, userId: kotlin.String, startDate: kotlin.Long, endDate: kotlin.Long) : kotlin.collections.List<CalendarItemTypeDto>  {
+    suspend fun listAppointmentTypesForUser(groupId: kotlin.String, userId: kotlin.String, startDate: kotlin.Long, endDate: kotlin.Long) : kotlin.collections.List<AppointmentTypeAndPlaceDto>  {
         val localVariableConfig = listAppointmentTypesForUserRequestConfig(groupId = groupId, userId = userId, startDate = startDate, endDate = endDate)
 
-        return request<Unit, kotlin.collections.List<CalendarItemTypeDto>>(
+        return request<Unit, kotlin.collections.List<AppointmentTypeAndPlaceDto>>(
             localVariableConfig
         )!!
     }
@@ -156,17 +164,17 @@ class AnonymousAccessApi(basePath: kotlin.String = defaultBasePath, webClient: W
     * List healthcare parties for a provided group id
     * Returns a list of Users/healthcare parties contained in the group owning the providing id. In order to be returned, a healthcare party needs to be linked to a user an this user must have a property &#39;org.taktik.icure.public&#39; set to a boolean true.
     * @param groupId Healthcare parties group id 
-    * @return kotlin.collections.List<UserDto>
+    * @return kotlin.collections.List<UserAndHealthcarePartyDto>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listHealthcarePartiesInGroup(groupId: kotlin.String) : kotlin.collections.List<UserDto>  {
+    suspend fun listHealthcarePartiesInGroup(groupId: kotlin.String) : kotlin.collections.List<UserAndHealthcarePartyDto>  {
         val localVariableConfig = listHealthcarePartiesInGroupRequestConfig(groupId = groupId)
 
-        return request<Unit, kotlin.collections.List<UserDto>>(
+        return request<Unit, kotlin.collections.List<UserAndHealthcarePartyDto>>(
             localVariableConfig
         )!!
     }

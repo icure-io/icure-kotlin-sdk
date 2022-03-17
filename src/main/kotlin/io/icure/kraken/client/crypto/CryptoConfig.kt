@@ -4,6 +4,7 @@ import io.icure.kraken.client.extendedapis.ContactMapperFactory
 import io.icure.kraken.client.extendedapis.DocumentMapperFactory
 import io.icure.kraken.client.extendedapis.HealthElementMapperFactory
 import io.icure.kraken.client.extendedapis.PatientMapperFactory
+import io.icure.kraken.client.extendedapis.dataOwnerId
 import io.icure.kraken.client.extendedapis.decryptServices
 import io.icure.kraken.client.extendedapis.encryptServices
 import io.icure.kraken.client.infrastructure.ApiClient
@@ -13,6 +14,7 @@ import io.icure.kraken.client.models.decrypted.DocumentDto
 import io.icure.kraken.client.models.decrypted.HealthElementDto
 import io.icure.kraken.client.models.decrypted.PatientDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 
 /*
 D is the decrypted class, K is the crypted class
@@ -29,7 +31,7 @@ open class CryptoConfig<D,K>(
     val unmarshaller: suspend (K, ByteArray) -> D
 )
 
-
+@FlowPreview
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 fun patientCryptoConfig(crypto: LocalCrypto) =
@@ -48,6 +50,7 @@ fun patientCryptoConfig(crypto: LocalCrypto) =
         }
     )
 
+@FlowPreview
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 fun contactCryptoConfig(
@@ -57,10 +60,10 @@ fun contactCryptoConfig(
     crypto = crypto,
     marshaller = { c ->
         val decryptedKey =
-            crypto.decryptEncryptionKeys(user.healthcarePartyId!!, c.encryptionKeys).firstOrNull()
+            crypto.decryptEncryptionKeys(user.dataOwnerId(), c.encryptionKeys).firstOrNull()
         ContactMapperFactory.instance.map(c).copy(
             services = crypto.encryptServices(
-                user.healthcarePartyId!!,
+                user.dataOwnerId(),
                 (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"]
                     ?: setOf()),
                 decryptedKey?.toByteArray(),
@@ -71,8 +74,8 @@ fun contactCryptoConfig(
     unmarshaller = { c, b ->
         ContactMapperFactory.instance.map(c).copy(
             services = crypto.decryptServices(
-                user.healthcarePartyId!!,
-                crypto.decryptEncryptionKeys(user.healthcarePartyId!!, c.encryptionKeys).firstOrNull()
+                user.dataOwnerId(),
+                crypto.decryptEncryptionKeys(user.dataOwnerId(), c.encryptionKeys).firstOrNull()
                     ?.toByteArray(),
                 c.services
             )
@@ -80,6 +83,7 @@ fun contactCryptoConfig(
     }
 )
 
+@FlowPreview
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 fun healthElementCryptoConfig(
@@ -94,6 +98,7 @@ fun healthElementCryptoConfig(
     }
 )
 
+@FlowPreview
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 fun documentCryptoConfig(

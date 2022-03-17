@@ -8,10 +8,13 @@ import io.icure.kraken.client.crypto.LocalCrypto
 import io.icure.kraken.client.crypto.documentCryptoConfig
 import io.icure.kraken.client.crypto.toPrivateKey
 import io.icure.kraken.client.crypto.toPublicKey
+import io.icure.kraken.client.extendedapis.infrastructure.ExtendedTestUtils
+import io.icure.kraken.client.extendedapis.infrastructure.ExtendedTestUtils.localCrypto
 import io.icure.kraken.client.models.HealthcarePartyDto
 import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.decrypted.DocumentDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions
@@ -32,6 +35,7 @@ internal class DocumentApiKtTest {
     private val documentApi =
         DocumentApi(basePath = "https://kraken.icure.dev", authHeader = "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=")
 
+    @FlowPreview
     @org.junit.jupiter.api.Test
     fun setDocumentAttachment_HappyFlow() {
         runBlocking {
@@ -41,7 +45,8 @@ internal class DocumentApiKtTest {
 
             val keyPath = "keys/${hcp.id}-icc-priv.2048.key"
             val keyFile = this@DocumentApiKtTest::class.java.getResource(keyPath)!!
-            val localCrypto = localCrypto(currentUser, keyFile, hcp)
+            val localCrypto = localCrypto("https://kraken.icure.dev",
+                "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=", keyFile, currentUser, hcp.toDataOwner())
             val documentConfig = documentCryptoConfig(localCrypto)
 
             val attachmentToAdd = Files.readAllBytes(Paths.get("src/test/resources/set_attachment_test.txt"))
@@ -71,14 +76,4 @@ internal class DocumentApiKtTest {
             Assertions.assertEquals(docWithAttachment.externalUuid, documentToCreate.externalUuid)
         }
     }
-
-    private fun localCrypto(
-        user: UserDto,
-        keyFile: URL,
-        hcp: HealthcarePartyDto
-    ) = LocalCrypto(
-        hcpartyApi, mapOf(
-            user.healthcarePartyId!! to (keyFile.readText(Charsets.UTF_8).toPrivateKey() to hcp.publicKey!!.toPublicKey())
-        )
-    )
 }

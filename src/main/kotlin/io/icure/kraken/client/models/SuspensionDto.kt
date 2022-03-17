@@ -25,6 +25,7 @@ import com.github.pozo.KotlinBuilder
  * @param beginMoment 
  * @param endMoment 
  * @param suspensionReason 
+ * @param lifecycle 
  */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -39,7 +40,10 @@ data class SuspensionDto (
     val endMoment: kotlin.Long? = null,
 
     @field:JsonProperty("suspensionReason")
-    val suspensionReason: kotlin.String? = null
+    val suspensionReason: kotlin.String? = null,
+
+    @field:JsonProperty("lifecycle")
+    val lifecycle: kotlin.String? = null
 
 )
 

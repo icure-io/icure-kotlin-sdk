@@ -18,7 +18,13 @@ Method | HTTP request | Description
 [**findPaginatedVmpsByGroupId**](Besamv2Api.md#findPaginatedVmpsByGroupId) | **GET** /rest/v2/be_samv2/vmp/byGroupId/{vmpgId} | Finding VMPs by group with pagination.
 [**findPaginatedVmpsByLabel**](Besamv2Api.md#findPaginatedVmpsByLabel) | **GET** /rest/v2/be_samv2/vmp | Finding VMPs by label with pagination.
 [**findPaginatedVmpsByVmpCode**](Besamv2Api.md#findPaginatedVmpsByVmpCode) | **GET** /rest/v2/be_samv2/vmp/byVmpCode/{vmpCode} | Finding VMPs by group with pagination.
+[**findParagraphs**](Besamv2Api.md#findParagraphs) | **GET** /rest/v2/be_samv2/chap/search/{searchString}/{language} | 
+[**findParagraphsWithCnk**](Besamv2Api.md#findParagraphsWithCnk) | **GET** /rest/v2/be_samv2/chap/bycnk/{cnk}/{language} | 
+[**getAddedDocument**](Besamv2Api.md#getAddedDocument) | **GET** /rest/v2/be_samv2/chap/{chapterName}/{paragraphName}/{verseSeq}/addeddoc/{docSeq}/{language} | 
+[**getAmpsForParagraph**](Besamv2Api.md#getAmpsForParagraph) | **GET** /rest/v2/be_samv2/chap/amps/{chapterName}/{paragraphName} | 
 [**getSamVersion**](Besamv2Api.md#getSamVersion) | **GET** /rest/v2/be_samv2/v | Get Samv2 version.
+[**getVersesHierarchy**](Besamv2Api.md#getVersesHierarchy) | **GET** /rest/v2/be_samv2/chap/verse/{chapterName}/{paragraphName} | 
+[**getVtmNamesForParagraph**](Besamv2Api.md#getVtmNamesForParagraph) | **GET** /rest/v2/be_samv2/chap/vtms/{chapterName}/{paragraphName}/{language} | 
 [**listAmpsByDmppCodes**](Besamv2Api.md#listAmpsByDmppCodes) | **POST** /rest/v2/be_samv2/amp/byDmppCodes | Finding AMPs by dmpp code
 [**listAmpsByGroupCodes**](Besamv2Api.md#listAmpsByGroupCodes) | **POST** /rest/v2/be_samv2/amp/byGroupCodes | Finding AMPs by group.
 [**listAmpsByGroupIds**](Besamv2Api.md#listAmpsByGroupIds) | **POST** /rest/v2/be_samv2/amp/byGroupIds | Finding AMPs by group.
@@ -776,6 +782,202 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: */*
 
+<a name="findParagraphs"></a>
+# **findParagraphs**
+> kotlin.collections.List&lt;ParagraphDto&gt; findParagraphs(searchString, language)
+
+
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = Besamv2Api()
+val searchString : kotlin.String = searchString_example // kotlin.String | 
+val language : kotlin.String = language_example // kotlin.String | 
+try {
+    val result : kotlin.collections.List<ParagraphDto> = apiInstance.findParagraphs(searchString, language)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling Besamv2Api#findParagraphs")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling Besamv2Api#findParagraphs")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **searchString** | **kotlin.String**|  |
+ **language** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;ParagraphDto&gt;**](ParagraphDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="findParagraphsWithCnk"></a>
+# **findParagraphsWithCnk**
+> kotlin.collections.List&lt;ParagraphDto&gt; findParagraphsWithCnk(cnk, language)
+
+
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = Besamv2Api()
+val cnk : kotlin.Long = 789 // kotlin.Long | 
+val language : kotlin.String = language_example // kotlin.String | 
+try {
+    val result : kotlin.collections.List<ParagraphDto> = apiInstance.findParagraphsWithCnk(cnk, language)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling Besamv2Api#findParagraphsWithCnk")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling Besamv2Api#findParagraphsWithCnk")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **cnk** | **kotlin.Long**|  |
+ **language** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;ParagraphDto&gt;**](ParagraphDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="getAddedDocument"></a>
+# **getAddedDocument**
+> kotlin.collections.List&lt;InlineResponse200&gt; getAddedDocument(chapterName, paragraphName, verseSeq, docSeq, language, response)
+
+
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = Besamv2Api()
+val chapterName : kotlin.String = chapterName_example // kotlin.String | 
+val paragraphName : kotlin.String = paragraphName_example // kotlin.String | 
+val verseSeq : kotlin.Long = 789 // kotlin.Long | 
+val docSeq : kotlin.Long = 789 // kotlin.Long | 
+val language : kotlin.String = language_example // kotlin.String | 
+val response : Response =  // Response | 
+try {
+    val result : kotlin.collections.List<InlineResponse200> = apiInstance.getAddedDocument(chapterName, paragraphName, verseSeq, docSeq, language, response)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling Besamv2Api#getAddedDocument")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling Besamv2Api#getAddedDocument")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **chapterName** | **kotlin.String**|  |
+ **paragraphName** | **kotlin.String**|  |
+ **verseSeq** | **kotlin.Long**|  |
+ **docSeq** | **kotlin.Long**|  |
+ **language** | **kotlin.String**|  |
+ **response** | [**Response**](.md)|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;InlineResponse200&gt;**](InlineResponse200.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/octet-stream
+
+<a name="getAmpsForParagraph"></a>
+# **getAmpsForParagraph**
+> kotlin.collections.List&lt;AmpDto&gt; getAmpsForParagraph(chapterName, paragraphName)
+
+
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = Besamv2Api()
+val chapterName : kotlin.String = chapterName_example // kotlin.String | 
+val paragraphName : kotlin.String = paragraphName_example // kotlin.String | 
+try {
+    val result : kotlin.collections.List<AmpDto> = apiInstance.getAmpsForParagraph(chapterName, paragraphName)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling Besamv2Api#getAmpsForParagraph")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling Besamv2Api#getAmpsForParagraph")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **chapterName** | **kotlin.String**|  |
+ **paragraphName** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;AmpDto&gt;**](AmpDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
 <a name="getSamVersion"></a>
 # **getSamVersion**
 > SamVersionDto getSamVersion()
@@ -809,6 +1011,102 @@ This endpoint does not need any parameter.
 ### Return type
 
 [**SamVersionDto**](SamVersionDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="getVersesHierarchy"></a>
+# **getVersesHierarchy**
+> VerseDto getVersesHierarchy(chapterName, paragraphName)
+
+
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = Besamv2Api()
+val chapterName : kotlin.String = chapterName_example // kotlin.String | 
+val paragraphName : kotlin.String = paragraphName_example // kotlin.String | 
+try {
+    val result : VerseDto = apiInstance.getVersesHierarchy(chapterName, paragraphName)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling Besamv2Api#getVersesHierarchy")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling Besamv2Api#getVersesHierarchy")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **chapterName** | **kotlin.String**|  |
+ **paragraphName** | **kotlin.String**|  |
+
+### Return type
+
+[**VerseDto**](VerseDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="getVtmNamesForParagraph"></a>
+# **getVtmNamesForParagraph**
+> kotlin.collections.List&lt;kotlin.String&gt; getVtmNamesForParagraph(chapterName, paragraphName, language)
+
+
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = Besamv2Api()
+val chapterName : kotlin.String = chapterName_example // kotlin.String | 
+val paragraphName : kotlin.String = paragraphName_example // kotlin.String | 
+val language : kotlin.String = language_example // kotlin.String | 
+try {
+    val result : kotlin.collections.List<kotlin.String> = apiInstance.getVtmNamesForParagraph(chapterName, paragraphName, language)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling Besamv2Api#getVtmNamesForParagraph")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling Besamv2Api#getVtmNamesForParagraph")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **chapterName** | **kotlin.String**|  |
+ **paragraphName** | **kotlin.String**|  |
+ **language** | **kotlin.String**|  |
+
+### Return type
+
+**kotlin.collections.List&lt;kotlin.String&gt;**
 
 ### Authorization
 

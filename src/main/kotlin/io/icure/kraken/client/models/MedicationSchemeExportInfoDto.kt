@@ -26,6 +26,7 @@ import com.github.pozo.KotlinBuilder
  *
  * @param secretForeignKeys 
  * @param services 
+ * @param serviceAuthors 
  * @param recipient 
  * @param comment 
  */
@@ -40,6 +41,9 @@ data class MedicationSchemeExportInfoDto (
 
     @field:JsonProperty("services")
     val services: kotlin.collections.List<ServiceDto> = emptyList(),
+
+    @field:JsonProperty("serviceAuthors")
+    val serviceAuthors: kotlin.collections.List<HealthcarePartyDto>? = null,
 
     @field:JsonProperty("recipient")
     val recipient: HealthcarePartyDto? = null,

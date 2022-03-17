@@ -4,14 +4,14 @@ All URIs are relative to *https://kraken.icure.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getAvailabilitiesByPeriodAndCalendarItemTypeId**](AnonymousAccessApi.md#getAvailabilitiesByPeriodAndCalendarItemTypeId) | **GET** /rest/v2/aa/available/inGroup/{groupId}/forUser/{userId}/type/{getCalendarItemTypeId} | Get Availabilities for HCP and appointmentType
+[**getAvailabilitiesByPeriodAndCalendarItemTypeId**](AnonymousAccessApi.md#getAvailabilitiesByPeriodAndCalendarItemTypeId) | **GET** /rest/v2/aa/available/inGroup/{groupId}/forUser/{userId}/type/{calendarItemTypeId} | Get Availabilities for HCP and appointmentType
 [**listAppointmentTypesForUser**](AnonymousAccessApi.md#listAppointmentTypesForUser) | **GET** /rest/v2/aa/appointmentType/inGroup/{groupId}/forUser/{userId} | List Calendar Item types for a provided group id and user id
 [**listHealthcarePartiesInGroup**](AnonymousAccessApi.md#listHealthcarePartiesInGroup) | **GET** /rest/v2/aa/hcparty/inGroup/{groupId} | List healthcare parties for a provided group id
 
 
 <a name="getAvailabilitiesByPeriodAndCalendarItemTypeId"></a>
 # **getAvailabilitiesByPeriodAndCalendarItemTypeId**
-> kotlin.collections.List&lt;kotlin.Long&gt; getAvailabilitiesByPeriodAndCalendarItemTypeId(groupId, userId, getCalendarItemTypeId, startDate, endDate, hcpId, limit)
+> kotlin.collections.List&lt;kotlin.Long&gt; getAvailabilitiesByPeriodAndCalendarItemTypeId(groupId, userId, calendarItemTypeId, isNewPatient, startDate, endDate, hcpId, placeId, limit)
 
 Get Availabilities for HCP and appointmentType
 
@@ -26,13 +26,15 @@ The start of the slot is returned in YYYYDDMMHHmmss format and only slots belong
 val apiInstance = AnonymousAccessApi()
 val groupId : kotlin.String = groupId_example // kotlin.String | 
 val userId : kotlin.String = userId_example // kotlin.String | 
-val getCalendarItemTypeId : kotlin.String = getCalendarItemTypeId_example // kotlin.String | 
+val calendarItemTypeId : kotlin.String = calendarItemTypeId_example // kotlin.String | 
+val isNewPatient : kotlin.Boolean = true // kotlin.Boolean | 
 val startDate : kotlin.Long = 789 // kotlin.Long | 
 val endDate : kotlin.Long = 789 // kotlin.Long | 
 val hcpId : kotlin.String = hcpId_example // kotlin.String | 
+val placeId : kotlin.String = placeId_example // kotlin.String | 
 val limit : kotlin.Int = 56 // kotlin.Int | 
 try {
-    val result : kotlin.collections.List<kotlin.Long> = apiInstance.getAvailabilitiesByPeriodAndCalendarItemTypeId(groupId, userId, getCalendarItemTypeId, startDate, endDate, hcpId, limit)
+    val result : kotlin.collections.List<kotlin.Long> = apiInstance.getAvailabilitiesByPeriodAndCalendarItemTypeId(groupId, userId, calendarItemTypeId, isNewPatient, startDate, endDate, hcpId, placeId, limit)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling AnonymousAccessApi#getAvailabilitiesByPeriodAndCalendarItemTypeId")
@@ -49,10 +51,12 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **groupId** | **kotlin.String**|  |
  **userId** | **kotlin.String**|  |
- **getCalendarItemTypeId** | **kotlin.String**|  |
+ **calendarItemTypeId** | **kotlin.String**|  |
+ **isNewPatient** | **kotlin.Boolean**|  |
  **startDate** | **kotlin.Long**|  |
  **endDate** | **kotlin.Long**|  |
  **hcpId** | **kotlin.String**|  |
+ **placeId** | **kotlin.String**|  | [optional]
  **limit** | **kotlin.Int**|  | [optional]
 
 ### Return type
@@ -70,7 +74,7 @@ No authorization required
 
 <a name="listAppointmentTypesForUser"></a>
 # **listAppointmentTypesForUser**
-> kotlin.collections.List&lt;CalendarItemTypeDto&gt; listAppointmentTypesForUser(groupId, userId, startDate, endDate)
+> kotlin.collections.List&lt;AppointmentTypeAndPlaceDto&gt; listAppointmentTypesForUser(groupId, userId, startDate, endDate)
 
 List Calendar Item types for a provided group id and user id
 
@@ -88,7 +92,7 @@ val userId : kotlin.String = userId_example // kotlin.String | Healthcare party 
 val startDate : kotlin.Long = 789 // kotlin.Long | 
 val endDate : kotlin.Long = 789 // kotlin.Long | 
 try {
-    val result : kotlin.collections.List<CalendarItemTypeDto> = apiInstance.listAppointmentTypesForUser(groupId, userId, startDate, endDate)
+    val result : kotlin.collections.List<AppointmentTypeAndPlaceDto> = apiInstance.listAppointmentTypesForUser(groupId, userId, startDate, endDate)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling AnonymousAccessApi#listAppointmentTypesForUser")
@@ -110,7 +114,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.collections.List&lt;CalendarItemTypeDto&gt;**](CalendarItemTypeDto.md)
+[**kotlin.collections.List&lt;AppointmentTypeAndPlaceDto&gt;**](AppointmentTypeAndPlaceDto.md)
 
 ### Authorization
 
@@ -123,7 +127,7 @@ No authorization required
 
 <a name="listHealthcarePartiesInGroup"></a>
 # **listHealthcarePartiesInGroup**
-> kotlin.collections.List&lt;UserDto&gt; listHealthcarePartiesInGroup(groupId)
+> kotlin.collections.List&lt;UserAndHealthcarePartyDto&gt; listHealthcarePartiesInGroup(groupId)
 
 List healthcare parties for a provided group id
 
@@ -138,7 +142,7 @@ Returns a list of Users/healthcare parties contained in the group owning the pro
 val apiInstance = AnonymousAccessApi()
 val groupId : kotlin.String = groupId_example // kotlin.String | Healthcare parties group id
 try {
-    val result : kotlin.collections.List<UserDto> = apiInstance.listHealthcarePartiesInGroup(groupId)
+    val result : kotlin.collections.List<UserAndHealthcarePartyDto> = apiInstance.listHealthcarePartiesInGroup(groupId)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling AnonymousAccessApi#listHealthcarePartiesInGroup")
@@ -157,7 +161,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.collections.List&lt;UserDto&gt;**](UserDto.md)
+[**kotlin.collections.List&lt;UserAndHealthcarePartyDto&gt;**](UserAndHealthcarePartyDto.md)
 
 ### Authorization
 

@@ -27,6 +27,8 @@ import com.github.pozo.KotlinBuilder
  * @param hours 
  * @param recurrenceTypes 
  * @param homeVisit 
+ * @param publicTimeTableItem 
+ * @param acceptsNewPatient 
  * @param unavailable 
  * @param calendarItemTypeId 
  * @param placeId 
@@ -48,6 +50,12 @@ data class TimeTableItemDto (
 
     @field:JsonProperty("homeVisit")
     val homeVisit: kotlin.Boolean,
+
+    @field:JsonProperty("publicTimeTableItem")
+    val publicTimeTableItem: kotlin.Boolean,
+
+    @field:JsonProperty("acceptsNewPatient")
+    val acceptsNewPatient: kotlin.Boolean,
 
     @field:JsonProperty("unavailable")
     val unavailable: kotlin.Boolean,

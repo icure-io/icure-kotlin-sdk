@@ -18,25 +18,25 @@ suspend fun InvoiceDto.initDelegations(user: UserDto, config: CryptoConfig<Invoi
     val ek = UUID.randomUUID().toString()
     val sfk = UUID.randomUUID().toString()
     return this.copy(
-        responsible = user.healthcarePartyId!!,
+        responsible = user.dataOwnerId(),
         author = user.id,
-        delegations = (delegations + user.healthcarePartyId).fold(this.encryptionKeys) { m, d ->
+        delegations = (delegations + user.dataOwnerId()).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
                     emptyList(),
-                    user.healthcarePartyId,
+                    user.dataOwnerId(),
                     d,
-                    config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, sfk),
+                    config.crypto.encryptAESKeyForHcp(user.dataOwnerId(), d, this.id, sfk),
                 ),
             ))
         },
-        encryptionKeys = (delegations + user.healthcarePartyId).fold(this.encryptionKeys) { m, d ->
+        encryptionKeys = (delegations + user.dataOwnerId()).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
                     emptyList(),
-                    user.healthcarePartyId,
+                    user.dataOwnerId(),
                     d,
-                    config.crypto.encryptAESKeyForHcp(user.healthcarePartyId, d, this.id, ek),
+                    config.crypto.encryptAESKeyForHcp(user.dataOwnerId(), d, this.id, ek),
                 ),
             ))
         },
@@ -48,22 +48,22 @@ suspend fun InvoiceDto.initDelegations(user: UserDto, config: CryptoConfig<Invoi
 suspend fun InvoiceApi.createInvoice(user: UserDto, invoice: InvoiceDto, config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>) =
     this.createInvoice(
         config.encryptInvoice(
-            user.healthcarePartyId!!,
+            user.dataOwnerId(),
             (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
             invoice
         )
-    ).let { config.decryptInvoice(user.healthcarePartyId, it) }
+    ).let { config.decryptInvoice(user.dataOwnerId(), it) }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun InvoiceApi.createInvoices(user: UserDto, invoices: List<InvoiceDto>, config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>) =
     this.createInvoices(invoices.map {
         config.encryptInvoice(
-            user.healthcarePartyId!!,
+            user.dataOwnerId(),
             (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
             it
         )
-    }).map { config.decryptInvoice(user.healthcarePartyId!!, it) }
+    }).map { config.decryptInvoice(user.dataOwnerId(), it) }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
@@ -74,7 +74,7 @@ suspend fun InvoiceApi.newInvoiceDelegations(
     config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>
 ): InvoiceDto {
     return this.newInvoiceDelegations(invoiceId, delegationDto)
-        .let { config.decryptInvoice(user.healthcarePartyId!!, it) }
+        .let { config.decryptInvoice(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
@@ -85,7 +85,7 @@ suspend fun InvoiceApi.listInvoicesByHCPartyAndPatient(
     patient: PatientDto,
     config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>
 ): List<InvoiceDto> {
-    val keys = config.crypto.decryptEncryptionKeys(user.healthcarePartyId!!, patient.delegations).takeIf { it.isNotEmpty() }
+    val keys = config.crypto.decryptEncryptionKeys(user.dataOwnerId(), patient.delegations).takeIf { it.isNotEmpty() }
         ?: throw IllegalArgumentException("No delegation for user")
 
     return this.listInvoicesByHCPartyAndPatientForeignKeys(user, hcPartyId, keys.joinToString(","), config)
@@ -100,13 +100,13 @@ suspend fun InvoiceApi.listInvoicesByHCPartyAndPatientForeignKeys(
     config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>
 ): List<InvoiceDto> {
     return this.listInvoicesByHCPartyAndPatientForeignKeys(hcPartyId, secretFKeys)
-        .map { config.decryptInvoice(user.healthcarePartyId!!, it) }
+        .map { config.decryptInvoice(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun InvoiceApi.getInvoice(user: UserDto, invoiceId: String, config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>): InvoiceDto {
-    return this.getInvoice(invoiceId).let { config.decryptInvoice(user.healthcarePartyId!!, it) }
+    return this.getInvoice(invoiceId).let { config.decryptInvoice(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
@@ -118,11 +118,11 @@ suspend fun InvoiceApi.modifyInvoice(
 ): InvoiceDto {
     return this.modifyInvoice(
         config.encryptInvoice(
-            user.healthcarePartyId!!,
+            user.dataOwnerId(),
             (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
             invoice
         )
-    ).let { config.decryptInvoice(user.healthcarePartyId, it) }
+    ).let { config.decryptInvoice(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
@@ -130,11 +130,11 @@ suspend fun InvoiceApi.modifyInvoice(
 suspend fun InvoiceApi.modifyInvoices(user: UserDto, invoices: List<InvoiceDto>, config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>) =
     this.modifyInvoices(invoices.map {
         config.encryptInvoice(
-            user.healthcarePartyId!!,
+            user.dataOwnerId(),
             (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
             it
         )
-    }).map { config.decryptInvoice(user.healthcarePartyId!!, it) }
+    }).map { config.decryptInvoice(user.dataOwnerId(), it) }
 
 
 @ExperimentalCoroutinesApi
@@ -160,7 +160,7 @@ suspend fun InvoiceApi.appendCodes(
         insuranceId,
         invoiceId,
         gracePeriod
-    ).map { config.decryptInvoice(user.healthcarePartyId!!, it) }
+    ).map { config.decryptInvoice(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
@@ -170,7 +170,7 @@ suspend fun InvoiceApi.filterInvoicesBy(
     filterChainInvoice: FilterChain<io.icure.kraken.client.models.InvoiceDto>,
     config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>
 ): List<InvoiceDto> {
-    return this.filterInvoicesBy(filterChainInvoice).map { config.decryptInvoice(user.healthcarePartyId!!, it) }
+    return this.filterInvoicesBy(filterChainInvoice).map { config.decryptInvoice(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
@@ -187,7 +187,7 @@ suspend fun InvoiceApi.findInvoicesByAuthor(
 ): io.icure.kraken.client.models.decrypted.PaginatedListInvoiceDto {
     return this.findInvoicesByAuthor(hcPartyId, fromDate, toDate, startKey, startDocumentId, limit)
         .let {
-            io.icure.kraken.client.models.decrypted.PaginatedListInvoiceDto(rows = it.rows.map { config.decryptInvoice(user.healthcarePartyId!!, it) }, pageSize = it.pageSize, totalSize = it.totalSize, nextKeyPair = it.nextKeyPair)
+            io.icure.kraken.client.models.decrypted.PaginatedListInvoiceDto(rows = it.rows.map { config.decryptInvoice(user.dataOwnerId(), it) }, pageSize = it.pageSize, totalSize = it.totalSize, nextKeyPair = it.nextKeyPair)
         }
 }
 
@@ -198,7 +198,7 @@ suspend fun InvoiceApi.getInvoices(
     listOfIdsDto: ListOfIdsDto,
     config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>
 ): List<InvoiceDto> {
-    return this.getInvoices(listOfIdsDto).map { config.decryptInvoice(user.healthcarePartyId!!, it) }
+    return this.getInvoices(listOfIdsDto).map { config.decryptInvoice(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
@@ -212,7 +212,7 @@ suspend fun InvoiceApi.listAllHcpsByStatus(
     config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>
 ): List<InvoiceDto> {
     return this.listAllHcpsByStatus(status, listOfIdsDto, from, to)
-        .map { config.decryptInvoice(user.healthcarePartyId!!, it) }
+        .map { config.decryptInvoice(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
@@ -222,7 +222,7 @@ suspend fun InvoiceApi.listInvoicesByContactIds(
     listOfIdsDto: ListOfIdsDto,
     config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>
 ): List<InvoiceDto> {
-    return this.listInvoicesByContactIds(listOfIdsDto).map { config.decryptInvoice(user.healthcarePartyId!!, it) }
+    return this.listInvoicesByContactIds(listOfIdsDto).map { config.decryptInvoice(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
@@ -233,7 +233,7 @@ suspend fun InvoiceApi.listByHcPartyGroupId(
     groupId: String,
     config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>
 ): List<InvoiceDto> {
-    return this.listInvoicesByHcPartyAndGroupId(hcPartyId, groupId).map { config.decryptInvoice(user.healthcarePartyId!!, it) }
+    return this.listInvoicesByHcPartyAndGroupId(hcPartyId, groupId).map { config.decryptInvoice(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
@@ -249,7 +249,7 @@ suspend fun InvoiceApi.listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate(
     config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>
 ): List<InvoiceDto> {
     return this.listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate(hcPartyId, sentMediumType, invoiceType, sent, from, to)
-        .map { config.decryptInvoice(user.healthcarePartyId!!, it) }
+        .map { config.decryptInvoice(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
@@ -264,7 +264,7 @@ suspend fun InvoiceApi.listInvoicesByHcpartySendingModeStatusDate(
     config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>
 ): List<InvoiceDto> {
     return this.listInvoicesByHcpartySendingModeStatusDate(hcPartyId, sendingMode, status, from, to)
-        .map { config.decryptInvoice(user.healthcarePartyId!!, it) }
+        .map { config.decryptInvoice(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
@@ -274,7 +274,7 @@ suspend fun InvoiceApi.listInvoicesByIds(
     invoiceIds: String,
     config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>
 ): List<InvoiceDto> {
-    return this.listInvoicesByIds(invoiceIds).map { config.decryptInvoice(user.healthcarePartyId!!, it) }
+    return this.listInvoicesByIds(invoiceIds).map { config.decryptInvoice(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
@@ -284,7 +284,7 @@ suspend fun InvoiceApi.listInvoicesByRecipientsIds(
     recipientIds: String,
     config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>
 ): List<InvoiceDto> {
-    return this.listInvoicesByRecipientsIds(recipientIds).map { config.decryptInvoice(user.healthcarePartyId!!, it) }
+    return this.listInvoicesByRecipientsIds(recipientIds).map { config.decryptInvoice(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
@@ -294,7 +294,7 @@ suspend fun InvoiceApi.listInvoicesByServiceIds(
     serviceIds: String,
     config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>
 ): List<InvoiceDto> {
-    return this.listInvoicesByServiceIds(serviceIds).map { config.decryptInvoice(user.healthcarePartyId!!, it) }
+    return this.listInvoicesByServiceIds(serviceIds).map { config.decryptInvoice(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
@@ -304,7 +304,7 @@ suspend fun InvoiceApi.listToInsurances(
     userIds: String?,
     config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>
 ): List<InvoiceDto> {
-    return this.listToInsurances(userIds).map { config.decryptInvoice(user.healthcarePartyId!!, it) }
+    return this.listToInsurances(userIds).map { config.decryptInvoice(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
@@ -314,7 +314,7 @@ suspend fun InvoiceApi.listToInsurancesUnsent(
     userIds: String?,
     config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>
 ): List<InvoiceDto> {
-    return this.listToInsurancesUnsent(userIds).map { config.decryptInvoice(user.healthcarePartyId!!, it) }
+    return this.listToInsurancesUnsent(userIds).map { config.decryptInvoice(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
@@ -324,7 +324,7 @@ suspend fun InvoiceApi.listToPatients(
     hcPartyId: String?,
     config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>
 ): List<InvoiceDto> {
-    return this.listToPatients(hcPartyId).map { config.decryptInvoice(user.healthcarePartyId!!, it) }
+    return this.listToPatients(hcPartyId).map { config.decryptInvoice(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
@@ -334,7 +334,7 @@ suspend fun InvoiceApi.listToPatientsUnsent(
     hcPartyId: String?,
     config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>
 ): List<InvoiceDto> {
-    return this.listToPatientsUnsent(hcPartyId).map { config.decryptInvoice(user.healthcarePartyId!!, it) }
+    return this.listToPatientsUnsent(hcPartyId).map { config.decryptInvoice(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
@@ -345,7 +345,7 @@ suspend fun InvoiceApi.mergeTo(
     listOfIdsDto: ListOfIdsDto,
     config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>
 ): InvoiceDto {
-    return this.mergeTo(invoiceId, listOfIdsDto).let { config.decryptInvoice(user.healthcarePartyId!!, it) }
+    return this.mergeTo(invoiceId, listOfIdsDto).let { config.decryptInvoice(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
@@ -357,11 +357,11 @@ suspend fun InvoiceApi.reassignInvoice(
 ): InvoiceDto {
     return this.reassignInvoice(invoiceDto.let {
         config.encryptInvoice(
-            user.healthcarePartyId!!,
+            user.dataOwnerId(),
             (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
             it
         )
-    }).let { config.decryptInvoice(user.healthcarePartyId!!, it) }
+    }).let { config.decryptInvoice(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
@@ -375,7 +375,7 @@ suspend fun InvoiceApi.removeCodes(
     config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>
 ): List<InvoiceDto> {
     return this.removeCodes(userId, serviceId, secretFKeys, requestBody)
-        .map { config.decryptInvoice(user.healthcarePartyId!!, it) }
+        .map { config.decryptInvoice(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
@@ -387,7 +387,7 @@ suspend fun InvoiceApi.validate(
     forcedValue: String,
     config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>
 ): InvoiceDto {
-    return this.validate(invoiceId, scheme, forcedValue).let { config.decryptInvoice(user.healthcarePartyId!!, it) }
+    return this.validate(invoiceId, scheme, forcedValue).let { config.decryptInvoice(user.dataOwnerId(), it) }
 }
 
 suspend fun CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>.encryptInvoice(
