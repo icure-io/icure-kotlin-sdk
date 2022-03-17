@@ -189,6 +189,18 @@ data class PatientDto (
     @field:JsonProperty("hcPartyKeys")
     val hcPartyKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.List<kotlin.String>> = emptyMap(),
 
+    /* Extra AES exchange keys, usually the ones we lost access to at some point. The structure is { publicKey: { delegateId: [aesExKey_for_this, aesExKey_for_delegate] } } */
+    @field:JsonProperty("aesExchangeKeys")
+    val aesExchangeKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.collections.List<kotlin.String>>> = emptyMap(),
+
+    /* Our private keys encrypted with our public keys. The structure is { publicKey1: { publicKey2: privateKey2_encrypted_with_publicKey1, publicKey3: privateKey3_encrypted_with_publicKey1 } } */
+    @field:JsonProperty("transferKeys")
+    val transferKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.String>> = emptyMap(),
+
+    /* The hcparty keys (first of the pair) for which we are asking a re-encryption by the delegate using our new publicKey. */
+    @field:JsonProperty("lostHcPartyKeys")
+    val lostHcPartyKeys: kotlin.collections.List<kotlin.String> = emptyList(),
+
     /* The privateKeyShamirPartitions are used to share this hcp's private RSA key with a series of other hcParties using Shamir's algorithm. The key of the map is the hcp Id with whom this partition has been shared. The value is \"threshold⎮partition in hex\" encrypted using the the partition's holder's public RSA key */
     @field:JsonProperty("privateKeyShamirPartitions")
     val privateKeyShamirPartitions: kotlin.collections.Map<kotlin.String, kotlin.String> = emptyMap(),
