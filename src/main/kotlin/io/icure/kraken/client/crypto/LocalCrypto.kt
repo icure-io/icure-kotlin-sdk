@@ -6,12 +6,16 @@ import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
 import io.icure.kraken.client.defGet
 import io.icure.kraken.client.defPut
+import io.icure.kraken.client.exception.MissingPrivateKeyException
 import io.icure.kraken.client.extendedapis.DataOwner
 import io.icure.kraken.client.extendedapis.DataOwnerResolver
 import io.icure.kraken.client.models.DelegationDto
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.async
 import java.security.*
 import java.security.interfaces.RSAPrivateKey
 import java.security.interfaces.RSAPublicKey
@@ -49,16 +53,18 @@ class LocalCrypto(
         }?.toSet() ?: emptySet()) + (dataOwnerResolver.getDataOwner(myId).parentId?.let { decryptEncryptionKeys(it, keys) } ?: emptySet())).takeIf { it.isNotEmpty() } ?: throw IllegalArgumentException("Missing key for $myId")
     }
 
-    override suspend fun encryptAESKeyForHcp(myId: String, delegateId: String, objectId: String, secret: String): String {
+    override suspend fun encryptAESKeyForDataOwner(myId: String, delegateId: String, objectId: String, secret: String): Pair<String, DataOwner?> {
         val secretKey = formatKey(secret)
         if (secretKey.keyFromHexString().size * 8 !in aesValidKeySizes) {
             throw IllegalArgumentException("Illegal AES key size : Secret length should be either 128, 192 or 256")
         }
-        return encryptAES("$objectId:$secretKey".toByteArray(Charsets.UTF_8), getOrCreateHcPartyKey(myId, delegateId)).keyToHexString()
+        val (key, dataOwner) = getOrCreateHcPartyKey(myId, delegateId)
+        return encryptAES("$objectId:$secretKey".toByteArray(Charsets.UTF_8), key).keyToHexString() to dataOwner
     }
 
-    override suspend fun encryptValueForHcp(myId: String, delegateId: String, objectId: String, secret: String): String {
-        return encryptAES("$objectId:$secret".toByteArray(Charsets.UTF_8), getOrCreateHcPartyKey(myId, delegateId)).keyToHexString()
+    override suspend fun encryptValueForDataOwner(myId: String, delegateId: String, objectId: String, secret: String): Pair<String, DataOwner?> {
+        val (key, dataOwner) = getOrCreateHcPartyKey(myId, delegateId)
+        return encryptAES("$objectId:$secret".toByteArray(Charsets.UTF_8), key).keyToHexString() to dataOwner
     }
 
     private fun formatKey(key: String) : String {
@@ -70,7 +76,7 @@ class LocalCrypto(
     }
 
     suspend fun getDelegateHcPartyKey(delegateId: String, ownerId: String, myPrivateKey: PrivateKey? = null): ByteArray {
-        val privateKey = myPrivateKey ?: rsaKeyPairs[delegateId]?.first ?: throw IllegalArgumentException("Missing key for hcp $delegateId")
+        val privateKey = myPrivateKey ?: rsaKeyPairs[delegateId]?.first ?: throw MissingPrivateKeyException(delegateId, "Missing key for hcp $delegateId")
         val keyMap: Map<String, Pair<String, ByteArray>> =
             delegateHcpartyKeysCache.defGet(delegateId) {
                 dataOwnerResolver.getDataOwnerHcPartyKeysForDelegate(delegateId).decryptHcPartyKeys(delegateId, privateKey)
@@ -87,15 +93,15 @@ class LocalCrypto(
         return dataOwnerResolver.getDataOwner(dataOwnerId).hcPartyKeys
     }
 
-    suspend fun getOrCreateHcPartyKey(myId: String, delegateId: String, privateKey: PrivateKey? = null, publicKey: PublicKey? = null): ByteArray {
+    suspend fun getOrCreateHcPartyKey(myId: String, delegateId: String, privateKey: PrivateKey? = null, publicKey: PublicKey? = null): Pair<ByteArray, DataOwner?> {
         val myPublicKey = publicKey ?: rsaKeyPairs[myId]?.second ?: throw IllegalArgumentException("Missing key for hcp $myId")
-        val myPrivateKey = privateKey ?: rsaKeyPairs[myId]?.first ?: throw IllegalArgumentException("Missing key for hcp $myId")
+        val myPrivateKey = privateKey ?: rsaKeyPairs[myId]?.first ?: throw MissingPrivateKeyException(myId, "Missing key for hcp $myId")
         val keyMap: Map<String, Pair<String, ByteArray>> =
             ownerHcpartyKeysCache.defGet(myId) {
                 getDataOwnerHcPartyKeys(myId).mapValues { (_, v) -> v[0] }.decryptHcPartyKeys(myId, myPrivateKey)
             } ?: throw IllegalArgumentException("Unknown hcp $myId")
 
-        return keyMap[delegateId]?.second ?: CryptoUtils.generateKeyAES().encoded.let {
+        return keyMap[delegateId]?.second?.let { it to null } ?: CryptoUtils.generateKeyAES().encoded.let {
             val keyForMe = CryptoUtils.encryptRSA(it, myPublicKey).keyToHexString()
             val keyForDelegate = CryptoUtils.encryptRSA(
                 it,
@@ -103,17 +109,18 @@ class LocalCrypto(
                     KeyFactory.getInstance("RSA").generatePublic(X509EncodedKeySpec(pk.keyFromHexString()))
                 } ?: throw IllegalArgumentException("Unknown hcp $delegateId")
             ).keyToHexString()
-            dataOwnerResolver.getDataOwner(myId).let { hcp ->
-                ownerHcpartyKeysCache.defPut(myId) {
-                    dataOwnerResolver.updateDataOwnerWithNewHcPartyKeys(
-                        hcp.type, hcp.dataOwnerId, (delegateId to listOf(
-                            keyForMe,
-                            keyForDelegate
-                        ))
-                    ).hcPartyKeys.mapValues { (_, v) -> v[0] }.decryptHcPartyKeys(myId, myPrivateKey)
+            it to dataOwnerResolver.getDataOwner(myId).let { hcp ->
+                CoroutineScope(Dispatchers.IO).async { dataOwnerResolver.updateDataOwnerWithNewHcPartyKeys(
+                    hcp.type, hcp.dataOwnerId, (delegateId to listOf(
+                        keyForMe,
+                        keyForDelegate
+                    ))
+                ) }.also { deferredNewDataOwner ->
+                    ownerHcpartyKeysCache.defPut(myId) {
+                        deferredNewDataOwner.await().hcPartyKeys.mapValues { (_, v) -> v[0] }.decryptHcPartyKeys(myId, myPrivateKey)
+                    }
                 }
-            }
-            it
+            }.await()
         }
     }
 

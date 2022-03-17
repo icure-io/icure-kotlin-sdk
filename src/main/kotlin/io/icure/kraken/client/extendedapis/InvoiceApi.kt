@@ -26,7 +26,7 @@ suspend fun InvoiceDto.initDelegations(user: UserDto, config: CryptoConfig<Invoi
                     emptyList(),
                     user.dataOwnerId(),
                     d,
-                    config.crypto.encryptAESKeyForHcp(user.dataOwnerId(), d, this.id, sfk),
+                    config.crypto.encryptAESKeyForDataOwner(user.dataOwnerId(), d, this.id, sfk).first,
                 ),
             ))
         },
@@ -36,7 +36,7 @@ suspend fun InvoiceDto.initDelegations(user: UserDto, config: CryptoConfig<Invoi
                     emptyList(),
                     user.dataOwnerId(),
                     d,
-                    config.crypto.encryptAESKeyForHcp(user.dataOwnerId(), d, this.id, ek),
+                    config.crypto.encryptAESKeyForDataOwner(user.dataOwnerId(), d, this.id, ek).first,
                 ),
             ))
         },
@@ -405,7 +405,7 @@ suspend fun CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>.e
                     emptyList(),
                     myId,
                     d,
-                    this.crypto.encryptAESKeyForHcp(myId, d, invoice.id, secret)
+                    this.crypto.encryptAESKeyForDataOwner(myId, d, invoice.id, secret).first
                 )
             ))
         })

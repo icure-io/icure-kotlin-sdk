@@ -66,14 +66,14 @@ suspend fun PatientDto.initDelegations(user: UserDto, config: CryptoConfig<Patie
         delegations = (delegations + user.dataOwnerId()).fold(this.delegations) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    emptyList(), user.dataOwnerId(), d, config.crypto.encryptAESKeyForHcp(user.dataOwnerId(), d, this.id, sfk),
+                    emptyList(), user.dataOwnerId(), d, config.crypto.encryptAESKeyForDataOwner(user.dataOwnerId(), d, this.id, sfk).first,
                 ),
             ))
         },
         encryptionKeys = (delegations + user.dataOwnerId()).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    emptyList(), user.dataOwnerId(), d, config.crypto.encryptAESKeyForHcp(user.dataOwnerId(), d, this.id, ek),
+                    emptyList(), user.dataOwnerId(), d, config.crypto.encryptAESKeyForDataOwner(user.dataOwnerId(), d, this.id, ek).first,
                 ),
             ))
         },
@@ -241,9 +241,11 @@ suspend fun CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>.e
         patient
     } else {
         val secret = UUID.randomUUID().toString()
-        patient.copy(encryptionKeys = (delegations + myId).fold(patient.encryptionKeys) { m, d ->
-            m + (d to setOf(DelegationDto(emptyList(), myId, d, this.crypto.encryptAESKeyForHcp(myId, d, patient.id, secret))))
-        })
+        val (encryptionKeys, dataOwner) = (delegations + myId).fold(patient.encryptionKeys to null as DataOwner?) { (m, dow), d ->
+            val (key, dataOwner) = this.crypto.encryptAESKeyForDataOwner(myId, d, patient.id, secret)
+            (m + (d to setOf(DelegationDto(emptyList(), myId, d, key)))) to (dataOwner ?: dow)
+        }
+        if (dataOwner != null && dataOwner.dataOwnerId == patient.id) patient.copy(encryptionKeys = encryptionKeys, hcPartyKeys = dataOwner.hcPartyKeys, rev = dataOwner.rev) else patient.copy(encryptionKeys = encryptionKeys)
     }.let { p ->
         val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.keyFromHexString()
             ?: throw IllegalArgumentException("No encryption key for user")

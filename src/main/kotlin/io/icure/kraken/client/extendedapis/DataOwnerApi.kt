@@ -117,20 +117,21 @@ class DataOwnerResolver(
 }
 
 fun HealthcarePartyDto.toDataOwner() : DataOwner {
-    return DataOwner(DataOwnerType.HCP, this.id, this.publicKey, this.hcPartyKeys, this.parentId)
+    return DataOwner(DataOwnerType.HCP, this.id, this.publicKey, this.rev, this.hcPartyKeys, this.parentId)
 }
 
 fun PatientDto.toDataOwner() : DataOwner {
-    return DataOwner(DataOwnerType.PATIENT, this.id, this.publicKey, this.hcPartyKeys)
+    return DataOwner(DataOwnerType.PATIENT, this.id, this.publicKey, this.rev, this.hcPartyKeys)
 }
 
 fun DeviceDto.toDataOwner() : DataOwner {
-    return DataOwner(DataOwnerType.DEVICE, this.id, this.publicKey, this.hcPartyKeys, this.parentId)
+    return DataOwner(DataOwnerType.DEVICE, this.id, this.publicKey, this.rev, this.hcPartyKeys, this.parentId)
 }
 
 data class DataOwner(
     val type: DataOwnerType,
     val dataOwnerId: String,
+    val rev: String?,
     val publicKey: String? = null,
     val hcPartyKeys: Map<String, List<String>> = emptyMap(),
     val parentId: String? = null

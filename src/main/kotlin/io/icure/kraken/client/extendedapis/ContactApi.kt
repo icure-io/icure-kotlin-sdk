@@ -35,14 +35,14 @@ suspend fun ContactDto.initDelegations(user: UserDto, config: CryptoConfig<Conta
         delegations = (delegations + user.dataOwnerId()).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    emptyList(), user.dataOwnerId(), d, config.crypto.encryptAESKeyForHcp(user.dataOwnerId(), d, this.id, sfk),
+                    emptyList(), user.dataOwnerId(), d, config.crypto.encryptAESKeyForDataOwner(user.dataOwnerId(), d, this.id, sfk).first,
                 ),
             ))
         },
         encryptionKeys = (delegations + user.dataOwnerId()).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    emptyList(), user.dataOwnerId(), d, config.crypto.encryptAESKeyForHcp(user.dataOwnerId(), d, this.id, ek),
+                    emptyList(), user.dataOwnerId(), d, config.crypto.encryptAESKeyForDataOwner(user.dataOwnerId(), d, this.id, ek).first,
                 ),
             ))
         },
@@ -79,7 +79,7 @@ suspend fun ContactApi.createContact(user: UserDto, patient:PatientDto, contact:
                             emptyList(),
                             user.dataOwnerId(),
                             d,
-                            config.crypto.encryptValueForHcp(user.dataOwnerId(), d, ec.id, patient.id),
+                            config.crypto.encryptValueForDataOwner(user.dataOwnerId(), d, ec.id, patient.id).first,
                         ),
                     ))
                 },
@@ -174,7 +174,6 @@ suspend fun ContactApi.filterServicesBy(user: UserDto, filterChainService: Filte
     return this.filterServicesBy(filterChainService, startDocumentId, limit).let {
         io.icure.kraken.client.models.decrypted.PaginatedListServiceDto(rows = it.rows.let { crypto.decryptServices(user.dataOwnerId(), null, it) }, pageSize = it.pageSize, totalSize = it.totalSize, nextKeyPair = it.nextKeyPair)
     }
-
 }
 
 @ExperimentalCoroutinesApi
@@ -223,6 +222,7 @@ suspend fun ContactApi.listContactsByOpeningDate(user: UserDto, startKey: Long, 
     }
 
 }
+
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun ContactApi.listServices(user: UserDto, listOfIdsDto: ListOfIdsDto, crypto: Crypto) : List<ServiceDto> {
@@ -266,7 +266,7 @@ suspend fun CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>.e
     } else {
         val secret = UUID.randomUUID().toString()
         contact.copy(encryptionKeys = (delegations + myId).fold(contact.encryptionKeys) { m, d ->
-            m + (d to setOf(DelegationDto(emptyList(), myId, d, this.crypto.encryptAESKeyForHcp(myId, d, contact.id, secret))))
+            m + (d to setOf(DelegationDto(emptyList(), myId, d, this.crypto.encryptAESKeyForDataOwner(myId, d, contact.id, secret).first)))
         })
     }.let { p ->
         val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.replace(

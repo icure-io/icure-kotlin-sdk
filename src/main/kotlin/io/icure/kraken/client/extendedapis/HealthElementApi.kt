@@ -24,14 +24,14 @@ suspend fun HealthElementDto.initDelegations(user: UserDto, config: CryptoConfig
         delegations = (delegations + user.dataOwnerId()).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    emptyList(), user.dataOwnerId(), d, config.crypto.encryptAESKeyForHcp(user.dataOwnerId(), d, this.id, sfk),
+                    emptyList(), user.dataOwnerId(), d, config.crypto.encryptAESKeyForDataOwner(user.dataOwnerId(), d, this.id, sfk).first,
                 ),
             ))
         },
         encryptionKeys = (delegations + user.dataOwnerId()).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    emptyList(), user.dataOwnerId(), d, config.crypto.encryptAESKeyForHcp(user.dataOwnerId(), d, this.id, ek),
+                    emptyList(), user.dataOwnerId(), d, config.crypto.encryptAESKeyForDataOwner(user.dataOwnerId(), d, this.id, ek).first,
                 ),
             ))
         },
@@ -69,7 +69,7 @@ suspend fun HealthElementApi.createHealthElements(user: UserDto, patient: io.icu
                                 emptyList(),
                                 user.dataOwnerId(),
                                 d,
-                                config.crypto.encryptValueForHcp(user.dataOwnerId(), d, ec.id, patient.id),
+                                config.crypto.encryptValueForDataOwner(user.dataOwnerId(), d, ec.id, patient.id).first,
                             ),
                         ))
                     },
@@ -98,7 +98,7 @@ suspend fun HealthElementApi.createHealthElement(user: UserDto, patient: io.icur
                             emptyList(),
                             user.dataOwnerId(),
                             d,
-                            config.crypto.encryptValueForHcp(user.dataOwnerId(), d, ec.id, patient.id),
+                            config.crypto.encryptValueForDataOwner(user.dataOwnerId(), d, ec.id, patient.id).first,
                         ),
                     ))
                 },
@@ -203,7 +203,7 @@ suspend fun CryptoConfig<HealthElementDto, io.icure.kraken.client.models.HealthE
     } else {
         val secret = UUID.randomUUID().toString()
         healthElement.copy(encryptionKeys = (delegations + myId).fold(healthElement.encryptionKeys) { m, d ->
-            m + (d to setOf(DelegationDto(emptyList(), myId, d, this.crypto.encryptAESKeyForHcp(myId, d, healthElement.id, secret))))
+            m + (d to setOf(DelegationDto(emptyList(), myId, d, this.crypto.encryptAESKeyForDataOwner(myId, d, healthElement.id, secret).first)))
         })
     }.let { p ->
         val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.replace(
