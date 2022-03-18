@@ -57,26 +57,32 @@ private fun PatientDto.addName(use: PersonNameDto.Use, lastName: String, firstNa
 
 
 suspend fun PatientDto.initDelegations(user: UserDto, config: CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>): PatientDto {
-    val delegations =  (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf())
+    val delegates =  (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf())
     val ek = UUID.randomUUID().toString()
     val sfk = UUID.randomUUID().toString()
-    return this.copy(
+
+    val (delegationsAndEncryptionKeys, dataOwner) = (delegates + user.dataOwnerId()).fold(this.delegations to null as DataOwner?) { (m, dow), d ->
+        val (key, dataOwner) = config.crypto.encryptAESKeyForDataOwner(user.dataOwnerId(), d, this.id, sfk)
+        (m + (d to setOf(DelegationDto(emptyList(), user.dataOwnerId(), d, key,)))) to (dataOwner ?: dow)
+    }.let { (delegations, dow) ->
+        (delegates + user.dataOwnerId()).fold(this.encryptionKeys to dow) { (m, dow), d ->
+            val (key, dataOwner) = config.crypto.encryptAESKeyForDataOwner(user.dataOwnerId(), d, this.id, ek)
+            (m + (d to setOf(DelegationDto(emptyList(), user.dataOwnerId(), d, key,)))) to (dataOwner ?: dow)
+        }.let { (encryptionKeys, dataOwner) -> (delegations to encryptionKeys) to dataOwner }
+    }
+
+    return if (dataOwner != null && dataOwner.dataOwnerId == this.id) this.copy(
+        hcPartyKeys = dataOwner.hcPartyKeys,
+        rev = dataOwner.rev,
         responsible = this.responsible ?: user.dataOwnerId(),
         author = user.id,
-        delegations = (delegations + user.dataOwnerId()).fold(this.delegations) { m, d ->
-            m + (d to setOf(
-                DelegationDto(
-                    emptyList(), user.dataOwnerId(), d, config.crypto.encryptAESKeyForDataOwner(user.dataOwnerId(), d, this.id, sfk).first,
-                ),
-            ))
-        },
-        encryptionKeys = (delegations + user.dataOwnerId()).fold(this.encryptionKeys) { m, d ->
-            m + (d to setOf(
-                DelegationDto(
-                    emptyList(), user.dataOwnerId(), d, config.crypto.encryptAESKeyForDataOwner(user.dataOwnerId(), d, this.id, ek).first,
-                ),
-            ))
-        },
+        delegations = delegationsAndEncryptionKeys.first,
+        encryptionKeys = delegationsAndEncryptionKeys.second,
+    ) else this.copy(
+        responsible = this.responsible ?: user.dataOwnerId(),
+        author = user.id,
+        delegations = delegationsAndEncryptionKeys.first,
+        encryptionKeys = delegationsAndEncryptionKeys.second,
     )
 }
 
