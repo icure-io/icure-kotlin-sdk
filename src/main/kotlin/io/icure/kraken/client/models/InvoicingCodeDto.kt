@@ -63,6 +63,7 @@ import com.github.pozo.KotlinBuilder
  * @param locationNihii 
  * @param locationCdHcParty 
  * @param locationService 
+ * @param admissionDate 
  * @param canceled 
  * @param accepted 
  * @param pending 
@@ -202,6 +203,9 @@ data class InvoicingCodeDto (
 
     @field:JsonProperty("locationService")
     val locationService: kotlin.Int? = null,
+
+    @field:JsonProperty("admissionDate")
+    val admissionDate: kotlin.Long? = null,
 
     @field:JsonProperty("canceled")
     val canceled: kotlin.Boolean? = null,

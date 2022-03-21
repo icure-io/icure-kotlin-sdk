@@ -45,6 +45,7 @@ Name | Type | Description | Notes
 **locationNihii** | **kotlin.String** |  |  [optional]
 **locationCdHcParty** | **kotlin.String** |  |  [optional]
 **locationService** | **kotlin.Int** |  |  [optional]
+**admissionDate** | **kotlin.Long** |  |  [optional]
 **canceled** | **kotlin.Boolean** |  |  [optional]
 **accepted** | **kotlin.Boolean** |  |  [optional]
 **pending** | **kotlin.Boolean** |  |  [optional]
