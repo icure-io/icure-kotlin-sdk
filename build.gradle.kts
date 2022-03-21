@@ -1,9 +1,9 @@
-val kotlinVersion = "1.4.32"
-val kotlinCoroutinesVersion = "1.4.3"
+val kotlinVersion = "1.6.10"
+val kotlinCoroutinesVersion = "1.6.0"
 val jacksonVersion = "2.12.5"
 
 plugins {
-    kotlin("jvm") version "1.4.32"
+    kotlin("jvm") version "1.6.10"
     id("org.sonarqube") version "3.3"
     id("com.google.devtools.ksp") version "1.6.10-1.0.2"
 }
