@@ -15,7 +15,6 @@ package io.icure.kraken.client.models.decrypted
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.github.pozo.KotlinBuilder
 import io.icure.kraken.client.models.AddressDto
 import io.icure.kraken.client.models.CalendarItemTagDto
 import io.icure.kraken.client.models.CodeStubDto
@@ -68,7 +67,6 @@ import io.icure.kraken.client.models.FlowItemDto
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@KotlinBuilder
 data class CalendarItemDto (
 
     @field:JsonProperty("id")
