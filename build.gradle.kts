@@ -4,8 +4,8 @@ val jacksonVersion = "2.12.5"
 
 plugins {
     kotlin("jvm") version "1.4.32"
-    kotlin("kapt") version "1.4.32"
     id("org.sonarqube") version "3.3"
+    id("com.google.devtools.ksp") version "1.6.10-1.0.2"
 }
 
 sonarqube {
@@ -41,9 +41,14 @@ repositories {
     }
 }
 
+ksp {
+    arg("option1", "value1")
+    arg("option2", "value2")
+}
+
 dependencies {
-    api(group = "com.github.pozo", name = "mapstruct-kotlin", version = "1.3.1.2")
-    kapt(group = "com.github.pozo", name = "mapstruct-kotlin-processor", version = "1.3.1.2")
+    implementation(group = "io.icure", name = "mapper-processor", version = "0.1.0-20e703509b")
+    ksp(group = "io.icure", name = "mapper-processor", version = "0.1.0-20e703509b")
 
     implementation(group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version = kotlinVersion)
 
