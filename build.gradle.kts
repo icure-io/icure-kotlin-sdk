@@ -41,11 +41,6 @@ repositories {
     }
 }
 
-ksp {
-    arg("option1", "value1")
-    arg("option2", "value2")
-}
-
 dependencies {
     implementation(group = "io.icure", name = "mapper-processor", version = "0.1.0-20e703509b")
     ksp(group = "io.icure", name = "mapper-processor", version = "0.1.0-20e703509b")
@@ -95,6 +90,13 @@ dependencies {
     testImplementation(group = "com.willowtreeapps.assertk", name = "assertk-jvm", version = "0.24")
 }
 
+kotlin {
+    sourceSets {
+        main {
+            kotlin.srcDir("build/generated/ksp/main/kotlin")
+        }
+    }
+}
 
 java {
     sourceCompatibility = JavaVersion.VERSION_11
