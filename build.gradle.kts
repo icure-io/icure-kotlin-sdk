@@ -1,6 +1,7 @@
 val kotlinVersion = "1.6.10"
 val kotlinCoroutinesVersion = "1.6.0"
 val jacksonVersion = "2.12.5"
+val kmapVersion = "0.1.22-77b57a3b36"
 
 plugins {
     kotlin("jvm") version "1.6.10"
@@ -42,8 +43,8 @@ repositories {
 }
 
 dependencies {
-    implementation(group = "io.icure", name = "mapper-processor", version = "0.1.0-20e703509b")
-    ksp(group = "io.icure", name = "mapper-processor", version = "0.1.0-20e703509b")
+    implementation(group = "io.icure", name = "kmap", version = kmapVersion)
+    ksp(group = "io.icure", name = "kmap", version = kmapVersion)
 
     implementation(group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version = kotlinVersion)
 
