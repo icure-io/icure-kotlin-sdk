@@ -115,6 +115,15 @@
   "findHealthcarePartiesBy": {
     "skipEndpoint": true
   },
+  "registerPatient1": {
+    "skipEndpoint": true
+  },
+  "matchHealthcarePartiesBy": {
+    "skipEndpoint": true
+  },
+  "filterHealthPartiesBy": {
+    "skipEndpoint": true
+  },
   "fallback": {
   }
 }

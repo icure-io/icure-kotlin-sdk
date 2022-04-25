@@ -52,6 +52,7 @@ Class | Method | HTTP request | Description
 *AnonymousAccessApi* | [**getAvailabilitiesByPeriodAndCalendarItemTypeId**](docs/AnonymousAccessApi.md#getavailabilitiesbyperiodandcalendaritemtypeid) | **GET** /rest/v2/aa/available/inGroup/{groupId}/forUser/{userId}/type/{calendarItemTypeId} | Get Availabilities for HCP and appointmentType
 *AnonymousAccessApi* | [**listAppointmentTypesForUser**](docs/AnonymousAccessApi.md#listappointmenttypesforuser) | **GET** /rest/v2/aa/appointmentType/inGroup/{groupId}/forUser/{userId} | List Calendar Item types for a provided group id and user id
 *AnonymousAccessApi* | [**listHealthcarePartiesInGroup**](docs/AnonymousAccessApi.md#listhealthcarepartiesingroup) | **GET** /rest/v2/aa/hcparty/inGroup/{groupId} | List healthcare parties for a provided group id
+*ApplicationsettingsApi* | [**createApplicationSettings**](docs/ApplicationsettingsApi.md#createapplicationsettings) | **POST** /rest/v2/appsettings | Create new application settings
 *ApplicationsettingsApi* | [**getApplicationSettings**](docs/ApplicationsettingsApi.md#getapplicationsettings) | **GET** /rest/v2/appsettings | Gets all application settings
 *ArticleApi* | [**createArticle**](docs/ArticleApi.md#createarticle) | **POST** /rest/v2/article | Creates a article
 *ArticleApi* | [**deleteArticles**](docs/ArticleApi.md#deletearticles) | **POST** /rest/v2/article/delete/batch | Deletes articles
@@ -291,7 +292,10 @@ Class | Method | HTTP request | Description
 *FrontEndMigrationApi* | [**getFrontEndMigrations**](docs/FrontEndMigrationApi.md#getfrontendmigrations) | **GET** /rest/v2/frontendmigration | Gets a front end migration
 *FrontEndMigrationApi* | [**modifyFrontEndMigration**](docs/FrontEndMigrationApi.md#modifyfrontendmigration) | **PUT** /rest/v2/frontendmigration | Modifies a front end migration
 *GroupApi* | [**createGroup**](docs/GroupApi.md#creategroup) | **POST** /rest/v2/group/{id} | Create a group
+*GroupApi* | [**findGroups**](docs/GroupApi.md#findgroups) | **GET** /rest/v2/group/{id}/children | Find groups by parent
+*GroupApi* | [**findGroupsWithContent**](docs/GroupApi.md#findgroupswithcontent) | **GET** /rest/v2/group/{id}/children/search | Find groups by parent and content
 *GroupApi* | [**getGroup**](docs/GroupApi.md#getgroup) | **GET** /rest/v2/group/{id} | Get a group by id
+*GroupApi* | [**getGroupsStorageInfos**](docs/GroupApi.md#getgroupsstorageinfos) | **POST** /rest/v2/group/storage/info | Reset storage for group
 *GroupApi* | [**getReplicationInfo1**](docs/GroupApi.md#getreplicationinfo1) | **GET** /rest/v2/group/{id}/r | Get index info
 *GroupApi* | [**initDesignDocs**](docs/GroupApi.md#initdesigndocs) | **PUT** /rest/v2/group/{id}/dd | Init design docs
 *GroupApi* | [**listGroups**](docs/GroupApi.md#listgroups) | **GET** /rest/v2/group | List groups
@@ -315,7 +319,9 @@ Class | Method | HTTP request | Description
 *HealthElementApi* | [**newHealthElementDelegations**](docs/HealthElementApi.md#newhealthelementdelegations) | **POST** /rest/v2/helement/{healthElementId}/delegate | Delegates a health element to a healthcare party
 *HealthElementApi* | [**setHealthElementsDelegations**](docs/HealthElementApi.md#sethealthelementsdelegations) | **POST** /rest/v2/helement/delegations | Update delegations in healthElements.
 *HealthcarePartyApi* | [**createHealthcareParty**](docs/HealthcarePartyApi.md#createhealthcareparty) | **POST** /rest/v2/hcparty | Create a healthcare party
+*HealthcarePartyApi* | [**createHealthcarePartyInGroup**](docs/HealthcarePartyApi.md#createhealthcarepartyingroup) | **POST** /rest/v2/hcparty/inGroup/{groupId} | Create a healthcare party
 *HealthcarePartyApi* | [**deleteHealthcareParties**](docs/HealthcarePartyApi.md#deletehealthcareparties) | **POST** /rest/v2/hcparty/delete/batch | Delete healthcare parties
+*HealthcarePartyApi* | [**deleteHealthcarePartiesInGroup**](docs/HealthcarePartyApi.md#deletehealthcarepartiesingroup) | **POST** /rest/v2/hcparty/delete/batch/inGroup/{groupId} | Delete a healthcare party
 *HealthcarePartyApi* | [**filterHealthPartiesBy**](docs/HealthcarePartyApi.md#filterhealthpartiesby) | **POST** /rest/v2/hcparty/filter | Filter healthcare parties for the current user (HcParty)
 *HealthcarePartyApi* | [**findHealthcarePartiesBy**](docs/HealthcarePartyApi.md#findhealthcarepartiesby) | **GET** /rest/v2/hcparty | List healthcare parties with(out) pagination
 *HealthcarePartyApi* | [**findHealthcarePartiesByName**](docs/HealthcarePartyApi.md#findhealthcarepartiesbyname) | **GET** /rest/v2/hcparty/byName | Find healthcare parties by name with(out) pagination
@@ -330,10 +336,13 @@ Class | Method | HTTP request | Description
 *HealthcarePartyApi* | [**listHealthcarePartiesByParentId**](docs/HealthcarePartyApi.md#listhealthcarepartiesbyparentid) | **GET** /rest/v2/hcparty/{parentId}/children | Find children of an healthcare parties
 *HealthcarePartyApi* | [**matchHealthcarePartiesBy**](docs/HealthcarePartyApi.md#matchhealthcarepartiesby) | **POST** /rest/v2/hcparty/match | Get ids of healthcare party matching the provided filter for the current user (HcParty) 
 *HealthcarePartyApi* | [**modifyHealthcareParty**](docs/HealthcarePartyApi.md#modifyhealthcareparty) | **PUT** /rest/v2/hcparty | Modify a Healthcare Party.
+*HealthcarePartyApi* | [**modifyHealthcarePartyInGroup**](docs/HealthcarePartyApi.md#modifyhealthcarepartyingroup) | **PUT** /rest/v2/hcparty/inGroup/{groupId} | Modify a Healthcare Party.
+*HealthcarePartyApi* | [**registerPatient1**](docs/HealthcarePartyApi.md#registerpatient1) | **POST** /rest/v2/hcparty/register/inGroup/{groupId} | Register a hcp
 *IcureApi* | [**getIndexingInfo**](docs/IcureApi.md#getindexinginfo) | **GET** /rest/v2/icure/i | Get index info
 *IcureApi* | [**getProcessInfo**](docs/IcureApi.md#getprocessinfo) | **GET** /rest/v2/icure/p | Get process info
 *IcureApi* | [**getReplicationInfo**](docs/IcureApi.md#getreplicationinfo) | **GET** /rest/v2/icure/r | Get replication info
 *IcureApi* | [**getReplicatorInfo**](docs/IcureApi.md#getreplicatorinfo) | **GET** /rest/v2/icure/r/{id} | Get replication info
+*IcureApi* | [**getUserSyncInfo**](docs/IcureApi.md#getusersyncinfo) | **GET** /rest/v2/icure/sync/user | Get user sync info
 *IcureApi* | [**getVersion**](docs/IcureApi.md#getversion) | **GET** /rest/v2/icure/v | Get version
 *IcureApi* | [**isReady**](docs/IcureApi.md#isready) | **GET** /rest/v2/icure/ok | Check if a user exists
 *IcureApi* | [**resolveContactsConflicts**](docs/IcureApi.md#resolvecontactsconflicts) | **POST** /rest/v2/icure/conflicts/contact | Resolve contacts conflicts
@@ -609,6 +618,8 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.ContactDto](docs/ContactDto.md)
  - [io.icure.kraken.client.models.ContentDto](docs/ContentDto.md)
  - [io.icure.kraken.client.models.CopaymentDto](docs/CopaymentDto.md)
+ - [io.icure.kraken.client.models.DataOwnerRegistrationSuccessDto](docs/DataOwnerRegistrationSuccessDto.md)
+ - [io.icure.kraken.client.models.DatabaseInfoDto](docs/DatabaseInfoDto.md)
  - [io.icure.kraken.client.models.DatabaseInitialisationDto](docs/DatabaseInitialisationDto.md)
  - [io.icure.kraken.client.models.DatabaseSynchronizationDto](docs/DatabaseSynchronizationDto.md)
  - [io.icure.kraken.client.models.DelegationDto](docs/DelegationDto.md)
@@ -653,6 +664,7 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.FormTemplateLayout](docs/FormTemplateLayout.md)
  - [io.icure.kraken.client.models.Formula](docs/Formula.md)
  - [io.icure.kraken.client.models.FrontEndMigrationDto](docs/FrontEndMigrationDto.md)
+ - [io.icure.kraken.client.models.GroupDatabasesInfoDto](docs/GroupDatabasesInfoDto.md)
  - [io.icure.kraken.client.models.GroupDto](docs/GroupDto.md)
  - [io.icure.kraken.client.models.GuiCode](docs/GuiCode.md)
  - [io.icure.kraken.client.models.GuiCodeType](docs/GuiCodeType.md)
@@ -711,6 +723,7 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.PaginatedListDocumentDto](docs/PaginatedListDocumentDto.md)
  - [io.icure.kraken.client.models.PaginatedListEntityTemplateDto](docs/PaginatedListEntityTemplateDto.md)
  - [io.icure.kraken.client.models.PaginatedListFormDto](docs/PaginatedListFormDto.md)
+ - [io.icure.kraken.client.models.PaginatedListGroupDto](docs/PaginatedListGroupDto.md)
  - [io.icure.kraken.client.models.PaginatedListHealthElementDto](docs/PaginatedListHealthElementDto.md)
  - [io.icure.kraken.client.models.PaginatedListHealthcarePartyDto](docs/PaginatedListHealthcarePartyDto.md)
  - [io.icure.kraken.client.models.PaginatedListInvoiceDto](docs/PaginatedListInvoiceDto.md)
@@ -728,7 +741,6 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.PartnershipDto](docs/PartnershipDto.md)
  - [io.icure.kraken.client.models.PatientDto](docs/PatientDto.md)
  - [io.icure.kraken.client.models.PatientHealthCarePartyDto](docs/PatientHealthCarePartyDto.md)
- - [io.icure.kraken.client.models.PatientRegistrationSuccessDto](docs/PatientRegistrationSuccessDto.md)
  - [io.icure.kraken.client.models.PaymentDto](docs/PaymentDto.md)
  - [io.icure.kraken.client.models.PeriodicityDto](docs/PeriodicityDto.md)
  - [io.icure.kraken.client.models.PermissionDto](docs/PermissionDto.md)

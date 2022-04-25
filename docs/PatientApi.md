@@ -914,7 +914,7 @@ No authorization required
 
 Get the patient (identified by patientId) hcparty keys. Those keys are AES keys (encrypted) used to share information between HCPs and a patient.
 
-This endpoint is used to recover all keys that have already been created and that can be used to share information with this patient. It returns a map with the following structure: ID of the owner of the encrypted AES key -&gt; encrypted AES key. The returned encrypted AES keys will have to be decrypted using the patient&#39;s private key.                                  {                     \&quot;hcparty 1 delegator ID\&quot;: \&quot;AES hcparty key (encrypted using patient public RSA key)\&quot;                     \&quot;hcparty 2 delegator ID\&quot;: \&quot;other AES hcparty key (encrypted using patient public RSA key)\&quot;                 }                 
+This endpoint is used to recover all keys that have already been created and that can be used to share information with this patient. It returns a map with the following structure: ID of the owner of the encrypted AES key -&gt; encrypted AES key. The returned encrypted AES keys will have to be decrypted using the patient&#39;s private key.                  {                     \&quot;hcparty 1 delegator ID\&quot;: \&quot;AES hcparty key (encrypted using patient public RSA key)\&quot;                     \&quot;hcparty 2 delegator ID\&quot;: \&quot;other AES hcparty key (encrypted using patient public RSA key)\&quot;                 }                 
 
 ### Example
 ```kotlin
@@ -1386,7 +1386,7 @@ No authorization required
 
 <a name="registerPatient"></a>
 # **registerPatient**
-> PatientRegistrationSuccessDto registerPatient(hcPartyId, groupId, patientDto, token, useShortToken)
+> DataOwnerRegistrationSuccessDto registerPatient(hcPartyId, groupId, patientDto, token, useShortToken)
 
 Register a patient
 
@@ -1405,7 +1405,7 @@ val patientDto : PatientDto =  // PatientDto |
 val token : kotlin.String = token_example // kotlin.String | 
 val useShortToken : kotlin.Boolean = true // kotlin.Boolean | 
 try {
-    val result : PatientRegistrationSuccessDto = apiInstance.registerPatient(hcPartyId, groupId, patientDto, token, useShortToken)
+    val result : DataOwnerRegistrationSuccessDto = apiInstance.registerPatient(hcPartyId, groupId, patientDto, token, useShortToken)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling PatientApi#registerPatient")
@@ -1428,7 +1428,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**PatientRegistrationSuccessDto**](PatientRegistrationSuccessDto.md)
+[**DataOwnerRegistrationSuccessDto**](DataOwnerRegistrationSuccessDto.md)
 
 ### Authorization
 

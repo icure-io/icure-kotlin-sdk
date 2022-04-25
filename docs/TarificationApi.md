@@ -63,7 +63,7 @@ No authorization required
 
 <a name="findTarificationsBy"></a>
 # **findTarificationsBy**
-> PaginatedListTarificationDto findTarificationsBy(region, type, tarification, version, startDocumentId, limit)
+> PaginatedListTarificationDto findTarificationsBy(region, type, tarification, version, startDocumentId, startKey, limit)
 
 Finding tarifications by tarification, type and version with pagination.
 
@@ -81,9 +81,10 @@ val type : kotlin.String = type_example // kotlin.String |
 val tarification : kotlin.String = tarification_example // kotlin.String | 
 val version : kotlin.String = version_example // kotlin.String | 
 val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A tarification document ID
+val startKey : kotlin.String = startKey_example // kotlin.String | 
 val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
 try {
-    val result : PaginatedListTarificationDto = apiInstance.findTarificationsBy(region, type, tarification, version, startDocumentId, limit)
+    val result : PaginatedListTarificationDto = apiInstance.findTarificationsBy(region, type, tarification, version, startDocumentId, startKey, limit)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling TarificationApi#findTarificationsBy")
@@ -103,6 +104,7 @@ Name | Type | Description  | Notes
  **tarification** | **kotlin.String**|  | [optional]
  **version** | **kotlin.String**|  | [optional]
  **startDocumentId** | **kotlin.String**| A tarification document ID | [optional]
+ **startKey** | **kotlin.String**|  | [optional]
  **limit** | **kotlin.Int**| Number of rows | [optional]
 
 ### Return type
@@ -173,7 +175,7 @@ No authorization required
 
 <a name="findTarificationsByLabel"></a>
 # **findTarificationsByLabel**
-> PaginatedListTarificationDto findTarificationsByLabel(region, types, language, label, startDocumentId, limit)
+> PaginatedListTarificationDto findTarificationsByLabel(region, types, language, label, startKey, startDocumentId, limit)
 
 Finding tarifications by tarification, type and version with pagination.
 
@@ -190,10 +192,11 @@ val region : kotlin.String = region_example // kotlin.String |
 val types : kotlin.String = types_example // kotlin.String | 
 val language : kotlin.String = language_example // kotlin.String | 
 val label : kotlin.String = label_example // kotlin.String | 
+val startKey : kotlin.String = startKey_example // kotlin.String | 
 val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A tarification document ID
 val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
 try {
-    val result : PaginatedListTarificationDto = apiInstance.findTarificationsByLabel(region, types, language, label, startDocumentId, limit)
+    val result : PaginatedListTarificationDto = apiInstance.findTarificationsByLabel(region, types, language, label, startKey, startDocumentId, limit)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling TarificationApi#findTarificationsByLabel")
@@ -212,6 +215,7 @@ Name | Type | Description  | Notes
  **types** | **kotlin.String**|  | [optional]
  **language** | **kotlin.String**|  | [optional]
  **label** | **kotlin.String**|  | [optional]
+ **startKey** | **kotlin.String**|  | [optional]
  **startDocumentId** | **kotlin.String**| A tarification document ID | [optional]
  **limit** | **kotlin.Int**| Number of rows | [optional]
 

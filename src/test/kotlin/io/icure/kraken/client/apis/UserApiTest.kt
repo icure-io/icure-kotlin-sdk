@@ -13,8 +13,10 @@
 
 package io.icure.kraken.client.apis
 
+
 import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.EmailTemplateDto
+
 import io.icure.kraken.client.models.PaginatedListUserDto
 import io.icure.kraken.client.models.PropertyStubDto
 import io.icure.kraken.client.models.UserDto
@@ -673,6 +675,86 @@ class UserApiTest() {
     }
     
     /**
+     * Filter users for the current user (HcParty)
+     *
+     * Returns a list of users along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @ParameterizedTest
+    @MethodSource("fileNames") // six numbers
+	fun filterUsersByTest(fileName: String) = runBlocking {
+
+        if (TestUtils.skipEndpoint(fileName, "filterUsersBy")) {
+            assertTrue(true, "Test of filterUsersBy endpoint has been skipped")
+        } else {
+            try{
+                createForModification(fileName)
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "filterUsersBy")
+                val filterChainUser: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.UserDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.UserDto>>(fileName, "filterUsersBy.filterChainUser")!!.let {
+                    (it as? UserDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterUsersBy") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getUser(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.UserDto> ?: it
+                    }
+                val startDocumentId: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "filterUsersBy.startDocumentId")?.let {
+                    (it as? UserDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterUsersBy") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getUser(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
+                    }
+                val limit: kotlin.Int? = TestUtils.getParameter<kotlin.Int>(fileName, "filterUsersBy.limit")?.let {
+                    (it as? UserDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterUsersBy") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getUser(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.Int ?: it
+                    }
+
+                val response = api(credentialsFile).filterUsersBy(filterChainUser = filterChainUser,startDocumentId = startDocumentId,limit = limit)
+
+                val testFileName = "UserApi.filterUsersBy"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<PaginatedListUserDto>? != null) {
+                        if ("PaginatedListUserDto".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
+                        } else {
+                            object : TypeReference<List<PaginatedListUserDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<PaginatedListUserDto>() {}
+                    })
+                    assertAreEquals("filterUsersBy", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
+                        }
+                    }
+                }
+            }
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
+        }
+    }
+    
+    /**
      * Get the list of users by healthcare party id
      *
      * 
@@ -989,7 +1071,7 @@ class UserApiTest() {
     }
     
     /**
-     * Require a new temporary token for authentication
+     * Request a new temporary token for authentication
      *
      * 
      *
@@ -1368,6 +1450,72 @@ class UserApiTest() {
     }
     
     /**
+     * Get ids of healthcare party matching the provided filter for the current user (HcParty) 
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @ParameterizedTest
+    @MethodSource("fileNames") // six numbers
+	fun matchUsersByTest(fileName: String) = runBlocking {
+
+        if (TestUtils.skipEndpoint(fileName, "matchUsersBy")) {
+            assertTrue(true, "Test of matchUsersBy endpoint has been skipped")
+        } else {
+            try{
+                createForModification(fileName)
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "matchUsersBy")
+                val abstractFilterDtoUser: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.UserDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.UserDto>>(fileName, "matchUsersBy.abstractFilterDtoUser")!!.let {
+                    (it as? UserDto)?.takeIf { TestUtils.isAutoRev(fileName, "matchUsersBy") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getUser(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.UserDto> ?: it
+                    }
+
+                val response = api(credentialsFile).matchUsersBy(abstractFilterDtoUser = abstractFilterDtoUser)
+
+                val testFileName = "UserApi.matchUsersBy"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<kotlin.String>? != null) {
+                        if ("kotlin.collections.List<kotlin.String>".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
+                        } else {
+                            object : TypeReference<List<kotlin.String>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<kotlin.collections.List<kotlin.String>>() {}
+                    })
+                    assertAreEquals("matchUsersBy", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
+                        }
+                    }
+                }
+            }
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
+        }
+    }
+    
+    /**
      * Modify a User property
      *
      * Modify a User properties based on his/her ID. The return value is the modified user.
@@ -1587,7 +1735,7 @@ class UserApiTest() {
                     functionName.let { name -> listOf("listContact", "modifyContacts").any { name.startsWith(it) } } -> listOf("subContacts.[created, rev, modified]", "services.[openingDate]", "groupId", "created", "modified", "rev")
                     functionName.let { name -> listOf("getServices").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "openingDate")
                     functionName.let { name -> listOf("create", "new", "get", "list", "set").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
-                    functionName.let { name -> listOf("modify", "delete", "undelete").any { name.startsWith(it) } } -> listOf("rev")
+                    functionName.let { name -> listOf("modify", "delete", "undelete", "update").any { name.startsWith(it) } } -> listOf("rev")
                     functionName.let { name -> listOf("append").any { name.startsWith(it) } } -> listOf("id", "created", "modified")
                     functionName.let { name -> listOf("find", "filter").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]", "created", "modified", "rev")
                     else -> emptyList()
@@ -1629,7 +1777,7 @@ class UserApiTest() {
                     functionName.let { name -> listOf("modifyPatientReferral").any { name.startsWith(it) } } -> listOf("rev", "patientHealthCareParties.[referralPeriods]", "created", "modified")
                     functionName.let { name -> listOf("createContact").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "deletionDate", "groupId")
                     functionName.let { name -> listOf("newContactDelegations").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "groupId")
-                    functionName.let { name -> listOf("create", "get", "modify", "new").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "deletionDate")
+                    functionName.let { name -> listOf("create", "get", "modify", "new", "update").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "deletionDate")
                     functionName.let { name -> listOf("set", "delete", "merge").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
                     functionName.let { name -> listOf("validate").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "sentDate")
                     functionName.let { name -> listOf("reassign").any { name.startsWith(it) } } -> listOf("id", "created", "invoicingCodes.id")

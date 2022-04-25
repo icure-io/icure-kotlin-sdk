@@ -39,7 +39,8 @@
     "receiptId": "be5e355a-866e-42d7-9ee8-56a0a84b0ff4",
     "blobType": "tack",
     "enckeys": "ccd36d62-7759-4121-8eac-ee7a67eeba23",
-    "body": ["the money is under my desk"]
+    "body": ["the money is under my desk"],
+    "skipEndpoint": true
   },
   
   "fallback": {

@@ -119,5 +119,8 @@
         "model": "12 Pro Max"
       }
     ]
+  },
+  "getDeviceHcPartyKeysForDelegate": {
+    "skipEndpoint": true
   }
 }

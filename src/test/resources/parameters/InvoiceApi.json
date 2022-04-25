@@ -104,9 +104,11 @@
     "serviceIds": "string"
   },
   "listToInsurances": {
+    "skipEndpoint": true,
     "userIds": null
   },
   "listToInsurancesUnsent": {
+    "skipEndpoint": true,
     "userIds": null
   },
   "listToPatients": {

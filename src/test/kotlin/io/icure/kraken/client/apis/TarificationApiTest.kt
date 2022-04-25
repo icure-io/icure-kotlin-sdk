@@ -239,6 +239,13 @@ class TarificationApiTest() {
                     it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
                     }
+                val startKey: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findTarificationsBy.startKey")?.let {
+                    (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "findTarificationsBy") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
+                    }
                 val limit: kotlin.Int? = TestUtils.getParameter<kotlin.Int>(fileName, "findTarificationsBy.limit")?.let {
                     (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "findTarificationsBy") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
@@ -247,7 +254,7 @@ class TarificationApiTest() {
                     } as? kotlin.Int ?: it
                     }
 
-                val response = api(credentialsFile).findTarificationsBy(region = region,type = type,tarification = tarification,version = version,startDocumentId = startDocumentId,limit = limit)
+                val response = api(credentialsFile).findTarificationsBy(region = region,type = type,tarification = tarification,version = version,startDocumentId = startDocumentId,startKey = startKey,limit = limit)
 
                 val testFileName = "TarificationApi.findTarificationsBy"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -420,6 +427,13 @@ class TarificationApiTest() {
                     it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
                     }
+                val startKey: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findTarificationsByLabel.startKey")?.let {
+                    (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "findTarificationsByLabel") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
+                    }
                 val startDocumentId: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findTarificationsByLabel.startDocumentId")?.let {
                     (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "findTarificationsByLabel") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
@@ -435,7 +449,7 @@ class TarificationApiTest() {
                     } as? kotlin.Int ?: it
                     }
 
-                val response = api(credentialsFile).findTarificationsByLabel(region = region,types = types,language = language,label = label,startDocumentId = startDocumentId,limit = limit)
+                val response = api(credentialsFile).findTarificationsByLabel(region = region,types = types,language = language,label = label,startKey = startKey,startDocumentId = startDocumentId,limit = limit)
 
                 val testFileName = "TarificationApi.findTarificationsByLabel"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -761,7 +775,7 @@ class TarificationApiTest() {
                     functionName.let { name -> listOf("listContact", "modifyContacts").any { name.startsWith(it) } } -> listOf("subContacts.[created, rev, modified]", "services.[openingDate]", "groupId", "created", "modified", "rev")
                     functionName.let { name -> listOf("getServices").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "openingDate")
                     functionName.let { name -> listOf("create", "new", "get", "list", "set").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
-                    functionName.let { name -> listOf("modify", "delete", "undelete").any { name.startsWith(it) } } -> listOf("rev")
+                    functionName.let { name -> listOf("modify", "delete", "undelete", "update").any { name.startsWith(it) } } -> listOf("rev")
                     functionName.let { name -> listOf("append").any { name.startsWith(it) } } -> listOf("id", "created", "modified")
                     functionName.let { name -> listOf("find", "filter").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]", "created", "modified", "rev")
                     else -> emptyList()
@@ -803,7 +817,7 @@ class TarificationApiTest() {
                     functionName.let { name -> listOf("modifyPatientReferral").any { name.startsWith(it) } } -> listOf("rev", "patientHealthCareParties.[referralPeriods]", "created", "modified")
                     functionName.let { name -> listOf("createContact").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "deletionDate", "groupId")
                     functionName.let { name -> listOf("newContactDelegations").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "groupId")
-                    functionName.let { name -> listOf("create", "get", "modify", "new").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "deletionDate")
+                    functionName.let { name -> listOf("create", "get", "modify", "new", "update").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "deletionDate")
                     functionName.let { name -> listOf("set", "delete", "merge").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
                     functionName.let { name -> listOf("validate").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "sentDate")
                     functionName.let { name -> listOf("reassign").any { name.startsWith(it) } } -> listOf("id", "created", "invoicingCodes.id")

@@ -91,6 +91,9 @@ import com.github.pozo.KotlinBuilder
  * @param creditNote 
  * @param creditNoteRelatedInvoiceId 
  * @param idDocument 
+ * @param admissionDate 
+ * @param locationNihii 
+ * @param locationService 
  * @param cancelReason 
  * @param cancelDate 
  * @param encryptedSelf The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys.
@@ -315,6 +318,15 @@ data class InvoiceDto (
 
     @field:JsonProperty("idDocument")
     val idDocument: IdentityDocumentReaderDto? = null,
+
+    @field:JsonProperty("admissionDate")
+    val admissionDate: kotlin.Long? = null,
+
+    @field:JsonProperty("locationNihii")
+    val locationNihii: kotlin.String? = null,
+
+    @field:JsonProperty("locationService")
+    val locationService: kotlin.Int? = null,
 
     @field:JsonProperty("cancelReason")
     val cancelReason: kotlin.String? = null,

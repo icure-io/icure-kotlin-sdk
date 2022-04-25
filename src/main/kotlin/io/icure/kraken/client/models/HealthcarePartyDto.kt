@@ -73,6 +73,7 @@ import com.github.pozo.KotlinBuilder
  * @param ssin Social security inscription number.
  * @param picture A picture usually saved in JPEG format.
  * @param notes Text notes.
+ * @param descr A description of the HCP, meant for the public and in multiple languages.
  * @param billingType The invoicing scheme this healthcare party adheres to : 'service fee' or 'flat rate'
  * @param type 
  * @param contactPerson 
@@ -253,6 +254,10 @@ data class HealthcarePartyDto (
     /* Text notes. */
     @field:JsonProperty("notes")
     val notes: kotlin.String? = null,
+
+    /* A description of the HCP, meant for the public and in multiple languages. */
+    @field:JsonProperty("descr")
+    val descr: kotlin.collections.Map<kotlin.String, kotlin.String>? = null,
 
     /* The invoicing scheme this healthcare party adheres to : 'service fee' or 'flat rate' */
     @field:JsonProperty("billingType")

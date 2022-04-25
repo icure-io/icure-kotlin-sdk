@@ -48,6 +48,7 @@ Name | Type | Description | Notes
 **ssin** | **kotlin.String** | Social security inscription number. |  [optional]
 **picture** | [**io.icure.kraken.client.infrastructure.ByteArrayWrapper**](io.icure.kraken.client.infrastructure.ByteArrayWrapper.md) | A picture usually saved in JPEG format. |  [optional]
 **notes** | **kotlin.String** | Text notes. |  [optional]
+**descr** | **kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;** | A description of the HCP, meant for the public and in multiple languages. |  [optional]
 **billingType** | **kotlin.String** | The invoicing scheme this healthcare party adheres to : &#39;service fee&#39; or &#39;flat rate&#39; |  [optional]
 **type** | **kotlin.String** |  |  [optional]
 **contactPerson** | **kotlin.String** |  |  [optional]

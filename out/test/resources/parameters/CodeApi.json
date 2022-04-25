@@ -119,6 +119,12 @@
       "links": ["L", "M", "N"]
     }
   },
+  "importCodes": {
+    "skipEndpoint": true
+  },
+  "matchCodesBy": {
+    "skipEndpoint": true
+  },
   "fallback": {
   }
 }

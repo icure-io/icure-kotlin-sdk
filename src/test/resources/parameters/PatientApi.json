@@ -24,6 +24,7 @@
     }
   },
   "filterPatientsBy": {
+    "skipEndpoint": true,
     "startKey": null,
     "startDocumentId": null, 
     "limit": null, 

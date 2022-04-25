@@ -14,10 +14,12 @@
 package io.icure.kraken.client.apis
 
 import io.icure.kraken.client.models.DatabaseInitialisationDto
+import io.icure.kraken.client.models.GroupDatabasesInfoDto
 import io.icure.kraken.client.models.GroupDto
 import io.icure.kraken.client.models.IdWithRevDto
 import io.icure.kraken.client.models.ListOfIdsDto
 import io.icure.kraken.client.models.ListOfPropertiesDto
+import io.icure.kraken.client.models.PaginatedListGroupDto
 import io.icure.kraken.client.models.RegistrationInformationDto
 import io.icure.kraken.client.models.RegistrationSuccessDto
 import io.icure.kraken.client.models.ReplicationInfoDto
@@ -192,8 +194,15 @@ class GroupApiTest() {
                     it.copy(rev = currentRev)
                     } as? kotlin.Int ?: it
                     }
+                val superGroup: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "createGroup.superGroup")?.let {
+                    (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "createGroup") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
+                    }
 
-                val response = api(credentialsFile).createGroup(id = id,name = name,password = password,databaseInitialisationDto = databaseInitialisationDto,server = server,q = q,n = n)
+                val response = api(credentialsFile).createGroup(id = id,name = name,password = password,databaseInitialisationDto = databaseInitialisationDto,server = server,q = q,n = n,superGroup = superGroup)
 
                 val testFileName = "GroupApi.createGroup"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
@@ -210,6 +219,180 @@ class GroupApiTest() {
                         object : TypeReference<GroupDto>() {}
                     })
                     assertAreEquals("createGroup", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
+                        }
+                    }
+                }
+            }
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
+        }
+    }
+    
+    /**
+     * Find groups by parent
+     *
+     * List groups that are the children of the group with th eprovided parent id
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @ParameterizedTest
+    @MethodSource("fileNames") // six numbers
+	fun findGroupsTest(fileName: String) = runBlocking {
+
+        if (TestUtils.skipEndpoint(fileName, "findGroups")) {
+            assertTrue(true, "Test of findGroups endpoint has been skipped")
+        } else {
+            try{
+                createForModification(fileName)
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "findGroups")
+                val id: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "findGroups.id")!!.let {
+                    (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "findGroups") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
+                    }
+                val startDocumentId: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findGroups.startDocumentId")?.let {
+                    (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "findGroups") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
+                    }
+                val limit: kotlin.Int? = TestUtils.getParameter<kotlin.Int>(fileName, "findGroups.limit")?.let {
+                    (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "findGroups") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.Int ?: it
+                    }
+
+                val response = api(credentialsFile).findGroups(id = id,startDocumentId = startDocumentId,limit = limit)
+
+                val testFileName = "GroupApi.findGroups"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<PaginatedListGroupDto>? != null) {
+                        if ("PaginatedListGroupDto".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
+                        } else {
+                            object : TypeReference<List<PaginatedListGroupDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<PaginatedListGroupDto>() {}
+                    })
+                    assertAreEquals("findGroups", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
+                        }
+                    }
+                }
+            }
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
+        }
+    }
+    
+    /**
+     * Find groups by parent and content
+     *
+     * List groups that are the children of the group with the provided parent id and that match the provided search string
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @ParameterizedTest
+    @MethodSource("fileNames") // six numbers
+	fun findGroupsWithContentTest(fileName: String) = runBlocking {
+
+        if (TestUtils.skipEndpoint(fileName, "findGroupsWithContent")) {
+            assertTrue(true, "Test of findGroupsWithContent endpoint has been skipped")
+        } else {
+            try{
+                createForModification(fileName)
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "findGroupsWithContent")
+                val id: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "findGroupsWithContent.id")!!.let {
+                    (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "findGroupsWithContent") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
+                    }
+                val searchString: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "findGroupsWithContent.searchString")!!.let {
+                    (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "findGroupsWithContent") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
+                    }
+                val startKey: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findGroupsWithContent.startKey")?.let {
+                    (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "findGroupsWithContent") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
+                    }
+                val startDocumentId: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findGroupsWithContent.startDocumentId")?.let {
+                    (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "findGroupsWithContent") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
+                    }
+                val limit: kotlin.Int? = TestUtils.getParameter<kotlin.Int>(fileName, "findGroupsWithContent.limit")?.let {
+                    (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "findGroupsWithContent") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.Int ?: it
+                    }
+
+                val response = api(credentialsFile).findGroupsWithContent(id = id,searchString = searchString,startKey = startKey,startDocumentId = startDocumentId,limit = limit)
+
+                val testFileName = "GroupApi.findGroupsWithContent"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<PaginatedListGroupDto>? != null) {
+                        if ("PaginatedListGroupDto".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
+                        } else {
+                            object : TypeReference<List<PaginatedListGroupDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<PaginatedListGroupDto>() {}
+                    })
+                    assertAreEquals("findGroupsWithContent", objectFromFile, response)
                     println("Comparison successful")
                 }
                 catch (e: Exception) {
@@ -276,6 +459,72 @@ class GroupApiTest() {
                         object : TypeReference<GroupDto>() {}
                     })
                     assertAreEquals("getGroup", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
+                        }
+                    }
+                }
+            }
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
+        }
+    }
+    
+    /**
+     * Reset storage for group
+     *
+     * Reset storage
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @ParameterizedTest
+    @MethodSource("fileNames") // six numbers
+	fun getGroupsStorageInfosTest(fileName: String) = runBlocking {
+
+        if (TestUtils.skipEndpoint(fileName, "getGroupsStorageInfos")) {
+            assertTrue(true, "Test of getGroupsStorageInfos endpoint has been skipped")
+        } else {
+            try{
+                createForModification(fileName)
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "getGroupsStorageInfos")
+                val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "getGroupsStorageInfos.listOfIdsDto")!!.let {
+                    (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "getGroupsStorageInfos") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? ListOfIdsDto ?: it
+                    }
+
+                val response = api(credentialsFile).getGroupsStorageInfos(listOfIdsDto = listOfIdsDto)
+
+                val testFileName = "GroupApi.getGroupsStorageInfos"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<GroupDatabasesInfoDto>? != null) {
+                        if ("kotlin.collections.List<GroupDatabasesInfoDto>".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
+                        } else {
+                            object : TypeReference<List<GroupDatabasesInfoDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<kotlin.collections.List<GroupDatabasesInfoDto>>() {}
+                    })
+                    assertAreEquals("getGroupsStorageInfos", objectFromFile, response)
                     println("Comparison successful")
                 }
                 catch (e: Exception) {
@@ -964,7 +1213,7 @@ class GroupApiTest() {
                     functionName.let { name -> listOf("listContact", "modifyContacts").any { name.startsWith(it) } } -> listOf("subContacts.[created, rev, modified]", "services.[openingDate]", "groupId", "created", "modified", "rev")
                     functionName.let { name -> listOf("getServices").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "openingDate")
                     functionName.let { name -> listOf("create", "new", "get", "list", "set").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
-                    functionName.let { name -> listOf("modify", "delete", "undelete").any { name.startsWith(it) } } -> listOf("rev")
+                    functionName.let { name -> listOf("modify", "delete", "undelete", "update").any { name.startsWith(it) } } -> listOf("rev")
                     functionName.let { name -> listOf("append").any { name.startsWith(it) } } -> listOf("id", "created", "modified")
                     functionName.let { name -> listOf("find", "filter").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]", "created", "modified", "rev")
                     else -> emptyList()
@@ -1006,7 +1255,7 @@ class GroupApiTest() {
                     functionName.let { name -> listOf("modifyPatientReferral").any { name.startsWith(it) } } -> listOf("rev", "patientHealthCareParties.[referralPeriods]", "created", "modified")
                     functionName.let { name -> listOf("createContact").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "deletionDate", "groupId")
                     functionName.let { name -> listOf("newContactDelegations").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "groupId")
-                    functionName.let { name -> listOf("create", "get", "modify", "new").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "deletionDate")
+                    functionName.let { name -> listOf("create", "get", "modify", "new", "update").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "deletionDate")
                     functionName.let { name -> listOf("set", "delete", "merge").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
                     functionName.let { name -> listOf("validate").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "sentDate")
                     functionName.let { name -> listOf("reassign").any { name.startsWith(it) } } -> listOf("id", "created", "invoicingCodes.id")
