@@ -112,6 +112,7 @@ import java.time.Duration
         .toFlow().let {
             when(T::class) {
                 Flow::class -> it as T
+                String::class -> it.fold(StringBuilder()) { sb, bb -> sb.append(ByteArray(bb.remaining()).also { ba -> bb.get(ba) }.toString(Charsets.UTF_8)) }.toString() as T
                 else -> it.toObject(objectMapper, true)
             }
         }

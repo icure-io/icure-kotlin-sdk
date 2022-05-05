@@ -554,6 +554,7 @@ Class | Method | HTTP request | Description
 *UserApi* | [**deleteUserInGroup**](docs/UserApi.md#deleteuseringroup) | **DELETE** /rest/v2/user/inGroup/{groupId}/{userId} | Delete a User based on his/her ID.
 *UserApi* | [**encodePassword**](docs/UserApi.md#encodepassword) | **GET** /rest/v2/user/encodePassword | 
 *UserApi* | [**filterUsersBy**](docs/UserApi.md#filterusersby) | **POST** /rest/v2/user/filter | Filter users for the current user (HcParty)
+*UserApi* | [**filterUsersInGroupBy**](docs/UserApi.md#filterusersingroupby) | **POST** /rest/v2/user/filter/inGroup/{groupId} | Filter users for the current user (HcParty) for a provided groupId
 *UserApi* | [**findByHcpartyId**](docs/UserApi.md#findbyhcpartyid) | **GET** /rest/v2/user/byHealthcarePartyId/{id} | Get the list of users by healthcare party id
 *UserApi* | [**forgottenPassword**](docs/UserApi.md#forgottenpassword) | **POST** /rest/v2/user/forgottenPassword/{email} | Send a forgotten email message to an user
 *UserApi* | [**getCurrentSession**](docs/UserApi.md#getcurrentsession) | **GET** /rest/v2/user/session | Get Currently logged-in user session.

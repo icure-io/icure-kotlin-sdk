@@ -1,6 +1,7 @@
 package io.icure.kraken.client
 
 import com.github.benmanes.caffeine.cache.Cache
+import io.icure.kraken.client.infrastructure.ApiClient
 import kotlinx.coroutines.*
 import java.util.*
 

@@ -13,6 +13,7 @@ Method | HTTP request | Description
 [**deleteUserInGroup**](UserApi.md#deleteUserInGroup) | **DELETE** /rest/v2/user/inGroup/{groupId}/{userId} | Delete a User based on his/her ID.
 [**encodePassword**](UserApi.md#encodePassword) | **GET** /rest/v2/user/encodePassword | 
 [**filterUsersBy**](UserApi.md#filterUsersBy) | **POST** /rest/v2/user/filter | Filter users for the current user (HcParty)
+[**filterUsersInGroupBy**](UserApi.md#filterUsersInGroupBy) | **POST** /rest/v2/user/filter/inGroup/{groupId} | Filter users for the current user (HcParty) for a provided groupId
 [**findByHcpartyId**](UserApi.md#findByHcpartyId) | **GET** /rest/v2/user/byHealthcarePartyId/{id} | Get the list of users by healthcare party id
 [**forgottenPassword**](UserApi.md#forgottenPassword) | **POST** /rest/v2/user/forgottenPassword/{email} | Send a forgotten email message to an user
 [**getCurrentSession**](UserApi.md#getCurrentSession) | **GET** /rest/v2/user/session | Get Currently logged-in user session.
@@ -439,6 +440,59 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **filterChainUser** | [**FilterChainUser**](FilterChainUser.md)|  |
+ **startDocumentId** | **kotlin.String**| A User document ID | [optional]
+ **limit** | **kotlin.Int**| Number of rows | [optional]
+
+### Return type
+
+[**PaginatedListUserDto**](PaginatedListUserDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="filterUsersInGroupBy"></a>
+# **filterUsersInGroupBy**
+> PaginatedListUserDto filterUsersInGroupBy(groupId, filterChainUser, startDocumentId, limit)
+
+Filter users for the current user (HcParty) for a provided groupId
+
+Returns a list of users along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = UserApi()
+val groupId : kotlin.String = groupId_example // kotlin.String | 
+val filterChainUser : FilterChainUser =  // FilterChainUser | 
+val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A User document ID
+val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
+try {
+    val result : PaginatedListUserDto = apiInstance.filterUsersInGroupBy(groupId, filterChainUser, startDocumentId, limit)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling UserApi#filterUsersInGroupBy")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling UserApi#filterUsersInGroupBy")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **groupId** | **kotlin.String**|  |
  **filterChainUser** | [**FilterChainUser**](FilterChainUser.md)|  |
  **startDocumentId** | **kotlin.String**| A User document ID | [optional]
  **limit** | **kotlin.Int**| Number of rows | [optional]

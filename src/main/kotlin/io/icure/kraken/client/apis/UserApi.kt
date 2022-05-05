@@ -423,6 +423,59 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     }
 
     /**
+    * Filter users for the current user (HcParty) for a provided groupId
+    * Returns a list of users along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
+    * @param groupId  
+    * @param filterChainUser  
+    * @param startDocumentId A User document ID (optional)
+    * @param limit Number of rows (optional)
+    * @return PaginatedListUserDto
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun filterUsersInGroupBy(groupId: kotlin.String, filterChainUser: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.UserDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListUserDto  {
+        val localVariableConfig = filterUsersInGroupByRequestConfig(groupId = groupId, filterChainUser = filterChainUser, startDocumentId = startDocumentId, limit = limit)
+
+        return request<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.UserDto>, PaginatedListUserDto>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation filterUsersInGroupBy
+    *
+    * @param groupId  
+    * @param filterChainUser  
+    * @param startDocumentId A User document ID (optional)
+    * @param limit Number of rows (optional)
+    * @return RequestConfig
+    */
+    fun filterUsersInGroupByRequestConfig(groupId: kotlin.String, filterChainUser: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.UserDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.UserDto>> {
+        // val localVariableBody = filterChainUser
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                if (startDocumentId != null) {
+                    put("startDocumentId", listOf(startDocumentId.toString()))
+                }
+                if (limit != null) {
+                    put("limit", listOf(limit.toString()))
+                }
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = filterChainUser
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v2/user/filter/inGroup/{groupId}".replace("{"+"groupId"+"}", "${URLEncoder.encode(groupId.toString(), Charsets.UTF_8)}"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
     * Get the list of users by healthcare party id
     * 
     * @param id  

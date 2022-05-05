@@ -95,7 +95,7 @@
     "skipEndpoint": true,
     "abstractFilterDtoContact": {"$type": "ContactByHcPartyPatientTagCodeDateFilter", "healthcarePartyId": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98", "startServiceValueDate": 12345}
   },
-  "abstractFilterDtoService": {
+  "matchServicesBy": {
     "skipEndpoint": true
   },
   "modifyContact": {
