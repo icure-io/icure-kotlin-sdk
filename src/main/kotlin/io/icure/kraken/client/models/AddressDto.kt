@@ -95,7 +95,7 @@ data class AddressDto (
     /**
      * The type of place the address represents, ex: home, office, hospital, clinic, etc. 
      *
-     * Values: home,work,vacation,hospital,clinic,hq,other,temporary,postal,diplomatic,reference
+     * Values: home,work,vacation,hospital,clinic,hq,other,temporary,postal,diplomatic,reference,careaddress
      */
     enum class AddressType(val value: kotlin.String) {
         @JsonProperty(value = "home") home("home"),
@@ -108,7 +108,8 @@ data class AddressDto (
         @JsonProperty(value = "temporary") temporary("temporary"),
         @JsonProperty(value = "postal") postal("postal"),
         @JsonProperty(value = "diplomatic") diplomatic("diplomatic"),
-        @JsonProperty(value = "reference") reference("reference");
+        @JsonProperty(value = "reference") reference("reference"),
+        @JsonProperty(value = "careaddress") careaddress("careaddress");
     }
 }
 

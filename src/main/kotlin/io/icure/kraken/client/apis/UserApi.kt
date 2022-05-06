@@ -17,10 +17,10 @@ import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.infrastructure.*
 
 import io.icure.kraken.client.models.DocIdentifier
-import io.icure.kraken.client.models.EmailTemplateDto
 
 import io.icure.kraken.client.models.PaginatedListUserDto
 import io.icure.kraken.client.models.PropertyStubDto
+import io.icure.kraken.client.models.TokenWithGroupDto
 import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.UserGroupDto
 
@@ -515,47 +515,6 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     }
 
     /**
-    * Send a forgotten email message to an user
-    * 
-    * @param email the email of the user  
-    * @param emailTemplateDto  
-    * @return kotlin.Boolean
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun forgottenPassword(email: kotlin.String, emailTemplateDto: EmailTemplateDto) : kotlin.Boolean  {
-        val localVariableConfig = forgottenPasswordRequestConfig(email = email, emailTemplateDto = emailTemplateDto)
-
-        return request<EmailTemplateDto, kotlin.Boolean>(
-            localVariableConfig
-        )!!
-    }
-    /**
-    * To obtain the request config of the operation forgottenPassword
-    *
-    * @param email the email of the user  
-    * @param emailTemplateDto  
-    * @return RequestConfig
-    */
-    fun forgottenPasswordRequestConfig(email: kotlin.String, emailTemplateDto: EmailTemplateDto) : RequestConfig<EmailTemplateDto> {
-        // val localVariableBody = emailTemplateDto
-        val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
-        localVariableHeaders["Accept"] = "*/*"
-        val localVariableBody = emailTemplateDto
-
-        return RequestConfig(
-            method = RequestMethod.POST,
-            path = "/rest/v2/user/forgottenPassword/{email}".replace("{"+"email"+"}", "${URLEncoder.encode(email.toString(), Charsets.UTF_8)}"),
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody        )
-    }
-
-    /**
     * Get Currently logged-in user session.
     * Get current user.
     * @return kotlin.String
@@ -709,6 +668,110 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/user/token/{userId}/{key}".replace("{"+"userId"+"}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}").replace("{"+"key"+"}", "${URLEncoder.encode(key.toString(), Charsets.UTF_8)}"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
+    * Require a new temporary token for authentication inside all groups
+    * 
+    * @param userIdentifier  
+    * @param key The token key. Only one instance of a token with a defined key can exist at the same time 
+    * @param token  (optional)
+    * @param tokenValidity The token validity in seconds (optional)
+    * @return kotlin.collections.List<TokenWithGroupDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun getTokenInAllGroups(userIdentifier: kotlin.String, key: kotlin.String, token: kotlin.String?, tokenValidity: kotlin.Long?) : kotlin.collections.List<TokenWithGroupDto>  {
+        val localVariableConfig = getTokenInAllGroupsRequestConfig(userIdentifier = userIdentifier, key = key, token = token, tokenValidity = tokenValidity)
+
+        return request<Unit, kotlin.collections.List<TokenWithGroupDto>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation getTokenInAllGroups
+    *
+    * @param userIdentifier  
+    * @param key The token key. Only one instance of a token with a defined key can exist at the same time 
+    * @param token  (optional)
+    * @param tokenValidity The token validity in seconds (optional)
+    * @return RequestConfig
+    */
+    fun getTokenInAllGroupsRequestConfig(userIdentifier: kotlin.String, key: kotlin.String, token: kotlin.String?, tokenValidity: kotlin.Long?) : RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                if (tokenValidity != null) {
+                    put("tokenValidity", listOf(tokenValidity.toString()))
+                }
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+        token?.apply { localVariableHeaders["token"] = this.toString() }
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v2/user/inAllGroups/token/{userIdentifier}/{key}".replace("{"+"userIdentifier"+"}", "${URLEncoder.encode(userIdentifier.toString(), Charsets.UTF_8)}").replace("{"+"key"+"}", "${URLEncoder.encode(key.toString(), Charsets.UTF_8)}"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
+    * Require a new temporary token for authentication inside provided group
+    * 
+    * @param groupId  
+    * @param userId  
+    * @param key The token key. Only one instance of a token with a defined key can exist at the same time 
+    * @param token  (optional)
+    * @param tokenValidity The token validity in seconds (optional)
+    * @return kotlin.String
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun getTokenInGroup(groupId: kotlin.String, userId: kotlin.String, key: kotlin.String, token: kotlin.String?, tokenValidity: kotlin.Long?) : kotlin.String  {
+        val localVariableConfig = getTokenInGroupRequestConfig(groupId = groupId, userId = userId, key = key, token = token, tokenValidity = tokenValidity)
+
+        return request<Unit, kotlin.String>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation getTokenInGroup
+    *
+    * @param groupId  
+    * @param userId  
+    * @param key The token key. Only one instance of a token with a defined key can exist at the same time 
+    * @param token  (optional)
+    * @param tokenValidity The token validity in seconds (optional)
+    * @return RequestConfig
+    */
+    fun getTokenInGroupRequestConfig(groupId: kotlin.String, userId: kotlin.String, key: kotlin.String, token: kotlin.String?, tokenValidity: kotlin.Long?) : RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                if (tokenValidity != null) {
+                    put("tokenValidity", listOf(tokenValidity.toString()))
+                }
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+        token?.apply { localVariableHeaders["token"] = this.toString() }
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v2/user/inGroup/{groupId}/token/{userId}/{key}".replace("{"+"groupId"+"}", "${URLEncoder.encode(groupId.toString(), Charsets.UTF_8)}").replace("{"+"userId"+"}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}").replace("{"+"key"+"}", "${URLEncoder.encode(key.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

@@ -22,40 +22,24 @@ import com.github.pozo.KotlinBuilder
 /**
  * 
  *
+ * @param token 
  * @param groupId 
  * @param groupName 
- * @param userId 
- * @param login 
- * @param name 
- * @param email 
- * @param phone 
  */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @KotlinBuilder
-data class UserGroupDto (
+data class TokenWithGroupDto (
+
+    @field:JsonProperty("token")
+    val token: kotlin.String,
 
     @field:JsonProperty("groupId")
-    val groupId: kotlin.String? = null,
+    val groupId: kotlin.String,
 
     @field:JsonProperty("groupName")
-    val groupName: kotlin.String? = null,
-
-    @field:JsonProperty("userId")
-    val userId: kotlin.String? = null,
-
-    @field:JsonProperty("login")
-    val login: kotlin.String? = null,
-
-    @field:JsonProperty("name")
-    val name: kotlin.String? = null,
-
-    @field:JsonProperty("email")
-    val email: kotlin.String? = null,
-
-    @field:JsonProperty("phone")
-    val phone: kotlin.String? = null
+    val groupName: kotlin.String? = null
 
 )
 

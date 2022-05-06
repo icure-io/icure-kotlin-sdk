@@ -98,7 +98,7 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: We
     * @param formIds  
     * @param planOfActionId  
     * @param enckeys  
-    * @param ctc  
+    * @param contactDto  
     * @return ContactDto
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -106,10 +106,10 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: We
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun doImport(documentId: kotlin.String, hcpId: kotlin.String, language: kotlin.String, protocolIds: kotlin.String, formIds: kotlin.String, planOfActionId: kotlin.String, enckeys: kotlin.String, ctc: ContactDto) : ContactDto  {
-        val localVariableConfig = doImportRequestConfig(documentId = documentId, hcpId = hcpId, language = language, protocolIds = protocolIds, formIds = formIds, planOfActionId = planOfActionId, enckeys = enckeys, ctc = ctc)
+    suspend fun doImport(documentId: kotlin.String, hcpId: kotlin.String, language: kotlin.String, protocolIds: kotlin.String, formIds: kotlin.String, planOfActionId: kotlin.String, enckeys: kotlin.String, contactDto: ContactDto) : ContactDto  {
+        val localVariableConfig = doImportRequestConfig(documentId = documentId, hcpId = hcpId, language = language, protocolIds = protocolIds, formIds = formIds, planOfActionId = planOfActionId, enckeys = enckeys, contactDto = contactDto)
 
-        return request<Unit, ContactDto>(
+        return request<ContactDto, ContactDto>(
             localVariableConfig
         )!!
     }
@@ -123,25 +123,24 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: We
     * @param formIds  
     * @param planOfActionId  
     * @param enckeys  
-    * @param ctc  
+    * @param contactDto  
     * @return RequestConfig
     */
-    fun doImportRequestConfig(documentId: kotlin.String, hcpId: kotlin.String, language: kotlin.String, protocolIds: kotlin.String, formIds: kotlin.String, planOfActionId: kotlin.String, enckeys: kotlin.String, ctc: ContactDto) : RequestConfig<Unit> {
-        // val localVariableBody = null
+    fun doImportRequestConfig(documentId: kotlin.String, hcpId: kotlin.String, language: kotlin.String, protocolIds: kotlin.String, formIds: kotlin.String, planOfActionId: kotlin.String, enckeys: kotlin.String, contactDto: ContactDto) : RequestConfig<ContactDto> {
+        // val localVariableBody = contactDto
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
                 put("protocolIds", listOf(protocolIds.toString()))
                 put("formIds", listOf(formIds.toString()))
                 put("planOfActionId", listOf(planOfActionId.toString()))
                 put("enckeys", listOf(enckeys.toString()))
-                put("ctc", listOf(ctc.toString()))
             }
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
-        val localVariableBody = null
+        val localVariableBody = contactDto
 
         return RequestConfig(
-            method = RequestMethod.GET,
+            method = RequestMethod.POST,
             path = "/rest/v2/be_result_import/import/{documentId}/{hcpId}/{language}".replace("{"+"documentId"+"}", "${URLEncoder.encode(documentId.toString(), Charsets.UTF_8)}").replace("{"+"hcpId"+"}", "${URLEncoder.encode(hcpId.toString(), Charsets.UTF_8)}").replace("{"+"language"+"}", "${URLEncoder.encode(language.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,

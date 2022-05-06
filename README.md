@@ -67,6 +67,7 @@ Class | Method | HTTP request | Description
 *BekmehrApi* | [**checkIfSMFPatientsExists**](docs/BekmehrApi.md#checkifsmfpatientsexists) | **POST** /rest/v2/be_kmehr/smf/{documentId}/checkIfSMFPatientsExists | Check whether patients in SMF already exists in DB
 *BekmehrApi* | [**generateContactreportExport**](docs/BekmehrApi.md#generatecontactreportexport) | **POST** /rest/v2/be_kmehr/contactreport/{patientId}/export/{id} | Get Kmehr contactreport
 *BekmehrApi* | [**generateDiaryNote**](docs/BekmehrApi.md#generatediarynote) | **POST** /rest/v2/be_kmehr/diarynote/{patientId}/export | Generate diarynote
+*BekmehrApi* | [**generateIncapacityExport**](docs/BekmehrApi.md#generateincapacityexport) | **POST** /rest/v2/be_kmehr/incapacity/{patientId}/export | Get Incapacity export
 *BekmehrApi* | [**generateLabresultExport**](docs/BekmehrApi.md#generatelabresultexport) | **POST** /rest/v2/be_kmehr/labresult/{patientId}/export/{id} | Get Kmehr labresult
 *BekmehrApi* | [**generateMedicationSchemeExport**](docs/BekmehrApi.md#generatemedicationschemeexport) | **POST** /rest/v2/be_kmehr/medicationscheme/{patientId}/export | Get Medicationscheme export
 *BekmehrApi* | [**generateNoteExport**](docs/BekmehrApi.md#generatenoteexport) | **POST** /rest/v2/be_kmehr/note/{patientId}/export/{id} | Get Kmehr note
@@ -94,7 +95,7 @@ Class | Method | HTTP request | Description
 *BeresultexportApi* | [**exportKmehrReport**](docs/BeresultexportApi.md#exportkmehrreport) | **POST** /rest/v2/be_result_export/kmehrreport/{fromHcpId}/{toHcpId}/{patId}/{date}/{ref} | Export data
 *BeresultexportApi* | [**exportMedidoc**](docs/BeresultexportApi.md#exportmedidoc) | **POST** /rest/v2/be_result_export/medidoc/{fromHcpId}/{toHcpId}/{patId}/{date}/{ref} | Export data
 *BeresultimportApi* | [**canHandle**](docs/BeresultimportApi.md#canhandle) | **GET** /rest/v2/be_result_import/canhandle/{id} | Can we handle this document
-*BeresultimportApi* | [**doImport**](docs/BeresultimportApi.md#doimport) | **GET** /rest/v2/be_result_import/import/{documentId}/{hcpId}/{language} | import document
+*BeresultimportApi* | [**doImport**](docs/BeresultimportApi.md#doimport) | **POST** /rest/v2/be_result_import/import/{documentId}/{hcpId}/{language} | import document
 *BeresultimportApi* | [**getInfos**](docs/BeresultimportApi.md#getinfos) | **GET** /rest/v2/be_result_import/infos/{id} | Extract general infos from document
 *Besamv2Api* | [**findAmpsByDmppCode**](docs/Besamv2Api.md#findampsbydmppcode) | **GET** /rest/v2/be_samv2/amp/byDmppCode/{dmppCode} | Finding AMPs by dmpp code
 *Besamv2Api* | [**findPaginatedAmpsByAtc**](docs/Besamv2Api.md#findpaginatedampsbyatc) | **GET** /rest/v2/be_samv2/vmp/byAtc/{atcCode} | Finding AMPs by atc code with pagination.
@@ -206,15 +207,19 @@ Class | Method | HTTP request | Description
 *ContactApi* | [**newContactDelegations**](docs/ContactApi.md#newcontactdelegations) | **POST** /rest/v2/contact/{contactId}/delegate | Delegates a contact to a healthcare party
 *ContactApi* | [**setContactsDelegations**](docs/ContactApi.md#setcontactsdelegations) | **POST** /rest/v2/contact/delegations | Update delegations in healthElements.
 *DeviceApi* | [**createDevice**](docs/DeviceApi.md#createdevice) | **POST** /rest/v2/device | Create a device
+*DeviceApi* | [**createDeviceInGroup**](docs/DeviceApi.md#createdeviceingroup) | **POST** /rest/v2/device/inGroup/{groupId} | Create a device
 *DeviceApi* | [**createDevices**](docs/DeviceApi.md#createdevices) | **POST** /rest/v2/device/batch | Create devices in bulk
 *DeviceApi* | [**createDevices1**](docs/DeviceApi.md#createdevices1) | **POST** /rest/v2/device/bulk | Create devices in bulk
 *DeviceApi* | [**deleteDevice**](docs/DeviceApi.md#deletedevice) | **DELETE** /rest/v2/device/{deviceId} | Delete device.
 *DeviceApi* | [**deleteDevices**](docs/DeviceApi.md#deletedevices) | **POST** /rest/v2/device/delete/batch | Delete devices.
+*DeviceApi* | [**deleteDevicesInGroup**](docs/DeviceApi.md#deletedevicesingroup) | **DELETE** /rest/v2/device/inGroup/{groupId}/{deviceIds} | Delete a device
 *DeviceApi* | [**filterDevicesBy**](docs/DeviceApi.md#filterdevicesby) | **POST** /rest/v2/device/filter | Filter devices for the current user (HcParty) 
 *DeviceApi* | [**getDevice**](docs/DeviceApi.md#getdevice) | **GET** /rest/v2/device/{deviceId} | Get Device
 *DeviceApi* | [**getDeviceHcPartyKeysForDelegate**](docs/DeviceApi.md#getdevicehcpartykeysfordelegate) | **GET** /rest/v2/device/{deviceId}/keys | Get the HcParty encrypted AES keys indexed by owner
 *DeviceApi* | [**getDevices**](docs/DeviceApi.md#getdevices) | **POST** /rest/v2/device/byIds | Get devices by id
+*DeviceApi* | [**getDevicesInGroup**](docs/DeviceApi.md#getdevicesingroup) | **POST** /rest/v2/device/inGroup/{groupId}/byIds | Get devices by their IDs
 *DeviceApi* | [**matchDevicesBy**](docs/DeviceApi.md#matchdevicesby) | **POST** /rest/v2/device/match | Get ids of devices matching the provided filter for the current user (HcParty) 
+*DeviceApi* | [**modifyDeviceInGroup**](docs/DeviceApi.md#modifydeviceingroup) | **PUT** /rest/v2/device/inGroup/{groupId} | Modify a Device.
 *DeviceApi* | [**updateDevice**](docs/DeviceApi.md#updatedevice) | **PUT** /rest/v2/device | Modify a device
 *DeviceApi* | [**updateDevices**](docs/DeviceApi.md#updatedevices) | **PUT** /rest/v2/device/batch | Modify devices in bulk
 *DeviceApi* | [**updateDevices1**](docs/DeviceApi.md#updatedevices1) | **PUT** /rest/v2/device/bulk | Modify devices in bulk
@@ -556,11 +561,12 @@ Class | Method | HTTP request | Description
 *UserApi* | [**filterUsersBy**](docs/UserApi.md#filterusersby) | **POST** /rest/v2/user/filter | Filter users for the current user (HcParty)
 *UserApi* | [**filterUsersInGroupBy**](docs/UserApi.md#filterusersingroupby) | **POST** /rest/v2/user/filter/inGroup/{groupId} | Filter users for the current user (HcParty) for a provided groupId
 *UserApi* | [**findByHcpartyId**](docs/UserApi.md#findbyhcpartyid) | **GET** /rest/v2/user/byHealthcarePartyId/{id} | Get the list of users by healthcare party id
-*UserApi* | [**forgottenPassword**](docs/UserApi.md#forgottenpassword) | **POST** /rest/v2/user/forgottenPassword/{email} | Send a forgotten email message to an user
 *UserApi* | [**getCurrentSession**](docs/UserApi.md#getcurrentsession) | **GET** /rest/v2/user/session | Get Currently logged-in user session.
 *UserApi* | [**getCurrentUser**](docs/UserApi.md#getcurrentuser) | **GET** /rest/v2/user/current | Get presently logged-in user.
 *UserApi* | [**getMatchingUsers**](docs/UserApi.md#getmatchingusers) | **GET** /rest/v2/user/matches | Get presently logged-in user.
 *UserApi* | [**getToken**](docs/UserApi.md#gettoken) | **POST** /rest/v2/user/token/{userId}/{key} | Request a new temporary token for authentication
+*UserApi* | [**getTokenInAllGroups**](docs/UserApi.md#gettokeninallgroups) | **POST** /rest/v2/user/inAllGroups/token/{userIdentifier}/{key} | Require a new temporary token for authentication inside all groups
+*UserApi* | [**getTokenInGroup**](docs/UserApi.md#gettokeningroup) | **POST** /rest/v2/user/inGroup/{groupId}/token/{userId}/{key} | Require a new temporary token for authentication inside provided group
 *UserApi* | [**getUser**](docs/UserApi.md#getuser) | **GET** /rest/v2/user/{userId} | Get a user by his ID
 *UserApi* | [**getUserByEmail**](docs/UserApi.md#getuserbyemail) | **GET** /rest/v2/user/byEmail/{email} | Get a user by his Email/Login
 *UserApi* | [**listUsersBy**](docs/UserApi.md#listusersby) | **GET** /rest/v2/user | List users with(out) pagination
@@ -636,7 +642,6 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.EIDItem](docs/EIDItem.md)
  - [io.icure.kraken.client.models.Editor](docs/Editor.md)
  - [io.icure.kraken.client.models.EfactInvoice](docs/EfactInvoice.md)
- - [io.icure.kraken.client.models.EmailTemplateDto](docs/EmailTemplateDto.md)
  - [io.icure.kraken.client.models.EmployerDto](docs/EmployerDto.md)
  - [io.icure.kraken.client.models.EmploymentInfoDto](docs/EmploymentInfoDto.md)
  - [io.icure.kraken.client.models.EntityReferenceDto](docs/EntityReferenceDto.md)
@@ -678,6 +683,7 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.IdentityDocumentReaderDto](docs/IdentityDocumentReaderDto.md)
  - [io.icure.kraken.client.models.ImportMapping](docs/ImportMapping.md)
  - [io.icure.kraken.client.models.ImportResultDto](docs/ImportResultDto.md)
+ - [io.icure.kraken.client.models.IncapacityExportInfoDto](docs/IncapacityExportInfoDto.md)
  - [io.icure.kraken.client.models.IndexingInfoDto](docs/IndexingInfoDto.md)
  - [io.icure.kraken.client.models.IngredientDto](docs/IngredientDto.md)
  - [io.icure.kraken.client.models.InlineResponse200](docs/InlineResponse200.md)
@@ -802,6 +808,7 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.TimeTableDto](docs/TimeTableDto.md)
  - [io.icure.kraken.client.models.TimeTableHourDto](docs/TimeTableHourDto.md)
  - [io.icure.kraken.client.models.TimeTableItemDto](docs/TimeTableItemDto.md)
+ - [io.icure.kraken.client.models.TokenWithGroupDto](docs/TokenWithGroupDto.md)
  - [io.icure.kraken.client.models.TypedValueDtoObject](docs/TypedValueDtoObject.md)
  - [io.icure.kraken.client.models.UserAndHealthcarePartyDto](docs/UserAndHealthcarePartyDto.md)
  - [io.icure.kraken.client.models.UserDto](docs/UserDto.md)

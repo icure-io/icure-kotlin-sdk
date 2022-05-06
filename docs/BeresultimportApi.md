@@ -5,7 +5,7 @@ All URIs are relative to *https://kraken.icure.dev*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**canHandle**](BeresultimportApi.md#canHandle) | **GET** /rest/v2/be_result_import/canhandle/{id} | Can we handle this document
-[**doImport**](BeresultimportApi.md#doImport) | **GET** /rest/v2/be_result_import/import/{documentId}/{hcpId}/{language} | import document
+[**doImport**](BeresultimportApi.md#doImport) | **POST** /rest/v2/be_result_import/import/{documentId}/{hcpId}/{language} | import document
 [**getInfos**](BeresultimportApi.md#getInfos) | **GET** /rest/v2/be_result_import/infos/{id} | Extract general infos from document
 
 
@@ -58,7 +58,7 @@ No authorization required
 
 <a name="doImport"></a>
 # **doImport**
-> ContactDto doImport(documentId, hcpId, language, protocolIds, formIds, planOfActionId, enckeys, ctc)
+> ContactDto doImport(documentId, hcpId, language, protocolIds, formIds, planOfActionId, enckeys, contactDto)
 
 import document
 
@@ -76,9 +76,9 @@ val protocolIds : kotlin.String = protocolIds_example // kotlin.String |
 val formIds : kotlin.String = formIds_example // kotlin.String | 
 val planOfActionId : kotlin.String = planOfActionId_example // kotlin.String | 
 val enckeys : kotlin.String = enckeys_example // kotlin.String | 
-val ctc : ContactDto =  // ContactDto | 
+val contactDto : ContactDto =  // ContactDto | 
 try {
-    val result : ContactDto = apiInstance.doImport(documentId, hcpId, language, protocolIds, formIds, planOfActionId, enckeys, ctc)
+    val result : ContactDto = apiInstance.doImport(documentId, hcpId, language, protocolIds, formIds, planOfActionId, enckeys, contactDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BeresultimportApi#doImport")
@@ -100,7 +100,7 @@ Name | Type | Description  | Notes
  **formIds** | **kotlin.String**|  |
  **planOfActionId** | **kotlin.String**|  |
  **enckeys** | **kotlin.String**|  |
- **ctc** | [**ContactDto**](.md)|  |
+ **contactDto** | [**ContactDto**](ContactDto.md)|  |
 
 ### Return type
 
@@ -112,7 +112,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: */*
 
 <a name="getInfos"></a>

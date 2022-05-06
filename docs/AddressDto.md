@@ -22,7 +22,7 @@ Name | Type | Description | Notes
 ## Enum: addressType
 Name | Value
 ---- | -----
-addressType | home, work, vacation, hospital, clinic, hq, other, temporary, postal, diplomatic, reference
+addressType | home, work, vacation, hospital, clinic, hq, other, temporary, postal, diplomatic, reference, careaddress
 
 
 

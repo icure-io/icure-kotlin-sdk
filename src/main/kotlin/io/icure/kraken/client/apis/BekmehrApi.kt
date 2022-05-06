@@ -20,6 +20,7 @@ import io.icure.kraken.client.models.ContentDto
 import io.icure.kraken.client.models.DiaryNoteExportInfoDto
 import io.icure.kraken.client.models.ImportMapping
 import io.icure.kraken.client.models.ImportResultDto
+import io.icure.kraken.client.models.IncapacityExportInfoDto
 import io.icure.kraken.client.models.MedicationSchemeExportInfoDto
 import io.icure.kraken.client.models.SoftwareMedicalFileExportDto
 import io.icure.kraken.client.models.SumehrContentDto
@@ -217,6 +218,55 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/be_kmehr/diarynote/{patientId}/export".replace("{"+"patientId"+"}", "${URLEncoder.encode(patientId.toString(), Charsets.UTF_8)}"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
+    * Get Incapacity export
+    * 
+    * @param patientId  
+    * @param language  
+    * @param incapacityExportInfoDto  
+    * @param xTimezoneOffset  (optional)
+    * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun generateIncapacityExport(patientId: kotlin.String, language: kotlin.String, incapacityExportInfoDto: IncapacityExportInfoDto, xTimezoneOffset: kotlin.String?) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>  {
+        val localVariableConfig = generateIncapacityExportRequestConfig(patientId = patientId, language = language, incapacityExportInfoDto = incapacityExportInfoDto, xTimezoneOffset = xTimezoneOffset)
+
+        return request<IncapacityExportInfoDto, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation generateIncapacityExport
+    *
+    * @param patientId  
+    * @param language  
+    * @param incapacityExportInfoDto  
+    * @param xTimezoneOffset  (optional)
+    * @return RequestConfig
+    */
+    fun generateIncapacityExportRequestConfig(patientId: kotlin.String, language: kotlin.String, incapacityExportInfoDto: IncapacityExportInfoDto, xTimezoneOffset: kotlin.String?) : RequestConfig<IncapacityExportInfoDto> {
+        // val localVariableBody = incapacityExportInfoDto
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                put("language", listOf(language.toString()))
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "application/octet-stream"
+        val localVariableBody = incapacityExportInfoDto
+        xTimezoneOffset?.apply { localVariableHeaders["X-Timezone-Offset"] = this.toString() }
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v2/be_kmehr/incapacity/{patientId}/export".replace("{"+"patientId"+"}", "${URLEncoder.encode(patientId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
