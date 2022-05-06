@@ -238,8 +238,8 @@ suspend fun ContactApi.listServicesByAssociationId(user: UserDto, associationId:
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.listServicesByHealthElementId(user: UserDto, healthElementId: String, crypto: Crypto) : List<ServiceDto> {
-    return this.listServicesByHealthElementId(healthElementId).let { crypto.decryptServices(user.dataOwnerId(), null, it) }
+suspend fun ContactApi.listServicesByHealthElementId(user: UserDto, healthElementId: String, hcPartyId: String, crypto: Crypto) : List<ServiceDto> {
+    return this.listServicesByHealthElementId(healthElementId, hcPartyId).let { crypto.decryptServices(user.dataOwnerId(), null, it) }
 }
 
 @ExperimentalCoroutinesApi
