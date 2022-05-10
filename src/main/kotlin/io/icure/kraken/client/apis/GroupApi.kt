@@ -122,6 +122,45 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     }
 
     /**
+    * Delete group
+    * Delete group without reset or deleteing storage
+    * @param id The id of group to delete 
+    * @return GroupDto
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun deleteGroup(id: kotlin.String) : GroupDto  {
+        val localVariableConfig = deleteGroupRequestConfig(id = id)
+
+        return request<Unit, GroupDto>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation deleteGroup
+    *
+    * @param id The id of group to delete 
+    * @return RequestConfig
+    */
+    fun deleteGroupRequestConfig(id: kotlin.String) : RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+
+        return RequestConfig(
+            method = RequestMethod.DELETE,
+            path = "/rest/v2/group/{id}".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
     * Find groups by parent
     * List groups that are the children of the group with th eprovided parent id
     * @param id The id of the group 

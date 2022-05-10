@@ -297,6 +297,7 @@ Class | Method | HTTP request | Description
 *FrontEndMigrationApi* | [**getFrontEndMigrations**](docs/FrontEndMigrationApi.md#getfrontendmigrations) | **GET** /rest/v2/frontendmigration | Gets a front end migration
 *FrontEndMigrationApi* | [**modifyFrontEndMigration**](docs/FrontEndMigrationApi.md#modifyfrontendmigration) | **PUT** /rest/v2/frontendmigration | Modifies a front end migration
 *GroupApi* | [**createGroup**](docs/GroupApi.md#creategroup) | **POST** /rest/v2/group/{id} | Create a group
+*GroupApi* | [**deleteGroup**](docs/GroupApi.md#deletegroup) | **DELETE** /rest/v2/group/{id} | Delete group
 *GroupApi* | [**findGroups**](docs/GroupApi.md#findgroups) | **GET** /rest/v2/group/{id}/children | Find groups by parent
 *GroupApi* | [**findGroupsWithContent**](docs/GroupApi.md#findgroupswithcontent) | **GET** /rest/v2/group/{id}/children/search | Find groups by parent and content
 *GroupApi* | [**getGroup**](docs/GroupApi.md#getgroup) | **GET** /rest/v2/group/{id} | Get a group by id

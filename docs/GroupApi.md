@@ -5,6 +5,7 @@ All URIs are relative to *https://kraken.icure.dev*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createGroup**](GroupApi.md#createGroup) | **POST** /rest/v2/group/{id} | Create a group
+[**deleteGroup**](GroupApi.md#deleteGroup) | **DELETE** /rest/v2/group/{id} | Delete group
 [**findGroups**](GroupApi.md#findGroups) | **GET** /rest/v2/group/{id}/children | Find groups by parent
 [**findGroupsWithContent**](GroupApi.md#findGroupsWithContent) | **GET** /rest/v2/group/{id}/children/search | Find groups by parent and content
 [**getGroup**](GroupApi.md#getGroup) | **GET** /rest/v2/group/{id} | Get a group by id
@@ -79,6 +80,53 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="deleteGroup"></a>
+# **deleteGroup**
+> GroupDto deleteGroup(id)
+
+Delete group
+
+Delete group without reset or deleteing storage
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = GroupApi()
+val id : kotlin.String = id_example // kotlin.String | The id of group to delete
+try {
+    val result : GroupDto = apiInstance.deleteGroup(id)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling GroupApi#deleteGroup")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling GroupApi#deleteGroup")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **kotlin.String**| The id of group to delete |
+
+### Return type
+
+[**GroupDto**](GroupDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
  - **Accept**: */*
 
 <a name="findGroups"></a>
