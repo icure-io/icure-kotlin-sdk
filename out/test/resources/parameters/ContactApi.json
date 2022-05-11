@@ -146,7 +146,8 @@
     "skipEndpoint": true
   },
   "listServicesByHealthElementId": {
-    "skipEndpoint": true
+    "skipEndpoint": true,
+    "hcpartyId": "cc4dab7e-fe83-41f0-8dab-7efe83e1f018"
   },
   "fallback": {
   }

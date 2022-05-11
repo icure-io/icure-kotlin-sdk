@@ -1516,8 +1516,15 @@ class UserApiTest() {
                     it.copy(rev = currentRev)
                     } as? kotlin.Int ?: it
                     }
+                val skipPatients: kotlin.Boolean? = TestUtils.getParameter<kotlin.Boolean>(fileName, "listUsersBy.skipPatients")?.let {
+                    (it as? UserDto)?.takeIf { TestUtils.isAutoRev(fileName, "listUsersBy") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getUser(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.Boolean ?: it
+                    }
 
-                val response = api(credentialsFile).listUsersBy(startKey = startKey,startDocumentId = startDocumentId,limit = limit)
+                val response = api(credentialsFile).listUsersBy(startKey = startKey,startDocumentId = startDocumentId,limit = limit,skipPatients = skipPatients)
 
                 val testFileName = "UserApi.listUsersBy"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
