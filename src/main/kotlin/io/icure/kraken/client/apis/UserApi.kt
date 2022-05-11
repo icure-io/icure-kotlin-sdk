@@ -861,6 +861,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     * @param startKey An user email (optional)
     * @param startDocumentId An user document ID (optional)
     * @param limit Number of rows (optional)
+    * @param skipPatients Filter out patient users (optional)
     * @return PaginatedListUserDto
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -868,8 +869,8 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listUsersBy(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListUserDto  {
-        val localVariableConfig = listUsersByRequestConfig(startKey = startKey, startDocumentId = startDocumentId, limit = limit)
+    suspend fun listUsersBy(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, skipPatients: kotlin.Boolean?) : PaginatedListUserDto  {
+        val localVariableConfig = listUsersByRequestConfig(startKey = startKey, startDocumentId = startDocumentId, limit = limit, skipPatients = skipPatients)
 
         return request<Unit, PaginatedListUserDto>(
             localVariableConfig
@@ -881,9 +882,10 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     * @param startKey An user email (optional)
     * @param startDocumentId An user document ID (optional)
     * @param limit Number of rows (optional)
+    * @param skipPatients Filter out patient users (optional)
     * @return RequestConfig
     */
-    fun listUsersByRequestConfig(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
+    fun listUsersByRequestConfig(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, skipPatients: kotlin.Boolean?) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -895,6 +897,9 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
                 }
                 if (limit != null) {
                     put("limit", listOf(limit.toString()))
+                }
+                if (skipPatients != null) {
+                    put("skipPatients", listOf(skipPatients.toString()))
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()

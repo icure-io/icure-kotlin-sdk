@@ -934,7 +934,7 @@ No authorization required
 
 <a name="listUsersBy"></a>
 # **listUsersBy**
-> PaginatedListUserDto listUsersBy(startKey, startDocumentId, limit)
+> PaginatedListUserDto listUsersBy(startKey, startDocumentId, limit, skipPatients)
 
 List users with(out) pagination
 
@@ -950,8 +950,9 @@ val apiInstance = UserApi()
 val startKey : kotlin.String = startKey_example // kotlin.String | An user email
 val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | An user document ID
 val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
+val skipPatients : kotlin.Boolean = true // kotlin.Boolean | Filter out patient users
 try {
-    val result : PaginatedListUserDto = apiInstance.listUsersBy(startKey, startDocumentId, limit)
+    val result : PaginatedListUserDto = apiInstance.listUsersBy(startKey, startDocumentId, limit, skipPatients)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling UserApi#listUsersBy")
@@ -969,6 +970,7 @@ Name | Type | Description  | Notes
  **startKey** | **kotlin.String**| An user email | [optional]
  **startDocumentId** | **kotlin.String**| An user document ID | [optional]
  **limit** | **kotlin.Int**| Number of rows | [optional]
+ **skipPatients** | **kotlin.Boolean**| Filter out patient users | [optional]
 
 ### Return type
 
