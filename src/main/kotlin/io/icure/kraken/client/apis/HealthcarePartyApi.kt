@@ -498,6 +498,46 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
     }
 
     /**
+     * Get the HcParty encrypted AES keys indexed by owner
+     * (key, value) of the map is as follows: (ID of the owner of the encrypted AES key, encrypted AES key)
+     * @param healthcarePartyId
+     * @return kotlin.collections.Map<kotlin.String, kotlin.String>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun getHcPartyKeysForDelegate(healthcarePartyId: kotlin.String) : kotlin.collections.Map<kotlin.String, kotlin.String>  {
+        val localVariableConfig = getHcPartyKeysForDelegateRequestConfig(healthcarePartyId = healthcarePartyId)
+
+        return request<Unit, kotlin.collections.Map<kotlin.String, kotlin.String>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+     * To obtain the request config of the operation getHcPartyKeysForDelegate
+     *
+     * @param healthcarePartyId
+     * @return RequestConfig
+     */
+    fun getHcPartyKeysForDelegateRequestConfig(healthcarePartyId: kotlin.String) : RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v1/hcparty/byKeys/{healthcarePartyId}".replace("{"+"healthcarePartyId"+"}", "${URLEncoder.encode(healthcarePartyId.toString(), Charsets.UTF_8)}"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+
+    /**
     * Get the HcParty encrypted AES keys indexed by owner.
     * (key, value) of the map is as follows: (ID of the owner of the encrypted AES key, encrypted AES keys)
     * @param healthcarePartyId  
