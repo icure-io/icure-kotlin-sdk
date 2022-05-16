@@ -13,8 +13,8 @@ Method | HTTP request | Description
 [**findHealthcarePartiesByName**](HealthcarePartyApi.md#findHealthcarePartiesByName) | **GET** /rest/v2/hcparty/byName | Find healthcare parties by name with(out) pagination
 [**findHealthcarePartiesBySpecialityAndPostCode**](HealthcarePartyApi.md#findHealthcarePartiesBySpecialityAndPostCode) | **GET** /rest/v2/hcparty/bySpecialityAndPostCode/{type}/{spec}/{firstCode}/to/{lastCode} | Find healthcare parties by name with(out) pagination
 [**findHealthcarePartiesBySsinOrNihii**](HealthcarePartyApi.md#findHealthcarePartiesBySsinOrNihii) | **GET** /rest/v2/hcparty/byNihiiOrSsin/{searchValue} | Find healthcare parties by nihii or ssin with(out) pagination
+[**getAesExchangeKeysForDelegate**](HealthcarePartyApi.md#getAesExchangeKeysForDelegate) | **GET** /rest/v2/hcparty/{healthcarePartyId}/aesExchangeKeys | Get the HcParty encrypted AES keys indexed by owner.
 [**getCurrentHealthcareParty**](HealthcarePartyApi.md#getCurrentHealthcareParty) | **GET** /rest/v2/hcparty/current | Get the current healthcare party if logged in.
-[**getHcPartyKeysForDelegate**](HealthcarePartyApi.md#getHcPartyKeysForDelegate) | **GET** /rest/v2/hcparty/byKeys/{healthcarePartyId} | Get the HcParty encrypted AES keys indexed by owner
 [**getHealthcareParties**](HealthcarePartyApi.md#getHealthcareParties) | **POST** /rest/v2/hcparty/byIds | Get healthcareParties by their IDs
 [**getHealthcareParty**](HealthcarePartyApi.md#getHealthcareParty) | **GET** /rest/v2/hcparty/{healthcarePartyId} | Get a healthcareParty by his ID
 [**getPublicKey**](HealthcarePartyApi.md#getPublicKey) | **GET** /rest/v2/hcparty/{healthcarePartyId}/publicKey | Get public key of a healthcare party
@@ -487,6 +487,53 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: */*
 
+<a name="getAesExchangeKeysForDelegate"></a>
+# **getAesExchangeKeysForDelegate**
+> kotlin.collections.Map&lt;kotlin.String, kotlin.collections.List&lt;kotlin.String&gt;&gt; getAesExchangeKeysForDelegate(healthcarePartyId)
+
+Get the HcParty encrypted AES keys indexed by owner.
+
+(key, value) of the map is as follows: (ID of the owner of the encrypted AES key, encrypted AES keys)
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = HealthcarePartyApi()
+val healthcarePartyId : kotlin.String = healthcarePartyId_example // kotlin.String | 
+try {
+    val result : kotlin.collections.Map<kotlin.String, kotlin.collections.List<kotlin.String>> = apiInstance.getAesExchangeKeysForDelegate(healthcarePartyId)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling HealthcarePartyApi#getAesExchangeKeysForDelegate")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling HealthcarePartyApi#getAesExchangeKeysForDelegate")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **healthcarePartyId** | **kotlin.String**|  |
+
+### Return type
+
+**kotlin.collections.Map&lt;kotlin.String, kotlin.collections.List&lt;kotlin.String&gt;&gt;**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
 <a name="getCurrentHealthcareParty"></a>
 # **getCurrentHealthcareParty**
 > HealthcarePartyDto getCurrentHealthcareParty()
@@ -520,53 +567,6 @@ This endpoint does not need any parameter.
 ### Return type
 
 [**HealthcarePartyDto**](HealthcarePartyDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="getHcPartyKeysForDelegate"></a>
-# **getHcPartyKeysForDelegate**
-> kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt; getHcPartyKeysForDelegate(healthcarePartyId)
-
-Get the HcParty encrypted AES keys indexed by owner
-
-(key, value) of the map is as follows: (ID of the owner of the encrypted AES key, encrypted AES key)
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = HealthcarePartyApi()
-val healthcarePartyId : kotlin.String = healthcarePartyId_example // kotlin.String | 
-try {
-    val result : kotlin.collections.Map<kotlin.String, kotlin.String> = apiInstance.getHcPartyKeysForDelegate(healthcarePartyId)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling HealthcarePartyApi#getHcPartyKeysForDelegate")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling HealthcarePartyApi#getHcPartyKeysForDelegate")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **healthcarePartyId** | **kotlin.String**|  |
-
-### Return type
-
-**kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;**
 
 ### Authorization
 

@@ -439,6 +439,43 @@ class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     }
 
     /**
+    * List apps
+    * List available apps for user
+    * @return kotlin.collections.List<GroupDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun listApps() : kotlin.collections.List<GroupDto>  {
+        val localVariableConfig = listAppsRequestConfig()
+
+        return request<Unit, kotlin.collections.List<GroupDto>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation listApps
+    *
+    * @return RequestConfig
+    */
+    fun listAppsRequestConfig() : RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v2/group/apps",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
     * List groups
     * List existing groups
     * @return kotlin.collections.List<GroupDto>

@@ -12,6 +12,7 @@ Method | HTTP request | Description
 [**getGroupsStorageInfos**](GroupApi.md#getGroupsStorageInfos) | **POST** /rest/v2/group/storage/info | Reset storage for group
 [**getReplicationInfo1**](GroupApi.md#getReplicationInfo1) | **GET** /rest/v2/group/{id}/r | Get index info
 [**initDesignDocs**](GroupApi.md#initDesignDocs) | **PUT** /rest/v2/group/{id}/dd | Init design docs
+[**listApps**](GroupApi.md#listApps) | **GET** /rest/v2/group/apps | List apps
 [**listGroups**](GroupApi.md#listGroups) | **GET** /rest/v2/group | List groups
 [**modifyGroupName**](GroupApi.md#modifyGroupName) | **PUT** /rest/v2/group/{id}/name/{name} | Update group name
 [**modifyGroupProperties**](GroupApi.md#modifyGroupProperties) | **PUT** /rest/v2/group/{id}/properties | Update group properties
@@ -415,6 +416,49 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**kotlin.Any**](kotlin.Any.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="listApps"></a>
+# **listApps**
+> kotlin.collections.List&lt;GroupDto&gt; listApps()
+
+List apps
+
+List available apps for user
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = GroupApi()
+try {
+    val result : kotlin.collections.List<GroupDto> = apiInstance.listApps()
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling GroupApi#listApps")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling GroupApi#listApps")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**kotlin.collections.List&lt;GroupDto&gt;**](GroupDto.md)
 
 ### Authorization
 

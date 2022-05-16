@@ -215,7 +215,7 @@ Class | Method | HTTP request | Description
 *DeviceApi* | [**deleteDevicesInGroup**](docs/DeviceApi.md#deletedevicesingroup) | **DELETE** /rest/v2/device/inGroup/{groupId}/{deviceIds} | Delete a device
 *DeviceApi* | [**filterDevicesBy**](docs/DeviceApi.md#filterdevicesby) | **POST** /rest/v2/device/filter | Filter devices for the current user (HcParty) 
 *DeviceApi* | [**getDevice**](docs/DeviceApi.md#getdevice) | **GET** /rest/v2/device/{deviceId} | Get Device
-*DeviceApi* | [**getDeviceHcPartyKeysForDelegate**](docs/DeviceApi.md#getdevicehcpartykeysfordelegate) | **GET** /rest/v2/device/{deviceId}/keys | Get the HcParty encrypted AES keys indexed by owner
+*DeviceApi* | [**getDeviceAesExchangeKeysForDelegate**](docs/DeviceApi.md#getdeviceaesexchangekeysfordelegate) | **GET** /rest/v2/device/{deviceId}/aesExchangeKeys | Get the HcParty encrypted AES keys indexed by owner.
 *DeviceApi* | [**getDevices**](docs/DeviceApi.md#getdevices) | **POST** /rest/v2/device/byIds | Get devices by id
 *DeviceApi* | [**getDevicesInGroup**](docs/DeviceApi.md#getdevicesingroup) | **POST** /rest/v2/device/inGroup/{groupId}/byIds | Get devices by their IDs
 *DeviceApi* | [**matchDevicesBy**](docs/DeviceApi.md#matchdevicesby) | **POST** /rest/v2/device/match | Get ids of devices matching the provided filter for the current user (HcParty) 
@@ -304,6 +304,7 @@ Class | Method | HTTP request | Description
 *GroupApi* | [**getGroupsStorageInfos**](docs/GroupApi.md#getgroupsstorageinfos) | **POST** /rest/v2/group/storage/info | Reset storage for group
 *GroupApi* | [**getReplicationInfo1**](docs/GroupApi.md#getreplicationinfo1) | **GET** /rest/v2/group/{id}/r | Get index info
 *GroupApi* | [**initDesignDocs**](docs/GroupApi.md#initdesigndocs) | **PUT** /rest/v2/group/{id}/dd | Init design docs
+*GroupApi* | [**listApps**](docs/GroupApi.md#listapps) | **GET** /rest/v2/group/apps | List apps
 *GroupApi* | [**listGroups**](docs/GroupApi.md#listgroups) | **GET** /rest/v2/group | List groups
 *GroupApi* | [**modifyGroupName**](docs/GroupApi.md#modifygroupname) | **PUT** /rest/v2/group/{id}/name/{name} | Update group name
 *GroupApi* | [**modifyGroupProperties**](docs/GroupApi.md#modifygroupproperties) | **PUT** /rest/v2/group/{id}/properties | Update group properties
@@ -333,8 +334,8 @@ Class | Method | HTTP request | Description
 *HealthcarePartyApi* | [**findHealthcarePartiesByName**](docs/HealthcarePartyApi.md#findhealthcarepartiesbyname) | **GET** /rest/v2/hcparty/byName | Find healthcare parties by name with(out) pagination
 *HealthcarePartyApi* | [**findHealthcarePartiesBySpecialityAndPostCode**](docs/HealthcarePartyApi.md#findhealthcarepartiesbyspecialityandpostcode) | **GET** /rest/v2/hcparty/bySpecialityAndPostCode/{type}/{spec}/{firstCode}/to/{lastCode} | Find healthcare parties by name with(out) pagination
 *HealthcarePartyApi* | [**findHealthcarePartiesBySsinOrNihii**](docs/HealthcarePartyApi.md#findhealthcarepartiesbyssinornihii) | **GET** /rest/v2/hcparty/byNihiiOrSsin/{searchValue} | Find healthcare parties by nihii or ssin with(out) pagination
+*HealthcarePartyApi* | [**getAesExchangeKeysForDelegate**](docs/HealthcarePartyApi.md#getaesexchangekeysfordelegate) | **GET** /rest/v2/hcparty/{healthcarePartyId}/aesExchangeKeys | Get the HcParty encrypted AES keys indexed by owner.
 *HealthcarePartyApi* | [**getCurrentHealthcareParty**](docs/HealthcarePartyApi.md#getcurrenthealthcareparty) | **GET** /rest/v2/hcparty/current | Get the current healthcare party if logged in.
-*HealthcarePartyApi* | [**getHcPartyKeysForDelegate**](docs/HealthcarePartyApi.md#gethcpartykeysfordelegate) | **GET** /rest/v2/hcparty/byKeys/{healthcarePartyId} | Get the HcParty encrypted AES keys indexed by owner
 *HealthcarePartyApi* | [**getHealthcareParties**](docs/HealthcarePartyApi.md#gethealthcareparties) | **POST** /rest/v2/hcparty/byIds | Get healthcareParties by their IDs
 *HealthcarePartyApi* | [**getHealthcareParty**](docs/HealthcarePartyApi.md#gethealthcareparty) | **GET** /rest/v2/hcparty/{healthcarePartyId} | Get a healthcareParty by his ID
 *HealthcarePartyApi* | [**getPublicKey**](docs/HealthcarePartyApi.md#getpublickey) | **GET** /rest/v2/hcparty/{healthcarePartyId}/publicKey | Get public key of a healthcare party
@@ -442,9 +443,9 @@ Class | Method | HTTP request | Description
 *PatientApi* | [**findPatientsModifiedAfter**](docs/PatientApi.md#findpatientsmodifiedafter) | **GET** /rest/v2/patient/modifiedAfter/{date} | List patients that have been modified after the provided date
 *PatientApi* | [**fuzzySearch**](docs/PatientApi.md#fuzzysearch) | **GET** /rest/v2/patient/fuzzy | Filter patients for the current user (HcParty) 
 *PatientApi* | [**getPatient**](docs/PatientApi.md#getpatient) | **GET** /rest/v2/patient/{patientId} | Get patient
+*PatientApi* | [**getPatientAesExchangeKeysForDelegate**](docs/PatientApi.md#getpatientaesexchangekeysfordelegate) | **GET** /rest/v2/patient/{patientId}/aesExchangeKeys | Get the HcParty encrypted AES keys indexed by owner.
 *PatientApi* | [**getPatientByExternalId**](docs/PatientApi.md#getpatientbyexternalid) | **GET** /rest/v2/patient/byExternalId/{externalId} | Get the patient having the provided externalId
 *PatientApi* | [**getPatientByHealthcarepartyAndIdentifier**](docs/PatientApi.md#getpatientbyhealthcarepartyandidentifier) | **GET** /rest/v2/patient/{hcPartyId}/{id} | Get patient by identifier
-*PatientApi* | [**getPatientHcPartyKeysForDelegate**](docs/PatientApi.md#getpatienthcpartykeysfordelegate) | **GET** /rest/v2/patient/{patientId}/keys | Get the patient (identified by patientId) hcparty keys. Those keys are AES keys (encrypted) used to share information between HCPs and a patient.
 *PatientApi* | [**getPatients**](docs/PatientApi.md#getpatients) | **POST** /rest/v2/patient/byIds | Get patients by id
 *PatientApi* | [**listDeletedPatientsByName**](docs/PatientApi.md#listdeletedpatientsbyname) | **GET** /rest/v2/patient/deleted/by_name | Find deleted patients
 *PatientApi* | [**listOfMergesAfter**](docs/PatientApi.md#listofmergesafter) | **GET** /rest/v2/patient/merges/{date} | List patients that have been merged towards another patient 

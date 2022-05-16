@@ -13,7 +13,7 @@ Method | HTTP request | Description
 [**deleteDevicesInGroup**](DeviceApi.md#deleteDevicesInGroup) | **DELETE** /rest/v2/device/inGroup/{groupId}/{deviceIds} | Delete a device
 [**filterDevicesBy**](DeviceApi.md#filterDevicesBy) | **POST** /rest/v2/device/filter | Filter devices for the current user (HcParty) 
 [**getDevice**](DeviceApi.md#getDevice) | **GET** /rest/v2/device/{deviceId} | Get Device
-[**getDeviceHcPartyKeysForDelegate**](DeviceApi.md#getDeviceHcPartyKeysForDelegate) | **GET** /rest/v2/device/{deviceId}/keys | Get the HcParty encrypted AES keys indexed by owner
+[**getDeviceAesExchangeKeysForDelegate**](DeviceApi.md#getDeviceAesExchangeKeysForDelegate) | **GET** /rest/v2/device/{deviceId}/aesExchangeKeys | Get the HcParty encrypted AES keys indexed by owner.
 [**getDevices**](DeviceApi.md#getDevices) | **POST** /rest/v2/device/byIds | Get devices by id
 [**getDevicesInGroup**](DeviceApi.md#getDevicesInGroup) | **POST** /rest/v2/device/inGroup/{groupId}/byIds | Get devices by their IDs
 [**matchDevicesBy**](DeviceApi.md#matchDevicesBy) | **POST** /rest/v2/device/match | Get ids of devices matching the provided filter for the current user (HcParty) 
@@ -454,13 +454,13 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: */*
 
-<a name="getDeviceHcPartyKeysForDelegate"></a>
-# **getDeviceHcPartyKeysForDelegate**
-> kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt; getDeviceHcPartyKeysForDelegate(deviceId)
+<a name="getDeviceAesExchangeKeysForDelegate"></a>
+# **getDeviceAesExchangeKeysForDelegate**
+> kotlin.collections.Map&lt;kotlin.String, kotlin.collections.List&lt;kotlin.String&gt;&gt; getDeviceAesExchangeKeysForDelegate(deviceId)
 
-Get the HcParty encrypted AES keys indexed by owner
+Get the HcParty encrypted AES keys indexed by owner.
 
-(key, value) of the map is as follows: (ID of the owner of the encrypted AES key, encrypted AES key)
+(key, value) of the map is as follows: (ID of the owner of the encrypted AES key, encrypted AES keys)
 
 ### Example
 ```kotlin
@@ -469,15 +469,15 @@ Get the HcParty encrypted AES keys indexed by owner
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DeviceApi()
-val deviceId : kotlin.String = deviceId_example // kotlin.String | The deviceId Id for which information is shared
+val deviceId : kotlin.String = deviceId_example // kotlin.String | 
 try {
-    val result : kotlin.collections.Map<kotlin.String, kotlin.String> = apiInstance.getDeviceHcPartyKeysForDelegate(deviceId)
+    val result : kotlin.collections.Map<kotlin.String, kotlin.collections.List<kotlin.String>> = apiInstance.getDeviceAesExchangeKeysForDelegate(deviceId)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling DeviceApi#getDeviceHcPartyKeysForDelegate")
+    println("4xx response calling DeviceApi#getDeviceAesExchangeKeysForDelegate")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling DeviceApi#getDeviceHcPartyKeysForDelegate")
+    println("5xx response calling DeviceApi#getDeviceAesExchangeKeysForDelegate")
     e.printStackTrace()
 }
 ```
@@ -486,11 +486,11 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **deviceId** | **kotlin.String**| The deviceId Id for which information is shared |
+ **deviceId** | **kotlin.String**|  |
 
 ### Return type
 
-**kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;**
+**kotlin.collections.Map&lt;kotlin.String, kotlin.collections.List&lt;kotlin.String&gt;&gt;**
 
 ### Authorization
 
