@@ -17,6 +17,7 @@ import io.icure.kraken.client.models.CodeStubDto
 import io.icure.kraken.client.models.FinancialInstitutionInformationDto
 import io.icure.kraken.client.models.FlatRateTarificationDto
 import io.icure.kraken.client.models.HealthcarePartyHistoryStatusDto
+import io.icure.kraken.client.models.IdentifierDto
 import io.icure.kraken.client.models.PersonNameDto
 import io.icure.kraken.client.models.PropertyStubDto
 
@@ -30,6 +31,9 @@ import com.github.pozo.KotlinBuilder
  * This entity is a root level object. It represents a healthcare party. It is serialized in JSON and saved in the underlying icure-healthdata CouchDB database.
  *
  * @param id the Id of the healthcare party. We encourage using either a v4 UUID or a HL7 Id.
+ * @param identifier The healthcareparty's identifiers, used by the client to identify uniquely and unambiguously the HCP. However, iCure may not guarantee this uniqueness by itself : This should be done at the client side.
+ * @param tags A tag is an item from a codification system that qualifies an entity as being member of a certain class, whatever the value it might have taken. If the tag qualifies the content of a field, it means that whatever the content of the field, the tag will always apply. For example, the label of a field is qualified using a tag. LOINC is a codification system typically used for tags.
+ * @param codes A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes
  * @param names the list of all names of the healthcare party, also containing the official full name information. Ordered by preference of use. First element is therefore the official name used for the healthcare party in the application
  * @param addresses The list of addresses (with address type).
  * @param languages The list of languages spoken by the patient ordered by fluency (alpha-2 code http://www.loc.gov/standards/iso639-2/ascii_8bits.html).
@@ -45,7 +49,6 @@ import com.github.pozo.KotlinBuilder
  * @param hcPartyKeys For each couple of HcParties (delegator and delegate), this map contains the exchange AES key. The delegator is always this hcp, the key of the map is the id of the delegate. The AES exchange key is encrypted using RSA twice : once using this hcp public key (index 0 in the Array) and once using the other hcp public key (index 1 in the Array). For a pair of HcParties. Each HcParty always has one AES exchange key for himself.
  * @param aesExchangeKeys Extra AES exchange keys, usually the ones we lost access to at some point. The structure is { publicKey: { delegateId: [aesExKey_for_this, aesExKey_for_delegate] } }
  * @param transferKeys Our private keys encrypted with our public keys. The structure is { publicKey1: { publicKey2: privateKey2_encrypted_with_publicKey1, publicKey3: privateKey3_encrypted_with_publicKey1 } }
- * @param lostHcPartyKeys The hcparty keys (first of the pair) for which we are asking a re-encryption by the delegate using our new publicKey.
  * @param privateKeyShamirPartitions The privateKeyShamirPartitions are used to share this hcp's private RSA key with a series of other hcParties using Shamir's algorithm. The key of the map is the hcp Id with whom this partition has been shared. The value is \"threshold⎮partition in hex\" encrypted using the the partition's holder's public RSA key
  * @param rev the revision of the healthcare party in the database, used for conflict management / optimistic locking.
  * @param created creation timestamp of the object.
@@ -90,6 +93,18 @@ data class HealthcarePartyDto (
     /* the Id of the healthcare party. We encourage using either a v4 UUID or a HL7 Id. */
     @field:JsonProperty("id")
     val id: kotlin.String,
+
+    /* The healthcareparty's identifiers, used by the client to identify uniquely and unambiguously the HCP. However, iCure may not guarantee this uniqueness by itself : This should be done at the client side. */
+    @field:JsonProperty("identifier")
+    val identifier: kotlin.collections.List<IdentifierDto> = emptyList(),
+
+    /* A tag is an item from a codification system that qualifies an entity as being member of a certain class, whatever the value it might have taken. If the tag qualifies the content of a field, it means that whatever the content of the field, the tag will always apply. For example, the label of a field is qualified using a tag. LOINC is a codification system typically used for tags. */
+    @field:JsonProperty("tags")
+    val tags: kotlin.collections.List<CodeStubDto> = emptyList(),
+
+    /* A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes */
+    @field:JsonProperty("codes")
+    val codes: kotlin.collections.List<CodeStubDto> = emptyList(),
 
     /* the list of all names of the healthcare party, also containing the official full name information. Ordered by preference of use. First element is therefore the official name used for the healthcare party in the application */
     @field:JsonProperty("names")
@@ -146,10 +161,6 @@ data class HealthcarePartyDto (
     /* Our private keys encrypted with our public keys. The structure is { publicKey1: { publicKey2: privateKey2_encrypted_with_publicKey1, publicKey3: privateKey3_encrypted_with_publicKey1 } } */
     @field:JsonProperty("transferKeys")
     val transferKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.String>> = emptyMap(),
-
-    /* The hcparty keys (first of the pair) for which we are asking a re-encryption by the delegate using our new publicKey. */
-    @field:JsonProperty("lostHcPartyKeys")
-    val lostHcPartyKeys: kotlin.collections.List<kotlin.String> = emptyList(),
 
     /* The privateKeyShamirPartitions are used to share this hcp's private RSA key with a series of other hcParties using Shamir's algorithm. The key of the map is the hcp Id with whom this partition has been shared. The value is \"threshold⎮partition in hex\" encrypted using the the partition's holder's public RSA key */
     @field:JsonProperty("privateKeyShamirPartitions")
