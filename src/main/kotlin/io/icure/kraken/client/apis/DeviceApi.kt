@@ -417,6 +417,45 @@ class DeviceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     }
 
     /**
+     * Get the HcParty encrypted AES keys indexed by owner
+     * (key, value) of the map is as follows: (ID of the owner of the encrypted AES key, encrypted AES key)
+     * @param deviceId The deviceId Id for which information is shared
+     * @return kotlin.collections.Map<kotlin.String, kotlin.String>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun getDeviceHcPartyKeysForDelegate(deviceId: kotlin.String) : kotlin.collections.Map<kotlin.String, kotlin.String>  {
+        val localVariableConfig = getDeviceHcPartyKeysForDelegateRequestConfig(deviceId = deviceId)
+
+        return request<Unit, kotlin.collections.Map<kotlin.String, kotlin.String>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+     * To obtain the request config of the operation getDeviceHcPartyKeysForDelegate
+     *
+     * @param deviceId The deviceId Id for which information is shared
+     * @return RequestConfig
+     */
+    fun getDeviceHcPartyKeysForDelegateRequestConfig(deviceId: kotlin.String) : RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v1/device/{deviceId}/keys".replace("{"+"deviceId"+"}", "${URLEncoder.encode(deviceId.toString(), Charsets.UTF_8)}"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
     * Get the HcParty encrypted AES keys indexed by owner.
     * (key, value) of the map is as follows: (ID of the owner of the encrypted AES key, encrypted AES keys)
     * @param deviceId  
