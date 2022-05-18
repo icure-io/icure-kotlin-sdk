@@ -113,6 +113,10 @@ fun String.toPrivateKey() = KeyFactory.getInstance("RSA").generatePrivate(
     )) as RSAPrivateKey
 
 @ExperimentalUnsignedTypes
-fun KeyPair.publicKeyAsString() = this.public.encoded.keyToHexString()
+fun KeyPair.publicKeyAsString() = this.public.pubKeyAsString()
 @ExperimentalUnsignedTypes
-fun KeyPair.privateKeyAsString() = this.private.encoded.keyToHexString()
+fun KeyPair.privateKeyAsString() = this.private.privKeyAsString()
+@ExperimentalUnsignedTypes
+fun PublicKey.pubKeyAsString() = this.encoded.keyToHexString()
+@ExperimentalUnsignedTypes
+fun PrivateKey.privKeyAsString() = this.encoded.keyToHexString()

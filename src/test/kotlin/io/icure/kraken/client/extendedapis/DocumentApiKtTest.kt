@@ -2,16 +2,9 @@ package io.icure.kraken.client.extendedapis
 
 import io.icure.kraken.client.apis.DocumentApi
 import io.icure.kraken.client.apis.HealthcarePartyApi
-import io.icure.kraken.client.apis.PatientApi
 import io.icure.kraken.client.apis.UserApi
-import io.icure.kraken.client.crypto.LocalCrypto
 import io.icure.kraken.client.crypto.documentCryptoConfig
-import io.icure.kraken.client.crypto.toPrivateKey
-import io.icure.kraken.client.crypto.toPublicKey
-import io.icure.kraken.client.extendedapis.infrastructure.ExtendedTestUtils
 import io.icure.kraken.client.extendedapis.infrastructure.ExtendedTestUtils.localCrypto
-import io.icure.kraken.client.models.HealthcarePartyDto
-import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.decrypted.DocumentDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -19,7 +12,6 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import java.net.URL
 import java.nio.ByteBuffer
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -36,7 +28,7 @@ internal class DocumentApiKtTest {
         DocumentApi(basePath = "https://kraken.icure.dev", authHeader = "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=")
 
     @FlowPreview
-    @org.junit.jupiter.api.Test
+    @Test
     fun setDocumentAttachment_HappyFlow() {
         runBlocking {
             // Init

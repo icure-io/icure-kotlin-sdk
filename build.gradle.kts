@@ -5,6 +5,7 @@ val jacksonVersion = "2.12.5"
 plugins {
     kotlin("jvm") version "1.4.32"
     kotlin("kapt") version "1.4.32"
+    id("jacoco")
     id("org.sonarqube") version "3.3"
 }
 
@@ -263,4 +264,10 @@ tasks.create<Delete>("delete-unused-tests-files") {
     delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/IcureApiTest.kt"))
     delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/MedexApiTest.kt"))
     delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/PermissionApiTest.kt"))
+}
+
+tasks.jacocoTestReport {
+    reports {
+        xml.isEnabled = true
+    }
 }

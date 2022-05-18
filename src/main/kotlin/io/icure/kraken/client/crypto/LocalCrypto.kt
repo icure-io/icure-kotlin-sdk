@@ -25,6 +25,7 @@ import java.security.spec.X509EncodedKeySpec
 import java.util.*
 import java.util.concurrent.TimeUnit
 
+@OptIn(ExperimentalUnsignedTypes::class)
 @FlowPreview
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
@@ -77,55 +78,65 @@ class LocalCrypto(
         }
     }
 
-    private fun getDelegateIdOwnerIdKeyForCache(delegateId: String, ownerId: String): String {
-        return "$delegateId:$ownerId"
+    private fun getOwnerIdDelegateIdKeyForCache(ownerId: String, delegateId: String): String {
+        return "$ownerId:$delegateId"
     }
 
-    suspend fun getDelegateHcPartyKey(delegateId: String, ownerId: String, myPrivateKey: PrivateKey? = null): ByteArray {
-        val delegateIdOwnerIdKey = getDelegateIdOwnerIdKeyForCache(delegateId = delegateId, ownerId = ownerId)
-        val privateKey = myPrivateKey ?: rsaKeyPairs[delegateId]?.first ?: throw MissingPrivateKeyException(delegateId, "Missing key for hcp $delegateId")
+    private suspend fun getDelegateHcPartyKey(delegateId: String, ownerId: String, myPrivateKey: PrivateKey? = null): ByteArray {
+        val delegateIdOwnerIdKey = getOwnerIdDelegateIdKeyForCache(delegateId = delegateId, ownerId = ownerId)
+        val privateKey = myPrivateKey ?: rsaKeyPairs[delegateId]?.first ?: throw MissingPrivateKeyException(delegateId, "Missing key for data owner $delegateId")
         val keyMap: Map<String, Pair<String, ByteArray>> =
             delegateHcpartyKeysCache.defGet(delegateIdOwnerIdKey) {
-                dataOwnerResolver.getDataOwnerHcPartyKeysForDelegate(delegateId).decryptHcPartyKeys(delegateId, privateKey)
-            } ?: throw IllegalArgumentException("Unknown hcp $delegateId")
+                dataOwnerResolver.getDataOwnerHcPartyKeysForDelegate(delegateId).decryptAesExchangeKeyFor(delegateId, privateKey)
+            } ?: throw IllegalArgumentException("Unknown data owner $delegateId")
 
         return keyMap[ownerId]?.second ?: throw IllegalArgumentException("Missing share for $ownerId")
     }
 
-    private suspend fun getDataOwnerPublicKey(dataOwnerId: String) : String? {
-        return dataOwnerResolver.getDataOwner(dataOwnerId).publicKey
+    /**
+     * @return all the Public Keys known for the provided Data Owner Id. Returns first the "main" publicKey of the
+     * dataOwner and the ones contained on the aesExchangeKeys afterwards
+     */
+    private suspend fun getDataOwnerPublicKeys(dataOwnerId: String) : List<String> {
+        return dataOwnerResolver.getDataOwner(dataOwnerId).let { dataOwner ->
+            (listOf(dataOwner.publicKey).plus(dataOwner.aesExchangeKeys.keys).distinct()).filterNotNull()
+        }
     }
 
-    private suspend fun getDataOwnerHcPartyKeys(dataOwnerId: String) : Map<String, List<String>> {
-        return dataOwnerResolver.getDataOwner(dataOwnerId).hcPartyKeys
-    }
+    private suspend fun getDataOwnerHcPartyKeys(dataOwnerId: String, dataOwnerPublicKey: String) =
+        dataOwnerResolver.getDataOwner(dataOwnerId).findRelatedHcPartyKeys(dataOwnerPublicKey)
 
-    suspend fun getOrCreateHcPartyKey(myId: String, delegateId: String, privateKey: PrivateKey? = null, publicKey: PublicKey? = null): Pair<ByteArray, DataOwner?> {
-        val delegateIdOwnerIdKey = getDelegateIdOwnerIdKeyForCache(delegateId = delegateId, ownerId = myId)
-        val myPublicKey = publicKey ?: rsaKeyPairs[myId]?.second ?: throw IllegalArgumentException("Missing key for hcp $myId")
-        val myPrivateKey = privateKey ?: rsaKeyPairs[myId]?.first ?: throw MissingPrivateKeyException(myId, "Missing key for hcp $myId")
+    private suspend fun getOrCreateHcPartyKey(myId: String, delegateId: String, privateKey: PrivateKey? = null, publicKey: PublicKey? = null): Pair<ByteArray, DataOwner?> {
+        val ownerIdDelegateIdKey = getOwnerIdDelegateIdKeyForCache(delegateId = delegateId, ownerId = myId)
+        val myPublicKey = publicKey ?: rsaKeyPairs[myId]?.second ?: throw IllegalArgumentException("Missing key for data owner $myId")
+        val myPrivateKey = privateKey ?: rsaKeyPairs[myId]?.first ?: throw MissingPrivateKeyException(myId, "Missing key for data owner $myId")
         val keyMap: Map<String, Pair<String, ByteArray>> =
-            ownerHcpartyKeysCache.defGet(delegateIdOwnerIdKey) {
-                getDataOwnerHcPartyKeys(myId).mapValues { (_, v) -> v[0] }.decryptHcPartyKeys(myId, myPrivateKey)
+            ownerHcpartyKeysCache.defGet(ownerIdDelegateIdKey) {
+                getDataOwnerHcPartyKeys(myId, myPublicKey.pubKeyAsString()).mapValues { (_, v) -> v[0] }.decryptHcPartyKeys(myPrivateKey)
             } ?: throw IllegalArgumentException("Unknown hcp $myId")
 
-        return keyMap[delegateId]?.second?.let { it to null } ?: CryptoUtils.generateKeyAES().encoded.let {
-            val keyForMe = CryptoUtils.encryptRSA(it, myPublicKey).keyToHexString()
-            val keyForDelegate = CryptoUtils.encryptRSA(
-                it,
-                getDataOwnerPublicKey(delegateId)?.let { pk ->
-                    KeyFactory.getInstance("RSA").generatePublic(X509EncodedKeySpec(pk.keyFromHexString()))
-                } ?: throw IllegalArgumentException("Unknown hcp $delegateId")
-            ).keyToHexString()
-            it to dataOwnerResolver.getDataOwner(myId).let { hcp ->
-                CoroutineScope(Dispatchers.IO).async { dataOwnerResolver.updateDataOwnerWithNewHcPartyKeys(
-                    hcp.type, hcp.dataOwnerId, (delegateId to listOf(
-                        keyForMe,
-                        keyForDelegate
-                    ))
-                ) }.also { deferredNewDataOwner ->
-                    ownerHcpartyKeysCache.defPut(delegateIdOwnerIdKey) {
-                        deferredNewDataOwner.await().hcPartyKeys.mapValues { (_, v) -> v[0] }.decryptHcPartyKeys(myId, myPrivateKey)
+        return keyMap[delegateId]?.second?.let { it to null } ?: CryptoUtils.generateKeyAES().encoded.let { aesKey ->
+            val keyForMe = CryptoUtils.encryptRSA(aesKey, myPublicKey).keyToHexString()
+            val keysForDelegate = getDataOwnerPublicKeys(delegateId)
+                .map { delegatePubKey ->
+                    CryptoUtils.encryptRSA(
+                        aesKey,
+                        KeyFactory.getInstance("RSA").generatePublic(X509EncodedKeySpec(delegatePubKey.keyFromHexString()))
+                    ).keyToHexString()
+                }
+            if (keysForDelegate.isEmpty()) {
+                throw IllegalArgumentException("Unknown hcp $delegateId")
+            }
+
+            aesKey to dataOwnerResolver.getDataOwner(myId).let { hcp ->
+                CoroutineScope(Dispatchers.IO).async {
+                    dataOwnerResolver.updateDataOwnerWithNewHcPartyKeys(
+                        hcp.type, hcp.dataOwnerId, (myPublicKey.pubKeyAsString() to (delegateId to (listOf(keyForMe) + keysForDelegate)))
+                    )
+                }.also { deferredNewDataOwner ->
+                    ownerHcpartyKeysCache.defPut(ownerIdDelegateIdKey) {
+                        deferredNewDataOwner.await().findRelatedHcPartyKeys(myPublicKey.pubKeyAsString())
+                            .mapValues { (_, v) -> v[0] }.decryptHcPartyKeys(myPrivateKey)
                     }
                 }
             }.await()
@@ -136,12 +147,21 @@ class LocalCrypto(
      *
      */
     private fun Map<String, String>.decryptHcPartyKeys(
-        myId: String,
         myPrivateKey: PrivateKey
     ) = this.mapValues { (_, v) ->
-        v to CryptoUtils.decryptRSA(
-            v.keyFromHexString() ?: throw IllegalArgumentException("Invalid HCP key for hcp $myId"),
-            myPrivateKey
-        )
+        v to CryptoUtils.decryptRSA(v.keyFromHexString(), myPrivateKey)
+    }
+
+    private fun Map<String, List<String>>.decryptAesExchangeKeyFor(
+        myId: String,
+        myPrivateKey: PrivateKey
+    ) = this.mapValues { (_, hcPartyKeysValues) ->
+        hcPartyKeysValues.mapFirstNotNull { v ->
+            try {
+                v to CryptoUtils.decryptRSA(v.keyFromHexString(), myPrivateKey)
+            } catch (exception: Exception) {
+                null
+            }
+        } ?: throw IllegalArgumentException("Invalid HCP key for hcp $myId")
     }
 }

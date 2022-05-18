@@ -39,4 +39,4 @@ jobs:
           ORG_GRADLE_PROJECT_mavenRepository: https://maven.taktik.be/content/groups/public'
           ORG_GRADLE_PROJECT_mavenSnapshotsRepository: https://maven.taktik.be/content/repositories/snapshots/'
 
-        run: ./gradlew build sonarqube --info
+        run: ./gradlew build jacocoTestReport sonarqube --info -DAPI_URL=https://kraken.icure.dev

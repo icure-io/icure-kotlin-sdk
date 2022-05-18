@@ -72,9 +72,6 @@
     "lastName": "Delgat",
     "dateOfBirth": null
   },
-  "getHcPartyKeysForDelegate": {
-    "healthcarePartyId": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98"
-  },
   "getPatient": {
     "patientId": "fa32ae29-3765-4494-ad1f-0f321241e7d2"
   },
