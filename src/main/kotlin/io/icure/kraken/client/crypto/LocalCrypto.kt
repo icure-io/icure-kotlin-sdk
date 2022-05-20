@@ -112,14 +112,14 @@ class LocalCrypto(
         val myPrivateKey = privateKey ?: rsaKeyPairs[myId]?.first ?: throw MissingPrivateKeyException(myId, "Missing key for data owner $myId")
         val keyMap: Map<String, Pair<String, ByteArray>> =
             ownerHcpartyKeysCache.defGet(ownerIdDelegateIdKey) {
-                getDataOwnerHcPartyKeys(myId, myPublicKey.pubKeyAsString()).mapValues { (_, v) -> v[0] }.decryptHcPartyKeys(myPrivateKey)
+                getDataOwnerHcPartyKeys(myId, myPublicKey.pubKeyAsString()).decryptHcPartyKeys(myPrivateKey)
             } ?: throw IllegalArgumentException("Unknown hcp $myId")
 
         return keyMap[delegateId]?.second?.let { it to null } ?: CryptoUtils.generateKeyAES().encoded.let { aesKey ->
             val keyForMe = CryptoUtils.encryptRSA(aesKey, myPublicKey).keyToHexString()
             val keysForDelegate = getDataOwnerPublicKeys(delegateId)
                 .map { delegatePubKey ->
-                    CryptoUtils.encryptRSA(
+                    delegatePubKey to CryptoUtils.encryptRSA(
                         aesKey,
                         KeyFactory.getInstance("RSA").generatePublic(X509EncodedKeySpec(delegatePubKey.keyFromHexString()))
                     ).keyToHexString()
@@ -131,12 +131,12 @@ class LocalCrypto(
             aesKey to dataOwnerResolver.getDataOwner(myId).let { hcp ->
                 CoroutineScope(Dispatchers.IO).async {
                     dataOwnerResolver.updateDataOwnerWithNewHcPartyKeys(
-                        hcp.type, hcp.dataOwnerId, (myPublicKey.pubKeyAsString() to (delegateId to (listOf(keyForMe) + keysForDelegate)))
+                        hcp.type, hcp.dataOwnerId, (myPublicKey.pubKeyAsString() to (delegateId to (listOf(myPublicKey.pubKeyAsString() to keyForMe) + keysForDelegate)))
                     )
                 }.also { deferredNewDataOwner ->
                     ownerHcpartyKeysCache.defPut(ownerIdDelegateIdKey) {
                         deferredNewDataOwner.await().findRelatedHcPartyKeys(myPublicKey.pubKeyAsString())
-                            .mapValues { (_, v) -> v[0] }.decryptHcPartyKeys(myPrivateKey)
+                            .decryptHcPartyKeys(myPrivateKey)
                     }
                 }
             }.await()
@@ -152,16 +152,19 @@ class LocalCrypto(
         v to CryptoUtils.decryptRSA(v.keyFromHexString(), myPrivateKey)
     }
 
-    private fun Map<String, List<String>>.decryptAesExchangeKeyFor(
+    private fun Map<String, Map<String, String>>.decryptAesExchangeKeyFor(
         myId: String,
         myPrivateKey: PrivateKey
-    ) = this.mapValues { (_, hcPartyKeysValues) ->
-        hcPartyKeysValues.mapFirstNotNull { v ->
-            try {
-                v to CryptoUtils.decryptRSA(v.keyFromHexString(), myPrivateKey)
-            } catch (exception: Exception) {
-                null
-            }
-        } ?: throw IllegalArgumentException("Invalid HCP key for hcp $myId")
-    }
+    ) = this
+        .map { (key, hcPartyKeysValues) ->
+            key to hcPartyKeysValues.values.toList()
+        }.associate { (key, hcPartyKeysValues) ->
+            hcPartyKeysValues.mapFirstNotNull { v ->
+                try {
+                    key to (v to CryptoUtils.decryptRSA(v.keyFromHexString(), myPrivateKey))
+                } catch (exception: Exception) {
+                    null
+                }
+            } ?: throw IllegalArgumentException("Invalid HCP key for hcp $myId")
+        }
 }

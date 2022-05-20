@@ -59,7 +59,7 @@ class DataOwnerResolver(
      *
      * @return the updated data owner
      */
-    suspend fun updateDataOwnerWithNewHcPartyKeys(dataOwnerType: DataOwnerType, dataOwnerId: String, newHcPartyKeysForPubKey: Pair<String, Pair<String, List<String>>>) : DataOwner {
+    suspend fun updateDataOwnerWithNewHcPartyKeys(dataOwnerType: DataOwnerType, dataOwnerId: String, newHcPartyKeysForPubKey: Pair<String, Pair<String, List<Pair<String, String>>>>) : DataOwner {
         return when(dataOwnerType) {
             DataOwnerType.HCP -> hcParties.defGet(dataOwnerId) { hcpartyApi.getHealthcareParty(dataOwnerId) }
                 ?.let { hcp ->
@@ -85,7 +85,7 @@ class DataOwnerResolver(
         } ?: throw RuntimeException("Could not add new hcpartyKeys to data owner $dataOwnerId")
     }
 
-    private fun createHcpWithUpdatedHcPartyKeys(hcp: HealthcarePartyDto, newHcPartyKeysForPubKey: Pair<String, Pair<String, List<String>>>): HealthcarePartyDto {
+    private fun createHcpWithUpdatedHcPartyKeys(hcp: HealthcarePartyDto, newHcPartyKeysForPubKey: Pair<String, Pair<String, List<Pair<String, String>>>>): HealthcarePartyDto {
         val (dataOwnerPubKey, newHcPartyKeys) = newHcPartyKeysForPubKey
         val updatedAesExchangeKeys = addNewAesExchangeKeys(hcp.aesExchangeKeys, dataOwnerPubKey, newHcPartyKeys)
 
@@ -99,7 +99,7 @@ class DataOwnerResolver(
         }
     }
 
-    private fun createPatientWithUpdatedHcPartyKeys(patient: PatientDto, newHcPartyKeysForPubKey: Pair<String, Pair<String, List<String>>>): PatientDto {
+    private fun createPatientWithUpdatedHcPartyKeys(patient: PatientDto, newHcPartyKeysForPubKey: Pair<String, Pair<String, List<Pair<String, String>>>>): PatientDto {
         val (dataOwnerPubKey, newHcPartyKeys) = newHcPartyKeysForPubKey
         val updatedAesExchangeKeys = addNewAesExchangeKeys(patient.aesExchangeKeys, dataOwnerPubKey, newHcPartyKeys)
 
@@ -109,7 +109,7 @@ class DataOwnerResolver(
             patient.copy(aesExchangeKeys = updatedAesExchangeKeys)
         }
     }
-    private fun createDeviceWithUpdatedHcPartyKeys(device: DeviceDto, newHcPartyKeysForPubKey: Pair<String, Pair<String, List<String>>>): DeviceDto {
+    private fun createDeviceWithUpdatedHcPartyKeys(device: DeviceDto, newHcPartyKeysForPubKey: Pair<String, Pair<String, List<Pair<String, String>>>>): DeviceDto {
         val (dataOwnerPubKey, newHcPartyKeys) = newHcPartyKeysForPubKey
         val updatedAesExchangeKeys = addNewAesExchangeKeys(device.aesExchangeKeys, dataOwnerPubKey, newHcPartyKeys)
 
@@ -121,28 +121,34 @@ class DataOwnerResolver(
     }
 
     private fun addNewAesExchangeKeys(
-        existingAesExchangeKeys: Map<String, Map<String, List<String>>>,
+        existingAesExchangeKeys: Map<String, Map<String, Map<String, String>>>,
         dataOwnerPubKey: String,
-        newHcPartyKeys: Pair<String, List<String>>
-    ): Map<String, Map<String, List<String>>> = existingAesExchangeKeys.let {
-        val mutableAesKeys = it.toMutableMap()
-        mutableAesKeys
-            .merge(dataOwnerPubKey, mapOf(newHcPartyKeys)) { previousKeys, newKeys -> previousKeys + newKeys }
-        mutableAesKeys
+        newHcPartyKeys: Pair<String, List<Pair<String, String>>>
+    ): Map<String, Map<String, Map<String, String>>> {
+        val mappedNewHcPartyKeys = newHcPartyKeys.let { (delegateId, keys) ->
+            delegateId to keys.toMap()
+        }
+
+        return existingAesExchangeKeys.let {
+            val mutableAesKeys = it.toMutableMap()
+            mutableAesKeys
+                .merge(dataOwnerPubKey, mapOf(mappedNewHcPartyKeys)) { previousKeys, newKeys -> previousKeys + newKeys }
+            mutableAesKeys
+        }
     }
 
     private fun addNewHcPartyKeys(
         existingHcPartyKeys: Map<String, List<String>>,
-        newHcPartyKeys: Pair<String, List<String>>
+        newHcPartyKeys: Pair<String, List<Pair<String, String>>>
     ): Map<String, List<String>> {
         val (delegateId, keys) = newHcPartyKeys
         return existingHcPartyKeys.toMutableMap().let {
-            it[delegateId] = keys.subList(0, 2)
+            it[delegateId] = keys.subList(0, 2).map { (_, key) -> key }
             it
         }.toMap()
     }
 
-    suspend fun getDataOwnerHcPartyKeysForDelegate(delegateId: String) : Map<String, List<String>> {
+    suspend fun getDataOwnerHcPartyKeysForDelegate(delegateId: String) : Map<String, Map<String, String>> {
         return flowOf(
             flow { emit(try {
                 hcpartyApi.getAesExchangeKeysForDelegate(delegateId)
@@ -235,11 +241,18 @@ data class DataOwner(
     val rev: String?,
     val publicKey: String? = null,
     val hcPartyKeys: Map<String, List<String>> = emptyMap(),
-    val aesExchangeKeys: Map<String, Map<String, List<String>>> = emptyMap(),
+    val aesExchangeKeys: Map<String, Map<String, Map<String, String>>> = emptyMap(),
     val parentId: String? = null
 ) {
-    fun findRelatedHcPartyKeys(dataOwnerPublicKey: String): Map<String, List<String>> {
-        return if (this.publicKey == dataOwnerPublicKey && this.hcPartyKeys.isNotEmpty()) this.hcPartyKeys else this.aesExchangeKeys[dataOwnerPublicKey] ?: emptyMap()
+    fun findRelatedHcPartyKeys(dataOwnerPublicKey: String): Map<String, String> {
+        return if (this.publicKey == dataOwnerPublicKey && this.hcPartyKeys.isNotEmpty()) {
+            this.hcPartyKeys.mapValues { (_, v) -> v[0] }
+        } else {
+            val slicedPubKey = dataOwnerPublicKey.takeLast(12)
+            this.aesExchangeKeys[slicedPubKey]?.mapValues { (delegateId, v) ->
+                v[slicedPubKey] ?: throw IllegalArgumentException("Could not find $slicedPubKey in aesExchangeKeys values of $delegateId")
+            } ?: emptyMap()
+        }
     }
 }
 
