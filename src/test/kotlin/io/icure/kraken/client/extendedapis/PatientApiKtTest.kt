@@ -7,7 +7,6 @@ import io.icure.kraken.client.apis.UserApi
 import io.icure.kraken.client.crypto.CryptoConfig
 import io.icure.kraken.client.crypto.CryptoUtils
 import io.icure.kraken.client.crypto.LocalCrypto
-import io.icure.kraken.client.crypto.keyToHexString
 import io.icure.kraken.client.crypto.patientCryptoConfig
 import io.icure.kraken.client.crypto.publicKeyAsString
 import io.icure.kraken.client.crypto.toPrivateKey
@@ -155,6 +154,14 @@ internal class PatientApiKtTest {
         val parent = hcpartyApi.getCurrentHealthcareParty()
         val parentKeyPath = "keys/${parent.id}-icc-priv.2048.key"
         val parentKeyFile = PatientApiKtTest::class.java.getResource(parentKeyPath)!!
+        val parentLocalCrypto = LocalCrypto(
+            ExtendedTestUtils.dataOwnerWrapperFor(
+                "https://kraken.icure.dev",
+                "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM="
+            ), mapOf(
+                parent.id to (parentKeyFile.readText(Charsets.UTF_8).toPrivateKey() to parent.publicKey!!.toPublicKey()),
+            )
+        )
 
         val newHcpKp1 = CryptoUtils.generateKeyPairRSA()
         val newHcpKp2 = CryptoUtils.generateKeyPairRSA()
@@ -163,15 +170,11 @@ internal class PatientApiKtTest {
                 id = UUID.randomUUID().toString(),
                 firstName = "Jimmy",
                 lastName = "Materazzi",
-                aesExchangeKeys = mapOf(
-                    newHcpKp1.publicKeyAsString() to emptyMap(),
-                    newHcpKp2.publicKeyAsString() to emptyMap(),
-                ),
-                //transferKeys = mapOf(
-                //    newHcpKp2.publicKeyAsString() to mapOf(newHcpKp1.publicKeyAsString() to CryptoUtils.encryptRSA(newHcpKp1.private.encoded, newHcpKp2.public).keyToHexString())
-                //),
                 parentId = parent.id
-            ).initHcparty()
+            )
+                .initHcParty()
+                .addNewKeyPair(parentLocalCrypto, newHcpKp1.public)
+                .addNewKeyPair(parentLocalCrypto, newHcpKp2.public, newHcpKp2.private)
         )
         val newUser = userApi.createUser(
             UserDto(
@@ -225,12 +228,12 @@ internal class PatientApiKtTest {
         Assertions.assertEquals(newHcpUpdated.aesExchangeKeys.keys.size, 2)
 
         Assertions.assertEquals(newHcpUpdated.aesExchangeKeys[newHcpKp1.publicKeyAsString()]!![newHcpUpdated.id]!!.size, 2)
-        Assertions.assertTrue(newHcpUpdated.aesExchangeKeys[newHcpKp1.publicKeyAsString()]!![newHcpUpdated.id]!!.containsKey(newHcpKp1.publicKeyAsString()))
-        Assertions.assertTrue(newHcpUpdated.aesExchangeKeys[newHcpKp1.publicKeyAsString()]!![newHcpUpdated.id]!!.containsKey(newHcpKp2.publicKeyAsString()))
+        Assertions.assertTrue(newHcpUpdated.aesExchangeKeys[newHcpKp1.publicKeyAsString()]!![newHcpUpdated.id]!!.containsKey(newHcpKp1.publicKeyAsString().takeLast(12)))
+        Assertions.assertTrue(newHcpUpdated.aesExchangeKeys[newHcpKp1.publicKeyAsString()]!![newHcpUpdated.id]!!.containsKey(newHcpKp2.publicKeyAsString().takeLast(12)))
 
         Assertions.assertEquals(newHcpUpdated.aesExchangeKeys[newHcpKp1.publicKeyAsString()]!![parent.id]!!.size, 2)
-        Assertions.assertTrue(newHcpUpdated.aesExchangeKeys[newHcpKp1.publicKeyAsString()]!![parent.id]!!.containsKey(newHcpKp1.publicKeyAsString()))
-        Assertions.assertTrue(newHcpUpdated.aesExchangeKeys[newHcpKp1.publicKeyAsString()]!![parent.id]!!.containsKey(parent.publicKey!!))
+        Assertions.assertTrue(newHcpUpdated.aesExchangeKeys[newHcpKp1.publicKeyAsString()]!![parent.id]!!.containsKey(newHcpKp1.publicKeyAsString().takeLast(12)))
+        Assertions.assertTrue(newHcpUpdated.aesExchangeKeys[newHcpKp1.publicKeyAsString()]!![parent.id]!!.containsKey(parent.publicKey!!.takeLast(12)))
         Assertions.assertTrue(newHcpUpdated.hcPartyKeys.isEmpty())
     }
 

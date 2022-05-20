@@ -2,6 +2,7 @@ package io.icure.kraken.client.extendedapis
 
 import io.icure.kraken.client.apis.PatientApi
 import io.icure.kraken.client.applyIf
+import io.icure.kraken.client.crypto.Crypto
 import io.icure.kraken.client.crypto.CryptoConfig
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
@@ -17,7 +18,21 @@ import io.icure.kraken.client.models.filter.chain.FilterChain
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.mapstruct.Mapper
 import org.mapstruct.factory.Mappers
+import java.security.PrivateKey
+import java.security.PublicKey
 import java.util.*
+
+suspend fun PatientDto.addNewKeyPair(crypto: Crypto,
+                                     patPublicKey: PublicKey,
+                                     patPrivateKey: PrivateKey? = null
+) = crypto.addNewKeyPairTo(this.toDataOwner(), patPublicKey, patPrivateKey).let { dataOwner ->
+    this.copy(
+        publicKey = dataOwner.publicKey,
+        hcPartyKeys = dataOwner.hcPartyKeys,
+        aesExchangeKeys = dataOwner.aesExchangeKeys,
+        transferKeys = dataOwner.transferKeys
+    )
+}
 
 fun PatientDto.initPatient() : PatientDto {
     return this

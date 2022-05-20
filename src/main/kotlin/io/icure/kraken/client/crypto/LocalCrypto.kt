@@ -97,10 +97,20 @@ class LocalCrypto(
      * @return all the Public Keys known for the provided Data Owner Id. Returns first the "main" publicKey of the
      * dataOwner and the ones contained on the aesExchangeKeys afterwards
      */
-    private suspend fun getDataOwnerPublicKeys(dataOwnerId: String) : List<String> {
-        return dataOwnerResolver.getDataOwner(dataOwnerId).let { dataOwner ->
-            (listOf(dataOwner.publicKey).plus(dataOwner.aesExchangeKeys.keys).distinct()).filterNotNull()
-        }
+    private suspend fun getDataOwnerPublicKeys(dataOwnerId: String) : List<Pair<String, PublicKey>> {
+        return getDataOwnerPublicKeys(dataOwnerResolver.getDataOwner(dataOwnerId))
+    }
+
+    /**
+     * @return all the Public Keys known for the provided Data Owner Id. Returns first the "main" publicKey of the
+     * dataOwner and the ones contained on the aesExchangeKeys afterwards
+     */
+    private fun getDataOwnerPublicKeys(dataOwner: DataOwner) : List<Pair<String, PublicKey>> {
+        return (listOf(dataOwner.publicKey).plus(dataOwner.aesExchangeKeys.keys).distinct())
+            .filterNotNull()
+            .map { pubKey ->
+                pubKey to KeyFactory.getInstance("RSA").generatePublic(X509EncodedKeySpec(pubKey.keyFromHexString()))
+            }
     }
 
     private suspend fun getDataOwnerHcPartyKeys(dataOwnerId: String, dataOwnerPublicKey: String) =
@@ -118,10 +128,10 @@ class LocalCrypto(
         return keyMap[delegateId]?.second?.let { it to null } ?: CryptoUtils.generateKeyAES().encoded.let { aesKey ->
             val keyForMe = CryptoUtils.encryptRSA(aesKey, myPublicKey).keyToHexString()
             val keysForDelegate = getDataOwnerPublicKeys(delegateId)
-                .map { delegatePubKey ->
-                    delegatePubKey to CryptoUtils.encryptRSA(
+                .map { (rawPubKey, pubKey) ->
+                    rawPubKey to CryptoUtils.encryptRSA(
                         aesKey,
-                        KeyFactory.getInstance("RSA").generatePublic(X509EncodedKeySpec(delegatePubKey.keyFromHexString()))
+                        pubKey
                     ).keyToHexString()
                 }
             if (keysForDelegate.isEmpty()) {
@@ -141,6 +151,60 @@ class LocalCrypto(
                 }
             }.await()
         }
+    }
+
+    override suspend fun addNewKeyPairTo(dataOwnerId: String,
+                                         newPubKey: PublicKey,
+                                         newPrivateKey: PrivateKey?
+    ) : DataOwner = addNewKeyPairTo(dataOwnerResolver.getDataOwner(dataOwnerId), newPubKey, newPrivateKey)
+
+    override suspend fun addNewKeyPairTo(dataOwner: DataOwner, newPubKey: PublicKey, newPrivateKey: PrivateKey?) : DataOwner {
+        val aesKey = CryptoUtils.generateKeyAES().encoded
+        val newAesExchangeKey = encryptAesKeyFor(dataOwner, aesKey, newPubKey)
+
+        //TODO Send SharingTasks
+
+        return getDataOwnerPublicKeys(dataOwner)
+            .takeIf { existingPublicKeys -> existingPublicKeys.isNotEmpty() && newPrivateKey != null}
+            ?.let { existingPublicKeys ->
+                val newTransferKey = encryptAES(newPrivateKey!!.encoded, aesKey).keyToHexString()
+                val mutableTransferKeys = dataOwner.transferKeys.toMutableMap()
+
+                existingPublicKeys
+                    .map { (pubKey, _) -> pubKey }
+                    .forEach { pubKey ->
+                        mutableTransferKeys.merge(
+                            pubKey,
+                            mapOf(newAesExchangeKey.first to newTransferKey)
+                        ) { previousKeys, newKeys ->
+                            previousKeys + newKeys
+                        }
+                    }
+
+                dataOwner.updateAesExchangeKeys(newAesExchangeKey)
+                    .copy(transferKeys = mutableTransferKeys.toMap())
+
+            } ?: dataOwner.updateAesExchangeKeys(newAesExchangeKey)
+    }
+
+    private fun encryptAesKeyFor(
+        dataOwner: DataOwner,
+        aesKey: ByteArray,
+        myPublicKey: PublicKey
+    ): Pair<String, Pair<String, List<Pair<String, String>>>> {
+        val keyForMe = CryptoUtils.encryptRSA(aesKey, myPublicKey).keyToHexString()
+        val keysForDelegate = (listOf(myPublicKey.pubKeyAsString() to myPublicKey) + getDataOwnerPublicKeys(dataOwner))
+            .map { (rawPubKey, pubKey) ->
+                rawPubKey to CryptoUtils.encryptRSA(
+                    aesKey,
+                    pubKey
+                ).keyToHexString()
+            }
+            .ifEmpty {
+                throw IllegalArgumentException("Unknown data owner ${dataOwner.dataOwnerId}")
+            }
+
+        return myPublicKey.pubKeyAsString() to (dataOwner.dataOwnerId to (listOf(myPublicKey.pubKeyAsString() to keyForMe) + keysForDelegate))
     }
 
     /** Decrypt hcparty keys
