@@ -1,20 +1,27 @@
 package io.icure.kraken.client.crypto
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import io.icure.kraken.client.applyIf
 import io.icure.kraken.client.extendedapis.ContactMapperFactory
 import io.icure.kraken.client.extendedapis.DocumentMapperFactory
 import io.icure.kraken.client.extendedapis.HealthElementMapperFactory
+import io.icure.kraken.client.extendedapis.MaintenanceTaskMapperFactory
 import io.icure.kraken.client.extendedapis.PatientMapperFactory
+import io.icure.kraken.client.extendedapis.PropertyWrapper
 import io.icure.kraken.client.extendedapis.dataOwnerId
 import io.icure.kraken.client.extendedapis.decryptServices
 import io.icure.kraken.client.extendedapis.encryptServices
 import io.icure.kraken.client.infrastructure.ApiClient
+import io.icure.kraken.client.models.TypedValueDtoObject
 import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.decrypted.ContactDto
 import io.icure.kraken.client.models.decrypted.DocumentDto
 import io.icure.kraken.client.models.decrypted.HealthElementDto
+import io.icure.kraken.client.models.decrypted.MaintenanceTaskDto
 import io.icure.kraken.client.models.decrypted.PatientDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
+import java.util.Base64
 
 /*
 D is the decrypted class, K is the crypted class
@@ -53,6 +60,57 @@ fun patientCryptoConfig(crypto: LocalCrypto) =
 @FlowPreview
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
+fun maintenanceTaskCryptoConfig(crypto: LocalCrypto, user: UserDto) =
+    CryptoConfig<MaintenanceTaskDto, io.icure.kraken.client.models.MaintenanceTaskDto>(
+        crypto = crypto,
+        marshaller = { mt ->
+            if (mt.properties.isEmpty()) {
+                MaintenanceTaskMapperFactory.instance.map(mt) to byteArrayOf()
+            } else {
+                val objectMapper = ObjectMapper()
+                val decryptedKey = crypto.decryptEncryptionKeys(user.dataOwnerId(), mt.encryptionKeys)
+                    .firstOrNull()
+                    ?.keyFromHexString() ?: throw java.lang.IllegalArgumentException("No encryption key for user ${user.id}")
+
+                val encryptedProps = mt.properties
+                    .map { prop -> prop.applyIf({ it.typedValue != null }) {
+                            it.copy(
+                                typedValue = null,
+                                encryptedSelf = Base64.getEncoder().encodeToString(
+                                    CryptoUtils.encryptAES(
+                                        data = objectMapper.writeValueAsBytes(mapOf("typedValue" to it.typedValue)),
+                                        key = decryptedKey
+                                    )
+                                )
+                            )
+                        }
+                    }
+
+                MaintenanceTaskMapperFactory.instance.map(mt.copy(properties = encryptedProps)) to byteArrayOf()
+            }
+        },
+        unmarshaller = { mt, _ ->
+            if (mt.properties.isEmpty()) {
+                MaintenanceTaskMapperFactory.instance.map(mt)
+            } else {
+                val objectMapper = ObjectMapper()
+                val decryptedKey = crypto.decryptEncryptionKeys(user.dataOwnerId(), mt.encryptionKeys).firstOrNull()
+                    ?.toByteArray() ?: throw java.lang.IllegalArgumentException("No encryption key for user ${user.id}")
+
+                val decryptedProps = mt.properties.map { prop ->
+                    prop.encryptedSelf?.let { es ->
+                        prop.copy(typedValue = objectMapper.readValue(CryptoUtils.decryptAES(data = Base64.getDecoder().decode(es), key = decryptedKey), PropertyWrapper::class.java).typedValue)
+                    } ?: prop
+                }
+
+                MaintenanceTaskMapperFactory.instance.map(mt.copy(properties = decryptedProps))
+            }
+        }
+    )
+
+@FlowPreview
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
 fun contactCryptoConfig(
     crypto: LocalCrypto,
     user: UserDto
@@ -71,7 +129,7 @@ fun contactCryptoConfig(
             )
         ) to byteArrayOf()
     },
-    unmarshaller = { c, b ->
+    unmarshaller = { c, _ ->
         ContactMapperFactory.instance.map(c).copy(
             services = crypto.decryptServices(
                 user.dataOwnerId(),
