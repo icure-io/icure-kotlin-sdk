@@ -259,12 +259,12 @@ class MaintenanceTaskApiTest() {
             try{
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "filterMaintenanceTasksBy")
-                val filterChainMaintenanceTask: FilterChainMaintenanceTask = TestUtils.getParameter<FilterChainMaintenanceTask>(fileName, "filterMaintenanceTasksBy.filterChainMaintenanceTask")!!.let {
+                val filterChainMaintenanceTask: io.icure.kraken.client.models.filter.chain.FilterChain<MaintenanceTaskDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.chain.FilterChain<MaintenanceTaskDto>>(fileName, "filterMaintenanceTasksBy.filterChainMaintenanceTask")!!.let {
                     (it as? MaintenanceTaskDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterMaintenanceTasksBy") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
                     val currentRev = api(credentialsFile).getMaintenanceTask(id.getter.call(it) as String).rev
                     it.copy(rev = currentRev)
-                    } as? FilterChainMaintenanceTask ?: it
+                    } as? io.icure.kraken.client.models.filter.chain.FilterChain<MaintenanceTaskDto> ?: it
                     }
                 val startDocumentId: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "filterMaintenanceTasksBy.startDocumentId")?.let {
                     (it as? MaintenanceTaskDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterMaintenanceTasksBy") }?.let {
