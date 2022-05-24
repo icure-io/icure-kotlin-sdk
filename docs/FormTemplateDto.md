@@ -24,6 +24,7 @@ Name | Type | Description | Notes
 **mediumReport** | **kotlin.String** |  |  [optional]
 **longReport** | **kotlin.String** |  |  [optional]
 **layoutAttachmentId** | **kotlin.String** |  |  [optional]
+**templateLayoutAttachmentId** | **kotlin.String** |  |  [optional]
 
 
 

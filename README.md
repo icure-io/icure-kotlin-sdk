@@ -404,6 +404,11 @@ Class | Method | HTTP request | Description
 *KeywordApi* | [**getKeywords**](docs/KeywordApi.md#getkeywords) | **GET** /rest/v2/keyword | Gets all keywords
 *KeywordApi* | [**getKeywordsByUser**](docs/KeywordApi.md#getkeywordsbyuser) | **GET** /rest/v2/keyword/byUser/{userId} | Get keywords by user
 *KeywordApi* | [**modifyKeyword**](docs/KeywordApi.md#modifykeyword) | **PUT** /rest/v2/keyword | Modify a keyword
+*MaintenanceTaskApi* | [**createMaintenanceTask**](docs/MaintenanceTaskApi.md#createmaintenancetask) | **POST** /rest/v2/maintenancetask | Creates a maintenanceTask
+*MaintenanceTaskApi* | [**deleteMaintenanceTask**](docs/MaintenanceTaskApi.md#deletemaintenancetask) | **DELETE** /rest/v2/maintenancetask/{maintenanceTaskIds} | Delete maintenanceTasks
+*MaintenanceTaskApi* | [**filterMaintenanceTasksBy**](docs/MaintenanceTaskApi.md#filtermaintenancetasksby) | **POST** /rest/v2/maintenancetask/filter | Filter maintenanceTasks for the current user (HcParty) 
+*MaintenanceTaskApi* | [**getMaintenanceTask**](docs/MaintenanceTaskApi.md#getmaintenancetask) | **GET** /rest/v2/maintenancetask/{maintenanceTaskId} | Gets a maintenanceTask
+*MaintenanceTaskApi* | [**modifyMaintenanceTask**](docs/MaintenanceTaskApi.md#modifymaintenancetask) | **PUT** /rest/v2/maintenancetask | Updates a maintenanceTask
 *MedexApi* | [**generateMedex**](docs/MedexApi.md#generatemedex) | **POST** /rest/v2/medex/generate | Generate a Medex XML String
 *MedicalLocationApi* | [**createMedicalLocation**](docs/MedicalLocationApi.md#createmedicallocation) | **POST** /rest/v2/medicallocation | Creates a medical location
 *MedicalLocationApi* | [**deleteMedicalLocations**](docs/MedicalLocationApi.md#deletemedicallocations) | **POST** /rest/v2/medicallocation/delete/batch | Deletes medical locations
@@ -582,15 +587,6 @@ Class | Method | HTTP request | Description
 <a name="documentation-for-models"></a>
 ## Documentation for Models
 
- - [io.icure.kraken.client.models.AbstractFilterDtoCode](docs/AbstractFilterDtoCode.md)
- - [io.icure.kraken.client.models.AbstractFilterDtoContact](docs/AbstractFilterDtoContact.md)
- - [io.icure.kraken.client.models.AbstractFilterDtoDevice](docs/AbstractFilterDtoDevice.md)
- - [io.icure.kraken.client.models.AbstractFilterDtoHealthElement](docs/AbstractFilterDtoHealthElement.md)
- - [io.icure.kraken.client.models.AbstractFilterDtoHealthcareParty](docs/AbstractFilterDtoHealthcareParty.md)
- - [io.icure.kraken.client.models.AbstractFilterDtoInvoice](docs/AbstractFilterDtoInvoice.md)
- - [io.icure.kraken.client.models.AbstractFilterDtoPatient](docs/AbstractFilterDtoPatient.md)
- - [io.icure.kraken.client.models.AbstractFilterDtoService](docs/AbstractFilterDtoService.md)
- - [io.icure.kraken.client.models.AbstractFilterDtoUser](docs/AbstractFilterDtoUser.md)
  - [io.icure.kraken.client.models.AccessLogDto](docs/AccessLogDto.md)
  - [io.icure.kraken.client.models.AddedDocumentDto](docs/AddedDocumentDto.md)
  - [io.icure.kraken.client.models.AddressDto](docs/AddressDto.md)
@@ -649,15 +645,6 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.EntityReferenceDto](docs/EntityReferenceDto.md)
  - [io.icure.kraken.client.models.EntityTemplateDto](docs/EntityTemplateDto.md)
  - [io.icure.kraken.client.models.EpisodeDto](docs/EpisodeDto.md)
- - [io.icure.kraken.client.models.FilterChainCode](docs/FilterChainCode.md)
- - [io.icure.kraken.client.models.FilterChainContact](docs/FilterChainContact.md)
- - [io.icure.kraken.client.models.FilterChainDevice](docs/FilterChainDevice.md)
- - [io.icure.kraken.client.models.FilterChainHealthElement](docs/FilterChainHealthElement.md)
- - [io.icure.kraken.client.models.FilterChainHealthcareParty](docs/FilterChainHealthcareParty.md)
- - [io.icure.kraken.client.models.FilterChainInvoice](docs/FilterChainInvoice.md)
- - [io.icure.kraken.client.models.FilterChainPatient](docs/FilterChainPatient.md)
- - [io.icure.kraken.client.models.FilterChainService](docs/FilterChainService.md)
- - [io.icure.kraken.client.models.FilterChainUser](docs/FilterChainUser.md)
  - [io.icure.kraken.client.models.FinancialInstitutionInformationDto](docs/FinancialInstitutionInformationDto.md)
  - [io.icure.kraken.client.models.FlatRateTarificationDto](docs/FlatRateTarificationDto.md)
  - [io.icure.kraken.client.models.FlowItemDto](docs/FlowItemDto.md)
@@ -703,6 +690,7 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.ListOfIdsDto](docs/ListOfIdsDto.md)
  - [io.icure.kraken.client.models.ListOfPropertiesDto](docs/ListOfPropertiesDto.md)
  - [io.icure.kraken.client.models.LoginCredentials](docs/LoginCredentials.md)
+ - [io.icure.kraken.client.models.MaintenanceTaskDto](docs/MaintenanceTaskDto.md)
  - [io.icure.kraken.client.models.MapOfIdsDto](docs/MapOfIdsDto.md)
  - [io.icure.kraken.client.models.MeasureDto](docs/MeasureDto.md)
  - [io.icure.kraken.client.models.MedexInfoDto](docs/MedexInfoDto.md)
@@ -736,6 +724,7 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.PaginatedListHealthElementDto](docs/PaginatedListHealthElementDto.md)
  - [io.icure.kraken.client.models.PaginatedListHealthcarePartyDto](docs/PaginatedListHealthcarePartyDto.md)
  - [io.icure.kraken.client.models.PaginatedListInvoiceDto](docs/PaginatedListInvoiceDto.md)
+ - [io.icure.kraken.client.models.PaginatedListMaintenanceTaskDto](docs/PaginatedListMaintenanceTaskDto.md)
  - [io.icure.kraken.client.models.PaginatedListMessageDto](docs/PaginatedListMessageDto.md)
  - [io.icure.kraken.client.models.PaginatedListNmpDto](docs/PaginatedListNmpDto.md)
  - [io.icure.kraken.client.models.PaginatedListPatientDto](docs/PaginatedListPatientDto.md)
