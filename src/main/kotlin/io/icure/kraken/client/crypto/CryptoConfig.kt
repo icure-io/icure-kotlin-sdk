@@ -67,7 +67,6 @@ fun maintenanceTaskCryptoConfig(crypto: LocalCrypto, user: UserDto) =
             if (mt.properties.isEmpty()) {
                 MaintenanceTaskMapperFactory.instance.map(mt) to byteArrayOf()
             } else {
-                val objectMapper = ObjectMapper()
                 val decryptedKey = crypto.decryptEncryptionKeys(user.dataOwnerId(), mt.encryptionKeys)
                     .firstOrNull()
                     ?.keyFromHexString() ?: throw java.lang.IllegalArgumentException("No encryption key for user ${user.id}")
@@ -78,7 +77,7 @@ fun maintenanceTaskCryptoConfig(crypto: LocalCrypto, user: UserDto) =
                                 typedValue = null,
                                 encryptedSelf = Base64.getEncoder().encodeToString(
                                     CryptoUtils.encryptAES(
-                                        data = objectMapper.writeValueAsBytes(mapOf("typedValue" to it.typedValue)),
+                                        data = ApiClient.objectMapper.writeValueAsBytes(mapOf("typedValue" to it.typedValue)),
                                         key = decryptedKey
                                     )
                                 )
@@ -93,13 +92,13 @@ fun maintenanceTaskCryptoConfig(crypto: LocalCrypto, user: UserDto) =
             if (mt.properties.isEmpty()) {
                 MaintenanceTaskMapperFactory.instance.map(mt)
             } else {
-                val objectMapper = ObjectMapper()
-                val decryptedKey = crypto.decryptEncryptionKeys(user.dataOwnerId(), mt.encryptionKeys).firstOrNull()
-                    ?.toByteArray() ?: throw java.lang.IllegalArgumentException("No encryption key for user ${user.id}")
+                val decryptedKey = crypto.decryptEncryptionKeys(user.dataOwnerId(), mt.encryptionKeys)
+                    .firstOrNull()
+                    ?.keyFromHexString() ?: throw java.lang.IllegalArgumentException("No encryption key for user ${user.id}")
 
                 val decryptedProps = mt.properties.map { prop ->
                     prop.encryptedSelf?.let { es ->
-                        prop.copy(typedValue = objectMapper.readValue(CryptoUtils.decryptAES(data = Base64.getDecoder().decode(es), key = decryptedKey), PropertyWrapper::class.java).typedValue)
+                        prop.copy(typedValue = ApiClient.objectMapper.readValue(CryptoUtils.decryptAES(data = Base64.getDecoder().decode(es), key = decryptedKey), PropertyWrapper::class.java).typedValue)
                     } ?: prop
                 }
 
