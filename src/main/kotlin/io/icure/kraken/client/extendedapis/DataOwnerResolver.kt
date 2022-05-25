@@ -111,7 +111,7 @@ class DataOwnerResolver(
             }
     }
 
-    suspend fun getDataOwnerHcPartyKeysForDelegate(delegateId: String) : Map<String, Map<String, String>> {
+    suspend fun getDataOwnerHcPartyKeysForDelegate(delegateId: String) : Map<String, Map<String, Map<String, String>>> {
         return flowOf(
             flow { emit(try {
                 hcpartyApi.getAesExchangeKeysForDelegate(delegateId)
