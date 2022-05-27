@@ -203,7 +203,7 @@ internal class MaintenanceTaskApiKtTest {
     private fun cryptoConfigFor(user: UserDto,
                                 hcp: HealthcarePartyDto,
                                 authHeader: String,
-                                additionalRsaKeyPairs: Map<String, Pair<RSAPrivateKey, RSAPublicKey>> = emptyMap()) : CryptoConfig<MaintenanceTaskDto, io.icure.kraken.client.models.MaintenanceTaskDto> {
+                                additionalRsaKeyPairs: Map<String, List<Pair<RSAPrivateKey, RSAPublicKey>>> = emptyMap()) : CryptoConfig<MaintenanceTaskDto, io.icure.kraken.client.models.MaintenanceTaskDto> {
         return maintenanceTaskCryptoConfig(
             LocalCrypto(
                 ExtendedTestUtils.dataOwnerWrapperFor(
@@ -214,10 +214,10 @@ internal class MaintenanceTaskApiKtTest {
         )
     }
 
-    private fun rsaKeyPairFor(hcp: HealthcarePartyDto): Pair<String, Pair<RSAPrivateKey, RSAPublicKey>> {
+    private fun rsaKeyPairFor(hcp: HealthcarePartyDto): Pair<String, List<Pair<RSAPrivateKey, RSAPublicKey>>> {
         val hcp2KeyPath = "keys/${hcp.id}-icc-priv.2048.key"
         val hcp2KeyFile = MaintenanceTaskApiKtTest::class.java.getResource(hcp2KeyPath)!!
-        return hcp.id to (hcp2KeyFile.readText(Charsets.UTF_8).toPrivateKey() to hcp.publicKey!!.toPublicKey())
+        return hcp.id to listOf(hcp2KeyFile.readText(Charsets.UTF_8).toPrivateKey() to hcp.publicKey!!.toPublicKey())
     }
 
 

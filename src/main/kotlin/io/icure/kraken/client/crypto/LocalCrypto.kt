@@ -2,6 +2,7 @@ package io.icure.kraken.client.crypto
 
 import com.github.benmanes.caffeine.cache.Cache
 import com.github.benmanes.caffeine.cache.Caffeine
+import io.icure.kraken.client.applyIf
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
 import io.icure.kraken.client.defGet
@@ -17,6 +18,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.async
 import java.security.KeyFactory
+import java.security.KeyPair
 import java.security.PrivateKey
 import java.security.PublicKey
 import java.security.interfaces.RSAPrivateKey
@@ -31,29 +33,33 @@ import java.util.concurrent.TimeUnit
 @ExperimentalStdlibApi
 class LocalCrypto(
     private val dataOwnerResolver: DataOwnerResolver,
-    private val rsaKeyPairs: Map<String, Pair<RSAPrivateKey, RSAPublicKey>> //TODO We should stock multiple keys for ourselves
+    private val rsaKeyPairs: Map<String, List<Pair<RSAPrivateKey, RSAPublicKey>>>
 ) : Crypto {
     private val aesValidKeySizes : Set<Int> = setOf(128, 192, 256)
 
-    private val ownerHcpartyKeysCache : Cache<String, Deferred<Optional<Map<String, Pair<String, ByteArray>>>>> = Caffeine.newBuilder()
+    private val ownerHcpartyKeysCache : Cache<String, Deferred<Optional<Map<String, Map<String, Pair<String, ByteArray>>>>>> = Caffeine.newBuilder()
         .maximumSize(100)
         .expireAfterWrite(5, TimeUnit.MINUTES)
         .build()
-    private val delegateHcpartyKeysCache : Cache<String, Deferred<Optional<Map<String, Map<String, Pair<String, ByteArray>>>>>> = Caffeine.newBuilder() //TODO Add delegator pubKey in key entry, so that we have only
+    private val delegateHcpartyKeysCache : Cache<String, Deferred<Optional<Map<String, Map<String, Map<String, Pair<String, ByteArray>>>>>>> = Caffeine.newBuilder()
         .maximumSize(100)
         .expireAfterWrite(5, TimeUnit.MINUTES)
         .build()
 
     override suspend fun decryptEncryptionKeys(myId: String, keys: Map<String, Set<DelegationDto>>): Set<String> {
-        return ((keys[myId]?.mapNotNull { d ->
-            try {
-                getDelegateHcPartyKey(d.delegatedTo!!, d.owner!!)
-            } catch (e: Exception) {
-                null
-            }?.let { k -> decryptAES(d.key!!.keyFromHexString(), k).toString(Charsets.UTF_8)
-                .split(":")[1]
-            }
-        }?.toSet() ?: emptySet()) + (dataOwnerResolver.getDataOwner(myId).parentId?.let { decryptEncryptionKeys(it, keys) } ?: emptySet())).takeIf { it.isNotEmpty() } ?: throw IllegalArgumentException("Missing key for $myId")
+        return ((keys[myId]?.flatMap { d ->
+            getDelegateHcPartyKeys(d.delegatedTo!!, d.owner!!)
+                .mapNotNull { k ->
+                    try {
+                        decryptAES(d.key!!.keyFromHexString(), k)
+                            .toString(Charsets.UTF_8)
+                            .split(":")[1]
+                    } catch (e: Exception) {
+                        null
+                    }
+                }
+        }?.toSet() ?: emptySet()) + (dataOwnerResolver.getDataOwner(myId).parentId?.let { decryptEncryptionKeys(it, keys) } ?: emptySet()))
+            .takeIf { it.isNotEmpty() } ?: throw IllegalArgumentException("Missing key for $myId")
     }
 
     override suspend fun encryptAESKeyForDataOwner(myId: String, delegateId: String, objectId: String, secret: String): Pair<String, DataOwner?> {
@@ -61,13 +67,13 @@ class LocalCrypto(
         if (secretKey.keyFromHexString().size * 8 !in aesValidKeySizes) {
             throw IllegalArgumentException("Illegal AES key size : Secret length should be either 128, 192 or 256")
         }
-        val (key, dataOwner) = getOrCreateHcPartyKey(myId, delegateId)
-        return encryptAES("$objectId:$secretKey".toByteArray(Charsets.UTF_8), key).keyToHexString() to dataOwner
+        val (keys, dataOwner) = getOrCreateAesExchangeKeys(myId, delegateId) //TODO Really the first one ?
+        return encryptAES("$objectId:$secretKey".toByteArray(Charsets.UTF_8), keys.first()).keyToHexString() to dataOwner
     }
 
     override suspend fun encryptValueForDataOwner(myId: String, delegateId: String, objectId: String, secret: String): Pair<String, DataOwner?> {
-        val (key, dataOwner) = getOrCreateHcPartyKey(myId, delegateId)
-        return encryptAES("$objectId:$secret".toByteArray(Charsets.UTF_8), key).keyToHexString() to dataOwner
+        val (keys, dataOwner) = getOrCreateAesExchangeKeys(myId, delegateId)
+        return encryptAES("$objectId:$secret".toByteArray(Charsets.UTF_8), keys.first()).keyToHexString() to dataOwner
     }
 
     private fun formatKey(key: String) : String {
@@ -78,19 +84,22 @@ class LocalCrypto(
         }
     }
 
-    private fun getOwnerIdDelegateIdKeyForCache(ownerId: String, delegateId: String): String {
-        return "$ownerId:$delegateId"
+    private fun getOwnerIdDelegateIdKeyForCache(delegatorId: String, delegateId: String): String {
+        return "$delegatorId:$delegateId"
     }
 
-    private suspend fun getDelegateHcPartyKey(delegateId: String, ownerId: String, myPrivateKey: PrivateKey? = null): ByteArray {
-        val delegateIdOwnerIdKey = getOwnerIdDelegateIdKeyForCache(delegateId = delegateId, ownerId = ownerId)
-        val privateKey = myPrivateKey ?: rsaKeyPairs[delegateId]?.first ?: throw MissingPrivateKeyException(delegateId, "Missing key for data owner $delegateId")
-        val keyMap: Map<String, Map<String, Pair<String, ByteArray>>> =
+    private suspend fun getDelegateHcPartyKeys(delegateId: String, ownerId: String): List<ByteArray> {
+        val rsaKeyPairs = rsaKeyPairs[delegateId] ?: throw MissingPrivateKeyException(delegateId, "Missing key(s) for data owner $delegateId")
+        val delegateIdOwnerIdKey = getOwnerIdDelegateIdKeyForCache(delegateId = delegateId, delegatorId = ownerId)
+
+        val keyMap: Map<String, Map<String, Map<String, Pair<String, ByteArray>>>> =
             delegateHcpartyKeysCache.defGet(delegateIdOwnerIdKey) {
-                dataOwnerResolver.getDataOwnerHcPartyKeysForDelegate(delegateId).decryptAesExchangeKeyFor(delegateId, privateKey) //TODO Put slicedDelegatorPubKey into cache key
+                dataOwnerResolver.getDataOwnerHcPartyKeysForDelegate(delegateId).decryptAesExchangeKeysFor(delegateId, rsaKeyPairs)
             } ?: throw IllegalArgumentException("Unknown data owner $delegateId")
 
-        return keyMap[ownerId]?.mapNotNull { (_, decryptedKey) -> decryptedKey.second }?.firstOrNull() ?: throw IllegalArgumentException("Missing share for $ownerId")
+        return keyMap[ownerId]?.flatMap { (_, keys) ->
+            keys.mapNotNull { (_, decryptedKey) -> decryptedKey.second }
+        } ?: throw IllegalArgumentException("Missing share for $ownerId")
     }
 
     /**
@@ -113,20 +122,32 @@ class LocalCrypto(
             }
     }
 
-    private suspend fun getDataOwnerHcPartyKeys(dataOwnerId: String, dataOwnerPublicKey: String) =
-        dataOwnerResolver.getDataOwner(dataOwnerId).findRelatedHcPartyKeys(dataOwnerPublicKey)
+    private suspend fun getDataOwnerHcPartyKeys(dataOwnerId: String, dataOwnerPublicKeys: List<String>) =
+        dataOwnerResolver.getDataOwner(dataOwnerId).findRelatedHcPartyKeys(dataOwnerPublicKeys)
 
-    private suspend fun getOrCreateHcPartyKey(myId: String, delegateId: String, privateKey: PrivateKey? = null, publicKey: PublicKey? = null): Pair<ByteArray, DataOwner?> { //TODO We should send back a Map<String, Pair<ByteArray, ...>> to send back all possible decrypted keys (in argument, we receive all pubKeys of the myId as well)
-        val ownerIdDelegateIdKey = getOwnerIdDelegateIdKeyForCache(delegateId = delegateId, ownerId = myId)
-        val myPublicKey = publicKey ?: rsaKeyPairs[myId]?.second ?: throw IllegalArgumentException("Missing key for data owner $myId")
-        val myPrivateKey = privateKey ?: rsaKeyPairs[myId]?.first ?: throw MissingPrivateKeyException(myId, "Missing key for data owner $myId")
-        val keyMap: Map<String, Pair<String, ByteArray>> =
+    private suspend fun getOrCreateAesExchangeKeys(myId: String, delegateId: String): Pair<List<ByteArray>, DataOwner?> { //TODO We should send back a Map<String, Pair<ByteArray, ...>> to send back all possible decrypted keys (in argument, we receive all pubKeys of the myId as well)
+        val ownerIdDelegateIdKey = getOwnerIdDelegateIdKeyForCache(delegateId = delegateId, delegatorId = myId)
+
+        val myKeyPairs = rsaKeyPairs[myId] ?: throw IllegalArgumentException("Missing key for data owner $myId")
+        val myPublicKeys = rsaKeyPairs[myId]?.map { it.second } ?: throw IllegalArgumentException("Missing key for data owner $myId")
+
+        // MMmh...
+        val keyMap: Map<String, Map<String, Pair<String, ByteArray>>> =
             ownerHcpartyKeysCache.defGet(ownerIdDelegateIdKey) {
-                getDataOwnerHcPartyKeys(myId, myPublicKey.pubKeyAsString()).decryptHcPartyKeys(myPrivateKey)
+                getDataOwnerHcPartyKeys(myId, myPublicKeys.map { it.pubKeyAsString() }).decryptAesExchangeKeysFor(myKeyPairs)
             } ?: throw IllegalArgumentException("Unknown hcp $myId")
 
-        return keyMap[delegateId]?.second?.let { it to null } ?: CryptoUtils.generateKeyAES().encoded.let { aesKey ->
-            val keyForMe = CryptoUtils.encryptRSA(aesKey, myPublicKey).keyToHexString()
+        val existingAesExchangeKeysForDataOwner: Pair<List<ByteArray>, DataOwner?> = myPublicKeys.mapNotNull { myPubKey ->
+            keyMap[myPubKey.pubKeyAsString()]?.get(delegateId)?.second
+        }.let { it to null }
+
+        if (existingAesExchangeKeysForDataOwner.first.isNotEmpty()) {
+            return existingAesExchangeKeysForDataOwner
+        }
+
+        val allNewAesExchangeKeys = myPublicKeys.map { myPubKey ->
+            val aesKey = CryptoUtils.generateKeyAES().encoded
+            val keyForMe = myPubKey.pubKeyAsString() to CryptoUtils.encryptRSA(aesKey, myPubKey).keyToHexString()
             val keysForDelegate = getDataOwnerPublicKeys(delegateId)
                 .map { (rawPubKey, pubKey) ->
                     rawPubKey to CryptoUtils.encryptRSA(
@@ -138,19 +159,27 @@ class LocalCrypto(
                 throw IllegalArgumentException("Unknown hcp $delegateId")
             }
 
-            aesKey to dataOwnerResolver.getDataOwner(myId).let { hcp ->
-                CoroutineScope(Dispatchers.IO).async {
-                    dataOwnerResolver.updateDataOwnerWithNewHcPartyKeys(
-                        hcp.type, hcp.dataOwnerId, (myPublicKey.pubKeyAsString() to (delegateId to (listOf(myPublicKey.pubKeyAsString() to keyForMe) + keysForDelegate)))
-                    )
-                }.also { deferredNewDataOwner ->
-                    ownerHcpartyKeysCache.defPut(ownerIdDelegateIdKey) {
-                        deferredNewDataOwner.await().findRelatedHcPartyKeys(myPublicKey.pubKeyAsString())
-                            .decryptHcPartyKeys(myPrivateKey)
-                    }
-                }
-            }.await()
+            Triple(aesKey, keyForMe, keysForDelegate)
         }
+
+        val dataOwnerNewAesExchangeKeys = allNewAesExchangeKeys.associate { (_, keyForMe, keysForDelegates) ->
+            keyForMe.first to (delegateId to keysForDelegates)
+        }
+
+        return allNewAesExchangeKeys.map { (aesKey, _, _) -> aesKey } to dataOwnerResolver.getDataOwner(myId).let { dataOwner ->
+            CoroutineScope(Dispatchers.IO).async {
+                dataOwnerResolver.updateDataOwnerWithNewHcPartyKeys(
+                    dataOwner.type,
+                    dataOwner.dataOwnerId,
+                    dataOwnerNewAesExchangeKeys
+                )
+            }.also { deferredNewDataOwner ->
+                ownerHcpartyKeysCache.defPut(ownerIdDelegateIdKey) {
+                    deferredNewDataOwner.await().findRelatedHcPartyKeys(myPublicKeys.map { it.pubKeyAsString() })
+                        .decryptAesExchangeKeysFor(myKeyPairs)
+                }
+            }
+        }.await()
     }
 
     override suspend fun addNewKeyPairTo(dataOwnerId: String,
@@ -181,10 +210,10 @@ class LocalCrypto(
                         }
                     }
 
-                dataOwner.updateAesExchangeKeys(newAesExchangeKey)
+                dataOwner.updateAesExchangeKeys(mapOf(newAesExchangeKey))
                     .copy(transferKeys = mutableTransferKeys.toMap())
 
-            } ?: dataOwner.updateAesExchangeKeys(newAesExchangeKey)
+            } ?: dataOwner.updateAesExchangeKeys(mapOf(newAesExchangeKey))
     }
 
     private fun encryptAesKeyFor(
@@ -207,13 +236,61 @@ class LocalCrypto(
         return myPublicKey.pubKeyAsString() to (dataOwner.dataOwnerId to (listOf(myPublicKey.pubKeyAsString() to keyForMe) + keysForDelegate))
     }
 
-    /** Decrypt hcparty keys
+    /** Decrypt aesExchangeKeys
      *
      */
-    private fun Map<String, String>.decryptHcPartyKeys(
-        myPrivateKey: PrivateKey
-    ) = this.mapValues { (_, v) ->
-        v to CryptoUtils.decryptRSA(v.keyFromHexString(), myPrivateKey)
+    private fun Map<String, Map<String, String>>.decryptAesExchangeKeysFor(
+        myKeyPairs: List<Pair<RSAPrivateKey, RSAPublicKey>>
+    ) = this.mapNotNull { (pubKey, aesExchangeKeys) ->
+        val correspondingPrivKey = myKeyPairs.find { (_, myPubKey) -> myPubKey.pubKeyAsString().takeLast(12) == pubKey.takeLast(12) }
+            ?.first
+
+        correspondingPrivKey?.let { myPrivKey ->
+            pubKey to aesExchangeKeys.mapValues { (_, encKey) ->
+                encKey to CryptoUtils.decryptRSA(encKey.keyFromHexString(), myPrivKey)
+            }
+        }
+    }.applyIf({ it.isEmpty() }) {
+        throw IllegalArgumentException("Could not decrypt any aesExchangeKeys with provided keyPairs")
+    }.toMap()
+
+    private fun Map<String, Map<String, Map<String, String>>>.decryptAesExchangeKeysFor(
+        myId: String,
+        myKeyPairs: List<Pair<PrivateKey, PublicKey>>
+    ) : Map<String, Map<String, Map<String, Pair<String, ByteArray>>>> {
+        val cachedKeys = mutableMapOf<String, PrivateKey?>()
+        return this.map { (delegatorId, delegatorKeys) ->
+            delegatorId to delegatorKeys.map { (slicedDelegatorPubKey, aesExchangeKeys) ->
+                slicedDelegatorPubKey to aesExchangeKeys.mapNotNull { (delegatePubKey, encKey) ->
+                    // If we have the delegatePubKey info, we may directly choose the appropriate key in myKeyPairs
+                    if (delegatePubKey.isNotBlank()) {
+                        cachedKeys.computeIfAbsent(delegatePubKey) {
+                            myKeyPairs.find { it.second.pubKeyAsString().takeLast(12) == delegatePubKey }?.first
+                        }
+
+                        cachedKeys[delegatePubKey]?.let { myPrivateKey ->
+                            try {
+                                slicedDelegatorPubKey to (encKey to CryptoUtils.decryptRSA(encKey.keyFromHexString(), myPrivateKey))
+                            } catch (exception: Exception) {
+                                null
+                            }
+                        }
+                    } else {
+                        // Otherwise, we need to test them all, and take the first one working
+                        myKeyPairs.mapFirstNotNull { (privKey, _) ->
+                            try {
+                                slicedDelegatorPubKey to (encKey to CryptoUtils.decryptRSA(encKey.keyFromHexString(), privKey))
+                            } catch (exception: Exception) {
+                                null
+                            }
+                        }
+                    }
+                }.applyIf({ it.isEmpty() }) {
+                    throw IllegalArgumentException("Invalid HCP key for hcp $myId")
+                }.toMap()
+            }.toMap()
+        }.toMap()
+
     }
 
     private fun Map<String, Map<String, Map<String, String>>>.decryptAesExchangeKeyFor(

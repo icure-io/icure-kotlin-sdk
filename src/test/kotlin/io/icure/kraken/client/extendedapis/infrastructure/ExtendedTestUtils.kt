@@ -40,7 +40,7 @@ object ExtendedTestUtils {
     ) : LocalCrypto {
         return LocalCrypto(
             dataOwnerWrapperFor(basePath, authHeader), mapOf(
-                user.dataOwnerId() to (keyFile.readText(Charsets.UTF_8).toPrivateKey() to dataOwner.publicKey!!.toPublicKey())
+                user.dataOwnerId() to listOf(keyFile.readText(Charsets.UTF_8).toPrivateKey() to dataOwner.publicKey!!.toPublicKey())
             )
         )
     }

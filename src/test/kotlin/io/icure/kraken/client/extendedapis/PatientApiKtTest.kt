@@ -123,8 +123,8 @@ internal class PatientApiKtTest {
         val keyFile1 = PatientApiKtTest::class.java.getResource(keyPath1)!!
         val cc1 = patientCryptoConfig(LocalCrypto(
             DataOwnerResolver(child1HealthcarePartyApi, child1PatientApi, child1DeviceApi), mapOf(
-                parent.healthcarePartyId!! to (keyFile.readText(Charsets.UTF_8).toPrivateKey() to parentHcp.publicKey!!.toPublicKey()),
-                user1.healthcarePartyId!! to (keyFile1.readText(Charsets.UTF_8).toPrivateKey() to hcp1.publicKey!!.toPublicKey())
+                parent.healthcarePartyId!! to listOf(keyFile.readText(Charsets.UTF_8).toPrivateKey() to parentHcp.publicKey!!.toPublicKey()),
+                user1.healthcarePartyId!! to listOf(keyFile1.readText(Charsets.UTF_8).toPrivateKey() to hcp1.publicKey!!.toPublicKey())
             )
         ))
 
@@ -132,8 +132,8 @@ internal class PatientApiKtTest {
         val keyFile2 = PatientApiKtTest::class.java.getResource(keyPath2)!!
         val cc2 = patientCryptoConfig(LocalCrypto(
             DataOwnerResolver(child2HealthcarePartyApi, child2PatientApi, child2DeviceApi), mapOf(
-                parent.healthcarePartyId!! to (keyFile.readText(Charsets.UTF_8).toPrivateKey() to parentHcp.publicKey!!.toPublicKey()),
-                user2.healthcarePartyId!! to (keyFile2.readText(Charsets.UTF_8).toPrivateKey() to hcp2.publicKey!!.toPublicKey())
+                parent.healthcarePartyId!! to listOf(keyFile.readText(Charsets.UTF_8).toPrivateKey() to parentHcp.publicKey!!.toPublicKey()),
+                user2.healthcarePartyId!! to listOf(keyFile2.readText(Charsets.UTF_8).toPrivateKey() to hcp2.publicKey!!.toPublicKey())
             )
         ))
 
@@ -159,7 +159,7 @@ internal class PatientApiKtTest {
                 "https://kraken.icure.dev",
                 "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM="
             ), mapOf(
-                parent.id to (parentKeyFile.readText(Charsets.UTF_8).toPrivateKey() to parent.publicKey!!.toPublicKey()),
+                parent.id to listOf(parentKeyFile.readText(Charsets.UTF_8).toPrivateKey() to parent.publicKey!!.toPublicKey()),
             )
         )
 
@@ -196,8 +196,8 @@ internal class PatientApiKtTest {
                 "https://kraken.icure.dev",
                 "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}"
             ), mapOf(
-                parent.id to (parentKeyFile.readText(Charsets.UTF_8).toPrivateKey() to parent.publicKey!!.toPublicKey()),
-                newUser.dataOwnerId() to (newHcpKp1.private as RSAPrivateKey to newHcpKp1.public as RSAPublicKey)
+                parent.id to listOf(parentKeyFile.readText(Charsets.UTF_8).toPrivateKey() to parent.publicKey!!.toPublicKey()),
+                newUser.dataOwnerId() to listOf(newHcpKp1.private as RSAPrivateKey to newHcpKp1.public as RSAPublicKey)
             )
         ))
         val cc2 = patientCryptoConfig(LocalCrypto(
@@ -205,8 +205,8 @@ internal class PatientApiKtTest {
                 "https://kraken.icure.dev",
                 "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}"
             ), mapOf(
-                parent.id to (parentKeyFile.readText(Charsets.UTF_8).toPrivateKey() to parent.publicKey!!.toPublicKey()),
-                newUser.dataOwnerId() to (newHcpKp2.private as RSAPrivateKey to newHcpKp2.public as RSAPublicKey)
+                parent.id to listOf(parentKeyFile.readText(Charsets.UTF_8).toPrivateKey() to parent.publicKey!!.toPublicKey()),
+                newUser.dataOwnerId() to listOf(newHcpKp2.private as RSAPrivateKey to newHcpKp2.public as RSAPublicKey)
             )
         ))
 

@@ -117,7 +117,7 @@ fun contactCryptoConfig(
     crypto = crypto,
     marshaller = { c ->
         val decryptedKey =
-            crypto.decryptEncryptionKeys(user.dataOwnerId(), c.encryptionKeys).firstOrNull()
+            crypto.decryptEncryptionKeys(user.dataOwnerId(), c.encryptionKeys).firstOrNull() //TODO If we have multiple keys, maybe the first one is not the preferred one for encryption. For now, we take it as an assumption
         ContactMapperFactory.instance.map(c).copy(
             services = crypto.encryptServices(
                 user.dataOwnerId(),
