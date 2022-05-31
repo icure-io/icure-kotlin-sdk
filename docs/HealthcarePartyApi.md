@@ -13,7 +13,6 @@ Method | HTTP request | Description
 [**findHealthcarePartiesByName**](HealthcarePartyApi.md#findHealthcarePartiesByName) | **GET** /rest/v2/hcparty/byName | Find healthcare parties by name with(out) pagination
 [**findHealthcarePartiesBySpecialityAndPostCode**](HealthcarePartyApi.md#findHealthcarePartiesBySpecialityAndPostCode) | **GET** /rest/v2/hcparty/bySpecialityAndPostCode/{type}/{spec}/{firstCode}/to/{lastCode} | Find healthcare parties by name with(out) pagination
 [**findHealthcarePartiesBySsinOrNihii**](HealthcarePartyApi.md#findHealthcarePartiesBySsinOrNihii) | **GET** /rest/v2/hcparty/byNihiiOrSsin/{searchValue} | Find healthcare parties by nihii or ssin with(out) pagination
-[**getHcPartyKeysForDelegate**](HealthcarePartyApi.md#getHcPartyKeysForDelegate) | **GET** /rest/v2/hcparty/byKeys/{healthcarePartyId} | Get the HcParty encrypted AES keys indexed by owner
 [**getAesExchangeKeysForDelegate**](HealthcarePartyApi.md#getAesExchangeKeysForDelegate) | **GET** /rest/v2/hcparty/{healthcarePartyId}/aesExchangeKeys | Get the HcParty encrypted AES keys indexed by owner.
 [**getCurrentHealthcareParty**](HealthcarePartyApi.md#getCurrentHealthcareParty) | **GET** /rest/v2/hcparty/current | Get the current healthcare party if logged in.
 [**getHealthcareParties**](HealthcarePartyApi.md#getHealthcareParties) | **POST** /rest/v2/hcparty/byIds | Get healthcareParties by their IDs
@@ -490,7 +489,7 @@ No authorization required
 
 <a name="getAesExchangeKeysForDelegate"></a>
 # **getAesExchangeKeysForDelegate**
-> kotlin.collections.Map&lt;kotlin.String, kotlin.collections.List&lt;kotlin.String&gt;&gt; getAesExchangeKeysForDelegate(healthcarePartyId)
+> kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;&gt;&gt; getAesExchangeKeysForDelegate(healthcarePartyId)
 
 Get the HcParty encrypted AES keys indexed by owner.
 
@@ -505,7 +504,7 @@ Get the HcParty encrypted AES keys indexed by owner.
 val apiInstance = HealthcarePartyApi()
 val healthcarePartyId : kotlin.String = healthcarePartyId_example // kotlin.String | 
 try {
-    val result : kotlin.collections.Map<kotlin.String, kotlin.collections.List<kotlin.String>> = apiInstance.getAesExchangeKeysForDelegate(healthcarePartyId)
+    val result : kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.String>>> = apiInstance.getAesExchangeKeysForDelegate(healthcarePartyId)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling HealthcarePartyApi#getAesExchangeKeysForDelegate")
@@ -524,7 +523,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**kotlin.collections.Map&lt;kotlin.String, kotlin.collections.List&lt;kotlin.String&gt;&gt;**
+**kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;&gt;&gt;**
 
 ### Authorization
 

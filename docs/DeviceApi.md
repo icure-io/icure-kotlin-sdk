@@ -13,7 +13,6 @@ Method | HTTP request | Description
 [**deleteDevicesInGroup**](DeviceApi.md#deleteDevicesInGroup) | **DELETE** /rest/v2/device/inGroup/{groupId}/{deviceIds} | Delete a device
 [**filterDevicesBy**](DeviceApi.md#filterDevicesBy) | **POST** /rest/v2/device/filter | Filter devices for the current user (HcParty) 
 [**getDevice**](DeviceApi.md#getDevice) | **GET** /rest/v2/device/{deviceId} | Get Device
-[**getDeviceHcPartyKeysForDelegate**](DeviceApi.md#getDeviceHcPartyKeysForDelegate) | **GET** /rest/v2/device/{deviceId}/keys | Get the HcParty encrypted AES keys indexed by owner
 [**getDeviceAesExchangeKeysForDelegate**](DeviceApi.md#getDeviceAesExchangeKeysForDelegate) | **GET** /rest/v2/device/{deviceId}/aesExchangeKeys | Get the HcParty encrypted AES keys indexed by owner.
 [**getDevices**](DeviceApi.md#getDevices) | **POST** /rest/v2/device/byIds | Get devices by id
 [**getDevicesInGroup**](DeviceApi.md#getDevicesInGroup) | **POST** /rest/v2/device/inGroup/{groupId}/byIds | Get devices by their IDs
@@ -457,7 +456,7 @@ No authorization required
 
 <a name="getDeviceAesExchangeKeysForDelegate"></a>
 # **getDeviceAesExchangeKeysForDelegate**
-> kotlin.collections.Map&lt;kotlin.String, kotlin.collections.List&lt;kotlin.String&gt;&gt; getDeviceAesExchangeKeysForDelegate(deviceId)
+> kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;&gt;&gt; getDeviceAesExchangeKeysForDelegate(deviceId)
 
 Get the HcParty encrypted AES keys indexed by owner.
 
@@ -472,7 +471,7 @@ Get the HcParty encrypted AES keys indexed by owner.
 val apiInstance = DeviceApi()
 val deviceId : kotlin.String = deviceId_example // kotlin.String | 
 try {
-    val result : kotlin.collections.Map<kotlin.String, kotlin.collections.List<kotlin.String>> = apiInstance.getDeviceAesExchangeKeysForDelegate(deviceId)
+    val result : kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.String>>> = apiInstance.getDeviceAesExchangeKeysForDelegate(deviceId)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling DeviceApi#getDeviceAesExchangeKeysForDelegate")
@@ -491,7 +490,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**kotlin.collections.Map&lt;kotlin.String, kotlin.collections.List&lt;kotlin.String&gt;&gt;**
+**kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;&gt;&gt;**
 
 ### Authorization
 

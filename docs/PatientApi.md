@@ -19,7 +19,6 @@ Method | HTTP request | Description
 [**findPatientsModifiedAfter**](PatientApi.md#findPatientsModifiedAfter) | **GET** /rest/v2/patient/modifiedAfter/{date} | List patients that have been modified after the provided date
 [**fuzzySearch**](PatientApi.md#fuzzySearch) | **GET** /rest/v2/patient/fuzzy | Filter patients for the current user (HcParty) 
 [**getPatient**](PatientApi.md#getPatient) | **GET** /rest/v2/patient/{patientId} | Get patient
-[**getPatientHcPartyKeysForDelegate**](PatientApi.md#getPatientHcPartyKeysForDelegate) | **GET** /rest/v2/patient/{patientId}/keys | Get the patient (identified by patientId) hcparty keys. Those keys are AES keys (encrypted) used to share information between HCPs and a patient.
 [**getPatientAesExchangeKeysForDelegate**](PatientApi.md#getPatientAesExchangeKeysForDelegate) | **GET** /rest/v2/patient/{patientId}/aesExchangeKeys | Get the HcParty encrypted AES keys indexed by owner.
 [**getPatientByExternalId**](PatientApi.md#getPatientByExternalId) | **GET** /rest/v2/patient/byExternalId/{externalId} | Get the patient having the provided externalId
 [**getPatientByHealthcarepartyAndIdentifier**](PatientApi.md#getPatientByHealthcarepartyAndIdentifier) | **GET** /rest/v2/patient/{hcPartyId}/{id} | Get patient by identifier
@@ -815,7 +814,7 @@ No authorization required
 
 <a name="getPatientAesExchangeKeysForDelegate"></a>
 # **getPatientAesExchangeKeysForDelegate**
-> kotlin.collections.Map&lt;kotlin.String, kotlin.collections.List&lt;kotlin.String&gt;&gt; getPatientAesExchangeKeysForDelegate(patientId)
+> kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;&gt;&gt; getPatientAesExchangeKeysForDelegate(patientId)
 
 Get the HcParty encrypted AES keys indexed by owner.
 
@@ -830,7 +829,7 @@ Get the HcParty encrypted AES keys indexed by owner.
 val apiInstance = PatientApi()
 val patientId : kotlin.String = patientId_example // kotlin.String | 
 try {
-    val result : kotlin.collections.Map<kotlin.String, kotlin.collections.List<kotlin.String>> = apiInstance.getPatientAesExchangeKeysForDelegate(patientId)
+    val result : kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.String>>> = apiInstance.getPatientAesExchangeKeysForDelegate(patientId)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling PatientApi#getPatientAesExchangeKeysForDelegate")
@@ -849,7 +848,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**kotlin.collections.Map&lt;kotlin.String, kotlin.collections.List&lt;kotlin.String&gt;&gt;**
+**kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;&gt;&gt;**
 
 ### Authorization
 
