@@ -22,10 +22,11 @@ import java.security.PrivateKey
 import java.security.PublicKey
 import java.util.*
 
-suspend fun PatientDto.addNewKeyPair(crypto: Crypto,
+suspend fun PatientDto.addNewKeyPair(user: UserDto,
+                                     crypto: Crypto,
                                      patPublicKey: PublicKey,
                                      patPrivateKey: PrivateKey? = null
-) = crypto.addNewKeyPairTo(this.toDataOwner(), patPublicKey, patPrivateKey).let { dataOwner ->
+) = crypto.addNewKeyPairTo(user, this.toDataOwner(), patPublicKey, patPrivateKey).let { dataOwner ->
     this.copy(
         publicKey = dataOwner.publicKey,
         hcPartyKeys = dataOwner.hcPartyKeys,

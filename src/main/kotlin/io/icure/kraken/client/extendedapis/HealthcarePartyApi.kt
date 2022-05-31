@@ -4,14 +4,17 @@ import io.icure.kraken.client.applyIf
 import io.icure.kraken.client.crypto.Crypto
 import io.icure.kraken.client.models.HealthcarePartyDto
 import io.icure.kraken.client.models.PersonNameDto
+import io.icure.kraken.client.models.UserDto
 import java.security.PrivateKey
 import java.security.PublicKey
 
-suspend fun HealthcarePartyDto.addNewKeyPair(crypto: Crypto,
+suspend fun HealthcarePartyDto.addNewKeyPair(user: UserDto,
+                                             crypto: Crypto,
                                              hcpPublicKey: PublicKey,
                                              hcpPrivateKey: PrivateKey? = null
-) = crypto.addNewKeyPairTo(this.toDataOwner(), hcpPublicKey, hcpPrivateKey).let { dataOwner ->
+) = crypto.addNewKeyPairTo(user, this.toDataOwner(), hcpPublicKey, hcpPrivateKey).let { dataOwner ->
     this.copy(
+        rev = dataOwner.rev,
         publicKey = dataOwner.publicKey,
         hcPartyKeys = dataOwner.hcPartyKeys,
         aesExchangeKeys = dataOwner.aesExchangeKeys,

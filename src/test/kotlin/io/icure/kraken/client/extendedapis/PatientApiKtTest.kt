@@ -2,6 +2,7 @@ package io.icure.kraken.client.extendedapis
 
 import io.icure.kraken.client.apis.DeviceApi
 import io.icure.kraken.client.apis.HealthcarePartyApi
+import io.icure.kraken.client.apis.MaintenanceTaskApi
 import io.icure.kraken.client.apis.PatientApi
 import io.icure.kraken.client.apis.UserApi
 import io.icure.kraken.client.crypto.CryptoConfig
@@ -19,7 +20,6 @@ import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.decrypted.PatientDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions
 import java.security.interfaces.RSAPrivateKey
@@ -33,6 +33,7 @@ internal class PatientApiKtTest {
     private val userApi = UserApi(basePath = "https://kraken.icure.dev", authHeader = "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=")
     private val hcpartyApi = HealthcarePartyApi(basePath = "https://kraken.icure.dev", authHeader = "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=")
     private val patientApi = PatientApi(basePath = "https://kraken.icure.dev", authHeader = "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=")
+    private val maintenanceTaskApi = MaintenanceTaskApi(basePath = "https://kraken.icure.dev", authHeader = "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=")
 
     private val child1UserApi = UserApi(basePath = "https://kraken.icure.dev", authHeader = "Basic dGVzdC0yLXR6LWRldi10ZWFtLzE0NGJhYTc3LTQ1YTMtNDgxZi1iNTcxLWRlYjM2YTIyOWI4ZjozOTI3MjRjOC0zYWFmLTQzMmYtYWU3My0zNDQzMTk4ZDQyMTI=")
     private val child1HealthcarePartyApi = HealthcarePartyApi(basePath = "https://kraken.icure.dev", authHeader = "Basic dGVzdC0yLXR6LWRldi10ZWFtLzE0NGJhYTc3LTQ1YTMtNDgxZi1iNTcxLWRlYjM2YTIyOWI4ZjozOTI3MjRjOC0zYWFmLTQzMmYtYWU3My0zNDQzMTk4ZDQyMTI=")
@@ -152,6 +153,7 @@ internal class PatientApiKtTest {
     @org.junit.jupiter.api.Test
     fun createPatientWithNewHcpHavingMultipleKeys() = runBlocking {
         // Before
+        val parentUser = userApi.getCurrentUser()
         val parent = hcpartyApi.getCurrentHealthcareParty()
         val parentKeyPath = "keys/${parent.id}-icc-priv.2048.key"
         val parentKeyFile = PatientApiKtTest::class.java.getResource(parentKeyPath)!!
@@ -161,7 +163,8 @@ internal class PatientApiKtTest {
                 "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM="
             ), mapOf(
                 parent.id to listOf(parentKeyFile.readText(Charsets.UTF_8).toPrivateKey() to parent.publicKey!!.toPublicKey()),
-            )
+            ),
+            maintenanceTaskApi
         )
 
         val newHcpKp1 = CryptoUtils.generateKeyPairRSA()
@@ -174,8 +177,8 @@ internal class PatientApiKtTest {
                 parentId = parent.id
             )
                 .initHcParty()
-                .addNewKeyPair(parentLocalCrypto, newHcpKp1.public)
-                .addNewKeyPair(parentLocalCrypto, newHcpKp2.public, newHcpKp2.private)
+                .addNewKeyPair(parentUser, parentLocalCrypto, newHcpKp1.public)
+                .addNewKeyPair(parentUser, parentLocalCrypto, newHcpKp2.public, newHcpKp2.private)
         )
         val newUser = userApi.createUser(
             UserDto(

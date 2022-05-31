@@ -2,6 +2,7 @@ package io.icure.kraken.client.crypto
 
 import com.github.benmanes.caffeine.cache.Cache
 import com.github.benmanes.caffeine.cache.Caffeine
+import io.icure.kraken.client.apis.MaintenanceTaskApi
 import io.icure.kraken.client.applyIf
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
@@ -10,13 +11,34 @@ import io.icure.kraken.client.defPut
 import io.icure.kraken.client.exception.MissingPrivateKeyException
 import io.icure.kraken.client.extendedapis.DataOwner
 import io.icure.kraken.client.extendedapis.DataOwnerResolver
+import io.icure.kraken.client.extendedapis.createMaintenanceTask
 import io.icure.kraken.client.models.DelegationDto
+import io.icure.kraken.client.models.PropertyStubDto
+import io.icure.kraken.client.models.PropertyTypeStubDto
+import io.icure.kraken.client.models.TypedValueDtoObject
+import io.icure.kraken.client.models.UserDto
+import io.icure.kraken.client.models.decrypted.MaintenanceTaskDto
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flatMapMerge
+import kotlinx.coroutines.flow.flattenMerge
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onEmpty
+import kotlinx.coroutines.flow.transformLatest
 import java.security.KeyFactory
 import java.security.PrivateKey
 import java.security.PublicKey
@@ -32,7 +54,8 @@ import java.util.concurrent.TimeUnit
 @ExperimentalStdlibApi
 class LocalCrypto(
     private val dataOwnerResolver: DataOwnerResolver,
-    private val rsaKeyPairs: Map<String, List<Pair<RSAPrivateKey, RSAPublicKey>>>
+    private val rsaKeyPairs: Map<String, List<Pair<RSAPrivateKey, RSAPublicKey>>>,
+    private val maintenanceTaskApi: MaintenanceTaskApi? = null
 ) : Crypto {
     private val aesValidKeySizes : Set<Int> = setOf(128, 192, 256)
 
@@ -47,7 +70,7 @@ class LocalCrypto(
 
     override suspend fun decryptEncryptionKeys(myId: String, keys: Map<String, Set<DelegationDto>>): Set<String> {
         return ((keys[myId]?.flatMap { d ->
-            getDelegateHcPartyKeys(d.delegatedTo!!, d.owner!!)
+            getDelegateAesExchangeKeys(d.delegatedTo!!, d.owner!!)
                 .mapNotNull { k ->
                     try {
                         decryptAES(d.key!!.keyFromHexString(), k)
@@ -87,13 +110,13 @@ class LocalCrypto(
         return "$delegatorId:$delegateId"
     }
 
-    private suspend fun getDelegateHcPartyKeys(delegateId: String, ownerId: String): List<ByteArray> {
+    private suspend fun getDelegateAesExchangeKeys(delegateId: String, ownerId: String): List<ByteArray> {
         val rsaKeyPairs = rsaKeyPairs[delegateId] ?: throw MissingPrivateKeyException(delegateId, "Missing key(s) for data owner $delegateId")
         val delegateIdOwnerIdKey = getOwnerIdDelegateIdKeyForCache(delegateId = delegateId, delegatorId = ownerId)
 
         val keyMap: Map<String, Map<String, Map<String, Pair<String, ByteArray>>>> =
             delegateHcpartyKeysCache.defGet(delegateIdOwnerIdKey) {
-                dataOwnerResolver.getDataOwnerHcPartyKeysForDelegate(delegateId).decryptAesExchangeKeysFor(delegateId, rsaKeyPairs)
+                dataOwnerResolver.getDataOwnerAesExchangeKeysForDelegate(delegateId).decryptAesExchangeKeysFor(delegateId, rsaKeyPairs)
             } ?: throw IllegalArgumentException("Unknown data owner $delegateId")
 
         return keyMap[ownerId]?.flatMap { (_, keys) ->
@@ -165,7 +188,7 @@ class LocalCrypto(
 
         return listOf(aesKey) to dataOwnerResolver.getDataOwner(myId).let { dataOwner ->
             CoroutineScope(Dispatchers.IO).async {
-                dataOwnerResolver.updateDataOwnerWithNewHcPartyKeys(
+                dataOwnerResolver.updateDataOwnerWithNewAesExchangeKeys(
                     dataOwner.type,
                     dataOwner.dataOwnerId,
                     dataOwnerNewAesExchangeKeys.first,
@@ -180,19 +203,33 @@ class LocalCrypto(
         }.await()
     }
 
-    override suspend fun addNewKeyPairTo(dataOwnerId: String,
+    override suspend fun addNewKeyPairTo(user: UserDto,
+                                         dataOwnerId: String,
                                          newPubKey: PublicKey,
                                          newPrivateKey: PrivateKey?
-    ) : DataOwner = addNewKeyPairTo(dataOwnerResolver.getDataOwner(dataOwnerId), newPubKey, newPrivateKey)
+    ) : DataOwner = addNewKeyPairTo(user, dataOwnerResolver.getDataOwner(dataOwnerId), newPubKey, newPrivateKey)
 
-    override suspend fun addNewKeyPairTo(dataOwner: DataOwner, newPubKey: PublicKey, newPrivateKey: PrivateKey?) : DataOwner {
+    override suspend fun addNewKeyPairTo(user: UserDto, dataOwner: DataOwner, newPubKey: PublicKey, newPrivateKey: PrivateKey?) : DataOwner {
+        val dataOwnerToUpdate = sendMaintenanceTasksForDataOwner(user, dataOwner, newPubKey)
+            .onEach { createdMaintenanceTask ->
+                println("Created MaintenanceTask $createdMaintenanceTask for data owner ${dataOwner.dataOwnerId}")
+            }.firstOrNull()
+            ?.let { dataOwnerResolver.getDataOwner(dataOwner.dataOwnerId) }
+            ?: dataOwner
+
+        return updateDataOwnerWithNewKeys(dataOwnerToUpdate, newPubKey, newPrivateKey)
+    }
+
+    private fun updateDataOwnerWithNewKeys(
+        dataOwner: DataOwner,
+        newPubKey: PublicKey,
+        newPrivateKey: PrivateKey?
+    ) : DataOwner {
         val aesKey = CryptoUtils.generateKeyAES().encoded
         val newAesExchangeKey = encryptAesKeyFor(dataOwner, aesKey, newPubKey)
 
-        //TODO Send MaintenanceTasks
-
         return getDataOwnerPublicKeys(dataOwner)
-            .takeIf { existingPublicKeys -> existingPublicKeys.isNotEmpty() && newPrivateKey != null}
+            .takeIf { existingPublicKeys -> existingPublicKeys.isNotEmpty() && newPrivateKey != null }
             ?.let { existingPublicKeys ->
                 val newTransferKey = encryptAES(newPrivateKey!!.encoded, aesKey).keyToHexString()
                 val mutableTransferKeys = dataOwner.transferKeys.toMutableMap()
@@ -213,6 +250,86 @@ class LocalCrypto(
 
             } ?: dataOwner.updateAesExchangeKeys(newAesExchangeKey.first, newAesExchangeKey.second)
     }
+
+    private suspend fun sendMaintenanceTasksForDataOwner(user: UserDto, dataOwner: DataOwner, newPubKey: PublicKey) : Flow<MaintenanceTaskDto> {
+        if (maintenanceTaskApi == null) {
+            throw IllegalStateException("MaintenanceTaskApi is not initialized !")
+        }
+
+        val nonAccessiblePublicKeys = getDataOwnerPublicKeys(dataOwner)
+            .filterNot { (rawPubKey, _) -> rawPubKey == newPubKey.pubKeyAsString() }
+            .filter { (rawPubKey, _) -> (rsaKeyPairs[dataOwner.dataOwnerId]?.find { (_, pubKey) -> rawPubKey == pubKey.pubKeyAsString() } == null) }
+
+        if (nonAccessiblePublicKeys.isNotEmpty()) {
+            try {
+                val nonAccessibleDelegateAesExchangeKeys =
+                    dataOwnerResolver.getDataOwnerAesExchangeKeysForDelegate(dataOwner.dataOwnerId)
+                        .filter { (delegatorId, _) -> delegatorId != dataOwner.dataOwnerId }
+                        .flatMap { (delegatorId, delegatorKeys) ->
+                            delegatorKeys.flatMap { (_, aesExchangeKeys) ->
+                                aesExchangeKeys.map { (delegatePubKey, _) ->
+                                    delegatorId to createMaintenanceTaskFor(dataOwner, delegatePubKey)
+                                }
+                            }
+                        }.asFlow()
+
+                val nonAccessibleDelegatorAesExchangeKeys =
+                    dataOwner.findRelatedAesExchangeKeys(nonAccessiblePublicKeys.map { (rawPubKey, _) -> rawPubKey })
+                        .flatMap { (doPubKey, delegateKeys) ->
+                            delegateKeys
+                                .filter { (delegateId, _) -> delegateId != dataOwner.dataOwnerId }
+                                .map { (delegateId, _) ->
+                                    delegateId to createMaintenanceTaskFor(dataOwner, doPubKey)
+                                }
+                        }.asFlow()
+
+                val maintenanceTaskCc = maintenanceTaskCryptoConfig(this@LocalCrypto, user)
+
+                return flowOf(nonAccessibleDelegateAesExchangeKeys, nonAccessibleDelegatorAesExchangeKeys)
+                    .flattenMerge(10)
+                    .map { (delegateId, newMaintenanceTask) ->
+                        maintenanceTaskApi.createMaintenanceTask(
+                            user,
+                            newMaintenanceTask,
+                            delegateId,
+                            maintenanceTaskCc
+                        )
+                    }
+            } catch (e: Exception) {
+                println("Error during sending maintenance tasks $e")
+                return emptyFlow()
+            }
+        } else {
+            return emptyFlow()
+        }
+    }
+
+    private fun createMaintenanceTaskFor(
+        concernedDataOwner: DataOwner,
+        concernedDataOwnerPubKey: String
+    ) = MaintenanceTaskDto(
+        id = UUID.randomUUID().toString(),
+        taskType = "updateAesExchangeKey",
+        status = MaintenanceTaskDto.Status.pending,
+        properties = listOf(
+            PropertyStubDto(
+                id = "dataOwnerConcernedId",
+                type = PropertyTypeStubDto(type = PropertyTypeStubDto.Type.sTRING),
+                typedValue = TypedValueDtoObject(
+                    type = TypedValueDtoObject.Type.sTRING,
+                    stringValue = concernedDataOwner.dataOwnerId
+                )
+            ),
+            PropertyStubDto(
+                id = "dataOwnerConcernedPubKey",
+                type = PropertyTypeStubDto(type = PropertyTypeStubDto.Type.sTRING),
+                typedValue = TypedValueDtoObject(
+                    type = TypedValueDtoObject.Type.sTRING,
+                    stringValue = concernedDataOwnerPubKey
+                )
+            )
+        )
+    )
 
     private fun encryptAesKeyFor(
         dataOwner: DataOwner,

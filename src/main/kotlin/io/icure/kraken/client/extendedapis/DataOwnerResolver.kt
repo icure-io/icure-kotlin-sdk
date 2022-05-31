@@ -46,6 +46,12 @@ class DataOwnerResolver(
         .expireAfterWrite(5, TimeUnit.MINUTES)
         .build()
 
+    fun clearCacheFor(dataOwnerId: String) {
+        hcParties.invalidate(dataOwnerId)
+        patients.invalidate(dataOwnerId)
+        devices.invalidate(dataOwnerId)
+    }
+
     /**
      * This method updates the Data Owner after adding the new hcPartyKeys (or aesExchangeKeys) provided in argument.
      *
@@ -58,7 +64,7 @@ class DataOwnerResolver(
      *
      * @return the updated data owner
      */
-    suspend fun updateDataOwnerWithNewHcPartyKeys(dataOwnerType: DataOwnerType, dataOwnerId: String, dataOwnerPubKey: String, newAesExchangeKeys: Pair<String, List<Pair<String, String>>>) : DataOwner {
+    suspend fun updateDataOwnerWithNewAesExchangeKeys(dataOwnerType: DataOwnerType, dataOwnerId: String, dataOwnerPubKey: String, newAesExchangeKeys: Pair<String, List<Pair<String, String>>>) : DataOwner {
         return when(dataOwnerType) {
             DataOwnerType.HCP -> hcParties.defGet(dataOwnerId) { hcpartyApi.getHealthcareParty(dataOwnerId) }
                 ?.let { hcp ->
@@ -108,7 +114,11 @@ class DataOwnerResolver(
             }
     }
 
-    suspend fun getDataOwnerHcPartyKeysForDelegate(delegateId: String) : Map<String, Map<String, Map<String, String>>> {
+    /**
+     * @return The Map containing all aesExchangeKeys concerning the dataOwner identified as delegateId.
+     * The structure of the returned map is the following : { delegatorId: { slicedDelegatorPubKey: { delegatePubKey: encAesKey } } }
+     */
+    suspend fun getDataOwnerAesExchangeKeysForDelegate(delegateId: String) : Map<String, Map<String, Map<String, String>>> {
         return flowOf(
             flow { emit(try {
                 hcpartyApi.getAesExchangeKeysForDelegate(delegateId)

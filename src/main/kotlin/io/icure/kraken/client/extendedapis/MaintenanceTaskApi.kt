@@ -89,7 +89,6 @@ suspend fun MaintenanceTaskApi.modifyMaintenanceTask(user: UserDto,
 ).let { config.decryptMaintenanceTask(user.dataOwnerId(), it) }
 
 
-
 // CRYPTO
 suspend fun CryptoConfig<MaintenanceTaskDto, io.icure.kraken.client.models.MaintenanceTaskDto>.encryptMaintenanceTask(myId: String, delegations: Set<String>, maintenanceTask: MaintenanceTaskDto): io.icure.kraken.client.models.MaintenanceTaskDto {
     return if (maintenanceTask.encryptionKeys.any { (_,s) -> s.isNotEmpty() }) {
