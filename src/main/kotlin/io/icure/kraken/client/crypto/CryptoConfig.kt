@@ -148,7 +148,7 @@ fun healthElementCryptoConfig(
     marshaller = { c ->
         HealthElementMapperFactory.instance.map(c) to byteArrayOf()
     },
-    unmarshaller = { c, b ->
+    unmarshaller = { c, _ ->
         HealthElementMapperFactory.instance.map(c)
     }
 )
@@ -163,7 +163,7 @@ fun documentCryptoConfig(
     marshaller = { c ->
         DocumentMapperFactory.instance.map(c) to byteArrayOf()
     },
-    unmarshaller = { c, b ->
+    unmarshaller = { c, _ ->
         DocumentMapperFactory.instance.map(c)
     }
 )

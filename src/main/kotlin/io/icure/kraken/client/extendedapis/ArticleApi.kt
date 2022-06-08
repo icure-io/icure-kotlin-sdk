@@ -68,7 +68,7 @@ suspend fun ArticleApi.modifyArticle(user: UserDto, article: ArticleDto, config:
             (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
             article
         )
-    )?.let { config.decryptArticle(user.dataOwnerId(), it) }
+    ).let { config.decryptArticle(user.dataOwnerId(), it) }
 }
 
 suspend fun CryptoConfig<ArticleDto, io.icure.kraken.client.models.ArticleDto>.encryptArticle(myId: String, delegations: Set<String>, article: ArticleDto): io.icure.kraken.client.models.ArticleDto {
