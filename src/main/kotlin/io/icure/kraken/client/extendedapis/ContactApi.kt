@@ -7,23 +7,18 @@ import io.icure.kraken.client.crypto.CryptoConfig
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
 import io.icure.kraken.client.crypto.keyFromHexString
+import io.icure.kraken.client.extendedapis.mapper.ServiceMapperFactory
 import io.icure.kraken.client.models.DelegationDto
 import io.icure.kraken.client.models.IcureStubDto
 import io.icure.kraken.client.models.ListOfIdsDto
 import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.decrypted.ContactDto
-import io.icure.kraken.client.models.decrypted.ContentDto
 import io.icure.kraken.client.models.decrypted.PaginatedListContactDto
 import io.icure.kraken.client.models.decrypted.PatientDto
 import io.icure.kraken.client.models.decrypted.ServiceDto
 import io.icure.kraken.client.models.filter.chain.FilterChain
 import io.icure.kraken.client.models.filter.contact.ContactByServiceIdsFilter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.mapstruct.InjectionStrategy
-import org.mapstruct.Mapper
-import org.mapstruct.Mapping
-import org.mapstruct.Mappings
-import org.mapstruct.factory.Mappers
 import java.util.*
 
 suspend fun ContactDto.initDelegations(user: UserDto, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>): ContactDto {
@@ -328,33 +323,4 @@ suspend fun Crypto.decryptServices(myId: String, contactKey: ByteArray?, service
 data class ContentWrapper(val content: Map<String, io.icure.kraken.client.models.decrypted.ContentDto> = mapOf()
 )
 
-@Mapper(uses = [ServiceMapper::class])
-interface ContactMapper {
-    fun map(contact: ContactDto): io.icure.kraken.client.models.ContactDto
-    fun map(contact: io.icure.kraken.client.models.ContactDto): ContactDto
-}
 
-object ContactMapperFactory {
-    val instance = Mappers.getMapper(ContactMapper::class.java)
-}
-
-@Mapper(uses = [ContentMapper::class], injectionStrategy = InjectionStrategy.CONSTRUCTOR)
-interface ServiceMapper {
-
-    fun map(service: ServiceDto): io.icure.kraken.client.models.ServiceDto
-    fun map(service: io.icure.kraken.client.models.ServiceDto): ServiceDto
-}
-
-object ServiceMapperFactory {
-    val instance = Mappers.getMapper(ServiceMapper::class.java)
-}
-
-@Mapper(uses = [ServiceMapper::class], injectionStrategy = InjectionStrategy.CONSTRUCTOR)
-interface ContentMapper {
-    fun map(content: ContentDto): io.icure.kraken.client.models.ContentDto
-    fun map(content: io.icure.kraken.client.models.ContentDto): ContentDto
-}
-
-object ContentMapperFactory {
-    val instance = Mappers.getMapper(ContentMapper::class.java)
-}

@@ -8,7 +8,6 @@ import io.icure.kraken.client.crypto.keyFromHexString
 import io.icure.kraken.client.models.*
 import io.icure.kraken.client.models.decrypted.TimeTableDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.mapstruct.Mapper
 import org.mapstruct.factory.Mappers
 import java.util.*
 
@@ -102,14 +101,4 @@ suspend fun CryptoConfig<TimeTableDto, io.icure.kraken.client.models.TimeTableDt
         ""
     )?.keyFromHexString() ?: throw IllegalArgumentException("No encryption key for user")
     return this.unmarshaller(timeTable, decryptAES(data = Base64.getDecoder().decode(timeTable.encryptedSelf), key = key))
-}
-
-@Mapper
-interface TimeTableMapper {
-    fun map(timeTable: TimeTableDto): io.icure.kraken.client.models.TimeTableDto
-    fun map(timeTable: io.icure.kraken.client.models.TimeTableDto): TimeTableDto
-}
-
-object TimeTableMapperFactory {
-    val instance = Mappers.getMapper(TimeTableMapper::class.java)
 }

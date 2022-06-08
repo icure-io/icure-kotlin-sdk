@@ -10,7 +10,6 @@ import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.decrypted.ClassificationDto
 import io.icure.kraken.client.models.decrypted.PatientDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.mapstruct.Mapper
 import org.mapstruct.factory.Mappers
 import java.util.*
 
@@ -118,12 +117,4 @@ suspend fun CryptoConfig<ClassificationDto, io.icure.kraken.client.models.Classi
     return this.unmarshaller(classification, decryptAES(data = Base64.getDecoder().decode(classification.encryptedSelf), key = key))
 }
 
-@Mapper
-interface ClassificationMapper {
-    fun map(classification: ClassificationDto): io.icure.kraken.client.models.ClassificationDto
-    fun map(classification: io.icure.kraken.client.models.ClassificationDto): ClassificationDto
-}
 
-object ClassificationMapperFactory {
-    val instance = Mappers.getMapper(ClassificationMapper::class.java)
-}

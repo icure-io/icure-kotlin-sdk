@@ -5,12 +5,14 @@ import io.icure.kraken.client.crypto.CryptoConfig
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
 import io.icure.kraken.client.crypto.keyFromHexString
-import io.icure.kraken.client.models.*
+import io.icure.kraken.client.models.DelegationDto
+import io.icure.kraken.client.models.InvoicingCodeDto
+import io.icure.kraken.client.models.ListOfIdsDto
+import io.icure.kraken.client.models.PatientDto
+import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.decrypted.InvoiceDto
 import io.icure.kraken.client.models.filter.chain.FilterChain
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.mapstruct.InjectionStrategy
-import org.mapstruct.Mapper
 import org.mapstruct.factory.Mappers
 import java.util.*
 
@@ -431,14 +433,4 @@ suspend fun CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>.d
             ""
         )?.keyFromHexString() ?: throw IllegalArgumentException("No encryption key for user")
         return this.unmarshaller(invoice, decryptAES(data = Base64.getDecoder().decode(invoice.encryptedSelf), key = key))
-}
-
-@Mapper(injectionStrategy = InjectionStrategy.CONSTRUCTOR)
-interface InvoiceMapper {
-    fun map(invoice: InvoiceDto): io.icure.kraken.client.models.InvoiceDto
-    fun map(invoice: io.icure.kraken.client.models.InvoiceDto): InvoiceDto
-}
-
-object InvoiceMapperFactory {
-    val instance = Mappers.getMapper(InvoiceMapper::class.java)
 }

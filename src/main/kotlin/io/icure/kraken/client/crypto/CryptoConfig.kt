@@ -1,18 +1,16 @@
 package io.icure.kraken.client.crypto
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import io.icure.kraken.client.applyIf
-import io.icure.kraken.client.extendedapis.ContactMapperFactory
-import io.icure.kraken.client.extendedapis.DocumentMapperFactory
-import io.icure.kraken.client.extendedapis.HealthElementMapperFactory
-import io.icure.kraken.client.extendedapis.MaintenanceTaskMapperFactory
-import io.icure.kraken.client.extendedapis.PatientMapperFactory
+import io.icure.kraken.client.extendedapis.mapper.ContactMapperFactory
+import io.icure.kraken.client.extendedapis.mapper.DocumentMapperFactory
+import io.icure.kraken.client.extendedapis.mapper.HealthElementMapperFactory
+import io.icure.kraken.client.extendedapis.mapper.MaintenanceTaskMapperFactory
+import io.icure.kraken.client.extendedapis.mapper.PatientMapperFactory
 import io.icure.kraken.client.extendedapis.PropertyWrapper
 import io.icure.kraken.client.extendedapis.dataOwnerId
 import io.icure.kraken.client.extendedapis.decryptServices
 import io.icure.kraken.client.extendedapis.encryptServices
 import io.icure.kraken.client.infrastructure.ApiClient
-import io.icure.kraken.client.models.TypedValueDtoObject
 import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.decrypted.ContactDto
 import io.icure.kraken.client.models.decrypted.DocumentDto

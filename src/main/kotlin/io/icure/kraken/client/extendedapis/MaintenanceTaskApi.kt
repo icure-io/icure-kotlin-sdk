@@ -12,7 +12,6 @@ import io.icure.kraken.client.models.decrypted.MaintenanceTaskDto
 import io.icure.kraken.client.models.decrypted.PaginatedListMaintenanceTaskDto
 import io.icure.kraken.client.models.filter.chain.FilterChain
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.mapstruct.Mapper
 import org.mapstruct.factory.Mappers
 import java.util.*
 
@@ -132,13 +131,3 @@ suspend fun CryptoConfig<MaintenanceTaskDto, io.icure.kraken.client.models.Maint
 data class PropertyWrapper(val typedValue: TypedValueDtoObject)
 
 
-// MAPPING
-@Mapper
-interface MaintenanceTaskMapper {
-    fun map(maintenanceTask: MaintenanceTaskDto): io.icure.kraken.client.models.MaintenanceTaskDto
-    fun map(maintenanceTask: io.icure.kraken.client.models.MaintenanceTaskDto): MaintenanceTaskDto
-}
-
-object MaintenanceTaskMapperFactory {
-    val instance = Mappers.getMapper(MaintenanceTaskMapper::class.java)
-}

@@ -9,7 +9,6 @@ import io.icure.kraken.client.models.DelegationDto
 import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.decrypted.ArticleDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.mapstruct.Mapper
 import org.mapstruct.factory.Mappers
 import java.util.*
 
@@ -98,12 +97,4 @@ suspend fun CryptoConfig<ArticleDto, io.icure.kraken.client.models.ArticleDto>.d
     return this.unmarshaller(article, decryptAES(data = Base64.getDecoder().decode(article.encryptedSelf), key = key))
 }
 
-@Mapper
-interface ArticleMapper {
-    fun map(article: ArticleDto): io.icure.kraken.client.models.ArticleDto
-    fun map(article: io.icure.kraken.client.models.ArticleDto): ArticleDto
-}
 
-object ArticleMapperFactory {
-    val instance = Mappers.getMapper(ArticleMapper::class.java)
-}

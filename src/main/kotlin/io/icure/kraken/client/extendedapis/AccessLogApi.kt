@@ -11,7 +11,6 @@ import io.icure.kraken.client.models.decrypted.AccessLogDto
 import io.icure.kraken.client.models.decrypted.PaginatedListAccessLogDto
 import io.icure.kraken.client.models.decrypted.PatientDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.mapstruct.Mapper
 import org.mapstruct.factory.Mappers
 import java.util.*
 
@@ -122,12 +121,4 @@ suspend fun CryptoConfig<AccessLogDto, io.icure.kraken.client.models.AccessLogDt
     return this.unmarshaller(accessLog, decryptAES(data = Base64.getDecoder().decode(accessLog.encryptedSelf), key = key))
 }
 
-@Mapper
-interface AccessLogMapper {
-    fun map(accessLog: AccessLogDto): io.icure.kraken.client.models.AccessLogDto
-    fun map(accessLog: io.icure.kraken.client.models.AccessLogDto): AccessLogDto
-}
 
-object AccessLogMapperFactory {
-    val instance = Mappers.getMapper(AccessLogMapper::class.java)
-}
