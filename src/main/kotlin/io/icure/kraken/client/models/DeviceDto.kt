@@ -19,7 +19,6 @@ import io.icure.kraken.client.models.PropertyStubDto
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-import com.github.pozo.KotlinBuilder
 
 
 /**
@@ -31,7 +30,7 @@ import com.github.pozo.KotlinBuilder
  * @param codes A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes
  * @param properties 
  * @param hcPartyKeys For each couple of HcParties (delegator and delegate), this map contains the exchange AES key. The delegator is always this hcp, the key of the map is the id of the delegate. The AES exchange key is encrypted using RSA twice : once using this hcp public key (index 0 in the Array) and once using the other hcp public key (index 1 in the Array). For a pair of HcParties. Each HcParty always has one AES exchange key for himself.
- * @param aesExchangeKeys Extra AES exchange keys, usually the ones we lost access to at some point. The structure is { publicKey: { delegateId: [aesExKey_for_this, aesExKey_for_delegate] } }
+ * @param aesExchangeKeys Extra AES exchange keys, usually the ones we lost access to at some point. The structure is { publicKey: { delegateId: { myPubKey1: aesExKey_for_this, delegatePubKey1: aesExKey_for_delegate } } }
  * @param transferKeys Our private keys encrypted with our public keys. The structure is { publicKey1: { publicKey2: privateKey2_encrypted_with_publicKey1, publicKey3: privateKey3_encrypted_with_publicKey1 } }
  * @param privateKeyShamirPartitions The privateKeyShamirPartitions are used to share this hcp's private RSA key with a series of other hcParties using Shamir's algorithm. The key of the map is the hcp Id with whom this partition has been shared. The value is \"threshold⎮partition in hex\" encrypted using the the partition's holder's public RSA key
  * @param rev 
@@ -55,7 +54,6 @@ import com.github.pozo.KotlinBuilder
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@KotlinBuilder
 data class DeviceDto (
 
     @field:JsonProperty("id")

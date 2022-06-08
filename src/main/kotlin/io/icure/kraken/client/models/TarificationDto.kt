@@ -19,7 +19,6 @@ import io.icure.kraken.client.models.ValorisationDto
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-import com.github.pozo.KotlinBuilder
 
 
 /**
@@ -51,12 +50,11 @@ import com.github.pozo.KotlinBuilder
  * @param consultationCode 
  * @param hasRelatedCode 
  * @param needsPrescriber 
- * @param ngroup 
+ * @param nGroup 
  */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@KotlinBuilder
 data class TarificationDto (
 
     @field:JsonProperty("id")
@@ -138,8 +136,8 @@ data class TarificationDto (
     @field:JsonProperty("needsPrescriber")
     val needsPrescriber: kotlin.Boolean? = null,
 
-    @field:JsonProperty("ngroup")
-    val ngroup: kotlin.String? = null
+    @field:JsonProperty("nGroup")
+    val nGroup: kotlin.String? = null
 
 ) {
 

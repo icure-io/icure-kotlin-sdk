@@ -16,6 +16,7 @@ import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.models.DocIdentifier
+
 import io.icure.kraken.client.models.MaintenanceTaskDto
 import io.icure.kraken.client.models.PaginatedListMaintenanceTaskDto
 
@@ -136,10 +137,10 @@ class MaintenanceTaskApi(basePath: kotlin.String = defaultBasePath, webClient: W
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun filterMaintenanceTasksBy(filterChainMaintenanceTask: io.icure.kraken.client.models.filter.chain.FilterChain<MaintenanceTaskDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListMaintenanceTaskDto  {
+    suspend fun filterMaintenanceTasksBy(filterChainMaintenanceTask: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.MaintenanceTaskDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListMaintenanceTaskDto  {
         val localVariableConfig = filterMaintenanceTasksByRequestConfig(filterChainMaintenanceTask = filterChainMaintenanceTask, startDocumentId = startDocumentId, limit = limit)
 
-        return request<io.icure.kraken.client.models.filter.chain.FilterChain<MaintenanceTaskDto>, PaginatedListMaintenanceTaskDto>(
+        return request<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.MaintenanceTaskDto>, PaginatedListMaintenanceTaskDto>(
             localVariableConfig
         )!!
     }
@@ -151,7 +152,7 @@ class MaintenanceTaskApi(basePath: kotlin.String = defaultBasePath, webClient: W
     * @param limit Number of rows (optional)
     * @return RequestConfig
     */
-    fun filterMaintenanceTasksByRequestConfig(filterChainMaintenanceTask: io.icure.kraken.client.models.filter.chain.FilterChain<MaintenanceTaskDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<io.icure.kraken.client.models.filter.chain.FilterChain<MaintenanceTaskDto>> {
+    fun filterMaintenanceTasksByRequestConfig(filterChainMaintenanceTask: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.MaintenanceTaskDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.MaintenanceTaskDto>> {
         // val localVariableBody = filterChainMaintenanceTask
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {

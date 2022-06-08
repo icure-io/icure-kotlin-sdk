@@ -420,7 +420,7 @@ class DeviceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     * Get the HcParty encrypted AES keys indexed by owner.
     * (key, value) of the map is as follows: (ID of the owner of the encrypted AES key, encrypted AES keys)
     * @param deviceId  
-    * @return kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.String>>
+    * @return kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.String>>>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response

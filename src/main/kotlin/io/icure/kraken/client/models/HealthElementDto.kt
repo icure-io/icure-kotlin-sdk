@@ -22,7 +22,6 @@ import io.icure.kraken.client.models.PlanOfActionDto
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-import com.github.pozo.KotlinBuilder
 
 
 /**
@@ -64,7 +63,6 @@ import com.github.pozo.KotlinBuilder
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@KotlinBuilder
 data class HealthElementDto (
 
     /* The Id of the healthcare element. We encourage using either a v4 UUID or a HL7 Id. */

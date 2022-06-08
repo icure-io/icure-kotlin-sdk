@@ -16,7 +16,6 @@ package io.icure.kraken.client.models
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-import com.github.pozo.KotlinBuilder
 
 
 /**
@@ -30,7 +29,6 @@ import com.github.pozo.KotlinBuilder
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@KotlinBuilder
 data class SamTextDto (
 
     @field:JsonProperty("fr")

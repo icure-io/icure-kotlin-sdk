@@ -7,18 +7,19 @@ import io.icure.kraken.client.crypto.CryptoConfig
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
 import io.icure.kraken.client.crypto.keyFromHexString
-import io.icure.kraken.client.models.ContentDto
 import io.icure.kraken.client.models.DelegationDto
 import io.icure.kraken.client.models.IcureStubDto
 import io.icure.kraken.client.models.ListOfIdsDto
 import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.decrypted.ContactDto
+import io.icure.kraken.client.models.decrypted.ContentDto
 import io.icure.kraken.client.models.decrypted.PaginatedListContactDto
 import io.icure.kraken.client.models.decrypted.PatientDto
 import io.icure.kraken.client.models.decrypted.ServiceDto
 import io.icure.kraken.client.models.filter.chain.FilterChain
 import io.icure.kraken.client.models.filter.contact.ContactByServiceIdsFilter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.mapstruct.InjectionStrategy
 import org.mapstruct.Mapper
 import org.mapstruct.Mapping
 import org.mapstruct.Mappings
@@ -302,7 +303,7 @@ suspend fun Crypto.encryptServices(myId: String, delegations: Set<String>, conta
                 c.compoundValue != null && c.stringValue == null && c.documentId == null  && c.measureValue == null  && c.medicationValue == null  &&
                         c.booleanValue == null && c.numberValue == null && c.instantValue == null  && c.fuzzyDateValue == null  && c.binaryValue == null
             }) {
-            ServiceMapperFactory.instance.map(s).copy(content = s.content.mapValues { (_,c) -> ContentDto(compoundValue = c.compoundValue?.let { this.encryptServices(myId, delegations, contactKey, it) }) })
+            ServiceMapperFactory.instance.map(s).copy(content = s.content.mapValues { (_,c) -> io.icure.kraken.client.models.ContentDto(compoundValue = c.compoundValue?.let { this.encryptServices(myId, delegations, contactKey, it) }) })
         } else {
             ServiceMapperFactory.instance.map(s.copy(content = mapOf(), encryptedSelf = Base64.getEncoder().encodeToString(encryptAES(data = objectMapper.writeValueAsBytes(mapOf("content" to s.content)), key = key))))
         }
@@ -337,32 +338,23 @@ object ContactMapperFactory {
     val instance = Mappers.getMapper(ContactMapper::class.java)
 }
 
-@Mapper
+@Mapper(uses = [ContentMapper::class], injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 interface ServiceMapper {
 
-    @Mappings(
-        Mapping(target="qualifiedLinks", expression="java(mapQualifiedLinks(service.getQualifiedLinks()))")
-    )
     fun map(service: ServiceDto): io.icure.kraken.client.models.ServiceDto
-
-    @Mappings(
-        Mapping(target="qualifiedLinks", expression="java(mapRawQualifiedLinks(service.getQualifiedLinks()))")
-    )
     fun map(service: io.icure.kraken.client.models.ServiceDto): ServiceDto
-
-    fun mapQualifiedLinks(qualifiedLinks: Map<ServiceDto.LinkQualification, Map<String, String>>) : Map<String, Map<String, String>> {
-        return qualifiedLinks
-            .map { (key, value) -> key.value to value }
-            .toMap()
-    }
-
-    fun mapRawQualifiedLinks(qualifiedLinks: Map<String, Map<String, String>>) : Map<ServiceDto.LinkQualification, Map<String, String>> {
-        return qualifiedLinks
-            .map { (key, value) -> ServiceDto.LinkQualification.valueOf(key) to value }
-            .toMap()
-    }
 }
 
 object ServiceMapperFactory {
     val instance = Mappers.getMapper(ServiceMapper::class.java)
+}
+
+@Mapper(uses = [ServiceMapper::class], injectionStrategy = InjectionStrategy.CONSTRUCTOR)
+interface ContentMapper {
+    fun map(content: ContentDto): io.icure.kraken.client.models.ContentDto
+    fun map(content: io.icure.kraken.client.models.ContentDto): ContentDto
+}
+
+object ContentMapperFactory {
+    val instance = Mappers.getMapper(ContentMapper::class.java)
 }

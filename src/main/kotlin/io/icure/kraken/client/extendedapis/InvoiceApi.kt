@@ -9,6 +9,7 @@ import io.icure.kraken.client.models.*
 import io.icure.kraken.client.models.decrypted.InvoiceDto
 import io.icure.kraken.client.models.filter.chain.FilterChain
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.mapstruct.InjectionStrategy
 import org.mapstruct.Mapper
 import org.mapstruct.factory.Mappers
 import java.util.*
@@ -432,7 +433,7 @@ suspend fun CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>.d
         return this.unmarshaller(invoice, decryptAES(data = Base64.getDecoder().decode(invoice.encryptedSelf), key = key))
 }
 
-@Mapper
+@Mapper(injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 interface InvoiceMapper {
     fun map(invoice: InvoiceDto): io.icure.kraken.client.models.InvoiceDto
     fun map(invoice: io.icure.kraken.client.models.InvoiceDto): InvoiceDto
