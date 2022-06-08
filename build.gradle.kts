@@ -20,7 +20,7 @@ sonarqube {
 
 buildscript {
     repositories {
-        mavenLocal()
+        mavenCentral()
         maven { url = uri("https://maven.taktik.be/content/groups/public") }
     }
     dependencies {
@@ -37,7 +37,7 @@ group = "io.icure"
 version = gitVersion ?: "0.0.1-SNAPSHOT"
 
 repositories {
-    mavenLocal()
+    mavenCentral()
     maven {
         url = uri("https://maven.taktik.be/content/groups/public")
     }
