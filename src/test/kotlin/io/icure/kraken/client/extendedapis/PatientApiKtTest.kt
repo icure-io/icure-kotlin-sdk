@@ -20,6 +20,7 @@ import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.decrypted.PatientDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions
 import java.security.interfaces.RSAPrivateKey
@@ -192,6 +193,8 @@ internal class PatientApiKtTest {
                 autoDelegations = mapOf("all" to setOf(parent.id))
             )
         )
+
+        delay(3000) // User not active yet when trying to create data afterwards
 
         val newUserPatientApi = PatientApi(basePath = "https://kraken.icure.dev", authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}")
         val newUserHcpApi = HealthcarePartyApi(basePath = "https://kraken.icure.dev", authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}")

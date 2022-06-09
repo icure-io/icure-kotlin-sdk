@@ -236,16 +236,16 @@ data class DataOwner(
      * { doPubKey1: { hcp1Id: encAes1WithPubKey1, hcp2Id: encAes2WithPubKey1 }, doPubKey2: { hcp1Id: encAes2WithPubKey2 } }
      *
      */
-    fun findRelatedAesExchangeKeys(dataOwnerPublicKeys: List<String>): Map<String, Map<String, String>> {
-        return dataOwnerPublicKeys.fold(emptyMap()) { doAesKeys, pubKey ->
-            if (this.publicKey == pubKey && this.hcPartyKeys.isNotEmpty()) {
-                doAesKeys.plus(pubKey to this.hcPartyKeys.mapValues { (_, v) -> v[0] })
-            } else {
-                val slicedPubKey = pubKey.takeLast(12)
-                doAesKeys.plus(pubKey to (this.aesExchangeKeys[pubKey]?.mapNotNull { (delegateId, v) ->
-                    v[slicedPubKey]?.let { delegateId to it }
-                }?.toMap() ?: emptyMap()))
-            }
+    fun findRelatedAesExchangeKeys(dataOwnerPublicKeys: List<String>): Map<String, Map<String, Map<String, String>>> {
+        val slicedDataOwnerPublicKeys = dataOwnerPublicKeys.map { it.takeLast(12) }
+        val aesExchangeKeysOfDataOwner = this.aesExchangeKeys.filter { (_, aesKeysForDelegate) ->
+            aesKeysForDelegate.any { (_, v) -> slicedDataOwnerPublicKeys.any { v[it] != null } }
+        }
+
+        return if (this.publicKey in dataOwnerPublicKeys) {
+            aesExchangeKeysOfDataOwner.plus(this.publicKey!! to this.hcPartyKeys.map { (delegateId, v) -> delegateId to mapOf(this.publicKey.takeLast(12) to v[0]) }.toMap())
+        } else {
+            aesExchangeKeysOfDataOwner
         }
     }
 
