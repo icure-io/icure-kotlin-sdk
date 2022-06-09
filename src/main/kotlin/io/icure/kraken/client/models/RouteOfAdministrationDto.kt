@@ -32,7 +32,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class RouteOfAdministrationDto (
 
     @field:JsonProperty("standardRoutes")
-    val standardRoutes: kotlin.collections.List<CodeStubDto> = emptyList(),
+    val standardRoutes: kotlin.collections.List<CodeStubDto> = listOf(),
 
     @field:JsonProperty("name")
     val name: SamTextDto? = null

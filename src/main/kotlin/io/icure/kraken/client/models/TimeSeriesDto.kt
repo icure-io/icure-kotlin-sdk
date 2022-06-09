@@ -35,25 +35,25 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class TimeSeriesDto (
 
     @field:JsonProperty("fields")
-    val fields: kotlin.collections.List<kotlin.String> = emptyList(),
+    val fields: kotlin.collections.List<kotlin.String> = listOf(),
 
     @field:JsonProperty("samples")
-    val samples: kotlin.collections.List<kotlin.collections.List<kotlin.Double>> = emptyList(),
+    val samples: kotlin.collections.List<kotlin.collections.List<kotlin.Double>> = listOf(),
 
     @field:JsonProperty("min")
-    val min: kotlin.collections.List<kotlin.Double> = emptyList(),
+    val min: kotlin.collections.List<kotlin.Double> = listOf(),
 
     @field:JsonProperty("max")
-    val max: kotlin.collections.List<kotlin.Double> = emptyList(),
+    val max: kotlin.collections.List<kotlin.Double> = listOf(),
 
     @field:JsonProperty("mean")
-    val mean: kotlin.collections.List<kotlin.Double> = emptyList(),
+    val mean: kotlin.collections.List<kotlin.Double> = listOf(),
 
     @field:JsonProperty("median")
-    val median: kotlin.collections.List<kotlin.Double> = emptyList(),
+    val median: kotlin.collections.List<kotlin.Double> = listOf(),
 
     @field:JsonProperty("variance")
-    val variance: kotlin.collections.List<kotlin.Double> = emptyList()
+    val variance: kotlin.collections.List<kotlin.Double> = listOf()
 
 )
 

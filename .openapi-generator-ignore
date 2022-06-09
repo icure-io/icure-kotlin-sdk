@@ -28,3 +28,6 @@ settings.gradle
 **/infrastructure/ResponseExtensions.kt
 **/infrastructure/ByteArrayAdapter.kt
 **/infrastructure/Serializer.kt
+
+gradle/wrapper/**
+gradlew

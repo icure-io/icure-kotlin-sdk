@@ -36,7 +36,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class FinancialInstitutionInformationDto (
 
     @field:JsonProperty("preferredFiiForPartners")
-    val preferredFiiForPartners: kotlin.collections.List<kotlin.String> = emptyList(),
+    val preferredFiiForPartners: kotlin.collections.List<kotlin.String> = listOf(),
 
     @field:JsonProperty("name")
     val name: kotlin.String? = null,

@@ -34,7 +34,7 @@ data class GroupDatabasesInfoDto (
     val groupId: kotlin.String,
 
     @field:JsonProperty("databasesInfo")
-    val databasesInfo: kotlin.collections.List<DatabaseInfoDto> = emptyList()
+    val databasesInfo: kotlin.collections.List<DatabaseInfoDto> = listOf()
 
 )
 

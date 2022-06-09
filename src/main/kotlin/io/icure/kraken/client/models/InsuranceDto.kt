@@ -43,7 +43,7 @@ data class InsuranceDto (
     val id: kotlin.String,
 
     @field:JsonProperty("name")
-    val name: kotlin.collections.Map<kotlin.String, kotlin.String> = emptyMap(),
+    val name: kotlin.collections.Map<kotlin.String, kotlin.String> = mapOf(),
 
     @field:JsonProperty("privateInsurance")
     val privateInsurance: kotlin.Boolean,

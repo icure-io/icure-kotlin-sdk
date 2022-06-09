@@ -94,75 +94,75 @@ data class HealthcarePartyDto (
 
     /* The healthcareparty's identifiers, used by the client to identify uniquely and unambiguously the HCP. However, iCure may not guarantee this uniqueness by itself : This should be done at the client side. */
     @field:JsonProperty("identifier")
-    val identifier: kotlin.collections.List<IdentifierDto> = emptyList(),
+    val identifier: kotlin.collections.List<IdentifierDto> = listOf(),
 
     /* A tag is an item from a codification system that qualifies an entity as being member of a certain class, whatever the value it might have taken. If the tag qualifies the content of a field, it means that whatever the content of the field, the tag will always apply. For example, the label of a field is qualified using a tag. LOINC is a codification system typically used for tags. */
     @field:JsonProperty("tags")
-    val tags: kotlin.collections.List<CodeStubDto> = emptyList(),
+    val tags: kotlin.collections.List<CodeStubDto> = listOf(),
 
     /* A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes */
     @field:JsonProperty("codes")
-    val codes: kotlin.collections.List<CodeStubDto> = emptyList(),
+    val codes: kotlin.collections.List<CodeStubDto> = listOf(),
 
     /* the list of all names of the healthcare party, also containing the official full name information. Ordered by preference of use. First element is therefore the official name used for the healthcare party in the application */
     @field:JsonProperty("names")
-    val names: kotlin.collections.List<PersonNameDto> = emptyList(),
+    val names: kotlin.collections.List<PersonNameDto> = listOf(),
 
     /* The list of addresses (with address type). */
     @field:JsonProperty("addresses")
-    val addresses: kotlin.collections.List<AddressDto> = emptyList(),
+    val addresses: kotlin.collections.List<AddressDto> = listOf(),
 
     /* The list of languages spoken by the patient ordered by fluency (alpha-2 code http://www.loc.gov/standards/iso639-2/ascii_8bits.html). */
     @field:JsonProperty("languages")
-    val languages: kotlin.collections.List<kotlin.String> = emptyList(),
+    val languages: kotlin.collections.List<kotlin.String> = listOf(),
 
     /* The healthcare party's status: 'trainee' or 'withconvention' or 'accredited' */
     @field:JsonProperty("statuses")
-    val statuses: kotlin.collections.List<HealthcarePartyDto.Statuses> = emptyList(),
+    val statuses: kotlin.collections.List<HealthcarePartyDto.Statuses> = listOf(),
 
     /* The healthcare party's status history */
     @field:JsonProperty("statusHistory")
-    val statusHistory: kotlin.collections.List<HealthcarePartyHistoryStatusDto> = emptyList(),
+    val statusHistory: kotlin.collections.List<HealthcarePartyHistoryStatusDto> = listOf(),
 
     /* Medical specialty of the healthcare party codified using FHIR or Kmehr codificaiton scheme */
     @field:JsonProperty("specialityCodes")
-    val specialityCodes: kotlin.collections.List<CodeStubDto> = emptyList(),
+    val specialityCodes: kotlin.collections.List<CodeStubDto> = listOf(),
 
     /* The type of format for contacting the healthcare party, ex: mobile, phone, email, etc. */
     @field:JsonProperty("sendFormats")
-    val sendFormats: kotlin.collections.Map<kotlin.String, kotlin.String> = emptyMap(),
+    val sendFormats: kotlin.collections.Map<kotlin.String, kotlin.String> = mapOf(),
 
     /* List of financial information (Bank, bank account). */
     @field:JsonProperty("financialInstitutionInformation")
-    val financialInstitutionInformation: kotlin.collections.List<FinancialInstitutionInformationDto> = emptyList(),
+    val financialInstitutionInformation: kotlin.collections.List<FinancialInstitutionInformationDto> = listOf(),
 
     @field:JsonProperty("flatRateTarifications")
-    val flatRateTarifications: kotlin.collections.List<FlatRateTarificationDto> = emptyList(),
+    val flatRateTarifications: kotlin.collections.List<FlatRateTarificationDto> = listOf(),
 
     @field:JsonProperty("importedData")
-    val importedData: kotlin.collections.Map<kotlin.String, kotlin.String> = emptyMap(),
+    val importedData: kotlin.collections.Map<kotlin.String, kotlin.String> = mapOf(),
 
     @field:JsonProperty("options")
-    val options: kotlin.collections.Map<kotlin.String, kotlin.String> = emptyMap(),
+    val options: kotlin.collections.Map<kotlin.String, kotlin.String> = mapOf(),
 
     @field:JsonProperty("properties")
-    val properties: kotlin.collections.List<PropertyStubDto> = emptyList(),
+    val properties: kotlin.collections.List<PropertyStubDto> = listOf(),
 
     /* For each couple of HcParties (delegator and delegate), this map contains the exchange AES key. The delegator is always this hcp, the key of the map is the id of the delegate. The AES exchange key is encrypted using RSA twice : once using this hcp public key (index 0 in the Array) and once using the other hcp public key (index 1 in the Array). For a pair of HcParties. Each HcParty always has one AES exchange key for himself. */
     @field:JsonProperty("hcPartyKeys")
-    val hcPartyKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.List<kotlin.String>> = emptyMap(),
+    val hcPartyKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.List<kotlin.String>> = mapOf(),
 
     /* Extra AES exchange keys, usually the ones we lost access to at some point. The structure is { publicKey: { delegateId: { myPubKey1: aesExKey_for_this, delegatePubKey1: aesExKey_for_delegate } } } */
     @field:JsonProperty("aesExchangeKeys")
-    val aesExchangeKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.String>>> = emptyMap(),
+    val aesExchangeKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.String>>> = mapOf(),
 
     /* Our private keys encrypted with our public keys. The structure is { publicKey1: { publicKey2: privateKey2_encrypted_with_publicKey1, publicKey3: privateKey3_encrypted_with_publicKey1 } } */
     @field:JsonProperty("transferKeys")
-    val transferKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.String>> = emptyMap(),
+    val transferKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.String>> = mapOf(),
 
     /* The privateKeyShamirPartitions are used to share this hcp's private RSA key with a series of other hcParties using Shamir's algorithm. The key of the map is the hcp Id with whom this partition has been shared. The value is \"threshold⎮partition in hex\" encrypted using the the partition's holder's public RSA key */
     @field:JsonProperty("privateKeyShamirPartitions")
-    val privateKeyShamirPartitions: kotlin.collections.Map<kotlin.String, kotlin.String> = emptyMap(),
+    val privateKeyShamirPartitions: kotlin.collections.Map<kotlin.String, kotlin.String> = mapOf(),
 
     /* the revision of the healthcare party in the database, used for conflict management / optimistic locking. */
     @field:JsonProperty("rev")

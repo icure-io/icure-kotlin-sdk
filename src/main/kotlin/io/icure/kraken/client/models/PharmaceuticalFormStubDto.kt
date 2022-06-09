@@ -34,7 +34,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class PharmaceuticalFormStubDto (
 
     @field:JsonProperty("standardForms")
-    val standardForms: kotlin.collections.List<CodeStubDto> = emptyList(),
+    val standardForms: kotlin.collections.List<CodeStubDto> = listOf(),
 
     @field:JsonProperty("id")
     val id: kotlin.String? = null,

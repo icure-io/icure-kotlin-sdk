@@ -85,10 +85,10 @@ data class MedicalHouseContractDto (
     val forcedSuspension: kotlin.Boolean = false,
 
     @field:JsonProperty("options")
-    val options: kotlin.collections.Map<kotlin.String, kotlin.String> = emptyMap(),
+    val options: kotlin.collections.Map<kotlin.String, kotlin.String> = mapOf(),
 
     @field:JsonProperty("receipts")
-    val receipts: kotlin.collections.Map<kotlin.String, kotlin.String> = emptyMap(),
+    val receipts: kotlin.collections.Map<kotlin.String, kotlin.String> = mapOf(),
 
     @field:JsonProperty("contractId")
     val contractId: kotlin.String? = null,

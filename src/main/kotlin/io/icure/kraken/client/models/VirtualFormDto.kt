@@ -32,7 +32,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class VirtualFormDto (
 
     @field:JsonProperty("standardForms")
-    val standardForms: kotlin.collections.List<CodeStubDto> = emptyList(),
+    val standardForms: kotlin.collections.List<CodeStubDto> = listOf(),
 
     @field:JsonProperty("name")
     val name: SamTextDto? = null

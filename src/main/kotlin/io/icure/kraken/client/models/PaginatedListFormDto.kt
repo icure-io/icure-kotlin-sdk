@@ -40,7 +40,7 @@ data class PaginatedListFormDto (
     val totalSize: kotlin.Int,
 
     @field:JsonProperty("rows")
-    val rows: kotlin.collections.List<FormDto> = emptyList(),
+    val rows: kotlin.collections.List<FormDto> = listOf(),
 
     @field:JsonProperty("nextKeyPair")
     val nextKeyPair: PaginatedDocumentKeyIdPairObject? = null

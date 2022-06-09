@@ -104,7 +104,7 @@ data class IncapacityExportInfoDto (
     val incapHeavyphysicalactivity: kotlin.Boolean,
 
     @field:JsonProperty("diagnoseServices")
-    val diagnoseServices: kotlin.collections.List<ServiceDto> = emptyList(),
+    val diagnoseServices: kotlin.collections.List<ServiceDto> = listOf(),
 
     @field:JsonProperty("jobstatus")
     val jobstatus: kotlin.String,
