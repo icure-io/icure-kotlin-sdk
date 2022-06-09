@@ -814,7 +814,7 @@ No authorization required
 
 <a name="getPatientAesExchangeKeysForDelegate"></a>
 # **getPatientAesExchangeKeysForDelegate**
-> kotlin.collections.Map&lt;kotlin.String, kotlin.collections.List&lt;kotlin.String&gt;&gt; getPatientAesExchangeKeysForDelegate(patientId)
+> kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;&gt;&gt; getPatientAesExchangeKeysForDelegate(patientId)
 
 Get the HcParty encrypted AES keys indexed by owner.
 
@@ -829,7 +829,7 @@ Get the HcParty encrypted AES keys indexed by owner.
 val apiInstance = PatientApi()
 val patientId : kotlin.String = patientId_example // kotlin.String | 
 try {
-    val result : kotlin.collections.Map<kotlin.String, kotlin.collections.List<kotlin.String>> = apiInstance.getPatientAesExchangeKeysForDelegate(patientId)
+    val result : kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.String>>> = apiInstance.getPatientAesExchangeKeysForDelegate(patientId)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling PatientApi#getPatientAesExchangeKeysForDelegate")
@@ -848,7 +848,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**kotlin.collections.Map&lt;kotlin.String, kotlin.collections.List&lt;kotlin.String&gt;&gt;**
+**kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;&gt;&gt;**
 
 ### Authorization
 
