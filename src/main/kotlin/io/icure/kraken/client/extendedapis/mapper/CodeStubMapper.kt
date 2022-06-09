@@ -6,11 +6,24 @@ import org.mapstruct.Mapper
 import org.mapstruct.factory.Mappers
 
 @Mapper
-interface CodeStubMapper {
-    fun map(codeStub: CodeStub): CodeStubDto
-    fun map(codeStubDto: CodeStubDto): CodeStub
+abstract class CodeStubMapper {
+    fun map(codeStub: CodeStub): CodeStubDto = CodeStubDto(
+        id = codeStub.id,
+        context = codeStub.context,
+        type = codeStub.type,
+        code = codeStub.code,
+        version = codeStub.version,
+        label = codeStub.label
+    )
+    fun map(codeStubDto: CodeStubDto): CodeStub = CodeStub(
+        id = codeStubDto.id ?: "${codeStubDto.type}|${codeStubDto.code}|${codeStubDto.version}",
+        context = codeStubDto.context,
+        type = codeStubDto.type,
+        code = codeStubDto.code,
+        version = codeStubDto.version,
+        label = codeStubDto.label
+    )
 }
-
 
 object CodeStubMapperFactory {
     val instance = Mappers.getMapper(CodeStubMapper::class.java)

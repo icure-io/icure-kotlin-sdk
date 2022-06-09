@@ -34,7 +34,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class CodeStub (
 
     @field:JsonProperty("_id")
-    val id: kotlin.String? = null,
+    val id: kotlin.String,
 
     @field:JsonProperty("context")
     val context: kotlin.String? = null,
