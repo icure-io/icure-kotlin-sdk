@@ -1040,7 +1040,7 @@ No authorization required
 
 <a name="listServicesByHealthElementId"></a>
 # **listServicesByHealthElementId**
-> kotlin.collections.List&lt;ServiceDto&gt; listServicesByHealthElementId(healthElementId)
+> kotlin.collections.List&lt;ServiceDto&gt; listServicesByHealthElementId(healthElementId, hcPartyId)
 
 List services linked to a health element
 
@@ -1054,8 +1054,9 @@ Returns the list of services linked to the provided health element id
 
 val apiInstance = ContactApi()
 val healthElementId : kotlin.String = healthElementId_example // kotlin.String | 
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | hcPartyId
 try {
-    val result : kotlin.collections.List<ServiceDto> = apiInstance.listServicesByHealthElementId(healthElementId)
+    val result : kotlin.collections.List<ServiceDto> = apiInstance.listServicesByHealthElementId(healthElementId, hcPartyId)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling ContactApi#listServicesByHealthElementId")
@@ -1071,6 +1072,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **healthElementId** | **kotlin.String**|  |
+ **hcPartyId** | **kotlin.String**| hcPartyId |
 
 ### Return type
 

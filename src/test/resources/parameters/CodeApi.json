@@ -106,6 +106,7 @@
     }
   },
   "modifyCode": {
+    "skipEndpoint": true,
     "autoRev": true,
     "codeDto": {
       "id": "normal|A0|1",
@@ -118,6 +119,12 @@
       },
       "links": ["L", "M", "N"]
     }
+  },
+  "importCodes": {
+    "skipEndpoint": true
+  },
+  "matchCodesBy": {
+    "skipEndpoint": true
   },
   "fallback": {
   }

@@ -16,7 +16,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.async
-import java.security.*
+import java.security.KeyFactory
+import java.security.PrivateKey
+import java.security.PublicKey
 import java.security.interfaces.RSAPrivateKey
 import java.security.interfaces.RSAPublicKey
 import java.security.spec.X509EncodedKeySpec
@@ -75,10 +77,15 @@ class LocalCrypto(
         }
     }
 
+    private fun getDelegateIdOwnerIdKeyForCache(delegateId: String, ownerId: String): String {
+        return "$delegateId:$ownerId"
+    }
+
     suspend fun getDelegateHcPartyKey(delegateId: String, ownerId: String, myPrivateKey: PrivateKey? = null): ByteArray {
+        val delegateIdOwnerIdKey = getDelegateIdOwnerIdKeyForCache(delegateId = delegateId, ownerId = ownerId)
         val privateKey = myPrivateKey ?: rsaKeyPairs[delegateId]?.first ?: throw MissingPrivateKeyException(delegateId, "Missing key for hcp $delegateId")
         val keyMap: Map<String, Pair<String, ByteArray>> =
-            delegateHcpartyKeysCache.defGet(delegateId) {
+            delegateHcpartyKeysCache.defGet(delegateIdOwnerIdKey) {
                 dataOwnerResolver.getDataOwnerHcPartyKeysForDelegate(delegateId).decryptHcPartyKeys(delegateId, privateKey)
             } ?: throw IllegalArgumentException("Unknown hcp $delegateId")
 
@@ -94,10 +101,11 @@ class LocalCrypto(
     }
 
     suspend fun getOrCreateHcPartyKey(myId: String, delegateId: String, privateKey: PrivateKey? = null, publicKey: PublicKey? = null): Pair<ByteArray, DataOwner?> {
+        val delegateIdOwnerIdKey = getDelegateIdOwnerIdKeyForCache(delegateId = delegateId, ownerId = myId)
         val myPublicKey = publicKey ?: rsaKeyPairs[myId]?.second ?: throw IllegalArgumentException("Missing key for hcp $myId")
         val myPrivateKey = privateKey ?: rsaKeyPairs[myId]?.first ?: throw MissingPrivateKeyException(myId, "Missing key for hcp $myId")
         val keyMap: Map<String, Pair<String, ByteArray>> =
-            ownerHcpartyKeysCache.defGet(myId) {
+            ownerHcpartyKeysCache.defGet(delegateIdOwnerIdKey) {
                 getDataOwnerHcPartyKeys(myId).mapValues { (_, v) -> v[0] }.decryptHcPartyKeys(myId, myPrivateKey)
             } ?: throw IllegalArgumentException("Unknown hcp $myId")
 
@@ -116,7 +124,7 @@ class LocalCrypto(
                         keyForDelegate
                     ))
                 ) }.also { deferredNewDataOwner ->
-                    ownerHcpartyKeysCache.defPut(myId) {
+                    ownerHcpartyKeysCache.defPut(delegateIdOwnerIdKey) {
                         deferredNewDataOwner.await().hcPartyKeys.mapValues { (_, v) -> v[0] }.decryptHcPartyKeys(myId, myPrivateKey)
                     }
                 }

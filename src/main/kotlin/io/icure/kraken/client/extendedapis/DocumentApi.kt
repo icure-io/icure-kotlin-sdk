@@ -25,7 +25,7 @@ suspend fun DocumentDto.initDelegations(user: UserDto, config: CryptoConfig<Docu
     return this.copy(
         responsible = user.dataOwnerId(),
         author = user.id,
-        delegations = (delegations + user.dataOwnerId()).fold(this.encryptionKeys) { m, d ->
+        delegations = (delegations + user.dataOwnerId()).fold(this.delegations) { m, d ->
             m + (d to setOf(
                 DelegationDto(
                     emptyList(), user.dataOwnerId(), d, config.crypto.encryptAESKeyForDataOwner(user.dataOwnerId(), d, this.id, sfk).first,

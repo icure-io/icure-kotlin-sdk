@@ -4,6 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**itemType** | **kotlin.String** |  | 
 **type** | [**inline**](#TypeEnum) |  | 
 **predicate** | [**kotlin.Any**](.md) |  | 
 

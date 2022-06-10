@@ -13,35 +13,53 @@
 
 package io.icure.kraken.client.apis
 
+import io.icure.kraken.client.models.CalendarItemDto
+import io.icure.kraken.client.models.DocIdentifier
+import io.icure.kraken.client.models.IcureStubDto
+import io.icure.kraken.client.models.ListOfIdsDto
+import assertk.assertThat
+import assertk.assertions.isEqualToIgnoringGivenProperties
+import java.io.*
+
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.core.json.JsonReadFeature
-import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import io.icure.kraken.client.infrastructure.*
-import io.icure.kraken.client.infrastructure.TestUtils.Companion.basicAuth
-import io.icure.kraken.client.models.CalendarItemDto
-import io.icure.kraken.client.models.DocIdentifier
-import io.icure.kraken.client.models.IcureStubDto
-import io.icure.kraken.client.models.ListOfIdsDto
-import io.icure.kraken.client.models.filter.AbstractFilterDto
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.runBlocking
-import org.junit.jupiter.api.Assertions.assertTrue
+
+import org.junit.jupiter.api.AfterAll
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
-import java.io.*
-import java.nio.ByteBuffer
-import java.util.List
-import java.util.Map
-import kotlin.reflect.full.callSuspendBy
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
+import io.icure.kraken.client.models.filter.AbstractFilterDto
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import kotlin.reflect.KProperty1
+import kotlin.reflect.KMutableProperty
 import kotlin.reflect.full.memberFunctions
 import kotlin.reflect.full.memberProperties
+
+import kotlinx.coroutines.runBlocking
+import io.icure.kraken.client.infrastructure.TestUtils
+import io.icure.kraken.client.infrastructure.TestUtils.Companion.basicAuth
+import io.icure.kraken.client.infrastructure.differences
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.fold
+import java.nio.ByteBuffer
+import kotlin.reflect.full.callSuspendBy
 import kotlin.reflect.javaType
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.toList
 
 /**
  * API tests for CalendarItemApi
@@ -179,6 +197,72 @@ class CalendarItemApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
+	fun deleteCalendarItemTest(fileName: String) = runBlocking {
+
+        if (TestUtils.skipEndpoint(fileName, "deleteCalendarItem")) {
+            assertTrue(true, "Test of deleteCalendarItem endpoint has been skipped")
+        } else {
+            try{
+                createForModification(fileName)
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteCalendarItem")
+                val calendarItemIds: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "deleteCalendarItem.calendarItemIds")!!.let {
+                    (it as? CalendarItemDto)?.takeIf { TestUtils.isAutoRev(fileName, "deleteCalendarItem") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
+                    }
+
+                val response = api(credentialsFile).deleteCalendarItem(calendarItemIds = calendarItemIds)
+
+                val testFileName = "CalendarItemApi.deleteCalendarItem"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocIdentifier>? != null) {
+                        if ("kotlin.collections.List<DocIdentifier>".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
+                        } else {
+                            object : TypeReference<List<DocIdentifier>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<kotlin.collections.List<DocIdentifier>>() {}
+                    })
+                    assertAreEquals("deleteCalendarItem", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
+                        }
+                    }
+                }
+            }
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
+        }
+    }
+    
+    /**
+     * Deletes calendarItems
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @ParameterizedTest
+    @MethodSource("fileNames") // six numbers
 	fun deleteCalendarItemsTest(fileName: String) = runBlocking {
 
         if (TestUtils.skipEndpoint(fileName, "deleteCalendarItems")) {
@@ -285,6 +369,72 @@ class CalendarItemApiTest() {
                         object : TypeReference<kotlin.collections.List<CalendarItemDto>>() {}
                     })
                     assertAreEquals("findCalendarItemsByHCPartyPatientForeignKeys", objectFromFile, response)
+                    println("Comparison successful")
+                }
+                catch (e: Exception) {
+                    when (e) {
+                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                            file.parentFile.mkdirs()
+                            file.createNewFile()
+                            (response as? Flow<ByteBuffer>)
+                                ?.let { it.writeToFile(file) }
+                                ?: objectMapper.writeValue(file, response)
+                            assert(true)
+                            println("File written")
+                        }
+                    }
+                }
+            }
+            finally {
+                TestUtils.deleteAfterElements(fileName)
+                alreadyCreatedObjects.remove(fileName)
+            }
+        }
+    }
+    
+    /**
+     * Find CalendarItems by recurrenceId
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @ParameterizedTest
+    @MethodSource("fileNames") // six numbers
+	fun findCalendarItemsByRecurrenceIdTest(fileName: String) = runBlocking {
+
+        if (TestUtils.skipEndpoint(fileName, "findCalendarItemsByRecurrenceId")) {
+            assertTrue(true, "Test of findCalendarItemsByRecurrenceId endpoint has been skipped")
+        } else {
+            try{
+                createForModification(fileName)
+                val credentialsFile = TestUtils.getCredentialsFile(fileName, "findCalendarItemsByRecurrenceId")
+                val recurrenceId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "findCalendarItemsByRecurrenceId.recurrenceId")!!.let {
+                    (it as? CalendarItemDto)?.takeIf { TestUtils.isAutoRev(fileName, "findCalendarItemsByRecurrenceId") }?.let {
+                    val id = it::class.memberProperties.first { it.name == "id" }
+                    val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
+                    it.copy(rev = currentRev)
+                    } as? kotlin.String ?: it
+                    }
+
+                val response = api(credentialsFile).findCalendarItemsByRecurrenceId(recurrenceId = recurrenceId)
+
+                val testFileName = "CalendarItemApi.findCalendarItemsByRecurrenceId"
+                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
+                try {
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<CalendarItemDto>? != null) {
+                        if ("kotlin.collections.List<CalendarItemDto>".contains("String>")) {
+                            object : TypeReference<List<String>>() {}
+                        } else {
+                            object : TypeReference<List<CalendarItemDto>>() {}
+                        }
+                    } else if(response as? kotlin.collections.Map<String, String>? != null){
+                        object : TypeReference<Map<String,String>>() {}
+                    } else {
+                        object : TypeReference<kotlin.collections.List<CalendarItemDto>>() {}
+                    })
+                    assertAreEquals("findCalendarItemsByRecurrenceId", objectFromFile, response)
                     println("Comparison successful")
                 }
                 catch (e: Exception) {
@@ -799,7 +949,7 @@ class CalendarItemApiTest() {
                     functionName.let { name -> listOf("listContact", "modifyContacts").any { name.startsWith(it) } } -> listOf("subContacts.[created, rev, modified]", "services.[openingDate]", "groupId", "created", "modified", "rev")
                     functionName.let { name -> listOf("getServices").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "openingDate")
                     functionName.let { name -> listOf("create", "new", "get", "list", "set").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
-                    functionName.let { name -> listOf("modify", "delete", "undelete").any { name.startsWith(it) } } -> listOf("rev")
+                    functionName.let { name -> listOf("modify", "delete", "undelete", "update").any { name.startsWith(it) } } -> listOf("rev")
                     functionName.let { name -> listOf("append").any { name.startsWith(it) } } -> listOf("id", "created", "modified")
                     functionName.let { name -> listOf("find", "filter").any { name.startsWith(it) } } -> listOf("rows.[created, rev, modified]", "created", "modified", "rev")
                     else -> emptyList()
@@ -841,7 +991,7 @@ class CalendarItemApiTest() {
                     functionName.let { name -> listOf("modifyPatientReferral").any { name.startsWith(it) } } -> listOf("rev", "patientHealthCareParties.[referralPeriods]", "created", "modified")
                     functionName.let { name -> listOf("createContact").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "deletionDate", "groupId")
                     functionName.let { name -> listOf("newContactDelegations").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "groupId")
-                    functionName.let { name -> listOf("create", "get", "modify", "new").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "deletionDate")
+                    functionName.let { name -> listOf("create", "get", "modify", "new", "update").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "deletionDate")
                     functionName.let { name -> listOf("set", "delete", "merge").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
                     functionName.let { name -> listOf("validate").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "sentDate")
                     functionName.let { name -> listOf("reassign").any { name.startsWith(it) } } -> listOf("id", "created", "invoicingCodes.id")

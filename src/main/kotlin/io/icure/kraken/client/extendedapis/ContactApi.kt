@@ -32,7 +32,7 @@ suspend fun ContactDto.initDelegations(user: UserDto, config: CryptoConfig<Conta
     return this.copy(
         responsible = user.dataOwnerId(),
         author = user.id,
-        delegations = (delegations + user.dataOwnerId()).fold(this.encryptionKeys) { m, d ->
+        delegations = (delegations + user.dataOwnerId()).fold(this.delegations) { m, d ->
             m + (d to setOf(
                 DelegationDto(
                     emptyList(), user.dataOwnerId(), d, config.crypto.encryptAESKeyForDataOwner(user.dataOwnerId(), d, this.id, sfk).first,
@@ -238,8 +238,8 @@ suspend fun ContactApi.listServicesByAssociationId(user: UserDto, associationId:
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.listServicesByHealthElementId(user: UserDto, healthElementId: String, crypto: Crypto) : List<ServiceDto> {
-    return this.listServicesByHealthElementId(healthElementId).let { crypto.decryptServices(user.dataOwnerId(), null, it) }
+suspend fun ContactApi.listServicesByHealthElementId(user: UserDto, healthElementId: String, hcPartyId: String, crypto: Crypto) : List<ServiceDto> {
+    return this.listServicesByHealthElementId(healthElementId, hcPartyId).let { crypto.decryptServices(user.dataOwnerId(), null, it) }
 }
 
 @ExperimentalCoroutinesApi

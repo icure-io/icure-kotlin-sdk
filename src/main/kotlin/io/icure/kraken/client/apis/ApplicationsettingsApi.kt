@@ -44,6 +44,45 @@ class ApplicationsettingsApi(basePath: kotlin.String = defaultBasePath, webClien
     }
 
     /**
+    * Create new application settings
+    * 
+    * @param applicationSettingsDto  
+    * @return ApplicationSettingsDto
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun createApplicationSettings(applicationSettingsDto: ApplicationSettingsDto) : ApplicationSettingsDto  {
+        val localVariableConfig = createApplicationSettingsRequestConfig(applicationSettingsDto = applicationSettingsDto)
+
+        return request<ApplicationSettingsDto, ApplicationSettingsDto>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation createApplicationSettings
+    *
+    * @param applicationSettingsDto  
+    * @return RequestConfig
+    */
+    fun createApplicationSettingsRequestConfig(applicationSettingsDto: ApplicationSettingsDto) : RequestConfig<ApplicationSettingsDto> {
+        // val localVariableBody = applicationSettingsDto
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = applicationSettingsDto
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v2/appsettings",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
     * Gets all application settings
     * 
     * @return kotlin.collections.List<ApplicationSettingsDto>

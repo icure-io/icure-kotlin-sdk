@@ -12,6 +12,7 @@
  */
 package io.icure.kraken.client.models
 
+import io.icure.kraken.client.models.CodeStubDto
 import io.icure.kraken.client.models.PropertyStubDto
 
 import com.fasterxml.jackson.annotation.JsonProperty
@@ -23,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
  * This entity represents a group
  *
  * @param id The id of the group. We encourage using either a v4 UUID or a HL7 Id.
+ * @param tags A tag is an item from a codification system that qualifies an entity as being member of a certain class, whatever the value it might have taken. If the tag qualifies the content of a field, it means that whatever the content of the field, the tag will always apply. For example, the label of a field is qualified using a tag. LOINC is a codification system typically used for tags.
  * @param superAdmin Whether the group has a super admin permission, originally set to no access.
  * @param properties Extra properties for the user. Those properties are typed (see class Property)
  * @param rev The revision of the group in the database, used for conflict management / optimistic locking.
@@ -40,6 +42,10 @@ data class GroupDto (
     /* The id of the group. We encourage using either a v4 UUID or a HL7 Id. */
     @field:JsonProperty("id")
     val id: kotlin.String,
+
+    /* A tag is an item from a codification system that qualifies an entity as being member of a certain class, whatever the value it might have taken. If the tag qualifies the content of a field, it means that whatever the content of the field, the tag will always apply. For example, the label of a field is qualified using a tag. LOINC is a codification system typically used for tags. */
+    @field:JsonProperty("tags")
+    val tags: kotlin.collections.List<CodeStubDto> = emptyList(),
 
     /* Whether the group has a super admin permission, originally set to no access. */
     @field:JsonProperty("superAdmin")

@@ -15,6 +15,7 @@ import io.icure.asyncjacksonhttpclient.parser.toObject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.fold
 import kotlinx.coroutines.withContext
 import reactor.core.publisher.Mono
 
@@ -112,6 +113,7 @@ import java.time.Duration
         .toFlow().let {
             when(T::class) {
                 Flow::class -> it as T
+                String::class -> it.fold(StringBuilder()) { sb, bb -> sb.append(ByteArray(bb.remaining()).also { ba -> bb.get(ba) }.toString(Charsets.UTF_8)) }.toString() as T
                 else -> it.toObject(objectMapper, true)
             }
         }

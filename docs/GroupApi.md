@@ -5,9 +5,14 @@ All URIs are relative to *https://kraken.icure.dev*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createGroup**](GroupApi.md#createGroup) | **POST** /rest/v2/group/{id} | Create a group
+[**deleteGroup**](GroupApi.md#deleteGroup) | **DELETE** /rest/v2/group/{id} | Delete group
+[**findGroups**](GroupApi.md#findGroups) | **GET** /rest/v2/group/{id}/children | Find groups by parent
+[**findGroupsWithContent**](GroupApi.md#findGroupsWithContent) | **GET** /rest/v2/group/{id}/children/search | Find groups by parent and content
 [**getGroup**](GroupApi.md#getGroup) | **GET** /rest/v2/group/{id} | Get a group by id
+[**getGroupsStorageInfos**](GroupApi.md#getGroupsStorageInfos) | **POST** /rest/v2/group/storage/info | Reset storage for group
 [**getReplicationInfo1**](GroupApi.md#getReplicationInfo1) | **GET** /rest/v2/group/{id}/r | Get index info
 [**initDesignDocs**](GroupApi.md#initDesignDocs) | **PUT** /rest/v2/group/{id}/dd | Init design docs
+[**listApps**](GroupApi.md#listApps) | **GET** /rest/v2/group/apps | List apps
 [**listGroups**](GroupApi.md#listGroups) | **GET** /rest/v2/group | List groups
 [**modifyGroupName**](GroupApi.md#modifyGroupName) | **PUT** /rest/v2/group/{id}/name/{name} | Update group name
 [**modifyGroupProperties**](GroupApi.md#modifyGroupProperties) | **PUT** /rest/v2/group/{id}/properties | Update group properties
@@ -19,7 +24,7 @@ Method | HTTP request | Description
 
 <a name="createGroup"></a>
 # **createGroup**
-> GroupDto createGroup(id, name, password, databaseInitialisationDto, server, q, n)
+> GroupDto createGroup(id, name, password, databaseInitialisationDto, server, q, n, superGroup)
 
 Create a group
 
@@ -38,9 +43,10 @@ val password : kotlin.String = password_example // kotlin.String | The password 
 val databaseInitialisationDto : DatabaseInitialisationDto =  // DatabaseInitialisationDto | 
 val server : kotlin.String = server_example // kotlin.String | The server on which the group dbs will be created
 val q : kotlin.Int = 56 // kotlin.Int | The number of shards for patient and healthdata dbs : 3-8 is a recommended range of value
-val n : kotlin.Int = 56 // kotlin.Int | The number of replications for dbs : 3 is a recommended value
+val n : kotlin.Int = 56 // kotlin.Int | The number of replications for other dbs : 3 is a recommended value
+val superGroup : kotlin.String = superGroup_example // kotlin.String | Group parent
 try {
-    val result : GroupDto = apiInstance.createGroup(id, name, password, databaseInitialisationDto, server, q, n)
+    val result : GroupDto = apiInstance.createGroup(id, name, password, databaseInitialisationDto, server, q, n, superGroup)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling GroupApi#createGroup")
@@ -61,7 +67,8 @@ Name | Type | Description  | Notes
  **databaseInitialisationDto** | [**DatabaseInitialisationDto**](DatabaseInitialisationDto.md)|  |
  **server** | **kotlin.String**| The server on which the group dbs will be created | [optional]
  **q** | **kotlin.Int**| The number of shards for patient and healthdata dbs : 3-8 is a recommended range of value | [optional]
- **n** | **kotlin.Int**| The number of replications for dbs : 3 is a recommended value | [optional]
+ **n** | **kotlin.Int**| The number of replications for other dbs : 3 is a recommended value | [optional]
+ **superGroup** | **kotlin.String**| Group parent | [optional]
 
 ### Return type
 
@@ -74,6 +81,159 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="deleteGroup"></a>
+# **deleteGroup**
+> GroupDto deleteGroup(id)
+
+Delete group
+
+Delete group without reset or deleteing storage
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = GroupApi()
+val id : kotlin.String = id_example // kotlin.String | The id of group to delete
+try {
+    val result : GroupDto = apiInstance.deleteGroup(id)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling GroupApi#deleteGroup")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling GroupApi#deleteGroup")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **kotlin.String**| The id of group to delete |
+
+### Return type
+
+[**GroupDto**](GroupDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="findGroups"></a>
+# **findGroups**
+> PaginatedListGroupDto findGroups(id, startDocumentId, limit)
+
+Find groups by parent
+
+List groups that are the children of the group with th eprovided parent id
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = GroupApi()
+val id : kotlin.String = id_example // kotlin.String | The id of the group
+val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A grou document ID used as a cursor for pagination
+val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
+try {
+    val result : PaginatedListGroupDto = apiInstance.findGroups(id, startDocumentId, limit)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling GroupApi#findGroups")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling GroupApi#findGroups")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **kotlin.String**| The id of the group |
+ **startDocumentId** | **kotlin.String**| A grou document ID used as a cursor for pagination | [optional]
+ **limit** | **kotlin.Int**| Number of rows | [optional] [default to 1000]
+
+### Return type
+
+[**PaginatedListGroupDto**](PaginatedListGroupDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="findGroupsWithContent"></a>
+# **findGroupsWithContent**
+> PaginatedListGroupDto findGroupsWithContent(id, searchString, startKey, startDocumentId, limit)
+
+Find groups by parent and content
+
+List groups that are the children of the group with the provided parent id and that match the provided search string
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = GroupApi()
+val id : kotlin.String = id_example // kotlin.String | The id of the group
+val searchString : kotlin.String = searchString_example // kotlin.String | The string to search for in the group. Properties, name and id are scanned for the provided search string.
+val startKey : kotlin.String = startKey_example // kotlin.String | The start key for pagination, depends on the filters used
+val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A group document ID used as a cursor for pagination
+val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
+try {
+    val result : PaginatedListGroupDto = apiInstance.findGroupsWithContent(id, searchString, startKey, startDocumentId, limit)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling GroupApi#findGroupsWithContent")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling GroupApi#findGroupsWithContent")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **kotlin.String**| The id of the group |
+ **searchString** | **kotlin.String**| The string to search for in the group. Properties, name and id are scanned for the provided search string. |
+ **startKey** | **kotlin.String**| The start key for pagination, depends on the filters used | [optional]
+ **startDocumentId** | **kotlin.String**| A group document ID used as a cursor for pagination | [optional]
+ **limit** | **kotlin.Int**| Number of rows | [optional] [default to 1000]
+
+### Return type
+
+[**PaginatedListGroupDto**](PaginatedListGroupDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
  - **Accept**: */*
 
 <a name="getGroup"></a>
@@ -121,6 +281,53 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="getGroupsStorageInfos"></a>
+# **getGroupsStorageInfos**
+> kotlin.collections.List&lt;GroupDatabasesInfoDto&gt; getGroupsStorageInfos(listOfIdsDto)
+
+Reset storage for group
+
+Reset storage
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = GroupApi()
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+try {
+    val result : kotlin.collections.List<GroupDatabasesInfoDto> = apiInstance.getGroupsStorageInfos(listOfIdsDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling GroupApi#getGroupsStorageInfos")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling GroupApi#getGroupsStorageInfos")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;GroupDatabasesInfoDto&gt;**](GroupDatabasesInfoDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: */*
 
 <a name="getReplicationInfo1"></a>
@@ -209,6 +416,49 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**kotlin.Any**](kotlin.Any.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="listApps"></a>
+# **listApps**
+> kotlin.collections.List&lt;GroupDto&gt; listApps()
+
+List apps
+
+List available apps for user
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = GroupApi()
+try {
+    val result : kotlin.collections.List<GroupDto> = apiInstance.listApps()
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling GroupApi#listApps")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling GroupApi#listApps")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**kotlin.collections.List&lt;GroupDto&gt;**](GroupDto.md)
 
 ### Authorization
 

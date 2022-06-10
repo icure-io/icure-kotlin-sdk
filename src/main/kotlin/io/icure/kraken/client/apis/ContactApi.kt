@@ -985,6 +985,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * List services linked to a health element
     * Returns the list of services linked to the provided health element id
     * @param healthElementId  
+    * @param hcPartyId hcPartyId 
     * @return kotlin.collections.List<ServiceDto>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -992,8 +993,8 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listServicesByHealthElementId(healthElementId: kotlin.String) : kotlin.collections.List<ServiceDto>  {
-        val localVariableConfig = listServicesByHealthElementIdRequestConfig(healthElementId = healthElementId)
+    suspend fun listServicesByHealthElementId(healthElementId: kotlin.String, hcPartyId: kotlin.String) : kotlin.collections.List<ServiceDto>  {
+        val localVariableConfig = listServicesByHealthElementIdRequestConfig(healthElementId = healthElementId, hcPartyId = hcPartyId)
 
         return request<Unit, kotlin.collections.List<ServiceDto>>(
             localVariableConfig
@@ -1003,11 +1004,15 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     * To obtain the request config of the operation listServicesByHealthElementId
     *
     * @param healthElementId  
+    * @param hcPartyId hcPartyId 
     * @return RequestConfig
     */
-    fun listServicesByHealthElementIdRequestConfig(healthElementId: kotlin.String) : RequestConfig<Unit> {
+    fun listServicesByHealthElementIdRequestConfig(healthElementId: kotlin.String, hcPartyId: kotlin.String) : RequestConfig<Unit> {
         // val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                put("hcPartyId", listOf(hcPartyId.toString()))
+            }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null

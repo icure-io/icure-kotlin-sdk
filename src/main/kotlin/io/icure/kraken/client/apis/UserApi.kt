@@ -17,10 +17,10 @@ import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.infrastructure.*
 
 import io.icure.kraken.client.models.DocIdentifier
-import io.icure.kraken.client.models.EmailTemplateDto
 
 import io.icure.kraken.client.models.PaginatedListUserDto
 import io.icure.kraken.client.models.PropertyStubDto
+import io.icure.kraken.client.models.TokenWithGroupDto
 import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.UserGroupDto
 
@@ -423,6 +423,59 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     }
 
     /**
+    * Filter users for the current user (HcParty) for a provided groupId
+    * Returns a list of users along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
+    * @param groupId  
+    * @param filterChainUser  
+    * @param startDocumentId A User document ID (optional)
+    * @param limit Number of rows (optional)
+    * @return PaginatedListUserDto
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun filterUsersInGroupBy(groupId: kotlin.String, filterChainUser: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.UserDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListUserDto  {
+        val localVariableConfig = filterUsersInGroupByRequestConfig(groupId = groupId, filterChainUser = filterChainUser, startDocumentId = startDocumentId, limit = limit)
+
+        return request<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.UserDto>, PaginatedListUserDto>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation filterUsersInGroupBy
+    *
+    * @param groupId  
+    * @param filterChainUser  
+    * @param startDocumentId A User document ID (optional)
+    * @param limit Number of rows (optional)
+    * @return RequestConfig
+    */
+    fun filterUsersInGroupByRequestConfig(groupId: kotlin.String, filterChainUser: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.UserDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.UserDto>> {
+        // val localVariableBody = filterChainUser
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                if (startDocumentId != null) {
+                    put("startDocumentId", listOf(startDocumentId.toString()))
+                }
+                if (limit != null) {
+                    put("limit", listOf(limit.toString()))
+                }
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = filterChainUser
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v2/user/filter/inGroup/{groupId}".replace("{"+"groupId"+"}", "${URLEncoder.encode(groupId.toString(), Charsets.UTF_8)}"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
     * Get the list of users by healthcare party id
     * 
     * @param id  
@@ -456,47 +509,6 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/rest/v2/user/byHealthcarePartyId/{id}".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody        )
-    }
-
-    /**
-    * Send a forgotten email message to an user
-    * 
-    * @param email the email of the user  
-    * @param emailTemplateDto  
-    * @return kotlin.Boolean
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun forgottenPassword(email: kotlin.String, emailTemplateDto: EmailTemplateDto) : kotlin.Boolean  {
-        val localVariableConfig = forgottenPasswordRequestConfig(email = email, emailTemplateDto = emailTemplateDto)
-
-        return request<EmailTemplateDto, kotlin.Boolean>(
-            localVariableConfig
-        )!!
-    }
-    /**
-    * To obtain the request config of the operation forgottenPassword
-    *
-    * @param email the email of the user  
-    * @param emailTemplateDto  
-    * @return RequestConfig
-    */
-    fun forgottenPasswordRequestConfig(email: kotlin.String, emailTemplateDto: EmailTemplateDto) : RequestConfig<EmailTemplateDto> {
-        // val localVariableBody = emailTemplateDto
-        val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
-        localVariableHeaders["Accept"] = "*/*"
-        val localVariableBody = emailTemplateDto
-
-        return RequestConfig(
-            method = RequestMethod.POST,
-            path = "/rest/v2/user/forgottenPassword/{email}".replace("{"+"email"+"}", "${URLEncoder.encode(email.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -662,6 +674,110 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     }
 
     /**
+    * Require a new temporary token for authentication inside all groups
+    * 
+    * @param userIdentifier  
+    * @param key The token key. Only one instance of a token with a defined key can exist at the same time 
+    * @param token  (optional)
+    * @param tokenValidity The token validity in seconds (optional)
+    * @return kotlin.collections.List<TokenWithGroupDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun getTokenInAllGroups(userIdentifier: kotlin.String, key: kotlin.String, token: kotlin.String?, tokenValidity: kotlin.Long?) : kotlin.collections.List<TokenWithGroupDto>  {
+        val localVariableConfig = getTokenInAllGroupsRequestConfig(userIdentifier = userIdentifier, key = key, token = token, tokenValidity = tokenValidity)
+
+        return request<Unit, kotlin.collections.List<TokenWithGroupDto>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation getTokenInAllGroups
+    *
+    * @param userIdentifier  
+    * @param key The token key. Only one instance of a token with a defined key can exist at the same time 
+    * @param token  (optional)
+    * @param tokenValidity The token validity in seconds (optional)
+    * @return RequestConfig
+    */
+    fun getTokenInAllGroupsRequestConfig(userIdentifier: kotlin.String, key: kotlin.String, token: kotlin.String?, tokenValidity: kotlin.Long?) : RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                if (tokenValidity != null) {
+                    put("tokenValidity", listOf(tokenValidity.toString()))
+                }
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+        token?.apply { localVariableHeaders["token"] = this.toString() }
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v2/user/inAllGroups/token/{userIdentifier}/{key}".replace("{"+"userIdentifier"+"}", "${URLEncoder.encode(userIdentifier.toString(), Charsets.UTF_8)}").replace("{"+"key"+"}", "${URLEncoder.encode(key.toString(), Charsets.UTF_8)}"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
+    * Require a new temporary token for authentication inside provided group
+    * 
+    * @param groupId  
+    * @param userId  
+    * @param key The token key. Only one instance of a token with a defined key can exist at the same time 
+    * @param token  (optional)
+    * @param tokenValidity The token validity in seconds (optional)
+    * @return kotlin.String
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun getTokenInGroup(groupId: kotlin.String, userId: kotlin.String, key: kotlin.String, token: kotlin.String?, tokenValidity: kotlin.Long?) : kotlin.String  {
+        val localVariableConfig = getTokenInGroupRequestConfig(groupId = groupId, userId = userId, key = key, token = token, tokenValidity = tokenValidity)
+
+        return request<Unit, kotlin.String>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation getTokenInGroup
+    *
+    * @param groupId  
+    * @param userId  
+    * @param key The token key. Only one instance of a token with a defined key can exist at the same time 
+    * @param token  (optional)
+    * @param tokenValidity The token validity in seconds (optional)
+    * @return RequestConfig
+    */
+    fun getTokenInGroupRequestConfig(groupId: kotlin.String, userId: kotlin.String, key: kotlin.String, token: kotlin.String?, tokenValidity: kotlin.Long?) : RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                if (tokenValidity != null) {
+                    put("tokenValidity", listOf(tokenValidity.toString()))
+                }
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+        token?.apply { localVariableHeaders["token"] = this.toString() }
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v2/user/inGroup/{groupId}/token/{userId}/{key}".replace("{"+"groupId"+"}", "${URLEncoder.encode(groupId.toString(), Charsets.UTF_8)}").replace("{"+"userId"+"}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}").replace("{"+"key"+"}", "${URLEncoder.encode(key.toString(), Charsets.UTF_8)}"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
     * Get a user by his ID
     * General information about the user
     * @param userId  
@@ -745,6 +861,7 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     * @param startKey An user email (optional)
     * @param startDocumentId An user document ID (optional)
     * @param limit Number of rows (optional)
+    * @param skipPatients Filter out patient users (optional)
     * @return PaginatedListUserDto
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
@@ -752,8 +869,8 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listUsersBy(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListUserDto  {
-        val localVariableConfig = listUsersByRequestConfig(startKey = startKey, startDocumentId = startDocumentId, limit = limit)
+    suspend fun listUsersBy(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, skipPatients: kotlin.Boolean?) : PaginatedListUserDto  {
+        val localVariableConfig = listUsersByRequestConfig(startKey = startKey, startDocumentId = startDocumentId, limit = limit, skipPatients = skipPatients)
 
         return request<Unit, PaginatedListUserDto>(
             localVariableConfig
@@ -765,9 +882,10 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     * @param startKey An user email (optional)
     * @param startDocumentId An user document ID (optional)
     * @param limit Number of rows (optional)
+    * @param skipPatients Filter out patient users (optional)
     * @return RequestConfig
     */
-    fun listUsersByRequestConfig(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
+    fun listUsersByRequestConfig(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, skipPatients: kotlin.Boolean?) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -779,6 +897,9 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
                 }
                 if (limit != null) {
                     put("limit", listOf(limit.toString()))
+                }
+                if (skipPatients != null) {
+                    put("skipPatients", listOf(skipPatients.toString()))
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()

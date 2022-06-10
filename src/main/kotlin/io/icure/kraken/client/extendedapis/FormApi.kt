@@ -22,7 +22,7 @@ suspend fun FormDto.initDelegations(user: UserDto, config: CryptoConfig<FormDto,
     return this.copy(
         responsible = user.dataOwnerId(),
         author = user.id,
-        delegations = (delegations + user.dataOwnerId()).fold(this.encryptionKeys) { m, d ->
+        delegations = (delegations + user.dataOwnerId()).fold(this.delegations) { m, d ->
             m + (d to setOf(
                 DelegationDto(
                     emptyList(),

@@ -89,6 +89,47 @@ class DeviceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     }
 
     /**
+    * Create a device
+    * One of Name or Last name+First name, Nihii, and Public key are required.
+    * @param groupId  
+    * @param deviceDto  
+    * @return DeviceDto
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun createDeviceInGroup(groupId: kotlin.String, deviceDto: DeviceDto) : DeviceDto  {
+        val localVariableConfig = createDeviceInGroupRequestConfig(groupId = groupId, deviceDto = deviceDto)
+
+        return request<DeviceDto, DeviceDto>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation createDeviceInGroup
+    *
+    * @param groupId  
+    * @param deviceDto  
+    * @return RequestConfig
+    */
+    fun createDeviceInGroupRequestConfig(groupId: kotlin.String, deviceDto: DeviceDto) : RequestConfig<DeviceDto> {
+        // val localVariableBody = deviceDto
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = deviceDto
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v2/device/inGroup/{groupId}".replace("{"+"groupId"+"}", "${URLEncoder.encode(groupId.toString(), Charsets.UTF_8)}"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
     * Create devices in bulk
     * Returns the id and _rev of created devices
     * @param deviceDto  
@@ -245,6 +286,47 @@ class DeviceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     }
 
     /**
+    * Delete a device
+    * Deleting a device. Response is an array containing the id of deleted device.
+    * @param groupId  
+    * @param deviceIds  
+    * @return kotlin.collections.List<DocIdentifier>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun deleteDevicesInGroup(groupId: kotlin.String, deviceIds: kotlin.String) : kotlin.collections.List<DocIdentifier>  {
+        val localVariableConfig = deleteDevicesInGroupRequestConfig(groupId = groupId, deviceIds = deviceIds)
+
+        return request<Unit, kotlin.collections.List<DocIdentifier>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation deleteDevicesInGroup
+    *
+    * @param groupId  
+    * @param deviceIds  
+    * @return RequestConfig
+    */
+    fun deleteDevicesInGroupRequestConfig(groupId: kotlin.String, deviceIds: kotlin.String) : RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+
+        return RequestConfig(
+            method = RequestMethod.DELETE,
+            path = "/rest/v2/device/inGroup/{groupId}/{deviceIds}".replace("{"+"groupId"+"}", "${URLEncoder.encode(groupId.toString(), Charsets.UTF_8)}").replace("{"+"deviceIds"+"}", "${URLEncoder.encode(deviceIds.toString(), Charsets.UTF_8)}"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
     * Filter devices for the current user (HcParty) 
     * Returns a list of devices along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
     * @param filterChainDevice  
@@ -335,14 +417,14 @@ class DeviceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     }
 
     /**
-    * Get the HcParty encrypted AES keys indexed by owner
-    * (key, value) of the map is as follows: (ID of the owner of the encrypted AES key, encrypted AES key)
-    * @param deviceId The deviceId Id for which information is shared 
-    * @return kotlin.collections.Map<kotlin.String, kotlin.String>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get the HcParty encrypted AES keys indexed by owner
+     * (key, value) of the map is as follows: (ID of the owner of the encrypted AES key, encrypted AES key)
+     * @param deviceId The deviceId Id for which information is shared
+     * @return kotlin.collections.Map<kotlin.String, kotlin.String>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
     suspend fun getDeviceHcPartyKeysForDelegate(deviceId: kotlin.String) : kotlin.collections.Map<kotlin.String, kotlin.String>  {
@@ -353,11 +435,11 @@ class DeviceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
         )!!
     }
     /**
-    * To obtain the request config of the operation getDeviceHcPartyKeysForDelegate
-    *
-    * @param deviceId The deviceId Id for which information is shared 
-    * @return RequestConfig
-    */
+     * To obtain the request config of the operation getDeviceHcPartyKeysForDelegate
+     *
+     * @param deviceId The deviceId Id for which information is shared
+     * @return RequestConfig
+     */
     fun getDeviceHcPartyKeysForDelegateRequestConfig(deviceId: kotlin.String) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
@@ -367,7 +449,46 @@ class DeviceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/device/{deviceId}/keys".replace("{"+"deviceId"+"}", "${URLEncoder.encode(deviceId.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v1/device/{deviceId}/keys".replace("{"+"deviceId"+"}", "${URLEncoder.encode(deviceId.toString(), Charsets.UTF_8)}"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
+    * Get the HcParty encrypted AES keys indexed by owner.
+    * (key, value) of the map is as follows: (ID of the owner of the encrypted AES key, encrypted AES keys)
+    * @param deviceId  
+    * @return kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.String>>>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun getDeviceAesExchangeKeysForDelegate(deviceId: kotlin.String) : kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.String>>>  {
+        val localVariableConfig = getDeviceAesExchangeKeysForDelegateRequestConfig(deviceId = deviceId)
+
+        return request<Unit, kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.String>>>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation getDeviceAesExchangeKeysForDelegate
+    *
+    * @param deviceId  
+    * @return RequestConfig
+    */
+    fun getDeviceAesExchangeKeysForDelegateRequestConfig(deviceId: kotlin.String) : RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v2/device/{deviceId}/aesExchangeKeys".replace("{"+"deviceId"+"}", "${URLEncoder.encode(deviceId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )
@@ -413,6 +534,47 @@ class DeviceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     }
 
     /**
+    * Get devices by their IDs
+    * General information about the device
+    * @param groupId  
+    * @param listOfIdsDto  (optional)
+    * @return kotlin.collections.List<DeviceDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun getDevicesInGroup(groupId: kotlin.String, listOfIdsDto: ListOfIdsDto?) : kotlin.collections.List<DeviceDto>  {
+        val localVariableConfig = getDevicesInGroupRequestConfig(groupId = groupId, listOfIdsDto = listOfIdsDto)
+
+        return request<ListOfIdsDto, kotlin.collections.List<DeviceDto>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation getDevicesInGroup
+    *
+    * @param groupId  
+    * @param listOfIdsDto  (optional)
+    * @return RequestConfig
+    */
+    fun getDevicesInGroupRequestConfig(groupId: kotlin.String, listOfIdsDto: ListOfIdsDto?) : RequestConfig<ListOfIdsDto> {
+        // val localVariableBody = listOfIdsDto
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = listOfIdsDto
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v2/device/inGroup/{groupId}/byIds".replace("{"+"groupId"+"}", "${URLEncoder.encode(groupId.toString(), Charsets.UTF_8)}"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
     * Get ids of devices matching the provided filter for the current user (HcParty) 
     * 
     * @param abstractFilterDtoDevice  
@@ -446,6 +608,47 @@ class DeviceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
         return RequestConfig(
             method = RequestMethod.POST,
             path = "/rest/v2/device/match",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
+    * Modify a Device.
+    * No particular return value. It&#39;s just a message.
+    * @param groupId  
+    * @param deviceDto  
+    * @return DeviceDto
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun modifyDeviceInGroup(groupId: kotlin.String, deviceDto: DeviceDto) : DeviceDto  {
+        val localVariableConfig = modifyDeviceInGroupRequestConfig(groupId = groupId, deviceDto = deviceDto)
+
+        return request<DeviceDto, DeviceDto>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation modifyDeviceInGroup
+    *
+    * @param groupId  
+    * @param deviceDto  
+    * @return RequestConfig
+    */
+    fun modifyDeviceInGroupRequestConfig(groupId: kotlin.String, deviceDto: DeviceDto) : RequestConfig<DeviceDto> {
+        // val localVariableBody = deviceDto
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = deviceDto
+
+        return RequestConfig(
+            method = RequestMethod.PUT,
+            path = "/rest/v2/device/inGroup/{groupId}".replace("{"+"groupId"+"}", "${URLEncoder.encode(groupId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

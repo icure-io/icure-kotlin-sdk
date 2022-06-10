@@ -109,6 +109,12 @@
   "listUsersBy": {
     "skipEndpoint": true
   },
+  "filterUsersBy": {
+    "skipEndpoint": true
+  },
+  "matchUsersBy": {
+    "skipEndpoint": true
+  },
   "fallback": {
   },
   "beforeElements": {

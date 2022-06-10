@@ -22,8 +22,12 @@ import com.fasterxml.jackson.annotation.JsonInclude
  * 
  *
  * @param groupId 
- * @param userId 
  * @param groupName 
+ * @param userId 
+ * @param login 
+ * @param name 
+ * @param email 
+ * @param phone 
  */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -33,11 +37,23 @@ data class UserGroupDto (
     @field:JsonProperty("groupId")
     val groupId: kotlin.String? = null,
 
+    @field:JsonProperty("groupName")
+    val groupName: kotlin.String? = null,
+
     @field:JsonProperty("userId")
     val userId: kotlin.String? = null,
 
-    @field:JsonProperty("groupName")
-    val groupName: kotlin.String? = null
+    @field:JsonProperty("login")
+    val login: kotlin.String? = null,
+
+    @field:JsonProperty("name")
+    val name: kotlin.String? = null,
+
+    @field:JsonProperty("email")
+    val email: kotlin.String? = null,
+
+    @field:JsonProperty("phone")
+    val phone: kotlin.String? = null
 
 )
 

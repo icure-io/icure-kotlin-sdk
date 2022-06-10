@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**getProcessInfo**](IcureApi.md#getProcessInfo) | **GET** /rest/v2/icure/p | Get process info
 [**getReplicationInfo**](IcureApi.md#getReplicationInfo) | **GET** /rest/v2/icure/r | Get replication info
 [**getReplicatorInfo**](IcureApi.md#getReplicatorInfo) | **GET** /rest/v2/icure/r/{id} | Get replication info
+[**getUserSyncInfo**](IcureApi.md#getUserSyncInfo) | **GET** /rest/v2/icure/sync/user | Get user sync info
 [**getVersion**](IcureApi.md#getVersion) | **GET** /rest/v2/icure/v | Get version
 [**isReady**](IcureApi.md#isReady) | **GET** /rest/v2/icure/ok | Check if a user exists
 [**resolveContactsConflicts**](IcureApi.md#resolveContactsConflicts) | **POST** /rest/v2/icure/conflicts/contact | Resolve contacts conflicts
@@ -178,6 +179,47 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ReplicatorDocumentDto**](ReplicatorDocumentDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="getUserSyncInfo"></a>
+# **getUserSyncInfo**
+> kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Map&lt;kotlin.String, kotlin.Any&gt;&gt; getUserSyncInfo()
+
+Get user sync info
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = IcureApi()
+try {
+    val result : kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.Any>> = apiInstance.getUserSyncInfo()
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling IcureApi#getUserSyncInfo")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling IcureApi#getUserSyncInfo")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+**kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Map&lt;kotlin.String, kotlin.Any&gt;&gt;**
 
 ### Authorization
 

@@ -14,6 +14,7 @@ package io.icure.kraken.client.models
 
 import io.icure.kraken.client.models.CodeStubDto
 import io.icure.kraken.client.models.DelegationDto
+import io.icure.kraken.client.models.IdentifierDto
 import io.icure.kraken.client.models.ServiceDto
 import io.icure.kraken.client.models.SubContactDto
 
@@ -28,6 +29,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
  * @param id the Id of the contact. We encourage using either a v4 UUID or a HL7 Id.
  * @param tags A tag is an item from a codification system that qualifies an entity as being member of a certain class, whatever the value it might have taken. If the tag qualifies the content of a field, it means that whatever the content of the field, the tag will always apply. For example, the label of a field is qualified using a tag. LOINC is a codification system typically used for tags.
  * @param codes A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes
+ * @param identifier The identifiers of the Contact
  * @param subContacts Set of all sub-contacts recorded during the given contact. Sub-contacts are used to link services embedded inside this contact to healthcare elements, healthcare approaches and/or forms.
  * @param services Set of all services provided to the patient during the contact.
  * @param secretForeignKeys The secretForeignKeys are filled at the to many end of a one to many relationship (for example inside Contact for the Patient -> Contacts relationship). Used when we want to find all contacts for a specific patient. These keys are in clear. You can have several to partition the medical document space.
@@ -69,6 +71,10 @@ data class ContactDto (
     /* A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes */
     @field:JsonProperty("codes")
     val codes: kotlin.collections.List<CodeStubDto> = emptyList(),
+
+    /* The identifiers of the Contact */
+    @field:JsonProperty("identifier")
+    val identifier: kotlin.collections.List<IdentifierDto> = emptyList(),
 
     /* Set of all sub-contacts recorded during the given contact. Sub-contacts are used to link services embedded inside this contact to healthcare elements, healthcare approaches and/or forms. */
     @field:JsonProperty("subContacts")

@@ -19,9 +19,9 @@ Method | HTTP request | Description
 [**findPatientsModifiedAfter**](PatientApi.md#findPatientsModifiedAfter) | **GET** /rest/v2/patient/modifiedAfter/{date} | List patients that have been modified after the provided date
 [**fuzzySearch**](PatientApi.md#fuzzySearch) | **GET** /rest/v2/patient/fuzzy | Filter patients for the current user (HcParty) 
 [**getPatient**](PatientApi.md#getPatient) | **GET** /rest/v2/patient/{patientId} | Get patient
+[**getPatientAesExchangeKeysForDelegate**](PatientApi.md#getPatientAesExchangeKeysForDelegate) | **GET** /rest/v2/patient/{patientId}/aesExchangeKeys | Get the HcParty encrypted AES keys indexed by owner.
 [**getPatientByExternalId**](PatientApi.md#getPatientByExternalId) | **GET** /rest/v2/patient/byExternalId/{externalId} | Get the patient having the provided externalId
 [**getPatientByHealthcarepartyAndIdentifier**](PatientApi.md#getPatientByHealthcarepartyAndIdentifier) | **GET** /rest/v2/patient/{hcPartyId}/{id} | Get patient by identifier
-[**getPatientHcPartyKeysForDelegate**](PatientApi.md#getPatientHcPartyKeysForDelegate) | **GET** /rest/v2/patient/{patientId}/keys | Get the patient (identified by patientId) hcparty keys. Those keys are AES keys (encrypted) used to share information between HCPs and a patient.
 [**getPatients**](PatientApi.md#getPatients) | **POST** /rest/v2/patient/byIds | Get patients by id
 [**listDeletedPatientsByName**](PatientApi.md#listDeletedPatientsByName) | **GET** /rest/v2/patient/deleted/by_name | Find deleted patients
 [**listOfMergesAfter**](PatientApi.md#listOfMergesAfter) | **GET** /rest/v2/patient/merges/{date} | List patients that have been merged towards another patient 
@@ -812,6 +812,53 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: */*
 
+<a name="getPatientAesExchangeKeysForDelegate"></a>
+# **getPatientAesExchangeKeysForDelegate**
+> kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;&gt;&gt; getPatientAesExchangeKeysForDelegate(patientId)
+
+Get the HcParty encrypted AES keys indexed by owner.
+
+(key, value) of the map is as follows: (ID of the owner of the encrypted AES key, encrypted AES keys)
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = PatientApi()
+val patientId : kotlin.String = patientId_example // kotlin.String | 
+try {
+    val result : kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.String>>> = apiInstance.getPatientAesExchangeKeysForDelegate(patientId)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling PatientApi#getPatientAesExchangeKeysForDelegate")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling PatientApi#getPatientAesExchangeKeysForDelegate")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **patientId** | **kotlin.String**|  |
+
+### Return type
+
+**kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;&gt;&gt;**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
 <a name="getPatientByExternalId"></a>
 # **getPatientByExternalId**
 > PatientDto getPatientByExternalId(externalId)
@@ -898,53 +945,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**PatientDto**](PatientDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="getPatientHcPartyKeysForDelegate"></a>
-# **getPatientHcPartyKeysForDelegate**
-> kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt; getPatientHcPartyKeysForDelegate(patientId)
-
-Get the patient (identified by patientId) hcparty keys. Those keys are AES keys (encrypted) used to share information between HCPs and a patient.
-
-This endpoint is used to recover all keys that have already been created and that can be used to share information with this patient. It returns a map with the following structure: ID of the owner of the encrypted AES key -&gt; encrypted AES key. The returned encrypted AES keys will have to be decrypted using the patient&#39;s private key.                                  {                     \&quot;hcparty 1 delegator ID\&quot;: \&quot;AES hcparty key (encrypted using patient public RSA key)\&quot;                     \&quot;hcparty 2 delegator ID\&quot;: \&quot;other AES hcparty key (encrypted using patient public RSA key)\&quot;                 }                 
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = PatientApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | The patient Id for which information is shared
-try {
-    val result : kotlin.collections.Map<kotlin.String, kotlin.String> = apiInstance.getPatientHcPartyKeysForDelegate(patientId)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling PatientApi#getPatientHcPartyKeysForDelegate")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling PatientApi#getPatientHcPartyKeysForDelegate")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **patientId** | **kotlin.String**| The patient Id for which information is shared |
-
-### Return type
-
-**kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;**
 
 ### Authorization
 
@@ -1386,7 +1386,7 @@ No authorization required
 
 <a name="registerPatient"></a>
 # **registerPatient**
-> PatientRegistrationSuccessDto registerPatient(hcPartyId, groupId, patientDto, token, useShortToken)
+> DataOwnerRegistrationSuccessDto registerPatient(hcPartyId, groupId, patientDto, token, useShortToken)
 
 Register a patient
 
@@ -1405,7 +1405,7 @@ val patientDto : PatientDto =  // PatientDto |
 val token : kotlin.String = token_example // kotlin.String | 
 val useShortToken : kotlin.Boolean = true // kotlin.Boolean | 
 try {
-    val result : PatientRegistrationSuccessDto = apiInstance.registerPatient(hcPartyId, groupId, patientDto, token, useShortToken)
+    val result : DataOwnerRegistrationSuccessDto = apiInstance.registerPatient(hcPartyId, groupId, patientDto, token, useShortToken)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling PatientApi#registerPatient")
@@ -1428,7 +1428,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**PatientRegistrationSuccessDto**](PatientRegistrationSuccessDto.md)
+[**DataOwnerRegistrationSuccessDto**](DataOwnerRegistrationSuccessDto.md)
 
 ### Authorization
 

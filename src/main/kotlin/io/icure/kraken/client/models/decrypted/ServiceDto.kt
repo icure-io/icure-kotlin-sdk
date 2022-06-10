@@ -226,7 +226,8 @@ data class ServiceDto (
         @JsonProperty("focus") focus("focus"),
         @JsonProperty("hasMember") hasMember("hasMember"),
         @JsonProperty("performer") performer("performer"),
-        @JsonProperty("specimen") specimen("specimen");
+        @JsonProperty("specimen") specimen("specimen"),
+        @JsonProperty("resultInterpreter") resultInterpreter("resultInterpreter");
     }
 }
 

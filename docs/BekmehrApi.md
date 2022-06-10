@@ -7,6 +7,7 @@ Method | HTTP request | Description
 [**checkIfSMFPatientsExists**](BekmehrApi.md#checkIfSMFPatientsExists) | **POST** /rest/v2/be_kmehr/smf/{documentId}/checkIfSMFPatientsExists | Check whether patients in SMF already exists in DB
 [**generateContactreportExport**](BekmehrApi.md#generateContactreportExport) | **POST** /rest/v2/be_kmehr/contactreport/{patientId}/export/{id} | Get Kmehr contactreport
 [**generateDiaryNote**](BekmehrApi.md#generateDiaryNote) | **POST** /rest/v2/be_kmehr/diarynote/{patientId}/export | Generate diarynote
+[**generateIncapacityExport**](BekmehrApi.md#generateIncapacityExport) | **POST** /rest/v2/be_kmehr/incapacity/{patientId}/export | Get Incapacity export
 [**generateLabresultExport**](BekmehrApi.md#generateLabresultExport) | **POST** /rest/v2/be_kmehr/labresult/{patientId}/export/{id} | Get Kmehr labresult
 [**generateMedicationSchemeExport**](BekmehrApi.md#generateMedicationSchemeExport) | **POST** /rest/v2/be_kmehr/medicationscheme/{patientId}/export | Get Medicationscheme export
 [**generateNoteExport**](BekmehrApi.md#generateNoteExport) | **POST** /rest/v2/be_kmehr/note/{patientId}/export/{id} | Get Kmehr note
@@ -183,6 +184,57 @@ Name | Type | Description  | Notes
  **patientId** | **kotlin.String**|  |
  **language** | **kotlin.String**|  |
  **diaryNoteExportInfoDto** | [**DiaryNoteExportInfoDto**](DiaryNoteExportInfoDto.md)|  |
+
+### Return type
+
+[**kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;**](kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt;.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/octet-stream
+
+<a name="generateIncapacityExport"></a>
+# **generateIncapacityExport**
+> kotlinx.coroutines.flow.Flow&lt;java.nio.ByteBuffer&gt; generateIncapacityExport(patientId, language, incapacityExportInfoDto, xTimezoneOffset)
+
+Get Incapacity export
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = BekmehrApi()
+val patientId : kotlin.String = patientId_example // kotlin.String | 
+val language : kotlin.String = language_example // kotlin.String | 
+val incapacityExportInfoDto : IncapacityExportInfoDto =  // IncapacityExportInfoDto | 
+val xTimezoneOffset : kotlin.String = xTimezoneOffset_example // kotlin.String | 
+try {
+    val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateIncapacityExport(patientId, language, incapacityExportInfoDto, xTimezoneOffset)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling BekmehrApi#generateIncapacityExport")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling BekmehrApi#generateIncapacityExport")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **patientId** | **kotlin.String**|  |
+ **language** | **kotlin.String**|  |
+ **incapacityExportInfoDto** | [**IncapacityExportInfoDto**](IncapacityExportInfoDto.md)|  |
+ **xTimezoneOffset** | **kotlin.String**|  | [optional]
 
 ### Return type
 

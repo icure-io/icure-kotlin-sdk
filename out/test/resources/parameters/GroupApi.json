@@ -40,6 +40,15 @@
     "password": null, 
     "body": null
   },
+  "getGroupsStorageInfos": {
+    "skipEndpoint": true
+  },
+  "findGroups": {
+    "skipEndpoint": true
+  },
+  "findGroupsWithContent": {
+    "skipEndpoint": true
+  },
   "fallback": {
   }
 }

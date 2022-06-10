@@ -13,12 +13,14 @@ Method | HTTP request | Description
 [**deleteUserInGroup**](UserApi.md#deleteUserInGroup) | **DELETE** /rest/v2/user/inGroup/{groupId}/{userId} | Delete a User based on his/her ID.
 [**encodePassword**](UserApi.md#encodePassword) | **GET** /rest/v2/user/encodePassword | 
 [**filterUsersBy**](UserApi.md#filterUsersBy) | **POST** /rest/v2/user/filter | Filter users for the current user (HcParty)
+[**filterUsersInGroupBy**](UserApi.md#filterUsersInGroupBy) | **POST** /rest/v2/user/filter/inGroup/{groupId} | Filter users for the current user (HcParty) for a provided groupId
 [**findByHcpartyId**](UserApi.md#findByHcpartyId) | **GET** /rest/v2/user/byHealthcarePartyId/{id} | Get the list of users by healthcare party id
-[**forgottenPassword**](UserApi.md#forgottenPassword) | **POST** /rest/v2/user/forgottenPassword/{email} | Send a forgotten email message to an user
 [**getCurrentSession**](UserApi.md#getCurrentSession) | **GET** /rest/v2/user/session | Get Currently logged-in user session.
 [**getCurrentUser**](UserApi.md#getCurrentUser) | **GET** /rest/v2/user/current | Get presently logged-in user.
 [**getMatchingUsers**](UserApi.md#getMatchingUsers) | **GET** /rest/v2/user/matches | Get presently logged-in user.
 [**getToken**](UserApi.md#getToken) | **POST** /rest/v2/user/token/{userId}/{key} | Request a new temporary token for authentication
+[**getTokenInAllGroups**](UserApi.md#getTokenInAllGroups) | **POST** /rest/v2/user/inAllGroups/token/{userIdentifier}/{key} | Require a new temporary token for authentication inside all groups
+[**getTokenInGroup**](UserApi.md#getTokenInGroup) | **POST** /rest/v2/user/inGroup/{groupId}/token/{userId}/{key} | Require a new temporary token for authentication inside provided group
 [**getUser**](UserApi.md#getUser) | **GET** /rest/v2/user/{userId} | Get a user by his ID
 [**getUserByEmail**](UserApi.md#getUserByEmail) | **GET** /rest/v2/user/byEmail/{email} | Get a user by his Email/Login
 [**listUsersBy**](UserApi.md#listUsersBy) | **GET** /rest/v2/user | List users with(out) pagination
@@ -456,6 +458,59 @@ No authorization required
  - **Content-Type**: application/json
  - **Accept**: */*
 
+<a name="filterUsersInGroupBy"></a>
+# **filterUsersInGroupBy**
+> PaginatedListUserDto filterUsersInGroupBy(groupId, filterChainUser, startDocumentId, limit)
+
+Filter users for the current user (HcParty) for a provided groupId
+
+Returns a list of users along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = UserApi()
+val groupId : kotlin.String = groupId_example // kotlin.String | 
+val filterChainUser : FilterChainUser =  // FilterChainUser | 
+val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A User document ID
+val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
+try {
+    val result : PaginatedListUserDto = apiInstance.filterUsersInGroupBy(groupId, filterChainUser, startDocumentId, limit)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling UserApi#filterUsersInGroupBy")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling UserApi#filterUsersInGroupBy")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **groupId** | **kotlin.String**|  |
+ **filterChainUser** | [**FilterChainUser**](FilterChainUser.md)|  |
+ **startDocumentId** | **kotlin.String**| A User document ID | [optional]
+ **limit** | **kotlin.Int**| Number of rows | [optional]
+
+### Return type
+
+[**PaginatedListUserDto**](PaginatedListUserDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
 <a name="findByHcpartyId"></a>
 # **findByHcpartyId**
 > kotlin.collections.List&lt;kotlin.String&gt; findByHcpartyId(id)
@@ -499,53 +554,6 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: */*
-
-<a name="forgottenPassword"></a>
-# **forgottenPassword**
-> kotlin.Boolean forgottenPassword(email, emailTemplateDto)
-
-Send a forgotten email message to an user
-
-### Example
-```kotlin
-// Import classes:
-//import io.icure.kraken.client.infrastructure.*
-//import io.icure.kraken.client.models.*
-
-val apiInstance = UserApi()
-val email : kotlin.String = email_example // kotlin.String | the email of the user 
-val emailTemplateDto : EmailTemplateDto =  // EmailTemplateDto | 
-try {
-    val result : kotlin.Boolean = apiInstance.forgottenPassword(email, emailTemplateDto)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling UserApi#forgottenPassword")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling UserApi#forgottenPassword")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **email** | **kotlin.String**| the email of the user  |
- **emailTemplateDto** | [**EmailTemplateDto**](EmailTemplateDto.md)|  |
-
-### Return type
-
-**kotlin.Boolean**
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
  - **Accept**: */*
 
 <a name="getCurrentSession"></a>
@@ -726,6 +734,110 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: */*
 
+<a name="getTokenInAllGroups"></a>
+# **getTokenInAllGroups**
+> kotlin.collections.List&lt;TokenWithGroupDto&gt; getTokenInAllGroups(userIdentifier, key, token, tokenValidity)
+
+Require a new temporary token for authentication inside all groups
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = UserApi()
+val userIdentifier : kotlin.String = userIdentifier_example // kotlin.String | 
+val key : kotlin.String = key_example // kotlin.String | The token key. Only one instance of a token with a defined key can exist at the same time
+val token : kotlin.String = token_example // kotlin.String | 
+val tokenValidity : kotlin.Long = 789 // kotlin.Long | The token validity in seconds
+try {
+    val result : kotlin.collections.List<TokenWithGroupDto> = apiInstance.getTokenInAllGroups(userIdentifier, key, token, tokenValidity)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling UserApi#getTokenInAllGroups")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling UserApi#getTokenInAllGroups")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **userIdentifier** | **kotlin.String**|  |
+ **key** | **kotlin.String**| The token key. Only one instance of a token with a defined key can exist at the same time |
+ **token** | **kotlin.String**|  | [optional]
+ **tokenValidity** | **kotlin.Long**| The token validity in seconds | [optional]
+
+### Return type
+
+[**kotlin.collections.List&lt;TokenWithGroupDto&gt;**](TokenWithGroupDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="getTokenInGroup"></a>
+# **getTokenInGroup**
+> kotlin.String getTokenInGroup(groupId, userId, key, token, tokenValidity)
+
+Require a new temporary token for authentication inside provided group
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = UserApi()
+val groupId : kotlin.String = groupId_example // kotlin.String | 
+val userId : kotlin.String = userId_example // kotlin.String | 
+val key : kotlin.String = key_example // kotlin.String | The token key. Only one instance of a token with a defined key can exist at the same time
+val token : kotlin.String = token_example // kotlin.String | 
+val tokenValidity : kotlin.Long = 789 // kotlin.Long | The token validity in seconds
+try {
+    val result : kotlin.String = apiInstance.getTokenInGroup(groupId, userId, key, token, tokenValidity)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling UserApi#getTokenInGroup")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling UserApi#getTokenInGroup")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **groupId** | **kotlin.String**|  |
+ **userId** | **kotlin.String**|  |
+ **key** | **kotlin.String**| The token key. Only one instance of a token with a defined key can exist at the same time |
+ **token** | **kotlin.String**|  | [optional]
+ **tokenValidity** | **kotlin.Long**| The token validity in seconds | [optional]
+
+### Return type
+
+**kotlin.String**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
 <a name="getUser"></a>
 # **getUser**
 > UserDto getUser(userId)
@@ -822,7 +934,7 @@ No authorization required
 
 <a name="listUsersBy"></a>
 # **listUsersBy**
-> PaginatedListUserDto listUsersBy(startKey, startDocumentId, limit)
+> PaginatedListUserDto listUsersBy(startKey, startDocumentId, limit, skipPatients)
 
 List users with(out) pagination
 
@@ -838,8 +950,9 @@ val apiInstance = UserApi()
 val startKey : kotlin.String = startKey_example // kotlin.String | An user email
 val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | An user document ID
 val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
+val skipPatients : kotlin.Boolean = true // kotlin.Boolean | Filter out patient users
 try {
-    val result : PaginatedListUserDto = apiInstance.listUsersBy(startKey, startDocumentId, limit)
+    val result : PaginatedListUserDto = apiInstance.listUsersBy(startKey, startDocumentId, limit, skipPatients)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling UserApi#listUsersBy")
@@ -857,6 +970,7 @@ Name | Type | Description  | Notes
  **startKey** | **kotlin.String**| An user email | [optional]
  **startDocumentId** | **kotlin.String**| An user document ID | [optional]
  **limit** | **kotlin.Int**| Number of rows | [optional]
+ **skipPatients** | **kotlin.Boolean**| Filter out patient users | [optional]
 
 ### Return type
 

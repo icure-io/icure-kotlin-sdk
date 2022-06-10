@@ -92,6 +92,7 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @param tarification  (optional)
     * @param version  (optional)
     * @param startDocumentId A tarification document ID (optional)
+    * @param startKey  (optional)
     * @param limit Number of rows (optional)
     * @return PaginatedListTarificationDto
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
@@ -100,8 +101,8 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findTarificationsBy(region: kotlin.String?, type: kotlin.String?, tarification: kotlin.String?, version: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListTarificationDto  {
-        val localVariableConfig = findTarificationsByRequestConfig(region = region, type = type, tarification = tarification, version = version, startDocumentId = startDocumentId, limit = limit)
+    suspend fun findTarificationsBy(region: kotlin.String?, type: kotlin.String?, tarification: kotlin.String?, version: kotlin.String?, startDocumentId: kotlin.String?, startKey: kotlin.String?, limit: kotlin.Int?) : PaginatedListTarificationDto  {
+        val localVariableConfig = findTarificationsByRequestConfig(region = region, type = type, tarification = tarification, version = version, startDocumentId = startDocumentId, startKey = startKey, limit = limit)
 
         return request<Unit, PaginatedListTarificationDto>(
             localVariableConfig
@@ -115,10 +116,11 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @param tarification  (optional)
     * @param version  (optional)
     * @param startDocumentId A tarification document ID (optional)
+    * @param startKey  (optional)
     * @param limit Number of rows (optional)
     * @return RequestConfig
     */
-    fun findTarificationsByRequestConfig(region: kotlin.String?, type: kotlin.String?, tarification: kotlin.String?, version: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
+    fun findTarificationsByRequestConfig(region: kotlin.String?, type: kotlin.String?, tarification: kotlin.String?, version: kotlin.String?, startDocumentId: kotlin.String?, startKey: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -136,6 +138,9 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
                 }
                 if (startDocumentId != null) {
                     put("startDocumentId", listOf(startDocumentId.toString()))
+                }
+                if (startKey != null) {
+                    put("startKey", listOf(startKey.toString()))
                 }
                 if (limit != null) {
                     put("limit", listOf(limit.toString()))
@@ -219,6 +224,7 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @param types  (optional)
     * @param language  (optional)
     * @param label  (optional)
+    * @param startKey  (optional)
     * @param startDocumentId A tarification document ID (optional)
     * @param limit Number of rows (optional)
     * @return PaginatedListTarificationDto
@@ -228,8 +234,8 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findTarificationsByLabel(region: kotlin.String?, types: kotlin.String?, language: kotlin.String?, label: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListTarificationDto  {
-        val localVariableConfig = findTarificationsByLabelRequestConfig(region = region, types = types, language = language, label = label, startDocumentId = startDocumentId, limit = limit)
+    suspend fun findTarificationsByLabel(region: kotlin.String?, types: kotlin.String?, language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListTarificationDto  {
+        val localVariableConfig = findTarificationsByLabelRequestConfig(region = region, types = types, language = language, label = label, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListTarificationDto>(
             localVariableConfig
@@ -242,11 +248,12 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @param types  (optional)
     * @param language  (optional)
     * @param label  (optional)
+    * @param startKey  (optional)
     * @param startDocumentId A tarification document ID (optional)
     * @param limit Number of rows (optional)
     * @return RequestConfig
     */
-    fun findTarificationsByLabelRequestConfig(region: kotlin.String?, types: kotlin.String?, language: kotlin.String?, label: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
+    fun findTarificationsByLabelRequestConfig(region: kotlin.String?, types: kotlin.String?, language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -261,6 +268,9 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
                 }
                 if (label != null) {
                     put("label", listOf(label.toString()))
+                }
+                if (startKey != null) {
+                    put("startKey", listOf(startKey.toString()))
                 }
                 if (startDocumentId != null) {
                     put("startDocumentId", listOf(startDocumentId.toString()))

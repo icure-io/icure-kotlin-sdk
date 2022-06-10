@@ -17,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 import io.icure.kraken.client.models.CodeStubDto
 import io.icure.kraken.client.models.DelegationDto
+import io.icure.kraken.client.models.IdentifierDto
 import io.icure.kraken.client.models.SubContactDto
 
 
@@ -67,6 +68,10 @@ data class ContactDto (
     /* A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes */
     @field:JsonProperty("codes")
     val codes: kotlin.collections.List<CodeStubDto> = emptyList(),
+
+    /* The identifiers of the Contact */
+    @field:JsonProperty("identifier")
+    val identifier: kotlin.collections.List<IdentifierDto> = emptyList(),
 
     /* Set of all sub-contacts recorded during the given contact. Sub-contacts are used to link services embedded inside this contact to healthcare elements, healthcare approaches and/or forms. */
     @field:JsonProperty("subContacts")

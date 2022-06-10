@@ -43,7 +43,7 @@
     "secretFKeys": "e6ed74cc-a8f7-44fa-9fab-50091233fa63"
   },
   "getHealthElement": {
-    "healthElementId": "0009f12c-1616-4189-89f1-2c1616018974"
+    "healthElementId": "c51e1902-380b-48fc-a921-8006e167adbb"
   },
   "modifyHealthElement": {
     "autoRev": true,
@@ -65,6 +65,14 @@
       "delegations": {
         "d9f61fcd-2b3c-4e8b-9b7d-9671ec525439": [{"owner": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98", "delegatedTo": "d9f61fcd-2b3c-4e8b-9b7d-9671ec525439", "key": "3e4eef2691bd5da45108a49de93c6f69a732f909cb709127316293b14d3beeee0cb973c1a300db9dd3bd37fb3eeab01b8e80a61a2b7b1a6e9a679f3550bd8746d56c78b61dbc8f62ab60b78b501697f594dc5f72e68cef2d76b21e99c67a4ea6", "tags": ["string"]}]
       }
+    }
+  },
+  "matchHealthElementsBy": {
+    "skipEndpoint": true
+  },
+  "getHealthElements": {
+    "listOfIdsDto": {
+      "ids":["c51e1902-380b-48fc-a921-8006e167adbb"]
     }
   },
   "fallback": {

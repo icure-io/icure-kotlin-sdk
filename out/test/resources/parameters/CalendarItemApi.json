@@ -83,7 +83,12 @@
     "skipEndpoint": true,
     "body": null
   },
-  
+  "deleteCalendarItem":{
+    "calendarItemIds": "07cfb20f-0d55-4c29-a509-0c0643132337"
+  },
+  "findCalendarItemsByRecurrenceId": {
+    "skipEndpoint": true
+  },
   "fallback": {
   }
 }

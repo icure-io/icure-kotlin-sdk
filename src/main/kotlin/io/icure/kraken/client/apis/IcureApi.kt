@@ -203,6 +203,43 @@ class IcureApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     }
 
     /**
+    * Get user sync info
+    * 
+    * @return kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.Any>>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun getUserSyncInfo() : kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.Any>>  {
+        val localVariableConfig = getUserSyncInfoRequestConfig()
+
+        return request<Unit, kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.Any>>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation getUserSyncInfo
+    *
+    * @return RequestConfig
+    */
+    fun getUserSyncInfoRequestConfig() : RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v2/icure/sync/user",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
     * Get version
     * 
     * @return kotlin.String

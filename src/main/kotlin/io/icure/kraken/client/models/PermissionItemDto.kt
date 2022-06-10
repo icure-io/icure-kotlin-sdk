@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 /**
  * Revoked permissions.
  *
+ * @param itemType 
  * @param type 
  * @param predicate 
  */
@@ -28,6 +29,9 @@ import com.fasterxml.jackson.annotation.JsonInclude
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class PermissionItemDto (
+
+    @field:JsonProperty("itemType")
+    val itemType: kotlin.String,
 
     @field:JsonProperty("type")
     val type: PermissionItemDto.Type,
