@@ -9,7 +9,6 @@ import io.icure.kraken.client.crypto.CryptoUtils
 import io.icure.kraken.client.crypto.LocalCrypto
 import io.icure.kraken.client.crypto.maintenanceTaskCryptoConfig
 import io.icure.kraken.client.crypto.patientCryptoConfig
-import io.icure.kraken.client.crypto.privateKeyAsString
 import io.icure.kraken.client.crypto.publicKeyAsString
 import io.icure.kraken.client.crypto.toPrivateKey
 import io.icure.kraken.client.crypto.toPublicKey
@@ -26,27 +25,28 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import java.nio.file.Path
 import java.security.KeyPair
 import java.security.interfaces.RSAPrivateKey
 import java.security.interfaces.RSAPublicKey
 import java.time.Instant
 import java.util.*
 import kotlin.io.path.ExperimentalPathApi
-import kotlin.io.path.absolute
-import kotlin.io.path.appendText
-import kotlin.io.path.createFile
 
 @ExperimentalPathApi
 @ExperimentalUnsignedTypes
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 internal class HealthcarePartyApiKtTest {
-    private val userApi = UserApi(basePath = "https://kraken.icure.dev", authHeader = "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=")
-    private val hcpartyApi = HealthcarePartyApi(basePath = "https://kraken.icure.dev", authHeader = "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=")
-    private val patientApi = PatientApi(basePath = "https://kraken.icure.dev", authHeader = "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=")
-    private val deviceApi = DeviceApi(basePath = "https://kraken.icure.dev", authHeader = "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=")
-    private val maintenanceTaskApi = MaintenanceTaskApi(basePath = "https://kraken.icure.dev", authHeader = "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=")
+    private val iCureBackendUrl = System.getenv("ICURE_BE_URL") ?: "https://kraken.icure.dev"
+
+    private val parentAuthorization = "Basic " + Base64.getEncoder().encodeToString("${System.getenv("PARENT_HCP_USERNAME")}:${System.getenv("PARENT_HCP_PASSWORD")}".toByteArray(Charsets.UTF_8))
+    private val parentPrivKey = System.getenv("PARENT_HCP_PRIV_KEY").toPrivateKey()
+    
+    private val userApi = UserApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
+    private val hcpartyApi = HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
+    private val patientApi = PatientApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
+    private val deviceApi = DeviceApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
+    private val maintenanceTaskApi = MaintenanceTaskApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
 
     @FlowPreview
     @Test
@@ -66,8 +66,8 @@ internal class HealthcarePartyApiKtTest {
 
         val newUser = createUserForHcp(newHcp, parent)
 
-        val keyPath = "src/test/resources/io/icure/kraken/client/extendedapis/keys/${newHcp.id}-icc-priv.2048.key"
-        Path.of(keyPath).absolute().createFile().appendText(kp.privateKeyAsString(), Charsets.UTF_8)
+        //val keyPath = "src/test/resources/io/icure/kraken/client/extendedapis/keys/${newHcp.id}-icc-priv.2048.key"
+        //Path.of(keyPath).absolute().createFile().appendText(kp.privateKeyAsString(), Charsets.UTF_8)
 
         Assertions.assertNotNull(newUser.login)
         Assertions.assertTrue(newHcp.aesExchangeKeys.containsKey(kp.publicKeyAsString()))
@@ -81,14 +81,8 @@ internal class HealthcarePartyApiKtTest {
         // Before
         val parentUser = userApi.getCurrentUser()
         val parent = hcpartyApi.getCurrentHealthcareParty()
-        val parentKeyPath = "keys/${parent.id}-icc-priv.2048.key"
-        val parentKeyFile = HealthcarePartyApiKtTest::class.java.getResource(parentKeyPath)!!
-        val parentLocalCrypto = LocalCrypto(
-            ExtendedTestUtils.dataOwnerWrapperFor(
-                "https://kraken.icure.dev",
-                "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM="
-            ), mapOf(
-                parent.id to listOf(parentKeyFile.readText(Charsets.UTF_8).toPrivateKey() to parent.publicKey!!.toPublicKey()),
+        val parentLocalCrypto = LocalCrypto(ExtendedTestUtils.dataOwnerWrapperFor(iCureBackendUrl, parentAuthorization), mapOf(
+                parent.id to listOf(parentPrivKey to parent.publicKey!!.toPublicKey()),
             ),
             maintenanceTaskApi
         )
@@ -109,12 +103,12 @@ internal class HealthcarePartyApiKtTest {
         Assertions.assertTrue(newHcp.aesExchangeKeys[newHcpKp1.publicKeyAsString()]!![newHcp.id]!!.containsKey(newHcpKp1.publicKeyAsString().takeLast(12)))
 
         // Given
-        val newUserHcpApi = HealthcarePartyApi(basePath = "https://kraken.icure.dev", authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}")
-        val newUserPatientApi = PatientApi(basePath = "https://kraken.icure.dev", authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}")
-        val newUserMaintenanceTaskApi = MaintenanceTaskApi(basePath = "https://kraken.icure.dev", authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}")
+        val newUserHcpApi = HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}")
+        val newUserPatientApi = PatientApi(basePath = iCureBackendUrl, authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}")
+        val newUserMaintenanceTaskApi = MaintenanceTaskApi(basePath = iCureBackendUrl, authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}")
         val newHcpLocalCrypto1 = LocalCrypto(
             ExtendedTestUtils.dataOwnerWrapperFor(
-                "https://kraken.icure.dev",
+                iCureBackendUrl,
                 "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}"
             ), mapOf(
                 newUser.dataOwnerId() to listOf(newHcpKp1.private as RSAPrivateKey to newHcpKp1.public as RSAPublicKey)
@@ -133,7 +127,7 @@ internal class HealthcarePartyApiKtTest {
         // Given
         val newHcpKp2 = CryptoUtils.generateKeyPairRSA()
         val newHcpKp2DoResolver = ExtendedTestUtils.dataOwnerWrapperFor(
-            "https://kraken.icure.dev",
+            iCureBackendUrl,
             "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}"
         )
         val newHcpLocalCrypto2 = LocalCrypto(
@@ -191,14 +185,8 @@ internal class HealthcarePartyApiKtTest {
         // Before
         val parentUser = userApi.getCurrentUser()
         val parent = hcpartyApi.getCurrentHealthcareParty()
-        val parentKeyPath = "keys/${parent.id}-icc-priv.2048.key"
-        val parentKeyFile = HealthcarePartyApiKtTest::class.java.getResource(parentKeyPath)!!
-        val parentLocalCrypto = LocalCrypto(
-            ExtendedTestUtils.dataOwnerWrapperFor(
-                "https://kraken.icure.dev",
-                "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM="
-            ), mapOf(
-                parent.id to listOf(parentKeyFile.readText(Charsets.UTF_8).toPrivateKey() to parent.publicKey!!.toPublicKey()),
+        val parentLocalCrypto = LocalCrypto(ExtendedTestUtils.dataOwnerWrapperFor(iCureBackendUrl, parentAuthorization), mapOf(
+                parent.id to listOf(parentPrivKey to parent.publicKey!!.toPublicKey()),
             ),
             maintenanceTaskApi
         )
@@ -209,12 +197,12 @@ internal class HealthcarePartyApiKtTest {
 
         delay(4000) // User not active yet when trying to create data afterwards
 
-        val newUserHcpApi = HealthcarePartyApi(basePath = "https://kraken.icure.dev", authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}")
-        val newUserPatientApi = PatientApi(basePath = "https://kraken.icure.dev", authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}")
-        val newUserMaintenanceTaskApi = MaintenanceTaskApi(basePath = "https://kraken.icure.dev", authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}")
+        val newUserHcpApi = HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}")
+        val newUserPatientApi = PatientApi(basePath = iCureBackendUrl, authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}")
+        val newUserMaintenanceTaskApi = MaintenanceTaskApi(basePath = iCureBackendUrl, authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}")
         val newHcpLocalCrypto1 = LocalCrypto(
             ExtendedTestUtils.dataOwnerWrapperFor(
-                "https://kraken.icure.dev",
+                iCureBackendUrl,
                 "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}"
             ), mapOf(
                 newUser.dataOwnerId() to listOf(newHcpKp1.private as RSAPrivateKey to newHcpKp1.public as RSAPublicKey)
@@ -228,7 +216,7 @@ internal class HealthcarePartyApiKtTest {
         val newHcpKp2 = CryptoUtils.generateKeyPairRSA()
         val newHcpLocalCrypto2 = LocalCrypto(
             ExtendedTestUtils.dataOwnerWrapperFor(
-                "https://kraken.icure.dev",
+                iCureBackendUrl,
                 "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}"
             ), mapOf(
                 newUser.dataOwnerId() to listOf(newHcpKp2.private as RSAPrivateKey to newHcpKp2.public as RSAPublicKey)
