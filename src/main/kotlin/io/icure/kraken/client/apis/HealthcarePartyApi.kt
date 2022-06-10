@@ -508,10 +508,10 @@ class HealthcarePartyApi(basePath: kotlin.String = defaultBasePath, webClient: W
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getAesExchangeKeysForDelegate(healthcarePartyId: kotlin.String) : kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.String>>  {
+    suspend fun getAesExchangeKeysForDelegate(healthcarePartyId: kotlin.String) : kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.String>>>  {
         val localVariableConfig = getAesExchangeKeysForDelegateRequestConfig(healthcarePartyId = healthcarePartyId)
 
-        return request<Unit, kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.String>>>(
+        return request<Unit, kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.String>>>>(
             localVariableConfig
         )!!
     }

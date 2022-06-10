@@ -101,8 +101,8 @@ internal class ContactApiKtTest {
         val keyFile1 = PatientApiKtTest::class.java.getResource(keyPath1)!!
         val cc1 = contactCryptoConfig(LocalCrypto(
             dataOwnerWrapperFor("https://kraken.icure.dev", "Basic dGVzdC0yLXR6LWRldi10ZWFtLzE0NGJhYTc3LTQ1YTMtNDgxZi1iNTcxLWRlYjM2YTIyOWI4ZjozOTI3MjRjOC0zYWFmLTQzMmYtYWU3My0zNDQzMTk4ZDQyMTI="), mapOf(
-                parent.healthcarePartyId!! to (keyFile.readText(Charsets.UTF_8).toPrivateKey() to parentHcp.publicKey!!.toPublicKey()),
-                user1.healthcarePartyId!! to (keyFile1.readText(Charsets.UTF_8).toPrivateKey() to hcp1.publicKey!!.toPublicKey())
+                parent.healthcarePartyId!! to listOf(keyFile.readText(Charsets.UTF_8).toPrivateKey() to parentHcp.publicKey!!.toPublicKey()),
+                user1.healthcarePartyId!! to listOf(keyFile1.readText(Charsets.UTF_8).toPrivateKey() to hcp1.publicKey!!.toPublicKey())
             )
         ), user1)
 
@@ -110,15 +110,15 @@ internal class ContactApiKtTest {
         val keyFile2 = PatientApiKtTest::class.java.getResource(keyPath2)!!
         val cc2 = contactCryptoConfig(LocalCrypto(
             dataOwnerWrapperFor("https://kraken.icure.dev", "Basic MTkxYWUwZmUtN2QwZS00YTI2LTljZDMtY2RjMDk3NjNiNGMwQG1haWxrZXB0LmNvbTo2YzgyNTcyYS04ZWJhLTQ5ZWYtYjZjNC03NDQ2NDg5OTA3ODM="), mapOf(
-                parent.healthcarePartyId!! to (keyFile.readText(Charsets.UTF_8).toPrivateKey() to parentHcp.publicKey!!.toPublicKey()),
-                user2.healthcarePartyId!! to (keyFile2.readText(Charsets.UTF_8).toPrivateKey() to hcp2.publicKey!!.toPublicKey())
+                parent.healthcarePartyId!! to listOf(keyFile.readText(Charsets.UTF_8).toPrivateKey() to parentHcp.publicKey!!.toPublicKey()),
+                user2.healthcarePartyId!! to listOf(keyFile2.readText(Charsets.UTF_8).toPrivateKey() to hcp2.publicKey!!.toPublicKey())
             )
         ), user2)
 
         val pcc = patientCryptoConfig(LocalCrypto(
             dataOwnerWrapperFor("https://kraken.icure.dev", "Basic dGVzdC0yLXR6LWRldi10ZWFtLzE0NGJhYTc3LTQ1YTMtNDgxZi1iNTcxLWRlYjM2YTIyOWI4ZjozOTI3MjRjOC0zYWFmLTQzMmYtYWU3My0zNDQzMTk4ZDQyMTI="), mapOf(
-                parent.healthcarePartyId!! to (keyFile.readText(Charsets.UTF_8).toPrivateKey() to parentHcp.publicKey!!.toPublicKey()),
-                user1.healthcarePartyId!! to (keyFile1.readText(Charsets.UTF_8).toPrivateKey() to hcp1.publicKey!!.toPublicKey())
+                parent.healthcarePartyId!! to listOf(keyFile.readText(Charsets.UTF_8).toPrivateKey() to parentHcp.publicKey!!.toPublicKey()),
+                user1.healthcarePartyId!! to listOf(keyFile1.readText(Charsets.UTF_8).toPrivateKey() to hcp1.publicKey!!.toPublicKey())
             )
         ))
 

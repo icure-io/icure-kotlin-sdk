@@ -22,6 +22,7 @@ import com.github.pozo.KotlinBuilder
 /**
  * Revoked permissions.
  *
+ * @param itemType 
  * @param type 
  * @param predicate 
  */
@@ -30,6 +31,9 @@ import com.github.pozo.KotlinBuilder
 @JsonIgnoreProperties(ignoreUnknown = true)
 @KotlinBuilder
 data class PermissionItemDto (
+
+    @field:JsonProperty("itemType")
+    val itemType: kotlin.String,
 
     @field:JsonProperty("type")
     val type: PermissionItemDto.Type,

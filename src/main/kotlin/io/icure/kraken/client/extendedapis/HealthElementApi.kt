@@ -21,7 +21,7 @@ suspend fun HealthElementDto.initDelegations(user: UserDto, config: CryptoConfig
     return this.copy(
         responsible = user.dataOwnerId(),
         author = user.id,
-        delegations = (delegations + user.dataOwnerId()).fold(this.encryptionKeys) { m, d ->
+        delegations = (delegations + user.dataOwnerId()).fold(this.delegations) { m, d ->
             m + (d to setOf(
                 DelegationDto(
                     emptyList(), user.dataOwnerId(), d, config.crypto.encryptAESKeyForDataOwner(user.dataOwnerId(), d, this.id, sfk).first,
@@ -216,10 +216,8 @@ suspend fun CryptoConfig<HealthElementDto, io.icure.kraken.client.models.HealthE
 }
 
 suspend fun CryptoConfig<HealthElementDto, io.icure.kraken.client.models.HealthElementDto>.decryptHealthElement(myId: String, healthElement: io.icure.kraken.client.models.HealthElementDto): HealthElementDto {
-    val key = this.crypto.decryptEncryptionKeys(myId, healthElement.encryptionKeys).firstOrNull()?.replace(
-        "-",
-        ""
-    )?.keyFromHexString() ?: throw IllegalArgumentException("No encryption key for user")
+    val key = this.crypto.decryptEncryptionKeys(myId, healthElement.encryptionKeys).firstOrNull()
+        ?.keyFromHexString() ?: throw IllegalArgumentException("No encryption key for user")
     return this.unmarshaller(healthElement, decryptAES(data = Base64.getDecoder().decode(healthElement.encryptedSelf), key = key))
 }
 

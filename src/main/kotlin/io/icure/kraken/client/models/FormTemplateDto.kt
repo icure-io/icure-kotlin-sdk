@@ -46,6 +46,7 @@ import com.github.pozo.KotlinBuilder
  * @param mediumReport 
  * @param longReport 
  * @param layoutAttachmentId 
+ * @param templateLayoutAttachmentId 
  */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -112,7 +113,10 @@ data class FormTemplateDto (
     val longReport: kotlin.String? = null,
 
     @field:JsonProperty("layoutAttachmentId")
-    val layoutAttachmentId: kotlin.String? = null
+    val layoutAttachmentId: kotlin.String? = null,
+
+    @field:JsonProperty("templateLayoutAttachmentId")
+    val templateLayoutAttachmentId: kotlin.String? = null
 
 )
 
