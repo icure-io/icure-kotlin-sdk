@@ -340,15 +340,11 @@ object ContactMapperFactory {
 @Mapper
 interface ServiceMapper {
 
-    @Mappings(
-        Mapping(target="qualifiedLinks", expression="java(mapQualifiedLinks(service.getQualifiedLinks()))")
-    )
     fun map(service: ServiceDto): io.icure.kraken.client.models.ServiceDto
-
-    @Mappings(
-        Mapping(target="qualifiedLinks", expression="java(mapRawQualifiedLinks(service.getQualifiedLinks()))")
-    )
     fun map(service: io.icure.kraken.client.models.ServiceDto): ServiceDto
+
+    fun map(content: io.icure.kraken.client.models.decrypted.ContentDto): ContentDto
+    fun map(content: ContentDto): io.icure.kraken.client.models.decrypted.ContentDto
 
     fun mapQualifiedLinks(qualifiedLinks: Map<ServiceDto.LinkQualification, Map<String, String>>) : Map<String, Map<String, String>> {
         return qualifiedLinks

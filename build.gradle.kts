@@ -1,12 +1,12 @@
-val kotlinVersion = "1.4.32"
-val kotlinCoroutinesVersion = "1.4.3"
+val kotlinVersion = "1.6.10"
+val kotlinCoroutinesVersion = "1.6.0"
 val jacksonVersion = "2.12.5"
+val kmapVersion = "0.1.22-77b57a3b36"
 
 plugins {
-    kotlin("jvm") version "1.4.32"
-    kotlin("kapt") version "1.4.32"
-    id("jacoco")
+    kotlin("jvm") version "1.6.10"
     id("org.sonarqube") version "3.3"
+    id("com.google.devtools.ksp") version "1.6.10-1.0.2"
 }
 
 sonarqube {
@@ -43,8 +43,8 @@ repositories {
 }
 
 dependencies {
-    api(group = "com.github.pozo", name = "mapstruct-kotlin", version = "1.3.1.2")
-    kapt(group = "com.github.pozo", name = "mapstruct-kotlin-processor", version = "1.3.1.2")
+    implementation(group = "io.icure", name = "kmap", version = kmapVersion)
+    ksp(group = "io.icure", name = "kmap", version = kmapVersion)
 
     implementation(group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version = kotlinVersion)
 
@@ -91,6 +91,13 @@ dependencies {
     testImplementation(group = "com.willowtreeapps.assertk", name = "assertk-jvm", version = "0.24")
 }
 
+kotlin {
+    sourceSets {
+        main {
+            kotlin.srcDir("build/generated/ksp/main/kotlin")
+        }
+    }
+}
 
 java {
     sourceCompatibility = JavaVersion.VERSION_11
