@@ -1,7 +1,7 @@
 val kotlinVersion = "1.6.21"
 val kotlinCoroutinesVersion = "1.6.2"
 val jacksonVersion = "2.12.5"
-val kmapVersion = "0.1.31-IBE-42.970cfa41bb"
+val kmapVersion = "0.1.33-b53d7e7ec1"
 
 plugins {
     kotlin("jvm") version "1.6.21"
