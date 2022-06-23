@@ -10,7 +10,6 @@ import io.icure.kraken.client.crypto.contactCryptoConfig
 import io.icure.kraken.client.crypto.patientCryptoConfig
 import io.icure.kraken.client.crypto.toPrivateKey
 import io.icure.kraken.client.crypto.toPublicKey
-import io.icure.kraken.client.extendedapis.infrastructure.ExtendedTestUtils
 import io.icure.kraken.client.extendedapis.infrastructure.ExtendedTestUtils.dataOwnerWrapperFor
 import io.icure.kraken.client.extendedapis.infrastructure.ExtendedTestUtils.localCrypto
 import io.icure.kraken.client.extendedapis.mapper.ContactMapperFactory
@@ -31,62 +30,63 @@ import java.util.*
 @ExperimentalStdlibApi
 @FlowPreview
 internal class ContactApiKtTest {
-    private val userApi = UserApi(basePath = "https://kraken.icure.dev", authHeader = "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=")
-    private val hcPartyApi = HealthcarePartyApi(basePath = "https://kraken.icure.dev", authHeader = "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=")
-    private val contactApi = ContactApi(basePath = "https://kraken.icure.dev", authHeader = "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=")
+    private val iCureBackendUrl = System.getenv("ICURE_BE_URL") ?: "https://kraken.icure.dev"
 
-    private val child1UserApi = UserApi(basePath = "https://kraken.icure.dev", authHeader = "Basic dGVzdC0yLXR6LWRldi10ZWFtLzE0NGJhYTc3LTQ1YTMtNDgxZi1iNTcxLWRlYjM2YTIyOWI4ZjozOTI3MjRjOC0zYWFmLTQzMmYtYWU3My0zNDQzMTk4ZDQyMTI=")
-    private val child1HealthcarePartyApi = HealthcarePartyApi(basePath = "https://kraken.icure.dev", authHeader = "Basic dGVzdC0yLXR6LWRldi10ZWFtLzE0NGJhYTc3LTQ1YTMtNDgxZi1iNTcxLWRlYjM2YTIyOWI4ZjozOTI3MjRjOC0zYWFmLTQzMmYtYWU3My0zNDQzMTk4ZDQyMTI=")
-    private val child1ContactApi = ContactApi(basePath = "https://kraken.icure.dev", authHeader = "Basic dGVzdC0yLXR6LWRldi10ZWFtLzE0NGJhYTc3LTQ1YTMtNDgxZi1iNTcxLWRlYjM2YTIyOWI4ZjozOTI3MjRjOC0zYWFmLTQzMmYtYWU3My0zNDQzMTk4ZDQyMTI=")
-    private val child1PatientApi = PatientApi(basePath = "https://kraken.icure.dev", authHeader = "Basic dGVzdC0yLXR6LWRldi10ZWFtLzE0NGJhYTc3LTQ1YTMtNDgxZi1iNTcxLWRlYjM2YTIyOWI4ZjozOTI3MjRjOC0zYWFmLTQzMmYtYWU3My0zNDQzMTk4ZDQyMTI=")
+    private val parentAuthorization = "Basic " + Base64.getEncoder().encodeToString("${System.getenv("PARENT_HCP_USERNAME")}:${System.getenv("PARENT_HCP_PASSWORD")}".toByteArray(Charsets.UTF_8))
+    private val child1Authorization = "Basic " + Base64.getEncoder().encodeToString("${System.getenv("CHILD_1_HCP_USERNAME")}:${System.getenv("CHILD_1_HCP_PASSWORD")}".toByteArray(Charsets.UTF_8))
+    private val child2Authorization = "Basic " + Base64.getEncoder().encodeToString("${System.getenv("CHILD_2_HCP_USERNAME")}:${System.getenv("CHILD_2_HCP_PASSWORD")}".toByteArray(Charsets.UTF_8))
 
-    private val child2UserApi = UserApi(basePath = "https://kraken.icure.dev", authHeader = "Basic MTkxYWUwZmUtN2QwZS00YTI2LTljZDMtY2RjMDk3NjNiNGMwQG1haWxrZXB0LmNvbTo2YzgyNTcyYS04ZWJhLTQ5ZWYtYjZjNC03NDQ2NDg5OTA3ODM=")
-    private val child2HealthcarePartyApi = HealthcarePartyApi(basePath = "https://kraken.icure.dev", authHeader = "Basic MTkxYWUwZmUtN2QwZS00YTI2LTljZDMtY2RjMDk3NjNiNGMwQG1haWxrZXB0LmNvbTo2YzgyNTcyYS04ZWJhLTQ5ZWYtYjZjNC03NDQ2NDg5OTA3ODM=")
-    private val child2ContactApi = ContactApi(basePath = "https://kraken.icure.dev", authHeader = "Basic MTkxYWUwZmUtN2QwZS00YTI2LTljZDMtY2RjMDk3NjNiNGMwQG1haWxrZXB0LmNvbTo2YzgyNTcyYS04ZWJhLTQ5ZWYtYjZjNC03NDQ2NDg5OTA3ODM=")
+    private val parentPrivKey = System.getenv("PARENT_HCP_PRIV_KEY").toPrivateKey()
+    private val child1PrivKey = System.getenv("CHILD_1_HCP_PRIV_KEY").toPrivateKey()
+    private val child2PrivKey = System.getenv("CHILD_2_HCP_PRIV_KEY").toPrivateKey()
+
+    private val userApi = UserApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
+    private val hcPartyApi = HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
+    private val contactApi = ContactApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
+
+    private val child1UserApi = UserApi(basePath = iCureBackendUrl, authHeader = child1Authorization)
+    private val child1HealthcarePartyApi = HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = child1Authorization)
+    private val child1ContactApi = ContactApi(basePath = iCureBackendUrl, authHeader = child1Authorization)
+    private val child1PatientApi = PatientApi(basePath = iCureBackendUrl, authHeader = child1Authorization)
+
+    private val child2UserApi = UserApi(basePath = iCureBackendUrl, authHeader = child2Authorization)
+    private val child2HealthcarePartyApi = HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = child2Authorization)
+    private val child2ContactApi = ContactApi(basePath = iCureBackendUrl, authHeader = child2Authorization)
 
     @Test
     fun testCreateContactUsingDefaultCryptoConfig() = runBlocking {
         val contactToCreateId = UUID.randomUUID().toString()
 
-        try {
-            // before
-            val user = userApi.getCurrentUser()
-            val hcp = hcPartyApi.getCurrentHealthcareParty()
-            val keyPath = "keys/${hcp.id}-icc-priv.2048.key"
-            val keyFile = ContactApiKtTest::class.java.getResource(keyPath)!!
-            val cc = contactCryptoConfig(localCrypto("https://kraken.icure.dev",
-                "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=", keyFile, user, hcp.toDataOwner()), user)
+        // before
+        val user = userApi.getCurrentUser()
+        val hcp = hcPartyApi.getCurrentHealthcareParty()
+        val cc = contactCryptoConfig(localCrypto(iCureBackendUrl,
+            parentAuthorization, parentPrivKey, user, hcp.toDataOwner()), user)
 
-            val contactToCreate = contactToCreate(contactToCreateId)
+        val contactToCreate = contactToCreate(contactToCreateId)
 
-            // when
-            val contact = contactApi.createContact(user, contactToCreate, cc)
+        // when
+        val contact = contactApi.createContact(user, contactToCreate, cc)
 
-            // then
-            Assertions.assertNotNull(contact, "Contact couldn't be found")
-            Assertions.assertNotNull(contact.services.first().encryptedSelf, "Service content should be encrypted")
-            Assertions.assertNotNull(contact.encryptionKeys, "Contact encryption keys should not be null")
-            Assertions.assertNotNull(contact.encryptedSelf, "Contact content should be encrypted")
-            Assertions.assertEquals(contact.services.first().content["fr"]?.numberValue,
-                contactToCreate.services.first().content["fr"]?.numberValue,
-                "Service content should not be null"
-            )
+        // then
+        Assertions.assertNotNull(contact, "Contact couldn't be found")
+        Assertions.assertNotNull(contact.services.first().encryptedSelf, "Service content should be encrypted")
+        Assertions.assertNotNull(contact.encryptionKeys, "Contact encryption keys should not be null")
+        Assertions.assertNotNull(contact.encryptedSelf, "Contact content should be encrypted")
+        Assertions.assertEquals(contact.services.first().content["fr"]?.numberValue,
+            contactToCreate.services.first().content["fr"]?.numberValue,
+            "Service content should not be null"
+        )
 
-            val encryptedContact = contactApi.getContact(contactToCreateId)
-            Assertions.assertEquals(encryptedContact.services.first().content.isEmpty(), true, "Service content should only be encrypted")
-            Assertions.assertNotNull(encryptedContact.services.first().encryptedSelf, "Service content should be encrypted")
-
-        } finally {
-            ExtendedTestUtils.deleteElements("healthdata", listOf(contactToCreateId))
-        }
+        val encryptedContact = contactApi.getContact(contactToCreateId)
+        Assertions.assertEquals(encryptedContact.services.first().content.isEmpty(), true, "Service content should only be encrypted")
+        Assertions.assertNotNull(encryptedContact.services.first().encryptedSelf, "Service content should be encrypted")
     }
 
     @Test
     fun createContactWithDefaultCryptoConfigHcpWithParent() = runBlocking {
         val parent = userApi.getCurrentUser()
         val parentHcp = hcPartyApi.getCurrentHealthcareParty()
-        val keyPath = "keys/${parent.healthcarePartyId}-icc-priv.2048.key"
-        val keyFile = PatientApiKtTest::class.java.getResource(keyPath)!!
 
         // Before
         val user1 = child1UserApi.getCurrentUser()
@@ -98,28 +98,24 @@ internal class ContactApiKtTest {
         Assertions.assertNotNull(hcp1.parentId, "Hcp must have a parent for this test")
         Assertions.assertNotNull(hcp2.parentId, "Hcp must have a parent for this test")
 
-        val keyPath1 = "keys/${hcp1.id}-icc-priv.2048.key"
-        val keyFile1 = PatientApiKtTest::class.java.getResource(keyPath1)!!
         val cc1 = contactCryptoConfig(LocalCrypto(
-            dataOwnerWrapperFor("https://kraken.icure.dev", "Basic dGVzdC0yLXR6LWRldi10ZWFtLzE0NGJhYTc3LTQ1YTMtNDgxZi1iNTcxLWRlYjM2YTIyOWI4ZjozOTI3MjRjOC0zYWFmLTQzMmYtYWU3My0zNDQzMTk4ZDQyMTI="), mapOf(
-                parent.healthcarePartyId!! to listOf(keyFile.readText(Charsets.UTF_8).toPrivateKey() to parentHcp.publicKey!!.toPublicKey()),
-                user1.healthcarePartyId!! to listOf(keyFile1.readText(Charsets.UTF_8).toPrivateKey() to hcp1.publicKey!!.toPublicKey())
+            dataOwnerWrapperFor(iCureBackendUrl, child1Authorization), mapOf(
+                parent.healthcarePartyId!! to listOf(parentPrivKey to parentHcp.publicKey!!.toPublicKey()),
+                user1.healthcarePartyId!! to listOf(child1PrivKey to hcp1.publicKey!!.toPublicKey())
             )
         ), user1)
 
-        val keyPath2 = "keys/${hcp2.id}-icc-priv.2048.key"
-        val keyFile2 = PatientApiKtTest::class.java.getResource(keyPath2)!!
         val cc2 = contactCryptoConfig(LocalCrypto(
-            dataOwnerWrapperFor("https://kraken.icure.dev", "Basic MTkxYWUwZmUtN2QwZS00YTI2LTljZDMtY2RjMDk3NjNiNGMwQG1haWxrZXB0LmNvbTo2YzgyNTcyYS04ZWJhLTQ5ZWYtYjZjNC03NDQ2NDg5OTA3ODM="), mapOf(
-                parent.healthcarePartyId!! to listOf(keyFile.readText(Charsets.UTF_8).toPrivateKey() to parentHcp.publicKey!!.toPublicKey()),
-                user2.healthcarePartyId!! to listOf(keyFile2.readText(Charsets.UTF_8).toPrivateKey() to hcp2.publicKey!!.toPublicKey())
+            dataOwnerWrapperFor(iCureBackendUrl, child2Authorization), mapOf(
+                parent.healthcarePartyId!! to listOf(parentPrivKey to parentHcp.publicKey!!.toPublicKey()),
+                user2.healthcarePartyId!! to listOf(child2PrivKey to hcp2.publicKey!!.toPublicKey())
             )
         ), user2)
 
         val pcc = patientCryptoConfig(LocalCrypto(
-            dataOwnerWrapperFor("https://kraken.icure.dev", "Basic dGVzdC0yLXR6LWRldi10ZWFtLzE0NGJhYTc3LTQ1YTMtNDgxZi1iNTcxLWRlYjM2YTIyOWI4ZjozOTI3MjRjOC0zYWFmLTQzMmYtYWU3My0zNDQzMTk4ZDQyMTI="), mapOf(
-                parent.healthcarePartyId!! to listOf(keyFile.readText(Charsets.UTF_8).toPrivateKey() to parentHcp.publicKey!!.toPublicKey()),
-                user1.healthcarePartyId!! to listOf(keyFile1.readText(Charsets.UTF_8).toPrivateKey() to hcp1.publicKey!!.toPublicKey())
+            dataOwnerWrapperFor(iCureBackendUrl, child1Authorization), mapOf(
+                parent.healthcarePartyId!! to listOf(parentPrivKey to parentHcp.publicKey!!.toPublicKey()),
+                user1.healthcarePartyId!! to listOf(child1PrivKey to hcp1.publicKey!!.toPublicKey())
             )
         ))
 
@@ -146,40 +142,32 @@ internal class ContactApiKtTest {
     fun testCreateContactUsingCustomCryptoConfig() = runBlocking {
         val contactToCreateId = UUID.randomUUID().toString()
 
-        try {
-            // before
-            val user = userApi.getCurrentUser()
-            val hcp = hcPartyApi.getCurrentHealthcareParty()
-            val keyPath = "keys/${hcp.id}-icc-priv.2048.key"
-            val keyFile = ContactApiKtTest::class.java.getResource(keyPath)!!
-            val cc = customContactCrypto(localCrypto("https://kraken.icure.dev",
-                "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=", keyFile, user, hcp.toDataOwner()))
+        // before
+        val user = userApi.getCurrentUser()
+        val hcp = hcPartyApi.getCurrentHealthcareParty()
+        val cc = customContactCrypto(localCrypto(iCureBackendUrl, parentAuthorization, parentPrivKey, user, hcp.toDataOwner()))
 
-            val contactToCreate = contactToCreate(contactToCreateId)
+        val contactToCreate = contactToCreate(contactToCreateId)
 
-            // when
-            val contact = contactApi.createContact(user, contactToCreate, cc)
+        // when
+        val contact = contactApi.createContact(user, contactToCreate, cc)
 
-            // then
-            Assertions.assertNotNull(contact, "Contact couldn't be found")
-            Assertions.assertEquals(contact.descr, contactToCreate.descr, "Descr should not be encrypted")
-            Assertions.assertEquals(contact.medicalLocationId, contactToCreate.medicalLocationId, "Medical Location Id should not be encrypted")
-            Assertions.assertNotNull(contact.encryptionKeys, "Contact encryption keys should not be null")
-            Assertions.assertNotNull(contact.encryptedSelf, "Contact content should be encrypted")
+        // then
+        Assertions.assertNotNull(contact, "Contact couldn't be found")
+        Assertions.assertEquals(contact.descr, contactToCreate.descr, "Descr should not be encrypted")
+        Assertions.assertEquals(contact.medicalLocationId, contactToCreate.medicalLocationId, "Medical Location Id should not be encrypted")
+        Assertions.assertNotNull(contact.encryptionKeys, "Contact encryption keys should not be null")
+        Assertions.assertNotNull(contact.encryptedSelf, "Contact content should be encrypted")
 
-            val encryptedContact = contactApi.getContact(contactToCreateId)
-            Assertions.assertNull(encryptedContact.descr, "Descr should be encrypted")
-            Assertions.assertNull(encryptedContact.medicalLocationId, "Medical Location Id should be encrypted")
+        val encryptedContact = contactApi.getContact(contactToCreateId)
+        Assertions.assertNull(encryptedContact.descr, "Descr should be encrypted")
+        Assertions.assertNull(encryptedContact.medicalLocationId, "Medical Location Id should be encrypted")
 
-            Assertions.assertNull(encryptedContact.services.first().encryptedSelf, "Service should not be encrypted")
-            Assertions.assertEquals(encryptedContact.services.first().content["fr"]?.numberValue,
-                contactToCreate.services.first().content["fr"]?.numberValue,
-                "Service content should not be encrypted"
-            )
-
-        } finally {
-            ExtendedTestUtils.deleteElements("healthdata", listOf(contactToCreateId))
-        }
+        Assertions.assertNull(encryptedContact.services.first().encryptedSelf, "Service should not be encrypted")
+        Assertions.assertEquals(encryptedContact.services.first().content["fr"]?.numberValue,
+            contactToCreate.services.first().content["fr"]?.numberValue,
+            "Service content should not be encrypted"
+        )
     }
 
     private fun contactToCreate(contactId: String = UUID.randomUUID().toString()) = ContactDto(

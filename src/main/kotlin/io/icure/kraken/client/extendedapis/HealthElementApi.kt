@@ -219,9 +219,7 @@ suspend fun CryptoConfig<HealthElementDto, io.icure.kraken.client.models.HealthE
 }
 
 suspend fun CryptoConfig<HealthElementDto, io.icure.kraken.client.models.HealthElementDto>.decryptHealthElement(myId: String, healthElement: io.icure.kraken.client.models.HealthElementDto): HealthElementDto {
-    val key = this.crypto.decryptEncryptionKeys(myId, healthElement.encryptionKeys).firstOrNull()?.replace(
-        "-",
-        ""
-    )?.keyFromHexString() ?: throw IllegalArgumentException("No encryption key for user")
+    val key = this.crypto.decryptEncryptionKeys(myId, healthElement.encryptionKeys).firstOrNull()
+        ?.keyFromHexString() ?: throw IllegalArgumentException("No encryption key for user")
     return this.unmarshaller(healthElement, decryptAES(data = Base64.getDecoder().decode(healthElement.encryptedSelf), key = key))
 }

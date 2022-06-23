@@ -4,6 +4,7 @@ import io.icure.kraken.client.apis.DocumentApi
 import io.icure.kraken.client.apis.HealthcarePartyApi
 import io.icure.kraken.client.apis.UserApi
 import io.icure.kraken.client.crypto.documentCryptoConfig
+import io.icure.kraken.client.crypto.toPrivateKey
 import io.icure.kraken.client.extendedapis.infrastructure.ExtendedTestUtils.localCrypto
 import io.icure.kraken.client.models.decrypted.DocumentDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -20,12 +21,14 @@ import java.util.*
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 internal class DocumentApiKtTest {
-    private val userApi =
-        UserApi(basePath = "https://kraken.icure.dev", authHeader = "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=")
-    private val hcpartyApi =
-        HealthcarePartyApi(basePath = "https://kraken.icure.dev", authHeader = "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=")
-    private val documentApi =
-        DocumentApi(basePath = "https://kraken.icure.dev", authHeader = "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=")
+    private val iCureBackendUrl = System.getenv("ICURE_BE_URL") ?: "https://kraken.icure.dev"
+
+    private val parentAuthorization = "Basic " + Base64.getEncoder().encodeToString("${System.getenv("PARENT_HCP_USERNAME")}:${System.getenv("PARENT_HCP_PASSWORD")}".toByteArray(Charsets.UTF_8))
+    private val parentPrivKey = System.getenv("PARENT_HCP_PRIV_KEY").toPrivateKey()
+    
+    private val userApi = UserApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
+    private val hcpartyApi = HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
+    private val documentApi = DocumentApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
 
     @FlowPreview
     @Test
@@ -35,10 +38,8 @@ internal class DocumentApiKtTest {
             val currentUser = userApi.getCurrentUser()
             val hcp = hcpartyApi.getCurrentHealthcareParty()
 
-            val keyPath = "keys/${hcp.id}-icc-priv.2048.key"
-            val keyFile = this@DocumentApiKtTest::class.java.getResource(keyPath)!!
-            val localCrypto = localCrypto("https://kraken.icure.dev",
-                "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=", keyFile, currentUser, hcp.toDataOwner())
+            val localCrypto = localCrypto(iCureBackendUrl,
+                parentAuthorization, parentPrivKey, currentUser, hcp.toDataOwner())
             val documentConfig = documentCryptoConfig(localCrypto)
 
             val attachmentToAdd = Files.readAllBytes(Paths.get("src/test/resources/set_attachment_test.txt"))

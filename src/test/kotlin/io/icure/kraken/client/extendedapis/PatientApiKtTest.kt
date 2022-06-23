@@ -21,6 +21,7 @@ import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.decrypted.PatientDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions
 import java.security.interfaces.RSAPrivateKey
@@ -31,21 +32,30 @@ import java.util.*
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 internal class PatientApiKtTest {
-    private val userApi = UserApi(basePath = "https://kraken.icure.dev", authHeader = "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=")
-    private val hcpartyApi = HealthcarePartyApi(basePath = "https://kraken.icure.dev", authHeader = "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=")
-    private val patientApi = PatientApi(basePath = "https://kraken.icure.dev", authHeader = "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=")
-    private val maintenanceTaskApi = MaintenanceTaskApi(basePath = "https://kraken.icure.dev", authHeader = "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=")
+    private val iCureBackendUrl = System.getenv("ICURE_BE_URL") ?: "https://kraken.icure.dev"
+    
+    private val parentAuthorization = "Basic " + Base64.getEncoder().encodeToString("${System.getenv("PARENT_HCP_USERNAME")}:${System.getenv("PARENT_HCP_PASSWORD")}".toByteArray(Charsets.UTF_8))
+    private val child1Authorization = "Basic " + Base64.getEncoder().encodeToString("${System.getenv("CHILD_1_HCP_USERNAME")}:${System.getenv("CHILD_1_HCP_PASSWORD")}".toByteArray(Charsets.UTF_8))
+    private val child2Authorization = "Basic " + Base64.getEncoder().encodeToString("${System.getenv("CHILD_2_HCP_USERNAME")}:${System.getenv("CHILD_2_HCP_PASSWORD")}".toByteArray(Charsets.UTF_8))
+    
+    private val parentPrivKey = System.getenv("PARENT_HCP_PRIV_KEY").toPrivateKey()
+    private val child1PrivKey = System.getenv("CHILD_1_HCP_PRIV_KEY").toPrivateKey()
+    private val child2PrivKey = System.getenv("CHILD_2_HCP_PRIV_KEY").toPrivateKey()
 
-    private val child1UserApi = UserApi(basePath = "https://kraken.icure.dev", authHeader = "Basic dGVzdC0yLXR6LWRldi10ZWFtLzE0NGJhYTc3LTQ1YTMtNDgxZi1iNTcxLWRlYjM2YTIyOWI4ZjozOTI3MjRjOC0zYWFmLTQzMmYtYWU3My0zNDQzMTk4ZDQyMTI=")
-    private val child1HealthcarePartyApi = HealthcarePartyApi(basePath = "https://kraken.icure.dev", authHeader = "Basic dGVzdC0yLXR6LWRldi10ZWFtLzE0NGJhYTc3LTQ1YTMtNDgxZi1iNTcxLWRlYjM2YTIyOWI4ZjozOTI3MjRjOC0zYWFmLTQzMmYtYWU3My0zNDQzMTk4ZDQyMTI=")
-    private val child1DeviceApi = DeviceApi(basePath = "https://kraken.icure.dev", authHeader = "Basic dGVzdC0yLXR6LWRldi10ZWFtLzE0NGJhYTc3LTQ1YTMtNDgxZi1iNTcxLWRlYjM2YTIyOWI4ZjozOTI3MjRjOC0zYWFmLTQzMmYtYWU3My0zNDQzMTk4ZDQyMTI=")
-    private val child1PatientApi = PatientApi(basePath = "https://kraken.icure.dev", authHeader = "Basic dGVzdC0yLXR6LWRldi10ZWFtLzE0NGJhYTc3LTQ1YTMtNDgxZi1iNTcxLWRlYjM2YTIyOWI4ZjozOTI3MjRjOC0zYWFmLTQzMmYtYWU3My0zNDQzMTk4ZDQyMTI=")
+    private val userApi = UserApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
+    private val hcpartyApi = HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
+    private val patientApi = PatientApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
+    private val maintenanceTaskApi = MaintenanceTaskApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
 
-    private val child2UserApi = UserApi(basePath = "https://kraken.icure.dev", authHeader = "Basic MTkxYWUwZmUtN2QwZS00YTI2LTljZDMtY2RjMDk3NjNiNGMwQG1haWxrZXB0LmNvbTo2YzgyNTcyYS04ZWJhLTQ5ZWYtYjZjNC03NDQ2NDg5OTA3ODM=")
-    private val child2HealthcarePartyApi = HealthcarePartyApi(basePath = "https://kraken.icure.dev", authHeader = "Basic MTkxYWUwZmUtN2QwZS00YTI2LTljZDMtY2RjMDk3NjNiNGMwQG1haWxrZXB0LmNvbTo2YzgyNTcyYS04ZWJhLTQ5ZWYtYjZjNC03NDQ2NDg5OTA3ODM=")
-    private val child2DeviceApi = DeviceApi(basePath = "https://kraken.icure.dev", authHeader = "Basic MTkxYWUwZmUtN2QwZS00YTI2LTljZDMtY2RjMDk3NjNiNGMwQG1haWxrZXB0LmNvbTo2YzgyNTcyYS04ZWJhLTQ5ZWYtYjZjNC03NDQ2NDg5OTA3ODM=")
-    private val child2PatientApi = PatientApi(basePath = "https://kraken.icure.dev", authHeader = "Basic MTkxYWUwZmUtN2QwZS00YTI2LTljZDMtY2RjMDk3NjNiNGMwQG1haWxrZXB0LmNvbTo2YzgyNTcyYS04ZWJhLTQ5ZWYtYjZjNC03NDQ2NDg5OTA3ODM=")
+    private val child1UserApi = UserApi(basePath = iCureBackendUrl, authHeader = child1Authorization)
+    private val child1HealthcarePartyApi = HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = child1Authorization)
+    private val child1DeviceApi = DeviceApi(basePath = iCureBackendUrl, authHeader = child1Authorization)
+    private val child1PatientApi = PatientApi(basePath = iCureBackendUrl, authHeader = child1Authorization)
 
+    private val child2UserApi = UserApi(basePath = iCureBackendUrl, authHeader = child2Authorization)
+    private val child2HealthcarePartyApi = HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = child2Authorization)
+    private val child2DeviceApi = DeviceApi(basePath = iCureBackendUrl, authHeader = child2Authorization)
+    private val child2PatientApi = PatientApi(basePath = iCureBackendUrl, authHeader = child2Authorization)
 
     @org.junit.jupiter.api.Test
     @FlowPreview
@@ -53,10 +63,8 @@ internal class PatientApiKtTest {
         // Before
         val user = userApi.getCurrentUser()
         val hcp = hcpartyApi.getCurrentHealthcareParty()
-        val keyPath = "keys/${hcp.id}-icc-priv.2048.key"
-        val keyFile = PatientApiKtTest::class.java.getResource(keyPath)!!
-        val cc = customPatientCryptoConfig(ExtendedTestUtils.localCrypto("https://kraken.icure.dev",
-            "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=", keyFile, user, hcp.toDataOwner()))
+        val cc = customPatientCryptoConfig(ExtendedTestUtils.localCrypto(iCureBackendUrl,
+            parentAuthorization, parentPrivKey, user, hcp.toDataOwner()))
 
         // When
         val p1 = try { patientApi.createPatient(user, PatientDto(id = UUID.randomUUID().toString(), firstName = "John", lastName = "Doe", note = "To be encrypted"), cc) } catch(e:Exception) { throw IllegalStateException(e) }
@@ -84,10 +92,8 @@ internal class PatientApiKtTest {
         val user = userApi.getCurrentUser()
         val hcp = hcpartyApi.getCurrentHealthcareParty()
 
-        val keyPath = "keys/${hcp.id}-icc-priv.2048.key"
-        val keyFile = PatientApiKtTest::class.java.getResource(keyPath)!!
-        val cc = patientCryptoConfig(ExtendedTestUtils.localCrypto("https://kraken.icure.dev",
-            "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=", keyFile, user, hcp.toDataOwner()))
+        val cc = patientCryptoConfig(ExtendedTestUtils.localCrypto(iCureBackendUrl,
+            parentAuthorization, parentPrivKey, user, hcp.toDataOwner()))
 
         // When
         val p1 = try { patientApi.createPatient(user, PatientDto(id = UUID.randomUUID().toString(), firstName = "John", lastName = "Doe", note = "To be encrypted"), cc) } catch(e:Exception) { throw IllegalStateException(e) }
@@ -109,8 +115,6 @@ internal class PatientApiKtTest {
     fun createPatientWithDefaultCryptoConfigHcpWithParent() = runBlocking {
         val parent = userApi.getCurrentUser()
         val parentHcp = hcpartyApi.getCurrentHealthcareParty()
-        val keyPath = "keys/${parent.healthcarePartyId}-icc-priv.2048.key"
-        val keyFile = PatientApiKtTest::class.java.getResource(keyPath)!!
 
         // Before
         val user1 = child1UserApi.getCurrentUser()
@@ -121,22 +125,18 @@ internal class PatientApiKtTest {
 
         Assertions.assertNotNull(hcp1.parentId, "Hcp must have a parent for this test")
         Assertions.assertNotNull(hcp2.parentId, "Hcp must have a parent for this test")
-
-        val keyPath1 = "keys/${hcp1.id}-icc-priv.2048.key"
-        val keyFile1 = PatientApiKtTest::class.java.getResource(keyPath1)!!
+        
         val cc1 = patientCryptoConfig(LocalCrypto(
             DataOwnerResolver(child1HealthcarePartyApi, child1PatientApi, child1DeviceApi), mapOf(
-                parent.healthcarePartyId!! to listOf(keyFile.readText(Charsets.UTF_8).toPrivateKey() to parentHcp.publicKey!!.toPublicKey()),
-                user1.healthcarePartyId!! to listOf(keyFile1.readText(Charsets.UTF_8).toPrivateKey() to hcp1.publicKey!!.toPublicKey())
+                parent.healthcarePartyId!! to listOf(parentPrivKey to parentHcp.publicKey!!.toPublicKey()),
+                user1.healthcarePartyId!! to listOf(child1PrivKey to hcp1.publicKey!!.toPublicKey())
             )
         ))
 
-        val keyPath2 = "keys/${hcp2.id}-icc-priv.2048.key"
-        val keyFile2 = PatientApiKtTest::class.java.getResource(keyPath2)!!
         val cc2 = patientCryptoConfig(LocalCrypto(
             DataOwnerResolver(child2HealthcarePartyApi, child2PatientApi, child2DeviceApi), mapOf(
-                parent.healthcarePartyId!! to listOf(keyFile.readText(Charsets.UTF_8).toPrivateKey() to parentHcp.publicKey!!.toPublicKey()),
-                user2.healthcarePartyId!! to listOf(keyFile2.readText(Charsets.UTF_8).toPrivateKey() to hcp2.publicKey!!.toPublicKey())
+                parent.healthcarePartyId!! to listOf(parentPrivKey to parentHcp.publicKey!!.toPublicKey()),
+                user2.healthcarePartyId!! to listOf(child2PrivKey to hcp2.publicKey!!.toPublicKey())
             )
         ))
 
@@ -156,14 +156,9 @@ internal class PatientApiKtTest {
         // Before
         val parentUser = userApi.getCurrentUser()
         val parent = hcpartyApi.getCurrentHealthcareParty()
-        val parentKeyPath = "keys/${parent.id}-icc-priv.2048.key"
-        val parentKeyFile = PatientApiKtTest::class.java.getResource(parentKeyPath)!!
         val parentLocalCrypto = LocalCrypto(
-            ExtendedTestUtils.dataOwnerWrapperFor(
-                "https://kraken.icure.dev",
-                "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM="
-            ), mapOf(
-                parent.id to listOf(parentKeyFile.readText(Charsets.UTF_8).toPrivateKey() to parent.publicKey!!.toPublicKey()),
+            ExtendedTestUtils.dataOwnerWrapperFor(iCureBackendUrl, parentAuthorization), mapOf(
+                parent.id to listOf(parentPrivKey to parent.publicKey!!.toPublicKey()),
             ),
             maintenanceTaskApi
         )
@@ -194,23 +189,25 @@ internal class PatientApiKtTest {
             )
         )
 
-        val newUserPatientApi = PatientApi(basePath = "https://kraken.icure.dev", authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}")
-        val newUserHcpApi = HealthcarePartyApi(basePath = "https://kraken.icure.dev", authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}")
+        delay(3000) // User not active yet when trying to create data afterwards
+
+        val newUserPatientApi = PatientApi(basePath = iCureBackendUrl, authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}")
+        val newUserHcpApi = HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}")
         val cc1 = patientCryptoConfig(LocalCrypto(
             ExtendedTestUtils.dataOwnerWrapperFor(
-                "https://kraken.icure.dev",
+                iCureBackendUrl,
                 "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}"
             ), mapOf(
-                parent.id to listOf(parentKeyFile.readText(Charsets.UTF_8).toPrivateKey() to parent.publicKey!!.toPublicKey()),
+                parent.id to listOf(parentPrivKey to parent.publicKey!!.toPublicKey()),
                 newUser.dataOwnerId() to listOf(newHcpKp1.private as RSAPrivateKey to newHcpKp1.public as RSAPublicKey)
             )
         ))
         val cc2 = patientCryptoConfig(LocalCrypto(
             ExtendedTestUtils.dataOwnerWrapperFor(
-                "https://kraken.icure.dev",
+                iCureBackendUrl,
                 "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}"
             ), mapOf(
-                parent.id to listOf(parentKeyFile.readText(Charsets.UTF_8).toPrivateKey() to parent.publicKey!!.toPublicKey()),
+                parent.id to listOf(parentPrivKey to parent.publicKey!!.toPublicKey()),
                 newUser.dataOwnerId() to listOf(newHcpKp2.private as RSAPrivateKey to newHcpKp2.public as RSAPublicKey)
             )
         ))

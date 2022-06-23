@@ -28,30 +28,38 @@ import org.junit.jupiter.api.Test
 import java.security.interfaces.RSAPrivateKey
 import java.security.interfaces.RSAPublicKey
 import java.time.Instant
-import java.util.UUID
+import java.util.*
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 @FlowPreview
 internal class MaintenanceTaskApiKtTest {
-    private val hcp1UserApi = UserApi(basePath = "https://kraken.icure.dev", authHeader = "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=")
-    private val hcp1HcPartyApi = HealthcarePartyApi(basePath = "https://kraken.icure.dev", authHeader = "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=")
-    private val hcp1MaintenanceTaskApi = MaintenanceTaskApi(basePath = "https://kraken.icure.dev", authHeader = "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=")
+    private val iCureBackendUrl = System.getenv("ICURE_BE_URL") ?: "https://kraken.icure.dev"
 
-    private val hcp2UserApi = UserApi(basePath = "https://kraken.icure.dev", authHeader = "Basic dGVzdC0yLXR6LWRldi10ZWFtLzE0NGJhYTc3LTQ1YTMtNDgxZi1iNTcxLWRlYjM2YTIyOWI4ZjozOTI3MjRjOC0zYWFmLTQzMmYtYWU3My0zNDQzMTk4ZDQyMTI=")
-    private val hcp2HcPartyApi = HealthcarePartyApi(basePath = "https://kraken.icure.dev", authHeader = "Basic dGVzdC0yLXR6LWRldi10ZWFtLzE0NGJhYTc3LTQ1YTMtNDgxZi1iNTcxLWRlYjM2YTIyOWI4ZjozOTI3MjRjOC0zYWFmLTQzMmYtYWU3My0zNDQzMTk4ZDQyMTI=")
-    private val hcp2MaintenanceTaskApi = MaintenanceTaskApi(basePath = "https://kraken.icure.dev", authHeader = "Basic dGVzdC0yLXR6LWRldi10ZWFtLzE0NGJhYTc3LTQ1YTMtNDgxZi1iNTcxLWRlYjM2YTIyOWI4ZjozOTI3MjRjOC0zYWFmLTQzMmYtYWU3My0zNDQzMTk4ZDQyMTI=")
+    private val hcp1Authorization = "Basic " + Base64.getEncoder().encodeToString("${System.getenv("PARENT_HCP_USERNAME")}:${System.getenv("PARENT_HCP_PASSWORD")}".toByteArray(Charsets.UTF_8))
+    private val hcp2Authorization = "Basic " + Base64.getEncoder().encodeToString("${System.getenv("CHILD_1_HCP_USERNAME")}:${System.getenv("CHILD_1_HCP_PASSWORD")}".toByteArray(Charsets.UTF_8))
+
+    private val hcp1PrivKey = System.getenv("PARENT_HCP_PRIV_KEY").toPrivateKey()
+    private val hcp2PrivKey = System.getenv("CHILD_1_HCP_PRIV_KEY").toPrivateKey()
+
+    private val hcp1UserApi = UserApi(basePath = iCureBackendUrl, authHeader = hcp1Authorization)
+    private val hcp1HcPartyApi = HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = hcp1Authorization)
+    private val hcp1MaintenanceTaskApi = MaintenanceTaskApi(basePath = iCureBackendUrl, authHeader = hcp1Authorization)
+
+    private val hcp2UserApi = UserApi(basePath = iCureBackendUrl, authHeader = hcp2Authorization)
+    private val hcp2HcPartyApi = HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = hcp2Authorization)
+    private val hcp2MaintenanceTaskApi = MaintenanceTaskApi(basePath = iCureBackendUrl, authHeader = hcp2Authorization)
 
     @Test
     fun test_CreateMaintenanceTask_Success() = runBlocking {
         // Given
         val hcp1User = hcp1UserApi.getCurrentUser()
         val hcp1 = hcp1HcPartyApi.getCurrentHealthcareParty()
-        val hcp1cc = cryptoConfigFor(hcp1User, hcp1, "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=")
+        val hcp1cc = cryptoConfigFor(hcp1User, hcp1, hcp1Authorization, hcp1PrivKey)
 
         val hcp2User = hcp2UserApi.getCurrentUser()
         val hcp2 = hcp2HcPartyApi.getCurrentHealthcareParty()
-        val hcp2cc = cryptoConfigFor(hcp2User, hcp2, "Basic dGVzdC0yLXR6LWRldi10ZWFtLzE0NGJhYTc3LTQ1YTMtNDgxZi1iNTcxLWRlYjM2YTIyOWI4ZjozOTI3MjRjOC0zYWFmLTQzMmYtYWU3My0zNDQzMTk4ZDQyMTI=", mapOf(rsaKeyPairFor(hcp1)))
+        val hcp2cc = cryptoConfigFor(hcp2User, hcp2, hcp2Authorization, hcp2PrivKey, mapOf(rsaKeyPairFor(hcp1, hcp1PrivKey)))
 
         val taskToCreate = maintenanceTaskDto(delegatedTo = hcp2)
 
@@ -79,7 +87,7 @@ internal class MaintenanceTaskApiKtTest {
         // Given
         val hcp1User = hcp1UserApi.getCurrentUser()
         val hcp1 = hcp1HcPartyApi.getCurrentHealthcareParty()
-        val hcp1cc = cryptoConfigFor(hcp1User, hcp1, "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=")
+        val hcp1cc = cryptoConfigFor(hcp1User, hcp1, hcp1Authorization, hcp1PrivKey)
 
         val createdTask = hcp1MaintenanceTaskApi.createMaintenanceTask(hcp1User, maintenanceTaskDto(delegatedTo = hcp1), config = hcp1cc)
 
@@ -100,7 +108,7 @@ internal class MaintenanceTaskApiKtTest {
         // Given
         val hcp1User = hcp1UserApi.getCurrentUser()
         val hcp1 = hcp1HcPartyApi.getCurrentHealthcareParty()
-        val hcp1cc = cryptoConfigFor(hcp1User, hcp1, "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=")
+        val hcp1cc = cryptoConfigFor(hcp1User, hcp1, hcp1Authorization, hcp1PrivKey)
 
         val createdTask = hcp1MaintenanceTaskApi.createMaintenanceTask(hcp1User, maintenanceTaskDto(delegatedTo = hcp1), config = hcp1cc)
 
@@ -123,7 +131,7 @@ internal class MaintenanceTaskApiKtTest {
         // Given
         val hcp1User = hcp1UserApi.getCurrentUser()
         val hcp1 = hcp1HcPartyApi.getCurrentHealthcareParty()
-        val hcp1cc = cryptoConfigFor(hcp1User, hcp1, "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=")
+        val hcp1cc = cryptoConfigFor(hcp1User, hcp1, hcp1Authorization, hcp1PrivKey)
 
         val createdTask = hcp1MaintenanceTaskApi.createMaintenanceTask(hcp1User, maintenanceTaskDto(delegatedTo = hcp1), config = hcp1cc)
 
@@ -142,7 +150,7 @@ internal class MaintenanceTaskApiKtTest {
         // Given
         val hcp1User = hcp1UserApi.getCurrentUser()
         val hcp1 = hcp1HcPartyApi.getCurrentHealthcareParty()
-        val hcp1cc = cryptoConfigFor(hcp1User, hcp1, "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=")
+        val hcp1cc = cryptoConfigFor(hcp1User, hcp1, hcp1Authorization, hcp1PrivKey)
 
         val identifierUuid = UUID.randomUUID().toString()
         val taskIdentifier = IdentifierDto(id = "SYSTEM-TEST|$identifierUuid", system = "SYSTEM-TEST", value = identifierUuid)
@@ -164,7 +172,7 @@ internal class MaintenanceTaskApiKtTest {
         // Given
         val hcp1User = hcp1UserApi.getCurrentUser()
         val hcp1 = hcp1HcPartyApi.getCurrentHealthcareParty()
-        val hcp1cc = cryptoConfigFor(hcp1User, hcp1, "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=")
+        val hcp1cc = cryptoConfigFor(hcp1User, hcp1, hcp1Authorization, hcp1PrivKey)
 
         val createdTask = hcp1MaintenanceTaskApi.createMaintenanceTask(hcp1User, maintenanceTaskDto(delegatedTo = hcp1)
             .copy(created = Instant.now().plusSeconds(60 * 5).toEpochMilli()), config = hcp1cc)
@@ -184,7 +192,7 @@ internal class MaintenanceTaskApiKtTest {
             // Given
             val hcp1User = hcp1UserApi.getCurrentUser()
             val hcp1 = hcp1HcPartyApi.getCurrentHealthcareParty()
-            val hcp1cc = cryptoConfigFor(hcp1User, hcp1, "Basic YWJkZW1vdHN0MjoyN2I5MGY2ZS02ODQ3LTQ0YmYtYjkwZi02ZTY4NDdiNGJmMWM=")
+            val hcp1cc = cryptoConfigFor(hcp1User, hcp1, hcp1Authorization, hcp1PrivKey)
 
             val taskTypeUuid = UUID.randomUUID().toString()
             val createdTask = hcp1MaintenanceTaskApi.createMaintenanceTask(hcp1User, maintenanceTaskDto(delegatedTo = hcp1)
@@ -203,21 +211,20 @@ internal class MaintenanceTaskApiKtTest {
     private fun cryptoConfigFor(user: UserDto,
                                 hcp: HealthcarePartyDto,
                                 authHeader: String,
+                                hcpPrivKey: RSAPrivateKey,
                                 additionalRsaKeyPairs: Map<String, List<Pair<RSAPrivateKey, RSAPublicKey>>> = emptyMap()) : CryptoConfig<MaintenanceTaskDto, io.icure.kraken.client.models.MaintenanceTaskDto> {
         return maintenanceTaskCryptoConfig(
             LocalCrypto(
                 ExtendedTestUtils.dataOwnerWrapperFor(
-                    "https://kraken.icure.dev",
+                    iCureBackendUrl,
                     authHeader
-                ), mapOf(rsaKeyPairFor(hcp)) + additionalRsaKeyPairs
+                ), mapOf(rsaKeyPairFor(hcp, hcpPrivKey)) + additionalRsaKeyPairs
             ), user
         )
     }
 
-    private fun rsaKeyPairFor(hcp: HealthcarePartyDto): Pair<String, List<Pair<RSAPrivateKey, RSAPublicKey>>> {
-        val hcp2KeyPath = "keys/${hcp.id}-icc-priv.2048.key"
-        val hcp2KeyFile = MaintenanceTaskApiKtTest::class.java.getResource(hcp2KeyPath)!!
-        return hcp.id to listOf(hcp2KeyFile.readText(Charsets.UTF_8).toPrivateKey() to hcp.publicKey!!.toPublicKey())
+    private fun rsaKeyPairFor(hcp: HealthcarePartyDto, hcpPrivKey: RSAPrivateKey): Pair<String, List<Pair<RSAPrivateKey, RSAPublicKey>>> {
+        return hcp.id to listOf(hcpPrivKey to hcp.publicKey!!.toPublicKey())
     }
 
 
