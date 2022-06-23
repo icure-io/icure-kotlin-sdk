@@ -279,3 +279,7 @@ tasks.jacocoTestReport {
         xml.isEnabled = true
     }
 }
+
+tasks.test {
+    useJUnitPlatform()
+}
