@@ -7,7 +7,7 @@ import io.icure.kraken.client.crypto.CryptoConfig
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
 import io.icure.kraken.client.crypto.keyFromHexString
-import io.icure.kraken.client.extendedapis.mapper.ServiceMapperFactory
+import io.icure.kraken.client.models.ContentDto
 import io.icure.kraken.client.models.DelegationDto
 import io.icure.kraken.client.models.IcureStubDto
 import io.icure.kraken.client.models.ListOfIdsDto
@@ -19,6 +19,10 @@ import io.icure.kraken.client.models.decrypted.ServiceDto
 import io.icure.kraken.client.models.filter.chain.FilterChain
 import io.icure.kraken.client.models.filter.contact.ContactByServiceIdsFilter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.mapstruct.Mapper
+import org.mapstruct.Mapping
+import org.mapstruct.Mappings
+import org.mapstruct.factory.Mappers
 import java.util.*
 
 suspend fun ContactDto.initDelegations(user: UserDto, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>): ContactDto {
@@ -298,7 +302,7 @@ suspend fun Crypto.encryptServices(myId: String, delegations: Set<String>, conta
                 c.compoundValue != null && c.stringValue == null && c.documentId == null  && c.measureValue == null  && c.medicationValue == null  &&
                         c.booleanValue == null && c.numberValue == null && c.instantValue == null  && c.fuzzyDateValue == null  && c.binaryValue == null
             }) {
-            ServiceMapperFactory.instance.map(s).copy(content = s.content.mapValues { (_,c) -> io.icure.kraken.client.models.ContentDto(compoundValue = c.compoundValue?.let { this.encryptServices(myId, delegations, contactKey, it) }) })
+            ServiceMapperFactory.instance.map(s).copy(content = s.content.mapValues { (_,c) -> ContentDto(compoundValue = c.compoundValue?.let { this.encryptServices(myId, delegations, contactKey, it) }) })
         } else {
             ServiceMapperFactory.instance.map(s.copy(content = mapOf(), encryptedSelf = Base64.getEncoder().encodeToString(encryptAES(data = objectMapper.writeValueAsBytes(mapOf("content" to s.content)), key = key))))
         }
@@ -323,4 +327,38 @@ suspend fun Crypto.decryptServices(myId: String, contactKey: ByteArray?, service
 data class ContentWrapper(val content: Map<String, io.icure.kraken.client.models.decrypted.ContentDto> = mapOf()
 )
 
+@Mapper(uses = [ServiceMapper::class])
+interface ContactMapper {
+    fun map(contact: ContactDto): io.icure.kraken.client.models.ContactDto
+    fun map(contact: io.icure.kraken.client.models.ContactDto): ContactDto
+}
 
+object ContactMapperFactory {
+    val instance = Mappers.getMapper(ContactMapper::class.java)
+}
+
+@Mapper
+interface ServiceMapper {
+
+    fun map(service: ServiceDto): io.icure.kraken.client.models.ServiceDto
+    fun map(service: io.icure.kraken.client.models.ServiceDto): ServiceDto
+
+    fun map(content: io.icure.kraken.client.models.decrypted.ContentDto): ContentDto
+    fun map(content: ContentDto): io.icure.kraken.client.models.decrypted.ContentDto
+
+    fun mapQualifiedLinks(qualifiedLinks: Map<ServiceDto.LinkQualification, Map<String, String>>) : Map<String, Map<String, String>> {
+        return qualifiedLinks
+            .map { (key, value) -> key.value to value }
+            .toMap()
+    }
+
+    fun mapRawQualifiedLinks(qualifiedLinks: Map<String, Map<String, String>>) : Map<ServiceDto.LinkQualification, Map<String, String>> {
+        return qualifiedLinks
+            .map { (key, value) -> ServiceDto.LinkQualification.valueOf(key) to value }
+            .toMap()
+    }
+}
+
+object ServiceMapperFactory {
+    val instance = Mappers.getMapper(ServiceMapper::class.java)
+}

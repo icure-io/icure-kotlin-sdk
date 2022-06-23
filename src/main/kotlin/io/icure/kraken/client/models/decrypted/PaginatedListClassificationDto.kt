@@ -17,7 +17,6 @@ import io.icure.kraken.client.models.PaginatedDocumentKeyIdPairObject
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
 import io.icure.kraken.client.models.ClassificationDto
 
 /**
@@ -31,7 +30,6 @@ import io.icure.kraken.client.models.ClassificationDto
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-
 data class PaginatedListClassificationDto (
 
     @field:JsonProperty("pageSize")

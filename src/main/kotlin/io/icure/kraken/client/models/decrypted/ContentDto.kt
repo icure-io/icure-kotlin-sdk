@@ -18,7 +18,6 @@ import io.icure.kraken.client.models.MedicationDto
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
 import io.icure.kraken.client.models.TimeSeriesDto
 
 /**
@@ -41,7 +40,6 @@ import io.icure.kraken.client.models.TimeSeriesDto
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-
 data class ContentDto (
 
     @field:JsonProperty("stringValue")
