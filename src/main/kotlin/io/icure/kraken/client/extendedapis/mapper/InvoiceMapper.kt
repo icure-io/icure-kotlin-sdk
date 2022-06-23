@@ -3,7 +3,6 @@ package io.icure.kraken.client.extendedapis.mapper
 import io.icure.kraken.client.models.decrypted.InvoiceDto
 import org.mapstruct.InjectionStrategy
 import org.mapstruct.Mapper
-import org.mapstruct.factory.Mappers
 
 @Mapper(injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 interface InvoiceMapper {
@@ -12,5 +11,5 @@ interface InvoiceMapper {
 }
 
 object InvoiceMapperFactory {
-    val instance = Mappers.getMapper(InvoiceMapper::class.java)
+    val instance = InvoiceMapperImpl()
 }

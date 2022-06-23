@@ -2,7 +2,6 @@ package io.icure.kraken.client.extendedapis.mapper
 
 import io.icure.kraken.client.models.decrypted.PatientDto
 import org.mapstruct.Mapper
-import org.mapstruct.factory.Mappers
 
 @Mapper
 interface PatientMapper {
@@ -11,5 +10,5 @@ interface PatientMapper {
 }
 
 object PatientMapperFactory {
-    val instance = Mappers.getMapper(PatientMapper::class.java)
+    val instance = PatientMapperImpl()
 }

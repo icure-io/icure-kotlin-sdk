@@ -2,7 +2,6 @@ package io.icure.kraken.client.extendedapis.mapper
 
 import io.icure.kraken.client.models.decrypted.FormDto
 import org.mapstruct.Mapper
-import org.mapstruct.factory.Mappers
 
 @Mapper
 interface FormMapper {
@@ -11,5 +10,5 @@ interface FormMapper {
 }
 
 object FormMapperFactory {
-    val instance = Mappers.getMapper(FormMapper::class.java)
+    val instance = FormMapperImpl()
 }

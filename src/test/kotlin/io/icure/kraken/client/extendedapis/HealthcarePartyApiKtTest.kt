@@ -250,7 +250,7 @@ internal class HealthcarePartyApiKtTest {
             name = "${newHcp.firstName} ${newHcp.lastName}",
             authenticationTokens = mapOf(
                 "test" to AuthenticationTokenDto(
-                    "test",
+                    UUID.randomUUID().toString(),
                     Instant.now().toEpochMilli(),
                     24 * 3600 * 365
                 )

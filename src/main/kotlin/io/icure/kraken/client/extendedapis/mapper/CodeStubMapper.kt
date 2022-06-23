@@ -3,7 +3,6 @@ package io.icure.kraken.client.extendedapis.mapper
 import io.icure.kraken.client.models.CodeStub
 import io.icure.kraken.client.models.CodeStubDto
 import org.mapstruct.Mapper
-import org.mapstruct.factory.Mappers
 
 @Mapper
 abstract class CodeStubMapper {
@@ -26,5 +25,5 @@ abstract class CodeStubMapper {
 }
 
 object CodeStubMapperFactory {
-    val instance = Mappers.getMapper(CodeStubMapper::class.java)
+    val instance = CodeStubMapperImpl()
 }

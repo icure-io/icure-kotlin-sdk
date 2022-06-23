@@ -2,7 +2,6 @@ package io.icure.kraken.client.extendedapis.mapper
 
 import io.icure.kraken.client.models.decrypted.TimeTableDto
 import org.mapstruct.Mapper
-import org.mapstruct.factory.Mappers
 
 @Mapper
 interface TimeTableMapper {
@@ -11,5 +10,5 @@ interface TimeTableMapper {
 }
 
 object TimeTableMapperFactory {
-    val instance = Mappers.getMapper(TimeTableMapper::class.java)
+    val instance = TimeTableMapperImpl()
 }

@@ -2,7 +2,6 @@ package io.icure.kraken.client.extendedapis.mapper
 
 import io.icure.kraken.client.models.decrypted.MessageDto
 import org.mapstruct.Mapper
-import org.mapstruct.factory.Mappers
 
 @Mapper
 interface MessageMapper {
@@ -11,5 +10,5 @@ interface MessageMapper {
 }
 
 object MessageMapperFactory {
-    val instance = Mappers.getMapper(MessageMapper::class.java)
+    val instance = MessageMapperImpl()
 }

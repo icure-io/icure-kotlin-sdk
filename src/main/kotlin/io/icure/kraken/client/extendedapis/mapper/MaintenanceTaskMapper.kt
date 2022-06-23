@@ -2,7 +2,6 @@ package io.icure.kraken.client.extendedapis.mapper
 
 import io.icure.kraken.client.models.decrypted.MaintenanceTaskDto
 import org.mapstruct.Mapper
-import org.mapstruct.factory.Mappers
 
 @Mapper
 interface MaintenanceTaskMapper {
@@ -11,5 +10,5 @@ interface MaintenanceTaskMapper {
 }
 
 object MaintenanceTaskMapperFactory {
-    val instance = Mappers.getMapper(MaintenanceTaskMapper::class.java)
+    val instance = MaintenanceTaskMapperImpl()
 }

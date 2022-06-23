@@ -2,7 +2,6 @@ package io.icure.kraken.client.extendedapis.mapper
 
 import io.icure.kraken.client.models.decrypted.ReceiptDto
 import org.mapstruct.Mapper
-import org.mapstruct.factory.Mappers
 
 @Mapper
 interface ReceiptMapper {
@@ -11,5 +10,5 @@ interface ReceiptMapper {
 }
 
 object ReceiptMapperFactory {
-    val instance = Mappers.getMapper(ReceiptMapper::class.java)
+    val instance = ReceiptMapperImpl()
 }

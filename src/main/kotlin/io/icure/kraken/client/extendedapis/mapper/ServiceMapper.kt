@@ -1,16 +1,18 @@
 package io.icure.kraken.client.extendedapis.mapper
 
+import io.icure.kraken.client.models.decrypted.ContentDto
 import io.icure.kraken.client.models.decrypted.ServiceDto
-import org.mapstruct.InjectionStrategy
 import org.mapstruct.Mapper
-import org.mapstruct.factory.Mappers
 
-@Mapper(uses = [ContentMapper::class], injectionStrategy = InjectionStrategy.CONSTRUCTOR)
+@Mapper
 interface ServiceMapper {
     fun map(service: ServiceDto): io.icure.kraken.client.models.ServiceDto
     fun map(service: io.icure.kraken.client.models.ServiceDto): ServiceDto
+
+    fun map(content: ContentDto): io.icure.kraken.client.models.ContentDto
+    fun map(content: io.icure.kraken.client.models.ContentDto): ContentDto
 }
 
 object ServiceMapperFactory {
-    val instance = Mappers.getMapper(ServiceMapper::class.java)
+    val instance = ServiceMapperImpl()
 }
