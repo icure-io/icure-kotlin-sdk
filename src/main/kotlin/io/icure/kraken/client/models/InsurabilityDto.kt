@@ -39,7 +39,7 @@ data class InsurabilityDto (
 
     /* Insurance extra parameters. */
     @field:JsonProperty("parameters")
-    val parameters: kotlin.collections.Map<kotlin.String, kotlin.String> = emptyMap(),
+    val parameters: kotlin.collections.Map<kotlin.String, kotlin.String> = mapOf(),
 
     /* Is hospitalization covered. */
     @field:JsonProperty("hospitalisation")

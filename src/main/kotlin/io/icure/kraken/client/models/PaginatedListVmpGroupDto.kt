@@ -40,7 +40,7 @@ data class PaginatedListVmpGroupDto (
     val totalSize: kotlin.Int,
 
     @field:JsonProperty("rows")
-    val rows: kotlin.collections.List<VmpGroupDto> = emptyList(),
+    val rows: kotlin.collections.List<VmpGroupDto> = listOf(),
 
     @field:JsonProperty("nextKeyPair")
     val nextKeyPair: PaginatedDocumentKeyIdPairObject? = null

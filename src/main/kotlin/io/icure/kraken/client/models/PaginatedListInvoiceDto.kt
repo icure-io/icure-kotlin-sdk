@@ -40,7 +40,7 @@ data class PaginatedListInvoiceDto (
     val totalSize: kotlin.Int,
 
     @field:JsonProperty("rows")
-    val rows: kotlin.collections.List<InvoiceDto> = emptyList(),
+    val rows: kotlin.collections.List<InvoiceDto> = listOf(),
 
     @field:JsonProperty("nextKeyPair")
     val nextKeyPair: PaginatedDocumentKeyIdPairObject? = null

@@ -34,10 +34,10 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class ImportMapping (
 
     @field:JsonProperty("label")
-    val label: kotlin.collections.Map<kotlin.String, kotlin.String> = emptyMap(),
+    val label: kotlin.collections.Map<kotlin.String, kotlin.String> = mapOf(),
 
     @field:JsonProperty("tags")
-    val tags: kotlin.collections.List<CodeStub> = emptyList(),
+    val tags: kotlin.collections.List<CodeStub> = listOf(),
 
     @field:JsonProperty("lifecycle")
     val lifecycle: kotlin.String? = null,

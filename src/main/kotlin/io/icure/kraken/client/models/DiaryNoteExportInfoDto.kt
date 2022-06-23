@@ -40,16 +40,16 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class DiaryNoteExportInfoDto (
 
     @field:JsonProperty("secretForeignKeys")
-    val secretForeignKeys: kotlin.collections.List<kotlin.String> = emptyList(),
+    val secretForeignKeys: kotlin.collections.List<kotlin.String> = listOf(),
 
     @field:JsonProperty("excludedIds")
-    val excludedIds: kotlin.collections.List<kotlin.String> = emptyList(),
+    val excludedIds: kotlin.collections.List<kotlin.String> = listOf(),
 
     @field:JsonProperty("tags")
-    val tags: kotlin.collections.List<kotlin.String> = emptyList(),
+    val tags: kotlin.collections.List<kotlin.String> = listOf(),
 
     @field:JsonProperty("contexts")
-    val contexts: kotlin.collections.List<kotlin.String> = emptyList(),
+    val contexts: kotlin.collections.List<kotlin.String> = listOf(),
 
     @field:JsonProperty("recipient")
     val recipient: HealthcarePartyDto? = null,

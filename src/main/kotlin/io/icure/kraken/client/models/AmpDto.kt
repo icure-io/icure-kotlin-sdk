@@ -57,10 +57,10 @@ data class AmpDto (
     val blackTriangle: kotlin.Boolean,
 
     @field:JsonProperty("ampps")
-    val ampps: kotlin.collections.List<AmppDto> = emptyList(),
+    val ampps: kotlin.collections.List<AmppDto> = listOf(),
 
     @field:JsonProperty("components")
-    val components: kotlin.collections.List<AmpComponentDto> = emptyList(),
+    val components: kotlin.collections.List<AmpComponentDto> = listOf(),
 
     @field:JsonProperty("rev")
     val rev: kotlin.String? = null,

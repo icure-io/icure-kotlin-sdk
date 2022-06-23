@@ -51,25 +51,25 @@ data class CodeDto (
     val id: kotlin.String,
 
     @field:JsonProperty("regions")
-    val regions: kotlin.collections.List<kotlin.String> = emptyList(),
+    val regions: kotlin.collections.List<kotlin.String> = listOf(),
 
     @field:JsonProperty("periodicity")
-    val periodicity: kotlin.collections.List<PeriodicityDto> = emptyList(),
+    val periodicity: kotlin.collections.List<PeriodicityDto> = listOf(),
 
     @field:JsonProperty("links")
-    val links: kotlin.collections.List<kotlin.String> = emptyList(),
+    val links: kotlin.collections.List<kotlin.String> = listOf(),
 
     @field:JsonProperty("qualifiedLinks")
-    val qualifiedLinks: kotlin.collections.Map<kotlin.String, kotlin.collections.List<kotlin.String>> = emptyMap(),
+    val qualifiedLinks: kotlin.collections.Map<kotlin.String, kotlin.collections.List<kotlin.String>> = mapOf(),
 
     @field:JsonProperty("flags")
-    val flags: kotlin.collections.List<CodeDto.Flags> = emptyList(),
+    val flags: kotlin.collections.List<CodeDto.Flags> = listOf(),
 
     @field:JsonProperty("searchTerms")
-    val searchTerms: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<kotlin.String>> = emptyMap(),
+    val searchTerms: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<kotlin.String>> = mapOf(),
 
     @field:JsonProperty("appendices")
-    val appendices: kotlin.collections.Map<kotlin.String, kotlin.String> = emptyMap(),
+    val appendices: kotlin.collections.Map<kotlin.String, kotlin.String> = mapOf(),
 
     @field:JsonProperty("disabled")
     val disabled: kotlin.Boolean = false,

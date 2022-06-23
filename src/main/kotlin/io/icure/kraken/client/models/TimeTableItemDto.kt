@@ -38,13 +38,13 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class TimeTableItemDto (
 
     @field:JsonProperty("days")
-    val days: kotlin.collections.List<kotlin.String> = emptyList(),
+    val days: kotlin.collections.List<kotlin.String> = listOf(),
 
     @field:JsonProperty("hours")
-    val hours: kotlin.collections.List<TimeTableHourDto> = emptyList(),
+    val hours: kotlin.collections.List<TimeTableHourDto> = listOf(),
 
     @field:JsonProperty("recurrenceTypes")
-    val recurrenceTypes: kotlin.collections.List<kotlin.String> = emptyList(),
+    val recurrenceTypes: kotlin.collections.List<kotlin.String> = listOf(),
 
     @field:JsonProperty("homeVisit")
     val homeVisit: kotlin.Boolean,

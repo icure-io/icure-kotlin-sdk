@@ -43,10 +43,10 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class ResultInfoDto (
 
     @field:JsonProperty("codes")
-    val codes: kotlin.collections.List<CodeStubDto> = emptyList(),
+    val codes: kotlin.collections.List<CodeStubDto> = listOf(),
 
     @field:JsonProperty("services")
-    val services: kotlin.collections.List<ServiceDto> = emptyList(),
+    val services: kotlin.collections.List<ServiceDto> = listOf(),
 
     @field:JsonProperty("ssin")
     val ssin: kotlin.String? = null,

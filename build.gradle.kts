@@ -1,12 +1,13 @@
-val kotlinVersion = "1.6.10"
-val kotlinCoroutinesVersion = "1.6.0"
+val kotlinVersion = "1.6.21"
+val kotlinCoroutinesVersion = "1.6.2"
 val jacksonVersion = "2.12.5"
-val kmapVersion = "0.1.22-77b57a3b36"
+val kmapVersion = "0.1.33-b53d7e7ec1"
 
 plugins {
-    kotlin("jvm") version "1.6.10"
+    kotlin("jvm") version "1.6.21"
+    id("com.google.devtools.ksp") version "1.6.21-1.0.5"
+    id("jacoco")
     id("org.sonarqube") version "3.3"
-    id("com.google.devtools.ksp") version "1.6.10-1.0.2"
 }
 
 sonarqube {
@@ -42,6 +43,14 @@ repositories {
     }
 }
 
+kotlin {
+    sourceSets {
+        main {
+            kotlin.srcDir("build/generated/ksp/main/kotlin")
+        }
+    }
+}
+
 dependencies {
     implementation(group = "io.icure", name = "kmap", version = kmapVersion)
     ksp(group = "io.icure", name = "kmap", version = kmapVersion)
@@ -49,16 +58,8 @@ dependencies {
     implementation(group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version = kotlinVersion)
 
     implementation(group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version = kotlinCoroutinesVersion)
-    implementation(
-        group = "org.jetbrains.kotlinx",
-        name = "kotlinx-coroutines-reactive",
-        version = kotlinCoroutinesVersion
-    )
-    implementation(
-        group = "org.jetbrains.kotlinx",
-        name = "kotlinx-coroutines-reactor",
-        version = kotlinCoroutinesVersion
-    )
+    implementation(group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-reactive", version = kotlinCoroutinesVersion)
+    implementation(group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-reactor", version = kotlinCoroutinesVersion)
 
     implementation(group = "com.fasterxml.jackson.core", name = "jackson-core", version = jacksonVersion)
     implementation(group = "com.fasterxml.jackson.core", name = "jackson-databind", version = jacksonVersion)
@@ -66,9 +67,10 @@ dependencies {
     implementation(group = "com.fasterxml.jackson.datatype", name = "jackson-datatype-jsr310", version = jacksonVersion)
 
     implementation(group = "io.icure", name = "async-jackson-http-client", version = "0.1.15-9cf193799d")
+    implementation(group = "io.icure", name = "mapper-processor", version = "0.1.1-32d45af2a6")
+    implementation(group = "org.mapstruct", name = "mapstruct", version = "1.3.1.Final")
 
     implementation(group = "javax.inject", name = "javax.inject", version = "1")
-    implementation(group = "org.mapstruct", name = "mapstruct", version = "1.3.1.Final")
     implementation(group = "com.github.ben-manes.caffeine", name = "caffeine", version = "3.0.3")
 
     implementation(group = "ch.qos.logback", name = "logback-classic", version = "1.2.3")
@@ -91,23 +93,16 @@ dependencies {
     testImplementation(group = "com.willowtreeapps.assertk", name = "assertk-jvm", version = "0.24")
 }
 
-kotlin {
-    sourceSets {
-        main {
-            kotlin.srcDir("build/generated/ksp/main/kotlin")
-        }
-    }
-}
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_11
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
-        freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "11"
+        freeCompilerArgs = listOf("-Xjsr305=strict", "-opt-in=kotlin.RequiresOptIn")
+        jvmTarget = "17"
     }
 }
 
@@ -283,4 +278,8 @@ tasks.jacocoTestReport {
     reports {
         xml.isEnabled = true
     }
+}
+
+tasks.test {
+    useJUnitPlatform()
 }

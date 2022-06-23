@@ -32,7 +32,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class DelegationDto (
 
     @field:JsonProperty("tags")
-    val tags: kotlin.collections.List<kotlin.String> = emptyList(),
+    val tags: kotlin.collections.List<kotlin.String> = listOf(),
 
     @field:JsonProperty("owner")
     val owner: kotlin.String? = null,

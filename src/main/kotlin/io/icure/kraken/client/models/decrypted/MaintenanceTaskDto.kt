@@ -15,7 +15,7 @@ package io.icure.kraken.client.models.decrypted
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-import com.github.pozo.KotlinBuilder
+
 import io.icure.kraken.client.models.CodeStubDto
 import io.icure.kraken.client.models.DelegationDto
 import io.icure.kraken.client.models.IdentifierDto
@@ -48,7 +48,7 @@ import io.icure.kraken.client.models.PropertyStubDto
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@KotlinBuilder
+
 data class MaintenanceTaskDto (
 
     @field:JsonProperty("id")

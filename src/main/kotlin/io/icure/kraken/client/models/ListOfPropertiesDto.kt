@@ -30,7 +30,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class ListOfPropertiesDto (
 
     @field:JsonProperty("properties")
-    val properties: kotlin.collections.List<PropertyStubDto> = emptyList()
+    val properties: kotlin.collections.List<PropertyStubDto> = listOf()
 
 )
 

@@ -43,7 +43,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class EfactInvoice (
 
     @field:JsonProperty("items")
-    val items: kotlin.collections.List<InvoiceItem> = emptyList(),
+    val items: kotlin.collections.List<InvoiceItem> = listOf(),
 
     @field:JsonProperty("ignorePrescriptionDate")
     val ignorePrescriptionDate: kotlin.Boolean,

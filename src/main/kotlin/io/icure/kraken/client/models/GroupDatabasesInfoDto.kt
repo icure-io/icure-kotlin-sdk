@@ -17,7 +17,6 @@ import io.icure.kraken.client.models.DatabaseInfoDto
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-import com.github.pozo.KotlinBuilder
 
 
 /**
@@ -29,14 +28,13 @@ import com.github.pozo.KotlinBuilder
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@KotlinBuilder
 data class GroupDatabasesInfoDto (
 
     @field:JsonProperty("groupId")
     val groupId: kotlin.String,
 
     @field:JsonProperty("databasesInfo")
-    val databasesInfo: kotlin.collections.List<DatabaseInfoDto> = emptyList()
+    val databasesInfo: kotlin.collections.List<DatabaseInfoDto> = listOf()
 
 )
 

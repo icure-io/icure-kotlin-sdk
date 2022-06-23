@@ -18,7 +18,6 @@ import io.icure.kraken.client.models.PaginatedDocumentKeyIdPairObject
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-import com.github.pozo.KotlinBuilder
 
 
 /**
@@ -32,7 +31,6 @@ import com.github.pozo.KotlinBuilder
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@KotlinBuilder
 data class PaginatedListMaintenanceTaskDto (
 
     @field:JsonProperty("pageSize")
@@ -42,7 +40,7 @@ data class PaginatedListMaintenanceTaskDto (
     val totalSize: kotlin.Int,
 
     @field:JsonProperty("rows")
-    val rows: kotlin.collections.List<MaintenanceTaskDto> = emptyList(),
+    val rows: kotlin.collections.List<MaintenanceTaskDto> = listOf(),
 
     @field:JsonProperty("nextKeyPair")
     val nextKeyPair: PaginatedDocumentKeyIdPairObject? = null

@@ -36,11 +36,11 @@ data class PatientHealthCarePartyDto (
 
     /* Preferred format of exchange for diverse means of communication */
     @field:JsonProperty("sendFormats")
-    val sendFormats: kotlin.collections.Map<kotlin.String, kotlin.String> = emptyMap(),
+    val sendFormats: kotlin.collections.Map<kotlin.String, kotlin.String> = mapOf(),
 
     /* Time periods */
     @field:JsonProperty("referralPeriods")
-    val referralPeriods: kotlin.collections.List<ReferralPeriodDto> = emptyList(),
+    val referralPeriods: kotlin.collections.List<ReferralPeriodDto> = listOf(),
 
     @field:JsonProperty("referral")
     @Deprecated(message = "This property is deprecated.")

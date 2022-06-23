@@ -27,6 +27,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flattenMerge
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -41,7 +42,7 @@ import java.security.spec.X509EncodedKeySpec
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-@OptIn(ExperimentalUnsignedTypes::class)
+@ExperimentalUnsignedTypes
 @FlowPreview
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi

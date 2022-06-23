@@ -40,7 +40,7 @@ data class PaginatedListEntityTemplateDto (
     val totalSize: kotlin.Int,
 
     @field:JsonProperty("rows")
-    val rows: kotlin.collections.List<EntityTemplateDto> = emptyList(),
+    val rows: kotlin.collections.List<EntityTemplateDto> = listOf(),
 
     @field:JsonProperty("nextKeyPair")
     val nextKeyPair: PaginatedDocumentKeyIdPairObject? = null

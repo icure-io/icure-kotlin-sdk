@@ -12,6 +12,7 @@ import io.icure.kraken.client.crypto.toPrivateKey
 import io.icure.kraken.client.crypto.toPublicKey
 import io.icure.kraken.client.extendedapis.infrastructure.ExtendedTestUtils.dataOwnerWrapperFor
 import io.icure.kraken.client.extendedapis.infrastructure.ExtendedTestUtils.localCrypto
+import io.icure.kraken.client.extendedapis.mapper.ContactMapperFactory
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.models.CodeStubDto
 import io.icure.kraken.client.models.decrypted.ContactDto

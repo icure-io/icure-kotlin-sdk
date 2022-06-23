@@ -5,12 +5,15 @@ import io.icure.kraken.client.crypto.CryptoConfig
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
 import io.icure.kraken.client.crypto.keyFromHexString
-import io.icure.kraken.client.models.*
+import io.icure.kraken.client.models.DelegationDto
+import io.icure.kraken.client.models.IcureStubDto
+import io.icure.kraken.client.models.ListOfIdsDto
+import io.icure.kraken.client.models.PatientDto
+import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.decrypted.HealthElementDto
 import io.icure.kraken.client.models.decrypted.PaginatedListHealthElementDto
 import io.icure.kraken.client.models.filter.chain.FilterChain
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.mapstruct.Mapper
 import org.mapstruct.factory.Mappers
 import java.util.*
 
@@ -219,14 +222,4 @@ suspend fun CryptoConfig<HealthElementDto, io.icure.kraken.client.models.HealthE
     val key = this.crypto.decryptEncryptionKeys(myId, healthElement.encryptionKeys).firstOrNull()
         ?.keyFromHexString() ?: throw IllegalArgumentException("No encryption key for user")
     return this.unmarshaller(healthElement, decryptAES(data = Base64.getDecoder().decode(healthElement.encryptedSelf), key = key))
-}
-
-@Mapper
-interface HealthElementMapper {
-    fun map(healthElement: HealthElementDto): io.icure.kraken.client.models.HealthElementDto
-    fun map(healthElement: io.icure.kraken.client.models.HealthElementDto): HealthElementDto
-}
-
-object HealthElementMapperFactory {
-    val instance = Mappers.getMapper(HealthElementMapper::class.java)
 }

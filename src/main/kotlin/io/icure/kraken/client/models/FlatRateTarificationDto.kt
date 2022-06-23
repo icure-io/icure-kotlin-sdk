@@ -34,7 +34,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class FlatRateTarificationDto (
 
     @field:JsonProperty("valorisations")
-    val valorisations: kotlin.collections.List<ValorisationDto> = emptyList(),
+    val valorisations: kotlin.collections.List<ValorisationDto> = listOf(),
 
     @field:JsonProperty("code")
     val code: kotlin.String? = null,
