@@ -9,7 +9,6 @@ import io.icure.kraken.client.models.*
 import io.icure.kraken.client.models.decrypted.ReceiptDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import org.mapstruct.Mapper
 import org.mapstruct.factory.Mappers
 import java.nio.ByteBuffer
 import java.util.*
@@ -103,14 +102,4 @@ suspend fun CryptoConfig<ReceiptDto, io.icure.kraken.client.models.ReceiptDto>.d
         ""
     )?.keyFromHexString() ?: throw IllegalArgumentException("No encryption key for user")
     return this.unmarshaller(receipt, decryptAES(data = Base64.getDecoder().decode(receipt.encryptedSelf), key = key))
-}
-
-@Mapper
-interface ReceiptMapper {
-    fun map(receipt: ReceiptDto): io.icure.kraken.client.models.ReceiptDto
-    fun map(receipt: io.icure.kraken.client.models.ReceiptDto): ReceiptDto
-}
-
-object ReceiptMapperFactory {
-    val instance = Mappers.getMapper(ReceiptMapper::class.java)
 }

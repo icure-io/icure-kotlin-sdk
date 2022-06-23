@@ -29,7 +29,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class ListOfIdsDto (
 
     @field:JsonProperty("ids")
-    val ids: kotlin.collections.List<kotlin.String> = emptyList()
+    val ids: kotlin.collections.List<kotlin.String> = listOf()
 
 )
 

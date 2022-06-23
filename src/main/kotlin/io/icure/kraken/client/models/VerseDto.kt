@@ -75,7 +75,7 @@ data class VerseDto (
     val id: kotlin.String,
 
     @field:JsonProperty("addedDocuments")
-    val addedDocuments: kotlin.collections.List<AddedDocumentDto> = emptyList(),
+    val addedDocuments: kotlin.collections.List<AddedDocumentDto> = listOf(),
 
     @field:JsonProperty("rev")
     val rev: kotlin.String? = null,

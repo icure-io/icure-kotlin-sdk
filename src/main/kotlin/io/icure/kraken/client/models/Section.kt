@@ -35,7 +35,7 @@ data class Section (
     val section: kotlin.String,
 
     @field:JsonProperty("fields")
-    val fields: kotlin.collections.List<kotlin.Any> = emptyList(),
+    val fields: kotlin.collections.List<kotlin.Any> = listOf(),
 
     @field:JsonProperty("description")
     val description: kotlin.String? = null,

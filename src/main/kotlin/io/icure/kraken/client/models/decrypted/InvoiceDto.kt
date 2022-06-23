@@ -314,6 +314,15 @@ data class InvoiceDto (
     @field:JsonProperty("idDocument")
     val idDocument: IdentityDocumentReaderDto? = null,
 
+    @field:JsonProperty("admissionDate")
+    val admissionDate: kotlin.Long? = null,
+
+    @field:JsonProperty("locationNihii")
+    val locationNihii: kotlin.String? = null,
+
+    @field:JsonProperty("locationService")
+    val locationService: kotlin.Int? = null,
+
     @field:JsonProperty("cancelReason")
     val cancelReason: kotlin.String? = null,
 

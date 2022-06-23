@@ -29,7 +29,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class MapOfIdsDto (
 
     @field:JsonProperty("mapOfIds")
-    val mapOfIds: kotlin.collections.Map<kotlin.String, kotlin.collections.List<kotlin.String>> = emptyMap()
+    val mapOfIds: kotlin.collections.Map<kotlin.String, kotlin.collections.List<kotlin.String>> = mapOf()
 
 )
 

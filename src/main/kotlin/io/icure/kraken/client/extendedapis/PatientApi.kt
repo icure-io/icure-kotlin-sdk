@@ -2,10 +2,12 @@ package io.icure.kraken.client.extendedapis
 
 import io.icure.kraken.client.apis.PatientApi
 import io.icure.kraken.client.applyIf
+import io.icure.kraken.client.crypto.Crypto
 import io.icure.kraken.client.crypto.CryptoConfig
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
 import io.icure.kraken.client.crypto.keyFromHexString
+import io.icure.kraken.client.extendedapis.mapper.PatientMapperFactory
 import io.icure.kraken.client.models.DelegationDto
 import io.icure.kraken.client.models.IdWithRevDto
 import io.icure.kraken.client.models.ListOfIdsDto
@@ -15,9 +17,22 @@ import io.icure.kraken.client.models.decrypted.PaginatedListPatientDto
 import io.icure.kraken.client.models.decrypted.PatientDto
 import io.icure.kraken.client.models.filter.chain.FilterChain
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.mapstruct.Mapper
-import org.mapstruct.factory.Mappers
+import java.security.PrivateKey
+import java.security.PublicKey
 import java.util.*
+
+suspend fun PatientDto.addNewKeyPair(user: UserDto,
+                                     crypto: Crypto,
+                                     patPublicKey: PublicKey,
+                                     patPrivateKey: PrivateKey? = null
+) = crypto.addNewKeyPairTo(user, this.toDataOwner(), patPublicKey, patPrivateKey).let { dataOwner ->
+    this.copy(
+        publicKey = dataOwner.publicKey,
+        hcPartyKeys = dataOwner.hcPartyKeys,
+        aesExchangeKeys = dataOwner.aesExchangeKeys,
+        transferKeys = dataOwner.transferKeys
+    )
+}
 
 fun PatientDto.initPatient() : PatientDto {
     return this
@@ -269,15 +284,4 @@ suspend fun CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>.d
     catch (ex : IllegalArgumentException){
         PatientMapperFactory.instance.map(patient)
     }
-}
-
-
-@Mapper
-interface PatientMapper {
-    fun map(patient: PatientDto): io.icure.kraken.client.models.PatientDto
-    fun map(patient: io.icure.kraken.client.models.PatientDto): PatientDto
-}
-
-object PatientMapperFactory {
-    val instance = Mappers.getMapper(PatientMapper::class.java)
 }

@@ -42,7 +42,7 @@ data class AddressDto (
 
     /* List of other contact details available through telecom services, ex: email, phone number, fax, etc. */
     @field:JsonProperty("telecoms")
-    val telecoms: kotlin.collections.List<TelecomDto> = emptyList(),
+    val telecoms: kotlin.collections.List<TelecomDto> = listOf(),
 
     /* The type of place the address represents, ex: home, office, hospital, clinic, etc.  */
     @field:JsonProperty("addressType")

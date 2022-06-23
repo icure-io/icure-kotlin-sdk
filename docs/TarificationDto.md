@@ -30,7 +30,7 @@ Name | Type | Description | Notes
 **consultationCode** | **kotlin.Boolean** |  |  [optional]
 **hasRelatedCode** | **kotlin.Boolean** |  |  [optional]
 **needsPrescriber** | **kotlin.Boolean** |  |  [optional]
-**ngroup** | **kotlin.String** |  |  [optional]
+**nGroup** | **kotlin.String** |  |  [optional]
 
 
 <a name="kotlin.collections.Set<FlagsEnum>"></a>

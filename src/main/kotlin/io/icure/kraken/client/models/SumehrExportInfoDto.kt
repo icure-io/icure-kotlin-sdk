@@ -40,10 +40,10 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class SumehrExportInfoDto (
 
     @field:JsonProperty("secretForeignKeys")
-    val secretForeignKeys: kotlin.collections.List<kotlin.String> = emptyList(),
+    val secretForeignKeys: kotlin.collections.List<kotlin.String> = listOf(),
 
     @field:JsonProperty("excludedIds")
-    val excludedIds: kotlin.collections.List<kotlin.String> = emptyList(),
+    val excludedIds: kotlin.collections.List<kotlin.String> = listOf(),
 
     @field:JsonProperty("comment")
     val comment: kotlin.String = "",

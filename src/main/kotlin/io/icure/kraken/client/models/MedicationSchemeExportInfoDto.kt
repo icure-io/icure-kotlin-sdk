@@ -35,10 +35,10 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class MedicationSchemeExportInfoDto (
 
     @field:JsonProperty("secretForeignKeys")
-    val secretForeignKeys: kotlin.collections.List<kotlin.String> = emptyList(),
+    val secretForeignKeys: kotlin.collections.List<kotlin.String> = listOf(),
 
     @field:JsonProperty("services")
-    val services: kotlin.collections.List<ServiceDto> = emptyList(),
+    val services: kotlin.collections.List<ServiceDto> = listOf(),
 
     @field:JsonProperty("serviceAuthors")
     val serviceAuthors: kotlin.collections.List<HealthcarePartyDto>? = null,

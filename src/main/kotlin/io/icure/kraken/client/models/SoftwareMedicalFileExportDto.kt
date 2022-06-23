@@ -33,7 +33,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class SoftwareMedicalFileExportDto (
 
     @field:JsonProperty("secretForeignKeys")
-    val secretForeignKeys: kotlin.collections.List<kotlin.String> = emptyList(),
+    val secretForeignKeys: kotlin.collections.List<kotlin.String> = listOf(),
 
     @field:JsonProperty("exportAsPMF")
     val exportAsPMF: kotlin.Boolean,

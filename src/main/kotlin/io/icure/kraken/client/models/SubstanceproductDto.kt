@@ -34,10 +34,10 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class SubstanceproductDto (
 
     @field:JsonProperty("intendedcds")
-    val intendedcds: kotlin.collections.List<CodeStubDto> = emptyList(),
+    val intendedcds: kotlin.collections.List<CodeStubDto> = listOf(),
 
     @field:JsonProperty("deliveredcds")
-    val deliveredcds: kotlin.collections.List<CodeStubDto> = emptyList(),
+    val deliveredcds: kotlin.collections.List<CodeStubDto> = listOf(),
 
     @field:JsonProperty("intendedname")
     val intendedname: kotlin.String? = null,

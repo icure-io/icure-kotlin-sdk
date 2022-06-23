@@ -13,7 +13,6 @@ import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.decrypted.DocumentDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import org.mapstruct.Mapper
 import org.mapstruct.factory.Mappers
 import java.nio.ByteBuffer
 import java.util.*
@@ -167,14 +166,4 @@ suspend fun CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>
         ""
     )?.keyFromHexString() ?: throw IllegalArgumentException("No encryption key for user")
     return this.unmarshaller(document, decryptAES(data = Base64.getDecoder().decode(document.encryptedSelf), key = key))
-}
-
-@Mapper
-interface DocumentMapper {
-    fun map(document: DocumentDto): io.icure.kraken.client.models.DocumentDto
-    fun map(document: io.icure.kraken.client.models.DocumentDto): DocumentDto
-}
-
-object DocumentMapperFactory {
-    val instance = Mappers.getMapper(DocumentMapper::class.java)
 }

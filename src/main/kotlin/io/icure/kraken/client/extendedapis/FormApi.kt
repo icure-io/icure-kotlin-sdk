@@ -11,7 +11,6 @@ import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.decrypted.FormDto
 import io.icure.kraken.client.models.decrypted.PatientDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.mapstruct.Mapper
 import org.mapstruct.factory.Mappers
 import java.util.*
 
@@ -230,12 +229,3 @@ suspend fun CryptoConfig<FormDto, io.icure.kraken.client.models.FormDto>.decrypt
     return this.unmarshaller(form, decryptAES(data = Base64.getDecoder().decode(form.encryptedSelf), key = key))
 }
 
-@Mapper
-interface FormMapper {
-    fun map(form: FormDto): io.icure.kraken.client.models.FormDto
-    fun map(form: io.icure.kraken.client.models.FormDto): FormDto
-}
-
-object FormMapperFactory {
-    val instance = Mappers.getMapper(FormMapper::class.java)
-}

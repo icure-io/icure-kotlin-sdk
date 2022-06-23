@@ -869,49 +869,10 @@ class PatientApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     }
 
     /**
-     * Get the patient (identified by patientId) hcparty keys. Those keys are AES keys (encrypted) used to share information between HCPs and a patient.
-     * This endpoint is used to recover all keys that have already been created and that can be used to share information with this patient. It returns a map with the following structure: ID of the owner of the encrypted AES key -&gt; encrypted AES key. The returned encrypted AES keys will have to be decrypted using the patient&#39;s private key.                  {                     \&quot;hcparty 1 delegator ID\&quot;: \&quot;AES hcparty key (encrypted using patient public RSA key)\&quot;                     \&quot;hcparty 2 delegator ID\&quot;: \&quot;other AES hcparty key (encrypted using patient public RSA key)\&quot;                 }
-     * @param patientId The patient Id for which information is shared
-     * @return kotlin.collections.Map<kotlin.String, kotlin.String>
-     * @throws UnsupportedOperationException If the API returns an informational or redirection response
-     * @throws ClientException If the API returns a client error response
-     * @throws ServerException If the API returns a server error response
-     */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getPatientHcPartyKeysForDelegate(patientId: kotlin.String) : kotlin.collections.Map<kotlin.String, kotlin.String>  {
-        val localVariableConfig = getPatientHcPartyKeysForDelegateRequestConfig(patientId = patientId)
-
-        return request<Unit, kotlin.collections.Map<kotlin.String, kotlin.String>>(
-            localVariableConfig
-        )!!
-    }
-    /**
-     * To obtain the request config of the operation getPatientHcPartyKeysForDelegate
-     *
-     * @param patientId The patient Id for which information is shared
-     * @return RequestConfig
-     */
-    fun getPatientHcPartyKeysForDelegateRequestConfig(patientId: kotlin.String) : RequestConfig<Unit> {
-        // val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-        localVariableHeaders["Accept"] = "*/*"
-        val localVariableBody = null
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/rest/v1/patient/{patientId}/keys".replace("{"+"patientId"+"}", "${URLEncoder.encode(patientId.toString(), Charsets.UTF_8)}"),
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            body = localVariableBody        )
-    }
-
-    /**
     * Get the HcParty encrypted AES keys indexed by owner.
     * (key, value) of the map is as follows: (ID of the owner of the encrypted AES key, encrypted AES keys)
     * @param patientId  
-    * @return kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.String>>>
+    * @return kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.String>>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response

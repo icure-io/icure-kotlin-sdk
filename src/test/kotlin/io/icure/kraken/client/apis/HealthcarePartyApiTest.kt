@@ -910,72 +910,7 @@ class HealthcarePartyApiTest() {
             }
         }
     }
-    
-    /**
-     * Get the HcParty encrypted AES keys indexed by owner
-     *
-     * (key, value) of the map is as follows: (ID of the owner of the encrypted AES key, encrypted AES key)
-     *
-     * @throws ApiException
-     *          if the Api call fails
-     */
-    @ParameterizedTest
-    @MethodSource("fileNames") // six numbers
-	fun getHcPartyKeysForDelegateTest(fileName: String) = runBlocking {
 
-        if (TestUtils.skipEndpoint(fileName, "getHcPartyKeysForDelegate")) {
-            assertTrue(true, "Test of getHcPartyKeysForDelegate endpoint has been skipped")
-        } else {
-            try{
-                createForModification(fileName)
-                val credentialsFile = TestUtils.getCredentialsFile(fileName, "getHcPartyKeysForDelegate")
-                val healthcarePartyId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getHcPartyKeysForDelegate.healthcarePartyId")!!.let {
-                    (it as? HealthcarePartyDto)?.takeIf { TestUtils.isAutoRev(fileName, "getHcPartyKeysForDelegate") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getHealthcareParty(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
-                    } as? kotlin.String ?: it
-                    }
-
-                val response = api(credentialsFile).getHcPartyKeysForDelegate(healthcarePartyId = healthcarePartyId)
-
-                val testFileName = "HealthcarePartyApi.getHcPartyKeysForDelegate"
-                val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
-                try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<kotlin.String>? != null) {
-                        if ("kotlin.collections.Map<kotlin.String, kotlin.String>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
-                        } else {
-                            object : TypeReference<List<kotlin.String>>() {}
-                        }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.Map<kotlin.String, kotlin.String>>() {}
-                    })
-                    assertAreEquals("getHcPartyKeysForDelegate", objectFromFile, response)
-                    println("Comparison successful")
-                }
-                catch (e: Exception) {
-                    when (e) {
-                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
-                            file.parentFile.mkdirs()
-                            file.createNewFile()
-                            (response as? Flow<ByteBuffer>)
-                                ?.let { it.writeToFile(file) }
-                                ?: objectMapper.writeValue(file, response)
-                            assert(true)
-                            println("File written")
-                        }
-                    }
-                }
-            }
-            finally {
-                TestUtils.deleteAfterElements(fileName)
-                alreadyCreatedObjects.remove(fileName)
-            }
-        }
-    }
     
     /**
      * Get healthcareParties by their IDs
