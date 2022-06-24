@@ -92,8 +92,7 @@ internal class PatientApiKtTest {
         val user = userApi.getCurrentUser()
         val hcp = hcpartyApi.getCurrentHealthcareParty()
 
-        val cc = patientCryptoConfig(ExtendedTestUtils.localCrypto(iCureBackendUrl,
-            parentAuthorization, parentPrivKey, user, hcp.toDataOwner()))
+        val cc = patientCryptoConfig(ExtendedTestUtils.localCrypto(iCureBackendUrl, parentAuthorization, parentPrivKey, user, hcp.toDataOwner()))
 
         // When
         val p1 = try { patientApi.createPatient(user, PatientDto(id = UUID.randomUUID().toString(), firstName = "John", lastName = "Doe", note = "To be encrypted"), cc) } catch(e:Exception) { throw IllegalStateException(e) }
