@@ -6,6 +6,7 @@ import io.icure.kraken.client.crypto.Crypto
 import io.icure.kraken.client.crypto.CryptoConfig
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
+import io.icure.kraken.client.crypto.LocalCrypto
 import io.icure.kraken.client.crypto.keyFromHexString
 import io.icure.kraken.client.extendedapis.mapper.PatientMapperFactory
 import io.icure.kraken.client.models.DelegationDto
@@ -17,6 +18,7 @@ import io.icure.kraken.client.models.decrypted.PaginatedListPatientDto
 import io.icure.kraken.client.models.decrypted.PatientDto
 import io.icure.kraken.client.models.filter.chain.FilterChain
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import java.security.PrivateKey
 import java.security.PublicKey
 import java.util.*
@@ -283,5 +285,60 @@ suspend fun CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>.d
     }
     catch (ex : IllegalArgumentException){
         PatientMapperFactory.instance.map(patient)
+    }
+}
+
+@OptIn(ExperimentalStdlibApi::class, ExperimentalCoroutinesApi::class)
+suspend fun PatientApi.giveAccessTo(ccPatient: CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>, currentUser: UserDto, patient: PatientDto, delegateTo: String): PatientDto {
+    val dataOwnerId = currentUser.dataOwnerId()
+    val localCrypto = ccPatient.crypto
+
+    if (!patient.delegations.keys.any { it == dataOwnerId }) {
+        throw IllegalStateException("DataOwner $dataOwnerId does not have the right to access patient ${patient.id}")
+    }
+
+    if (patient.delegations.keys.any { it == delegateTo }) {
+        return patient
+    }
+
+    return patient.let { patientDto ->
+        val (delegation_Key, dataOwner) = localCrypto.encryptAESKeyForDataOwner(
+            dataOwnerId,
+            delegateTo,
+            patientDto.id,
+            localCrypto.decryptEncryptionKeys(dataOwnerId, patientDto.delegations).first()
+        )
+        val (encryptionKey_Key, _) = localCrypto.encryptAESKeyForDataOwner(
+            dataOwnerId,
+            delegateTo,
+            patientDto.id,
+            localCrypto.decryptEncryptionKeys(dataOwnerId, patientDto.encryptionKeys).first()
+        )
+
+        val delegation = DelegationDto(owner = dataOwnerId, delegatedTo = delegateTo, key = delegation_Key)
+        val encryptionKey = DelegationDto(owner = dataOwnerId, delegatedTo = delegateTo, key = encryptionKey_Key)
+
+        val delegations = patient.delegations.plus(delegateTo to setOf(delegation))
+        val encryptionKeys = patient.encryptionKeys.plus(delegateTo to setOf(encryptionKey))
+
+        val patientToUpdate = if (dataOwner != null && dataOwner.dataOwnerId == patientDto.id) {
+            patient.copy(
+                rev = dataOwner.rev,
+                hcPartyKeys = dataOwner.hcPartyKeys,
+                delegations = delegations,
+                encryptionKeys = encryptionKeys
+            )
+        } else {
+            patient.copy(
+                delegations = delegations,
+                encryptionKeys = encryptionKeys
+            )
+        }
+
+        try {
+            this.modifyPatient(currentUser, patientToUpdate, ccPatient)
+        } catch (e: Exception) {
+            throw IllegalStateException("Couldn't give access to $delegateTo to patient ${patient.id}")
+        }
     }
 }
