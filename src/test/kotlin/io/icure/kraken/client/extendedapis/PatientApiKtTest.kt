@@ -24,10 +24,13 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
+import java.security.KeyPair
 import java.security.interfaces.RSAPrivateKey
 import java.security.interfaces.RSAPublicKey
 import java.time.Instant
 import java.util.*
+import kotlin.time.Duration.Companion.days
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
@@ -45,6 +48,7 @@ internal class PatientApiKtTest {
     private val userApi = UserApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
     private val hcpartyApi = HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
     private val patientApi = PatientApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
+    private val deviceApi = DeviceApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
     private val maintenanceTaskApi = MaintenanceTaskApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
 
     private val child1UserApi = UserApi(basePath = iCureBackendUrl, authHeader = child1Authorization)
@@ -267,5 +271,195 @@ internal class PatientApiKtTest {
 
     @org.junit.jupiter.api.Test
     fun decryptPatient() {
+    }
+
+    private suspend fun createUserForHcp(
+        newHcp: HealthcarePartyDto,
+        parent: HealthcarePartyDto
+    ) = userApi.createUser(
+        UserDto(
+            id = UUID.randomUUID().toString(),
+            login = "jimmy-${System.currentTimeMillis()}",
+            type = UserDto.Type.database,
+            status = UserDto.Status.aCTIVE,
+            name = "${newHcp.firstName} ${newHcp.lastName}",
+            authenticationTokens = mapOf(
+                "test" to AuthenticationTokenDto(
+                    "test",
+                    Instant.now().toEpochMilli(),
+                    365.days.inWholeSeconds
+                )
+            ),
+            healthcarePartyId = newHcp.id,
+            autoDelegations = mapOf("all" to setOf(parent.id))
+        )
+    )
+
+    private suspend fun createHealthcareParty(
+        parentUser: UserDto,
+        parentLocalCrypto: LocalCrypto,
+        hcpKeyPair: KeyPair,
+        firstName: String = "Jimmy",
+        lastName: String = "Materazzi"
+    ) = hcpartyApi.createHealthcareParty(
+        HealthcarePartyDto(
+            id = UUID.randomUUID().toString(),
+            firstName = firstName,
+            lastName = lastName
+        )
+            .initHcParty()
+            .addNewKeyPair(parentUser, parentLocalCrypto, hcpKeyPair.public)
+    )
+
+    @FlowPreview
+    @Test
+    fun `old hcp giveAccess to newly created patient to hcp1`() = runBlocking {
+        val parentUser = userApi.getCurrentUser()
+        val parent = hcpartyApi.getCurrentHealthcareParty()
+        val parentLocalCrypto = LocalCrypto(
+            ExtendedTestUtils.dataOwnerWrapperFor(iCureBackendUrl, parentAuthorization), mapOf(
+                parent.id to listOf(parentPrivKey to parent.publicKey!!.toPublicKey()),
+            ),
+            maintenanceTaskApi
+        )
+
+        val hcp1Kp = CryptoUtils.generateKeyPairRSA()
+
+        val hcp1User = createUserForHcp(
+            createHealthcareParty(parentUser, parentLocalCrypto, hcp1Kp, "Bender Bending", "Rodriguez"),
+            parent
+        )
+
+        val hcp1Auth =
+            "Basic ${Base64.getEncoder().encodeToString("${hcp1User.login}:test".toByteArray(Charsets.UTF_8))}"
+
+        val hcp1PatientApi = PatientApi(basePath = iCureBackendUrl, authHeader = hcp1Auth)
+
+        val ccPatient = { auth: String, user: UserDto, kp: KeyPair ->
+            patientCryptoConfig(
+                LocalCrypto(
+                    ExtendedTestUtils.dataOwnerWrapperFor(
+                        iCureBackendUrl,
+                        auth
+                    ), mapOf(
+                        user.dataOwnerId() to listOf(kp.private as RSAPrivateKey to kp.public as RSAPublicKey)
+                    )
+                )
+            )
+        }
+
+        val cc1 = ccPatient(hcp1Auth, hcp1User, hcp1Kp)
+        val ccParent = patientCryptoConfig(
+            ExtendedTestUtils.localCrypto(
+                iCureBackendUrl,
+                parentAuthorization,
+                parentPrivKey,
+                parentUser,
+                parent.toDataOwner()
+            )
+        )
+
+        delay(4000)
+
+        // When
+        val p1 = try {
+            patientApi.createPatient(
+                parentUser,
+                PatientDto(
+                    id = UUID.randomUUID().toString(),
+                    firstName = "Hermez",
+                    lastName = "Conrad",
+                    note = "Sweet manatee of Galilee!"
+                ),
+                ccParent
+            )
+        } catch (e: Exception) {
+            throw IllegalStateException(e)
+        }
+
+        Assertions.assertNotNull(p1, "Patient should not be null")
+
+        val sharedP1 = patientApi.giveAccessTo(ccParent, parentUser, p1, hcp1User.dataOwnerId())
+        val p2 = try {
+            hcp1PatientApi.getPatient(hcp1User, p1.id, cc1)
+        } catch (e: Exception) {
+            throw IllegalStateException(e)
+        }
+
+        Assertions.assertEquals(sharedP1, p2)
+    }
+
+    @FlowPreview
+    @Test
+    fun `hcp1 giveAccess to newly created patient to hcp2`() = runBlocking {
+        val parentLocalCrypto =
+            LocalCrypto(DataOwnerResolver(hcpartyApi, patientApi, deviceApi), emptyMap(), maintenanceTaskApi)
+        val parentUser = userApi.getCurrentUser()
+        val parent = hcpartyApi.getCurrentHealthcareParty()
+
+        val hcp1Kp = CryptoUtils.generateKeyPairRSA()
+        val hcp2Kp = CryptoUtils.generateKeyPairRSA()
+
+        val hcp1User = createUserForHcp(
+            createHealthcareParty(parentUser, parentLocalCrypto, hcp1Kp, "Bender Bending", "Rodriguez"),
+            parent
+        )
+        val hcp2User = createUserForHcp(
+            createHealthcareParty(parentUser, parentLocalCrypto, hcp2Kp, "Philip J.", "Fry"),
+            parent
+        )
+
+        val hcp1Auth =
+            "Basic ${Base64.getEncoder().encodeToString("${hcp1User.login}:test".toByteArray(Charsets.UTF_8))}"
+        val hcp2Auth =
+            "Basic ${Base64.getEncoder().encodeToString("${hcp2User.login}:test".toByteArray(Charsets.UTF_8))}"
+
+        val hcp1PatientApi = PatientApi(basePath = iCureBackendUrl, authHeader = hcp1Auth)
+        val hcp2PatientApi = PatientApi(basePath = iCureBackendUrl, authHeader = hcp2Auth)
+
+        val ccPatient = { auth: String, user: UserDto, kp: KeyPair ->
+            patientCryptoConfig(
+                LocalCrypto(
+                    ExtendedTestUtils.dataOwnerWrapperFor(
+                        iCureBackendUrl,
+                        auth
+                    ), mapOf(
+                        user.dataOwnerId() to listOf(kp.private as RSAPrivateKey to kp.public as RSAPublicKey)
+                    )
+                )
+            )
+        }
+
+        val cc1 = ccPatient(hcp1Auth, hcp1User, hcp1Kp)
+        val cc2 = ccPatient(hcp2Auth, hcp2User, hcp2Kp)
+
+        delay(4000)
+
+        // When
+        val p1 = try {
+            hcp1PatientApi.createPatient(
+                hcp1User,
+                PatientDto(
+                    id = UUID.randomUUID().toString(),
+                    firstName = "Hermez",
+                    lastName = "Conrad",
+                    note = "Sweet manatee of Galilee!"
+                ),
+                cc1
+            )
+        } catch (e: Exception) {
+            throw IllegalStateException(e)
+        }
+
+        Assertions.assertNotNull(p1, "Patient should not be null")
+
+        val sharedP1 = hcp1PatientApi.giveAccessTo(cc1, hcp1User, p1, hcp2User.dataOwnerId())
+        val p2 = try {
+            hcp2PatientApi.getPatient(hcp2User, p1.id, cc2)
+        } catch (e: Exception) {
+            throw IllegalStateException(e)
+        }
+
+        Assertions.assertEquals(sharedP1, p2)
     }
 }
