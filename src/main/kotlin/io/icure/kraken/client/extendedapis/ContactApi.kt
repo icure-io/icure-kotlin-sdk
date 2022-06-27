@@ -20,9 +20,8 @@ import io.icure.kraken.client.models.filter.chain.FilterChain
 import io.icure.kraken.client.models.filter.contact.ContactByServiceIdsFilter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.mapstruct.Mapper
-import org.mapstruct.Mapping
-import org.mapstruct.Mappings
 import org.mapstruct.factory.Mappers
+import java.security.interfaces.RSAPublicKey
 import java.util.*
 
 suspend fun ContactDto.initDelegations(user: UserDto, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>): ContactDto {
@@ -250,23 +249,99 @@ suspend fun ContactApi.listServicesLinkedTo(user: UserDto, listOfIdsDto: ListOfI
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.newContactDelegations(user: UserDto, contactId: String, delegationDto: DelegationDto, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>) : ContactDto {
+suspend fun ContactApi.newContactDelegations(
+    user: UserDto,
+    contactId: String,
+    delegationDto: DelegationDto,
+    config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>
+): ContactDto {
     return this.newContactDelegations(contactId, delegationDto).let { config.decryptContact(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.setContactsDelegations(user: UserDto, icureStubDto: List<IcureStubDto>, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>) : List<ContactDto> {
+suspend fun ContactApi.setContactsDelegations(
+    user: UserDto,
+    icureStubDto: List<IcureStubDto>,
+    config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>
+): List<ContactDto> {
     return this.setContactsDelegations(icureStubDto).map { config.decryptContact(user.dataOwnerId(), it) }
 }
 
-suspend fun CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>.encryptContact(myId: String, delegations: Set<String>, contact: ContactDto): io.icure.kraken.client.models.ContactDto {
-    return if (contact.encryptionKeys.any { (_,s) -> s.isNotEmpty() }) {
+@OptIn(ExperimentalStdlibApi::class, ExperimentalCoroutinesApi::class)
+suspend fun ContactApi.giveAccessTo(
+    ccContact: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>,
+    currentUser: UserDto,
+    contact: ContactDto,
+    delegateTo: String,
+    publicKey: RSAPublicKey
+): ContactDto {
+    val localCrypto = ccContact.crypto
+    val dataOwnerId = currentUser.dataOwnerId()
+
+    if (!contact.delegations.keys.any { it == dataOwnerId }) {
+        throw IllegalStateException("DataOwner $dataOwnerId does not have the right to access contact ${contact.id}")
+    }
+
+    if (contact.delegations.keys.any { it == dataOwnerId }) {
+        return contact
+    }
+
+    val (patientIdKey, _) = localCrypto.encryptAESKeyForDataOwner(
+        dataOwnerId,
+        delegateTo,
+        contact.id,
+        localCrypto.decryptEncryptionKeys(dataOwnerId, contact.cryptedForeignKeys).first()
+    )
+    val (secretForeignKey, _) = localCrypto.encryptAESKeyForDataOwner(
+        dataOwnerId,
+        delegateTo,
+        contact.id,
+        localCrypto.decryptEncryptionKeys(dataOwnerId, contact.delegations).first()
+    )
+    val (encryptionKey, _) = localCrypto.encryptAESKeyForDataOwner(
+        dataOwnerId,
+        delegateTo,
+        contact.id,
+        localCrypto.decryptEncryptionKeys(dataOwnerId, contact.encryptionKeys).first()
+    )
+
+    val delegation = DelegationDto(owner = dataOwnerId, delegatedTo = delegateTo, key = secretForeignKey)
+    val encryptionKeyDelegation = DelegationDto(owner = dataOwnerId, delegatedTo = delegateTo, key = encryptionKey)
+    val cryptedForeignKeyDelegation =
+        DelegationDto(owner = dataOwnerId, delegatedTo = delegateTo, key = patientIdKey)
+
+    val delegations = contact.delegations.plus(delegateTo to setOf(delegation))
+    val encryptionKeys = contact.encryptionKeys.plus(delegateTo to setOf(encryptionKeyDelegation))
+    val cryptedForeignKeys = contact.cryptedForeignKeys.plus(delegateTo to setOf(cryptedForeignKeyDelegation))
+
+    val contactToUpdate = contact.copy(
+        delegations = delegations,
+        encryptionKeys = encryptionKeys,
+        cryptedForeignKeys = cryptedForeignKeys
+    )
+
+    return this.modifyContact(currentUser, contactToUpdate, ccContact)
+}
+
+suspend fun CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>.encryptContact(
+    myId: String,
+    delegations: Set<String>,
+    contact: ContactDto
+): io.icure.kraken.client.models.ContactDto {
+    return if (contact.encryptionKeys.any { (_, s) -> s.isNotEmpty() }) {
         contact
     } else {
         val secret = UUID.randomUUID().toString()
         contact.copy(encryptionKeys = (delegations + myId).fold(contact.encryptionKeys) { m, d ->
-            m + (d to setOf(DelegationDto(emptyList(), myId, d, this.crypto.encryptAESKeyForDataOwner(myId, d, contact.id, secret).first)))
+            m + (d to setOf(
+                DelegationDto(
+                    emptyList(),
+                    myId,
+                    d,
+                    this.crypto.encryptAESKeyForDataOwner(myId, d, contact.id, secret).first
+                )
+            ))
         })
     }.let { p ->
         val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.replace(
