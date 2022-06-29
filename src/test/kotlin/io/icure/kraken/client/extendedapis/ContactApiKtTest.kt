@@ -278,7 +278,7 @@ internal class ContactApiKtTest {
     }
 
     @Test
-    fun `hcp1 giveAccess to newly created patient to hcp2`() = runBlocking {
+    fun `hcp1 giveAccess to newly created Contact to hcp2`() = runBlocking {
         val parentUser = userApi.getCurrentUser()
         val parent = hcPartyApi.getCurrentHealthcareParty()
         val parentLocalCrypto = LocalCrypto(
