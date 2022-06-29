@@ -14,7 +14,6 @@ import io.icure.kraken.client.models.decrypted.HealthElementDto
 import io.icure.kraken.client.models.decrypted.PaginatedListHealthElementDto
 import io.icure.kraken.client.models.filter.chain.FilterChain
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import java.security.interfaces.RSAPublicKey
 import java.util.*
 
 suspend fun HealthElementDto.initDelegations(user: UserDto, config: CryptoConfig<HealthElementDto, io.icure.kraken.client.models.HealthElementDto>): HealthElementDto {
@@ -205,7 +204,6 @@ suspend fun HealthElementApi.giveAccessTo(
     currentUser: UserDto,
     healthElementDto: HealthElementDto,
     delegateTo: String,
-    publicKey: RSAPublicKey
 ): HealthElementDto {
     val localCrypto = ccHealthElement.crypto
     val dataOwnerId = currentUser.dataOwnerId()

@@ -6,7 +6,6 @@ import io.icure.kraken.client.crypto.Crypto
 import io.icure.kraken.client.crypto.CryptoConfig
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
-import io.icure.kraken.client.crypto.LocalCrypto
 import io.icure.kraken.client.crypto.keyFromHexString
 import io.icure.kraken.client.extendedapis.mapper.PatientMapperFactory
 import io.icure.kraken.client.models.DelegationDto
@@ -18,7 +17,6 @@ import io.icure.kraken.client.models.decrypted.PaginatedListPatientDto
 import io.icure.kraken.client.models.decrypted.PatientDto
 import io.icure.kraken.client.models.filter.chain.FilterChain
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
 import java.security.PrivateKey
 import java.security.PublicKey
 import java.util.*
@@ -289,7 +287,12 @@ suspend fun CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>.d
 }
 
 @OptIn(ExperimentalStdlibApi::class, ExperimentalCoroutinesApi::class)
-suspend fun PatientApi.giveAccessTo(ccPatient: CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>, currentUser: UserDto, patient: PatientDto, delegateTo: String): PatientDto {
+suspend fun PatientApi.giveAccessTo(
+    ccPatient: CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>,
+    currentUser: UserDto,
+    patient: PatientDto,
+    delegateTo: String,
+): PatientDto {
     val dataOwnerId = currentUser.dataOwnerId()
     val localCrypto = ccPatient.crypto
 
