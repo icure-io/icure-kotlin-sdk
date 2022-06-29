@@ -21,7 +21,6 @@ import io.icure.kraken.client.models.filter.contact.ContactByServiceIdsFilter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.mapstruct.Mapper
 import org.mapstruct.factory.Mappers
-import java.security.interfaces.RSAPublicKey
 import java.util.*
 
 suspend fun ContactDto.initDelegations(user: UserDto, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>): ContactDto {
@@ -274,7 +273,6 @@ suspend fun ContactApi.giveAccessTo(
     currentUser: UserDto,
     contact: ContactDto,
     delegateTo: String,
-    publicKey: RSAPublicKey
 ): ContactDto {
     val localCrypto = ccContact.crypto
     val dataOwnerId = currentUser.dataOwnerId()
@@ -283,7 +281,7 @@ suspend fun ContactApi.giveAccessTo(
         throw IllegalStateException("DataOwner $dataOwnerId does not have the right to access contact ${contact.id}")
     }
 
-    if (contact.delegations.keys.any { it == dataOwnerId }) {
+    if (contact.delegations.keys.any { it == delegateTo }) {
         return contact
     }
 

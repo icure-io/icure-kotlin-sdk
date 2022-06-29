@@ -13,6 +13,8 @@ import io.icure.kraken.client.crypto.publicKeyAsString
 import io.icure.kraken.client.crypto.toPrivateKey
 import io.icure.kraken.client.crypto.toPublicKey
 import io.icure.kraken.client.extendedapis.infrastructure.ExtendedTestUtils
+import io.icure.kraken.client.extendedapis.infrastructure.createHealthcareParty
+import io.icure.kraken.client.extendedapis.infrastructure.createUserForHcp
 import io.icure.kraken.client.extendedapis.mapper.PatientMapperFactory
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.models.AuthenticationTokenDto
@@ -30,7 +32,6 @@ import java.security.interfaces.RSAPrivateKey
 import java.security.interfaces.RSAPublicKey
 import java.time.Instant
 import java.util.*
-import kotlin.time.Duration.Companion.days
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
@@ -46,7 +47,7 @@ internal class PatientApiKtTest {
     private val child2PrivKey = System.getenv("CHILD_2_HCP_PRIV_KEY").toPrivateKey()
 
     private val userApi = UserApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
-    private val hcpartyApi = HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
+    private val hcPartyApi = HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
     private val patientApi = PatientApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
     private val deviceApi = DeviceApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
     private val maintenanceTaskApi = MaintenanceTaskApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
@@ -66,9 +67,13 @@ internal class PatientApiKtTest {
     fun createPatientWithCustomCryptoConfig() = runBlocking {
         // Before
         val user = userApi.getCurrentUser()
-        val hcp = hcpartyApi.getCurrentHealthcareParty()
-        val cc = customPatientCryptoConfig(ExtendedTestUtils.localCrypto(iCureBackendUrl,
-            parentAuthorization, parentPrivKey, user, hcp.toDataOwner()))
+        val hcp = hcPartyApi.getCurrentHealthcareParty()
+        val cc = customPatientCryptoConfig(
+            ExtendedTestUtils.localCrypto(
+                iCureBackendUrl,
+                parentAuthorization, parentPrivKey, user, hcp.toDataOwner()
+            )
+        )
 
         // When
         val p1 = try { patientApi.createPatient(user, PatientDto(id = UUID.randomUUID().toString(), firstName = "John", lastName = "Doe", note = "To be encrypted"), cc) } catch(e:Exception) { throw IllegalStateException(e) }
@@ -94,7 +99,7 @@ internal class PatientApiKtTest {
     fun createPatientWithDefaultCryptoConfig() = runBlocking {
         // Before
         val user = userApi.getCurrentUser()
-        val hcp = hcpartyApi.getCurrentHealthcareParty()
+        val hcp = hcPartyApi.getCurrentHealthcareParty()
 
         val cc = patientCryptoConfig(ExtendedTestUtils.localCrypto(iCureBackendUrl, parentAuthorization, parentPrivKey, user, hcp.toDataOwner()))
 
@@ -117,7 +122,7 @@ internal class PatientApiKtTest {
     @org.junit.jupiter.api.Test
     fun createPatientWithDefaultCryptoConfigHcpWithParent() = runBlocking {
         val parent = userApi.getCurrentUser()
-        val parentHcp = hcpartyApi.getCurrentHealthcareParty()
+        val parentHcp = hcPartyApi.getCurrentHealthcareParty()
 
         // Before
         val user1 = child1UserApi.getCurrentUser()
@@ -158,7 +163,7 @@ internal class PatientApiKtTest {
     fun createPatientWithNewHcpHavingMultipleKeys() = runBlocking {
         // Before
         val parentUser = userApi.getCurrentUser()
-        val parent = hcpartyApi.getCurrentHealthcareParty()
+        val parent = hcPartyApi.getCurrentHealthcareParty()
         val parentLocalCrypto = LocalCrypto(
             ExtendedTestUtils.dataOwnerWrapperFor(iCureBackendUrl, parentAuthorization), mapOf(
                 parent.id to listOf(parentPrivKey to parent.publicKey!!.toPublicKey()),
@@ -168,7 +173,7 @@ internal class PatientApiKtTest {
 
         val newHcpKp1 = CryptoUtils.generateKeyPairRSA()
         val newHcpKp2 = CryptoUtils.generateKeyPairRSA()
-        val newHcp = hcpartyApi.createHealthcareParty(
+        val newHcp = hcPartyApi.createHealthcareParty(
             HealthcarePartyDto(
                 id = UUID.randomUUID().toString(),
                 firstName = "Jimmy",
@@ -273,49 +278,12 @@ internal class PatientApiKtTest {
     fun decryptPatient() {
     }
 
-    private suspend fun createUserForHcp(
-        newHcp: HealthcarePartyDto,
-        parent: HealthcarePartyDto
-    ) = userApi.createUser(
-        UserDto(
-            id = UUID.randomUUID().toString(),
-            login = "jimmy-${System.currentTimeMillis()}",
-            type = UserDto.Type.database,
-            status = UserDto.Status.aCTIVE,
-            name = "${newHcp.firstName} ${newHcp.lastName}",
-            authenticationTokens = mapOf(
-                "test" to AuthenticationTokenDto(
-                    "test",
-                    Instant.now().toEpochMilli(),
-                    365.days.inWholeSeconds
-                )
-            ),
-            healthcarePartyId = newHcp.id,
-            autoDelegations = mapOf("all" to setOf(parent.id))
-        )
-    )
-
-    private suspend fun createHealthcareParty(
-        parentUser: UserDto,
-        parentLocalCrypto: LocalCrypto,
-        hcpKeyPair: KeyPair,
-        firstName: String = "Jimmy",
-        lastName: String = "Materazzi"
-    ) = hcpartyApi.createHealthcareParty(
-        HealthcarePartyDto(
-            id = UUID.randomUUID().toString(),
-            firstName = firstName,
-            lastName = lastName
-        )
-            .initHcParty()
-            .addNewKeyPair(parentUser, parentLocalCrypto, hcpKeyPair.public)
-    )
-
+    @OptIn(ExperimentalUnsignedTypes::class)
     @FlowPreview
     @Test
     fun `old hcp giveAccess to newly created patient to hcp1`() = runBlocking {
         val parentUser = userApi.getCurrentUser()
-        val parent = hcpartyApi.getCurrentHealthcareParty()
+        val parent = hcPartyApi.getCurrentHealthcareParty()
         val parentLocalCrypto = LocalCrypto(
             ExtendedTestUtils.dataOwnerWrapperFor(iCureBackendUrl, parentAuthorization), mapOf(
                 parent.id to listOf(parentPrivKey to parent.publicKey!!.toPublicKey()),
@@ -325,8 +293,8 @@ internal class PatientApiKtTest {
 
         val hcp1Kp = CryptoUtils.generateKeyPairRSA()
 
-        val hcp1User = createUserForHcp(
-            createHealthcareParty(parentUser, parentLocalCrypto, hcp1Kp, "Bender Bending", "Rodriguez"),
+        val hcp1User = userApi.createUserForHcp(
+            hcPartyApi.createHealthcareParty(parentUser, parentLocalCrypto, hcp1Kp, "Bender Bending", "Rodriguez"),
             parent
         )
 
@@ -389,23 +357,24 @@ internal class PatientApiKtTest {
         Assertions.assertEquals(sharedP1, p2)
     }
 
+    @OptIn(ExperimentalUnsignedTypes::class)
     @FlowPreview
     @Test
     fun `hcp1 giveAccess to newly created patient to hcp2`() = runBlocking {
         val parentLocalCrypto =
-            LocalCrypto(DataOwnerResolver(hcpartyApi, patientApi, deviceApi), emptyMap(), maintenanceTaskApi)
+            LocalCrypto(DataOwnerResolver(hcPartyApi, patientApi, deviceApi), emptyMap(), maintenanceTaskApi)
         val parentUser = userApi.getCurrentUser()
-        val parent = hcpartyApi.getCurrentHealthcareParty()
+        val parent = hcPartyApi.getCurrentHealthcareParty()
 
         val hcp1Kp = CryptoUtils.generateKeyPairRSA()
         val hcp2Kp = CryptoUtils.generateKeyPairRSA()
 
-        val hcp1User = createUserForHcp(
-            createHealthcareParty(parentUser, parentLocalCrypto, hcp1Kp, "Bender Bending", "Rodriguez"),
+        val hcp1User = userApi.createUserForHcp(
+            hcPartyApi.createHealthcareParty(parentUser, parentLocalCrypto, hcp1Kp, "Bender Bending", "Rodriguez"),
             parent
         )
-        val hcp2User = createUserForHcp(
-            createHealthcareParty(parentUser, parentLocalCrypto, hcp2Kp, "Philip J.", "Fry"),
+        val hcp2User = userApi.createUserForHcp(
+            hcPartyApi.createHealthcareParty(parentUser, parentLocalCrypto, hcp2Kp, "Philip J.", "Fry"),
             parent
         )
 
