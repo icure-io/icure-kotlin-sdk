@@ -254,7 +254,7 @@ data class DataOwner(
         newAesExchangeKeys: Pair<String, List<Pair<String, String>>>
     ) : DataOwner {
         val (delegateId, keysForDelegate) = newAesExchangeKeys
-        return if (this.publicKey == dataOwnerPubKey && keysForDelegate.size >= 2) {
+        return if (this.publicKey == dataOwnerPubKey && keysForDelegate.size == 2) {
             this.addNewHcPartyKeys(delegateId, keysForDelegate)
         } else {
             this.addNewAesExchangeKeys(dataOwnerPubKey, delegateId, keysForDelegate)
