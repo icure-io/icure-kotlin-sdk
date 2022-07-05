@@ -73,7 +73,11 @@ internal class HealthcarePartyApiKtTest {
         Assertions.assertNotNull(newUser.login)
         Assertions.assertTrue(newHcp.aesExchangeKeys.containsKey(kp.publicKeyAsString()))
         Assertions.assertTrue(newHcp.aesExchangeKeys[kp.publicKeyAsString()]!!.containsKey(newHcp.id))
-        Assertions.assertTrue(newHcp.aesExchangeKeys[kp.publicKeyAsString()]!![newHcp.id]!!.containsKey(kp.publicKeyAsString().takeLast(12)))
+        Assertions.assertTrue(
+            newHcp.aesExchangeKeys[kp.publicKeyAsString()]!![newHcp.id]!!.containsKey(
+                kp.publicKeyAsString().takeLast(32)
+            )
+        )
     }
 
     @FlowPreview
@@ -101,7 +105,11 @@ internal class HealthcarePartyApiKtTest {
         Assertions.assertEquals(newHcp.aesExchangeKeys.keys.size, 1)
 
         Assertions.assertEquals(newHcp.aesExchangeKeys[newHcpKp1.publicKeyAsString()]!![newHcp.id]!!.size, 1)
-        Assertions.assertTrue(newHcp.aesExchangeKeys[newHcpKp1.publicKeyAsString()]!![newHcp.id]!!.containsKey(newHcpKp1.publicKeyAsString().takeLast(12)))
+        Assertions.assertTrue(
+            newHcp.aesExchangeKeys[newHcpKp1.publicKeyAsString()]!![newHcp.id]!!.containsKey(
+                newHcpKp1.publicKeyAsString().takeLast(32)
+            )
+        )
 
         // Given
         val newUserHcpApi = HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}")
@@ -117,13 +125,32 @@ internal class HealthcarePartyApiKtTest {
         )
 
         // When HCP creates data
-        val patientCreatedByNewHcp = newUserPatientApi.createPatient(newUser, PatientDto(id = UUID.randomUUID().toString(), firstName = "John", lastName = "Doe", note = "To be encrypted"), patientCryptoConfig(newHcpLocalCrypto1))
+        val patientCreatedByNewHcp = newUserPatientApi.createPatient(
+            newUser,
+            PatientDto(
+                id = UUID.randomUUID().toString(),
+                firstName = "John",
+                lastName = "Doe",
+                note = "To be encrypted"
+            ),
+            patientCryptoConfig(newHcpLocalCrypto1)
+        )
 
         // Then it created new aesExchangeKeys for its auto-delegations
         newHcp = newUserHcpApi.getCurrentHealthcareParty()
         Assertions.assertEquals(newHcp.aesExchangeKeys[newHcpKp1.publicKeyAsString()]!![parent.id]!!.size, 2)
-        Assertions.assertTrue(newHcp.aesExchangeKeys[newHcpKp1.publicKeyAsString()]!![parent.id]!!.containsKey(newHcpKp1.publicKeyAsString().takeLast(12)))
-        Assertions.assertTrue(newHcp.aesExchangeKeys[newHcpKp1.publicKeyAsString()]!![parent.id]!!.containsKey(parent.publicKey!!.takeLast(12)))
+        Assertions.assertTrue(
+            newHcp.aesExchangeKeys[newHcpKp1.publicKeyAsString()]!![parent.id]!!.containsKey(
+                newHcpKp1.publicKeyAsString().takeLast(32)
+            )
+        )
+        Assertions.assertTrue(
+            newHcp.aesExchangeKeys[newHcpKp1.publicKeyAsString()]!![parent.id]!!.containsKey(
+                parent.publicKey!!.takeLast(
+                    32
+                )
+            )
+        )
 
         // Given
         val newHcpKp2 = CryptoUtils.generateKeyPairRSA()
@@ -146,12 +173,30 @@ internal class HealthcarePartyApiKtTest {
         Assertions.assertTrue(newHcpUpdated.aesExchangeKeys.isNotEmpty())
         Assertions.assertEquals(newHcpUpdated.aesExchangeKeys.keys.size, 2)
 
-        Assertions.assertEquals(newHcpUpdated.aesExchangeKeys[newHcpKp1.publicKeyAsString()]!![newHcpUpdated.id]!!.size, 1)
-        Assertions.assertTrue(newHcpUpdated.aesExchangeKeys[newHcpKp1.publicKeyAsString()]!![newHcpUpdated.id]!!.containsKey(newHcpKp1.publicKeyAsString().takeLast(12)))
+        Assertions.assertEquals(
+            newHcpUpdated.aesExchangeKeys[newHcpKp1.publicKeyAsString()]!![newHcpUpdated.id]!!.size,
+            1
+        )
+        Assertions.assertTrue(
+            newHcpUpdated.aesExchangeKeys[newHcpKp1.publicKeyAsString()]!![newHcpUpdated.id]!!.containsKey(
+                newHcpKp1.publicKeyAsString().takeLast(32)
+            )
+        )
 
-        Assertions.assertEquals(newHcpUpdated.aesExchangeKeys[newHcpKp2.publicKeyAsString()]!![newHcpUpdated.id]!!.size, 2)
-        Assertions.assertTrue(newHcpUpdated.aesExchangeKeys[newHcpKp2.publicKeyAsString()]!![newHcpUpdated.id]!!.containsKey(newHcpKp1.publicKeyAsString().takeLast(12)))
-        Assertions.assertTrue(newHcpUpdated.aesExchangeKeys[newHcpKp2.publicKeyAsString()]!![newHcpUpdated.id]!!.containsKey(newHcpKp2.publicKeyAsString().takeLast(12)))
+        Assertions.assertEquals(
+            newHcpUpdated.aesExchangeKeys[newHcpKp2.publicKeyAsString()]!![newHcpUpdated.id]!!.size,
+            2
+        )
+        Assertions.assertTrue(
+            newHcpUpdated.aesExchangeKeys[newHcpKp2.publicKeyAsString()]!![newHcpUpdated.id]!!.containsKey(
+                newHcpKp1.publicKeyAsString().takeLast(32)
+            )
+        )
+        Assertions.assertTrue(
+            newHcpUpdated.aesExchangeKeys[newHcpKp2.publicKeyAsString()]!![newHcpUpdated.id]!!.containsKey(
+                newHcpKp2.publicKeyAsString().takeLast(32)
+            )
+        )
 
         Assertions.assertTrue(newHcpUpdated.transferKeys[newHcpKp1.publicKeyAsString()]!!.containsKey(newHcpKp2.publicKeyAsString()))
 
@@ -159,9 +204,11 @@ internal class HealthcarePartyApiKtTest {
         newHcpKp2DoResolver.clearCacheFor(newHcpUpdated.id)
 
         // When parent gets its maintenanceTasks to check if any task requires its action
-        val parentTasksToDo = maintenanceTaskApi.filterMaintenanceTasksBy(parentUser,
-            FilterChain(MaintenanceTaskByHcPartyAndTypeFilter(
-                parent.id,
+        val parentTasksToDo = maintenanceTaskApi.filterMaintenanceTasksBy(
+            parentUser,
+            FilterChain(
+                MaintenanceTaskByHcPartyAndTypeFilter(
+                    parent.id,
                 "updateAesExchangeKey"
             )),
             null, null,
