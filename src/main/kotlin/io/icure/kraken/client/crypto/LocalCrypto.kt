@@ -27,7 +27,6 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flattenMerge
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -471,7 +470,7 @@ class LocalCrypto(
         }
 
         val cachedKeyPairs = myKeyPairs.associate { (myPrivKey, myPubKey) ->
-            myPubKey.pubKeyAsString().takeLast(12) to myPrivKey
+            myPubKey.pubKeyAsString().takeLast(32) to myPrivKey
         }
 
         return this.mapNotNull { (pubKey, aesExchangeKeys) ->

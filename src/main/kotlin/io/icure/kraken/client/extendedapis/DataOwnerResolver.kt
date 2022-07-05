@@ -237,13 +237,17 @@ data class DataOwner(
      *
      */
     fun findRelatedAesExchangeKeys(dataOwnerPublicKeys: List<String>): Map<String, Map<String, Map<String, String>>> {
-        val slicedDataOwnerPublicKeys = dataOwnerPublicKeys.map { it.takeLast(12) }
+        val slicedDataOwnerPublicKeys = dataOwnerPublicKeys.map { it.takeLast(32) }
         val aesExchangeKeysOfDataOwner = this.aesExchangeKeys.filter { (_, aesKeysForDelegate) ->
             aesKeysForDelegate.any { (_, v) -> slicedDataOwnerPublicKeys.any { v[it] != null } }
         }
 
         return if (this.publicKey in dataOwnerPublicKeys) {
-            aesExchangeKeysOfDataOwner.plus(this.publicKey!! to this.hcPartyKeys.map { (delegateId, v) -> delegateId to mapOf(this.publicKey.takeLast(12) to v[0]) }.toMap())
+            aesExchangeKeysOfDataOwner.plus(this.publicKey!! to this.hcPartyKeys.map { (delegateId, v) ->
+                delegateId to mapOf(
+                    this.publicKey.takeLast(32) to v[0]
+                )
+            }.toMap())
         } else {
             aesExchangeKeysOfDataOwner
         }
@@ -266,7 +270,7 @@ data class DataOwner(
         newAesExchangeKeys: List<Pair<String, String>>
     ): DataOwner {
         val mappedAesExchangeKeys = mapOf(delegateId to newAesExchangeKeys.associate { (pubKey, encKey) ->
-            pubKey.takeLast(12) to encKey
+            pubKey.takeLast(32) to encKey
         })
 
         val mutableAesKeys = this.aesExchangeKeys.toMutableMap()

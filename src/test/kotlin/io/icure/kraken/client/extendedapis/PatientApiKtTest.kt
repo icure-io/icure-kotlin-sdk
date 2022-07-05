@@ -229,16 +229,42 @@ internal class PatientApiKtTest {
         Assertions.assertTrue(newHcpUpdated.aesExchangeKeys.isNotEmpty())
         Assertions.assertEquals(newHcpUpdated.aesExchangeKeys.keys.size, 2)
 
-        Assertions.assertEquals(newHcpUpdated.aesExchangeKeys[newHcpKp1.publicKeyAsString()]!![newHcpUpdated.id]!!.size, 1)
-        Assertions.assertTrue(newHcpUpdated.aesExchangeKeys[newHcpKp1.publicKeyAsString()]!![newHcpUpdated.id]!!.containsKey(newHcpKp1.publicKeyAsString().takeLast(12)))
+        Assertions.assertEquals(
+            newHcpUpdated.aesExchangeKeys[newHcpKp1.publicKeyAsString()]!![newHcpUpdated.id]!!.size,
+            1
+        )
+        Assertions.assertTrue(
+            newHcpUpdated.aesExchangeKeys[newHcpKp1.publicKeyAsString()]!![newHcpUpdated.id]!!.containsKey(
+                newHcpKp1.publicKeyAsString().takeLast(32)
+            )
+        )
 
         Assertions.assertEquals(newHcpUpdated.aesExchangeKeys[newHcpKp1.publicKeyAsString()]!![parent.id]!!.size, 2)
-        Assertions.assertTrue(newHcpUpdated.aesExchangeKeys[newHcpKp1.publicKeyAsString()]!![parent.id]!!.containsKey(newHcpKp1.publicKeyAsString().takeLast(12)))
-        Assertions.assertTrue(newHcpUpdated.aesExchangeKeys[newHcpKp1.publicKeyAsString()]!![parent.id]!!.containsKey(parent.publicKey!!.takeLast(12)))
+        Assertions.assertTrue(
+            newHcpUpdated.aesExchangeKeys[newHcpKp1.publicKeyAsString()]!![parent.id]!!.containsKey(
+                newHcpKp1.publicKeyAsString().takeLast(32)
+            )
+        )
+        Assertions.assertTrue(
+            newHcpUpdated.aesExchangeKeys[newHcpKp1.publicKeyAsString()]!![parent.id]!!.containsKey(
+                parent.publicKey!!.takeLast(32)
+            )
+        )
 
-        Assertions.assertEquals(newHcpUpdated.aesExchangeKeys[newHcpKp2.publicKeyAsString()]!![newHcpUpdated.id]!!.size, 2)
-        Assertions.assertTrue(newHcpUpdated.aesExchangeKeys[newHcpKp2.publicKeyAsString()]!![newHcpUpdated.id]!!.containsKey(newHcpKp1.publicKeyAsString().takeLast(12)))
-        Assertions.assertTrue(newHcpUpdated.aesExchangeKeys[newHcpKp2.publicKeyAsString()]!![newHcpUpdated.id]!!.containsKey(newHcpKp2.publicKeyAsString().takeLast(12)))
+        Assertions.assertEquals(
+            newHcpUpdated.aesExchangeKeys[newHcpKp2.publicKeyAsString()]!![newHcpUpdated.id]!!.size,
+            2
+        )
+        Assertions.assertTrue(
+            newHcpUpdated.aesExchangeKeys[newHcpKp2.publicKeyAsString()]!![newHcpUpdated.id]!!.containsKey(
+                newHcpKp1.publicKeyAsString().takeLast(32)
+            )
+        )
+        Assertions.assertTrue(
+            newHcpUpdated.aesExchangeKeys[newHcpKp2.publicKeyAsString()]!![newHcpUpdated.id]!!.containsKey(
+                newHcpKp2.publicKeyAsString().takeLast(32)
+            )
+        )
 
         Assertions.assertTrue(newHcpUpdated.hcPartyKeys.isEmpty())
     }
