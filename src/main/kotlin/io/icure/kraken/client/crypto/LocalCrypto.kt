@@ -206,7 +206,7 @@ class LocalCrypto(
      * @return all the Public Keys known for the provided Data Owner Id. Returns first the "main" publicKey of the
      * dataOwner and the ones contained on the aesExchangeKeys afterwards
      */
-    private suspend fun getDataOwnerPublicKeys(dataOwnerId: String): List<Pair<String, PublicKey>> {
+    suspend fun getDataOwnerPublicKeys(dataOwnerId: String): List<Pair<String, PublicKey>> {
         return getDataOwnerPublicKeys(dataOwnerResolver.getDataOwner(dataOwnerId))
     }
 
