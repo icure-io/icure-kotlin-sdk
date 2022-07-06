@@ -178,7 +178,7 @@ class LocalCrypto(
         return "$delegatorId:$delegateId:$delegatorPubKey"
     }
 
-    private suspend fun getDelegateAesExchangeKeys(
+     suspend fun getDelegateAesExchangeKeys(
         delegateId: String,
         ownerId: String,
         specificKeyPairs: List<Pair<RSAPrivateKey, RSAPublicKey>>? = null
@@ -225,15 +225,15 @@ class LocalCrypto(
     private suspend fun getDataOwnerAesExchangeKeys(dataOwnerId: String, dataOwnerPublicKeys: List<String>) =
         dataOwnerResolver.getDataOwner(dataOwnerId).findRelatedAesExchangeKeys(dataOwnerPublicKeys)
 
-    private suspend fun getOrCreateAesExchangeKeys(
+    suspend fun getOrCreateAesExchangeKeys(
         myId: String,
-        delegateId: String
+        delegateId: String,
+        specificPublicKeys: List<PublicKey>? = null
     ): Pair<List<ByteArray>, DataOwner?> {
         val ownerIdDelegateIdKey = getOwnerIdDelegateIdKeyForCache(delegateId = delegateId, delegatorId = myId)
 
         val myKeyPairs = rsaKeyPairs[myId] ?: throw IllegalArgumentException("Missing key for data owner $myId")
-        val myPublicKeys =
-            rsaKeyPairs[myId]?.map { it.second } ?: throw IllegalArgumentException("Missing key for data owner $myId")
+        val myPublicKeys = specificPublicKeys.takeUnless { it.isNullOrEmpty() } ?: rsaKeyPairs[myId]?.map { it.second } ?: throw IllegalArgumentException("Missing key for data owner $myId")
 
         val keyMap: Map<String, Map<String, Pair<String, ByteArray>>> =
             ownerHcpartyKeysCache.defGet(ownerIdDelegateIdKey) {
