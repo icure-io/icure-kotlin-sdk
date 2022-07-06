@@ -329,8 +329,7 @@ internal class HealthcarePartyApiKtTest {
             .addNewKeyPair(parentUser, parentLocalCrypto, hcpKeyPair.public)
     )
 
-    @OptIn(ExperimentalUnsignedTypes::class)
-    @FlowPreview
+    @OptIn(ExperimentalUnsignedTypes::class, FlowPreview::class)
     @Test
     fun `hcp1 giveAccess back to newly created patient to hcp2`() = runBlocking {
         fun localCrypto(
@@ -436,10 +435,10 @@ internal class HealthcarePartyApiKtTest {
         val hcp1HcPartyApi = HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = hcp1Auth)
         val hcp2HcPartyApi = HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = hcp2Auth)
 
-        val hcp2MaintenanceTaskApi = MaintenanceTaskApi(basePath = iCureBackendUrl, authHeader = hcp2Auth)
+        val hcp1MaintenanceTaskApi = MaintenanceTaskApi(basePath = iCureBackendUrl, authHeader = hcp1Auth)
 
         val hcp2 = hcp2HcPartyApi.getCurrentHealthcareParty()
-        val hcp2ToUpdate = hcp2.addNewKeyPair(hcp2User, localCrypto(hcp2Auth, hcp2User, newHcp2Kp, hcp2MaintenanceTaskApi), newHcp2Kp.public, newHcp2Kp.private)
+        val hcp2ToUpdate = hcp2.addNewKeyPair(hcp2User, localCrypto(hcp2Auth, hcp2User, newHcp2Kp, hcp1MaintenanceTaskApi), newHcp2Kp.public, newHcp2Kp.private)
         val updatedHcp2 = hcp2HcPartyApi.modifyHealthcareParty(hcp2ToUpdate)
 
         val cc2WithNewKp = ccPatient(hcp2Auth, hcp2User, newHcp2Kp)
@@ -447,7 +446,129 @@ internal class HealthcarePartyApiKtTest {
         val sharedPatientFromHcp2ButUnreadable = hcp2PatientApi.getPatientForTest(sharedPatientFromHcp2.id, hcp2User, cc2WithNewKp)
         Assertions.assertNull(sharedPatientFromHcp2ButUnreadable.note, "Patient should not be readable after the loss of the HCP2 keys")
 
-        hcp1HcPartyApi.giveAccessBack(localCrypto(hcp1Auth, hcp1User, hcp1Kp, hcp2MaintenanceTaskApi), hcp1Kp.privateKeyAsString().toPrivateKey() to hcp1Kp.public.pubKeyAsString().toPublicKey(),updatedHcp2.id, newHcp2Kp.public)
+        hcp1HcPartyApi.giveAccessBack(localCrypto(hcp1Auth, hcp1User, hcp1Kp, hcp1MaintenanceTaskApi), hcp1Kp.privateKeyAsString().toPrivateKey() to hcp1Kp.public.pubKeyAsString().toPublicKey(),updatedHcp2.id, newHcp2Kp.public)
+
+        // Apparently we have to wait X seconds (cache ?, couchDb takes time?)
+        delay(6000)
+
+        val sharedPatientFromHcp2AfterGiveAccessBack = hcp2PatientApi.getPatientForTest(sharedPatientFromHcp2.id, hcp2User, cc2WithNewKp)
+        val stillNotSharedPatientAndNeverWillBe = hcp2PatientApi.getPatientForTest(notSharedPatient.id, hcp2User, cc2)
+
+        Assertions.assertEquals(sharedPatientFromHcp2.note, sharedPatientFromHcp2AfterGiveAccessBack.note, "Patient should be readable after giveAccessBack")
+        Assertions.assertNull(stillNotSharedPatientAndNeverWillBe.note, "Patient shouldn't be readable since it haven't been shared with HCP2")
+    }
+
+    @OptIn(ExperimentalUnsignedTypes::class, FlowPreview::class)
+    @Test
+    fun `old hcp giveAccess back to newly created patient to hcp2`() = runBlocking {
+        fun localCrypto(
+            auth: String,
+            user: UserDto,
+            kp: KeyPair,
+            maintenanceTaskApi: MaintenanceTaskApi? = null
+        ) = LocalCrypto(
+            ExtendedTestUtils.dataOwnerWrapperFor(
+                iCureBackendUrl,
+                auth
+            ), mapOf(
+                user.dataOwnerId() to listOf(kp.private as RSAPrivateKey to kp.public as RSAPublicKey)
+            ),
+            maintenanceTaskApi
+        )
+
+        fun ccPatient(auth: String, user: UserDto, kp: KeyPair) = patientCryptoConfig(
+            localCrypto(auth, user, kp)
+        )
+
+        suspend fun PatientApi.getPatientForTest(id: String, user: UserDto, cc: CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>) = try {
+            this.getPatient(user, id, cc)
+        } catch (e: Exception) {
+            throw IllegalStateException(e)
+        }
+
+        val parentUser = userApi.getCurrentUser()
+        val parent = hcPartyApi.getCurrentHealthcareParty()
+        val parentLocalCrypto = LocalCrypto(
+            ExtendedTestUtils.dataOwnerWrapperFor(iCureBackendUrl, parentAuthorization), mapOf(
+                parent.id to listOf(parentPrivKey to parent.publicKey!!.toPublicKey()),
+            ),
+            maintenanceTaskApi
+        )
+
+        val hcp2Kp = CryptoUtils.generateKeyPairRSA()
+
+        val hcp2User = userApi.createUserForHcp(
+            hcPartyApi.createHealthcareParty(parentUser, parentLocalCrypto, hcp2Kp, "Philip J.", "Fry"),
+            parent
+        )
+
+        val hcp2Auth =
+            "Basic ${Base64.getEncoder().encodeToString("${hcp2User.login}:test".toByteArray(Charsets.UTF_8))}"
+
+        val hcp2PatientApi = PatientApi(basePath = iCureBackendUrl, authHeader = hcp2Auth)
+
+        val ccParent = patientCryptoConfig(parentLocalCrypto)
+        val cc2 = ccPatient(hcp2Auth, hcp2User, hcp2Kp)
+
+        delay(4000)
+
+        // When
+        val patientToShareWithHcp2 = try {
+            patientApi.createPatient(
+                parentUser,
+                PatientDto(
+                    id = UUID.randomUUID().toString(),
+                    firstName = "Hermez",
+                    lastName = "Conrad",
+                    note = "Sweet manatee of Galilee!"
+                ),
+                ccParent
+            )
+        } catch (e: Exception) {
+            throw IllegalStateException(e)
+        }
+
+        val notSharedPatient = try {
+            patientApi.createPatient(
+                parentUser,
+                PatientDto(
+                    id = UUID.randomUUID().toString(),
+                    firstName = "Johnny",
+                    lastName = "Zoidberg",
+                    note = "Blublublu"
+                ),
+                ccParent
+            )
+        } catch (e: Exception) {
+            throw IllegalStateException(e)
+        }
+
+        Assertions.assertNotNull(patientToShareWithHcp2, "Patient should not be null")
+        Assertions.assertNotNull(notSharedPatient, "Patient should not be null")
+
+        val notSharedP1bis = hcp2PatientApi.getPatientForTest(notSharedPatient.id, hcp2User, cc2)
+        Assertions.assertNull(notSharedP1bis.note, "Not shared patient shouldn't be accessible to hcp2")
+
+        val sharedPatientWithHcp2 = patientApi.giveAccessTo(ccParent, parentUser, patientToShareWithHcp2, hcp2User.dataOwnerId())
+        val sharedPatientFromHcp2 = hcp2PatientApi.getPatientForTest(patientToShareWithHcp2.id, hcp2User, cc2)
+        val stillNotSharedPatientWithHcp2 = hcp2PatientApi.getPatientForTest(notSharedPatient.id, hcp2User, cc2)
+
+        Assertions.assertNull(stillNotSharedPatientWithHcp2.note, "Not shared patient shouldn't be accessible to hcp2")
+        Assertions.assertEquals(sharedPatientWithHcp2, sharedPatientFromHcp2, "Patients should be the same after sharing")
+
+        val newHcp2Kp = CryptoUtils.generateKeyPairRSA()
+        val hcp2HcPartyApi = HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = hcp2Auth)
+
+        val hcp2 = hcp2HcPartyApi.getCurrentHealthcareParty()
+        val hcp2ToUpdate = hcp2.addNewKeyPair(hcp2User, localCrypto(hcp2Auth, hcp2User, newHcp2Kp, maintenanceTaskApi), newHcp2Kp.public, newHcp2Kp.private)
+        val updatedHcp2 = hcp2HcPartyApi.modifyHealthcareParty(hcp2ToUpdate)
+
+        val cc2WithNewKp = ccPatient(hcp2Auth, hcp2User, newHcp2Kp)
+
+        val sharedPatientFromHcp2ButUnreadable = hcp2PatientApi.getPatientForTest(sharedPatientFromHcp2.id, hcp2User, cc2WithNewKp)
+        Assertions.assertNull(sharedPatientFromHcp2ButUnreadable.note, "Patient should not be readable after the loss of the HCP2 keys")
+
+        hcPartyApi.giveAccessBack(parentLocalCrypto, parentPrivKey to parent.publicKey!!.toPublicKey(), updatedHcp2.id, newHcp2Kp.public)
 
         // Apparently we have to wait X seconds (cache ?, couchDb takes time?)
         delay(6000)
