@@ -5,6 +5,7 @@ import io.icure.kraken.client.applyIf
 import io.icure.kraken.client.crypto.Crypto
 import io.icure.kraken.client.crypto.CryptoUtils
 import io.icure.kraken.client.crypto.LocalCrypto
+import io.icure.kraken.client.crypto.keyFromHexString
 import io.icure.kraken.client.crypto.keyToHexString
 import io.icure.kraken.client.crypto.pubKeyAsString
 import io.icure.kraken.client.models.HealthcarePartyDto
@@ -63,34 +64,59 @@ fun HealthcarePartyDto.findName(nameUse: PersonNameDto.Use) : PersonNameDto? {
 
 @OptIn(ExperimentalStdlibApi::class, ExperimentalCoroutinesApi::class, ExperimentalUnsignedTypes::class, FlowPreview::class)
 suspend fun HealthcarePartyApi.giveAccessBack(localCrypto: LocalCrypto, specificKeyPair: Pair<RSAPrivateKey, RSAPublicKey>, delegateId: String, delegatePublicKey: PublicKey) {
-    return this.getCurrentHealthcareParty().let { hcpToMigrate ->
-        this.migrateToMultipleKeys(hcpToMigrate, localCrypto).let { currentHcp ->
-            localCrypto.getDelegateAesExchangeKeys(delegateId, currentHcp.id, listOf(specificKeyPair)).let { aesKey ->
-                CryptoUtils.encryptRSA(aesKey.firstOrNull() ?: throw IllegalStateException("Couldn't decrypt AES key for ${currentHcp.id}"), delegatePublicKey).keyToHexString().let { encryptedAesKey ->
-                    currentHcp.aesExchangeKeys.toPersistentMap().let { hcpAesKeys ->
-                        specificKeyPair.second.pubKeyAsString().let { pubKeyString ->
-                            (hcpAesKeys[pubKeyString] ?: throw IllegalStateException("Couldn't find HcPartyKeys for pubKey: $pubKeyString")).toPersistentMap().let { hcPartyKeys ->
-                                (hcPartyKeys[delegateId] ?: throw IllegalStateException("Couldn't find delegateHcPartyKeys for dataOwner $delegateId")).toPersistentMap().let { delegateHcPartyKeys ->
-                                    hcpAesKeys.put(pubKeyString, hcPartyKeys.put(delegateId, delegateHcPartyKeys.put(delegatePublicKey.pubKeyAsString().takeLast(32), encryptedAesKey))).let { aesExchangeKeysToUpdate ->
-                                        this.modifyHealthcareParty(
-                                            currentHcp.copy(
-                                                aesExchangeKeys = aesExchangeKeysToUpdate
-                                            )
-                                        )
-                                    }
-                                }
+    return this.getCurrentHealthcareParty().let { currentHcp ->
+        listOfNotNull(
+            this.getHealthcareParty(delegateId).let { delegateHcpToMigrate ->
+                this.migrateToMultipleKeys(delegateHcpToMigrate, localCrypto).let { migratedHcp ->
+                    this.modifyHealthcareParty(
+                        migratedHcp.copy(
+                            aesExchangeKeys = migratedHcp.aesExchangeKeys.entries.fold(migratedHcp.aesExchangeKeys.toPersistentMap()) { acc, (pubKey, hcPartyKeys) ->
+                                val hcPartyKeysForCurrentHcp = hcPartyKeys[currentHcp.id]
+
+                                hcPartyKeysForCurrentHcp?.get(specificKeyPair.second.pubKeyAsString().takeLast(32))?.let {
+                                    CryptoUtils.decryptRSA(it.keyFromHexString(), specificKeyPair.first)
+                                }?.let {
+                                    hcPartyKeysForCurrentHcp.toPersistentMap().put(delegatePublicKey.pubKeyAsString().takeLast(32), CryptoUtils.encryptRSA(it, delegatePublicKey).keyToHexString())
+                                }?.let {
+                                    hcPartyKeys.toPersistentMap().put(currentHcp.id, it)
+                                }?.let {
+                                    acc.put(pubKey, it)
+                                } ?: acc
+                            }
+                        )
+                    )
+                }
+            },
+            this.migrateToMultipleKeys(currentHcp, localCrypto).let { migratedCurrentHcp ->
+                migratedCurrentHcp.aesExchangeKeys.toPersistentMap().let { aesExchangeKeys ->
+                    specificKeyPair.second.pubKeyAsString().let { pubKeyString ->
+                        (aesExchangeKeys[pubKeyString] ?: throw IllegalStateException("Couldn't find HcPartyKeys for pubKey: $pubKeyString")).toPersistentMap().let { hcPartyKeys ->
+                            hcPartyKeys[delegateId]?.toPersistentMap()?.let { delegateHcPartyKeys ->
+                                this.modifyHealthcareParty(
+                                    migratedCurrentHcp.copy(
+                                        aesExchangeKeys = delegateHcPartyKeys[specificKeyPair.second.pubKeyAsString().takeLast(32)]?.let {
+                                            CryptoUtils.decryptRSA(it.keyFromHexString(), specificKeyPair.first)
+                                        }?.let {
+                                            delegateHcPartyKeys.put(delegatePublicKey.pubKeyAsString().takeLast(32), CryptoUtils.encryptRSA(it, delegatePublicKey).keyToHexString())
+                                        }?.let {
+                                            hcPartyKeys.put(delegateId, it)
+                                        }?.let {
+                                            aesExchangeKeys.put(specificKeyPair.second.pubKeyAsString(), it)
+                                        } ?: aesExchangeKeys
+                                    )
+                                )
                             }
                         }
                     }
                 }
             }
-        }
+        )
     }
 }
 
 @OptIn(ExperimentalStdlibApi::class, ExperimentalCoroutinesApi::class, FlowPreview::class, ExperimentalUnsignedTypes::class)
 private suspend fun HealthcarePartyApi.migrateToMultipleKeys(hcPartyDto: HealthcarePartyDto, localCrypto: LocalCrypto): HealthcarePartyDto{
-    if (hcPartyDto.hcPartyKeys.isEmpty() && hcPartyDto.publicKey.isNullOrEmpty()) {
+    if (hcPartyDto.aesExchangeKeys.isNotEmpty()) {
         return hcPartyDto
     } else {
         val publicKey = hcPartyDto.publicKey!!
@@ -98,21 +124,17 @@ private suspend fun HealthcarePartyApi.migrateToMultipleKeys(hcPartyDto: Healthc
             flow { emit(delegateId to localCrypto.getDataOwnerPublicKeys(delegateId)) }
         }.asFlow().flattenMerge().toList()
 
-        val hcPartyToUpdate = hcPartyDto.copy(
-        aesExchangeKeys = mapOf(
-            publicKey to hcPartyDto.hcPartyKeys.entries.associate { (delegateId, hcPartyKeys) ->
-                delegateId to mapOf(
-                    publicKey.takeLast(32) to hcPartyKeys[0],
-                    delegatePublicKeys.first { it.first === delegateId }.second.first().first.takeLast(32) to hcPartyKeys[1]
-                )
-            }
-        ),
-        publicKey = null,
-        hcPartyKeys = emptyMap()
-        )
-
         return this.modifyHealthcareParty(
-            hcPartyToUpdate
+            hcPartyDto.copy(
+                aesExchangeKeys = mapOf(
+                    publicKey to hcPartyDto.hcPartyKeys.entries.associate { (delegateId, hcPartyKeys) ->
+                        delegateId to mapOf(
+                            publicKey.takeLast(32) to hcPartyKeys[0],
+                            delegatePublicKeys.first { it.first === delegateId }.second.first().first.takeLast(32) to hcPartyKeys[1]
+                        )
+                    }
+                )
+            )
         )
     }
 }
