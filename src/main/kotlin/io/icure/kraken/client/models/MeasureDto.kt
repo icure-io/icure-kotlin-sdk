@@ -33,6 +33,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
  * @param unitCodes 
  * @param comment 
  * @param comparator 
+ * @param sign 
  */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -70,7 +71,10 @@ data class MeasureDto (
     val comment: kotlin.String? = null,
 
     @field:JsonProperty("comparator")
-    val comparator: kotlin.String? = null
+    val comparator: kotlin.String? = null,
+
+    @field:JsonProperty("sign")
+    val sign: kotlin.String? = null
 
 )
 

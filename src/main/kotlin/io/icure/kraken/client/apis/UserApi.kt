@@ -515,6 +515,45 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     }
 
     /**
+    * Get the list of users by patient id
+    * 
+    * @param id  
+    * @return kotlin.collections.List<kotlin.String>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun findByPatientId(id: kotlin.String) : kotlin.collections.List<kotlin.String>  {
+        val localVariableConfig = findByPatientIdRequestConfig(id = id)
+
+        return request<Unit, kotlin.collections.List<kotlin.String>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation findByPatientId
+    *
+    * @param id  
+    * @return RequestConfig
+    */
+    fun findByPatientIdRequestConfig(id: kotlin.String) : RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v2/user/byPatientId/{id}".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
     * Get Currently logged-in user session.
     * Get current user.
     * @return kotlin.String

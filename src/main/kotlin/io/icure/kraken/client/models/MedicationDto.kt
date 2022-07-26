@@ -35,6 +35,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
  * @param numberOfPackages 
  * @param batch 
  * @param instructionForPatient 
+ * @param instructionForReimbursement 
  * @param commentForDelivery 
  * @param drugRoute 
  * @param temporality 
@@ -92,6 +93,9 @@ data class MedicationDto (
 
     @field:JsonProperty("instructionForPatient")
     val instructionForPatient: kotlin.String? = null,
+
+    @field:JsonProperty("instructionForReimbursement")
+    val instructionForReimbursement: kotlin.String? = null,
 
     @field:JsonProperty("commentForDelivery")
     val commentForDelivery: kotlin.String? = null,

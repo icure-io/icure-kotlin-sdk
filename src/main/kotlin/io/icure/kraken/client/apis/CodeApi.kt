@@ -87,6 +87,45 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     }
 
     /**
+    * Create a batch of codes
+    * Create a batch of code entities. Fields Type, Code and Version are required for each code.
+    * @param codeDto  
+    * @return kotlin.collections.List<CodeDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun createCodes(codeDto: kotlin.collections.List<CodeDto>) : kotlin.collections.List<CodeDto>  {
+        val localVariableConfig = createCodesRequestConfig(codeDto = codeDto)
+
+        return request<kotlin.collections.List<CodeDto>, kotlin.collections.List<CodeDto>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation createCodes
+    *
+    * @param codeDto  
+    * @return RequestConfig
+    */
+    fun createCodesRequestConfig(codeDto: kotlin.collections.List<CodeDto>) : RequestConfig<kotlin.collections.List<CodeDto>> {
+        // val localVariableBody = codeDto
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = codeDto
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v2/code/batch",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
     * Filter codes 
     * Returns a list of codes along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
     * @param startKey The start key for pagination, depends on the filters used (optional)
@@ -164,6 +203,7 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     * @param types  (optional)
     * @param language  (optional)
     * @param label  (optional)
+    * @param version  (optional)
     * @param startKey The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key&#39;s startKey (optional)
     * @param startDocumentId A code document ID (optional)
     * @param limit Number of rows (optional)
@@ -174,8 +214,8 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findCodesByLabel(region: kotlin.String?, types: kotlin.String?, language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListCodeDto  {
-        val localVariableConfig = findCodesByLabelRequestConfig(region = region, types = types, language = language, label = label, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
+    suspend fun findCodesByLabel(region: kotlin.String?, types: kotlin.String?, language: kotlin.String?, label: kotlin.String?, version: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListCodeDto  {
+        val localVariableConfig = findCodesByLabelRequestConfig(region = region, types = types, language = language, label = label, version = version, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListCodeDto>(
             localVariableConfig
@@ -188,12 +228,13 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     * @param types  (optional)
     * @param language  (optional)
     * @param label  (optional)
+    * @param version  (optional)
     * @param startKey The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key&#39;s startKey (optional)
     * @param startDocumentId A code document ID (optional)
     * @param limit Number of rows (optional)
     * @return RequestConfig
     */
-    fun findCodesByLabelRequestConfig(region: kotlin.String?, types: kotlin.String?, language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
+    fun findCodesByLabelRequestConfig(region: kotlin.String?, types: kotlin.String?, language: kotlin.String?, label: kotlin.String?, version: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -208,6 +249,9 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
                 }
                 if (label != null) {
                     put("label", listOf(label.toString()))
+                }
+                if (version != null) {
+                    put("version", listOf(version.toString()))
                 }
                 if (startKey != null) {
                     put("startKey", listOf(startKey.toString()))
@@ -756,6 +800,45 @@ class CodeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
         return RequestConfig(
             method = RequestMethod.PUT,
             path = "/rest/v2/code",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody        )
+    }
+
+    /**
+    * Modify a batch of codes
+    * Modification of (type, code, version) is not allowed.
+    * @param codeDto  
+    * @return kotlin.collections.List<CodeDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun modifyCodes(codeDto: kotlin.collections.List<CodeDto>) : kotlin.collections.List<CodeDto>  {
+        val localVariableConfig = modifyCodesRequestConfig(codeDto = codeDto)
+
+        return request<kotlin.collections.List<CodeDto>, kotlin.collections.List<CodeDto>>(
+            localVariableConfig
+        )!!
+    }
+    /**
+    * To obtain the request config of the operation modifyCodes
+    *
+    * @param codeDto  
+    * @return RequestConfig
+    */
+    fun modifyCodesRequestConfig(codeDto: kotlin.collections.List<CodeDto>) : RequestConfig<kotlin.collections.List<CodeDto>> {
+        // val localVariableBody = codeDto
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = codeDto
+
+        return RequestConfig(
+            method = RequestMethod.PUT,
+            path = "/rest/v2/code/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody        )

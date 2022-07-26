@@ -5,6 +5,7 @@ All URIs are relative to *https://kraken.icure.dev*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createCode**](CodeApi.md#createCode) | **POST** /rest/v2/code | Create a Code
+[**createCodes**](CodeApi.md#createCodes) | **POST** /rest/v2/code/batch | Create a batch of codes
 [**filterCodesBy**](CodeApi.md#filterCodesBy) | **POST** /rest/v2/code/filter | Filter codes 
 [**findCodesByLabel**](CodeApi.md#findCodesByLabel) | **GET** /rest/v2/code/byLabel | Finding codes by code, type and version with pagination.
 [**findCodesByLink**](CodeApi.md#findCodesByLink) | **GET** /rest/v2/code/byLink/{linkType} | Finding codes by code, type and version with pagination.
@@ -18,6 +19,7 @@ Method | HTTP request | Description
 [**listTagTypesBy**](CodeApi.md#listTagTypesBy) | **GET** /rest/v2/code/tagtype/byRegionType | Finding tag types.
 [**matchCodesBy**](CodeApi.md#matchCodesBy) | **POST** /rest/v2/code/match | Get ids of code matching the provided filter for the current user (HcParty) 
 [**modifyCode**](CodeApi.md#modifyCode) | **PUT** /rest/v2/code | Modify a code
+[**modifyCodes**](CodeApi.md#modifyCodes) | **PUT** /rest/v2/code/batch | Modify a batch of codes
 
 
 <a name="createCode"></a>
@@ -57,6 +59,53 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**CodeDto**](CodeDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="createCodes"></a>
+# **createCodes**
+> kotlin.collections.List&lt;CodeDto&gt; createCodes(codeDto)
+
+Create a batch of codes
+
+Create a batch of code entities. Fields Type, Code and Version are required for each code.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = CodeApi()
+val codeDto : kotlin.collections.List<CodeDto> =  // kotlin.collections.List<CodeDto> | 
+try {
+    val result : kotlin.collections.List<CodeDto> = apiInstance.createCodes(codeDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling CodeApi#createCodes")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling CodeApi#createCodes")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **codeDto** | [**kotlin.collections.List&lt;CodeDto&gt;**](CodeDto.md)|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;CodeDto&gt;**](CodeDto.md)
 
 ### Authorization
 
@@ -128,7 +177,7 @@ No authorization required
 
 <a name="findCodesByLabel"></a>
 # **findCodesByLabel**
-> PaginatedListCodeDto findCodesByLabel(region, types, language, label, startKey, startDocumentId, limit)
+> PaginatedListCodeDto findCodesByLabel(region, types, language, label, version, startKey, startDocumentId, limit)
 
 Finding codes by code, type and version with pagination.
 
@@ -145,11 +194,12 @@ val region : kotlin.String = region_example // kotlin.String |
 val types : kotlin.String = types_example // kotlin.String | 
 val language : kotlin.String = language_example // kotlin.String | 
 val label : kotlin.String = label_example // kotlin.String | 
+val version : kotlin.String = version_example // kotlin.String | 
 val startKey : kotlin.String = startKey_example // kotlin.String | The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key's startKey
 val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A code document ID
 val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
 try {
-    val result : PaginatedListCodeDto = apiInstance.findCodesByLabel(region, types, language, label, startKey, startDocumentId, limit)
+    val result : PaginatedListCodeDto = apiInstance.findCodesByLabel(region, types, language, label, version, startKey, startDocumentId, limit)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling CodeApi#findCodesByLabel")
@@ -168,6 +218,7 @@ Name | Type | Description  | Notes
  **types** | **kotlin.String**|  | [optional]
  **language** | **kotlin.String**|  | [optional]
  **label** | **kotlin.String**|  | [optional]
+ **version** | **kotlin.String**|  | [optional]
  **startKey** | **kotlin.String**| The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key&#39;s startKey | [optional]
  **startDocumentId** | **kotlin.String**| A code document ID | [optional]
  **limit** | **kotlin.Int**| Number of rows | [optional]
@@ -724,6 +775,53 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**CodeDto**](CodeDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="modifyCodes"></a>
+# **modifyCodes**
+> kotlin.collections.List&lt;CodeDto&gt; modifyCodes(codeDto)
+
+Modify a batch of codes
+
+Modification of (type, code, version) is not allowed.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = CodeApi()
+val codeDto : kotlin.collections.List<CodeDto> =  // kotlin.collections.List<CodeDto> | 
+try {
+    val result : kotlin.collections.List<CodeDto> = apiInstance.modifyCodes(codeDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling CodeApi#modifyCodes")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling CodeApi#modifyCodes")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **codeDto** | [**kotlin.collections.List&lt;CodeDto&gt;**](CodeDto.md)|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;CodeDto&gt;**](CodeDto.md)
 
 ### Authorization
 

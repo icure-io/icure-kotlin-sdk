@@ -11,6 +11,9 @@ Name | Type | Description | Notes
 **name** | **kotlin.String** |  |  [optional]
 **email** | **kotlin.String** |  |  [optional]
 **phone** | **kotlin.String** |  |  [optional]
+**patientId** | **kotlin.String** |  |  [optional]
+**healthcarePartyId** | **kotlin.String** |  |  [optional]
+**deviceId** | **kotlin.String** |  |  [optional]
 
 
 

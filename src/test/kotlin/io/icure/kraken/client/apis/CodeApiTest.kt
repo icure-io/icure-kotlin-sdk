@@ -364,7 +364,7 @@ class CodeApiTest() {
                     } as? kotlin.Int ?: it
                     }
 
-                val response = api(credentialsFile).findCodesByLabel(region = region,types = types,language = language,label = label,startKey = startKey,startDocumentId = startDocumentId,limit = limit)
+                val response = api(credentialsFile).findCodesByLabel(region = region,types = types,language = language,label = label,startKey = startKey,startDocumentId = startDocumentId,limit = limit, version = null)
 
                 val testFileName = "CodeApi.findCodesByLabel"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")

@@ -54,6 +54,7 @@ Class | Method | HTTP request | Description
 *AnonymousAccessApi* | [**listHealthcarePartiesInGroup**](docs/AnonymousAccessApi.md#listhealthcarepartiesingroup) | **GET** /rest/v2/aa/hcparty/inGroup/{groupId} | List healthcare parties for a provided group id
 *ApplicationsettingsApi* | [**createApplicationSettings**](docs/ApplicationsettingsApi.md#createapplicationsettings) | **POST** /rest/v2/appsettings | Create new application settings
 *ApplicationsettingsApi* | [**getApplicationSettings**](docs/ApplicationsettingsApi.md#getapplicationsettings) | **GET** /rest/v2/appsettings | Gets all application settings
+*ApplicationsettingsApi* | [**updateApplicationSettings**](docs/ApplicationsettingsApi.md#updateapplicationsettings) | **PUT** /rest/v2/appsettings | Update application settings
 *ArticleApi* | [**createArticle**](docs/ArticleApi.md#createarticle) | **POST** /rest/v2/article | Creates a article
 *ArticleApi* | [**deleteArticles**](docs/ArticleApi.md#deletearticles) | **POST** /rest/v2/article/delete/batch | Deletes articles
 *ArticleApi* | [**getArticle**](docs/ArticleApi.md#getarticle) | **GET** /rest/v2/article/{articleId} | Gets an article
@@ -164,6 +165,7 @@ Class | Method | HTTP request | Description
 *ClassificationTemplateApi* | [**modifyClassificationTemplate**](docs/ClassificationTemplateApi.md#modifyclassificationtemplate) | **PUT** /rest/v2/classificationTemplate | Modify a classification Template
 *ClassificationTemplateApi* | [**newClassificationTemplateDelegations**](docs/ClassificationTemplateApi.md#newclassificationtemplatedelegations) | **POST** /rest/v2/classificationTemplate/{classificationTemplateId}/delegate | Delegates a classification Template to a healthcare party
 *CodeApi* | [**createCode**](docs/CodeApi.md#createcode) | **POST** /rest/v2/code | Create a Code
+*CodeApi* | [**createCodes**](docs/CodeApi.md#createcodes) | **POST** /rest/v2/code/batch | Create a batch of codes
 *CodeApi* | [**filterCodesBy**](docs/CodeApi.md#filtercodesby) | **POST** /rest/v2/code/filter | Filter codes 
 *CodeApi* | [**findCodesByLabel**](docs/CodeApi.md#findcodesbylabel) | **GET** /rest/v2/code/byLabel | Finding codes by code, type and version with pagination.
 *CodeApi* | [**findCodesByLink**](docs/CodeApi.md#findcodesbylink) | **GET** /rest/v2/code/byLink/{linkType} | Finding codes by code, type and version with pagination.
@@ -177,6 +179,7 @@ Class | Method | HTTP request | Description
 *CodeApi* | [**listTagTypesBy**](docs/CodeApi.md#listtagtypesby) | **GET** /rest/v2/code/tagtype/byRegionType | Finding tag types.
 *CodeApi* | [**matchCodesBy**](docs/CodeApi.md#matchcodesby) | **POST** /rest/v2/code/match | Get ids of code matching the provided filter for the current user (HcParty) 
 *CodeApi* | [**modifyCode**](docs/CodeApi.md#modifycode) | **PUT** /rest/v2/code | Modify a code
+*CodeApi* | [**modifyCodes**](docs/CodeApi.md#modifycodes) | **PUT** /rest/v2/code/batch | Modify a batch of codes
 *ContactApi* | [**closeForHCPartyPatientForeignKeys**](docs/ContactApi.md#closeforhcpartypatientforeignkeys) | **PUT** /rest/v2/contact/byHcPartySecretForeignKeys/close | Close contacts for Healthcare Party and secret foreign keys.
 *ContactApi* | [**createContact**](docs/ContactApi.md#createcontact) | **POST** /rest/v2/contact | Create a contact with the current user
 *ContactApi* | [**createContacts**](docs/ContactApi.md#createcontacts) | **POST** /rest/v2/contact/batch | Create a batch of contacts
@@ -568,6 +571,7 @@ Class | Method | HTTP request | Description
 *UserApi* | [**filterUsersBy**](docs/UserApi.md#filterusersby) | **POST** /rest/v2/user/filter | Filter users for the current user (HcParty)
 *UserApi* | [**filterUsersInGroupBy**](docs/UserApi.md#filterusersingroupby) | **POST** /rest/v2/user/filter/inGroup/{groupId} | Filter users for the current user (HcParty) for a provided groupId
 *UserApi* | [**findByHcpartyId**](docs/UserApi.md#findbyhcpartyid) | **GET** /rest/v2/user/byHealthcarePartyId/{id} | Get the list of users by healthcare party id
+*UserApi* | [**findByPatientId**](docs/UserApi.md#findbypatientid) | **GET** /rest/v2/user/byPatientId/{id} | Get the list of users by patient id
 *UserApi* | [**getCurrentSession**](docs/UserApi.md#getcurrentsession) | **GET** /rest/v2/user/session | Get Currently logged-in user session.
 *UserApi* | [**getCurrentUser**](docs/UserApi.md#getcurrentuser) | **GET** /rest/v2/user/current | Get presently logged-in user.
 *UserApi* | [**getMatchingUsers**](docs/UserApi.md#getmatchingusers) | **GET** /rest/v2/user/matches | Get presently logged-in user.

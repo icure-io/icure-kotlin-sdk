@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **unitCodes** | [**kotlin.collections.Set&lt;CodeStubDto&gt;**](CodeStubDto.md) |  |  [optional]
 **comment** | **kotlin.String** |  |  [optional]
 **comparator** | **kotlin.String** |  |  [optional]
+**sign** | **kotlin.String** |  |  [optional]
 
 
 

@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **numberOfPackages** | **kotlin.Int** |  |  [optional]
 **batch** | **kotlin.String** |  |  [optional]
 **instructionForPatient** | **kotlin.String** |  |  [optional]
+**instructionForReimbursement** | **kotlin.String** |  |  [optional]
 **commentForDelivery** | **kotlin.String** |  |  [optional]
 **drugRoute** | **kotlin.String** |  |  [optional]
 **temporality** | **kotlin.String** |  |  [optional]

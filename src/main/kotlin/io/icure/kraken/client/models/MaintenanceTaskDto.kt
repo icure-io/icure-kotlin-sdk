@@ -12,6 +12,11 @@
  */
 package io.icure.kraken.client.models
 
+import io.icure.kraken.client.models.CodeStubDto
+import io.icure.kraken.client.models.DelegationDto
+import io.icure.kraken.client.models.IdentifierDto
+import io.icure.kraken.client.models.PropertyStubDto
+
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude

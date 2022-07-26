@@ -28,6 +28,9 @@ import com.fasterxml.jackson.annotation.JsonInclude
  * @param name 
  * @param email 
  * @param phone 
+ * @param patientId 
+ * @param healthcarePartyId 
+ * @param deviceId 
  */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -53,7 +56,16 @@ data class UserGroupDto (
     val email: kotlin.String? = null,
 
     @field:JsonProperty("phone")
-    val phone: kotlin.String? = null
+    val phone: kotlin.String? = null,
+
+    @field:JsonProperty("patientId")
+    val patientId: kotlin.String? = null,
+
+    @field:JsonProperty("healthcarePartyId")
+    val healthcarePartyId: kotlin.String? = null,
+
+    @field:JsonProperty("deviceId")
+    val deviceId: kotlin.String? = null
 
 )
 

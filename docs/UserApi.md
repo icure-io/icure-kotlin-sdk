@@ -15,6 +15,7 @@ Method | HTTP request | Description
 [**filterUsersBy**](UserApi.md#filterUsersBy) | **POST** /rest/v2/user/filter | Filter users for the current user (HcParty)
 [**filterUsersInGroupBy**](UserApi.md#filterUsersInGroupBy) | **POST** /rest/v2/user/filter/inGroup/{groupId} | Filter users for the current user (HcParty) for a provided groupId
 [**findByHcpartyId**](UserApi.md#findByHcpartyId) | **GET** /rest/v2/user/byHealthcarePartyId/{id} | Get the list of users by healthcare party id
+[**findByPatientId**](UserApi.md#findByPatientId) | **GET** /rest/v2/user/byPatientId/{id} | Get the list of users by patient id
 [**getCurrentSession**](UserApi.md#getCurrentSession) | **GET** /rest/v2/user/session | Get Currently logged-in user session.
 [**getCurrentUser**](UserApi.md#getCurrentUser) | **GET** /rest/v2/user/current | Get presently logged-in user.
 [**getMatchingUsers**](UserApi.md#getMatchingUsers) | **GET** /rest/v2/user/matches | Get presently logged-in user.
@@ -533,6 +534,51 @@ try {
     e.printStackTrace()
 } catch (e: ServerException) {
     println("5xx response calling UserApi#findByHcpartyId")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **kotlin.String**|  |
+
+### Return type
+
+**kotlin.collections.List&lt;kotlin.String&gt;**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="findByPatientId"></a>
+# **findByPatientId**
+> kotlin.collections.List&lt;kotlin.String&gt; findByPatientId(id)
+
+Get the list of users by patient id
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = UserApi()
+val id : kotlin.String = id_example // kotlin.String | 
+try {
+    val result : kotlin.collections.List<kotlin.String> = apiInstance.findByPatientId(id)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling UserApi#findByPatientId")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling UserApi#findByPatientId")
     e.printStackTrace()
 }
 ```
