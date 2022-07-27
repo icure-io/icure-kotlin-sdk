@@ -14,7 +14,6 @@ import io.icure.kraken.client.models.decrypted.HealthElementDto
 import io.icure.kraken.client.models.decrypted.PaginatedListHealthElementDto
 import io.icure.kraken.client.models.filter.chain.FilterChain
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.mapstruct.factory.Mappers
 import java.util.*
 
 suspend fun HealthElementDto.initDelegations(user: UserDto, config: CryptoConfig<HealthElementDto, io.icure.kraken.client.models.HealthElementDto>): HealthElementDto {
@@ -199,6 +198,66 @@ suspend fun HealthElementApi.setHealthElementsDelegations(user: UserDto, icureSt
     return this.setHealthElementsDelegations(icureStubDtos).map { config.decryptHealthElement(user.dataOwnerId(), it) }
 }
 
+@OptIn(ExperimentalStdlibApi::class, ExperimentalCoroutinesApi::class)
+suspend fun HealthElementApi.giveAccessTo(
+    ccHealthElement: CryptoConfig<HealthElementDto, io.icure.kraken.client.models.HealthElementDto>,
+    currentUser: UserDto,
+    healthElementDto: HealthElementDto,
+    delegateTo: String,
+): HealthElementDto {
+    val localCrypto = ccHealthElement.crypto
+    val dataOwnerId = currentUser.dataOwnerId()
+
+    if (!healthElementDto.delegations.keys.any { it == dataOwnerId }) {
+        throw IllegalStateException("DataOwner $dataOwnerId does not have the right to access it ${healthElementDto.id}")
+    }
+
+    if (healthElementDto.delegations.keys.any { it == delegateTo }) {
+        return healthElementDto
+    }
+
+    val patientId = localCrypto.decryptEncryptionKeys(dataOwnerId, healthElementDto.cryptedForeignKeys).first()
+
+    val (patientIdKey, _) = localCrypto.encryptAESKeyForDataOwner(
+        dataOwnerId,
+        delegateTo,
+        healthElementDto.id,
+        patientId
+    )
+    val (secretForeignKey, _) = localCrypto.encryptAESKeyForDataOwner(
+        dataOwnerId,
+        delegateTo,
+        healthElementDto.id,
+        localCrypto.decryptEncryptionKeys(dataOwnerId, healthElementDto.delegations).first()
+    )
+    val (encryptionKey, _) = localCrypto.encryptAESKeyForDataOwner(
+        dataOwnerId,
+        delegateTo,
+        healthElementDto.id,
+        localCrypto.decryptEncryptionKeys(dataOwnerId, healthElementDto.encryptionKeys).first()
+    )
+
+    val delegation = DelegationDto(owner = dataOwnerId, delegatedTo = delegateTo, key = secretForeignKey)
+    val encryptionKeyDelegation = DelegationDto(owner = dataOwnerId, delegatedTo = delegateTo, key = encryptionKey)
+    val cryptedForeignKeyDelegation = DelegationDto(owner = dataOwnerId, delegatedTo = delegateTo, key = patientIdKey)
+
+    val delegations = healthElementDto.delegations.plus(delegateTo to setOf(delegation))
+    val encryptionKeys = healthElementDto.encryptionKeys.plus(delegateTo to setOf(encryptionKeyDelegation))
+    val cryptedForeignKeys =
+        healthElementDto.cryptedForeignKeys.plus(delegateTo to setOf(cryptedForeignKeyDelegation))
+
+    val healthElementToUpdate = healthElementDto.copy(
+        delegations = delegations,
+        encryptionKeys = encryptionKeys,
+        cryptedForeignKeys = cryptedForeignKeys
+    )
+
+    return try {
+        this.modifyHealthElement(currentUser, healthElementToUpdate, ccHealthElement)
+    } catch (e: Exception) {
+        throw IllegalStateException("Couldn't give access to $delegateTo to health element ${healthElementToUpdate.id}")
+    }
+}
 
 suspend fun CryptoConfig<HealthElementDto, io.icure.kraken.client.models.HealthElementDto>.encryptHealthElement(myId: String, delegations: Set<String>, healthElement: HealthElementDto): io.icure.kraken.client.models.HealthElementDto {
     return if (healthElement.encryptionKeys.any { (_,s) -> s.isNotEmpty() }) {

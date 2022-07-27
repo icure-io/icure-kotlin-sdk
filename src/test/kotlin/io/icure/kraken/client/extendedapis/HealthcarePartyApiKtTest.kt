@@ -31,6 +31,7 @@ import java.security.interfaces.RSAPublicKey
 import java.time.Instant
 import java.util.*
 import kotlin.io.path.ExperimentalPathApi
+import kotlin.time.Duration.Companion.days
 
 @ExperimentalPathApi
 @ExperimentalUnsignedTypes
@@ -41,7 +42,7 @@ internal class HealthcarePartyApiKtTest {
 
     private val parentAuthorization = "Basic " + Base64.getEncoder().encodeToString("${System.getenv("PARENT_HCP_USERNAME")}:${System.getenv("PARENT_HCP_PASSWORD")}".toByteArray(Charsets.UTF_8))
     private val parentPrivKey = System.getenv("PARENT_HCP_PRIV_KEY").toPrivateKey()
-    
+
     private val userApi = UserApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
     private val hcpartyApi = HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
     private val patientApi = PatientApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
@@ -250,9 +251,9 @@ internal class HealthcarePartyApiKtTest {
             name = "${newHcp.firstName} ${newHcp.lastName}",
             authenticationTokens = mapOf(
                 "test" to AuthenticationTokenDto(
-                    UUID.randomUUID().toString(),
+                    "test",
                     Instant.now().toEpochMilli(),
-                    24 * 3600 * 365
+                    365.days.inWholeSeconds
                 )
             ),
             healthcarePartyId = newHcp.id,
@@ -263,12 +264,14 @@ internal class HealthcarePartyApiKtTest {
     private suspend fun createHealthcareParty(
         parentUser: UserDto,
         parentLocalCrypto: LocalCrypto,
-        hcpKeyPair: KeyPair
+        hcpKeyPair: KeyPair,
+        firstName: String = "Jimmy",
+        lastName: String = "Materazzi"
     ) = hcpartyApi.createHealthcareParty(
         HealthcarePartyDto(
             id = UUID.randomUUID().toString(),
-            firstName = "Jimmy",
-            lastName = "Materazzi"
+            firstName = firstName,
+            lastName = lastName
         )
             .initHcParty()
             .addNewKeyPair(parentUser, parentLocalCrypto, hcpKeyPair.public)
