@@ -20,7 +20,11 @@ class UsersByPatientIdsFilterTest : StringSpec ({
     val createdEntitiesId = mutableListOf<String>()
 
     afterSpec {
-        removeEntities(createdEntitiesId)
+        removeEntities(createdEntitiesId,
+            System.getenv("ICURE_COUCHDB_USERNAME"),
+            System.getenv("ICURE_COUCHDB_PASSWORD"),
+            System.getenv("ICURE_COUCHDB_URL"),
+            System.getenv("ICURE_COUCHDB_PREFIX"))
     }
 
     "The UsersByPatientIdsFilter is able to get all the users with a certain PatientId" {

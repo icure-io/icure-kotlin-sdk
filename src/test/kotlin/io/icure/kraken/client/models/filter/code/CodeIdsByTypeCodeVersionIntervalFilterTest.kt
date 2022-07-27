@@ -27,7 +27,11 @@ class CodeIdsByTypeCodeVersionIntervalFilterTest : StringSpec({
     }
 
     afterSpec {
-        removeEntities(testBatchIds)
+        removeEntities(testBatchIds,
+            System.getenv("ICURE_COUCHDB_USERNAME"),
+            System.getenv("ICURE_COUCHDB_PASSWORD"),
+            System.getenv("ICURE_COUCHDB_URL"),
+            System.getenv("ICURE_COUCHDB_PREFIX"))
     }
 
     "If all parameters are null, all the code ids are returned" {
