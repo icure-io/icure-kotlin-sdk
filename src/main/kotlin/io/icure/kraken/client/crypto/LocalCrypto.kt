@@ -27,7 +27,6 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flattenMerge
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -179,7 +178,7 @@ class LocalCrypto(
         return "$delegatorId:$delegateId:$delegatorPubKey"
     }
 
-    private suspend fun getDelegateAesExchangeKeys(
+     suspend fun getDelegateAesExchangeKeys(
         delegateId: String,
         ownerId: String,
         specificKeyPairs: List<Pair<RSAPrivateKey, RSAPublicKey>>? = null
@@ -207,7 +206,7 @@ class LocalCrypto(
      * @return all the Public Keys known for the provided Data Owner Id. Returns first the "main" publicKey of the
      * dataOwner and the ones contained on the aesExchangeKeys afterwards
      */
-    private suspend fun getDataOwnerPublicKeys(dataOwnerId: String): List<Pair<String, PublicKey>> {
+    suspend fun getDataOwnerPublicKeys(dataOwnerId: String): List<Pair<String, PublicKey>> {
         return getDataOwnerPublicKeys(dataOwnerResolver.getDataOwner(dataOwnerId))
     }
 
@@ -226,15 +225,15 @@ class LocalCrypto(
     private suspend fun getDataOwnerAesExchangeKeys(dataOwnerId: String, dataOwnerPublicKeys: List<String>) =
         dataOwnerResolver.getDataOwner(dataOwnerId).findRelatedAesExchangeKeys(dataOwnerPublicKeys)
 
-    private suspend fun getOrCreateAesExchangeKeys(
+    suspend fun getOrCreateAesExchangeKeys(
         myId: String,
-        delegateId: String
+        delegateId: String,
+        specificPublicKeys: List<PublicKey>? = null
     ): Pair<List<ByteArray>, DataOwner?> {
         val ownerIdDelegateIdKey = getOwnerIdDelegateIdKeyForCache(delegateId = delegateId, delegatorId = myId)
 
         val myKeyPairs = rsaKeyPairs[myId] ?: throw IllegalArgumentException("Missing key for data owner $myId")
-        val myPublicKeys =
-            rsaKeyPairs[myId]?.map { it.second } ?: throw IllegalArgumentException("Missing key for data owner $myId")
+        val myPublicKeys = specificPublicKeys.takeUnless { it.isNullOrEmpty() } ?: rsaKeyPairs[myId]?.map { it.second } ?: throw IllegalArgumentException("Missing key for data owner $myId")
 
         val keyMap: Map<String, Map<String, Pair<String, ByteArray>>> =
             ownerHcpartyKeysCache.defGet(ownerIdDelegateIdKey) {
@@ -471,7 +470,7 @@ class LocalCrypto(
         }
 
         val cachedKeyPairs = myKeyPairs.associate { (myPrivKey, myPubKey) ->
-            myPubKey.pubKeyAsString().takeLast(12) to myPrivKey
+            myPubKey.pubKeyAsString().takeLast(32) to myPrivKey
         }
 
         return this.mapNotNull { (pubKey, aesExchangeKeys) ->

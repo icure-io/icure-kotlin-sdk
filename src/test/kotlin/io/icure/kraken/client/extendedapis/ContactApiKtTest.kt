@@ -1,10 +1,13 @@
 package io.icure.kraken.client.extendedapis
 
 import io.icure.kraken.client.apis.ContactApi
+import io.icure.kraken.client.apis.DeviceApi
 import io.icure.kraken.client.apis.HealthcarePartyApi
+import io.icure.kraken.client.apis.MaintenanceTaskApi
 import io.icure.kraken.client.apis.PatientApi
 import io.icure.kraken.client.apis.UserApi
 import io.icure.kraken.client.crypto.CryptoConfig
+import io.icure.kraken.client.crypto.CryptoUtils
 import io.icure.kraken.client.crypto.LocalCrypto
 import io.icure.kraken.client.crypto.contactCryptoConfig
 import io.icure.kraken.client.crypto.patientCryptoConfig
@@ -12,20 +15,28 @@ import io.icure.kraken.client.crypto.toPrivateKey
 import io.icure.kraken.client.crypto.toPublicKey
 import io.icure.kraken.client.extendedapis.infrastructure.ExtendedTestUtils.dataOwnerWrapperFor
 import io.icure.kraken.client.extendedapis.infrastructure.ExtendedTestUtils.localCrypto
+import io.icure.kraken.client.extendedapis.infrastructure.createHealthcareParty
+import io.icure.kraken.client.extendedapis.infrastructure.createUserForHcp
 import io.icure.kraken.client.extendedapis.mapper.ContactMapperFactory
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.models.CodeStubDto
+import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.decrypted.ContactDto
 import io.icure.kraken.client.models.decrypted.ContentDto
 import io.icure.kraken.client.models.decrypted.PatientDto
 import io.icure.kraken.client.models.decrypted.ServiceDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import java.security.KeyPair
+import java.security.interfaces.RSAPrivateKey
+import java.security.interfaces.RSAPublicKey
 import java.util.*
 
+@OptIn(ExperimentalUnsignedTypes::class)
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 @FlowPreview
@@ -33,8 +44,12 @@ internal class ContactApiKtTest {
     private val iCureBackendUrl = System.getenv("ICURE_BE_URL") ?: "https://kraken.icure.dev"
 
     private val parentAuthorization = "Basic " + Base64.getEncoder().encodeToString("${System.getenv("PARENT_HCP_USERNAME")}:${System.getenv("PARENT_HCP_PASSWORD")}".toByteArray(Charsets.UTF_8))
-    private val child1Authorization = "Basic " + Base64.getEncoder().encodeToString("${System.getenv("CHILD_1_HCP_USERNAME")}:${System.getenv("CHILD_1_HCP_PASSWORD")}".toByteArray(Charsets.UTF_8))
-    private val child2Authorization = "Basic " + Base64.getEncoder().encodeToString("${System.getenv("CHILD_2_HCP_USERNAME")}:${System.getenv("CHILD_2_HCP_PASSWORD")}".toByteArray(Charsets.UTF_8))
+    private val child1Authorization = "Basic " + Base64.getEncoder().encodeToString(
+        "${System.getenv("CHILD_1_HCP_USERNAME")}:${System.getenv("CHILD_1_HCP_PASSWORD")}".toByteArray(Charsets.UTF_8)
+    )
+    private val child2Authorization = "Basic " + Base64.getEncoder().encodeToString(
+        "${System.getenv("CHILD_2_HCP_USERNAME")}:${System.getenv("CHILD_2_HCP_PASSWORD")}".toByteArray(Charsets.UTF_8)
+    )
 
     private val parentPrivKey = System.getenv("PARENT_HCP_PRIV_KEY").toPrivateKey()
     private val child1PrivKey = System.getenv("CHILD_1_HCP_PRIV_KEY").toPrivateKey()
@@ -43,14 +58,19 @@ internal class ContactApiKtTest {
     private val userApi = UserApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
     private val hcPartyApi = HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
     private val contactApi = ContactApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
+    private val maintenanceTaskApi = MaintenanceTaskApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
+    private val deviceApi = DeviceApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
+    private val patientApi = PatientApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
 
     private val child1UserApi = UserApi(basePath = iCureBackendUrl, authHeader = child1Authorization)
-    private val child1HealthcarePartyApi = HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = child1Authorization)
+    private val child1HealthcarePartyApi =
+        HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = child1Authorization)
     private val child1ContactApi = ContactApi(basePath = iCureBackendUrl, authHeader = child1Authorization)
     private val child1PatientApi = PatientApi(basePath = iCureBackendUrl, authHeader = child1Authorization)
 
     private val child2UserApi = UserApi(basePath = iCureBackendUrl, authHeader = child2Authorization)
-    private val child2HealthcarePartyApi = HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = child2Authorization)
+    private val child2HealthcarePartyApi =
+        HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = child2Authorization)
     private val child2ContactApi = ContactApi(basePath = iCureBackendUrl, authHeader = child2Authorization)
 
     @Test
@@ -164,30 +184,210 @@ internal class ContactApiKtTest {
         Assertions.assertNull(encryptedContact.medicalLocationId, "Medical Location Id should be encrypted")
 
         Assertions.assertNull(encryptedContact.services.first().encryptedSelf, "Service should not be encrypted")
-        Assertions.assertEquals(encryptedContact.services.first().content["fr"]?.numberValue,
+        Assertions.assertEquals(
+            encryptedContact.services.first().content["fr"]?.numberValue,
             contactToCreate.services.first().content["fr"]?.numberValue,
             "Service content should not be encrypted"
         )
     }
 
-    private fun contactToCreate(contactId: String = UUID.randomUUID().toString()) = ContactDto(
+    @Test
+    fun `old hcp giveAccess to newly created Contact to hcp1`() = runBlocking {
+        val parentUser = userApi.getCurrentUser()
+        val parent = hcPartyApi.getCurrentHealthcareParty()
+        val parentLocalCrypto = LocalCrypto(
+            dataOwnerWrapperFor(iCureBackendUrl, parentAuthorization), mapOf(
+                parent.id to listOf(parentPrivKey to parent.publicKey!!.toPublicKey()),
+            ),
+            maintenanceTaskApi
+        )
+
+        val hcp1Kp = CryptoUtils.generateKeyPairRSA()
+
+        val hcp1User = userApi.createUserForHcp(
+            hcPartyApi.createHealthcareParty(parentUser, parentLocalCrypto, hcp1Kp, "Bender Bending", "Rodriguez"),
+            parent
+        )
+
+        val hcp1Auth =
+            "Basic ${Base64.getEncoder().encodeToString("${hcp1User.login}:test".toByteArray(Charsets.UTF_8))}"
+
+        val hcp1ContactApi = ContactApi(basePath = iCureBackendUrl, authHeader = hcp1Auth)
+
+        val ccContact = { auth: String, user: UserDto, kp: KeyPair ->
+            contactCryptoConfig(
+                LocalCrypto(
+                    dataOwnerWrapperFor(
+                        iCureBackendUrl,
+                        auth
+                    ), mapOf(
+                        user.dataOwnerId() to listOf(kp.private as RSAPrivateKey to kp.public as RSAPublicKey)
+                    )
+                ),
+                user
+            )
+        }
+
+        val cc1 = ccContact(hcp1Auth, hcp1User, hcp1Kp)
+        val ccParentContact = contactCryptoConfig(parentLocalCrypto, parentUser)
+        val ccParentPatient = patientCryptoConfig(parentLocalCrypto)
+
+        delay(4000)
+
+        // When
+        val p1 = try {
+            patientApi.createPatient(
+                parentUser,
+                PatientDto(
+                    id = UUID.randomUUID().toString(),
+                    firstName = "Hermez",
+                    lastName = "Conrad",
+                    note = "Sweet manatee of Galilee!"
+                ),
+                ccParentPatient
+            )
+        } catch (e: Exception) {
+            throw IllegalStateException(e)
+        }
+
+        val c1 = try {
+            contactApi.createContact(
+                user = parentUser,
+                patient = p1,
+                contact = contactToCreate(),
+                config = ccParentContact
+            )
+        } catch (e: Exception) {
+            throw IllegalStateException(e)
+        }
+
+        Assertions.assertNotNull(c1, "Contact should not be null")
+
+        val sharedC1 = contactApi.giveAccessTo(ccParentContact, parentUser, c1, hcp1User.dataOwnerId())
+
+        val c2 = try {
+            hcp1ContactApi.getContact(hcp1User, sharedC1.id, cc1)
+        } catch (e: Exception) {
+            throw IllegalStateException(e)
+        }
+
+        Assertions.assertEquals(sharedC1.descr, c2.descr)
+        Assertions.assertEquals(sharedC1.id, c2.id)
+        Assertions.assertEquals(sharedC1.rev, c2.rev)
+        Assertions.assertEquals(sharedC1.services.firstOrNull()?.content, c2.services.firstOrNull()?.content)
+    }
+
+    @Test
+    fun `hcp1 giveAccess to newly created Contact to hcp2`() = runBlocking {
+        val parentUser = userApi.getCurrentUser()
+        val parent = hcPartyApi.getCurrentHealthcareParty()
+        val parentLocalCrypto = LocalCrypto(
+            dataOwnerWrapperFor(iCureBackendUrl, parentAuthorization), mapOf(
+                parent.id to listOf(parentPrivKey to parent.publicKey!!.toPublicKey()),
+            ),
+            maintenanceTaskApi
+        )
+
+        val hcp1Kp = CryptoUtils.generateKeyPairRSA()
+        val hcp2Kp = CryptoUtils.generateKeyPairRSA()
+
+        val hcp1User = userApi.createUserForHcp(
+            hcPartyApi.createHealthcareParty(parentUser, parentLocalCrypto, hcp1Kp, "Bender Bending", "Rodriguez"),
+            parent
+        )
+        val hcp2User = userApi.createUserForHcp(
+            hcPartyApi.createHealthcareParty(parentUser, parentLocalCrypto, hcp2Kp, "Philip J.", "Fry"),
+            parent
+        )
+
+        val hcp1Auth =
+            "Basic ${Base64.getEncoder().encodeToString("${hcp1User.login}:test".toByteArray(Charsets.UTF_8))}"
+        val hcp2Auth =
+            "Basic ${Base64.getEncoder().encodeToString("${hcp2User.login}:test".toByteArray(Charsets.UTF_8))}"
+
+        val hcp1PatientApi = PatientApi(basePath = iCureBackendUrl, authHeader = hcp1Auth)
+        val hcp1ContactApi = ContactApi(basePath = iCureBackendUrl, authHeader = hcp1Auth)
+        val hcp2ContactApi = ContactApi(basePath = iCureBackendUrl, authHeader = hcp2Auth)
+
+        val localCrypto = { auth: String, user: UserDto, kp: KeyPair ->
+            LocalCrypto(
+                dataOwnerWrapperFor(
+                    iCureBackendUrl,
+                    auth
+                ), mapOf(
+                    user.dataOwnerId() to listOf(kp.private as RSAPrivateKey to kp.public as RSAPublicKey)
+                )
+            )
+        }
+
+        val hcp1LocalCrypto = localCrypto(hcp1Auth, hcp1User, hcp1Kp)
+        val hcp2LocalCrypto = localCrypto(hcp2Auth, hcp2User, hcp2Kp)
+
+        val hcp1ContactCryptoConfig = contactCryptoConfig(hcp1LocalCrypto, hcp1User)
+        val hcp2ContactCryptoConfig = contactCryptoConfig(hcp2LocalCrypto, hcp2User)
+        val hcp1PatientCryptoConfig = patientCryptoConfig(hcp1LocalCrypto)
+
+        delay(4000)
+
+        // When
+        val p1 = try {
+            hcp1PatientApi.createPatient(
+                hcp1User,
+                PatientDto(
+                    id = UUID.randomUUID().toString(),
+                    firstName = "Hermez",
+                    lastName = "Conrad",
+                    note = "Sweet manatee of Galilee!"
+                ),
+                hcp1PatientCryptoConfig
+            )
+        } catch (e: Exception) {
+            throw IllegalStateException(e)
+        }
+
+        Assertions.assertNotNull(p1, "Patient should not be null")
+
+        val c1 = try {
+            hcp1ContactApi.createContact(
+                user = hcp1User,
+                patient = p1,
+                contact = contactToCreate(),
+                config = hcp1ContactCryptoConfig
+            )
+        } catch (e: Exception) {
+            throw IllegalStateException(e)
+        }
+
+        Assertions.assertNotNull(c1, "Contact should not be null")
+
+        val sharedC1 = hcp1ContactApi.giveAccessTo(hcp1ContactCryptoConfig, hcp1User, c1, hcp2User.dataOwnerId())
+
+        val c2 = try {
+            hcp2ContactApi.getContact(hcp2User, sharedC1.id, hcp2ContactCryptoConfig)
+        } catch (e: Exception) {
+            throw IllegalStateException(e)
+        }
+
+        Assertions.assertEquals(sharedC1.descr, c2.descr)
+        Assertions.assertEquals(sharedC1.id, c2.id)
+        Assertions.assertEquals(sharedC1.rev, c2.rev)
+        Assertions.assertEquals(sharedC1.services.firstOrNull()?.content, c2.services.firstOrNull()?.content)
+    }
+
+    private fun contactToCreate(
+        contactId: String = UUID.randomUUID().toString(),
+    ) = ContactDto(
         id = contactId,
         openingDate = 20171214,
         closingDate = 20171214153600,
         descr = "Contact du 14/12/17",
         medicalLocationId = UUID.randomUUID().toString(),
-        healthcarePartyId = "782f1bcd-9f3f-408a-af1b-cd9f3f908a98",
         services = listOf(
             ServiceDto(
                 id = UUID.randomUUID().toString(),
                 label = "BMI",
                 index = 2,
                 content = mapOf("fr" to ContentDto(numberValue = 0.0)),
-                valueDate = 20170515151507,
-                created = 1494854114248,
-                modified = 1494854114105,
-                author = "ebd30407-9f33-4cd5-9999-079f334cd5e8",
-                responsible = "782f1bcd-9f3f-408a-af1b-cd9f3f908a98",
                 tags = listOf(
                     CodeStubDto(id = "SOAP|Objective|1", type = "SOAP", code = "Objective", version = "1"),
                     CodeStubDto(id = "CD-ITEM|parameter|1", type = "CD-ITEM", code = "parameter", version = "1"),
