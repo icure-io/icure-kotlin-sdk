@@ -14,7 +14,8 @@ import kotlin.random.Random
 
 @OptIn(ExperimentalStdlibApi::class, ExperimentalCoroutinesApi::class)
 class CodeIdsByTypeCodeVersionIntervalFilterTest : StringSpec({
-    val api = CodeApi(basePath = System.getenv("TEST_ICURE_URL"), authHeader = UsernamePassword(System.getenv("ICURE_USR"), System.getenv("ICURE_PWD")).toBasicAuth())
+    val iCureUrl = System.getenv("ICURE_BE_URL") ?: "https://kraken.icure.dev"
+    val api = CodeApi(basePath = iCureUrl, authHeader = UsernamePassword(System.getenv("ICURE_USR"), System.getenv("ICURE_PWD")).toBasicAuth())
     val testBatchSize = 40
     val codeGenerator = CodeBatchGenerator()
     val testBatch = codeGenerator.createBatchOfUniqueCodes(testBatchSize).associateBy { it.id }

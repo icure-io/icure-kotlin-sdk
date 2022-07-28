@@ -284,4 +284,8 @@ tasks.jacocoTestReport {
 
 tasks.test {
     useJUnitPlatform()
+
+    filter {
+        excludeTestsMatching("io.icure.kraken.client.apis.*")
+    }
 }

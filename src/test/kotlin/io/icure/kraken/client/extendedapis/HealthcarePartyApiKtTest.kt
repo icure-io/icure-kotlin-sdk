@@ -56,6 +56,7 @@ internal class HealthcarePartyApiKtTest {
         val parent = hcpartyApi.getCurrentHealthcareParty()
         val kp = CryptoUtils.generateKeyPairRSA()
 
+        val newUserPwd = UUID.randomUUID().toString()
         val newHcp = hcpartyApi.createHealthcareParty(
             HealthcarePartyDto(
                 id = UUID.randomUUID().toString(),
@@ -64,7 +65,7 @@ internal class HealthcarePartyApiKtTest {
                 parentId = parent.id
             ).initHcParty().addNewKeyPair(parentUser, localCrypto, kp.public))
 
-        val newUser = createUserForHcp(newHcp, parent)
+        val newUser = createUserForHcp(newHcp, parent, newUserPwd)
 
         //val keyPath = "src/test/resources/io/icure/kraken/client/extendedapis/keys/${newHcp.id}-icc-priv.2048.key"
         //Path.of(keyPath).absolute().createFile().appendText(kp.privateKeyAsString(), Charsets.UTF_8)
@@ -88,11 +89,12 @@ internal class HealthcarePartyApiKtTest {
         )
 
         // When creating new HCP
+        val newUserPwd = UUID.randomUUID().toString()
         val newHcpKp1 = CryptoUtils.generateKeyPairRSA()
         var newHcp = createHealthcareParty(parentUser, parentLocalCrypto, newHcpKp1)
-        val newUser = createUserForHcp(newHcp, parent)
+        val newUser = createUserForHcp(newHcp, parent, newUserPwd)
 
-        delay(3000) // User not active yet when trying to create data afterwards
+        delay(5000) // User not active yet when trying to create data afterwards
 
         //Then at first, only its own key is part of the aesExchangeKeys
         Assertions.assertTrue(newHcp.hcPartyKeys.isEmpty())
@@ -103,13 +105,13 @@ internal class HealthcarePartyApiKtTest {
         Assertions.assertTrue(newHcp.aesExchangeKeys[newHcpKp1.publicKeyAsString()]!![newHcp.id]!!.containsKey(newHcpKp1.publicKeyAsString().takeLast(12)))
 
         // Given
-        val newUserHcpApi = HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}")
-        val newUserPatientApi = PatientApi(basePath = iCureBackendUrl, authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}")
-        val newUserMaintenanceTaskApi = MaintenanceTaskApi(basePath = iCureBackendUrl, authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}")
+        val newUserHcpApi = HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:$newUserPwd".toByteArray(Charsets.UTF_8))}")
+        val newUserPatientApi = PatientApi(basePath = iCureBackendUrl, authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:$newUserPwd".toByteArray(Charsets.UTF_8))}")
+        val newUserMaintenanceTaskApi = MaintenanceTaskApi(basePath = iCureBackendUrl, authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:$newUserPwd".toByteArray(Charsets.UTF_8))}")
         val newHcpLocalCrypto1 = LocalCrypto(
             ExtendedTestUtils.dataOwnerWrapperFor(
                 iCureBackendUrl,
-                "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}"
+                "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:$newUserPwd".toByteArray(Charsets.UTF_8))}"
             ), mapOf(
                 newUser.dataOwnerId() to listOf(newHcpKp1.private as RSAPrivateKey to newHcpKp1.public as RSAPublicKey)
             ), newUserMaintenanceTaskApi
@@ -128,7 +130,7 @@ internal class HealthcarePartyApiKtTest {
         val newHcpKp2 = CryptoUtils.generateKeyPairRSA()
         val newHcpKp2DoResolver = ExtendedTestUtils.dataOwnerWrapperFor(
             iCureBackendUrl,
-            "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}"
+            "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:$newUserPwd".toByteArray(Charsets.UTF_8))}"
         )
         val newHcpLocalCrypto2 = LocalCrypto(
             newHcpKp2DoResolver, mapOf(
@@ -191,20 +193,23 @@ internal class HealthcarePartyApiKtTest {
             maintenanceTaskApi
         )
 
+        val newUserPwd = UUID.randomUUID().toString()
         val newHcpKp1 = CryptoUtils.generateKeyPairRSA()
         var newHcp = createHealthcareParty(parentUser, parentLocalCrypto, newHcpKp1)
-        val newUser = createUserForHcp(newHcp, parent)
+        val newUser = createUserForHcp(newHcp, parent, newUserPwd)
 
-        delay(4000) // User not active yet when trying to create data afterwards
+        val dataOwnerResolver = ExtendedTestUtils.dataOwnerWrapperFor(
+            iCureBackendUrl,
+            "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:$newUserPwd".toByteArray(Charsets.UTF_8))}"
+        )
 
-        val newUserHcpApi = HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}")
-        val newUserPatientApi = PatientApi(basePath = iCureBackendUrl, authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}")
-        val newUserMaintenanceTaskApi = MaintenanceTaskApi(basePath = iCureBackendUrl, authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}")
+        delay(5000) // User not active yet when trying to create data afterwards
+
+        val newUserHcpApi = HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:$newUserPwd".toByteArray(Charsets.UTF_8))}")
+        val newUserPatientApi = PatientApi(basePath = iCureBackendUrl, authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:$newUserPwd".toByteArray(Charsets.UTF_8))}")
+        val newUserMaintenanceTaskApi = MaintenanceTaskApi(basePath = iCureBackendUrl, authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:$newUserPwd".toByteArray(Charsets.UTF_8))}")
         val newHcpLocalCrypto1 = LocalCrypto(
-            ExtendedTestUtils.dataOwnerWrapperFor(
-                iCureBackendUrl,
-                "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}"
-            ), mapOf(
+            dataOwnerResolver, mapOf(
                 newUser.dataOwnerId() to listOf(newHcpKp1.private as RSAPrivateKey to newHcpKp1.public as RSAPublicKey)
             ), newUserMaintenanceTaskApi
         )
@@ -215,10 +220,7 @@ internal class HealthcarePartyApiKtTest {
         // Given
         val newHcpKp2 = CryptoUtils.generateKeyPairRSA()
         val newHcpLocalCrypto2 = LocalCrypto(
-            ExtendedTestUtils.dataOwnerWrapperFor(
-                iCureBackendUrl,
-                "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}"
-            ), mapOf(
+            dataOwnerResolver, mapOf(
                 newUser.dataOwnerId() to listOf(newHcpKp2.private as RSAPrivateKey to newHcpKp2.public as RSAPublicKey)
             ), newUserMaintenanceTaskApi
         )
@@ -226,6 +228,9 @@ internal class HealthcarePartyApiKtTest {
         newHcp = newUserHcpApi.getCurrentHealthcareParty()
         val hcpToUpdate = newHcp.addNewKeyPair(newUser, newHcpLocalCrypto2, newHcpKp2.public, newHcpKp2.private)
         newUserHcpApi.modifyHealthcareParty(hcpToUpdate)
+
+        dataOwnerResolver.clearCacheFor(newHcp.id)
+
 
         // When HCP creates data
         val patientCreatedWithKey2 = newUserPatientApi.createPatient(newUser, PatientDto(id = UUID.randomUUID().toString(), firstName = "John", lastName = "Doe", note = "To be encrypted"), patientCryptoConfig(newHcpLocalCrypto2))
@@ -240,7 +245,8 @@ internal class HealthcarePartyApiKtTest {
 
     private suspend fun createUserForHcp(
         newHcp: HealthcarePartyDto,
-        parent: HealthcarePartyDto
+        parent: HealthcarePartyDto,
+        userPassword: String
     ) = userApi.createUser(
         UserDto(
             id = UUID.randomUUID().toString(),
@@ -250,7 +256,7 @@ internal class HealthcarePartyApiKtTest {
             name = "${newHcp.firstName} ${newHcp.lastName}",
             authenticationTokens = mapOf(
                 "test" to AuthenticationTokenDto(
-                    UUID.randomUUID().toString(),
+                    userPassword,
                     Instant.now().toEpochMilli(),
                     24 * 3600 * 365
                 )

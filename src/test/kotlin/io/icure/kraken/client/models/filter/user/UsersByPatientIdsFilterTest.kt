@@ -17,6 +17,7 @@ import java.util.*
 @OptIn(ExperimentalStdlibApi::class, ExperimentalCoroutinesApi::class)
 class UsersByPatientIdsFilterTest : StringSpec ({
 
+    val iCureUrl = System.getenv("ICURE_BE_URL") ?: "https://kraken.icure.dev"
     val createdEntitiesId = mutableListOf<String>()
 
     afterSpec {
@@ -28,7 +29,7 @@ class UsersByPatientIdsFilterTest : StringSpec ({
     }
 
     "The UsersByPatientIdsFilter is able to get all the users with a certain PatientId" {
-        val api = UserApi(basePath = System.getenv("TEST_ICURE_URL"),
+        val api = UserApi(basePath = iCureUrl,
                             authHeader = UsernamePassword(System.getenv("ICURE_USR"), System.getenv("ICURE_PWD")).toBasicAuth())
         val filterPatientId = UUID.randomUUID().toString()
         val user1Uuid = UUID.randomUUID().toString()

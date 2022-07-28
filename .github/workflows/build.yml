@@ -38,5 +38,23 @@ jobs:
           ORG_GRADLE_PROJECT_mavenReleasesRepository: https://maven.taktik.be/content/repositories/releases/'
           ORG_GRADLE_PROJECT_mavenRepository: https://maven.taktik.be/content/groups/public'
           ORG_GRADLE_PROJECT_mavenSnapshotsRepository: https://maven.taktik.be/content/repositories/snapshots/'
+          ICURE_BE_URL: "https://kraken.icure.dev"
+          ICURE_COUCHDB_URL: "https://couch.svcacc.icure.cloud/"
+          ICURE_COUCHDB_PREFIX: ${{ secrets.ICURE_COUCHDB_PREFIX }}
+          ICURE_COUCHDB_USERNAME: ${{ secrets.ICURE_COUCHDB_USERNAME }}
+          ICURE_COUCHDB_PASSWORD: ${{ secrets.ICURE_COUCHDB_PASSWORD }}
+          ICURE_USR: ${{ secrets.ICURE_USR }}
+          ICURE_PWD: ${{ secrets.ICURE_PWD }}
+          CHILD_1_HCP_USERNAME: ${{ secrets.CHILD_1_HCP_USERNAME }}
+          CHILD_1_HCP_PASSWORD: ${{ secrets.CHILD_1_HCP_PASSWORD }}
+          CHILD_1_HCP_PRIV_KEY: ${{ secrets.CHILD_1_HCP_PRIV_KEY }}
+          CHILD_2_HCP_USERNAME: ${{ secrets.CHILD_2_HCP_USERNAME }}
+          CHILD_2_HCP_PASSWORD: ${{ secrets.CHILD_2_HCP_PASSWORD }}
+          CHILD_2_HCP_PRIV_KEY: ${{ secrets.CHILD_2_HCP_PRIV_KEY }}
+          PARENT_HCP_USERNAME: ${{ secrets.PARENT_HCP_USERNAME }}
+          PARENT_HCP_PASSWORD: ${{ secrets.PARENT_HCP_PASSWORD }}
+          PARENT_HCP_PRIV_KEY: ${{ secrets.PARENT_HCP_PRIV_KEY }}
+
+
 
         run: ./gradlew build jacocoTestReport sonarqube --info -DAPI_URL=https://kraken.icure.dev
