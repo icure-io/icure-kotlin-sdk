@@ -203,7 +203,7 @@ internal class HealthcarePartyApiKtTest {
             "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:$newUserPwd".toByteArray(Charsets.UTF_8))}"
         )
 
-        delay(5000) // User not active yet when trying to create data afterwards
+        delay(7000) // User not active yet when trying to create data afterwards
 
         val newUserHcpApi = HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:$newUserPwd".toByteArray(Charsets.UTF_8))}")
         val newUserPatientApi = PatientApi(basePath = iCureBackendUrl, authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:$newUserPwd".toByteArray(Charsets.UTF_8))}")
@@ -230,6 +230,8 @@ internal class HealthcarePartyApiKtTest {
         newUserHcpApi.modifyHealthcareParty(hcpToUpdate)
 
         dataOwnerResolver.clearCacheFor(newHcp.id)
+
+        delay(5000)
 
 
         // When HCP creates data
