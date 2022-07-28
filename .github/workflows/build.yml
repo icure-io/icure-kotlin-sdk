@@ -13,10 +13,18 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - name: Set up JDK 15
-        uses: actions/setup-java@v1
+      - name: 'Download latest JDK 17'
+        run: |
+            wget \
+              --no-verbose \
+              --directory-prefix $RUNNER_TEMP \
+              https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.tar.gz
+      - name: 'Set up JDK'
+        uses: actions/setup-java@v2
         with:
-          java-version: 15
+          java-version: 17
+          distribution: jdkfile
+          jdkFile: ${{ runner.temp }}/jdk-17_linux-x64_bin.tar.gz
       - name: Cache SonarCloud packages
         uses: actions/cache@v1
         with:
