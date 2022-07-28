@@ -24,6 +24,7 @@ import java.net.URI
 import java.net.URLConnection
 import java.nio.ByteBuffer
 import java.time.Duration
+import java.time.Instant
 
 @ExperimentalStdlibApi
 @ExperimentalCoroutinesApi
@@ -108,8 +109,10 @@ open class ApiClient(val baseUrl: String, val httpClient: WebClient, val authHea
         }
 
     return request.retrieve()
-        .onStatus(400) { Mono.just(ClientException("Client-side exception ${it.statusCode}", it.statusCode, details = objectMapper.readValue(it.responseBodyAsString(), ErrorDetails::class.java))) }
-        .onStatus(500) { Mono.just(ServerException("Server-side exception ${it.statusCode}", it.statusCode, details = objectMapper.readValue(it.responseBodyAsString(), ErrorDetails::class.java))) }
+        .onStatus(400) { Mono.just(ClientException("Client-side exception ${it.statusCode}", it.statusCode, details = ErrorDetails(timestamp = Instant.now().toEpochMilli(), status = it.statusCode, error = null, message = null, path = null, requestId = null)
+            .let { error -> it.responseBodyAsString().takeIf { body -> body.isNotBlank() }?.let { body -> objectMapper.readValue(body, ErrorDetails::class.java) } ?: error})) }
+        .onStatus(500) { Mono.just(ServerException("Server-side exception ${it.statusCode}", it.statusCode, details = ErrorDetails(timestamp = Instant.now().toEpochMilli(), status = it.statusCode, error = null, message = null, path = null, requestId = null)
+            .let { error -> it.responseBodyAsString().takeIf { body -> body.isNotBlank() }?.let { body -> objectMapper.readValue(body, ErrorDetails::class.java) } ?: error})) }
         .toFlow().let {
             when(T::class) {
                 Flow::class -> it as T

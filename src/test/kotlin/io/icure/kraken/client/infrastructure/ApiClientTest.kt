@@ -14,12 +14,11 @@ internal class ApiClientTest {
         try {
             val res = UserApi(
                 basePath = "https://kraken.icure.dev",
-                authHeader = Base64.getEncoder()
-                    .encodeToString("Basic a:a".toByteArray(Charsets.UTF_8))
+                authHeader = "Basic ${Base64.getEncoder().encodeToString("testuser:failingpwd".toByteArray(Charsets.UTF_8))}"
             ).getCurrentUser()
             assertNotNull(res)
         } catch(e:Exception) {
-            assertEquals(e::class.java, ClientException::class.java)
+            assertEquals(ClientException::class.java, e::class.java)
         }
     }
 }

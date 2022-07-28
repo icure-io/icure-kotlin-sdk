@@ -91,6 +91,8 @@ dependencies {
     testImplementation(group = "io.kotlintest", name = "kotlintest", version = "2.0.7")
     testImplementation(group = "org.junit.jupiter", name = "junit-jupiter", version = "5.7.0")
     testImplementation(group = "com.willowtreeapps.assertk", name = "assertk-jvm", version = "0.24")
+    testImplementation(group = "io.kotest", name = "kotest-assertions-core", version = "5.4.0")
+    testImplementation(group = "io.kotest", name = "kotest-runner-junit5", version = "5.4.0")
 }
 
 
@@ -282,4 +284,8 @@ tasks.jacocoTestReport {
 
 tasks.test {
     useJUnitPlatform()
+
+    filter {
+        excludeTestsMatching("io.icure.kraken.client.apis.*")
+    }
 }
