@@ -55,6 +55,4 @@ jobs:
           PARENT_HCP_PASSWORD: ${{ secrets.PARENT_HCP_PASSWORD }}
           PARENT_HCP_PRIV_KEY: ${{ secrets.PARENT_HCP_PRIV_KEY }}
 
-
-
         run: ./gradlew build jacocoTestReport sonarqube --info -DAPI_URL=https://kraken.icure.dev
